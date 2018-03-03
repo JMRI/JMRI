@@ -14,7 +14,7 @@ import org.junit.Test;
 public class PanelProFrameTest {
 
     @Test
-    @Ignore("causes IndexOutOfBoundsException;needs more setup")
+    @Ignore("causes IndexOutOfBoundsException; needs more set-up")
     public void testCTor() {
         PanelProFrame t = new PanelProFrame("test");
         Assert.assertNotNull("exists",t);

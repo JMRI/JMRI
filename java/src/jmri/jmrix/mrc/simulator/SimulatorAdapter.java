@@ -194,7 +194,7 @@ public class SimulatorAdapter extends MrcPortController implements
     /**
      * Get characters from the input source.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private MrcMessage loadChars() throws java.io.IOException {

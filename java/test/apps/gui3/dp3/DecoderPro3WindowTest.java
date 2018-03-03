@@ -14,7 +14,7 @@ import org.junit.Test;
 public class DecoderPro3WindowTest {
 
     @Test
-    @Ignore("needs more setup")
+    @Ignore("Needs more set-up")
     public void testCTor() {
         DecoderPro3Window t = new DecoderPro3Window();
         Assert.assertNotNull("exists", t);

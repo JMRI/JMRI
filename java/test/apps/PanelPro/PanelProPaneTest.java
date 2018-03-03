@@ -14,7 +14,7 @@ import org.junit.Test;
 public class PanelProPaneTest {
 
     @Test
-    @Ignore("needs more setup")
+    @Ignore("needs more set-up")
     public void testCTor() {
         PanelProPane t = new PanelProPane();
         Assert.assertNotNull("exists",t);
