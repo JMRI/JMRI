@@ -43,11 +43,8 @@ public class JsonHttpServiceTest {
     }
 
     /**
-     * Test failure modes of
+     * Test
      * {@link JsonHttpService#doSchema(java.lang.String, boolean, java.lang.String, java.lang.String)}.
-     * <p>
-     * Non-failure modes are tested in
-     * {@link jmri.server.json.schema.JsonSchemaServiceCacheTest#testSchemas()}.
      */
     @Test
     public void testDoSchema4Param() {
@@ -87,11 +84,23 @@ public class JsonHttpServiceTest {
         }
     }
 
+    /**
+     * Test that a JMRI JSON message is valid per the JMRI JSON schema.
+     *
+     * @param message the message to test
+     * @throws IOException if unable to read the schema
+     */
     public static void testValidJmriJsonMessage(JsonNode message) throws IOException {
         URL resource = JsonHttpServiceTest.class.getClassLoader().getResource("jmri/server/json/schema/json-server.json");
         testSchemaValidJson(message, new ObjectMapper().readTree((resource)));
     }
 
+    /**
+     * Test that a node is a valid per the given schema.
+     *
+     * @param node   the node to test
+     * @param schema the schema to test with
+     */
     public static void testSchemaValidJson(JsonNode node, JsonNode schema) {
         Set<ValidationMessage> errors = JsonSchemaFactory.getInstance().getSchema(schema).validate(node);
         if (!errors.isEmpty()) {
