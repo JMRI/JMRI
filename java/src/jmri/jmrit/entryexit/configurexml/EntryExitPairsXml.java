@@ -304,7 +304,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     @Deprecated
     public static Color stringToColor(String string) {
         return ColorUtil.stringToColor(string);
-    }   // stringToColor
+    }
 
     @Override
     public int loadOrder() {
