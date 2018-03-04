@@ -110,6 +110,9 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
 
     // Base class methods for the EasyDccPortController interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -119,6 +122,9 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -132,6 +138,9 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;

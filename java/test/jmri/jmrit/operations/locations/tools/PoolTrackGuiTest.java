@@ -338,7 +338,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     // }
 
     @Test
-    @Ignore("Not sure if we need this one....")
+    @Ignore("Not sure if we need this one...")
     public void testVerifyStatusPanel() {
     }
 

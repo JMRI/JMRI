@@ -70,8 +70,9 @@ public class SerialNode extends AbstractNode {
     protected int[] sensorTempSetting = new int[MAXSENSORS + 1];
 
     private SerialTrafficController tc = null;
+
     /**
-     * Assumes a node address of 0, and a node type of 0 (NODE2002V6).
+     * Assumes a node address of 1, and a node type of 0 (NODE2002V6).
      * If this constructor is used, actual node address must be set using
      * 'setNodeAddress()', and actual node type using 'setNodeType()'
      */
@@ -86,9 +87,9 @@ public class SerialNode extends AbstractNode {
     /**
      * Create a new SerialNode and initialize default instance variables.
      *
-     * @param address the address of node on serial bus (0-255)
+     * @param address the address of node on serial bus (1-127)
      * @param type a type constant from the class
-     * @param tc the TrafficControllerfor this connection
+     * @param tc the TrafficController for this connection
      */
     public SerialNode(int address, int type, SerialTrafficController tc) {
         this.tc = tc;
@@ -112,14 +113,14 @@ public class SerialNode extends AbstractNode {
         hasActiveSensors = false;
         // register this node
         tc.registerNode(this);
-        if (log.isDebugEnabled()) {
-            log.debug("new serial node " + this);
-        }
+        log.debug("new serial node {}", this);
     }
 
     /**
-     * Public method setting an output bit. Note: state = 'true' for 0, 'false'
-     * for 1. Bits are numbered from 1 (not 0)
+     * Set an output bit on this node.
+     *
+     * @param bitNumber the bit index. Bits are numbered from 1 (not 0)
+     * @param state 'true' for 0, 'false' for 1.
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // locate in the outputArray
@@ -147,7 +148,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return state of Sensors.
+     * Get state of Sensors.
      *
      * @return 'true' if at least one sensor is active for this node
      */
@@ -157,7 +158,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public to reset state of needSend flag. Can only reset if there are no
+     * Reset state of needSend flag. Can only reset if there are no
      * bytes that need to be sent.
      */
     @Override
@@ -171,14 +172,14 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public method to return node type.
+     * Get node type.
      */
     public int getNodeType() {
         return (nodeType);
     }
 
     /**
-     * Public method to set node type.
+     * Set node type.
      */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
@@ -186,7 +187,7 @@ public class SerialNode extends AbstractNode {
         nodeType = type;
         switch (nodeType) {
             default:
-                log.error("Unexpected nodeType in setNodeType: " + nodeType);
+                log.error("Unexpected nodeType in setNodeType: {}", nodeType);
             // use NODE2002V6 as default
             case NODE2002V6:
             case NODE2002V1:
@@ -204,11 +205,11 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public Method to create Initialization packets (SerialMessage) for this
-     * node. Initialization consists of multiple parts:
+     * Create Initialization packets (SerialMessage) for this node.
+     * Initialization consists of multiple parts:
      * <ul>
-     * <li>Turn on the ASD input 0x71 to bank 0
-     * <li>After a wait, another ASD message 0x73 to bank 0
+     *   <li>Turn on the ASD input 0x71 to bank 0
+     *   <li>After a wait, another ASD message 0x73 to bank 0
      * </ul>
      * (Eventually, it should also request input values, once we know what
      * message does that)
@@ -228,11 +229,13 @@ public class SerialNode extends AbstractNode {
                 int i = 0;
 
                 // turn on 2nd parallel inputs
-                m2.setElement(i++, getNodeAddress() | 0x80);  // address
+                m2.setElement(i++, getNodeAddress() | 0x80); // address
                 m2.setElement(i++, 0x73);  // command
-                m2.setElement(i++, getNodeAddress() | 0x80);  // address
-                m2.setElement(i++, 0x00);  // bank and parity
+                m2.setElement(i++, getNodeAddress() | 0x80); // address
+                m2.setElement(i++, 0x00);  // bank 0 = init
                 m2.setParity(i - 4);
+                log.debug("Node {} initpacket 2 sent to {} trafficController", getNodeAddress(),
+                        tc.getSystemConnectionMemo().getSystemPrefix());
                 tc.sendSerialMessage(m2, null);
             }
         };
@@ -249,14 +252,15 @@ public class SerialNode extends AbstractNode {
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
         m1.setElement(i++, 0x71);  // command
         m1.setElement(i++, getNodeAddress() | 0x80);  // address
-        m1.setElement(i++, 0x00);  // bank and parity
+        m1.setElement(i++, 0x00);  // bank 0 = init
         m1.setParity(i - 4);
-
+        log.debug("Node {} initpacket 1 ready to send to {} trafficController", getNodeAddress(),
+                tc.getSystemConnectionMemo().getSystemPrefix());
         return m1;
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage)
+     * Public method to create a Transmit packet (SerialMessage).
      */
     @Override
     public AbstractMRMessage createOutPacket() {
@@ -315,7 +319,7 @@ public class SerialNode extends AbstractNode {
     public void markChanges(SerialReply l) {
         // first, is it from a sensor?
         if (!(l.isFromParallelSensor() || l.isFromNewSerialSensor() || l.isFromOldSerialSensor())) {
-            return;  // not interesting message
+            return; // not interesting message
         }
         // Yes, continue.
         // Want to get individual sensor bits, and xor them with the
@@ -367,20 +371,20 @@ public class SerialNode extends AbstractNode {
     /**
      * Mark and act on a single input bit.
      *
-     * @param input     True if sensor says active
+     * @param input     true if sensor says active
      * @param sensorNum from 1 to lastUsedSensor+1 on this node
      */
     void markBit(boolean input, int sensorNum) {
-        if (log.isDebugEnabled()) {
-            log.debug("Mark bit " + sensorNum + " " + input + " in node " + getNodeAddress());
-        }
+        log.debug("Mark bit {} {} in node {}", sensorNum, input, getNodeAddress());
         if (sensorArray[sensorNum] == null) {
-            log.debug("Try to create sensor " + sensorNum + " on node " + getNodeAddress() + ", since sensor doesn't exist");
+            log.debug("Try to create sensor {} on node {} since sensor doesn't exist", sensorNum, getNodeAddress());
             // try to make the sensor, which will also register it
             jmri.InstanceManager.sensorManagerInstance()
-                    .provideSensor("GS" + (getNodeAddress() * 1000 + sensorNum));
+                    .provideSensor(tc.getSystemConnectionMemo().getSystemPrefix() + "S" + (getNodeAddress() * 1000 + sensorNum));
             if (sensorArray[sensorNum] == null) {
-                log.error("Creating sensor GS" + (getNodeAddress() * 1000 + sensorNum) + " failed unexpectedly");
+                log.error("Creating sensor {}S{} failed unexpectedly",
+                        tc.getSystemConnectionMemo().getSystemPrefix(),
+                        (getNodeAddress() * 1000 + sensorNum));
                 log.debug("node should be " + this);
                 return;
             }
@@ -408,6 +412,8 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
+     * Register a sensor on a node.
+     * <p>
      * The numbers here are 0 to MAXSENSORS, not 1 to MAXSENSORS. E.g. the
      * integer argument is one less than the name of the sensor object.
      *
@@ -416,12 +422,10 @@ public class SerialNode extends AbstractNode {
      *          low digits of the system name
      */
     public void registerSensor(Sensor s, int i) {
-        if (log.isDebugEnabled()) {
-            log.debug("Register sensor " + s.getSystemName() + " index " + i);
-        }
+        log.debug("Register sensor {} index {}", s.getSystemName(), i);
         // validate the sensor ordinal
         if ((i < 0) || (i > (inputBits[nodeType])) || (i > MAXSENSORS)) {
-            log.error("Unexpected sensor ordinal in registerSensor: " + Integer.toString(i));
+            log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(i));
             return;
         }
         hasActiveSensors = true;
@@ -432,15 +436,17 @@ public class SerialNode extends AbstractNode {
             }
         } else {
             // multiple registration of the same sensor
-            log.warn("multiple registration of same sensor: GS{}",
+            log.warn("multiple registration of same sensor: {}S{}",
+                    tc.getSystemConnectionMemo().getSystemPrefix(),
                     (getNodeAddress() * SerialSensorManager.SENSORSPERNODE) + i,
-                    new Exception("mult reg " + i + " S:" + s.getSystemName())); // TODO multichar prefix
+                    new Exception("mult reg " + i + " S:" + s.getSystemName()));
         }
     }
 
     int timeout = 0;
 
     /**
+     * {@inheritDoc}
      *
      * @return true if initialization required
      */
@@ -454,7 +460,7 @@ public class SerialNode extends AbstractNode {
 
         // see how many polls missed
         if (log.isDebugEnabled()) {
-            log.warn("Timeout to poll for addr=" + getNodeAddress() + ": consecutive timeouts: " + timeout);
+            log.warn("Timeout to poll for addr = {}: consecutive timeouts: {}", getNodeAddress(), timeout);
         }
 
         if (timeout > 5) { // enough, reinit
@@ -468,13 +474,19 @@ public class SerialNode extends AbstractNode {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param m GrapevineSerialMessage (ignored)
+     */
     @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
-            log.debug("Reset " + timeout + " timeout count");
+            log.debug("Reset {} timeout count", timeout);
         }
         timeout = 0;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialNode.class);
+
 }

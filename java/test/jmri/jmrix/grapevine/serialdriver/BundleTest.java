@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for the Bundle class
+ * Tests for the Bundle class.
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
@@ -46,6 +46,5 @@ public class BundleTest  {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
-
 
 }

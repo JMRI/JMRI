@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Minimum required SystemConnectionMemo for Grapevine.
- * Expanded for multichar/multiconnection support.
+ * Expanded for multichar/multiconnection support. Nodes are handled bij superclass.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
@@ -69,10 +69,19 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
         return ResourceBundle.getBundle("jmri.jmrix.grapevine.GrapevineActionListBundle");
     }
 
+    /**
+    * Configure the common managers for Grapevine connections. This puts the
+    * common manager config in one place.
+    */
     public void configureManagers() {
         setTurnoutManager(new SerialTurnoutManager(this));
+        InstanceManager.setTurnoutManager(getTurnoutManager());
+
         setLightManager(new SerialLightManager(this));
+        InstanceManager.setLightManager(getLightManager());
+
         setSensorManager(new SerialSensorManager(this));
+        InstanceManager.setSensorManager(getSensorManager());
     }
 
     /**
@@ -81,6 +90,7 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      * NOTE: Sensor manager defaults to NULL
      */
     public SensorManager getSensorManager() {
+        log.debug(sensorManager != null ? "getSensorManager OK": "getSensorManager returned NULL");
         return sensorManager;
     }
 
@@ -97,12 +107,13 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      * NOTE: Turnout manager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
+        log.debug(turnoutManager != null ? "getTurnoutManager OK": "getTurnoutManager returned NULL");
         return turnoutManager;
-
     }
 
     public void setTurnoutManager(SerialTurnoutManager t) {
         turnoutManager = t;
+        // not accessible, needed?
     }
 
     private TurnoutManager turnoutManager = null;
@@ -113,12 +124,14 @@ public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager() {
+        log.debug(lightManager != null ? "getLightManager OK": "getLightManager returned NULL");
         return lightManager;
 
     }
 
     public void setLightManager(SerialLightManager l) {
         lightManager = l;
+        // not accessible, needed?
     }
 
     private LightManager lightManager = null;

@@ -333,7 +333,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case USERNAMECOL:
-                //Directly changing the username should only be possible if the username was previously null or ""
+                // Directly changing the username should only be possible if the username was previously null or ""
                 // check to see if user name already exists
                 if (value.equals("")) {
                     value = null;

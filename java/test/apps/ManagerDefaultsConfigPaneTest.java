@@ -14,7 +14,7 @@ import org.junit.Test;
 public class ManagerDefaultsConfigPaneTest {
 
     @Test
-    @Ignore("needs more setup")
+    @Ignore("needs more set-up")
     public void testCTor() {
         ManagerDefaultsConfigPane t = new ManagerDefaultsConfigPane();
         Assert.assertNotNull("exists",t);

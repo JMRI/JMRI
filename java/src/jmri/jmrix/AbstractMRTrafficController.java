@@ -266,9 +266,7 @@ abstract public class AbstractMRTrafficController {
             }
         }
         if (m != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("just notified transmit thread with message {}", m.toString());
-            }
+            log.debug("just notified transmit thread with message {}", m.toString());
         }
     }
 

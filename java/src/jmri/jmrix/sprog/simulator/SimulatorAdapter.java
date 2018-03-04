@@ -60,6 +60,10 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                                 Bundle.getMessage("SprogCSTitle")}, true));
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -150,6 +154,9 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     // Base class methods for the SprogPortController simulated interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -159,6 +166,9 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
@@ -168,6 +178,9 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return (pout != null && pin != null);
@@ -361,7 +374,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message, only when the message is complete.
+     * @return filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
     private SprogMessage loadChars() throws java.io.IOException {

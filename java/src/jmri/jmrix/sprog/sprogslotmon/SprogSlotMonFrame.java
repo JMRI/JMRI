@@ -232,6 +232,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         slotModel = null;
         slotTable = null;
         slotScroll = null;
+        tc.removeSprogListener(this);
         super.dispose();
     }
 

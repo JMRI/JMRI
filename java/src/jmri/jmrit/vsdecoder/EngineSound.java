@@ -127,7 +127,7 @@ class EngineSound extends VSDSound {
         try {
             this.setFadeOutTime(Integer.parseInt(s));
         } catch (NumberFormatException e) {
-            log.debug("setFadeOutTime Failed to parse int from: " + s);
+            log.debug("setFadeOutTime Failed to parse int from: {}", s);
         }
     }
 
@@ -231,6 +231,15 @@ class EngineSound extends VSDSound {
             return Float.parseFloat(g);
         } else {
             return default_gain;
+        }
+    }
+
+    protected float setXMLReferenceDistance(Element e) {
+        String a = e.getChildText("reference-distance");
+        if ((a != null) && (!a.isEmpty())) {
+            return Float.parseFloat(a);
+        } else {
+            return default_reference_distance;
         }
     }
 
