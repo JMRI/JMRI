@@ -20,6 +20,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
 
     protected JsonSocketService(@Nonnull JsonConnection connection, @Nonnull H service) {
         this.connection = connection;
+        this.locale = connection.getLocale();
         this.service = service;
     }
 
@@ -83,7 +84,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * @return the connection
      */
     @Nonnull
-    public JsonConnection getConnection() {
+    public final JsonConnection getConnection() {
         return connection;
     }
 
@@ -93,7 +94,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * @return the supporting service
      */
     @Nonnull
-    public H getHttpService() {
+    public final H getHttpService() {
         return service;
     }
 
@@ -103,7 +104,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      * @return the locale
      */
     @Nonnull
-    protected Locale getLocale() {
+    protected final Locale getLocale() {
         return locale;
     }
 
@@ -112,7 +113,7 @@ public abstract class JsonSocketService<H extends JsonHttpService> {
      *
      * @param locale the new locale
      */
-    protected void setLocale(@Nonnull Locale locale) {
+    protected final void setLocale(@Nonnull Locale locale) {
         this.locale = locale;
     }
 }
