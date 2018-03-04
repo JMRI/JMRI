@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for XBee connections.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2013
  */
 public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
     private String nodeIdentifier; /* This is a string representation of
-     the XBee address in the system name
+     the XBee address in the system name.
      It may be an address or it may be
      the nodeIdentifier string stored in
      the NI parameter on the node.*/
@@ -46,7 +46,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     }
 
     /**
-     * Common initialization for both constructors
+     * Common initialization for both constructors.
      */
     private void init(String id) {
         // store address
@@ -107,7 +107,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     }
 
     /**
-     * request an update on status by sending an XBee message
+     * Request an update on status by sending an XBee message.
      */
     @Override
     public void requestUpdateFromLayout() {
@@ -133,6 +133,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
 
 
     // IIOSampleReceiveListener methods
+
     @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
@@ -153,13 +154,12 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
         return;
     }
 
-
     /**
-     * Set the pull resistance
+     * Set the pull resistance.
      * <p>
      * In this default implementation, the input value is ignored.
      *
-     * @param r PullResistance value to use.
+     * @param r PullResistance value to use
      */
     @Override
     public void setPullResistance(PullResistance r){
@@ -173,9 +173,9 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     }
 
     /**
-     * Get the pull resistance
+     * Get the pull resistance.
      *
-     * @return the currently set PullResistance value.
+     * @return the currently set PullResistance value
      */
     @Override
     public PullResistance getPullResistance(){
@@ -189,8 +189,6 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
        return PullResistance.PULL_UP; // return the default if we get this far.
     }
 
-
-
     @Override
     public void dispose() {
         tc.getXBee().removeIOSampleListener(this);
@@ -200,4 +198,3 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class);
 
 }
-

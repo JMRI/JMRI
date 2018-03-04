@@ -9,6 +9,7 @@ import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.BLOCK_COLOR;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.EXTRA_COLOR;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
+import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCKS;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.OCCUPANCY_SENSOR;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.OCCUPIED_COLOR;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.OCCUPIED_SENSE;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -56,7 +58,7 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
         data.put(EXTRA_COLOR, jmri.util.ColorUtil.colorToColorName(layoutBlock.getBlockExtraColor()));
         data.put(OCCUPANCY_SENSOR, layoutBlock.getOccupancySensorName());
         data.put(OCCUPIED_SENSE, layoutBlock.getOccupiedSense());
-        
+
         return root;
     }
 
@@ -87,5 +89,19 @@ public class JsonLayoutBlockHttpService extends JsonHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case LAYOUTBLOCK:
+            case LAYOUTBLOCKS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/layoutblock/layoutBlock-server.json",
+                        "jmri/server/json/layoutblock/layoutBlock-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

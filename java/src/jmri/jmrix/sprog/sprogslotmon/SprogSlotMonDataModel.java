@@ -89,6 +89,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SLOTCOLUMN:
+                return Integer.class;
             case ADDRCOLUMN:
             case SPDCOLUMN:
             case STATCOLUMN:

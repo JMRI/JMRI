@@ -27,12 +27,6 @@ import org.junit.Test;
 public class JsonSignalMastSocketServiceTest {
 
     @Test
-    public void testCtorSuccess() {
-        JsonSignalMastSocketService service = new JsonSignalMastSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     @Ignore("Needs setup completed")
     public void testSignalMastChange() {
         try {

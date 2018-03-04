@@ -200,7 +200,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     /**
-     * Public method to identify a AcelaNode from its bit address.
+     * Public method to identify an AcelaNode from its bit address.
      * <p>
      * Note: nodeAddress is numbered from 0
      *

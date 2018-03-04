@@ -518,7 +518,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
             }
             self = new NceTrafficController();
             // set as command station too
-            jmri.InstanceManager.setCommandStation(self);
+            jmri.InstanceManager.store(self, jmri.CommandStation.class);
         }
         return self;
     }

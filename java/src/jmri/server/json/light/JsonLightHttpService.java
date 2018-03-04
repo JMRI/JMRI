@@ -10,12 +10,14 @@ import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.light.JsonLight.LIGHT;
+import static jmri.server.json.light.JsonLight.LIGHTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.server.json.JsonException;
@@ -105,5 +107,19 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case LIGHT:
+            case LIGHTS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/light/light-server.json",
+                        "jmri/server/json/light/light-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

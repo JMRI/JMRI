@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-types-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"types\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of type for which schema was requested",
+            "enum": ["types"]
+        },
+        "types": {
+            "type": "array",
+            "description": "Array of types handled by this JMRI instance"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "types"]
+}

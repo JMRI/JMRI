@@ -259,11 +259,11 @@
                     </execution>
                 </executions>
                 <dependencies>
-                   <dependency>
-                      <groupId>net.java.dev.javacc</groupId>
-                      <artifactId>javacc</artifactId>
-                      <version>7.0.3</version>
-                   </dependency>
+                    <dependency>
+                        <groupId>net.java.dev.javacc</groupId>
+                        <artifactId>javacc</artifactId>
+                        <version>7.0.3</version>
+                    </dependency>
                 </dependencies>
             </plugin>
             <plugin>
@@ -505,6 +505,7 @@
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
+                                <File>jmri/util/web/BrowserFactory.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -980,9 +981,25 @@
             <artifactId>hid4java</artifactId>
             <version>0.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>0.1.16</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
+        <!-- Always try maven central first -->
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <!-- Automatic GitHub->Maven Dependency repository -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
         <!--
         Repository hosting NetBeans modules, especially APIs.
         Versions are based on IDE releases, e.g.: RELEASE691

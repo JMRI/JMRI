@@ -38,7 +38,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         super();
         log.debug("creating a new TamsTrafficController object");
         // set as command station too
-        jmri.InstanceManager.setCommandStation(this);
+        jmri.InstanceManager.store(this, jmri.CommandStation.class);
         super.setAllowUnexpectedReply(false);
     }
 

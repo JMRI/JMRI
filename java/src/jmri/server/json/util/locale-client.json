@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-empty-data",
+    "type": "object",
+    "description": "Schema data object in when data is empty",
+    "properties": {
+    },
+    "additionalProperties": false
+}
