@@ -2,7 +2,10 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import jmri.Conditional;
+import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -285,6 +288,11 @@ public class DefaultLogix extends AbstractNamedBean
         }
     }
 
+    // Pattern to check for new style NX system name
+    static final Pattern NXUUID = Pattern.compile(
+        "^IN:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",   // NOI18N
+        Pattern.CASE_INSENSITIVE);
+
     /**
      * ConditionalVariables only have a single name field.  For user interface purposes
      * a gui name is used for the referenced conditional user name.  This is not used
@@ -293,6 +301,10 @@ public class DefaultLogix extends AbstractNamedBean
      * In addition to setting the GUI name, any state variable references are changed to
      * conditional system names.  This converts the XML system/user name field to the system name
      * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
+     * <p>
+     * For Entry/Exit references, replace NX user names and old style NX UUID references
+     * with the new style "IN:" + UUID reference (4.11.4).
+     * <p>
      * Called by {@link jmri.managers.DefaultLogixManager#activateAllLogixs}
      * @since 4.7.4
      */
@@ -339,9 +351,55 @@ public class DefaultLogix extends AbstractNamedBean
                              cName, getSystemName(), var.getName());
                     }
                 }
+
+                // Find any Entry/Exit State Variables
+                if (var.getType() == Conditional.TYPE_ENTRYEXIT_ACTIVE
+                        || var.getType() == Conditional.TYPE_ENTRYEXIT_INACTIVE) {
+                    if (!NXUUID.matcher(var.getName()).find()) {
+                        // Either a user name or an old style system name (plain UUID)
+                        jmri.jmrit.entryexit.DestinationPoints dp =
+                                InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                                getNamedBean(var.getName());
+                        if (dp != null) {
+                            // Replace name with current system name
+                            var.setName(dp.getSystemName());
+                            isDirty = true;
+                        } else {
+                            log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced Entry Exit Pair, '{}',  does not exist",  // NOI18N
+                                 cName, getSystemName(), var.getName());
+                        }
+                    }
+                }
             }
             if (isDirty) {
                 conditional.setStateVariables(varList);
+            }
+
+            ArrayList<ConditionalAction> actionList = conditional.getCopyOfActions();
+            isDirty = false;
+            for (ConditionalAction action : actionList) {
+                // Find any Entry/Exit Actions
+                if (action.getType() == Conditional.ACTION_SET_NXPAIR_ENABLED
+                        || action.getType() == Conditional.ACTION_SET_NXPAIR_DISABLED
+                        || action.getType() == Conditional.ACTION_SET_NXPAIR_SEGMENT) {
+                    if (!NXUUID.matcher(action.getDeviceName()).find()) {
+                        // Either a user name or an old style system name (plain UUID)
+                        jmri.jmrit.entryexit.DestinationPoints dp =
+                                InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                                getNamedBean(action.getDeviceName());
+                        if (dp != null) {
+                            // Replace name with current system name
+                            action.setDeviceName(dp.getSystemName());
+                            isDirty = true;
+                        } else {
+                            log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced Entry Exit Pair, '{}',  does not exist",  // NOI18N
+                                 cName, getSystemName(), action.getDeviceName());
+                        }
+                    }
+                }
+            }
+            if (isDirty) {
+                conditional.setAction(actionList);
             }
         }
         _isGuiSet = true;
