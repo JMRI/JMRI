@@ -13,11 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180302"/>
+  <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180304"/>
   <!-- Version 1 -->
   <decoder>
-    <family name="Raw CVs 1-1023" mfg="NMRA">
-      <model model="Raw CVs 1-1023"/>
+    <family name="Raw CVs 1-1024" mfg="NMRA">
+      <model model="Raw CVs 1-1024"/>
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -6154,6 +6154,12 @@
         <label>Dummy 1023</label>
         <label xml:lang="it">Fittizio 1023</label>
         <label xml:lang="cs">Fiktivní 1023</label>
+      </variable>
+      <variable item="Dummy 1024" CV="1024">
+        <decVal/>
+        <label>Dummy 1024</label>
+        <label xml:lang="it">Fittizio 1024</label>
+        <label xml:lang="cs">Fiktivní 1024</label>
       </variable>
     </variables>
   </decoder>

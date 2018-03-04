@@ -170,8 +170,8 @@
       <family name="Raw CVs 1-255" mfg="NMRA" file="0NMRA_test.xml">
         <model model="Raw CVs 1-255" />
       </family>
-      <family name="Raw CVs 1-1023" mfg="NMRA" file="0NMRA_test_1023.xml">
-        <model model="Raw CVs 1-1023" />
+      <family name="Raw CVs 1-1024" mfg="NMRA" file="0NMRA_test_1024.xml">
+        <model model="Raw CVs 1-1024" />
       </family>      
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
