@@ -87,7 +87,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-        updateBackgrounds(); // create array of backgrounds
 
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
@@ -228,7 +227,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
 
     @Override
     protected void setEditor(Editor ed) {
-        _editor = ed;
+        super.setEditor(ed);
         if (_initialized) {
             _dragIconPanel.removeAll();
             makeDragIconPanel(1);

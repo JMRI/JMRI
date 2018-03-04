@@ -9,8 +9,6 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.InstanceManager;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +75,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel) _parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
             Set<String> keys = ItemPalette.getLevel4Family(_type, _family).keySet();
-            ArrayList<String> options = new ArrayList<String>();
+            ArrayList<String> options = new ArrayList<>();
             for (int i = 0; i < IndicatorTOItemPanel.STATUS_KEYS.length; i++) {
                 if (!keys.contains(IndicatorTOItemPanel.STATUS_KEYS[i])) {
                     options.add(IndicatorTOItemPanel.STATUS_KEYS[i]);
@@ -134,19 +132,19 @@ public class IndicatorTOIconDialog extends IconDialog {
         if (_family != null && _family.equals(subFamily)) {
             ItemPalette.removeLevel4IconMap(_type, _parent._family, subFamily);
         }
-        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+//        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         return addFamilySet(_parent._family, _iconMap, subFamily);
     }
 
     private boolean addFamilySet(String family, HashMap<String, NamedIcon> iconMap, String subFamily) {
         if (log.isDebugEnabled()) {
-            log.debug("addFamily _type= \"{}\", family= \"{}\", key=\"{}\", _iconMap.size= {}",
+            log.debug("addFamilySet _type= \"{}\", family= \"{}\", key=\"{}\", _iconMap.size= {}",
                     _type, family, _key, iconMap.size());
         }
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel) _parent;
         parent.updateIconGroupsMap(subFamily, iconMap);
-        _parent.updateFamiliesPanel();
-        _parent._family = family;
+        parent.updateFamiliesPanel();
+        parent._family = family;
         return true;
     }
 

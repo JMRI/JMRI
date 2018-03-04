@@ -38,7 +38,7 @@ public class ColorUtil {
     public final static Color CLEAR = clear;
 
     /**
-     * Handles known colors plus special value for track
+     * Handles known colors plus special value for track.
      *
      * @param color the color or null
      * @return the name of the color or "black" if a color was provided; "track"
@@ -58,7 +58,7 @@ public class ColorUtil {
     }
 
     /**
-     * Returns known color name or hex value in form #RRGGBB
+     * Returns known color name or hex value in form #RRGGBB.
      *
      * @param color the color
      * @return the name or hex value of color; returns null if color is null
@@ -76,7 +76,7 @@ public class ColorUtil {
     }
 
     /**
-     * @param string Either a hexidecimal representation of the rgb value of a
+     * @param string Either a hexadecimal representation of the rgb value of a
      * color or a color name defined as a constant.
      */
     public static Color stringToColor(String string) {
@@ -159,7 +159,7 @@ public class ColorUtil {
                     if (string.equals(Bundle.getMessage("None"))) {
                        return null;
                    } else {
-                      log.error("unknown color text '" + string + "' sent to stringToColor");
+                      log.error("unknown color text '{}' sent to stringToColor", string);
                       return Color.black;
                    }
             }
@@ -181,11 +181,10 @@ public class ColorUtil {
     }
 
     /**
-     * Internal method to return string name of several known colors, returns
-     * null if not in list.
+     * Internal method to return string name of several known colors.
      *
      * @param color the color
-     * @return the color name or null if not known
+     * @return the color name or null if not known/not in list
      */
     @CheckForNull
     private static String colorToName(@Nullable Color color) {
@@ -223,8 +222,8 @@ public class ColorUtil {
     }
 
     /**
-     * return the color (Black/White) that most contrasts with the specified
-     * color
+     * Return the color (Black/White) that most contrasts with the specified
+     * color.
      *
      * @param color the source color
      * @return the contrasting color
@@ -239,7 +238,7 @@ public class ColorUtil {
     }
 
     /**
-     * calculate the linear interpolation between two colors
+     * Calculate the linear interpolation between two colors.
      *
      * @param colorA the first color
      * @param colorB the second color
@@ -257,7 +256,7 @@ public class ColorUtil {
     }
 
     /**
-     * set the alpha component of a color
+     * Set the alpha component of a color.
      *
      * @param color the color
      * @param alpha the alpha component (integer 0 - 255)
@@ -269,7 +268,7 @@ public class ColorUtil {
     }
 
     /**
-     * set the alpha component of a color
+     * Set the alpha component of a color.
      *
      * @param color the color
      * @param alpha the alpha component (double 0.0 - 1.0)
