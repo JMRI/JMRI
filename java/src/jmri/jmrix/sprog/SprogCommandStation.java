@@ -9,6 +9,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +58,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     protected int currentSprogAddress = -1;
 
     protected LinkedList<SprogSlot> slots;
+    protected int numSlots = SprogConstants.MIN_SLOTS;
     protected Queue<SprogSlot> sendNow;
 
     private SprogTrafficController tc = null;
@@ -80,7 +82,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
          * Create a default length queue
          */
         slots = new LinkedList<>();
-        for (int i = 0; i < SprogConstants.MAX_SLOTS; i++) {
+        numSlots = SprogSlotMonDataModel.getSlotCount();
+        for (int i = 0; i < numSlots; i++) {
             slots.add(new SprogSlot(i));
         }
         tc = controller;
@@ -120,7 +123,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             try {
                 log.debug("Waiting for a reply");
                 synchronized (lock2) {
-                    lock2.wait(SprogConstants.REPLY_TIMEOUT); // Will wait until notify()ed or timeout
+                    lock2.wait(SprogConstants.CS_REPLY_TIMEOUT); // Will wait until notify()ed or timeout
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
@@ -217,7 +220,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -229,7 +232,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -241,7 +244,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -253,7 +256,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -416,7 +419,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         while(true) {
             try {
                 synchronized(lock) {
-                    lock.wait(SprogConstants.REPLY_TIMEOUT);
+                    lock.wait(SprogConstants.CS_REPLY_TIMEOUT);
                 }
             } catch (InterruptedException e) {
                log.debug("Slot thread interrupted");
@@ -515,7 +518,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         while (slots.get(currentSlot).isFree()) {
             currentSlot++;
-            currentSlot = currentSlot % SprogConstants.MAX_SLOTS;
+            currentSlot = currentSlot % numSlots;
         }
         s = slots.get(currentSlot);
         byte[] ret = s.getPayload();
@@ -524,7 +527,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         // next packet to send
         if (!s.isOpsPkt() || (s.getRepeat() == 0)) {
             currentSlot++;
-            currentSlot = currentSlot % SprogConstants.MAX_SLOTS;
+            currentSlot = currentSlot % numSlots;
         }
 
         if (s.isFinished()) {

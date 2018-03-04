@@ -1,10 +1,15 @@
 package jmri.jmrix.sprog;
 
+import java.awt.GraphicsEnvironment;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.swing.JOptionPane;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
@@ -35,6 +40,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private Thread tcThread;
     private final Object lock = new Object();
+    private boolean replyAvailable = false;
     
     /**
      * Create a new SprogTrafficController instance.
@@ -235,7 +241,9 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     /**
      * Block until a message is available from the queue, send it to the interface
-     * and then block until reply is received
+     * and then block until reply is received or a timeout occurs. This will be 
+     * a very long timeout to allow for page mode programming operations in SPROG
+     * programmer mode.
      */
     @Override
     public void run() {
@@ -261,12 +269,27 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             log.debug("Waiting for a reply");
             try {
                 synchronized (lock) {
-                    lock.wait(); // Wait for notify
+                    lock.wait(SprogConstants.TC_REPLY_TIMEOUT); // Wait for notify
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
             }
-            log.debug("Notified");
+            if (!replyAvailable) {
+                log.error("Timeout waiting for reply from hardware");
+                PowerManager pm = InstanceManager.getNullableDefault(jmri.PowerManager.class);
+                try {
+                    pm.setPower(PowerManager.OFF);
+                } catch (JmriException ex) {
+                    log.error("Exception when turning power off {}", ex);
+                }
+                if (!GraphicsEnvironment.isHeadless()) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
+                        Bundle.getMessage("SprogCSTitle"), JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                replyAvailable = false;
+                log.debug("Notified");
+            }
         }
     }
 
@@ -436,6 +459,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         reply.setId(lastId);
         notifyReply(reply, lastSender);
         log.debug("Notify() wait");
+        replyAvailable = true;
         synchronized(lock) {
             lock.notifyAll();
         }
