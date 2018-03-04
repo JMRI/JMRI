@@ -223,9 +223,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (_iconMaps == null) {
             // long t = System.currentTimeMillis();
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
-            _iconMaps = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
+            _iconMaps = new HashMap<>();
             _indicatorTOMaps
-                    = new HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>();
+                    = new HashMap<>();
 
             if (!loadSavedIcons(ed)) {
                 loadDefaultIcons(ed);
@@ -272,7 +272,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap
-                = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
+                = new HashMap<>();
         @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
@@ -286,13 +286,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<String, HashMap<String, NamedIcon>>();
+                = new HashMap<>();
         @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
             String familyName = (String) famNode.getUserObject();
-            HashMap<String, NamedIcon> iconMap = new HashMap<String, NamedIcon>();
+            HashMap<String, NamedIcon> iconMap = new HashMap<>();
             List<CatalogTreeLeaf> list = famNode.getLeaves();
             for (int i = 0; i < list.size(); i++) {
                 String iconName = list.get(i).getName();
@@ -391,11 +391,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<String, HashMap<String, NamedIcon>>();
+                = new HashMap<>();
         for (int k = 0; k < families.size(); k++) {
             String familyName = families.get(k).getName();
             HashMap<String, NamedIcon> iconMap
-                    = new HashMap<String, NamedIcon>();     // Map of all icons of in family, familyName
+                    = new HashMap<>();     // Map of all icons of in family, familyName
             List<Element> iconfiles = families.get(k).getChildren();
             for (int j = 0; j < iconfiles.size(); j++) {
                 String iconName = iconfiles.get(j).getName();
@@ -426,7 +426,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>(); // Map of all families of type, typeName
+                = new HashMap<>(); // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
             List<Element> types = typeList.get(k).getChildren();
@@ -499,7 +499,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      */
     static void buildTabPane(ItemPalette palette, Editor editor) {
         _tabPane = new JTabbedPane();
-        _tabIndex = new HashMap<String, ItemPanel>();
+        _tabIndex = new HashMap<>();
 
         ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
@@ -588,11 +588,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
         p.init(); // (re)initialize tab pane
-        log.debug("different tab displayed");
+        log.debug("different tab displayed for {}", p._itemType);
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
         }
-        if (listener != null) listener.onInitEvent(super.getPreviewBg(), _tabPane.getSelectedIndex()); // signal tab
+        if (p._bgColorBox != null) {
+            p._bgColorBox.setSelectedIndex(super.getPreviewBg());
+        }
         log.debug("tab redisplayed, previewBgSet updated to {}", super.getPreviewBg());
         _currentItemPanel = p;
         pack();
@@ -678,7 +680,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      */
     static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
         if (ItemPalette.getFamilyMaps(type) == null) {
-            HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<String, HashMap<String, NamedIcon>>();
+            HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<>();
             _iconMaps.put(type, typeMap);
             // typeMap.put(family, iconMap);
         }
@@ -803,7 +805,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     ///////////////////////////////////////////////////////////////////////////////
     
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
-        HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
+        HashMap<String, NamedIcon> clone = new HashMap<>();
         if (map != null) {
             Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
