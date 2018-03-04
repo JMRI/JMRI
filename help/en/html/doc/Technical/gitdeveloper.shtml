@@ -284,7 +284,7 @@ To push the current branch and set the remote as upstream, use
         <a href="ContinuousIntegration.shtml">Continuous Integration (CI) tests</a>
         and notifies the JMRI maintainers. </li>
         
-        <li>One of the maintainers will check
+        <li>One of the JMRI maintainers will check
         over your code and the test results, and then either contact you for more info
         (occasionally), or merge it into the master branch in the
         the main repository (more often). You are automatically signed up for
@@ -295,9 +295,6 @@ To push the current branch and set the remote as upstream, use
         Sometimes, a maintainer will put a label on your PR
         to indicate its status. Some of the more interesting ones are:
           <ul>
-            <li>"<a href="https://github.com/JMRI/JMRI/labels/WIP">WIP</a>" - this is a "blue flag" indicating Work In Progress - 
-                something is needed before this can be merged in. Place it on
-                a PR so that maintainers don't have to read the entire thread before doing the merge.
             <li>"<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Test%20Release">After Next Test Release</a>" 
                 and "<a href="https://github.com/JMRI/JMRI/labels/After%20Next%20Production%20Release">After Next Production Release</a>" - placed
                 when a PR should be merged later for some reason
@@ -323,10 +320,19 @@ To push the current branch and set the remote as upstream, use
           </ul>
         If you have any questions about the use of those on your PR, 
         you can add a comment to the PR and somebody will get back to you.
-        <li>If there are any problems found in the CI process, you can make additional edits, 
+        
+        <li>In addition to the labels, there's a "WIP" tag. It means 
+        "Work In Progress", and marks a PR as not yet ready to merge because
+        additional work (usually commits) is needed before merging.
+        Think of it as a blue flag on a train that indicates it's not ready to move.
+        It's added at the front of the PR's title, i.e. "WIP: My Fix", by 
+        editing the title with the pencil icon to the right.
+        
+        <li>If there are any problems found in the CI test process, you can make additional edits, 
         commit those files to the <u>same</u> branch, and push them 
         to your repository.  That'll get them included in an updated 
         version of your PR automatically, rerun the tests, etc.
+
         <li>Once the code gets merged, it'll automatically show up in the next
         regular test release.
       </ul>
@@ -349,6 +355,38 @@ To push the current branch and set the remote as upstream, use
      <p>just like you did at the start of this process, and continue
      to develop.</p>
 
+    <h3>Who are these people?</h3>
+    
+    JMRI is the work of 
+    <a href="../../../Acknowledgements.shtml">several hundred people</a>.
+    Anybody can contribute their work, large or small to JMRI, either by 
+    creating a PR (see above) or in other ways.  You don't need any 
+    special status to create a PR and have it evaluated, just an ability
+    to follow these instructions.
+    
+    <p>
+    There's a group of people with 
+    "developer"
+    status on the JMRI GitHub project
+    who work more generally on JMRI code, for example taking on and resolving
+    <a href="https://github.com/JMRI/JMRI/issues">Issues</a>
+    opened by others. These people can assign Issues and PRs 
+    to themselves, and do a few other minor things.
+    Typically, once somebody has solved a couple of Issues, they'll 
+    get an automated invitation to developer status from GitHub.
+    These people are expected to be subscribed to the
+    jmri-developers mailing list
+    and to have public GitHub profiles that identify them.
+    
+    <p>
+    A smaller group of JMRI 
+    "maintainers"
+    on GitHub have the ability to edit, label and close all Issues and PRs, and to merge the
+    contents of PRs to the main repository. This group does the infrastructure work
+    that keeps the project code moving forward while avoiding unnecessary risk to the 
+    project's code and other assets.
+    
+    
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
