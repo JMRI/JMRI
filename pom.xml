@@ -502,6 +502,7 @@
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
+                                <File>jmri/util/web/BrowserFactory.class</class>
                             </excludes>
                             <rules>
                                 <rule>
