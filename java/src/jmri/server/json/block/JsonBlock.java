@@ -20,6 +20,6 @@ public class JsonBlock {
      * Prevent instantiation, since this class only contains static values
      */
     private JsonBlock() {
-        // nothing to do
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

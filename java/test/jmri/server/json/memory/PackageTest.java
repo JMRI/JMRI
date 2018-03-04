@@ -12,7 +12,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     BundleTest.class,
     JsonMemoryHttpServiceTest.class,
-    JsonMemorySocketServiceTest.class
+    JsonMemorySocketServiceTest.class,
+    JsonMemoryTest.class
 })
 public class PackageTest {
 }

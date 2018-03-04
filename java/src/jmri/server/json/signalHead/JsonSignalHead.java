@@ -20,6 +20,6 @@ public class JsonSignalHead {
      * Prevent instantiation, since this class only contains static values
      */
     private JsonSignalHead() {
-        // nothing to do
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

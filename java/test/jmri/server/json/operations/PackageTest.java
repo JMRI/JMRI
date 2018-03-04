@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    JsonOperations.class
 })
 /**
  * Tests for the jmri.server.json.operations package
