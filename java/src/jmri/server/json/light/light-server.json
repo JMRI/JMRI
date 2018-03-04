@@ -9,11 +9,11 @@
             "description": "System name of the light"
         },
         "userName": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "User name of the light"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the light"
         },
         "properties": {
@@ -40,5 +40,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["name", "userName", "comment", "state"]
 }
