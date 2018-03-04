@@ -42,6 +42,38 @@ public class JsonHttpServiceTest {
         Assert.assertEquals("get object mapper", mapper, (new JsonTestHttpService(mapper)).getObjectMapper());
     }
 
+    /**
+     * Test failure modes of
+     * {@link JsonHttpService#doSchema(java.lang.String, boolean, java.lang.String, java.lang.String)}.
+     * <p>
+     * Non-failure modes are tested in
+     * {@link jmri.server.json.schema.JsonSchemaServiceCacheTest#testSchemas()}.
+     */
+    @Test
+    public void testDoSchema4Param() {
+        JsonTestHttpService instance = new JsonTestHttpService(new ObjectMapper());
+        // Ensure a JsonException with code 500 is thrown if either schema
+        // resource is invalid
+        try {
+            instance.doSchema("anyname",
+                    true,
+                    "jmri/server/json/schema/not-jmri-client-schema",
+                    "jmri/server/json/schema/not-jmri-server-schema");
+            Assert.fail("Expected exception to be thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Exception is coded 500", 500, ex.getCode());
+        }
+        try {
+            instance.doSchema("anyname",
+                    false,
+                    "jmri/server/json/schema/not-jmri-client-schema",
+                    "jmri/server/json/schema/not-jmri-server-schema");
+            Assert.fail("Expected exception to be thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Exception is coded 500", 500, ex.getCode());
+        }
+    }
+
     public static void testValidJmriJsonMessage(JsonNode message) throws IOException {
         URL resource = JsonHttpServiceTest.class.getClassLoader().getResource("jmri/server/json/schema/json-server.json");
         testSchemaValidJson(message, new ObjectMapper().readTree((resource)));
