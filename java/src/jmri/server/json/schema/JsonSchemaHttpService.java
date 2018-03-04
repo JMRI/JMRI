@@ -31,7 +31,10 @@ public class JsonSchemaHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Boolean server = null; // note use of Boolean for tristate null, true, false
+        // note use of Boolean for tristate null, true, false
+        // if server == null, returns both schemas in an array
+        // if server != null, returns single schema for client or server as appropriate
+        Boolean server = null;
         if (data.path(JSON.SERVER).isValueNode()) {
             server = data.path(JSON.SERVER).asBoolean();
         }

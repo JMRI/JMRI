@@ -52,10 +52,10 @@ public class JsonHttpServiceTest {
     @Test
     public void testDoSchema4Param() {
         JsonTestHttpService instance = new JsonTestHttpService(new ObjectMapper());
-        // Ensure a JsonException with code 500 is thrown if either schema
+        // Ensure a JsonException with code 500 is thrown if the schema
         // resource is invalid
         try {
-            instance.doSchema("anyname",
+            instance.doSchema(JsonTestServiceFactory.TEST,
                     true,
                     "jmri/server/json/schema/not-jmri-client-schema",
                     "jmri/server/json/schema/not-jmri-server-schema");
@@ -64,13 +64,26 @@ public class JsonHttpServiceTest {
             Assert.assertEquals("Exception is coded 500", 500, ex.getCode());
         }
         try {
-            instance.doSchema("anyname",
+            instance.doSchema(JsonTestServiceFactory.TEST,
                     false,
                     "jmri/server/json/schema/not-jmri-client-schema",
                     "jmri/server/json/schema/not-jmri-server-schema");
             Assert.fail("Expected exception to be thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Exception is coded 500", 500, ex.getCode());
+        }
+        // Test that real schemas return correctly
+        try {
+            instance.doSchema(JsonTestServiceFactory.TEST,
+                    true,
+                    "jmri/server/json/schema/json-client.json",
+                    "jmri/server/json/schema/json-server.json");
+            instance.doSchema(JsonTestServiceFactory.TEST,
+                    false,
+                    "jmri/server/json/schema/json-client.json",
+                    "jmri/server/json/schema/json-server.json");
+        } catch (JsonException ex) {
+            Assert.fail("Should not have thrown exception");
         }
     }
 

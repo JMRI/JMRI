@@ -141,7 +141,10 @@ public abstract class JsonHttpService {
      *               if the schema is for a message from the client
      * @param locale the requesting client's Locale
      * @return a JSON Schema valid for the type
-     * @throws JsonException if an error occurs preparing schema
+     * @throws JsonException if an error occurs preparing schema; if type is is
+     *                       not a type handled by this service, this must be
+     *                       thrown with an error code of 500 and the localized
+     *                       message "ErrorUnknownType"
      */
     @Nonnull
     public abstract JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException;
