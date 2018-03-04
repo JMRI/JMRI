@@ -27,13 +27,14 @@ import org.slf4j.LoggerFactory;
  */
 public class MarklinTrafficController extends AbstractMRTrafficController implements MarklinInterface, CommandStation {
 
+    /**
+     * Create a new MarklinTrafficController instance.
+     */
     public MarklinTrafficController() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("creating a new MarklinTrafficController object");
-        }
+        log.debug("creating a new MarklinTrafficController object");
         // set as command station too
-        jmri.InstanceManager.setCommandStation(this);
+        jmri.InstanceManager.store(this, jmri.CommandStation.class);
         this.setAllowUnexpectedReply(true);
     }
 
@@ -134,7 +135,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      */
     @Deprecated
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected MarklinTrafficController self = null;
 
@@ -258,7 +259,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "MC";
+            return "M";
         }
         return adaptermemo.getSystemPrefix();
     }

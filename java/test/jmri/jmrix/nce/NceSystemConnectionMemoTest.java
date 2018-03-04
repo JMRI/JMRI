@@ -50,7 +50,15 @@ public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
         jmri.util.JUnitUtil.setUp();
         
         scm = memo = new NceSystemConnectionMemo();
-        memo.setNceTrafficController(new NceTrafficController());
+        memo.setNceTrafficController(new NceTrafficController(){
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+        });
+        memo.configureManagers();
     }
 
     @Override

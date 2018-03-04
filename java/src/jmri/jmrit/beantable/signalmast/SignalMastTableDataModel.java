@@ -7,19 +7,13 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.RowComboBoxPanel;
-import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
-import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
 import jmri.jmrit.signalling.SignallingSourceAction;
-import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2009
  * @author Egbert Broerse Copyright (C) 2016
  */
-public class SignalMastTableDataModel extends BeanTableDataModel {
+public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
 
     static public final int EDITMASTCOL = NUMCOLUMN;
     static public final int EDITLOGICCOL = EDITMASTCOL + 1;
@@ -121,17 +115,17 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     @Override
-    protected Manager getManager() {
+    protected Manager<SignalMast> getManager() {
         return InstanceManager.getDefault(jmri.SignalMastManager.class);
     }
 
     @Override
-    protected NamedBean getBySystemName(String name) {
+    protected SignalMast getBySystemName(String name) {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
     }
 
     @Override
-    protected NamedBean getByUserName(String name) {
+    protected SignalMast getByUserName(String name) {
         return InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
     }
 
@@ -141,7 +135,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     @Override
-    protected void clickOn(NamedBean t) {
+    protected void clickOn(SignalMast t) {
     }
 
     @Override
@@ -233,7 +227,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
             @Override
             public void run() {
-                SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage("TitleSignalMastLogicTable"), (SignalMast) getBySystemName(sysNameList.get(row)));
+                SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage("TitleSignalMastLogicTable"), getBySystemName(sysNameList.get(row)));
                 action.actionPerformed(null);
             }
         }
@@ -252,116 +246,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
             @Override
             public void run() {
-                AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame((SignalMast) getBySystemName(sysNameList.get(row)));
+                AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame(getBySystemName(sysNameList.get(row)));
                 editFrame.setVisible(true);
             }
         }
         WindowMaker t = new WindowMaker(row);
         javax.swing.SwingUtilities.invokeLater(t);
     }
-
-    /**
-     * Does not appear to be used.
-     *
-     * @param srtr a table model
-     * @return a new table
-     * @deprecated since 4.5.4 without direct replacement
-     */
-    @Deprecated
-    public JTable makeJTable(TableModel srtr) {
-        JTable table = new SignalMastJTable(srtr);
-
-        table.getTableHeader().setReorderingAllowed(true);
-        table.setColumnModel(new XTableColumnModel());
-        table.createDefaultColumnsFromModel();
-
-        addMouseListenerToHeader(table);
-        return table;
-    }
-
-    /**
-     * @deprecated since 4.5.4; replaced by SignalMastTableAction.createModel()
-     * or invoke SignalMastTableDataModel instance directly from
-     * ListedTableFrame()
-     */
-    @Deprecated
-    //The JTable is extended so that we can reset the available aspect in the drop down when required
-    static class SignalMastJTable extends JTable {
-
-        /**
-         * @param srtr a table model.
-         */
-        public SignalMastJTable(TableModel srtr) {
-            super(srtr);
-        }
-
-        /**
-         * @deprecated since 4.5.7
-         * @param row index in the list of Aspect to clear
-         */
-        public void clearAspectVector(int row) {
-            // Clear the old aspect combobox and force it to be rebuilt
-            log.debug("clearAspectVector (remove row={})", row);
-            boxMap.remove(getModel().getValueAt(row, SYSNAMECOL));
-            editorMap.remove(getModel().getValueAt(row, SYSNAMECOL));
-            rendererMap.remove(getModel().getValueAt(row, SYSNAMECOL));
-        }
-
-        @Override
-        public TableCellRenderer getCellRenderer(int row, int column) {
-            if (column == VALUECOL) {
-                return getRenderer(row);
-            } else {
-                return super.getCellRenderer(row, column);
-            }
-        }
-
-        @Override
-        public TableCellEditor getCellEditor(int row, int column) {
-            if (column == VALUECOL) {
-                return getEditor(row);
-            } else {
-                return super.getCellEditor(row, column);
-            }
-        }
-
-        TableCellRenderer getRenderer(int row) {
-            TableCellRenderer retval = rendererMap.get(getModel().getValueAt(row, SYSNAMECOL));
-            if (retval == null) {
-                // create a new one with right aspects
-                retval = new MyComboBoxRenderer(getAspectVector(row));
-                rendererMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
-            }
-            return retval;
-        }
-        HashMap<Object, TableCellRenderer> rendererMap = new HashMap<>();
-
-        TableCellEditor getEditor(int row) {
-            TableCellEditor retval = editorMap.get(getModel().getValueAt(row, SYSNAMECOL));
-            if (retval == null) {
-                // create a new one with right aspects
-                retval = new MyComboBoxEditor(getAspectVector(row));
-                editorMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
-            }
-            return retval;
-        }
-        HashMap<Object, TableCellEditor> editorMap = new HashMap<>();
-
-        Vector<String> getAspectVector(int row) {
-            Vector<String> retval = boxMap.get(getModel().getValueAt(row, SYSNAMECOL));
-            if (retval == null) {
-                // create a new one with right aspects
-                Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
-                        .getSignalMast((String) getModel().getValueAt(row, SYSNAMECOL)).getValidAspects();
-                retval = v;
-                boxMap.put(getModel().getValueAt(row, SYSNAMECOL), retval);
-            }
-            return retval;
-        }
-
-        HashMap<Object, Vector<String>> boxMap = new HashMap<>();
-    }
-    // end of deprecated class
 
     @Override
     protected String getBeanType() {
@@ -452,15 +343,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
          * @return an appropriate combobox for this signal mast
          */
         @Override
-        protected JComboBox getEditorBox(int row) {
+        protected JComboBox<String> getEditorBox(int row) {
             return getAspectEditorBox(row);
         }
 
     }
 
-    // Methods to display VALUECOL (aspect) ComboBox in the Signal Mast Table
-    // Derived from the SignalMastJTable class (deprecated since 4.5.5):
-    // All row values are in terms of the Model, not the Table as displayed.
     /**
      * Clear the old aspect comboboxes and force them to be rebuilt
      *
@@ -502,7 +390,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SYSNAMECOL));
         if (comboaspects == null) {
             // create a new one with right aspects
-            Vector<String> v = ((SignalMast) this.getValueAt(row, SYSNAMECOL)).getValidAspects();
+            Vector<String> v = ((SignalMast)this.getValueAt(row, SYSNAMECOL)).getValidAspects();
             comboaspects = v;
             boxMap.put(this.getValueAt(row, SYSNAMECOL), comboaspects);
         }

@@ -247,6 +247,6 @@ public class EasyDccProgrammerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class);
 
 }

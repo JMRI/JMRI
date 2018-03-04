@@ -54,7 +54,6 @@ public class TurnoutEditAction extends BeanEditAction {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
 
-    private JCheckBox useCurrent = new JCheckBox();
     private JCheckBox inverted = new JCheckBox();
 
     @Override

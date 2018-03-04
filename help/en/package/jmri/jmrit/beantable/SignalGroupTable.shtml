@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Group Table Help</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20170124">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -62,7 +62,8 @@
 
       <p>Click on one of the <b>Edit</b>
       buttons at the right of the Signal Group Table to open
-      the</a> <a href="SignalGroupAddEdit.shtml">Edit Signal
+      the
+      <a href="SignalGroupAddEdit.shtml">Edit Signal
       Group</a> window for the corresponding Signal Group. <a href=
       "images/SignalGroup.png"><img src="images/SignalGroup.png" align="right"
       height="223" width="309"></a></p>

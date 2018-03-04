@@ -19,6 +19,18 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
+<style type="text/css">
+    span.since {
+        color: #fff;
+        float: right;
+        background: #222696;
+        background-size: 100% 100%;
+        border-radius: 4px;
+        margin: 2px 2px 2px 2px;
+        padding: .2em .3em;
+    }
+</style>
+
 </head>
 
 <body>
@@ -89,6 +101,8 @@
 
         <li><a href="#block">Blocks</a></li>
 
+        <li><a href="#trackdrawoptions">Track Drawing Options</a></li>
+
         <li><a href="#tracking">Blocks, Memory Labels, and Train
         Tracking</a></li>
 
@@ -103,51 +117,51 @@
 
       <p>JMRI supports multiple panels, either Layout Editor type
       or Panel Editor type. All panels that have been created or
-      loaded are listed in the submenu of <b>Show Panel</b> in the
+      loaded are listed in the submenu of <strong>Show Panel</strong> in the
       Panels menu. You can minimize or close a panel window, and
       bring it back as the front most window by selecting it in
       this submenu. Multiple monitors are supported to the extent
       that the operating system allows, and a single panel may be
       stretched to occupy more than one monitor.</p>
 
-      <p>To save your Layout Editor panel, select <b>Save
-      Panels...</b> in the <b>File</b> menu of your Layout Editor
+      <p>To save your Layout Editor panel, select <strong>Save
+      Panels...</strong> in the <strong>File</strong> menu of your Layout Editor
       panel, or in the Panels menu. When you do this, all panels
-      listed in the submenu of <b>Show Panel</b> are saved, along
+      listed in the submenu of <strong>Show Panel</strong> are saved, along
       with all shared configuration items (sensors, turnouts,
       signal heads, etc.). To make it easier to save your panel
-      often, Layout Editor provides the menu item, <b>Save Location
-      and Size</b>, in the <b>Options</b> menu. Once you have sized
+      often, Layout Editor provides the menu item, <strong>Save Location
+      and Size</strong>, in the <strong>Options</strong> menu. Once you have sized
       and positioned your panel exactly as you would like it to
       come up when loaded, select this item and save your panel.
       You need not be concerned about the position and size of your
       panel changing during subsequent saves! The position and size
-      of your panel will only change when you select <b>Save
-      Location and Size</b>. So save your panel often to preserve
+      of your panel will only change when you select <strong>Save
+      Location and Size</strong>. So save your panel often to preserve
       your work.</p>
 
-      <p><b>Layout Editor</b> supports the construction and display
-      of PanelPro panels. <b>Layout Editor</b> is similar to the
-      traditional PanelPro <b>Panel Editor</b>, except it supports
+      <p><strong>Layout Editor</strong> supports the construction and display
+      of PanelPro panels. <strong>Layout Editor</strong> is similar to the
+      traditional PanelPro <strong>Panel Editor</strong>, except it supports
       a drawn track diagram instead of an icon-based track diagram.
-      Because of the way it works, <b>Layout Editor</b> captures
+      Because of the way it works, <strong>Layout Editor</strong> captures
       the full connectivity of your layout as you draw it. Several
       automated tools are available to make setting up your panel
       easier.</p>
 
-      <p><b>Layout Editor</b> is implemented using a tool bar at
+      <p><strong>Layout Editor</strong> is implemented using a tool bar at
       the top (default location) of your panel. This tool bar may be switched on and
-      off using the <b>Edit Mode</b> item in your panel's
-      <b>Options</b> menu. When you create a new Layout Editor
+      off using the <strong>Edit Mode</strong> item in your panel's
+      <strong>Options</strong> menu. When you create a new Layout Editor
       panel, your new panel appears with the Edit Mode tool bar
       displayed at the top of your panel, and with a
       system-specific help bar displayed at the bottom of the
-      panel. The help bar describes how to use the <b>Layout
-      Editor</b> user interface. The help bar probably should be
+      panel. The help bar describes how to use the <strong>Layout
+      Editor</strong> user interface. The help bar probably should be
       turned off (using the Options menu) once you are familiar
       with the user interface.</p>
 
-      <p><b>Layout Editor</b> supports several options that you may
+      <p><strong>Layout Editor</strong> supports several options that you may
       or may not elect to use when you draw your track diagram.
       Sections of track may be designated as <i>mainline track</i>
       to differentiate it from <i>side track</i> (the default).
@@ -167,8 +181,8 @@
       <p>Below is a short tutorial on the basics of using Layout
       Editor. A more complete tutorial is available for download as
       a pdf file on the JMRI web site. See <a href=
-      "http://jmri.org/community/clinics/NMRA2008/index.html"><b>Using
-      the JMRI/PanelPro Layout Editor</b></a> and its two
+      "http://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using
+      the JMRI/PanelPro Layout Editor</strong></a> and its two
       associated demonstration .xml files. <a name="start" id=
       "start"></a></p>
 
@@ -177,8 +191,8 @@
       <p>To get familiar with the Layout Editor user interface, try
       the following:</p>
 
-      <p>1. Select <b>New panel...</b>, then <b>Layout Editor</b>
-      in the Panels menu. You should see a blank panel window with
+      <p>1. Select <strong>New panel...</strong>, then <strong>Layout Editor
+      </strong> in the Panels menu. You should see a blank panel window with
       a tool bar at the top, and a help bar at the bottom.</p>
 
       <p>2. Move the cursor around inside the blank panel. Note
@@ -195,7 +209,7 @@
       left of your panel. A right-handed turnout should appear. The
       three <strong><span style="color:red">red</span></strong> squares
       at the ends of the throat and the continuing and diverging legs of
-      the turnout are connection points for <b>Track Segments</b>. The
+      the turnout are connection points for <strong>Track Segments</strong>. The
       round circle at the center of the turnout is where you should
       point to get the turnout's popup menu.</p>
 
@@ -230,7 +244,7 @@
 
       <p>7. To connect this turnout with the upper passing track and
       form a simple oval track diagram, select Anchor Point on the third
-      row of the tool bar. An <b>Anchor Point</b> is a node in a track
+      row of the tool bar. An <strong>Anchor Point</strong> is a node in a track
       diagram that can accept two connecting track segments; it's used
       to place connected track segments so that they look reasonably
       nice (and also to divide blocks). While holding shift down, click
@@ -260,7 +274,7 @@
       point of the lower turnout should be the only box needing a
       connection (colored <strong><span
       style="color:red">red</span></strong>). Select End Bumper in the
-      tool bar. An <b>End Bumper</b> is a node in a track diagram that
+      tool bar. An <strong>End Bumper</strong> is a node in a track diagram that
       can accept only one connection. With shift pressed, click on a
       point exactly to the right of the diverging connection point of
       the lower turnout. Connect your end bumper to the diverging
@@ -273,7 +287,7 @@
       height="169" hspace="0" vspace="0" alt=
       "Oval Layout Image"></a></p>
 
-      <p>10. Select <b>Edit Mode</b> in the Options menu to hide
+      <p>10. Select <strong>Edit Mode</strong> in the Options menu to hide
       the tool bar (and the help bar) and see how your track
       diagram of a simple oval layout would look in a final panel.
       You should see connection points and edit circles disappear.
@@ -282,16 +296,16 @@
 
       <p>The above steps demonstrated the basic steps needed to
       draw a track diagram. You can clear this demonstration panel
-      by selecting <b>Delete this panel...</b> in the panel's File
+      by selecting <strong>Delete this panel...</strong> in the panel's File
       menu, and begin to construct a track diagram of your layout.
       Read the items below to learn more about how to add content
       to track diagram items and how to add icon items to your
       panel.</p>
 
-      <p><b>Note: Layout Editor tools for placing signal heads and
+      <p><strong>Note: Layout Editor tools for placing signal heads and
       automatically configuring signal logic require that turnouts
       and block boundaries (see below) be oriented vertically or
-      horizontally on your panel.</b> To make maximum use of these
+      horizontally on your panel.</strong> To make maximum use of these
       tools, design your panel with turnouts oriented vertically or
       horizontally (the orientation does not have to be exact, just
       mostly vertical or mostly horizontal).</p>
@@ -305,68 +319,68 @@
       bar:</p>
 
       <ul>
-        <li><b>RH</b> - selects a right-handed turnout</li>
+        <li><strong>RH</strong> - selects a right-handed turnout</li>
 
-        <li><b>LH</b> - selects a left-handed turnout</li>
+        <li><strong>LH</strong> - selects a left-handed turnout</li>
 
-        <li><b>WYE</b> - selects a wye turnout</li>
+        <li><strong>WYE</strong> - selects a wye turnout</li>
 
-        <li><b>Double X-over</b> - selects a double crossover
+        <li><strong>Double X-over</strong> - selects a double crossover
         turnout</li>
 
-        <li><b>RH X-over</b> - selects a right-handed single
+        <li><strong>RH X-over</strong> - selects a right-handed single
         crossover turnout</li>
 
-        <li><b>LH X-over</b> - selects a left-handed single
+        <li><strong>LH X-over</strong> - selects a left-handed single
         crossover turnout</li>
 
-        <li><b>Single Slip</b> - selects a single
+        <li><strong>Single Slip</strong> - selects a single
         slip turnout</li>
 
-        <li><b>Double Slip</b> - selects a double
+        <li><strong>Double Slip</strong> - selects a double
         slip turnout</li>
 
-        <li><b>Level Crossing</b> - selects a level crossing track
+        <li><strong>Level Crossing</strong> - selects a level crossing track
         (a diamond)</li>
 
-        <li><b>Track Segment</b> - selects a piece of connecting track</li>
+        <li><strong>Track Segment</strong> - selects a piece of connecting track</li>
 
-        <li><b>End Bumper</b> - selects a connection point at the
+        <li><strong>End Bumper</strong> - selects a connection point at the
         end of a track</li>
 
-        <li><b>Anchor Point</b> - selects a connection point
+        <li><strong>Anchor Point</strong> - selects a connection point
         between two track segments</li>
 
-        <li><b>Edge Connector</b> - selects a connection point
+        <li><strong>Edge Connector</strong> - selects a connection point
         between two track segments on different panels</li>
 
-        <li><b>Text Label</b> - selects a label showing the content
+        <li><strong>Text Label</strong> - selects a label showing the content
         of the entry field</li>
 
-        <li><b>Memory</b> - selects a label showing the
+        <li><strong>Memory</strong> - selects a label showing the
         contents of the memory whose name is entered on the
         right</li>
 
-        <li><b>Block Contents</b> - selects a label showing the
+        <li><strong>Block Contents</strong> - selects a label showing the
         contents of the block whose name is entered</li>
 
-        <li><b>Multi-sensor</b> - selects a multi-sensor--A dialog
+        <li><strong>Multi-sensor</strong> - selects a multi-sensor--A dialog
         is displayed allowing the multi-sensor to be defined.
         Before creating the multi-sensor, a name must be entered
         for every sensor to define the multi-sensor
         completely.</li>
 
-        <li><b>Sensor Icon</b> - selects a sensor icon showing the
+        <li><strong>Sensor Icon</strong> - selects a sensor icon showing the
         sensor whose name is entered on the right.</li>
 
-        <li><b>Signal Icon</b> - selects a signal head icon showing
+        <li><strong>Signal Icon</strong> - selects a signal head icon showing
         the signal head whose name is entered on the right</li>
 
-        <li><b>Signal Mast Icon</b> - selects a signal mast icon
+        <li><strong>Signal Mast Icon</strong> - selects a signal mast icon
         showing the signal mast whose name is entered on the
         right</li>
 
-        <li><b>Icon Label</b> - selects a general purpose icon</li>
+        <li><strong>Icon Label</strong> - selects a general purpose icon</li>
       </ul>
 
       <p>The top 13 items are used to create a track diagram, and
@@ -434,48 +448,48 @@
       below, along with which created items they apply to and
       whether they are optional or required.</p>
 
-      <p></p><span class="since">Since 4.7.3</span>
-      Most of the toolbar's options are set using <b>combo boxes</b>.
-      A <b>combo box</b> combines a <b>text field</b>
-      with a <b>drop down list</b>. You may ether type text into the
-      <b>text field</b> or select an item from the <b>drop down list</b>.
-      Selecting an item from the <b>drop down list</b> will copy it
-      into the <b>text field</b> where you may edit it.
+      <p><span class="since">Since 4.7.3</span>
+      Most of the toolbar's options are set using <strong>combo boxes</strong>.
+      A <strong>combo box</strong> combines a <strong>text field</strong>
+      with a <strong>drop down list</strong>. You may ether type text into the
+      <strong>text field</strong> or select an item from the <strong>drop down
+      list</strong>.  Selecting an item from the <strong>drop down list</strong>
+      will copy it into the <strong>text field</strong> where you may edit it.
       </p>
       <p>
-      Note: Toolbar <b>Combo boxes</b> are color coded! If you enter the name of an
-      existing item then the background color of the <b>combo box</b> will turn
-      <strong><span style="background-color: #BDECB6">green</span></strong>.
-      If the item doesn't match the name of an existing item then the
-      background will ether turn
-      <strong><span style="background-color: #FDFD96">yellow</span></strong>
-      if a new item with that name will be created or
-      <strong><span style="background-color: #FFC0C0">red</span></strong>
-      if that name can not be used.
+      Note: Toolbar <strong>Combo boxes</strong> are color coded! If you enter
+      the name of an existing item then the background color of the <strong>
+      combo box</strong> will turn <strong><span style="background-color: #BDECB6">
+      green</span></strong>. If the item doesn't match the name of an existing
+      item then the background will ether turn <strong><span
+      style="background-color: #FDFD96">yellow</span></strong> if a new item
+      with that name will be created or <strong><span
+      style="background-color: #FFC0C0">red</span></strong> if that name can
+      not be used.
       </p>
       <p>
-      <b>Combo boxes</b> that are not applicable for the currently
+      <strong>Combo boxes</strong> that are not applicable for the currently
       selected edit toolbar item are disabled.
       </p>
       <ul>
-        <li><b>Turnout: Name</b> (ComboBox) - applies to RH, LH, WYE,
+        <li><strong>Turnout: Name</strong> (ComboBox) - applies to RH, LH, WYE,
         Double X-over, RH X-over, LH X-over, Single Slip, Double Slip -
         Entry is optional. If a name is entered, it must correspond to
         a turnout in the Turnout Table.</li>
 
-        <li><b>Additional Name</b> (ComboBox) - applies to Single Slip,
+        <li><strong>Additional Name</strong> (ComboBox) - applies to Single Slip,
         Double Slip - Entry is optional. If a
         name is entered, it must correspond to a turnout in the
         Turnout Table.</li>
 
-        <li><b>Rotation</b> (ComboBox) - applies to RH, LH, WYE,
+        <li><strong>Rotation</strong> (ComboBox) - applies to RH, LH, WYE,
         Double X-over, RH X-over, LH X-over, Single Slip, Double Slip
          - Entry is optional. If
         there is no entry, the turnout is not rotated when it is
         created. Remember to try to keep your turnouts oriented
         vertically or horizontally.</li>
 
-        <li><b>Block: Name</b> (ComboBox) - applies to RH, LH, WYE,
+        <li><strong>Block: Name</strong> (ComboBox) - applies to RH, LH, WYE,
         Double X-over, RH X-over, LH X-over, Single Slip, Double Slip,
         Track Segment, Level Crossing - Entry is optional. If a name
         is entered, the created item is assigned to the named block.
@@ -483,35 +497,35 @@
         block with that name is created. A block name may be any
         alphabetic or numeric characters that identify the block.</li>
 
-        <li><b>Sensor</b> (ComboBox) - applies to the block
+        <li><strong>Sensor</strong> (ComboBox) - applies to the block
         named in the above entry - Entry is optional. An entry must
         correspond to a sensor in the Sensor Table. If the named
         block already has an occupancy sensor, this sensor replaces
         the previous occupancy sensor.</li>
 
-        <li><b>Dashed</b> (check box) - applies to Track Segment -
+        <li><strong>Dashed</strong> (check box) - applies to Track Segment -
         A Track Segment may be drawn as a solid line or a dashed
         line. Solid is the default if Dashed is not checked. Dashed
         is useful for tunnels or tracks crossing at different grade
         levels.</li>
 
-        <li><b>Mainline</b> (check box) - applies to Track Segment
+        <li><strong>Mainline</strong> (check box) - applies to Track Segment
         - A Track Segment may be either <i>mainline track</i> or
         <i>side track</i>. Side track is the default if Mainline is
         not checked. Designating some of your track as <i>mainline
         track</i> is optional.</li>
 
-        <li><b>Label Text</b> (field) - applies to Text Label -
+        <li><strong>Label Text</strong> (field) - applies to Text Label -
         Entry is required if anything is to be displayed in the new
         Text Label.</li>
 
-        <li><b>Memory Label</b> (ComboBox) - applies to Memory Label -
+        <li><strong>Memory Label</strong> (ComboBox) - applies to Memory Label -
         Entry is required. If the entered name doesn't correspond
         to a memory variable in the Memory Table, a new memory
         variable will be created, using the entered name as the
         JMRI system name (with IM prefixed if needed).</li>
 
-        <li><b>Block Contents</b> (ComboBox) - applies to Block
+        <li><strong>Block Contents</strong> (ComboBox) - applies to Block
         Contents - Entry is required. If the entered name doesn't
         correspond to a layout block a new memory layout block will
         be created, using the entered name as the JMRI system name
@@ -519,40 +533,40 @@
         discarded on the next save of the Layout unless it is
         actually used.</li>
 
-        <li><b>Sensor Icon</b> (ComboBox) - applies to Sensor Icon -
+        <li><strong>Sensor Icon</strong> (ComboBox) - applies to Sensor Icon -
         Entry is required. If a sensor with the entered name does
         not exist, it will be created using the entered name as the
         JMRI system name (with a suitable prefix if needed).</li>
 
-        <li><b>Signal Mast Icon</b> (ComboBox) - applies to Signal Mast Icon -
-        Entry is required. If a signal mast with the entered name
+        <li><strong>Signal Mast Icon</strong> (ComboBox) - applies to Signal
+        Mast Icon - Entry is required. If a signal mast with the entered name
         is not in the Signal Mast Table, an error message results,
-        and the Signal Mast Icon is not created. <b>Note: To
+        and the Signal Mast Icon is not created. <strong>Note: To
         automatically associate signal masts with turnouts and
         block boundaries, you should use the automated tools in the
-        Tools menu to place signal mast icons.</b> This item is provided
+        Tools menu to place signal mast icons.</strong> This item is provided
         for those cases where those automated tools cannot place a
         signal mast icon where needed.</li>
 
-        <li><b>Signal Head Icon</b> (ComboBox) - applies to Signal Head Icon -
-        Entry is required. If a signal head with the entered name
+        <li><strong>Signal Head Icon</strong> (ComboBox) - applies to Signal
+        Head Icon - Entry is required. If a signal head with the entered name
         is not in the Signal Head Table, an error message results,
-        and the Signal Head Icon is not created. <b>Note: To
+        and the Signal Head Icon is not created. <strong>Note: To
         automatically associate signal heads with turnouts and
         block boundaries, you should use the automated tools in the
-        Tools menu to place signal head icons.</b> This item is provided
+        Tools menu to place signal head icons.</strong> This item is provided
         for those cases where those automated tools cannot place a
         signal head icon where needed.</li>
       </ul>
 
-      <p>When pressed, the <b>Change Icons...</b> button on the
+      <p>When pressed, the <strong>Change Icons...</strong> button on the
       tool bar brings up an icon editor for either sensor icons,
       signal mast icons, signal head icons, or general purpose icons,
-      depending upon whether <b>Sensor Icon</b>, <b>Signal Mast Icon</b>,
-      <b>Signal Head Icon</b>, or <b>Icon Label</b> is checked in the toolbar.
-      If none of these items is checked, the menu choice is ignored.
-      For Signal Mast Icons and Signal Head Icons, the Layout Editor
-      defaults to the left-facing short icons found at
+      depending upon whether <strong>Sensor Icon</strong>, <strong>Signal Mast
+      Icon</strong>, <strong>Signal Head Icon</strong>, or <strong>Icon Label
+      </strong> is checked in the toolbar.  If none of these items is checked,
+      the menu choice is ignored.  For Signal Mast Icons and Signal Head Icons,
+      the Layout Editor defaults to the left-facing short icons found at
       "resources/icons/smallschematics/searchlights/". If you are
       using a black background you may need to switch to white
       icons that are available in the same area, since the default
@@ -563,22 +577,22 @@
       <span class="since">since 4.7.2</span>
 
       <p>The classic toolbar resides to the top or side of the panel. The
-      <b>toolbox</b> floats on the screen and can be moved around. It provides
-      all of the same functions as the toolbar.</p>
+      <strong>toolbox</strong> floats on the screen and can be moved around. It
+      provides all of the same functions as the toolbar.</p>
 
       <p>The radio buttons, checkboxes, combo boxes and labels are grouped
-      together on 4 tabs:  <b>Turnouts</b>, <b>Track</b>, <b>Labels</b> and
-      <b>Icons</b>. Below the tab section is a line that displays the current
-      zoom factor and cursor location.  The title bar includes the name
-      of the related panel.</p>
+      together on 4 tabs:  <strong>Turnouts</strong>, <strong>Track</strong>,
+      <strong>Labels</strong> and <strong>Icons</strong>. Below the tab section
+      is a line that displays the current zoom factor and cursor location.  The
+      title bar includes the name of the related panel.</p>
 
       <p>Since the Toolbox is a standard window, it contains the Close
-	  and Minimize buttons. The Close button <b><em>hides</em></b> the toolbox,
-      it does not delete it. To show it again, select the toolbox name
-	  from the <b>Window</b> menu. The minimize button behaves in the
-	  traditional manner with the toolbox becoming an icon on the operating system task
-	  bar.  Use the Window menu or click on the task bar icon to make it
-	  visible.
+      and Minimize buttons. The Close button <strong><em>hides</em></strong>
+      the toolbox, it does not delete it. To show it again, select the toolbox
+      name from the <strong>Window</strong> menu. The minimize button behaves
+      in the traditional manner with the toolbox becoming an icon on the
+      operating system task bar.  Use the Window menu or click on the task bar
+      icon to make itvisible.
       </p>
 
       <a name="filemenu" id="filemenu"></a>
@@ -589,26 +603,26 @@
       panels.</p>
 
       <ul>
-        <li><b>Save Panels...</b> - When this item is selected, a
+        <li><strong>Save Panels...</strong> - When this item is selected, a
         Save dialog is shown. When Save is selected in the Save
         dialog, all layout configuration information is written to
         disk, including information for all panels, Layout
         Editor, Control Panel Editor and Panel Editor types, and all non-panel
         specific layout configuration items (e.g., turnouts,
         sensors, lights, signal heads, routes, logixs, blocks,
-        etc.) <b>Store panels...</b> is available in the File menu
+        etc.) <strong>Store panels...</strong> is available in the File menu
         of each panel, and in the Panels menu. It can also be
-        reached by selecting <b>Store Configuration And Panels To
-        File...</b> in the Store submenu of the File menu of any
+        reached by selecting <strong>Store Configuration And Panels To
+        File...</strong> in the Store submenu of the File menu of any
         table.</li>
 
-        <li><b>Delete this Panel...</b> - This item deletes the
+        <li><strong>Delete this Panel...</strong> - This item deletes the
         front most panel. A confirmation dialog is displayed,
         allowing the choice of canceling before deleting. Deletion
         removes the panel from the program. To permanently delete a
-        panel from your panel file, <b>Store panels...</b> must be
-        selected after deleting that panel. <b>There is no undo for
-        deletion.</b> Unless the panel has been saved to disk, it
+        panel from your panel file, <strong>Store panels...</strong> must be
+        selected after deleting that panel. <strong>There is no undo for
+        deletion.</strong> Unless the panel has been saved to disk, it
         is gone after deletion.</li>
       </ul>
 
@@ -621,36 +635,54 @@
       described below.</p>
 
       <ul>
-        <li><b>Edit Mode</b> - When this item is checked, the toolbar
-        is displayed based on the <b>ToolBar Side</b> selection, and the track
-        diagram displays connection points and edit circles.
-        Uncheck <b>Edit Mode</b> to hide the toolbar and the help bar if
-        it is displayed.</li>
+        <li><strong>Edit Mode</strong> - When this item is checked, the toolbar
+        is displayed based on the <strong>ToolBar Side</strong> selection, and
+        the track diagram displays connection points and edit circles.
+        Uncheck <strong>Edit Mode</strong> to hide the toolbar and the help bar
+        if it is displayed.</li>
 
         <li>
-	      <b>ToolBar</b> - This sub-menu controls the Toolbar characteristics.
-	      It contains the following options: <span class="since">since 4.7.2</span>
+          <span class="since">since 4.7.2</span>
+          <strong>ToolBar</strong> - This sub-menu controls the Toolbar
+          characteristics.  It contains the following options:
 
           <ul>
-            <li><b>ToolBar Side...</b> - Set the location of the
+            <li><strong>ToolBar Side...</strong> - Set the location of the
             toolbar.  The choices are Top, Left, Bottom and Right.
-            A fifth choice, <b>Float</b>, replaces
+            A fifth choice, <strong>Float</strong>, replaces
             the normal tool bar with a floating toolbox.
             </li>
 
-            <li><b>Wide ToolBar</b> - The Top and Bottom tool bars change
-             their height and width based on screen size.  If this option
-             is enabled, the the wide version will be used.  This can result
-             in the toolbar using a horizontal scroll bar.</li>
+            <li><strong>Wide ToolBar</strong> - The Top and Bottom tool bars
+            change their height and width based on screen size.  If this option
+            is enabled, the the wide version will be used.  This can result
+            in the toolbar using a horizontal scroll bar.</li>
 
-            <li><b>Drop Down Lists Display Order...</b> - Choose which names,
-            <b>user</b> and/or <b>system</b>, to use for the combo boxes.  This also
-            determines the sort order</li>
+            <li><strong>Drop Down Lists Display Order...</strong> - Choose which
+            names, <strong>user</strong> and/or <strong>system</strong>, to use
+            for the combo boxes.  This also determines the sort order</li>
 
           </ul>
         </li>
 
-        <li><b>Allow Repositioning</b> - When this item is checked,
+        <li><strong>Panel scrollbars</strong> - This sub-menu allows you to
+        choose which scrollbars to display. You can still pan the
+        display by holding down the left mouse button and dragging
+        outside the window in the direction you want to pan. The
+        scrollbars are always enabled during edit mode.</li>
+
+        <li><strong>Show Icon tooltips</strong> - This submenu allows you to
+        select whether icon tooltips are displayed when in Edit
+        Mode and when not in Edit Mode. When the mouse is hovered
+        over an icon, and tooltips are on, the name of the icon is
+        displayed while the mouse remains over the icon. Drawn
+        track items do not have tooltips.</li>
+
+        <li><strong>Show Help Bar in Edit Mode</strong> - If this item is
+        checked, the help bar is displayed when the tool bar is
+        displayed.</li>
+
+        <li><strong>Allow Repositioning</strong> - When this item is checked,
         items on the panel can be repositioned by dragging on the
         item with the meta key pressed. Track diagram items and
         icon-based items can only be repositioned when Edit Mode is
@@ -658,105 +690,34 @@
         repositioned at any time irrespective of whether Edit Mode
         and/or Allow Repositioning are checked.</li>
 
-        <li><b>Allow Layout Control</b> - When this item is
+        <li><strong>Allow Layout Control</strong> - When this item is
         checked, clicking on active turnout items in the track
         diagram or on active icon items, such as sensor icons, and
         signal icons, will toggle the state of the represented
         item.</li>
 
-        <li><b>Allow Turnout Animation</b> - When this item is
-        checked, turnouts on the track diagram will change to show
-        turnout state. If this item is not checked, turnout
-        drawings will show the Closed position at all times.</li>
+        <li><strong>Use Direct Turnout Control</strong> - If enabled and edit mode
+        is not active, then the left mouse button sets a turnout closed and
+        the right mouse button sets the turnout thrown.</li>
 
-        <li><b>Show Help Bar in Edit Mode</b> - If this item is
-        checked, the help bar is displayed when the tool bar is
-        displayed.</li>
-
-        <li><b>Show Grid in Edit Mode</b> - If this item is
-        checked, a background grid is displayed in edit mode.</li>
-
-        <li><b>Snap to Grid when Adding</b> - If this item is
-        checked, when an item is added to the panel, its
-        coordinates are constrained to grid points. For track
-        diagram items (turnouts, anchor points, end bumpers, edge
-        connectors and level crossings, the coordinates of center
-        points are constrained to grid points. For icons and
-        labels, the coordinates of upper left corners are
-        constrained to grid points.</li>
-
-        <li><b>Snap to Grid when Moving</b> - If this item is
-        checked, when an item is moved on the panel, its
-        coordinates are constrained to grid points. For track
-        diagram items (turnouts, anchor points, end bumpers, edge
-        connectors, and level crossings), the coordinates of center
-        points are constrained to grid points. If connection points
-        of turnouts or level crossings are moved, their coordinates
-        are also constrained to grid points. For icons and labels,
-        the coordinates of upper left corners are constrained to
-        grid points.</li>
-
-        <li><b>Grid Size...</b>Change the size of the grid.  The
-        default size is 10.</li>
-
-        <li><b>Panel scrollbars</b> - This sub-menu allows you to
-        choose which scrollbars to display. You can still pan the
-        display by holding down the left mouse button and dragging
-        outside the window in the direction you want to pan. The
-        scrollbars are always enabled during edit mode.</li>
-
-        <li><b>Show Icon tooltips</b> - This submenu allows you to
-        select whether icon tooltips are displayed when in Edit
-        Mode and when not in Edit Mode. When the mouse is hovered
-        over an icon, and tooltips are on, the name of the icon is
-        displayed while the mouse remains over the icon. Drawn
-        track items do not have tooltips.</li>
-
-        <li><b>Enable antialiasing (Smoother lines)</b> - If this
+        <li><strong>Enable antialiasing (Smoother lines)</strong> - If this
         item is selected, the panel is displayed (rendered) with
         antialiasing enabled. Antialiasing smoothes out lines in
         the drawn panel, but it does take longer to refresh the
         panel. Check antialiasing for a better looking panel.
         Uncheck antialiasing for faster refresh.</li>
 
-        <li><b>Highlight Selected Block</b> - Selecting this item
-        enables block highighting while in edit mode.  When a block
-        is selected in the block name combo box, the track components
-        assigned to that block are changed to use the alternate
-        track color.  This is used to verify that blocks are valid.
-        This generally means that there are no block gaps</li>
-
-        <li><b>New Title...</b> - Selecting this item brings up a
+        <li><strong>New Title...</strong> - Selecting this item brings up a
         small window that allows a new panel window title to be
         entered.</li>
 
-        <li><b>Add Background Image...</b> - Selecting this item
-        shows a dialog that allows a background image to be added
-        to the panel. See <a href="#background">Backgrounds</a>
-        below for more information.</li>
+        <li><strong>Set Background Color...</strong> - Select a background color
+        using a color chooser.</li>
 
-        <li><b>Add Fast Clock</b> - Selecting this item adds an
-        analog fast clock at the upper left. You can then drag it
-        with the meta key pressed to any location on the
-        panel.</li>
+        <li><strong>Set Default Text Color...</strong> - Select the default text
+        color using a color chooser.</li>
 
-        <li><b>Add Turntable</b> - Selecting this item adds a
-        turntable to the panel at the center of the panel. You can
-        then drag it with the meta key pressed to any location on
-        the panel.</li>
-
-        <li><b>Add Reporter Label...</b> - Selecting this item
-        brings up a dialog that allows entry of a Reporter name
-        (system name or user name) and x, y coordinates of where
-        the label is to be placed initially. The x,y coordinates
-        apply to the upper left corner of the label. To create a
-        Reporter Label, enter the name and coordinates, then click
-        <b>Add New Label</b>. After a label is added the Add
-        Reporter Label window remains open to allow entry of more
-        Reporter Labels. To close the window, click <b>Cancel</b>
-        or use the close button at the top.</li>
-
-        <li><b>Save Location and Size</b> - When this item is
+        <li><strong>Save Location and Size</strong> - When this item is
         selected, the current panel window size and location
         replace the default size and location of the panel window.
         If the panel is saved to disk after this item is selected,
@@ -765,85 +726,165 @@
         the computer operating system permits a window with that
         size and location.</li>
 
-        <li><b>Set Track Line Width...</b> - Selecting this item brings
-        up a dialog that allows entry of a width for mainline track
-        and a width for side track. All mainline track and all side
-        track in the track diagram will use the new values. (See
-        below for more information on types of track.)</li>
-
-        <li><b>Set Default Track Colors</b> - This item's submenu
-        allows one of thirteen colors to be selected as the <b>Default
-        Track Color</b>, the <b>Default Occupied Color</b> and the
-        <b>Default Alternative Track Color</b>.  When a track component
-        is added it will have the default track color.  If the track
-        component is added with a block name assigned and the block has
-        been used before, it will inherit the existing block colors.
-        If this is the first track component for this block, the new
-        layout block will be assigned all three colors.  The default
-        track color is also used for lines of the selection rectangle.</li>
-
-        <li><b>Set Default Text Color</b> - This item's submenu
-        allows one of thirteen colors to be selected as the default
-        text color.</li>
-
-        <li>
-          <b>Turnout Options</b> - This sub-menu controls the look
-          of turnouts on the panel. Contains:
-
+        <li><strong>Add</strong>
           <ul>
-            <li><b>Show Turnout Circles</b> - When this item is
+            <li><strong>Add Background Image...</strong> - Selecting this item
+            shows a dialog that allows a background image to be added
+            to the panel. See <a href="#background">Backgrounds</a>
+            below for more information.</li>
+
+            <li><strong>Add Fast Clock</strong> - Selecting this item adds an
+            analog fast clock at the upper left. You can then drag it
+            with the meta key pressed to any location on the
+            panel.</li>
+
+            <li><strong>Add Turntable</strong> - Selecting this item adds a
+            turntable to the panel at the center of the panel. You can
+            then drag it with the meta key pressed to any location on
+            the panel.</li>
+
+            <li><strong>Add Reporter Label...</strong> - Selecting this item
+            brings up a dialog that allows entry of a Reporter name
+            (system name or user name) and x, y coordinates of where
+            the label is to be placed initially. The x,y coordinates
+            apply to the upper left corner of the label. To create a
+            Reporter Label, enter the name and coordinates, then click
+            <strong>Add New Label</strong>. After a label is added the Add
+            Reporter Label window remains open to allow entry of more
+            Reporter Labels. To close the window, click <strong>Cancel</strong>
+            or use the close button at the top.</li>
+          </ul>
+        </li>
+
+        <li><strong>Grid Options</strong>
+          <ul>
+            <li><strong>Show Grid in Edit Mode</strong> - If this item is
+            checked, a background grid is displayed in edit mode.</li>
+
+            <li><strong>Snap to Grid when Adding</strong> - If this item is
+            checked, when an item is added to the panel, its
+            coordinates are constrained to grid points. For track
+            diagram items (turnouts, anchor points, end bumpers, edge
+            connectors and level crossings, the coordinates of center
+            points are constrained to grid points. For icons and
+            labels, the coordinates of upper left corners are
+            constrained to grid points.</li>
+
+            <li><strong>Snap to Grid when Moving</strong> - If this item is
+            checked, when an item is moved on the panel, its
+            coordinates are constrained to grid points. For track
+            diagram items (turnouts, anchor points, end bumpers, edge
+            connectors, and level crossings), the coordinates of center
+            points are constrained to grid points. If connection points
+            of turnouts or level crossings are moved, their coordinates
+            are also constrained to grid points. For icons and labels,
+            the coordinates of upper left corners are constrained to
+            grid points.</li>
+
+            <li><strong>Grid Size...</strong>Change the size of the grid.  The
+            default size is 10.</li>
+          </ul>
+        </li>
+
+        <li><strong>Track Options</strong>
+          <ul>
+            <li><span class="since">since 4.11.4</span>
+            <strong>Set Track Drawing Options</strong> - Display a dialog
+            window that is used to configure the track drawing settings.  See
+            <a href="#trackdrawoptions">Track Drawing Options</a> for details.</li>
+
+            <li><strong>Default Track Colors</strong> - This item's submenu
+            allows colors to be selected from a color chooser as the <strong>
+            Default Track Color</strong>, the <strong>Default Occupied Color
+            </strong> and the <strong>Default Alternative Track Color</strong>.
+            When a track component is added it will have the default track color.
+            If the track component is added with a block name assigned and the
+            block has been used before, it will inherit the existing block
+            colors.  If this is the first track component for this block, the new
+            layout block will be assigned all three colors.  The default
+            track color is also used for lines of the selection rectangle.</li>
+
+            <li><strong>Automatically Assign Blocks to Track</strong> - A block
+            is created for each piece of track as it is added.  The generated
+            block names are <strong>AUTOBLK:n</strong> where n is a number.</li>
+
+            <li><strong>Hide Track Construction Lines</strong> - Some track
+            objects create construction lines.  This mainly applieds to curved
+            track.  If this option is enabled, then those lines are not displayed,</li>
+
+          </ul>
+        </li>
+
+        <li><strong>Turnout Options</strong>
+          <ul>
+            <li><strong>Allow Turnout Animation</strong> - When this item is
+            checked, turnouts on the track diagram will change to show
+            turnout state. If this item is not checked, turnout
+            drawings will show the Closed position at all times.</li>
+
+            <li><strong>Show Turnout Circles</strong> - When this item is
             checked, circles at the center of turnouts are shown
             when not in Edit Mode. Turnout circles are always shown
             when in Edit Mode. When not in Edit Mode, turnout
             circles can be useful if you are toggling turnouts by
             clicking on them.</li>
 
-            <li><b>Turnout Circle Colors</b> - Sets the color of
+            <li><strong>Turnout Circle Color</strong> - Sets the color of
             the turnout circle. Default is to use the Default Track
             Color.</li>
 
-            <li><b>Turnout Circle Size</b> - Sets the relative size
+            <li><strong>Turnout Circle Size</strong> - Sets the relative size
             of the turnout circle.</li>
 
-            <li><b>Draw Unselected Turnout Leg</b> - When on, draws
+            <li><strong>Draw Unselected Turnout Leg</strong> - When on, draws
             the unselected leg of each turnout. When off, this leg
             is not drawn. This makes the turnout position more
             visible when the diverging angle is small.</li>
           </ul>
         </li>
-
-        <li><b>Automatically Assign Blocks to Track</b> - A block is created
-        for each piece of track as it is added.  The generated block names
-        are <b>AUTOBLK:n</b> where n is a number.</li>
-
-        <li><b>Hide Track Construction Lines</b> - Some track objects create
-        construction lines.  This mainly applieds to curved track.  If this
-        option is enabled, then those lines are not displayed,</li>
-
-        <li><b>Use Direct Turnout Control</b> - If enabled and edit mode
-        is not active, then the left mouse button sets a turnout closed and
-        the right mouse button sets the turnout thrown.</li>
-
       </ul>
 
       <a name="toolsmenu" id="toolsmenu"></a>
       <h2>Using Layout Editor's Tools Menu</h2>
 
-      <p>The <b>Tools</b> menu provides tools to aid in creation and
+      <p>The <strong>Tools</strong> menu provides tools to aid in creation and
       editing of Layout Editor panels. Using these automated
       procedures should reduce the time and effort needed to create
-      your panel. Note: <b>Set Signals</b> tools only work
+      your panel. Note: <strong>Set Signals</strong> tools only work
       correctly if turnouts and block boundaries are oriented
       mostly vertically or mostly horizontally.</p>
 
       <ul>
-        <li><b>Scale/Translate Track Diagram...</b> - Selecting
+        <li><strong>Check</strong> - Find potential issues in the track plan.
+        Many of the advanced tools rely on a complete and valid track plan.
+          <ul>
+            <li><strong>Un-Connected Tracks</strong> - Find track
+            components that are missing connections.  These are usually
+            visible as red squares.</li>
+            <li><strong>Un-Blocked Tracks</strong> - Find track components that
+            do not have a block assigned.</li>
+            <li><strong>Non-Contiguous Blocks</strong> - A valid block requires
+            one or more track components that are connected to each other.  This
+            means that only one occurance of a block can only exist on a panel.</li>
+            <li><strong>Unnecessary Anchors</strong> - Anchor points are only
+            required at block boundaries or changing track geometry, such as
+            entering a curve, using dashes, hidden track, etc.</li>
+          </ul>
+        </li>
+
+        <li><strong>Assign Block To Selection...</strong> - Set the block for
+        a group of track components.  Select a block name in the tool bar, do a
+        click/drag to select a group of track components and then select
+        <strong>Assign Block To Selection</strong>.  The block will be assigned
+        to the selected compnents.</li>
+
+        <li><strong>Scale/Translate Track Diagram...</strong> - Selecting
         this item brings up a dialog that allows scaling and
         translation of the track diagram. (For more information on
         this item, see the help page for that dialog.)</li>
 
-        <li><b>Translate Selection...</b> - Prior to selecting this
-        item, the user must select an area on the panel. To select
+        <li><strong>Translate (Move) Selection...</strong> - Prior to selecting
+        this item, the user must select an area on the panel. To select
         an area, press the mouse button (left button) with the
         cursor at the upper left of the area, and drag to the lower
         right of the area. With a selection active, selecting this
@@ -851,21 +892,21 @@
         selected area. (For more information on this item, see the
         help page for that dialog.)</li>
 
-        <li><b>Undo Translate Selection</b> - Selecting this item
-        automatically reverses the previous <b>Translate
-        Selection...</b>. Only one level of undo is supported. If a
+        <li><strong>Undo Translate Selection</strong> - Selecting this item
+        automatically reverses the previous <strong>Translate
+        Selection...</strong>. Only one level of undo is supported. If a
         selection has not been translated, this item is
         ignored.</li>
 
-        <li><b>Use Program Default Turnout Size</b> - Selecting
+        <li><strong>Use Program Default Turnout Size</strong> - Selecting
         this item sets default sizes of new turnouts to Layout
         Editor program defaults, canceling any changes to turnout
         default sizes that may have been made. See <a href=
         "#turnouts">Turnouts</a> for more information on turnout
         sizes.</li>
 
-        <li><b>Skip Unsignaled Internal Turnouts</b> - When setting
-        up signal logic, Layout Editor's <b>Set Signals ...</b>
+        <li><strong>Skip Unsignaled Internal Turnouts</strong> - When setting
+        up signal logic, Layout Editor's <strong>Set Signals ...</strong>
         tools (described below) will follow track within a block
         until it finds a signal or a place where they expect to
         find a signal. If the expected signal is absent, a message
@@ -876,15 +917,15 @@
         at the end of the block. However, at times the user may not
         want to signal a seldom used turnout within a block. When
         following track through a block, the program will skip over
-        unsignaled internal turnouts if this item, <b>Skip
-        Unsignaled Internal Turnouts</b>, is checked. It will
-        always, however, warn that it is doing so. <b>Use this
-        option with caution.</b> There is no signal protecting
+        unsignaled internal turnouts if this item, <strong>Skip
+        Unsignaled Internal Turnouts</strong>, is checked. It will
+        always, however, warn that it is doing so. <strong>Use this
+        option with caution.</strong> There is no signal protecting
         against a skipped turnout being set incorrectly, so if an
         unsignaled internal turnout is not set correctly, derailed
         trains could result.</li>
 
-        <li><b>Set Signals at Turnout...</b> - This item provides
+        <li><strong>Set Signals at Turnout...</strong> - This item provides
         an automated procedure for assigning signals to a turnout.
         Right-handed turnouts, left-handed turnouts, and wye
         turnouts are supported. Prior to accessing this item, the
@@ -904,11 +945,11 @@
         signals have been assigned and after blocks have been
         defined for signaled regions of track on the panel. After a
         turnout has been assigned to the turnout drawing, this tool
-        can be reached by selecting <b>Set Signals...</b> in that
+        can be reached by selecting <strong>Set Signals...</strong> in that
         turnout's popup menu. (For more information, see the help
         page for the Set Signals at Turnout dialog.)</li>
 
-        <li><b>Set Signals at Block Boundary...</b> - This item
+        <li><strong>Set Signals at Block Boundary...</strong> - This item
         provides an automated procedure for assigning signals to a
         block boundary not associated with a turnout or a level
         crossing. Prior to accessing this item, blocks must be
@@ -928,11 +969,11 @@
         available to set up the logic, you may have to return later
         after more signals have been assigned. After an anchor
         point is recognized as a block boundary, this tool can be
-        reached by selecting <b>Set Signals...</b> in that anchor
+        reached by selecting <strong>Set Signals...</strong> in that anchor
         point's popup menu. (For more information, see the help
         page for the Set Signals at Block Boundary dialog.)</li>
 
-        <li><b>Set Signals at Crossover...</b> - This item provides
+        <li><strong>Set Signals at Crossover...</strong> - This item provides
         an automated procedure for assigning signals at a crossover
         turnout. It also provides for placing signal heads around
         the crossover and for setting up logic for those signals.
@@ -943,8 +984,8 @@
         name (system or user) of the crossover turnout to be
         signaled. The entered name must correspond to a double
         crossover, a right-handed crossover, or a left-handed
-        crossover. (If this tool is accessed by selecting <b>Set
-        Signals...</b> in a turnout's popup menu, the turnout name
+        crossover. (If this tool is accessed by selecting <strong>Set
+        Signals...</strong> in a turnout's popup menu, the turnout name
         is entered automatically.) After the crossover turnout is
         identified, a dialog is displayed for entry of names
         (system or user) of four to eight signal heads to be
@@ -959,11 +1000,11 @@
         may have to return later after more signals have been
         assigned. After a turnout from the Turnout Table is
         assigned to a crossover, this tool can be reached by
-        selecting <b>Set Signals...</b> in that turnout's popup
+        selecting <strong>Set Signals...</strong> in that turnout's popup
         menu. (For more information, see the help page for the Set
         Signals at Crossover dialog.)</li>
 
-        <li><b>Set Signals at Level Crossing...</b> - This item
+        <li><strong>Set Signals at Level Crossing...</strong> - This item
         provides an automated procedure for assigning signals at a
         level crossing (a diamond). It also provides for placing
         signal heads around the level crossing and for setting up
@@ -987,11 +1028,11 @@
         logic, you may have to return later after more signals have
         been assigned. After blocks have been assigned to the level
         crossing tracks, this tool can be reached by selecting
-        <b>Set Signals...</b> in that level crossing's popup menu.
+        <strong>Set Signals...</strong> in that level crossing's popup menu.
         (For more information, see the help page for the Set
         Signals at Level Crossing dialog.)</li>
 
-        <li><b>Set Signals at Throat-to-Throat Turnouts...</b> -
+        <li><strong>Set Signals at Throat-to-Throat Turnouts...</strong> -
         This item provides an automated procedure for assigning
         signals to two turnouts in close proximity oriented
         throat-to-throat, with the throats connected by a single
@@ -1024,38 +1065,13 @@
         used for each throat-to-throat setup, this tool must be
         invoked from the Tools menu. After Layout Editor has
         recorded that the two turnouts are linked in a special
-        throat-to-throat configuration, selecting <b>Set
-        Signals...</b> in the popup menu of either turnout will
+        throat-to-throat configuration, selecting <strong>Set
+        Signals...</strong> in the popup menu of either turnout will
         bring up this tool with both turnouts identified. (For more
         information, see the help page for the Set Signals at
         Throat-to-Throat Turnouts dialog.)</li>
 
-        <li><b>Set Signals at a Slip</b> - This item provides an
-        automated procedure for assigning signals at a single or
-        double slip It also provides for placing signal heads
-        around the level crossing and for setting up logic for
-        those signals. Prior to accessing this item, blocks must be
-        defined for signaled regions of track on the panel, and the
-        required signal heads must be in the Signal Head Table.
-        When this item is selected, a drop down box is shown that
-        lists the slips that have been defined on the panel to be
-        signaled, and dialog boxes for entry of names (system or
-        user) of four to eight signal heads to be assigned. For
-        each signal head, check boxes are available for selecting
-        whether a signal head icon is to be placed on the panel,
-        and whether signal logic is to be created for the signal
-        head. Regardless of whether icons are placed or logic is
-        created, Layout Editor will record that the entered signal
-        heads are assigned to the specified turnouts. If create
-        logic is requested and the tool does not have enough
-        information available to set up the logic, you may have to
-        return later after more signals have been assigned. After
-        blocks have been assigned to the a slip, this tool can be
-        reached by selecting <b>Set Signals...</b> in the slips
-        popup menu. (For more information, see the help page for
-        the Set Signals at a Slip dialog.)</li>
-
-        <li><b>Set Signals at 3-Way Turnout...</b> - This item
+        <li><strong>Set Signals at 3-Way Turnout...</strong> - This item
         provides an automated procedure for assigning signals to
         two turnouts used to model a 3-way turnout in Layout
         Editor. A 3-way turnout is modeled by using two turnouts,
@@ -1092,10 +1108,43 @@
         each 3-way turnout, this tool must be invoked from the
         Tools menu. After Layout Editor has recorded that the two
         turnouts are linked to simulate a 3-way turnout, selecting
-        <b>Set Signals...</b> in the popup menu of either turnout
+        <strong>Set Signals...</strong> in the popup menu of either turnout
         will bring up this tool with both turnouts identified. (For
         more information, see the help page for the Set Signals at
         3-Way Turnouts window.)</li>
+
+        <li><strong>Set Signals at a Slip</strong> - This item provides an
+        automated procedure for assigning signals at a single or
+        double slip It also provides for placing signal heads
+        around the level crossing and for setting up logic for
+        those signals. Prior to accessing this item, blocks must be
+        defined for signaled regions of track on the panel, and the
+        required signal heads must be in the Signal Head Table.
+        When this item is selected, a drop down box is shown that
+        lists the slips that have been defined on the panel to be
+        signaled, and dialog boxes for entry of names (system or
+        user) of four to eight signal heads to be assigned. For
+        each signal head, check boxes are available for selecting
+        whether a signal head icon is to be placed on the panel,
+        and whether signal logic is to be created for the signal
+        head. Regardless of whether icons are placed or logic is
+        created, Layout Editor will record that the entered signal
+        heads are assigned to the specified turnouts. If create
+        logic is requested and the tool does not have enough
+        information available to set up the logic, you may have to
+        return later after more signals have been assigned. After
+        blocks have been assigned to the a slip, this tool can be
+        reached by selecting <strong>Set Signals...</strong> in the slips
+        popup menu. (For more information, see the help page for
+        the Set Signals at a Slip dialog.)</li>
+
+        <li><strong>Entry Exit...</strong> - Open the Entry/Exit Tools window.
+        For details see
+        <a href="../../../../html/tools/EntryExit.shtml">
+        Entry/Exit (NX) Routing Documentation</a> and
+        <a href="../entryexit/EntryExitFrame.shtml">
+        Entry/Exit (NX) Tools</a>.</li>
+
       </ul>
 
       <a name="zoommenu" id="zoommenu"></a>
@@ -1103,7 +1152,7 @@
 
       <p>The Zoom menu allows you to temporarily magnify a panel.
       The menu provides a choice of several magnification factors,
-      and a <b>No Zoom</b> item to return to normal size. When a
+      and a <strong>No Zoom</strong> item to return to normal size. When a
       magnification factor is selected the panel is magnified by
       that factor. Scroll bars are automatically set to reasonable
       positions. Move scroll bars to focus on various parts of the
@@ -1117,8 +1166,8 @@
       coordinates are those of the unmagnified panel. A panel may
       be saved while magnified.</p>
 
-      <p>When a panel is loaded, it always come up with <b>No
-      Zoom</b> selected. Since zooming is temporary, the zoom
+      <p>When a panel is loaded, it always come up with <strong>No
+      Zoom</strong> selected. Since zooming is temporary, the zoom
       factor is not preserved when a panel is saved.</p>
 
       <p><span class="since">Since 4.7.3</span>The Layout Editor Zoom
@@ -1128,15 +1177,15 @@
       <a name="markermenu" id="markermenu"></a>
       <h2>Using Layout Editor's Marker Menu</h2>
 
-      <p>The Marker menu provides <b>Markers</b> that may be used
+      <p>The Marker menu provides <strong>Markers</strong> that may be used
       to keep track of the location of trains on Layout Editor
       panels. Markers are small colored icons that display a train
       ID, usually the locomotive number. When running trains, a
       marker is created for each train, and that marker is moved
       around the panel as the train traverses the layout. This
       feature is especially useful to those who do not have block
-      detection hardware, and therefore cannot use the <b>Train
-      Tracking</b> feature of Layout Editor (<a href=
+      detection hardware, and therefore cannot use the <strong>Train
+      Tracking</strong> feature of Layout Editor (<a href=
       "#tracking">see below</a>).</p>
 
       <p>Markers are different from other items on Layout Editor
@@ -1148,7 +1197,7 @@
       to disk.</p>
 
       <ul>
-        <li><b>Add loco...</b> - Selecting this item brings up a
+        <li><strong>Add loco...</strong> - Selecting this item brings up a
         small window that allows a Marker to be created from an
         entered Loco ID. The Marker icon is not very large, so no
         more than 6 characters should be entered. Usually the
@@ -1158,7 +1207,7 @@
         change its color, etc. Dismiss this window by clicking the
         close icon in its title bar.</li>
 
-        <li><b>Add loco from roster...</b> - Selecting this item
+        <li><strong>Add loco from roster...</strong> - Selecting this item
         brings up a small window that allows a Marker to be created
         for a locomotive in the JMRI roster. To use this item, the
         locomotive must be in the JMRI roster before the panel is
@@ -1168,22 +1217,22 @@
         the "Road number" is used as the Loco ID. Otherwise, the
         locomotive's dcc address is used. Use the marker's popup
         menu to change its color, etc. For markers created from a
-        roster entry, the marker's popup menu has a <b>Throttle</b>
+        roster entry, the marker's popup menu has a <strong>Throttle</strong>
         item, that may be used to open a JMRI throttle for that
         locomotive. Dismiss this window by clicking the close icon
         in its title bar.</li>
 
-        <li><b>Remove markers</b> - Selecting this item removes
-        <b>all</b> markers from the Layout Editor panel. This item
+        <li><strong>Remove markers</strong> - Selecting this item removes
+        <strong>all</strong> markers from the Layout Editor panel. This item
         may not be undone. Note: A single marker may be removed by
-        selecting <b>Remove</b> in its popup menu.</li>
+        selecting <strong>Remove</strong> in its popup menu.</li>
       </ul>
 
       <a name="editing" id="editing"></a>
       <h2>Editing and Removing Items</h2>
 
-      <p>Every item on a panel has a popup menu. <b>Except for
-      Markers, popup menus are only active in edit mode.</b> To
+      <p>Every item on a panel has a popup menu. <strong>Except for
+      Markers, popup menus are only active in edit mode.</strong> To
       access the popup menu of an icon-based item (sensor icon,
       signal icon, text label, memory label, multi-sensor, fast
       clock, icon label, marker, recorder, or background): on
@@ -1197,7 +1246,7 @@
       control-click or right-click inside the square showing the
       connection point.</p>
 
-      <p>To delete an item from a panel, select <b>Remove</b> in
+      <p>To delete an item from a panel, select <strong>Remove</strong> in
       that item's popup menu. Some items will show a verify dialog.
       Most verify dialogs have an option to shut off verify dialogs
       in case you're deleting many of the same items. When an icon
@@ -1205,10 +1254,10 @@
       the item itself (signal head, sensor, memory variable, etc.)
       is not deleted. If you need to delete the item itself, do so
       using the corresponding table (Signal Table, Sensor Table,
-      etc.) <b>Important Note: Prior to deleting any item in a
+      etc.) <strong>Important Note: Prior to deleting any item in a
       table, make sure that all references to that item are removed
       from other places. Also immediately after deleting an item,
-      save your panel and restart before doing anything else!</b>
+      save your panel and restart before doing anything else!</strong>
       If there is no good reason for deleting an item, or if there
       is uncertainty if all references to an item have been
       removed, don't delete the item from its table. Extra unused
@@ -1226,30 +1275,41 @@
       <i>y</i> (vertical) location of the icon on the panel. These
       coordinates give the location of the upper left corner of the
       icon. A convenient way to change the location of an
-      icon-based item is to select <b>Set x &amp; y</b> in its
-      popup menu. Selecting <b>Set x &amp; y</b> brings up a small
+      icon-based item is to select <strong>Set x &amp; y</strong> in its
+      popup menu. Selecting <strong>Set x &amp; y</strong> brings up a small
       window that provides for precise adjustment of the icon's
       position.</p>
 
       <p>With turnouts, level crossings, and track segments,
-      selecting <b>Edit...</b> in the popup menu brings up a small
+      selecting <strong>Edit...</strong> in the popup menu brings up a small
       window for editing. If a turnout has no connections, a
-      <b>Rotate</b> item appears in its popup menu, allowing the
+      <strong>Rotate</strong> item appears in its popup menu, allowing the
       turnout to be rotated to any angle. More information on the
       edit dialogs of turnouts, level crossings, and track segments
       is contained below in the discussion of these items, and in
       the help page of each edit dialog.</p>
 
+      <span class="since">Since 4.11.4</span>
+      <p>For <strong>Track Segments</strong>, there is also a <strong>
+      Decorations</strong> item. The sub-menus provide the ability to add
+      <strong>Arrows</strong>, <strong>Bridges</strong>, <strong>End Bumpers
+      </strong>, and <strong>Tunnels</strong> to the track segment.</p>
+
+      <div style="margin-left: 2em;">
+      <img src="images/TrackDecorations.png"
+      alt="Track Decorations Menu Item" height="113" width="364">
+      </div>
+
       <p>A signal head icon's popup menu allows editing of signal
       head information related to the panel, but also contains an
-      <b>Edit Logic...</b> item that brings up a window for editing
+      <strong>Edit Logic...</strong> item that brings up a window for editing
       <a href="../blockboss/BlockBossFrame.shtml">Simple Signal Logic</a>
       (SSL) for the signal head. SSL supports ABS signaling, and will
       handle basic signal (head) logic.</p>
-      <p><a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a>
-      - in short <b>SML</b> - was added to support Aspect based signaling.
-      It is managed using the Signal Mast Logic table. In Layout Editor,
-      Signal Masts can be placed at Turnouts, anchor points and level
+      <p><a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal
+      Mast Logic</a> - in short <strong>SML</strong> - was added to support
+      Aspect based signaling.  It is managed using the Signal Mast Logic table.
+      In Layout Editor, Signal Masts can be placed at Turnouts, anchor points and level
       crossings, but only where there is a boundary between two different
       layout blocks. To add a Signal Mast using a Layout Editor Panel,
       right click on the Turnout, level crossing or anchor point and
@@ -1262,35 +1322,39 @@
       Layout Editor's tools for assigning signal heads to these
       items, for automated placement of signal head icons on the
       panel, and for automated creation of signal logic for the
-      assigned signal heads may be reached by selecting <b>Set
-      Signals...</b> in the popup menu. <b>Set Signals...</b> is
+      assigned signal heads may be reached by selecting <strong>Set
+      Signals...</strong> in the popup menu. <strong>Set Signals...</strong> is
       not shown in the popup menu until a minimum amount of
-      information is available to the tools. The remaining <b>Set
-      Signals...</b> tools may be accessed via the Tools menu.
+      information is available to the tools. The remaining <strong>Set
+      Signals...</strong> tools may be accessed via the Tools menu.
       These tools are briefly described above under <a href=
       "#toolsmenu">Using Layout Editor's Tools Menu</a>, and are
       discussed in detail on the help page of the tool's dialog
       pane.</p>
 
+      <p>In addition to signal heads and signal masts, it is possible to add
+      sensors to block boundaries.  Use the <strong>Set Sensors...</strong>
+      item.  The sensors are used to implement <strong>Entry/Exit</strong>.
+      See <a href="../../../../html/tools/EntryExit.shtml">
+      Entry/Exit (NX) Routing Documentation</a> for details.
+
       <a name="turnouts" id="turnouts"></a>
       <h2>Turnouts</h2>
 
-      <p>Layout Editor supports six different types of turnouts
+      <p>Layout Editor supports eight different types of turnouts
         (track switches):</p>
       <ul>
-        <li>right- handed (<b>RH</b>)</li>
-        <li>left-handed (<b>LH</b>)</li>
-        <li>wye (<b>WYE</b>)</li>
-        <li>double crossover (<b>Double Xover</b>)</li>
-        <li>right-handed single crossover (<b>RH Xover</b>)</li>
-        <li>left-handed single crossover (<b>LH Xover</b>)</li>
+        <li>right- handed (<strong>RH</strong>)</li>
+        <li>left-handed (<strong>LH</strong>)</li>
+        <li>wye (<strong>Wye</strong>)</li>
+        <li>double crossover (<strong>Double X-over</strong>)</li>
+        <li>right-handed single crossover (<strong>RH X-over</strong>)</li>
+        <li>left-handed single crossover (<strong>LH X-over</strong>)</li>
+        <li>single slip (<strong>Single Slip</strong>)</li>
+        <li>double slip (<strong>Double Slip</strong>)</li>
       </ul>
-      <p>Two other types of turnouts sometimes used on model railroad
-      layouts, double slip and three-way, can be drawn using two LH
-      or RH turnouts. Double slip turnouts, for example, are easily
-      represented by two LH and/or RH turnouts drawn with their
-      throats connected by a short track segment. Once a turnout
-      has been created, its type cannot be changed. Changing the
+      <p>A three-way can be drawn using a pair of regular turnouts. Once a
+      turnout has been created, its type cannot be changed. Changing the
       type of a turnout requires removing and recreating the
       turnout. Drawn turnout parts may be lengthened, shortened, or
       repositioned by dragging connection points with the meta key
@@ -1301,20 +1365,20 @@
       Editor uses default displacements from the center of the new
       turnout to "size" the new turnout drawing. Layout Editor
       maintains two sets of default displacements, one for for
-      regular turnouts (<b>RH</b>, <b>LH</b>, <b>WYE</b>) and one
-      for crossovers ( <b>Double Xover</b>, <b>RH Xover</b>, <b>LH
-      Xover</b>). These default size parameters may be changed if a
-      different default size is needed. First create a new turnout
-      (or select an existing turnout) and resize it by dragging its
-      connection points. Then select <b>Use Size As Default</b> in
-      that turnout's popup menu. This will change default size
-      parameters so that the next and subsequent turnouts to be
+      regular turnouts (<strong>RH</strong>, <strong>LH</strong>,
+      <strong>WYE</strong>) and one for crossovers ( <strong>Double Xover
+      </strong>, <strong>RH Xover</strong>, <strong>LH Xover</strong>). These
+      default size parameters may be changed if a different default size is
+      needed. First create a new turnout (or select an existing turnout) and
+      resize it by dragging its connection points. Then select <strong>Use
+      Size As Default</strong> in that turnout's popup menu. This will change
+      default size parameters so that the next and subsequent turnouts to be
       added will be the same size as the resized turnout. Each
-      <b>Use Size As Default</b> changes one of the two sets of
+      <strong>Use Size As Default</strong> changes one of the two sets of
       default size parameters. Both sets of default size parameters
       are saved when the panel is saved. To return to Layout
-      Editor's default turnout sizes select <b>Use Program Default
-      Turnout Size</b> in the Tools menu.</p>
+      Editor's default turnout sizes select <strong>Use Program Default
+      Turnout Size</strong> in the Tools menu.</p>
 
       <p>Turnout drawings in a track diagram are drawn using solid
       lines for both continuing and diverging legs until the
@@ -1322,29 +1386,29 @@
       Once linked to actual turnouts, turnout drawings show the
       "known states" of the turnouts they represent. After linking,
       you can toggle each turnout on your layout by clicking on the
-      center point of its drawing (provided <b>Allow Layout
-      Control</b> is checked in the Options menu, and your DCC
+      center point of its drawing (provided <strong>Allow Layout
+      Control</strong> is checked in the Options menu, and your DCC
       system supports computer control of turnouts). The ability to
       toggle by clicking can be turned off by checking
-      <b>Disabled</b> in the turnout's popup menu.</p>
+      <strong>Disabled</strong> in the turnout's popup menu.</p>
 
       <p>You can link each turnout drawing with an actual turnout
       (internal or hardware) in the Turnout Table as turnout
       drawings are created, by entering its Turnout Table name
-      (either system name or user name) in the <b>Turnout: Name</b>
+      (either system name or user name) in the <strong>Turnout: Name</strong>
       field (top row of the tool bar) before clicking to create
       that turnout. Alternatively, you can create your turnout
-      drawings first, then select <b>Edit...</b> in each turnout's
-      popup menu to open an <b>Edit Turnout</b> dialog that allows
+      drawings first, then select <strong>Edit...</strong> in each turnout's
+      popup menu to open an <strong>Edit Turnout</strong> dialog that allows
       entry of the turnout name. Once the name of an actual turnout
       is entered, the actual turnout can be toggled by clicking the
       mouse at the center of the turnout. Turnout toggling can be
-      disabled by checking <b>Disabled</b> in the turnout's popup
+      disabled by checking <strong>Disabled</strong> in the turnout's popup
       menu.</p>
 
-      <p>Optionally, you can designate which <b>Block</b> a turnout
-      is in either by entering a block name in the <b>Block:
-      Name</b> field of the tool bar prior to creating each turnout
+      <p>Optionally, you can designate which <strong>Block</strong> a turnout
+      is in either by entering a block name in the <strong>Block:
+      Name</strong> field of the tool bar prior to creating each turnout
       drawing, or by entering a block name in the Edit Turnout
       dialog at a later time. The Edit Turnout dialog also allows
       an Edit Block dialog to be requested, where information for
@@ -1357,7 +1421,7 @@
       closed path). Sometimes, however, the mainline follows the
       diverging leg (the thrown path). To allow entry of this
       information, the Edit Turnout dialog contains an entry called
-      <b>Continuing Route Turnout State</b>. Continuing Route
+      <strong>Continuing Route Turnout State</strong>. Continuing Route
       Turnout State defaults to Closed when a turnout drawing is
       created. You should change it to Thrown if the mainline track
       follows the Thrown path through the turnout. For a WYE
@@ -1394,11 +1458,11 @@
       may be in one, two, three, or four separate blocks. The Edit
       Turnout dialog for a crossover allows the entry of up to four
       blocks, each linked to one of the four connection points. The
-      first block entered must be the <b>Block: Name</b> field;
+      first block entered must be the <strong>Block: Name</strong> field;
       this block is linked to upper left connection point (if the
       turnout has not been rotated), and serves as the default
-      block for the crossover. If any of <b>Block 2</b>, <b>Block
-      3</b>, or <b>Block 4</b> entries are blank, the default block
+      block for the crossover. If any of <strong>Block 2</strong>, <strong>Block
+      3</strong>, or <strong>Block 4</strong> entries are blank, the default block
       is used. Block connection points are numbered 1, 2, 3 and 4,
       proceeding from the upper left connection point in a
       clockwise direction.</p>
@@ -1406,16 +1470,16 @@
       <a name="track" id="track"></a>
       <h2>Track Segments and Connection Points</h2>
 
-      <p>A <b>Track Segment</b> is a two ended piece of track between
+      <p>A <strong>Track Segment</strong> is a two ended piece of track between
       two connection points. Connection points are found on anchor
       points, end bumpers, edge connectors, turnouts, slips, cross
-      overs, level crossings and turn tables.
+      overs, level crossings and turntables.
       </p>
       <p>Anchor points have one connection point that accept two
       connections. All other connection points only accept one.
       End bumpers have one connection point. An Edge Connector
       only accepts one connection and is used to mark the "Edge"
-      of the current layout. Each turnout has three connection
+      of the current layout editor panel. Each turnout has three connection
       points and each slip, cross over and level crossing has four.
       </p>
       <p>
@@ -1432,8 +1496,8 @@
       can designate that a track segment be drawn <i>dashed</i> to
       show tunnels or tracks crossing at different grades. You can
       request a dashed line for a track segment by checking
-      <b>Dashed</b> in the tool bar before the track segment is
-      created, or you can change a track segment to <b>Dashed</b>
+      <strong>Dashed</strong> in the tool bar before the track segment is
+      created, or you can change a track segment to <strong>Dashed</strong>
       in the Edit Track Segment dialog. (More anchor points can be
       added to get the dashed part of your track to cover the exact
       area desired.) You can also designate a track segment as
@@ -1441,13 +1505,13 @@
       active. <i>Hidden</i> track segments are useful for track
       diagrams drawn as multiple rows where the end of one row
       connects to the beginning of the same or another row. To make
-      a track segment hidden, check <b>Hide Track</b> in the Edit
+      a track segment hidden, check <strong>Hide Track</strong> in the Edit
       Track Segment dialog.
       </p>
 
       <p>The default appearance of a track segment is a straight
-      line however you may change its appearance to <b>Circle</b>,
-      <b>Ellipse</b> or <b>Bezier</b> via its popup menu (when in edit
+      line however you may change its appearance to <strong>Circle</strong>,
+      <strong>Ellipse</strong> or <strong>Bezier</strong> via its popup menu (when in edit
       mode). Circled track segments are drawn as fixed radius arc's
       connecting the two end points. When in edit mode the radius may
       be adjusted by dragging the center point of the circle. An
@@ -1467,18 +1531,15 @@
       information on how a mainline is tracked through a
       turnout.</p>
 
-      <p>If <b>Mainline</b> is checked in the tool bar when a track
+      <p>If <strong>Mainline</strong> is checked in the tool bar when a track
       segment is created, that track segment is designated as
       <i>mainline track</i>, otherwise it is considered <i>side
       track</i>. You can change from mainline track to side track,
-      or vice versa, in the Edit Track dialog. Mainline track and
-      side track may be drawn with different width lines. Track
-      widths for each are set using the <b>Set Track Width...</b>
-      item in the Options menu.</p>
+      or vice versa, in the Edit Track dialog.</p>
 
-      <p>Optionally, you can designate which <b>Block</b> a track
+      <p>Optionally, you can designate which <strong>Block</strong> a track
       segment is in--either by entering a block name in the
-      <b>Block: Name</b> field of the tool bar prior to creating
+      <strong>Block: Name</strong> field of the tool bar prior to creating
       each track segment, or by entering a block name in the Edit
       Track Segment dialog at a later time. The Edit Track Segment
       dialog also allows a Create/Edit Block dialog to be
@@ -1486,7 +1547,7 @@
       be entered or changed. (Blocks are discussed more fully
       below.)</p>
 
-      <p>An <b>Edge Connector</b> is used to denote that the current
+      <p>An <strong>Edge Connector</strong> is used to denote that the current
       track finished on this panel and can continue on another one. The
       connector uses the same <strong><span
       style="color:red">red</span></strong> / <strong><span
@@ -1526,7 +1587,7 @@
       track designation of the track segments connected to each
       track. Also optionally you may independently assign each
       track to a different block. If a block name is entered in the
-      <b>Block: Name</b> field of the tool bar prior to creating a
+      <strong>Block: Name</strong> field of the tool bar prior to creating a
       level crossing, that block is assigned to both tracks. Each
       track may be assigned to a different block in the Edit Level
       Crossing dialog. The Edit Level Crossing dialog also allows a
@@ -1554,15 +1615,15 @@
       to a panel, and each turntable may have any number of ray
       tracks.</p>
 
-      <p>A turntable is added to a panel by selecting <b>Add
-      Turntable</b> in the panel's Option menu. New turntables are
+      <p>A turntable is added to a panel by selecting <strong>Add
+      Turntable</strong> in the panel's Option menu. New turntables are
       placed at the center of the panel, and should be moved to
       desired locations by dragging its center point with the meta
       key pressed (right button drag on Windows). When a turntable
       is added, it has four ray tracks located in up, down, left,
       and right directions. The turntable's popup menu has two
-      items. Selecting <b>Edit...</b> brings up an Edit Turntable
-      dialog, and selecting <b>Remove</b> deletes the turntable and
+      items. Selecting <strong>Edit...</strong> brings up an Edit Turntable
+      dialog, and selecting <strong>Remove</strong> deletes the turntable and
       any track segments connected to it. Before a turntable is
       actually deleted, the program asks for verification of that
       action.</p>
@@ -1593,16 +1654,16 @@
       to the right of the other, until the desired panel area is
       covered.</p>
 
-      <p><b>Important Note: if you create your own background
+      <p><strong>Important Note: if you create your own background
       images (or icons), don't store them with the JMRI distribution
       images or they will be deleted when you upgrade JMRI.
       Instead, create a new folder called "resources" in your JMRI
       Preferences directory (where your panel file is stored), and
-      add your images and icons to that folder.</b></p>
+      add your images and icons to that folder.</strong></p>
 
-      <p>A background image is added to a panel by selecting <b>Add
-      Background Image...</b> in the panel's Option menu. Selecting
-      <b>Add Background Image...</b> brings up a file selection
+      <p>A background image is added to a panel by selecting <strong>Add
+      Background Image...</strong> in the panel's Option menu. Selecting
+      <strong>Add Background Image...</strong> brings up a file selection
       dialog for selecting the file containing the background
       image. Layout Editor provides for multiple background images.
       The first background image is placed with its upper left
@@ -1612,7 +1673,7 @@
       multi-slice background images (see below). The <i>x, y</i>
       location of the upper left corner of each background image is
       shown in it's popup menu. This location may be changed by
-      selecting <b>Set x &amp; y</b> in the popup menu.</p>
+      selecting <strong>Set x &amp; y</strong> in the popup menu.</p>
 
       <p>For users building a classic US&amp;S panel, there are two
       sets of predefined image 'slices' currently available. One
@@ -1644,15 +1705,15 @@
       signaling, but blocks may be used for other layout control
       and animation functions.</p>
 
-      <p>If a block name is entered in the <b>Block: Name</b> field
+      <p>If a block name is entered in the <strong>Block: Name</strong> field
       of the tool bar prior to adding a turnout, level crossing, or
       track segment, the added item is assigned to that block; if a
       sensor name (system name or user name) was entered into the
-      <b>Occupancy Sensor</b> field, that sensor will be assigned
+      <strong>Occupancy Sensor</strong> field, that sensor will be assigned
       to the entered block. A turnout, level crossing, or track
       segment may also be assigned to a block by entering that
       block's name in the edit dialog accessed by selecting
-      <b>Edit...</b> in that items popup menu. In either case, if a
+      <strong>Edit...</strong> in that items popup menu. In either case, if a
       block with the entered name doesn't exist, one is
       created.</p>
 
@@ -1668,18 +1729,18 @@
       <p>Turnout, level crossing, and track segment edit dialogs
       provide access to the Create/Edit Block dialog where
       information specific to a block may be entered or edited. The
-      <b>Occupancy Sensor:</b> field in the Create/Edit Block
+      <strong>Occupancy Sensor:</strong> field in the Create/Edit Block
       dialog shows the name of the occupancy sensor currently
       assigned to the block, if there is one. To enter or change
       the occupancy sensor, enter the name (system name or user
-      name) of a sensor in the Sensor Table in the <b>Occupancy
-      Sensor:</b> field. A sensor may be assigned as the occupancy
+      name) of a sensor in the Sensor Table in the <strong>Occupancy
+      Sensor:</strong> field. A sensor may be assigned as the occupancy
       sensor of only one block; attempting to do otherwise will
       result in an error message. Normally, the state of an
       occupancy sensor is "Active" when a block is occupied, so
       "Active" for occupied sense is the automatic default. This
-      can be changed by selecting "Inactive" in the <b>Occupied
-      Sense:</b> selection box.</p>
+      can be changed by selecting "Inactive" in the <strong>Occupied
+      Sense:</strong> selection box.</p>
 
       <p>Block track colors are used instead of the default track
       color if a section of track is in a block. The track items in
@@ -1687,14 +1748,14 @@
       and unoccupied states, allowing the track in a block to
       change color as a train enters and leaves that block. To set
       track colors, select the unoccupied track color in the
-      <b>Track Color:</b> selection box, and select the occupied
-      track color in the <b>Occupied Track Color:</b> selection
+      <strong>Track Color:</strong> selection box, and select the occupied
+      track color in the <strong>Occupied Track Color:</strong> selection
       box. An alternate unoccupied track color is provided for
       special uses. For example, <a href=
       "../dispatcher/Dispatcher.shtml">Dispatcher</a> has an option
       to use the alternate unoccupied track color for blocks that are
       allocated but unoccupied. Set the alternate unoccupied track
-      color using the <b>Alternate Track Color:</b> selection box.
+      color using the <strong>Alternate Track Color:</strong> selection box.
       When track color is set, Layout Editor will use the occupied
       track color if a block is occupied, then if not occupied,
       will use the alternate unoccupied track color if it has been
@@ -1710,18 +1771,67 @@
       used. Layout Editor keeps track of the number of track items
       (turnouts, track segments, and level crossings) that are
       assigned to a block. This count is displayed in the
-      Create/Edit Block dialog as <b>Current Use Count:</b>. When
+      Create/Edit Block dialog as <strong>Current Use Count:</strong>. When
       panels are saved to disk, only those blocks with a use count
       greater than zero are saved.</p>
+
+      <a name="trackdrawoptions" id="trackdrawoptions">
+      </a><span class="since">Since 4.11.4</span>
+      <h2>Track Drawing Options</h2>
+      <p>The appearance of the track components as drawn on the Layout
+      Editor panel is set by the Track Drawing Options dialog.</p>
+
+      <div style="margin-left: 2em;">
+      <img src="images/TrackDrawingOptions.png"
+      alt="Track Drawing Options Dialog" height="370" width="600">
+      </div>
+
+      <p>There is a column for the track defined as mainline and one for sideline
+      trackage.  Numbers can be entered using the spinners or typing in the box.
+      The colors are set by clicking on a color box and using the color
+      selector.</p>
+      <p>At the lower left corner is a <strong>Presets:</strong> list which can
+      be used to select example configurations.  If you customize the
+      configuration, the panel name will be added to the presets list.</p>
+
+      <p>The track consists of 1 to 4 layers.</p>
+      <ul>
+        <li><strong>Rail</strong> &mdash; There can be from 0 to 3 rails.</li>
+        <li><strong>Block</strong> &mdash; If a block has been assigned to the
+        track component, the block layer will be drawn.</li>
+        <li><strong>Ballast</strong> &mdash; Simulate track ballast.</li>
+        <li><strong>Ties</strong> &mdash; Add ties to the rails.</li>
+      </ul>
+
+      <p>The rail layer defaults to a single rail with a width of 1 for sideline
+      and 2 for mainline.</p>
+
+      <p>The block line width defaults to the previous track width values.</p>
+
+      <p>The <strong>Block Line Dash Percentage</strong> has
+      <strong><em>nothing</em></strong> to do with dashed track.  This is a
+      special setting to create an on/off pattern to blocks.  The <strong>
+      British 70's</strong> preset uses this option.</p>
+
+      <h3>Notes</h3>
+      <p><strong>Dashed Track</strong> &mdash; If a track segment is defined as
+      dashed and a block has been assigned, the rail layer will not be drawn.
+      This eliminates rail fragments that might show up in the block gaps.</p>
+
+      <p><strong>Draw Unselected Turnout Leg</strong> &mdash; This option only
+      applies to the block layer.  If the rail count is 1, the rail for the
+      unselected leg is drawn with a gap.  If the option is active, the block
+      line will also be drawn.  For maximum turnout position visibliy, turn off
+      the option.</p>
 
       <a name="tracking" id="tracking"></a>
       <h2>Train Tracking</h2>
 
-      <p><b>Train Tracking</b> is an animation technique that
+      <p><strong>Train Tracking</strong> is an animation technique that
       allows us to display dynamically which train is in an
       occupied Block. So, for one train, or for several trains
       transiting a layout at the same time, we can show where each
-      train is at any given time. <b>Train Tracking</b> uses the
+      train is at any given time. <strong>Train Tracking</strong> uses the
       JMRI Block software. Each occupied block has a <i>value</i>,
       which is automatically passed from block to block as a train
       moves from block to block. A block's <i>value</i> is cleared
@@ -1761,9 +1871,9 @@
 
         <li>2. Open the Block Table, and enter the name of each
         train in the "Value" column of the block it is occupying.
-        <b>Remember to click somewhere outside the value entry box
+        <strong>Remember to click somewhere outside the value entry box
         after entering a train name to make Java read what was
-        entered.</b></li>
+        entered.</strong></li>
       </ul>
 
       <p>Note: If the program detects a block is unoccupied
@@ -1777,27 +1887,16 @@
       <a name="tips" id="tips"></a>
       <h2>Tips</h2>
 
-      <p>Because of the way a Layout Editor panel is refreshed, the
-      drawn track schematic will be on top of all icons and labels.
-      It is possible to have a label or icon appear to be "on top
-      of" a section of track, as is commonly done in Panel Editor.
-      To create a break in visible track, without breaking
-      connectivity, place an Anchor Point at each end of the break.
-      Connect these anchor points with a track segment. Make the
-      connecting track segment invisible by editing it and checking
-      <b>Hide Track</b>. The track segment will show as a narrow
-      line when in edit mode, but will be invisible when edit mode
-      is turned off.</p>
+      <span class="since">Since 4.10</span>
+      <h3>Track Level</h3>
+      <p>The Layout Editor track components are drawn at level 3.  Icons are
+      drawn at level 10 and labels are drawn at level 4.  These can be placed
+      over track components.  Depending on opacity, the track will be hidden.
+      To make the track appear over the icon or label, change the icon or label
+      level to 2.  This replaces the old trick of using hidden track segments.
+      </p>
 
-      <p>Remember that "system names" of items (turnouts, sensors,
-      signal heads, etc.) may not be changed, but "user names" may
-      be changed. If there is any chance that you might want to
-      change an item's user name, use its system name when selecting
-      an item. If you use the user name, and then
-      change the user name, all assignments using the old user name
-      will break, until you edit all occurrences of the old user
-      name to the new user name.</p>
-
+      <h3>Panel Differences</h3>
       <p>Since Panel Editor panels are fully icon based, their
       track schematic has the possibility of looking more
       prototypical. Layout Editor panels have more animation
@@ -1805,13 +1904,13 @@
       train tracking, etc. If you would like both worlds, consider
       building both Panel Editor and Layout Editor panels for your
       layout. You can switch between them easily using the
-      <b>Panels</b> menu. Since both type of panels share the same
+      <strong>Panels</strong> menu. Since both type of panels share the same
       configuration items (turnouts, sensors, memory variables,
       block contents, signal heads, etc.), whatever is set in one
       panel is reflected in the other if the same items are
       displayed. After they are loaded, panels continue to
       function, whether they are displayed or not-- they just need
-      to show up in the <b>Show Panel</b> submenu. So, for example,
+      to show up in the <strong>Show Panel</strong> submenu. So, for example,
       if you set up a Layout Editor panel for train tracking as
       described above, you can track trains in a companion Panel
       Editor panel just by adding Block Contents Labels or follow a
@@ -1821,7 +1920,7 @@
       <h2>Putting Finishing Touches on your Panel</h2>
 
       <p>Below is an enhanced version of the simple oval panel
-      constructed in <b>Getting Started with Layout Editor</b>. The
+      constructed in <strong>Getting Started with Layout Editor</strong>. The
       general steps needed to get from that starting panel to this
       panel are sketched below. The steps need not be done in the
       exact same order presented. The presented order works, but
@@ -1836,7 +1935,7 @@
 
       <ul>
         <li>Turnouts from the Turnout Table were assigned to each
-        turnout graphic using the <b>Edit...</b> item in each
+        turnout graphic using the <strong>Edit...</strong> item in each
         turnout's popup menu.</li>
 
         <li>Three new anchor points were added-one on each side
@@ -1844,8 +1943,8 @@
         <i>block boundaries</i>. Block boundaries are places on the
         track where two blocks join; track at a block boundary is
         normally gapped on the physical layout. Adding anchor
-        points was made easier by using the <b>Translate
-        Selection</b>... tool in the Tools menu, to spread out the
+        points was made easier by using the <strong>Translate
+        Selection</strong>... tool in the Tools menu, to spread out the
         original panel in the vertical and horizontal
         directions.</li>
 
@@ -1858,20 +1957,20 @@
         continuing and diverging points were placed in different
         blocks.</li>
 
-        <li>Block names were placed on the panel using <b>Text
-        Label</b> on the toolbar. This was done for this
+        <li>Block names were placed on the panel using <strong>Text
+        Label</strong> on the toolbar. This was done for this
         illustrated example, but you may or may not want to display
         block names on your final panel.</li>
 
         <li>Each block was assigned an occupancy sensor from the
         Sensor Table. Sensors were added to the Sensor Table prior
         to assigning occupancy sensors. An occupancy sensor was
-        assigned to each block using the <b>Create/Edit Block</b>
-        button in the <b>Edit Track Segment</b> dialog of one of
+        assigned to each block using the <strong>Create/Edit Block</strong>
+        button in the <strong>Edit Track Segment</strong> dialog of one of
         the track segments in the block.</li>
 
         <li>Track on the main oval were designated <i>mainline
-        track</i> using the <b>Edit Track Segment</b> dialog for
+        track</i> using the <strong>Edit Track Segment</strong> dialog for
         each track segment. This gave different track widths for
         mainline and side track.</li>
 
@@ -1879,25 +1978,25 @@
         each of the signals to be placed on the panel. Triple Output
         signal head types were used for all.</li>
 
-        <li>Signals Heads were placed at turnouts using the <b>Set
-        Signals at Turnout</b> tool in the Tools menu. For each
-        signal head <b>Add Signal Icon to Panel</b> was checked,
-        but <b>Set up Logic</b> was not.</li>
+        <li>Signals Heads were placed at turnouts using the <strong>Set
+        Signals at Turnout</strong> tool in the Tools menu. For each
+        signal head <strong>Add Signal Icon to Panel</strong> was checked,
+        but <strong>Set up Logic</strong> was not.</li>
 
         <li>Signal Heads were placed at block boundaries at the three
-        anchor points using <b>Set Signals at Block Boundary</b> in
-        the Tools menu. <b>Add Signal Icon to Panel</b> was
-        checked, but <b>Set up Logic</b> was not.</li>
+        anchor points using <strong>Set Signals at Block Boundary</strong> in
+        the Tools menu. <strong>Add Signal Icon to Panel</strong> was
+        checked, but <strong>Set up Logic</strong> was not.</li>
 
         <li>Logic for the signal heads at turnouts was set up using
-        <b>Set Signals at Turnout</b>. The name of the turnout was
-        entered, then <b>Get Saved</b> was clicked to retrieve the
-        turnout names. Next <b>Set up Logic</b> was checked for
-        each signal head, and <b>Add Signal Icon to Panel</b> was
+        <strong>Set Signals at Turnout</strong>. The name of the turnout was
+        entered, then <strong>Get Saved</strong> was clicked to retrieve the
+        turnout names. Next <strong>Set up Logic</strong> was checked for
+        each signal head, and <strong>Add Signal Icon to Panel</strong> was
         not.</li>
 
         <li>Logic for signals at anchor point block boundaries was
-        set up using <b>Set Signals at Block Boundary</b> by
+        set up using <strong>Set Signals at Block Boundary</strong> by
         following a similar procedure.</li>
 
         <li>Since all signal heads will show <strong><span

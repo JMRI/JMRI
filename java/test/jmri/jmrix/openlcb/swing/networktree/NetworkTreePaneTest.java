@@ -26,11 +26,7 @@ public class NetworkTreePaneTest {
     public void setUp() {
         JUnitUtil.setUp();
 
-        memo = new jmri.jmrix.can.CanSystemConnectionMemo();
-        tc = new jmri.jmrix.can.adapters.loopback.LoopbackTrafficController();
-        memo.setTrafficController(tc);
-        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-
+        memo = jmri.jmrix.openlcb.OlcbTestInterface.createForLegacyTests();
     }
 
     @After

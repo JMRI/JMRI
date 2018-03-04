@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2015
- * @author      B. Milhaupt  Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2015
+ * @author B. Milhaupt  Copyright (C) 2017
  */
 public class NetworkDriverAdapter extends RfidNetworkPortController {
 
@@ -43,7 +43,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {

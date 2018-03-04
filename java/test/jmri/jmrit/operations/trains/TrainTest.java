@@ -358,7 +358,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
-        train.setTrainRailroadName("Working Railroad");
+        train.setRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
         // now add a route that doesn't have any locations
@@ -377,7 +377,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
-        train.setTrainRailroadName("Working Railroad");
+        train.setRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
         // now add a route that doesn't have any locations
@@ -458,7 +458,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test");
 
         // exercise manifest build
-        train.setTrainRailroadName("Working Railroad");
+        train.setRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
         // now add a route that doesn't have any locations
@@ -4418,14 +4418,41 @@ public class TrainTest extends OperationsTestCase {
 
         // now test train returning to staging
         Setup.setStagingTrackImmediatelyAvail(false);
-        rte1.addLocation(loc1);
+        rte1.addLocation(loc1); // return to staging
         train1.build();
         // should fail, can't return to staging track
         Assert.assertEquals("Train 1 deaprting and returning to staging", false, train1.isBuilt());
         // change mode
         Setup.setStagingTrackImmediatelyAvail(true);
         train1.build();
-        Assert.assertEquals("Train 1 deaprting and returning to staging", true, train1.isBuilt());
+        Assert.assertEquals("Train 1 departing and returning to staging", true, train1.isBuilt());
+        Assert.assertEquals("check departure track name", "Harvard Yard 1", train1.getDepartureTrack().getName());
+        Assert.assertEquals("check departure and arrival track", train1.getDepartureTrack(), train1.getTerminationTrack());
+        
+        // check destinations
+        Assert.assertEquals("c1 destination 3", "Harvard Yard 1", c1.getDestinationTrackName());
+        Assert.assertEquals("c2 destination 3", "", c2.getDestinationTrackName());
+        Assert.assertEquals("c3 destination 3", "", c3.getDestinationTrackName());
+        Assert.assertEquals("c4 destination 3", "Boston Yard 2", c4.getDestinationTrackName());
+
+        Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
+        Assert.assertEquals("c6 destination 3", "Westford Yard 1", c6.getDestinationTrackName());
+        Assert.assertEquals("c7 destination 3", "Harvard Yard 1", c7.getDestinationTrackName());
+        Assert.assertEquals("c8 destination 3", "Arlington Siding", c8.getDestinationTrackName());
+
+        Assert.assertEquals("c9 destination 3", "", c9.getDestinationTrackName());
+        Assert.assertEquals("c10 destination 3", "Chelmsford Yard 1", c10.getDestinationTrackName());
+        Assert.assertEquals("c11 destination 3", "Westford Yard 2", c11.getDestinationTrackName());
+
+        Assert.assertEquals("e1 destination 3", "", e1.getDestinationTrackName());
+        Assert.assertEquals("e2 destination 3", "", e2.getDestinationTrackName());
+        Assert.assertEquals("e3 destination 3", "", e3.getDestinationTrackName());
+        Assert.assertEquals("e4 destination 3", "", e4.getDestinationTrackName());
+        Assert.assertEquals("e5 destination 3", "", e5.getDestinationTrackName());
+        Assert.assertEquals("e6 destination 3", "Harvard Yard 1", e6.getDestinationTrackName());
+        Assert.assertEquals("e7 destination 3", "Harvard Yard 1", e7.getDestinationTrackName());
+        Assert.assertEquals("e8 destination 3", "Harvard Yard 1", e8.getDestinationTrackName());
+        
         train1.terminate();
 
         // check car locations

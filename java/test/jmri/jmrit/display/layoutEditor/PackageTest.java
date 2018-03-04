@@ -42,7 +42,11 @@ import org.junit.runners.Suite;
         LayoutTrackEditorsTest.class,
         LayoutEditorComponentTest.class,
         LayoutEditorToolsTest.class,
-        LayoutEditorChecksTest.class
+        LayoutEditorChecksTest.class,
+        LayoutTrackDrawingOptionsDialogTest.class,
+	LayoutTrackDrawingOptionsTest.class,
+	LayoutTrackExpectedStateTest.class,
+
 })
 public class PackageTest {
 }

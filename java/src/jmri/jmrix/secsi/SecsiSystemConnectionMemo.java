@@ -22,13 +22,11 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, SecsiSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.secsi.swing.SecsiComponentFactory(this),
+        InstanceManager.store(new jmri.jmrix.secsi.swing.SecsiComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created SecsiSystemConnectionMemo");
     }
-
-    private jmri.jmrix.swing.ComponentFactory cf = null;
 
     private SerialTrafficController tc = null;
 

@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Create/Edit Warrant Help</title>
-  <meta content="Pete Cressman" name="author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Create/Edit Warrant">
   <!-- Style -->
   <meta http-equiv="content-type" content=
@@ -25,28 +25,42 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Creating and Editing Warrants</h1>A Warrant contains the
+      <h1>Creating and Editing Warrants</h1>
+
+      <p>A Warrant contains the
       information needed to run a train. This includes the DCC
       address of the locomotive(s), the route train will take, the
       settings of the turnouts to traverse the route and the
       throttle commands to use at various points along the route -
       e.g. speed, when to show lights, sound horns, bells or other
-      sound effects. For an overview discussion of warrants, see
-      <a href="Warrant.shtml">Warrants</a>.
+      sound effects. For an overview discussion of Warrants, see
+      <a href="Warrant.shtml">Warrants</a>.</p>
 
       <div style="margin-left: 2em">
         <b>NOTE:</b> Warrants can only be created if the PanelPro
         configuration has at least two OBlocks defined.
-      </div>There are three steps in creating a warrant, 1. define
-      the route; 2. select a train; and 3. record the throttle
-      commands. There are two tabs on the Create/Edit window,
-      <b>Define Route</b> and <b>Record/Playback Script</b>.
+      </div>
 
-      <h2>Defining a Warrant Route</h2>Routes are created using the
-      <b>Define Route</b> tab in the Edit Warrant window.
+      <p>There are three steps in creating a Warrant:</p>
+        <ol>
+            <li>Define the route</li>
+            <li>Select a train, and</li>
+            <li>Record the throttle commands.</li>
+        </ol>
+      <p>On the Create/Edit pane are two tabs:
+      <b>Define Route</b> and <b>Record/Playback Script</b>.</p>
 
-      <h3>Origin, Destination, Via and Avoid Blocks</h3>The Origin
-      Block is where a train given this route will start
+      <a href="images/WarrantCreate1.png"><img
+      src="images/WarrantCreate1.png" width="639"
+      height="270" alt="Create Warrant pane part 1 in JMRI 4.10"></a>
+
+      <h2>Defining a Warrant Route</h2>
+      <p>Routes are created using the
+      <b>Define Route</b> tab in the Edit Warrant pane.</p>
+
+      <h3>Origin, Destination, Via and Avoid Blocks</h3>
+      <p>The <b>Origin Block</b> is where a train given this route
+      will start
       and the starting path within the origin block is the track it
       is on - e.g. a path named "Departure Track #3" in block named
       "Main Terminal". Choosing the portal of the path, e.g. portal
@@ -54,22 +68,22 @@
       block determines the direction of the train on the route. A
       computer algorithm will find portals, paths and blocks needed
       to take the train to the Destination Block and path - e.g.
-      "Arrival Track #1" in the destination block.
+        "Arrival Track #1" in the destination block.</p>
 
-      <p>A warrant route is created by selecting the the block and
+      <p>A Warrant route is created by selecting the block and
       path where the train will begin its trip and the portal by
       which it should leave. Then you select the block, path and
       entry portal where the train should end its trip. Press the
-      <b>Calculate Route</b> button and the the computer will
+      <b>Calculate Route</b> button and the computer will
       determine all the intermediate paths needed to make the
       trip.</p>
 
       <div style="margin-left: 2em">
         <b>Note:</b> The right hand portion of the
-        Create/Edit Warrant frame is a table listing all the
-        OBlocks you have defined. Either the system name or the
-        user name of the block can be dragged and dropped into the
-        location blocks on the left hand side of the frame.
+        Create/Edit Warrant pane is a table listing all the
+        OBlocks you have defined. Either the System Name or the
+        User Name of a Block can be dragged and dropped into the
+        Location Block fields on the left hand side of the pane.
       </div>
 
       <ul>
@@ -103,17 +117,18 @@
             be specified. It is important to specify the Entry
             portal for the destination. This is needed when the
             layout has reversing loops allowing the path to be
-            entered from either end. <i>A common mistake where no
-            route will be found is to specify an <b>entry portal</b> or
-            <b>path</b> that cannot be reached by the direction taken when
-            leaving the origin block.</i>
+            entered from either end.<br>
+            <i>A common mistake where no route will be found is to
+            specify an <b>Entry Portal</b> or <b>Path</b> that
+            cannot be reached by the direction taken when
+            leaving the origin OBlock.</i>
           </div>
 
           <div style="margin-left: 2em">
-            <b>Note:</b> when a path is chosen, only the Portals of
-            that path are shown in the Exit or Entry Portal drop
+            <b>Note:</b> when a Path is chosen, only the Portals of
+            that Path are shown in the Exit or Entry Portal drop
             down menus. Thus, even though the block may have many
-            portals, you will only see at most two portals.
+            Portals, you will only see at most two portals.
           </div>
         </li>
 
@@ -173,23 +188,23 @@
           several ways you can restrict the number of routes
           found.</p>
 
-          <ul>
-            <li>1. Specify a maximum number of blocks to use in a
+          <ol>
+            <li>Specify a maximum number of blocks to use in a
             route by entering a smaller number in the <b>Max Number
             of Blocks in Route</b> box. The computer will only list
             routes with this number or fewer blocks</li>
 
-            <li>2. Specify an intermediate <b>Via Location</b>
+            <li>Specify an intermediate <b>Via Location</b>
             block and path that must be included in the route. The
             computer will calculate the route with this "must
             include" restriction and present you only with routes
             through the specified "Via" block and path.</li>
 
-            <li>3. Specify an <b>Avoid Location</b> block and path
+            <li>Specify an <b>Avoid Location</b> block and path
             that must not be in the route. The computer will not
             list any routes containing this "must avoid" block and
             path</li>
-          </ul>
+          </ol>
 
           <p>Sometimes the dialog message "No Route found from
           "Origin Block', path ..." etc. is displayed. Responding
@@ -218,11 +233,16 @@
       </ul>
 
       <h2>Creating the Throttle Command Script</h2>
-          When you are satisfied with the route, the
+          <p>When you are satisfied with the route, the
           <b>Record/Playback Script</b> tab will be selected for
-          you.
-          <p>At the very top are
-          two Radio buttons which allow you to select either the
+          you:<br>
+          <a href="images/WarrantCreate2.png"><img
+          src="images/WarrantCreate2.png" width="704"
+          height="270" hspace="0" vspace="0" alt="Create Warrant
+          pane part 2 in in JMRI 4.10"></a>
+
+          At the very top are
+          two radio buttons which allow you to select either the
           <b>Route Table</b> or the <b>Throttle Command Table</b>.
           The Route Table shows the track circuits (OBlock, Portals
           and Paths) the warrant defines. The Throttle Command
@@ -236,16 +256,17 @@
           <b>Setect Type</b>, <b>Settings</b>,
           <b>Learn mode</b>, <b>Run Parameters,</b> and <b>Test 
           Run Train,</b>. The first thing to do
-          is to choose an engine consist.
+          is to choose an engine consist.</p>
 
-          <h3>Choosing a Train</h3>The <b>Train Name</b> field is
+          <h3>Choosing a Train</h3>
+          <p>The <b>Train Name</b> field is
           used to provide a name that can be displayed by an
           indicator track icon as the train travels along the
           warrant route. If you have defined an JMRI engine roster,
           the train names are displayed in the <b>Engine Roster</b>
           drop down ComboBox. Selecting a name from this list will
           fill in the <b>Train Name</b>, and <b>Address</b> text
-          fields and assigns them to the warrant.
+          fields and assigns them to the warrant.</p>
 
           <p>A DCC address typed into the<b>Address</b> text field
           will be used whether or not it is found in the JMRI
@@ -322,31 +343,33 @@
            <a href="SpeedChanges.shtml">Warrant Speed Changes</a> has details
            about how warrants modify recorded speeds.</p>
 
-			<h3>Run Parameters</h3>This area has check boxes to modify
-			how the train will operate when running the warrant.
+			<h3>Run Parameters</h3>
+            <p>This area has check boxes to modify how the train will operate
+            when running the Warrant.</p>
 			<ul>
-			<li><b>Clearance to Share Route</b> Normally a track warrant
-			assigns exclusive rights to only one train.  This option allows
-			several trains to share rights to a route, such as train sections 
-			following one another. Multiple "shared warrants" are still
-			subject to ramping speed changes due to signals or rogue
-			occupancy.</li> 
-			<li><b>Don't Ramp Speed Changes</b> Suppress the 
-			ramping calculations. Instead, the warrant makes immediate speed
-			change upon entering the approach block to the block requiring
-			a speed change.</li>
-			<li><b>Use Elapsed Time Only</b> Do not use
-			block detection. <i>Using this option allows Warrants to
-			be run on layouts without block detection.</i> </li>
+                <li><b>Clearance to Share Route</b> - Normally a track warrant
+                assigns exclusive rights to only one train.  This option allows
+                several trains to share rights to a route, such as train sections
+                following one another. Multiple "shared warrants" are still
+                subject to ramping speed changes due to signals or rogue
+                occupancy.</li>
+                <li><b>Don't Ramp Speed Changes</b> - Suppress the
+                ramping calculations. Instead, the Warrant makes immediate speed
+                change upon entering the approach block to the block requiring
+                a speed change. <span class="since">since 4.5.7</span></li>
+                <li><b>Use Elapsed Time Only</b> - Do not use
+                block detection. <i>Using this option allows Warrants to
+                be run on layouts without block detection.</i></li>
 			</ul> 
 			Using the "Don't Ramp" or "Elapsed Time" options are the 
 			only cases where block path lengths and engine speed factors
-			are not necessary. 
+            are <i>not</i> necessary.
 			
-          <h2>Run Mode</h2>After a script is recorded, pressing the
+          <h2>Run Mode</h2>
+          <p>After a script is recorded, pressing the
           <b>AutoRun</b> button in the <b>Test Run Train</b> box will
           send the throttle commands to the train specified in the
-          warrant.
+          warrant.</p>
 
           <div style="margin-left: 2em">
             <b>NOTE:</b>Be sure that the train is located on the
@@ -486,8 +509,8 @@
           trigger the setting of the sensor. On playback when this
           command is executed the state of the sensor will be set.
 
-          <h3>Internal Synchronization From External
-          Events</h3>Additional synchronization can be done within
+          <h3>Internal Synchronization From External Events</h3>
+          <p>Additional synchronization can be done within
           a block. For example stopping a train at a water tower or
           over an uncoupling device or for any reason where using
           the elapsed time of a command is not precise enough. To
@@ -507,6 +530,7 @@
           -1). The script will then have the train creep at the
           slow speed until the sensor makes the detection. Then the
           script continues and the speed 0 command stops the train.
+          </p>
 
           <p>The script and train will stay stopped until a
           second "Wait Sensor" command triggers the script to
@@ -571,14 +595,16 @@
           stops the train and it remains stopped until the sensor
           at command #14 <b>changes</b> to inactive.</p>
 
-          <h3>Automatic Sequencing of Scripts</h3>It is possible to
+          <h3>Automatic Sequencing of Scripts</h3>
+          <span class="since">since 3.11.1</span>
+          <p>It is possible to
           start another script from a script. To do this, insert a
           row with the words <b>Run Warrant</b> in the
           <b><i>Command</i></b> column and name of a warrant in the
           <b><i>Block</i></b> column. This command launches the
           second warrant. Note that a train with the address
           specified in the second warrant must be placed in the
-          starting block of the second warrant.
+          starting block of the second warrant.</p>
 
           <p>This feature can be used to loop a train repeatedly by
           using the same warrant name. If a script terminates with
@@ -590,7 +616,7 @@
           would be to use warrant "from A to B" and warrant "from B
           to A", where warrant "from A to B" runs warrant "from B
           to A" and warrant "from B to A" runs warrant "from A to
-          B" and each warrant specifies the same train Id and the
+          B" and each Warrant specifies the same train ID and the
           same number of repeats.</p>
 
           <h3>Script Commands</h3>
@@ -673,7 +699,8 @@
             </tr>
           </table>
 
-          <h2>Running Trains on Dark Blocks</h2>The Learn mode and
+          <h2>Running Trains on Dark Blocks</h2>
+          <p>The Learn mode and
           Run Mode functions can be used on blocks that do not have
           detection sensors. However, without detection, other than
           the initial setting of turnouts, the warrant cannot reset
@@ -681,7 +708,7 @@
           <em>en route</em>. This means there is no protection from
           rogue trains fouling the route or from turnouts being
           changed while the train is <em>en route</em>. Therefore,
-          run trains with caution over Dark Blocks.
+          run trains with caution over Dark Blocks.</p>
 
           <p>Note that entry into a Dark Block is detected
           differently that an occupancy block. Obviously, entry
@@ -689,11 +716,12 @@
           block detects occupancy. However entry into a Dark Block
           can only be recorded when the previous
           occupancy Block shows no occupancy. That is, the elapsed
-          time for entry into a Dark Block is recorded by the the tail
+          time for entry into a Dark Block is recorded by the tail
           of the train entered the dark, not the head.</p>
 
-          <h2>Save etc.</h2>There are three buttons at the bottom
-          of the window:
+          <h2>Save etc.</h2>
+          <p>At the bottom of the Create Warrant pane three
+          buttons let you:</p>
 
           <ul>
             <li><b>Save</b>: - Saves the warrant so it can be shown
@@ -706,9 +734,14 @@
             <li><b>Cancel</b>: - Cancels any editing that may have
             been done.</li>
 
-            <li><b>Delete</b>: - Deletes the warrant when the panel
-            is saved to the Configuration file.</li>
-          </ul><!--#include virtual="/Footer" -->
+            <!-- Not visible in 4.10 <li><b>Delete</b>: - Deletes
+            the Warrant when the panel is saved to the Configuration
+            file.</li> -->
+          </ul>
+
+        <p>Back to <a href="Warrant.shtml">Warrants Help</a>.</p>
+
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

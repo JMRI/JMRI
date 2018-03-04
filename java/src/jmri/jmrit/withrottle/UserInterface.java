@@ -31,11 +31,11 @@ import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
 import org.slf4j.Logger;
@@ -45,12 +45,12 @@ import org.slf4j.LoggerFactory;
  * UserInterface.java Create a window for WiThrottle information, advertise
  * service, and create a thread for it to run in.
  * <p>
- * listen() has to run in a separate thread.
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Randall Wood Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2018
  */
-public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
+public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector, ZeroConfServiceListener {
 
     private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 
@@ -67,20 +67,44 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     String rosterGroupSelectorPreferencesName = this.getClass().getName() + ".rosterGroupSelector";
     RosterGroupComboBox rosterGroupSelector = new RosterGroupComboBox(userPreferences.getComboBoxLastSelection(rosterGroupSelectorPreferencesName));
 
+
+    //keep a reference to the actual server
+    private FacelessServer facelessServer;
+
     // Server iVars
     int port;
-    ZeroConfService service;
-    boolean isListen = true;
-    ServerSocket socket = null;
-    private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
+    boolean isListen;
+    private ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
     UserInterface() {
         super(false, false);
 
+        facelessServer = (FacelessServer) InstanceManager.getOptionalDefault(DeviceManager.class).orElseGet(() -> {
+                return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
+        });
+
+        port = facelessServer.getPort();
+        if (log.isDebugEnabled()) {
+            log.debug("WiThrottle listening on TCP port: " + port);
+        }
+
+        try {
+           facelessServer.getZeroConfService().addEventListener(this);
+        } catch( java.lang.NullPointerException npe) {
+            //ZeroConfService may not exist yet
+            log.debug("Unable to register for ZeroConf events");
+        }
+
+        // add ourselves as device listeners for any existing devices
+        for(DeviceServer ds:facelessServer.getDeviceList()) {
+           deviceList.add(ds);
+           ds.addDeviceListener(this); 
+        }
+
+        facelessServer.addDeviceListener(this);
+
         createWindow();
 
-        setShutDownTask();
-        createServerThread();
     } // End of constructor
 
     protected void createWindow() {
@@ -191,7 +215,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             @SuppressWarnings("unchecked")
             @Override
             public void actionPerformed(ActionEvent e) {
-                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox<String>) e.getSource()).getSelectedItem());
+                String s = (String) ((JComboBox<String>) e.getSource()).getSelectedItem();
+                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, s);
+                facelessServer.setSelectedRosterGroup(s);
 //              Send new selected roster group to all devices
                 for (DeviceServer device : deviceList) {
                     device.sendPacketToDevice(device.sendRoster());
@@ -218,7 +244,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStop"));
                     isListen = true;
 
-                    createServerThread();
+                    //createServerThread();
                 }
             }
         });
@@ -237,48 +263,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
         // add help menu
         addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
-    }
-
-    @Override
-    public void listen() {
-        int socketPort = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
-
-        try { //Create socket on available port
-            socket = new ServerSocket(socketPort);
-        } catch (IOException e1) {
-            log.error("New ServerSocket Failed during listen()");
-            return;
-        }
-
-        port = socket.getLocalPort();
-        if (log.isDebugEnabled()) {
-            log.debug("WiThrottle listening on TCP port: " + port);
-        }
-
-        service = ZeroConfService.create("_withrottle._tcp.local.", port);
-        service.addEventListener(this);
-        service.publish();
-
-        while (isListen) { //Create DeviceServer threads
-            DeviceServer device;
-            try {
-                log.info("Creating new WiThrottle DeviceServer(socket) on port " + port + ", waiting for incoming connection...");
-                device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
-
-                Thread t = new Thread(device);
-                device.addDeviceListener(this);
-                t.setName("WiThrottleUIDeviceServer"); // NOI18N
-                log.debug("Starting WiThrottleUIDeviceServer thread");
-                t.start();
-            } catch (IOException e3) {
-                if (isListen) {
-                    log.error("Listen Failed on port " + port);
-                }
-                return;
-            }
-
-        }
-
     }
 
     @Override
@@ -333,57 +317,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         withrottlesListModel.updateDeviceList(deviceList);
     }
 
-// Clear out the deviceList array and close each device thread
-    private void stopDevices() {
-        DeviceServer device;
-        int cnt = 0;
-        if (deviceList.size() > 0) {
-            do {
-                device = deviceList.get(0);
-                if (device != null) {
-                    device.closeThrottles(); //Tell device to stop its throttles,
-                    device.closeSocket();   //close its sockets
-                    //close() will throw read error and it will be caught
-                    //and drop the thread.
-                    cnt++;
-                    if (cnt > 200) {
-                        break;
-                    }
-                }
-            } while (!deviceList.isEmpty());
-        }
-        deviceList.clear();
-        withrottlesListModel.updateDeviceList(deviceList);
-        numConnected.setText(Bundle.getMessage("LabelClients") + " " + deviceList.size());
-
-    }
-
-    private jmri.implementation.AbstractShutDownTask task = null;
-
-    @Override
-    protected void setShutDownTask() {
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
-                @Override
-                public boolean execute() {
-                    disableServer();
-                    return true;
-                }
-            };
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
-        }
-    }
-
-    private void disableServer() {
-        isListen = false;
-        stopDevices();
-        try {
-            socket.close();
-            log.debug("UI socket in ServerThread just closed");
-            service.stop();
-        } catch (IOException ex) {
-            log.error("socket in ServerThread won't close");
-        }
+    // this is package protected so tests can trigger easilly.
+    void disableServer() {
+        facelessServer.disableServer();
     }
 
     @Override

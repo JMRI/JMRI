@@ -32,6 +32,10 @@ public class OlcbSensor extends AbstractSensor {
     BitProducerConsumer pc;
     EventTable.EventTableEntryHolder activeEventTableEntryHolder = null;
     EventTable.EventTableEntryHolder inactiveEventTableEntryHolder = null;
+    private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
+    private static final boolean DEFAULT_LISTEN = true;
+    private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &
+            (~BitProducerConsumer.LISTEN_INVALID_STATE);
 
     public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
@@ -57,33 +61,48 @@ public class OlcbSensor extends AbstractSensor {
                 // momentary sensor
                 addrActive = v[0];
                 addrInactive = null;
-                pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, false);
-                timer = new Timer(true);
-                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
-                    @Override
-                    public void update(Boolean value) {
-                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
-                        if (value) {
-                            setTimeout();
-                        }
-                    }
-                };
                 break;
             case 2:
                 addrActive = v[0];
                 addrInactive = v[1];
-                pc = new BitProducerConsumer(iface, addrActive.toEventID(),
-                        addrInactive.toEventID(), false);
-                sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
-                    @Override
-                    public void update(Boolean value) {
-                        setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
-                    }
-                };
                 break;
             default:
                 log.error("Can't parse OpenLCB Sensor system name: " + address);
                 return;
+        }
+
+    }
+
+    /**
+     * Helper function that will be invoked after construction once the properties have been
+     * loaded. Used specifically for preventing double initialization when loading sensors from
+     * XML.
+     */
+    void finishLoad() {
+        int flags = PC_DEFAULT_FLAGS;
+        flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
+        if (addrInactive == null) {
+            pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
+
+            timer = new Timer("OLCB Sensor Timer",true);
+            sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                @Override
+                public void update(Boolean value) {
+                    setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                    if (value) {
+                        setTimeout();
+                    }
+                }
+            };
+        } else {
+            pc = new BitProducerConsumer(iface, addrActive.toEventID(),
+                    addrInactive.toEventID(), flags);
+            sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
+                @Override
+                public void update(Boolean value) {
+                    setOwnState(value ? Sensor.ACTIVE : Sensor.INACTIVE);
+                }
+            };
         }
         activeEventTableEntryHolder = iface.getEventTable().addEvent(addrActive.toEventID(), getEventName(true));
         if (addrInactive != null) {
@@ -145,6 +164,10 @@ public class OlcbSensor extends AbstractSensor {
             }
         } else if (s == Sensor.INACTIVE) {
             sensorListener.setFromOwnerWithForceNotify(false);
+        } else if (s == Sensor.UNKNOWN) {
+            if (pc != null) {
+                pc.resetToDefault();
+            }
         }
     }
 
@@ -165,6 +188,67 @@ public class OlcbSensor extends AbstractSensor {
         }, ON_TIME);
     }
 
+    /**
+     * Changes how the turnout reacts to inquire state events. With authoritative == false the
+     * state will always be reported as UNKNOWN to the layout when queried.
+     *
+     * @param authoritative whether we should respond true state or unknown to the layout event
+     *                      state inquiries.
+     */
+    public void setAuthoritative(boolean authoritative) {
+        boolean recreate = (authoritative != isAuthoritative()) && (pc != null);
+        setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, authoritative);
+        if (recreate) {
+            finishLoad();
+        }
+    }
+
+    /**
+     * @return whether this producer/consumer is enabled to return state to the layout upon queries.
+     */
+    public boolean isAuthoritative() {
+        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE);
+        if (value != null) {
+            return value;
+        }
+        return DEFAULT_IS_AUTHORITATIVE;
+    }
+
+    @Override
+    public void setProperty(String key, Object value) {
+        Object old = getProperty(key);
+        super.setProperty(key, value);
+        if (old != null && value.equals(old)) return;
+        if (pc == null) return;
+        finishLoad();
+    }
+
+    /**
+     * @return whether this producer/consumer is always listening to state declaration messages.
+     */
+    public boolean isListeningToStateMessages() {
+        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_LISTEN);
+        if (value != null) {
+            return value;
+        }
+        return DEFAULT_LISTEN;
+    }
+
+    /**
+     * Changes how the turnout reacts to state declaration messages. With listen == true state
+     * declarations will update local state at all times. With listen == false state declarations
+     * will update local state only if local state is unknown.
+     *
+     * @param listen whether we should always listen to state declaration messages.
+     */
+    public void setListeningToStateMessages(boolean listen) {
+        boolean recreate = (listen != isListeningToStateMessages()) && (pc != null);
+        setProperty(OlcbUtils.PROPERTY_LISTEN, listen);
+        if (recreate) {
+            finishLoad();
+        }
+    }
+
     /*
      * since the events that drive a sensor can be whichever state a user
      * wants, the order of the event pair determines what is the 'active' state
@@ -178,6 +262,7 @@ public class OlcbSensor extends AbstractSensor {
     public void dispose() {
         if (sensorListener != null) sensorListener.release();
         if (pc != null) pc.release();
+        if (timer!=null) timer.cancel();
         super.dispose();
     }
 
@@ -187,6 +272,7 @@ public class OlcbSensor extends AbstractSensor {
      * Sorts by decoded EventID(s)
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
         return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }

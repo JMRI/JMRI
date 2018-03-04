@@ -43,7 +43,7 @@
       other adapters can't because of their intrinsic latency.
       Their slow replies effectively make them invisible.</p>
 
-      <p>Therefore, Mike Bolton , one of the the CBUS developers
+      <p>Therefore, Mike Bolton , one of the CBUS developers
       suggested that JMRI use a CBUS ID of 126. Currently, that's a
       fixed value. <a name="documentation" id=
       "documentation"></a></p>
@@ -56,7 +56,8 @@
       page</a></p>
 
       <p>Also read JMRI's <a href="../index.shtml">general CAN
-      support</a> <!--#include virtual="/Footer" --></p>
+      support</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

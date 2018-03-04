@@ -74,6 +74,7 @@ import org.slf4j.LoggerFactory;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorTools {
 
@@ -1518,7 +1519,7 @@ public class LayoutEditorTools {
      */
     public boolean initializeBlockBossLogic(@Nonnull String signalHeadName) {
         logic = BlockBossLogic.getStoppedObject(signalHeadName);
-        //TODO: Findbugs says this test isn't necessary - dead code strip
+        //TODO: SpotBugs says this test isn't necessary - dead code strip
 //        if (logic == null) {
 //            log.error("Trouble creating BlockBossLogic for '" + signalHeadName + "'.");
 //            return false;
@@ -2666,7 +2667,8 @@ public class LayoutEditorTools {
                     xovers.add(layoutTurnout);
                 }
             }
-            JComboBox<LayoutTurnout> jcb = new JComboBox(xovers.toArray());
+            JComboBox<LayoutTurnout> jcb = new JComboBox<>(
+                    xovers.toArray(new LayoutTurnout[xovers.size()]));
             jcb.setEditable(true);
             JOptionPane.showMessageDialog(layoutEditor, jcb,
                     Bundle.getMessage("MakeLabel",
@@ -5796,7 +5798,7 @@ public class LayoutEditorTools {
         String sensorName = "IS" + namer;
         String logixName = "IX" + namer;
         try {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";
@@ -7406,117 +7408,95 @@ public class LayoutEditorTools {
 
     /**
      * Returns true if the specified Sensor is assigned to an object on the
-     * panel, regardless of whether an icon is displayed or not With sensors we
-     * do allow the same sensor to be allocated in both directions.
+     * panel, regardless of whether an icon is displayed or not. With sensors we
+     * NO LONGER (4.11.2) allow the same sensor to be allocated in both directions.
+     * @param sensor The sensor to be checked.
+     * @return true if the sensor is currently assigned someplace.
      */
     public boolean isSensorAssignedAnywhere(@Nonnull Sensor sensor) {
         for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
-            //We allow the same sensor to be allocated in both directions.
-            if (po != boundary) {
-                if (po.getEastBoundSensor() == sensor) {
-                    if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                        return true;
-                    }
-
-                }
-                if (po.getWestBoundSensor() == sensor) {
-                    if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                        return true;
-                    }
-                }
+            if (po.getEastBoundSensor() == sensor) {
+                return true;
+            }
+            if (po.getWestBoundSensor() == sensor) {
+                return true;
             }
         }
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
             if ((to.getSensorB() != null) && to.getSensorB() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
             if ((to.getSensorC() != null) && to.getSensorC() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
             if ((to.getSensorD() != null) && to.getSensorD() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
         }
-
         for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
             if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
             if ((to.getSensorB() != null) && to.getSensorB() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
             if ((to.getSensorC() != null) && to.getSensorC() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
             }
             if ((to.getSensorD() != null) && to.getSensorD() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
+                return true;
+            }
+        }
+        for (LevelXing x : layoutEditor.getLevelXings()) {
+            if ((x.getSensorA() != null) && x.getSensorA() == sensor) {
+                return true;
+            }
+            if ((x.getSensorB() != null) && x.getSensorB() == sensor) {
+                return true;
+            }
+            if ((x.getSensorC() != null) && x.getSensorC() == sensor) {
+                return true;
+            }
+            if ((x.getSensorD() != null) && x.getSensorD() == sensor) {
+                return true;
             }
         }
 
-        for (LevelXing x : layoutEditor.getLevelXings()) {
-            if ((x.getSensorA() != null) && x.getSensorA() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
-            }
-            if ((x.getSensorB() != null) && x.getSensorB() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
-            }
-            if ((x.getSensorC() != null) && x.getSensorC() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
-            }
-            if ((x.getSensorD() != null) && x.getSensorD() == sensor) {
-                if (!sensorAssignedElseWhere(sensor.getDisplayName())) {
-                    return true;
-                }
-            }
-        }
         return false;
     }   // isSensorAssignedAnywhere
 
-    boolean sensorAssignedElseWhere(@Nonnull String sensor) {
-        int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("DuplicateSensorAssign",
-                new Object[]{sensor}),
-                Bundle.getMessage("DuplicateSensorAssignTitle"),
-                JOptionPane.YES_NO_OPTION);
-        if (i == 0) {
-            return true;
-        }
-        return false;
+    /**
+     * Display an error dialog.
+     * @param sensor The sensor that is already assigned.
+     */
+    void sensorAssignedElseWhere(@Nonnull Sensor sensor) {
+        JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
+                Bundle.getMessage("SensorsError6",  // NOI18N
+                        new Object[]{sensor.getDisplayName()}),
+                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
     }
 
     /**
      * Removes the assignment of the specified Sensor to either a turnout, a
-     * positionable point, or a level crossing wherever it is assigned
+     * positionable point, or a level crossing wherever it is assigned.
+     * Removes any NX Pairs that use the sensor.
+     * <p>
+     * If the NX deletes fail due to Conditional references or user deny, the
+     * assignment is not deleted.  No additional notification is necessary since
+     * they have already been notified or made a choice to not continue.
+     * <p>
+     * @param sensor The sensor to be removed.
+     * @return true if the sensor has been removed.
      */
-    public void removeSensorAssignment(@Nullable Sensor sensor) {
-        if (sensor == null) {
-            return;
+    public boolean removeSensorAssignment(@Nonnull Sensor sensor) {
+        log.trace("Remove sensor assignment at block boundary for '{}'", sensor.getDisplayName());  // NOI18N
+        if (!InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).deleteNxPair(sensor)) {
+            log.trace("Removal of NX pairs for sensor '{}' failed", sensor.getDisplayName());  // NOI18N
+            return false;
         }
-
         for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             if (po.getEastBoundSensor() == sensor) {
                 po.setEastBoundSensor(null);
@@ -7525,6 +7505,7 @@ public class LayoutEditorTools {
                 po.setWestBoundSensor(null);
             }
         }
+
         for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
             if (to.getSensorA() == sensor) {
                 to.setSensorA(null);
@@ -7544,15 +7525,12 @@ public class LayoutEditorTools {
             if (to.getSensorA() == sensor) {
                 to.setSensorA(null);
             }
-
             if (to.getSensorB() == sensor) {
                 to.setSensorB(null);
             }
-
             if (to.getSensorC() == sensor) {
                 to.setSensorC(null);
             }
-
             if (to.getSensorD() == sensor) {
                 to.setSensorD(null);
             }
@@ -7562,27 +7540,32 @@ public class LayoutEditorTools {
             if (x.getSensorA() == sensor) {
                 x.setSensorAName(null);
             }
-
             if (x.getSensorB() == sensor) {
                 x.setSensorBName(null);
             }
-
             if (x.getSensorC() == sensor) {
                 x.setSensorCName(null);
             }
-
             if (x.getSensorD() == sensor) {
                 x.setSensorDName(null);
             }
         }
+
+        return true;
     }   // removeSensorAssignment
 
     /**
-     * Removes the Sensor object from the panel and from assignment to any
-     * turnout, positionable point, or level crossing
+     * Removes the Sensor icon from the panel and from assignment to any
+     * turnout, positionable point, or level crossing.
+     * @param sensor The sensor whose icon and references are to be removed.
+     * @return true if the removal was successful.
      */
-    public void removeSensorFromPanel(@Nonnull Sensor sensor) {
-        removeSensorAssignment(sensor);
+    public boolean removeSensorFromPanel(@Nonnull Sensor sensor) {
+        log.trace("Remove sensor icon and assignment for '{}'", sensor.getDisplayName());  // NOI18N
+        if (!removeSensorAssignment(sensor)) {
+            return false;
+        }
+
         SensorIcon h = null;
         int index = -1;
         for (int i = 0; (i < layoutEditor.sensorList.size()) && (index == -1); i++) {
@@ -7591,12 +7574,13 @@ public class LayoutEditorTools {
                 index = i;
             }
         }
-        if (index != (-1) && h != null) {
+        if ((h != null) && (index != -1)) {
             layoutEditor.sensorList.remove(index);
             h.remove();
             h.dispose();
             needRedraw = true;
         }
+        return true;
     }
 
     private void getSavedAnchorSensors(ActionEvent a) {
@@ -7635,90 +7619,122 @@ public class LayoutEditorTools {
     }
 
     private void setSensorsAtBlockBoundaryDonePressed(ActionEvent a) {
+        log.trace("setSensorsAtBlockBoundaryDonePressed");  // NOI18N
         if (!getSimpleBlockInformation()) {
             return;
         }
+
         Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getText(), false, setSensorsAtBlockBoundaryFrame);
         Sensor westSensor = getSensorFromEntry(westBoundSensor.getText(), false, setSensorsAtBlockBoundaryFrame);
-        if (eastSensor == null) {
-            removeSensorAssignment(InstanceManager.sensorManagerInstance().getSensor(boundary.getEastBoundSensorName()));
-            boundary.setEastBoundSensor(null);
-        }
-        if (westSensor == null) {
-            removeSensorAssignment(InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensorName()));
-            boundary.setWestBoundSensor(null);
-        }
-        // place or update signals as requested
-        if ((eastSensor != null) && eastBoundSensor.addToPanel()) {
-            if (isSensorAssignedAnywhere(eastSensor)
-                    && (eastSensor != boundary.getEastBoundSensor())) {
-                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{eastBoundSensor.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                placeEastBoundIcon(getSensorIcon(eastBoundSensor.getText()), eastBoundSensor.isRightSelected(), 0.0);
-                removeSensorAssignment(eastSensor);
-                boundary.setEastBoundSensor(eastBoundSensor.getText());
-                needRedraw = true;
-            }
-        } else if ((eastSensor != null)
-                && (eastSensor != boundary.getEastBoundSensor())
-                && (eastSensor != boundary.getWestBoundSensor())) {
-            if (isSensorAssignedAnywhere(eastSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{eastBoundSensor.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorAssignment(eastSensor);
-                boundary.setEastBoundSensor(eastBoundSensor.getText());
-            }
-        } else if ((eastSensor != null)
-                && (eastSensor == boundary.getWestBoundSensor())) {
-            boundary.setEastBoundSensor(eastBoundSensor.getText());
+        Sensor currEastSensor = InstanceManager.sensorManagerInstance().getSensor(boundary.getEastBoundSensorName());
+        Sensor currWestSensor = InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensorName());
+
+        if (log.isTraceEnabled()) {
+            log.trace("current sensors: east = {}, west = {}",  // NOI18N
+                    (currEastSensor == null) ? "- none- " : currEastSensor.getDisplayName(),  // NOI18N
+                    (currWestSensor == null) ? "- none- " : currWestSensor.getDisplayName());  // NOI18N
+            log.trace("new sensors: east = {}, west = {}",  // NOI18N
+                    (eastSensor == null) ? "- none- " : eastSensor.getDisplayName(),  // NOI18N
+                    (westSensor == null) ? "- none- " : westSensor.getDisplayName());  // NOI18N
         }
 
-        if ((westSensor != null) && westBoundSensor.addToPanel()) {
-            if (isSensorAssignedAnywhere(westSensor)
-                    && (westSensor != boundary.getWestBoundSensor())) {
-                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{westBoundSensor.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                placeWestBoundIcon(getSensorIcon(westBoundSensor.getText()), westBoundSensor.isRightSelected(), 0.0);
-                removeSensorAssignment(westSensor);
-                boundary.setWestBoundSensor(westBoundSensor.getText());
-                needRedraw = true;
+        if (eastSensor == null) {
+            if (currEastSensor != null && removeSensorFromPanel(currEastSensor)) {
+                boundary.setEastBoundSensor(null);
             }
-        } else if ((westSensor != null)
-                && (westSensor != boundary.getEastBoundSensor())
-                && (westSensor != boundary.getWestBoundSensor())) {
-            if (isSensorAssignedAnywhere(westSensor)) {
-                //Need to do this better, so that the sensor can be on panel multiple times but only alocated to one anchor at a time
-                JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{westBoundSensor.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorAssignment(westSensor);
-                boundary.setWestBoundSensor(westBoundSensor.getText());
-            }
-        } else if ((westSensor != null)
-                && (westSensor == boundary.getEastBoundSensor())) {
-            boundary.setWestBoundSensor(westBoundSensor.getText());
+        } else if (eastBoundSensor != null) {
+            setBoundarySensor(eastSensor, currEastSensor, eastBoundSensor, "East");  // NOI18N
         }
+
+        if (westSensor == null) {
+            if (currWestSensor != null && removeSensorFromPanel(currWestSensor)) {
+                boundary.setWestBoundSensor(null);
+            }
+        } else if (westBoundSensor != null) {
+            setBoundarySensor(westSensor, currWestSensor, westBoundSensor, "West");  // NOI18N
+        }
+
         setSensorsAtBlockBoundaryOpenFlag = false;
         setSensorsAtBlockBoundaryFrame.setVisible(false);
         if (needRedraw) {
             layoutEditor.redrawPanel();
             needRedraw = false;
             layoutEditor.setDirty();
+        }
+    }
+
+    /**
+     * Attached a sensor to the block boundary positional point.
+     * @since 4.11.2
+     * @param newSensor The sensor that is being added.
+     * @param currSensor The sensor that might already be there, otherwise null.
+     * @param beanDetail The BeanDetails object that contains the supporting data.
+     * @param direction The direction, East or West.
+     */
+    void setBoundarySensor(Sensor newSensor, Sensor currSensor,
+            BeanDetails beanDetail, String direction) {
+        if (currSensor == null) {
+            if (!isSensorAssignedAnywhere(newSensor)) {
+                log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                if (direction.equals("West")) {  // NOI18N
+                    boundary.setWestBoundSensor(beanDetail.getText());
+                } else {
+                    boundary.setEastBoundSensor(beanDetail.getText());
+                }
+                if (beanDetail.addToPanel()) {
+                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    if (direction.equals("West")) {  // NOI18N
+                        placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
+                                beanDetail.isRightSelected(), 0.0);
+                    } else {
+                        placeEastBoundIcon(getSensorIcon(beanDetail.getText()),
+                                beanDetail.isRightSelected(), 0.0);
+                    }
+                    needRedraw = true;
+                }
+            } else {
+                sensorAssignedElseWhere(newSensor);
+            }
+        } else if (currSensor == newSensor) {
+             if (beanDetail.addToPanel()) {
+                if (!isSensorOnPanel(newSensor)) {
+                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    if (direction.equals("West")) {  // NOI18N
+                        placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
+                                beanDetail.isRightSelected(), 0.0);
+                    } else {
+                        placeEastBoundIcon(getSensorIcon(beanDetail.getText()),
+                                beanDetail.isRightSelected(), 0.0);
+                    }
+                    needRedraw = true;
+                }
+            }
+        } else {
+            if (!isSensorAssignedAnywhere(newSensor)) {
+                if (removeSensorFromPanel(currSensor)) {
+                    log.trace("Replace sensor '{}' with sensor '{}'",  // NOI18N
+                            currSensor.getDisplayName(), newSensor.getDisplayName());
+                    if (direction.equals("West")) {  // NOI18N
+                        boundary.setWestBoundSensor(beanDetail.getText());
+                    } else {
+                        boundary.setEastBoundSensor(beanDetail.getText());
+                    }
+                    if (beanDetail.addToPanel()) {
+                        log.trace("Add icon for replacement sensor '{}'",  // NOI18N
+                                newSensor.getDisplayName());
+                        if (direction.equals("West")) {  // NOI18N
+                            placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
+                                    beanDetail.isRightSelected(), 0.0);
+                        } else {
+                            placeEastBoundIcon(getSensorIcon(beanDetail.getText()),
+                                    beanDetail.isRightSelected(), 0.0);
+                        }
+                        needRedraw = true;
+                    }
+                }
+            } else {
+                sensorAssignedElseWhere(newSensor);
+            }
         }
     }
 
@@ -8099,11 +8115,11 @@ public class LayoutEditorTools {
         int index = -1;
         for (int i = 0; (i < layoutEditor.signalMastList.size()) && (index == -1); i++) {
             h = layoutEditor.signalMastList.get(i);
-            if (h.getSignalMast() == signalMast) {
+            if ((h != null) && (h.getSignalMast() == signalMast)) {
                 index = i;
             }
         }
-        if (index != (-1)) {
+        if ((h != null) && (index != -1)) {
             layoutEditor.signalMastList.remove(index);
             h.remove();
             h.dispose();
@@ -10719,260 +10735,100 @@ public class LayoutEditorTools {
         setSensorsAtTurnoutFrame.pack();
     }   // turnoutSensorsGetSaved
 
-    private int isSensorAssignedHere(Sensor sensor, LayoutTurnout lTurnout) {
-        if ((sensor == null) || (lTurnout == null)) {
-            return NONE;
-        }
-        String sysName = sensor.getSystemName();
-        String uName = sensor.getUserName();
-        String name = lTurnout.getSensorAName();
-        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
-            return A1;
-        }
-        name = lTurnout.getSensorBName();
-        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
-            return A2;
-        }
-        name = lTurnout.getSensorCName();
-        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
-            return A3;
-        }
-        name = lTurnout.getSensorDName();
-        if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
-            return B1;
-        }
-        return NONE;
-    }   // isSensorAssignedHere
-
-    public void removeAssignment(@Nonnull Sensor sensor) {
-        for (LayoutTurnout to : layoutEditor.getLayoutTurnouts()) {
-            if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
-                to.setSensorA(null);
-            }
-            if ((to.getSensorB() != null) && to.getSensorB() == sensor) {
-                to.setSensorB(null);
-            }
-            if ((to.getSensorC() != null) && to.getSensorC() == sensor) {
-                to.setSensorC(null);
-            }
-            if ((to.getSensorD() != null) && to.getSensorD() == sensor) {
-                to.setSensorD(null);
-            }
-        }
-        for (LayoutSlip to : layoutEditor.getLayoutSlips()) {
-            if ((to.getSensorA() != null) && to.getSensorA() == sensor) {
-                to.setSensorA(null);
-            }
-            if ((to.getSensorB() != null) && to.getSensorB() == sensor) {
-                to.setSensorB(null);
-            }
-            if ((to.getSensorC() != null) && to.getSensorC() == sensor) {
-                to.setSensorC(null);
-            }
-            if ((to.getSensorD() != null) && to.getSensorD() == sensor) {
-                to.setSensorD(null);
-            }
-        }
-
-        for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
-            if ((po.getEastBoundSensor() != null) && po.getEastBoundSensor() == sensor) {
-                po.setEastBoundSensor(null);
-            }
-            if ((po.getWestBoundSensor() != null) && po.getWestBoundSensor() == sensor) {
-                po.setWestBoundSensor(null);
-            }
-        }
-
-        for (LevelXing x : layoutEditor.getLevelXings()) {
-            if ((x.getSensorA() != null) && x.getSensorA() == sensor) {
-                x.setSensorAName(null);
-            }
-            if ((x.getSensorB() != null) && x.getSensorB() == sensor) {
-                x.setSensorBName(null);
-            }
-            if ((x.getSensorC() != null) && x.getSensorC() == sensor) {
-                x.setSensorCName(null);
-            }
-            if ((x.getSensorD() != null) && x.getSensorD() == sensor) {
-                x.setSensorDName(null);
-            }
-        }
-    }   // removeAssignment
+//     private int isSensorAssignedHere(Sensor sensor, LayoutTurnout lTurnout) {
+//         if ((sensor == null) || (lTurnout == null)) {
+//             return NONE;
+//         }
+//         String sysName = sensor.getSystemName();
+//         String uName = sensor.getUserName();
+//         String name = lTurnout.getSensorAName();
+//         if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
+//             return A1;
+//         }
+//         name = lTurnout.getSensorBName();
+//         if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
+//             return A2;
+//         }
+//         name = lTurnout.getSensorCName();
+//         if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
+//             return A3;
+//         }
+//         name = lTurnout.getSensorDName();
+//         if (!name.isEmpty() && name.equals(uName) || name.equals(sysName)) {
+//             return B1;
+//         }
+//         return NONE;
+//     }   // isSensorAssignedHere
 
     SensorIcon turnoutSensorBlockIcon;
 
     private void setSensorsDonePressed(ActionEvent a) {
-        //Placing of turnouts needs to be better handled
-        // process turnout name
+        log.trace("setSensorsDonePressed (turnouts)");  // NOI18N
         if (!getTurnoutSensorInformation()) {
             return;
         }
-        // process signal head names
-        //if ( !getSensorTurnoutInformation() ) return;
+
+        // process sensor names
         Sensor sensorA = getSensorFromEntry(turnoutSensorA.getText(), false, setSensorsAtTurnoutFrame);
         Sensor sensorB = getSensorFromEntry(turnoutSensorB.getText(), false, setSensorsAtTurnoutFrame);
         Sensor sensorC = getSensorFromEntry(turnoutSensorC.getText(), false, setSensorsAtTurnoutFrame);
         Sensor sensorD = getSensorFromEntry(turnoutSensorD.getText(), false, setSensorsAtTurnoutFrame);
-        // place sensors as requested
-        if (sensorA != null && turnoutSensorA.addToPanel()) {
-            if (isSensorOnPanel(sensorA)
-                    && (sensorA != layoutTurnout.getSensorA())) {
-                JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{turnoutSensorA.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutTurnout.getSensorA());
-                placingBlock(getSensorIcon(turnoutSensorA.getText()), turnoutSensorA.isRightSelected(), 0.0, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA());
-                removeAssignment(sensorA);
-                layoutTurnout.setSensorA(turnoutSensorA.getText());
-                needRedraw = true;
-            }
-        } else if (sensorA != null) {
-            int assigned = isSensorAssignedHere(sensorA, layoutTurnout);
-            if (assigned == NONE) {
-                if (isSensorOnPanel(sensorA)
-                        && isSensorAssignedAnywhere(sensorA)) {
-                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                            Bundle.getMessage("SensorsError8",
-                                    new Object[]{turnoutSensorA.getText()}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    removeSensorFromPanel(layoutTurnout.getSensorA());
-                    removeAssignment(sensorA);
-                    layoutTurnout.setSensorA(turnoutSensorA.getText());
-                }
-                //} else if (assigned != A1) {
-                // need to figure out what to do in this case.
-            }
-        } else {
-            removeSensorFromPanel(layoutTurnout.getSensorA());
-            layoutTurnout.setSensorA("");
-        }
-        if ((turnoutSensorB != null) && (turnoutSensorB.addToPanel())) {
-            if (isSensorOnPanel(sensorB)
-                    && (sensorB != layoutTurnout.getSensorB())) {
-                JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{turnoutSensorB.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutTurnout.getSensorB());
 
-                placingBlock(getSensorIcon(turnoutSensorB.getText()), turnoutSensorB.isRightSelected(), 0.0, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB());
-                removeAssignment(sensorB);
-                layoutTurnout.setSensorB(turnoutSensorB.getText());
-                needRedraw = true;
-            }
-        } else if (sensorB != null) {
-            int assigned = isSensorAssignedHere(sensorB, layoutTurnout);
-            if (assigned == NONE) {
-                if (isSensorOnPanel(sensorB)
-                        && isSensorAssignedAnywhere(sensorB)) {
-                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                            Bundle.getMessage("SensorsError8",
-                                    new Object[]{turnoutSensorB.getText()}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    removeSensorFromPanel(layoutTurnout.getSensorB());
-                    removeAssignment(sensorB);
-                    layoutTurnout.setSensorB(turnoutSensorB.getText());
-                }
-                //} else if (assigned != A2) {
-                // need to figure out what to do in this case.
-            }
-        } else {
-            removeSensorFromPanel(layoutTurnout.getSensorB());
-            layoutTurnout.setSensorB("");
-        }
-        if (sensorC != null) {
-            if (turnoutSensorC.addToPanel()) {
-                if (isSensorOnPanel(sensorC)
-                        && (sensorC != layoutTurnout.getSensorC())) {
-                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                            Bundle.getMessage("SensorsError6",
-                                    new Object[]{turnoutSensorC.getText()}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    removeSensorFromPanel(layoutTurnout.getSensorC());
+        Sensor currSensorA = layoutTurnout.getSensorA();
+        Sensor currSensorB = layoutTurnout.getSensorB();
+        Sensor currSensorC = layoutTurnout.getSensorC();
+        Sensor currSensorD = layoutTurnout.getSensorD();
 
-                    placingBlock(getSensorIcon(turnoutSensorC.getText()), turnoutSensorC.isRightSelected(), 0.0, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC());
-                    removeAssignment(sensorC);
-                    layoutTurnout.setSensorC(turnoutSensorC.getText());
-                    needRedraw = true;
-                }
-            } else {
-                int assigned = isSensorAssignedHere(sensorC, layoutTurnout);
-                if (assigned == NONE) {
-                    if (isSensorOnPanel(sensorC)
-                            && isSensorAssignedAnywhere(sensorC)) {
-                        JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                                Bundle.getMessage("SensorsError8",
-                                        new Object[]{turnoutSensorC.getText()}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                        return;
-                    } else {
-                        removeSensorFromPanel(layoutTurnout.getSensorC());
-                        removeAssignment(sensorC);
-                        layoutTurnout.setSensorC(turnoutSensorC.getText());
-                    }
-                    //} else if (assigned != A3) {
-                    // need to figure out what to do in this case.
-                }
-            }
-        } else {
-            removeSensorFromPanel(layoutTurnout.getSensorC());
-            layoutTurnout.setSensorC("");
+        if (log.isTraceEnabled()) {
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(),  // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(),  // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(),  // NOI18N
+                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
+                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(),  // NOI18N
+                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(),  // NOI18N
+                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(),  // NOI18N
+                    (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
-        if (sensorD != null) {
-            if (turnoutSensorD.addToPanel()) {
-                if (isSensorOnPanel(sensorD)
-                        && (sensorD != layoutTurnout.getSensorD())) {
-                    String signalHeadName = divergingSignalHeadComboBox.getDisplayName();
-                    JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                            Bundle.getMessage("SensorsError6",
-                                    new Object[]{signalHeadName}),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                } else {
-                    removeSensorFromPanel(layoutTurnout.getSensorD());
-                    placingBlock(getSensorIcon(turnoutSensorD.getText()), turnoutSensorD.isRightSelected(), 0.0, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD());
-                    removeAssignment(sensorD);
-                    layoutTurnout.setSensorD(turnoutSensorD.getText());
-                    needRedraw = true;
-                }
-            } else {
-                int assigned = isSensorAssignedHere(sensorD, layoutTurnout);
-                if (assigned == NONE) {
-                    if (isSensorOnPanel(sensorD)
-                            && isSensorAssignedAnywhere(sensorD)) {
-                        JOptionPane.showMessageDialog(setSensorsAtTurnoutFrame,
-                                Bundle.getMessage("SensorsError8",
-                                        new Object[]{turnoutSensorD.getText()}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                        return;
-                    } else {
-                        removeSensorFromPanel(layoutTurnout.getSensorD());
-                        removeAssignment(sensorD);
-                        layoutTurnout.setSensorD(turnoutSensorD.getText());
-                    }
-                    //} else if (assigned != B1) {
-                    // need to figure out what to do in this case.
-                }
+
+        // place/remove sensors as requested
+        if (sensorA == null) {
+            if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
+                layoutTurnout.setSensorA(null);
             }
-        } else {
-            removeSensorFromPanel(layoutTurnout.getSensorD());
-            layoutTurnout.setSensorD("");
+        } else if (turnoutSensorA != null && layoutTurnout.getConnectA() != null) {
+            setTurnoutSensor(layoutTurnout, sensorA, currSensorA, turnoutSensorA, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA(), "A");
+        }
+
+        if (sensorB == null) {
+            if (currSensorB != null && removeSensorFromPanel(currSensorB)) {
+                layoutTurnout.setSensorB(null);
+            }
+        } else if (turnoutSensorB != null && layoutTurnout.getConnectB() != null) {
+            setTurnoutSensor(layoutTurnout, sensorB, currSensorB, turnoutSensorB, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB(), "B");
+        }
+
+        if (sensorC == null) {
+            if (currSensorC != null && removeSensorFromPanel(currSensorC)) {
+                layoutTurnout.setSensorC(null);
+            }
+        } else if (turnoutSensorC != null && layoutTurnout.getConnectC() != null) {
+            setTurnoutSensor(layoutTurnout, sensorC, currSensorC, turnoutSensorC, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC(), "C");
+        }
+
+        if (sensorD == null) {
+            if (currSensorD != null && removeSensorFromPanel(currSensorD)) {
+                layoutTurnout.setSensorD(null);
+            }
+        } else if (turnoutSensorD != null && layoutTurnout.getConnectD() != null) {
+            setTurnoutSensor(layoutTurnout, sensorD, currSensorD, turnoutSensorD, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD(), "D");
         }
 
         // make sure this layout turnout is not linked to another
         layoutTurnout.setLinkType(LayoutTurnout.NO_LINK);
         layoutTurnout.setLinkedTurnoutName("");
+
         // finish up
         setSensorsAtTurnoutOpenFlag = false;
         setSensorsAtTurnoutFrame.setVisible(false);
@@ -10982,6 +10838,95 @@ public class LayoutEditorTools {
             layoutEditor.setDirty();
         }
     }   // setSensorsDonePressed
+
+    /**
+     * Attached a sensor to a turnout block boundary.
+     * Supports both LayoutTurnout and LayoutSlip classes.
+     * @since 4.11.2
+     * @param trackItem The turnout or slip that is being modified.
+     * @param newSensor The sensor that is being added.
+     * @param currSensor The sensor that might already be there, otherwise null.
+     * @param beanDetail The BeanDetails object that contains the supporting data.
+     * @param connect The track segment that is attached to this point
+     * @param coords The track componennt coordinates
+     * @param position Which of the four points is being changed
+     */
+    <T extends LayoutTurnout> void setTurnoutSensor(T trackItem, Sensor newSensor, Sensor currSensor,
+            BeanDetails beanDetail, LayoutTrack connect, Point2D coords, String position) {
+        if (currSensor == null) {
+            if (!isSensorAssignedAnywhere(newSensor)) {
+                log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                switch (position) {
+                    case "A":  // NOI18N
+                        trackItem.setSensorA(beanDetail.getText());
+                        break;
+                    case "B":  // NOI18N
+                        trackItem.setSensorB(beanDetail.getText());
+                        break;
+                    case "C":  // NOI18N
+                        trackItem.setSensorC(beanDetail.getText());
+                        break;
+                    case "D":  // NOI18N
+                        trackItem.setSensorD(beanDetail.getText());
+                        break;
+                    default:
+                        break;
+                }
+                if (beanDetail.addToPanel()) {
+                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    placingBlock(getSensorIcon(beanDetail.getText()),
+                            beanDetail.isRightSelected(), 0.0,
+                            connect, coords);
+                    needRedraw = true;
+                }
+            } else {
+                sensorAssignedElseWhere(newSensor);
+            }
+        } else if (currSensor == newSensor) {
+            if (beanDetail.addToPanel()) {
+                if (!isSensorOnPanel(newSensor)) {
+                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    placingBlock(getSensorIcon(beanDetail.getText()),
+                            beanDetail.isRightSelected(), 0.0,
+                            connect, coords);
+                    needRedraw = true;
+                }
+            }
+        } else {
+            if (!isSensorAssignedAnywhere(newSensor)) {
+                if (removeSensorFromPanel(currSensor)) {
+                    log.trace("Replace sensor '{}' with sensor '{}'",  // NOI18N
+                            currSensor.getDisplayName(), newSensor.getDisplayName());
+                    switch (position) {
+                        case "A":  // NOI18N
+                            trackItem.setSensorA(beanDetail.getText());
+                            break;
+                        case "B":  // NOI18N
+                            trackItem.setSensorB(beanDetail.getText());
+                            break;
+                        case "C":  // NOI18N
+                            trackItem.setSensorC(beanDetail.getText());
+                            break;
+                        case "D":  // NOI18N
+                            trackItem.setSensorD(beanDetail.getText());
+                            break;
+                        default:
+                            break;
+                    }
+                    if (beanDetail.addToPanel()) {
+                        log.trace("Add icon for replacement sensor '{}'",  // NOI18N
+                                newSensor.getDisplayName());
+                        placingBlock(getSensorIcon(beanDetail.getText()),
+                                beanDetail.isRightSelected(), 0.0,
+                                connect, coords);
+                        needRedraw = true;
+                    }
+                }
+            } else {
+                sensorAssignedElseWhere(newSensor);
+            }
+        }
+    }
 
     private boolean getTurnoutSensorInformation() {
         turnout = null;
@@ -11339,178 +11284,69 @@ public class LayoutEditorTools {
     }
 
     private void setXingSensorsDonePressed(ActionEvent a) {
+        log.trace("setXingSensorsDonePressed");  // NOI18N
+
         if (!getLevelCrossingSensorInformation()) {
             return;
         }
+
         Sensor aSensor = getSensorFromEntry(xingSensorA.getText(), false, setSensorsAtLevelXingFrame);
         Sensor bSensor = getSensorFromEntry(xingSensorB.getText(), false, setSensorsAtLevelXingFrame);
         Sensor cSensor = getSensorFromEntry(xingSensorC.getText(), false, setSensorsAtLevelXingFrame);
         Sensor dSensor = getSensorFromEntry(xingSensorD.getText(), false, setSensorsAtLevelXingFrame);
-        // place or update signals as requested
-        if ((aSensor != null) && xingSensorA.addToPanel()) {
-            if (isSensorOnPanel(aSensor)
-                    && (aSensor != levelXing.getSensorA())) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{xingSensorA.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorA());
-                placingBlock(getSensorIcon(xingSensorA.getText()), xingSensorA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXing.getCoordsA());
-                removeAssignment(aSensor);
-                levelXing.setSensorAName(xingSensorB.getText());
-                needRedraw = true;
-            }
-        } else if ((aSensor != null)
-                && (aSensor != levelXing.getSensorA())
-                && (aSensor != levelXing.getSensorB())
-                && (aSensor != levelXing.getSensorC())
-                && (aSensor != levelXing.getSensorD())) {
-            if (isSensorOnPanel(aSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{xingSensorA.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorA());
-                removeAssignment(aSensor);
-                levelXing.setSensorAName(xingSensorA.getText());
-            }
-        } else if ((aSensor != null)
-                && ((aSensor == levelXing.getSensorB())
-                || (aSensor == levelXing.getSensorC())
-                || (aSensor == levelXing.getSensorD()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (aSensor == null) {
-            removeSensorFromPanel(levelXing.getSensorA());
-            levelXing.setSensorAName("");
+
+        Sensor currSensorA = levelXing.getSensorA();
+        Sensor currSensorB = levelXing.getSensorB();
+        Sensor currSensorC = levelXing.getSensorC();
+        Sensor currSensorD = levelXing.getSensorD();
+
+        if (log.isTraceEnabled()) {
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(),  // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(),  // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(),  // NOI18N
+                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
+                    (aSensor == null) ? "- none- " : aSensor.getDisplayName(),  // NOI18N
+                    (bSensor == null) ? "- none- " : bSensor.getDisplayName(),  // NOI18N
+                    (cSensor == null) ? "- none- " : cSensor.getDisplayName(),  // NOI18N
+                    (dSensor == null) ? "- none- " : dSensor.getDisplayName());  // NOI18N
         }
-        if ((bSensor != null) && xingSensorB.addToPanel()) {
-            if (isSensorOnPanel(bSensor)
-                    && (bSensor != levelXing.getSensorB())) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{xingSensorB.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorB());
-                placingBlock(getSensorIcon(xingSensorB.getText()), xingSensorB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXing.getCoordsB());
-                removeAssignment(bSensor);
-                levelXing.setSensorBName(xingSensorB.getText());
-                needRedraw = true;
+
+
+        // place/remove sensors as requested
+        if (aSensor == null) {
+            if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
+                levelXing.setSensorAName(null);
             }
-        } else if ((bSensor != null)
-                && (bSensor != levelXing.getSensorA())
-                && (bSensor != levelXing.getSensorB())
-                && (bSensor != levelXing.getSensorC())
-                && (bSensor != levelXing.getSensorD())) {
-            if (isSensorOnPanel(bSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{xingSensorB.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorB());
-                removeAssignment(bSensor);
-                levelXing.setSensorBName(xingSensorB.getText());
-            }
-        } else if ((bSensor != null)
-                && ((bSensor == levelXing.getSensorA())
-                || (bSensor == levelXing.getSensorC())
-                || (bSensor == levelXing.getSensorD()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (bSensor == null) {
-            removeSensorFromPanel(levelXing.getSensorB());
-            levelXing.setSensorBName("");
+        } else if (xingSensorA != null && levelXing.getConnectA() != null) {
+            setLevelXingSensor(aSensor, currSensorA, xingSensorA, levelXing.getConnectA(), levelXing.getCoordsA(), "A");
         }
-        if ((cSensor != null) && xingSensorC.addToPanel()) {
-            if (isSensorOnPanel(cSensor)
-                    && (cSensor != levelXing.getSensorC())) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{xingSensorC.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorC());
-                placingBlock(getSensorIcon(xingSensorC.getText()), xingSensorC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXing.getCoordsC());
-                removeAssignment(cSensor);
-                levelXing.setSensorCName(xingSensorC.getText());
-                needRedraw = true;
+
+        if (bSensor == null) {
+            if (currSensorB != null && removeSensorFromPanel(currSensorB)) {
+                levelXing.setSensorBName(null);
             }
-        } else if ((cSensor != null)
-                && (cSensor != levelXing.getSensorA())
-                && (cSensor != levelXing.getSensorB())
-                && (cSensor != levelXing.getSensorC())
-                && (cSensor != levelXing.getSensorD())) {
-            if (isSensorOnPanel(cSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{xingSensorC.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorC());
-                removeAssignment(cSensor);
-                levelXing.setSensorCName(xingSensorC.getText());
-            }
-        } else if ((cSensor != null)
-                && ((cSensor == levelXing.getSensorB())
-                || (cSensor == levelXing.getSensorA())
-                || (cSensor == levelXing.getSensorD()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (cSensor == null) {
-            removeSensorFromPanel(levelXing.getSensorC());
-            levelXing.setSensorCName("");
+        } else if (xingSensorB != null && levelXing.getConnectB() != null) {
+            setLevelXingSensor(bSensor, currSensorB, xingSensorB, levelXing.getConnectB(), levelXing.getCoordsB(), "B");
         }
-        if ((dSensor != null) && xingSensorD.addToPanel()) {
-            if (isSensorOnPanel(dSensor)
-                    && (dSensor != levelXing.getSensorD())) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{xingSensorD.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorD());
-                placingBlock(getSensorIcon(xingSensorD.getText()), xingSensorD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXing.getCoordsD());
-                removeAssignment(dSensor);
-                levelXing.setSensorDName(xingSensorD.getText());
-                needRedraw = true;
+
+        if (cSensor == null) {
+            if (currSensorC != null && removeSensorFromPanel(currSensorC)) {
+                levelXing.setSensorCName(null);
             }
-        } else if ((dSensor != null)
-                && (dSensor != levelXing.getSensorA())
-                && (dSensor != levelXing.getSensorB())
-                && (dSensor != levelXing.getSensorC())
-                && (dSensor != levelXing.getSensorD())) {
-            if (isSensorOnPanel(dSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtLevelXingFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{xingSensorD.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(levelXing.getSensorD());
-                removeAssignment(dSensor);
-                levelXing.setSensorDName(xingSensorD.getText());
-            }
-        } else if ((dSensor != null)
-                && ((dSensor == levelXing.getSensorB())
-                || (dSensor == levelXing.getSensorC())
-                || (dSensor == levelXing.getSensorA()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (dSensor == null) {
-            removeSensorFromPanel(levelXing.getSensorD());
-            levelXing.setSensorDName("");
+        } else if (xingSensorC != null && levelXing.getConnectC() != null) {
+            setLevelXingSensor(cSensor, currSensorC, xingSensorC, levelXing.getConnectC(), levelXing.getCoordsC(), "C");
         }
+
+        if (dSensor == null) {
+            if (currSensorD != null && removeSensorFromPanel(currSensorD)) {
+                levelXing.setSensorDName(null);
+            }
+        } else if (xingSensorD != null && levelXing.getConnectD() != null) {
+            setLevelXingSensor(dSensor, currSensorD, xingSensorD, levelXing.getConnectD(), levelXing.getCoordsD(), "D");
+        }
+
         // setup logic if requested
         // finish up
         setSensorsAtLevelXingOpenFlag = false;
@@ -11519,6 +11355,90 @@ public class LayoutEditorTools {
             layoutEditor.redrawPanel();
             needRedraw = false;
             layoutEditor.setDirty();
+        }
+    }
+
+    /**
+     * Attached a sensor to a level crossing block boundary.
+     * @since 4.11.2
+     * @param newSensor The sensor that is being added.
+     * @param currSensor The sensor that might already be there, otherwise null.
+     * @param beanDetail The BeanDetails object that contains the supporting data.
+     * @param connect The track segment that is attached to this point
+     * @param coords The track componennt coordinates
+     * @param position Which of the four points is being changed
+     */
+    void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails beanDetail,
+            LayoutTrack connect, Point2D coords, String position) {
+        if (currSensor == null) {
+            if (!isSensorAssignedAnywhere(newSensor)) {
+                log.trace("Add sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                switch (position) {
+                    case "A":  // NOI18N
+                        levelXing.setSensorAName(beanDetail.getText());
+                        break;
+                    case "B":  // NOI18N
+                        levelXing.setSensorBName(beanDetail.getText());
+                        break;
+                    case "C":  // NOI18N
+                        levelXing.setSensorCName(beanDetail.getText());
+                        break;
+                    case "D":  // NOI18N
+                        levelXing.setSensorDName(beanDetail.getText());
+                        break;
+                    default:
+                        break;
+                }
+                if (beanDetail.addToPanel()) {
+                    log.trace("Add icon for sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    placingBlock(getSensorIcon(beanDetail.getText()),
+                            beanDetail.isRightSelected(), 0.0, connect, coords);
+                    needRedraw = true;
+                }
+            } else {
+                sensorAssignedElseWhere(newSensor);
+            }
+        } else if (currSensor == newSensor) {
+            if (beanDetail.addToPanel()) {
+                if (!isSensorOnPanel(newSensor)) {
+                    log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
+                    placingBlock(getSensorIcon(beanDetail.getText()),
+                            beanDetail.isRightSelected(), 0.0, connect, coords);
+                    needRedraw = true;
+                }
+            }
+        } else {
+            if (!isSensorAssignedAnywhere(newSensor)) {
+                if (removeSensorFromPanel(currSensor)) {
+                    log.trace("Replace sensor '{}' with sensor '{}'",  // NOI18N
+                            currSensor.getDisplayName(), newSensor.getDisplayName());
+                    switch (position) {
+                        case "A":  // NOI18N
+                            levelXing.setSensorAName(beanDetail.getText());
+                            break;
+                        case "B":  // NOI18N
+                            levelXing.setSensorBName(beanDetail.getText());
+                            break;
+                        case "C":  // NOI18N
+                            levelXing.setSensorCName(beanDetail.getText());
+                            break;
+                        case "D":  // NOI18N
+                            levelXing.setSensorDName(beanDetail.getText());
+                            break;
+                        default:
+                            break;
+                    }
+                    if (beanDetail.addToPanel()) {
+                        log.trace("Add icon for replacement sensor '{}'",  // NOI18N
+                                newSensor.getDisplayName());
+                        placingBlock(getSensorIcon(beanDetail.getText()),
+                                beanDetail.isRightSelected(), 0.0, connect, coords);
+                        needRedraw = true;
+                    }
+                }
+            } else {
+                sensorAssignedElseWhere(newSensor);
+            }
         }
     }
 
@@ -11535,10 +11455,11 @@ public class LayoutEditorTools {
             if (block2 == null || (block1 == block2)) {
                 // find the 1st positionablePoint that's connect1'ed to block1
                 for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                    if ((p.getType() == PositionablePoint.END_BUMPER)
-                            && (p.getConnect1().getLayoutBlock() == block1)) {
-                        boundary = p;
-                        break;
+                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                        if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() == block1) {
+                            boundary = p;
+                            break;
+                        }
                     }
                 }
             }
@@ -11917,178 +11838,68 @@ public class LayoutEditorTools {
     }
 
     private void setSlipSensorsDonePressed(ActionEvent a) {
+        log.trace("setSlipSensorsDonePressed");
         if (!getSlipSensorInformation()) {
             return;
         }
-        Sensor aSensor = getSensorFromEntry(slipSensorA.getText(), false, setSensorsAtSlipFrame);
-        Sensor bSensor = getSensorFromEntry(slipSensorB.getText(), false, setSensorsAtSlipFrame);
-        Sensor cSensor = getSensorFromEntry(slipSensorC.getText(), false, setSensorsAtSlipFrame);
-        Sensor dSensor = getSensorFromEntry(slipSensorD.getText(), false, setSensorsAtSlipFrame);
-        // place or update signals as requested
-        if ((aSensor != null) && slipSensorA.addToPanel()) {
-            if (isSensorOnPanel(aSensor)
-                    && (aSensor != layoutSlip.getSensorA())) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{slipSensorA.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorA());
-                placingBlock(getSensorIcon(slipSensorA.getText()), slipSensorA.isRightSelected(), 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
-                removeAssignment(aSensor);
-                layoutSlip.setSensorA(slipSensorA.getText());
-                needRedraw = true;
-            }
-        } else if ((aSensor != null)
-                && (aSensor != layoutSlip.getSensorA())
-                && (aSensor != layoutSlip.getSensorB())
-                && (aSensor != layoutSlip.getSensorC())
-                && (aSensor != layoutSlip.getSensorD())) {
-            if (isSensorOnPanel(aSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{slipSensorA.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorA());
-                removeAssignment(aSensor);
-                layoutSlip.setSensorA(slipSensorA.getText());
-            }
-        } else if ((aSensor != null)
-                && ((aSensor == layoutSlip.getSensorB())
-                || (aSensor == layoutSlip.getSensorC())
-                || (aSensor == layoutSlip.getSensorD()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (aSensor == null) {
-            removeSensorFromPanel(layoutSlip.getSensorA());
-            layoutSlip.setSensorA("");
+
+        Sensor sensorA = getSensorFromEntry(slipSensorA.getText(), false, setSensorsAtSlipFrame);
+        Sensor sensorB = getSensorFromEntry(slipSensorB.getText(), false, setSensorsAtSlipFrame);
+        Sensor sensorC = getSensorFromEntry(slipSensorC.getText(), false, setSensorsAtSlipFrame);
+        Sensor sensorD = getSensorFromEntry(slipSensorD.getText(), false, setSensorsAtSlipFrame);
+
+
+        Sensor currSensorA = layoutSlip.getSensorA();
+        Sensor currSensorB = layoutSlip.getSensorB();
+        Sensor currSensorC = layoutSlip.getSensorC();
+        Sensor currSensorD = layoutSlip.getSensorD();
+
+        if (log.isTraceEnabled()) {
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(),  // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(),  // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(),  // NOI18N
+                    (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
+                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(),  // NOI18N
+                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(),  // NOI18N
+                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(),  // NOI18N
+                    (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
-        if ((bSensor != null) && slipSensorB.addToPanel()) {
-            if (isSensorOnPanel(bSensor)
-                    && (bSensor != layoutSlip.getSensorB())) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{slipSensorB.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorB());
-                placingBlock(getSensorIcon(slipSensorB.getText()), slipSensorB.isRightSelected(), 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
-                removeAssignment(bSensor);
-                layoutSlip.setSensorB(slipSensorB.getText());
-                needRedraw = true;
+
+        // place/remove sensors as requested
+        if (sensorA == null) {
+            if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
+                layoutSlip.setSensorA(null);
             }
-        } else if ((bSensor != null)
-                && (bSensor != layoutSlip.getSensorA())
-                && (bSensor != layoutSlip.getSensorB())
-                && (bSensor != layoutSlip.getSensorC())
-                && (bSensor != layoutSlip.getSensorD())) {
-            if (isSensorOnPanel(bSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{slipSensorB.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorB());
-                removeAssignment(bSensor);
-                layoutSlip.setSensorB(slipSensorB.getText());
-            }
-        } else if ((bSensor != null)
-                && ((bSensor == layoutSlip.getSensorA())
-                || (bSensor == layoutSlip.getSensorC())
-                || (bSensor == layoutSlip.getSensorD()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (bSensor == null) {
-            removeSensorFromPanel(layoutSlip.getSensorB());
-            layoutSlip.setSensorB("");
+        } else if (slipSensorA != null && layoutSlip.getConnectA() != null) {
+            setTurnoutSensor(layoutSlip, sensorA, currSensorA, slipSensorA, layoutSlip.getConnectA(), layoutSlip.getCoordsA(), "A");
         }
-        if ((cSensor != null) && slipSensorC.addToPanel()) {
-            if (isSensorOnPanel(cSensor)
-                    && (cSensor != layoutSlip.getSensorC())) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{slipSensorC.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorC());
-                placingBlock(getSensorIcon(slipSensorC.getText()), slipSensorC.isRightSelected(), 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
-                removeAssignment(cSensor);
-                layoutSlip.setSensorC(slipSensorC.getText());
-                needRedraw = true;
+
+        if (sensorB == null) {
+            if (currSensorB != null && removeSensorFromPanel(currSensorB)) {
+                layoutSlip.setSensorB(null);
             }
-        } else if ((cSensor != null)
-                && (cSensor != layoutSlip.getSensorA())
-                && (cSensor != layoutSlip.getSensorB())
-                && (cSensor != layoutSlip.getSensorC())
-                && (cSensor != layoutSlip.getSensorD())) {
-            if (isSensorOnPanel(cSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{slipSensorC.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorC());
-                removeAssignment(cSensor);
-                layoutSlip.setSensorC(slipSensorC.getText());
-            }
-        } else if ((cSensor != null)
-                && ((cSensor == layoutSlip.getSensorB())
-                || (cSensor == layoutSlip.getSensorA())
-                || (cSensor == layoutSlip.getSensorD()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (cSensor == null) {
-            removeSensorFromPanel(layoutSlip.getSensorC());
-            layoutSlip.setSensorC("");
+        } else if (slipSensorB != null && layoutSlip.getConnectB() != null) {
+            setTurnoutSensor(layoutSlip, sensorB, currSensorB, slipSensorB, layoutSlip.getConnectB(), layoutSlip.getCoordsB(), "B");
         }
-        if ((dSensor != null) && slipSensorD.addToPanel()) {
-            if (isSensorOnPanel(dSensor)
-                    && (dSensor != layoutSlip.getSensorD())) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError6",
-                                new Object[]{slipSensorD.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorD());
-                placingBlock(getSensorIcon(slipSensorD.getText()), slipSensorD.isRightSelected(), 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
-                removeAssignment(dSensor);
-                layoutSlip.setSensorD(slipSensorD.getText());
-                needRedraw = true;
+
+        if (sensorC == null) {
+            if (currSensorC != null && removeSensorFromPanel(currSensorC)) {
+                layoutSlip.setSensorC(null);
             }
-        } else if ((dSensor != null)
-                && (dSensor != layoutSlip.getSensorA())
-                && (dSensor != layoutSlip.getSensorB())
-                && (dSensor != layoutSlip.getSensorC())
-                && (dSensor != layoutSlip.getSensorD())) {
-            if (isSensorOnPanel(dSensor)) {
-                JOptionPane.showMessageDialog(setSensorsAtSlipFrame,
-                        Bundle.getMessage("SensorsError13",
-                                new Object[]{slipSensorD.getText()}),
-                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-                removeSensorFromPanel(layoutSlip.getSensorD());
-                removeAssignment(dSensor);
-                layoutSlip.setSensorD(slipSensorD.getText());
-            }
-        } else if ((dSensor != null)
-                && ((dSensor == layoutSlip.getSensorB())
-                || (dSensor == layoutSlip.getSensorC())
-                || (dSensor == layoutSlip.getSensorA()))) {
-            // need to figure out what to do in this case.
-            log.trace("need to figure out what to do in this case.");
-        } else if (dSensor == null) {
-            removeSensorFromPanel(layoutSlip.getSensorD());
-            layoutSlip.setSensorD("");
+        } else if (slipSensorC != null && layoutSlip.getConnectC() != null) {
+            setTurnoutSensor(layoutSlip, sensorC, currSensorC, slipSensorC, layoutSlip.getConnectC(), layoutSlip.getCoordsC(), "C");
         }
+
+        if (sensorD == null) {
+            if (currSensorD != null && removeSensorFromPanel(currSensorD)) {
+                layoutSlip.setSensorD(null);
+            }
+        } else if (slipSensorD != null && layoutSlip.getConnectD() != null) {
+            setTurnoutSensor(layoutSlip, sensorD, currSensorD, slipSensorD, layoutSlip.getConnectD(), layoutSlip.getCoordsD(), "D");
+        }
+
         // setup logic if requested
         // finish up
         setSensorsAtSlipOpenFlag = false;
@@ -13471,7 +13282,7 @@ public class LayoutEditorTools {
         String logixName = "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
-            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+            InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         } catch (IllegalArgumentException ex) {
             log.error("Trouble creating sensor " + sensorName + " while setting up Logix.");
             return "";

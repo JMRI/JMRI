@@ -81,6 +81,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         initializeNodes();
         if (cmriNode.size() > 0) {
             inputBits.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     if (inputSelected == false) {
                         inputSelected = true;
@@ -89,6 +90,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                 }
             });
             outputBits.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     if (inputSelected == true) {
                         inputSelected = false;
@@ -173,6 +175,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         printButton.setToolTipText(Bundle.getMessage("PrintButtonTip"));
         if (cmriNode.size() > 0) {
             printButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     printButtonActionPerformed(e);
                 }
@@ -185,6 +188,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip"));
         if (cmriNode.size() > 0) {
             doneButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doneButtonActionPerformed();
                 }
@@ -300,11 +304,11 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head;
         if (inputSelected) {
-            head = "CMRInet " + Bundle.getMessage("AssignmentPanelInputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  "+ Bundle.getMessage("AssignmentPanelInputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         } else {
-            head = "CMRInet " + Bundle.getMessage("AssignmentPanelOutputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  " + Bundle.getMessage("AssignmentPanelOutputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeNum + "  ";
         }
         // initialize a printer writer
         HardcopyWriter writer = null;
@@ -328,26 +332,32 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
         private int curRow = -1;
         private String curRowSysName = "";
 
+        @Override
         public String getColumnName(int c) {
             return assignmentTableColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             return false;
         }
 
+        @Override
         public int getColumnCount() {
             return MAX_COLS;
         }
 
+        @Override
         public int getRowCount() {
             return numBits;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == BIT_COLUMN) {
                 return Integer.toString(r + 1);
@@ -429,6 +439,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             return "";  // fall through
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             // nothing is stored here
         }

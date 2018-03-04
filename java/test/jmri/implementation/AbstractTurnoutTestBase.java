@@ -1,7 +1,13 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
+
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import jmri.Turnout;
+import jmri.Sensor;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -104,6 +110,49 @@ public abstract class AbstractTurnoutTestBase {
         checkThrownMsgSent();
     }
 
+    class TestSensor extends AbstractSensor {
+            public boolean request = false;
+
+            public TestSensor(String sysName, String userName){
+                super(sysName, userName);
+            }
+
+            @Override
+            public void requestUpdateFromLayout(){
+                request = true;
+            }
+
+            boolean getRequest(){
+              return request;
+            }
+
+            void resetRequest(){
+              request=false;
+            }
+    }
+
+    @Test
+    public void testRequestUpdate() throws JmriException {
+        TestSensor s1 = new TestSensor("IS1", "username1");
+        TestSensor s2 = new TestSensor("IS2", "username2");
+        InstanceManager.sensorManagerInstance().register(s1);
+        InstanceManager.sensorManagerInstance().register(s2);
+
+        t.provideFirstFeedbackSensor("IS1");
+        t.setFeedbackMode(Turnout.ONESENSOR);
+
+        t.requestUpdateFromLayout();
+        Assert.assertTrue("update requested, one sensor",s1.getRequest());
+        s1.resetRequest();
+
+        t.provideSecondFeedbackSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR);
+
+        t.requestUpdateFromLayout();
+        Assert.assertTrue("update requested, two sensor s1",s1.getRequest());
+        Assert.assertTrue("update requested, two sensor s2",s2.getRequest());
+    }
+
     @Test
     public void testGetAndSetInverted(){
         Assume.assumeTrue(t.canInvert());  // skip test if can't invert.
@@ -136,6 +185,60 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("commanded state 2", Turnout.THROWN, t.getState());
         Assert.assertEquals("commanded state 3", "Thrown", t.describeState(t.getState()));
         checkClosedMsgSent();
+    }
+
+    @Test
+    public void testProvideFirstFeedbackSensor() throws jmri.JmriException {
+        t.provideFirstFeedbackSensor("IS1");
+        Assert.assertNotNull("first feedback sensor",t.getFirstSensor());
+    }
+
+    @Test
+    public void testProvideSecondFeedbackSensor() throws jmri.JmriException {
+        t.provideSecondFeedbackSensor("IS2");
+        Assert.assertNotNull("first feedback sensor",t.getSecondSensor());
+    }
+
+    @Test
+    public void testOneSensorFeedback() throws jmri.JmriException {
+        Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
+        t.setFeedbackMode(Turnout.ONESENSOR); 
+        t.provideFirstFeedbackSensor("IS1");
+        s1.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("known state for ONESENSOR feedback Inactive",Turnout.CLOSED,t.getKnownState());
+        s1.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("known state for ONESENSOR feedback active",Turnout.THROWN,t.getKnownState());
+    }
+
+    @Test
+    public void testTwoSensorFeedback() throws jmri.JmriException {
+        Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
+        Sensor s2 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR); 
+        t.provideFirstFeedbackSensor("IS1");
+        t.provideSecondFeedbackSensor("IS2");
+        Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)",Turnout.UNKNOWN,t.getKnownState());
+
+        s1.setKnownState(Sensor.ACTIVE);
+        s2.setKnownState(Sensor.INACTIVE);
+
+        JUnitUtil.waitFor( () -> {
+            return t.getKnownState() != Turnout.UNKNOWN;
+        });
+
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Inactive)", Turnout.THROWN, t.getKnownState());
+
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.INACTIVE);
+        Assert.assertEquals("known state for TWOSENSOR feedback (Inactive,Inactive)",Turnout.INCONSISTENT,t.getKnownState());
+
+        s1.setKnownState(Sensor.INACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive,Active)", Turnout.CLOSED, t.getKnownState());
+
+        s1.setKnownState(Sensor.ACTIVE);
+        s2.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Active)", Turnout.INCONSISTENT, t.getKnownState());
     }
 
 }

@@ -4,7 +4,6 @@ import static jmri.server.json.JSON.ADD;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.POST;
 import static jmri.server.json.JSON.PUT;
@@ -34,18 +33,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2014, 2016
  */
-public class JsonRosterSocketService extends JsonSocketService {
+public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpService> {
 
     private final static Logger log = LoggerFactory.getLogger(JsonRosterSocketService.class);
     private final JsonRosterListener rosterListener = new JsonRosterListener();
     private final JsonRosterEntryListener rosterEntryListener = new JsonRosterEntryListener();
     private final JsonRosterGroupsListener rosterGroupsListener = new JsonRosterGroupsListener();
-    private final JsonRosterHttpService service;
     private boolean listening = false;
 
     public JsonRosterSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonRosterHttpService(connection.getObjectMapper());
+        super(connection, new JsonRosterHttpService(connection.getObjectMapper()));
     }
 
     public void listen() {
@@ -61,8 +58,7 @@ public class JsonRosterSocketService extends JsonSocketService {
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        String method = data.path(METHOD).asText();
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         switch (method) {
             case DELETE:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage("DeleteNotAllowed", type));
@@ -148,11 +144,11 @@ public class JsonRosterSocketService extends JsonSocketService {
             try {
                 try {
                     if (evt.getPropertyName().equals(Roster.ADD)) {
-                        root.putObject(DATA).put(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
+                        root.putObject(DATA).set(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getNewValue()));
                         ((PropertyChangeProvider) evt.getNewValue()).addPropertyChangeListener(rosterEntryListener);
                         connection.sendMessage(root);
                     } else if (evt.getPropertyName().equals(Roster.REMOVE)) {
-                        root.putObject(DATA).put(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
+                        root.putObject(DATA).set(REMOVE, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getOldValue()));
                         connection.sendMessage(root);
                     } else if (!evt.getPropertyName().equals(Roster.SAVED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)

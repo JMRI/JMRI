@@ -21,9 +21,12 @@ import javax.annotation.Nonnull;
  * not 123
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
- *
+ * Note: the {@link #check()} routine does a full, expensive
+ * validity check of the name.  All other operations 
+ * assume correctness, diagnose some invalid-format strings, but 
+ * may appear to successfully handle other invalid forms.
  * <P>
- * @author Bob Jacobsen Copyright (C) 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
  */
 public class OlcbAddress {
 
@@ -33,14 +36,33 @@ public class OlcbAddress {
 
     static final String singleAddressPattern = "([xX](\\p{XDigit}\\p{XDigit}){1,8})|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
 
-    private Matcher hCode = Pattern.compile("^" + singleAddressPattern + "$").matcher("");
+    private Matcher hCode = null;
 
+    private Matcher getMatcher() {
+        if (hCode == null)  hCode = Pattern.compile("^" + singleAddressPattern + "$").matcher("");
+        return hCode;
+    }
+    
     String aString = null;
     int[] aFrame = null;
     boolean match = false;
 
     static final int NODEFACTOR = 100000;
 
+    /** 
+     * Construct from OlcbEvent
+     *
+     */
+    public OlcbAddress(EventID e) {
+        byte[] contents = e.getContents();
+        aFrame = new int[contents.length];
+        int i = 0;
+        for (byte b : contents) {
+            aFrame[i++] = b;
+        }
+        aString = toCanonicalString();
+    }
+    
     /**
      * Construct from string without leading system or type letters
      * @param s hex coded string of address
@@ -48,31 +70,39 @@ public class OlcbAddress {
     public OlcbAddress(String s) {
         aString = s;
         // now parse
-        match = hCode.reset(aString).matches();
-        if (match) {
-            if (hCode.group(GROUP_FULL_HEX) != null) {
-                // hit on hex form
-                String l = hCode.group(GROUP_FULL_HEX);
-                int len = (l.length() - 1) / 2;
-                aFrame = new int[len];
-                // get the frame data
-                for (int i = 0; i < len; i++) {
-                    String two = l.substring(1 + 2 * i, 1 + 2 * i + 2);
-                    aFrame[i] = Integer.parseInt(two, 16);
-                }
-            } else if (hCode.group(GROUP_DOT_HEX) != null) {
-                // dotted form, 7 dots
-                String[] terms = s.split("\\.");
-                if (terms.length != 8) {
-                    log.error("unexpected number of terms: " + terms.length);
-                }
-                aFrame = new int[terms.length];
-                for (int i = 0; i < terms.length; i++) {
-                    aFrame[i] = Integer.parseInt(terms[i], 16);
-                }
+        // This is done manually, rather than via regular expressions, for performance reasons.
+        if (aString.contains(";")) {
+            // multi-part address; leave match false and aFrame null
+            return;
+        } else if (aString.contains(".")) {
+            // dotted form, 7 dots
+            String[] terms = s.split("\\.");
+            if (terms.length != 8) {
+                log.error("unexpected number of terms: " + terms.length);
             }
+            int[] tFrame = new int[terms.length];
+            try {
+                for (int i = 0; i < terms.length; i++) {
+                    tFrame[i] = Integer.parseInt(terms[i], 16);
+                }
+            } catch (NumberFormatException ex) { return; } // leaving the string unparsed
+            aFrame = tFrame;
+            match = true;
         } else {
-            // no match, leave match false and aFrame null
+            // assume single hex string - drop leading x if present
+            if (aString.startsWith("x")) aString = aString.substring(1);
+            if (aString.startsWith("X")) aString = aString.substring(1);
+            int len = aString.length() / 2;
+            int[] tFrame  = new int[len];
+            // get the frame data
+            try {
+                for (int i = 0; i < len; i++) {
+                    String two = aString.substring(2 * i, 2 * i + 2);
+                    tFrame[i] = Integer.parseInt(two, 16);
+                }
+            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed  
+            aFrame = tFrame;
+            match = true;
         }
     }
 
@@ -130,8 +160,14 @@ public class OlcbAddress {
         return c;
     }
 
+    /**
+     * Confirm that the address string (provided earlier) is fully
+     * valid.  This is an expensive call. It's complete-compliance done
+     * using a regular expression. It can reject some 
+     * forms that the code will normally handle OK.
+     */
     public boolean check() {
-        return hCode.reset(aString).matches();
+        return getMatcher().reset(aString).matches();
     }
 
     boolean match(CanReply r) {
@@ -195,12 +231,12 @@ public class OlcbAddress {
             if (pStrings[i].equals("")) {
                 return null;
             }
-            if (!hCode.reset(pStrings[i]).matches()) {
-                return null;
-            }
+            
+            // too expensive to do full regex check here, as this is used a lot in e.g. sorts
+            // if (!getMatcher().reset(pStrings[i]).matches()) return null;
 
             retval[i] = new OlcbAddress(pStrings[i]);
-            if (retval[i] == null) {
+            if (!retval[i].match) {
                 return null;
             }
         }

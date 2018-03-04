@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
+    /**
+     * Create a new AbstractMRMessage instance.
+     */
     public AbstractMRMessage() {
         setBinary(false);
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
@@ -22,7 +25,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setRetries(0); // default to no retries
     }
 
-    // create a new one
+    /**
+     * Create a new AbstractMRMessage instance of a given byte size.
+     *
+     * @param i number of elements
+     */
     public AbstractMRMessage(int i) {
         this();
         if (i < 1) {
@@ -33,7 +40,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         _dataChars = new int[i];
     }
 
-    // copy one
+    /**
+     * Copy an AbstractMRMessage to a new instance.
+     *
+     * @param m the message to copy
+     */
     public AbstractMRMessage(@Nonnull AbstractMRMessage m) {
         this();
         Objects.requireNonNull(m, "copy ctor of null message");
@@ -45,7 +56,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setNeededMode(m.getNeededMode());
     }
 
-    // from String
+    /**
+     * Create a new Message instance from a string.
+     *
+     * @param s String to use as message content
+     */
     public AbstractMRMessage(String s) {
         this(s.length());
         for (int i = 0; i < _nDataChars; i++) {
@@ -84,7 +99,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     /**
      * Is a reply expected to this message?
-     * <P>
+     * <p>
      * By default, a reply is expected to every message; either a reply or a
      * timeout is needed before the next message can be sent.
      * <p>
@@ -108,11 +123,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     /**
      * Minimum timeout that's acceptable.
-     * <P>
+     * <p>
      * Also used as default for normal operations. Don't shorten this "to make
      * recovery faster", as sometimes <i>internal</i> delays can slow processing
      * down.
-     * <P>
+     * <p>
      * Units are milliseconds.
      */
     static protected final int SHORT_TIMEOUT = 2000;

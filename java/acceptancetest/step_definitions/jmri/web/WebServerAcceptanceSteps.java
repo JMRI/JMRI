@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.GraphicsEnvironment;
 
 /**
- * Cucumber step defintions for Web Server Acceptance tests.
+ * Cucumber step definitions for Web Server Acceptance tests.
  *
- * @author  Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WebServerAcceptanceSteps implements En {
      

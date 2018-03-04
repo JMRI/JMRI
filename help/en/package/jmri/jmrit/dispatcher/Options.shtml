@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Dispatcher Options Help</title>
-  <meta content="Dave Duchamp" name="Author">
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Dispatcher Options">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -25,7 +25,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Dispatcher: Dispatcher Options</h1>
+      <h1>JMRI: Dispatcher Options</h1>
 
       <h2>Introduction</h2>
 
@@ -67,7 +67,7 @@
           correctly. This item must be checked if Dispatcher is to
           set turnouts when a Section is allocated (see below), and
           if trains are to be run automatically.</p>
-          <p>Select the type of Signalling control that is use on
+          <p>Select the type of Signaling control that is use on
           the panel from the drop down:</p>
 
           <ul>
@@ -209,6 +209,7 @@
         </li>
 
         <li>
+          <span class="since">since 4.3.7</span>
           <p><b>Time to Fully Ramp</b> is used to calculate the
           Ramping values. Specifically, it is how long (in
           milliseconds) it would take to go from 0&#37; to 100&#37;.
@@ -217,6 +218,7 @@
         </li>
 
         <li>
+          <span class="since">since 3.4</span>
           <p>Check the <b>Open Dispatcher with Panel</b> to open up
           the Dispatcher window when the panel file is loaded.
           Please note that this option is saved when the panel file

@@ -8,6 +8,7 @@ import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -16,15 +17,16 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
- * <P>
+ * <p>
  * It does include, with AbstractNamedBean, the implementation of the normalized
  * user name.
  *
@@ -250,6 +252,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
+     * By default there are no custom properties.
+     * @return empty list
+     */
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        return new LinkedList<>();
+    }
+
+    /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely
      * implemented yet. In particular, listeners are not added to newly
@@ -258,26 +269,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @param e the event
      */
     @Override
+    @SuppressWarnings("unchecked") // The cast of getSource() to E can't be checked due to type erasure, but we catch errors
     @OverridingMethodsMustInvokeSuper
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
             String old = (String) e.getOldValue();  // previous user name
             String now = (String) e.getNewValue();  // current user name
-            E t = (E) e.getSource();
-            if (old != null) {
-                _tuser.remove(old); // remove old name for this bean
-            }
-            if (now != null) {
-                // was there previously a bean with the new name?
-                if (_tuser.get(now) != null && _tuser.get(now) != t) {
-                    // If so, clear. Note that this is not a "move" operation
-                    _tuser.get(now).setUserName(null);
+            try { // really should always succeed
+                E t = (E) e.getSource();
+                if (old != null) {
+                    _tuser.remove(old); // remove old name for this bean
                 }
+                if (now != null) {
+                    // was there previously a bean with the new name?
+                    if (_tuser.get(now) != null && _tuser.get(now) != t) {
+                        // If so, clear. Note that this is not a "move" operation
+                        _tuser.get(now).setUserName(null);
+                    }
 
-                _tuser.put(now, t); // put new name for this bean
+                    _tuser.put(now, t); // put new name for this bean
+                }
+            } catch (ClassCastException ex) {
+                log.error("Received event of wrong type {}", e.getSource().getClass().getName(), ex);
             }
 
-            //called DisplayListName, as DisplayName might get used at some point by a NamedBean
+            // called DisplayListName, as DisplayName might get used at some point by a NamedBean
             firePropertyChange("DisplayListName", old, now); //IN18N
         }
     }

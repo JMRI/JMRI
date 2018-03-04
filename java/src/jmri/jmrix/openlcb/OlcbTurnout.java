@@ -46,6 +46,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     EventTable.EventTableEntryHolder thrownEventTableEntryHolder = null;
     EventTable.EventTableEntryHolder closedEventTableEntryHolder = null;
 
+    static final boolean DEFAULT_IS_AUTHORITATIVE = true;
+    static final boolean DEFAULT_LISTEN = true;
     private static final String[] validFeedbackNames = {"MONITORING", "ONESENSOR", "TWOSENSOR",
             "DIRECT"};
     private static final int[] validFeedbackModes = {MONITORING, ONESENSOR, TWOSENSOR, DIRECT};
@@ -108,8 +110,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             case DIRECT:
                 flags = BitProducerConsumer.IS_PRODUCER;
                 break;
-
         }
+        flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
         pc = new BitProducerConsumer(iface, addrThrown.toEventID(), addrClosed.toEventID(), flags);
         turnoutListener = new VersionedValueListener<Boolean>(pc.getValue()) {
             @Override
@@ -173,6 +175,15 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         }
     }
 
+    @Override
+    public void setProperty(String key, Object value) {
+        Object old = getProperty(key);
+        super.setProperty(key, value);
+        if (old != null && value.equals(old)) return;
+        if (pc == null) return;
+        finishLoad();
+    }
+
     /**
      * Handle a request to change state by sending CBUS events.
      *
@@ -190,7 +201,23 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             if (_activeFeedbackType == MONITORING) {
                 newKnownState(CLOSED);
             }
+        } else if (s == Turnout.UNKNOWN) {
+            if (pc != null) {
+                pc.resetToDefault();
+            }
+            newKnownState(Turnout.UNKNOWN);
         }
+    }
+
+    @Override
+    public void requestUpdateFromLayout() {
+        if (_activeFeedbackType == MONITORING) {
+            if (pc != null) {
+                pc.resetToDefault();
+                pc.sendQuery();
+            }
+        }
+        super.requestUpdateFromLayout();
     }
 
     @Override
@@ -224,11 +251,64 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     }
 
     /**
+     * Changes how the turnout reacts to inquire state events. With authoritative == false the
+     * state will always be reported as UNKNOWN to the layout when queried.
+     *
+     * @param authoritative whether we should respond true state or unknown to the layout event
+     *                      state inquiries.
+     */
+    public void setAuthoritative(boolean authoritative) {
+        boolean recreate = (authoritative != isAuthoritative()) && (pc != null);
+        setProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, authoritative);
+        if (recreate) {
+            finishLoad();
+        }
+    }
+
+    /**
+     * @return whether this producer/consumer is enabled to return state to the layout upon queries.
+     */
+    public boolean isAuthoritative() {
+        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_IS_AUTHORITATIVE);
+        if (value != null) {
+            return value;
+        }
+        return DEFAULT_IS_AUTHORITATIVE;
+    }
+
+    /**
+     * @return whether this producer/consumer is always listening to state declaration messages.
+     */
+    public boolean isListeningToStateMessages() {
+        Boolean value = (Boolean) getProperty(OlcbUtils.PROPERTY_LISTEN);
+        if (value != null) {
+            return value;
+        }
+        return DEFAULT_LISTEN;
+    }
+
+    /**
+     * Changes how the turnout reacts to state declaration messages. With listen == true state
+     * declarations will update local state at all times. With listen == false state declarations
+     * will update local state only if local state is unknown.
+     *
+     * @param listen whether we should always listen to state declaration messages.
+     */
+    public void setListeningToStateMessages(boolean listen) {
+        boolean recreate = (listen != isListeningToStateMessages()) && (pc != null);
+        setProperty(OlcbUtils.PROPERTY_LISTEN, listen);
+        if (recreate) {
+            finishLoad();
+        }
+    }
+
+    /**
      * {@inheritDoc} 
      * 
      * Sorts by decoded EventID(s)
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
         return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }

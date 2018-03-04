@@ -39,11 +39,11 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
         root.put(TYPE, SIGNAL_MAST);
         SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         ObjectNode data = this.getNamedBean(signalMast, name, type, locale);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (signalMast != null) {
             String aspect = signalMast.getAspect();
             if (aspect == null) {
-                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"   
+                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"
             }
             data.put(ASPECT, aspect);
             data.put(LIT, signalMast.getLit());

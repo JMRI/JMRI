@@ -1,15 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id$ -->
 
 <html>
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Jython access to JMRI tools</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
+  <title>Jython access to JMRI Tools</title>
+  <meta name="author" content="Bob Jacobsen">  <meta name="keywords" content=
   "JMRI technical code Python Jython scripting">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -32,7 +30,8 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Jython access to JMRI tools</h1>This page discusses
+      <h1>Jython access to JMRI Tools</h1>
+      <p>This page discusses
       access to the JMRI libraries from Jython, a Java version of
       Python. The emphasis is on using JMRI capabilities from a
       command-line Jython interpreter. <b>This page is not about
@@ -371,14 +370,16 @@ name space:
       </ol>We need to understand how the developers of Jython
       intended this to be done.
 
-      <h3>Termination</h3>Once the JMRI main thread (or Swing GUI
+    <h3>Termination</h3>
+      <p>Once the JMRI main thread (or Swing GUI
       thread?) has started, ^D is not sufficient to exist the
       program. You have to select "Quit" from the actual file menu,
-      or ^C the program.
+      or ^C the program.</p>
 
       <p>It would be good to understand what's preventing the
-      program from stopping when it gets the ^D. 
-      <!--#include virtual="/Footer" --></p>
+      program from stopping when it gets the <code>^D</code>.</p>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

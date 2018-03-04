@@ -4,7 +4,7 @@
   <title>
  	JMRI: Consisting Tool
   </title>
-  <meta content="Paul Bender" name="Author">
+  <meta name="author" content="Paul Bender">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 

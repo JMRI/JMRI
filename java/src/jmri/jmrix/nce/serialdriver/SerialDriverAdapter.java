@@ -18,11 +18,9 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the NCE system.
- * <P>
+ * <p>
  * This connects an NCE command station via a serial com port. Normally
  * controlled by the SerialDriverFrame class.
- * <P>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author ken ccameron Copyright (C) 2013
@@ -91,8 +89,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (UnsupportedCommOperationException | IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -101,8 +98,8 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     }
 
     /**
-     * set up all of the other objects to operate with an NCE command station
-     * connected to this port
+     * Set up all of the other objects to operate with an NCE command station
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -125,6 +122,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     }
 
     // base class methods for the NcePortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {

@@ -12,21 +12,26 @@ HEADLESS=${HEADLESS:-false}
 export MAVEN_OPTS=-Xmx1536m
 
 if [[ "${HEADLESS}" == "true" ]] ; then
-    # compile with ECJ for warnings or errors
-    mvn antrun:run -Danttarget=tests-warnings
-    # run FindBugs only on headless, failing build if bugs are found
-    # FindBugs configuration is in pom.xml
-    mvn clean test -U -P travis-findbugs --batch-mode
-    # run headless tests
-    mvn test -U -P travis-headless --batch-mode \
-        -Dsurefire.printSummary=${PRINT_SUMMARY} \
-        -Dsurefire.runOrder=${RUN_ORDER} \
-        -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
-        -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox'"
+    if [[ "${STATIC}" == "true" ]] ; then
+        # compile with ECJ for warnings or errors
+        mvn antrun:run -Danttarget=tests-warnings
+        # run SpotBugs only on headless, failing build if bugs are found
+        # SpotBugs configuration is in pom.xml
+        mvn clean test -U -P travis-spotbugs --batch-mode
+        # run Javadoc
+        mvn javadoc:javadoc -U --batch-mode
+    else
+        # run headless tests
+        mvn test -U -P travis-headless --batch-mode \
+            -Dsurefire.printSummary=${PRINT_SUMMARY} \
+            -Dsurefire.runOrder=${RUN_ORDER} \
+            -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
+            -Djava.awt.headless=${HEADLESS} \
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox'"
+    fi
 else
     # run full GUI test suite and fail on coverage issues
-    mvn javadoc:javadoc verify -U -P travis-coverage --batch-mode \
+    mvn verify -U -P travis-coverage --batch-mode \
         -Dsurefire.printSummary=${PRINT_SUMMARY} \
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \

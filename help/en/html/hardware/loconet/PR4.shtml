@@ -5,7 +5,7 @@
 <head>
 
   <title>JMRI Hardware Support - Connecting to a Digitrax PR4</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station PR4 MS-100 LocoBuffer java model railroad JMRI install windows">
   <!-- Style -->
@@ -82,7 +82,9 @@
       page.</a></p>
 
       <h2><a href=
-      "http://www.digitrax.com/tsd/product/PR4/">Drivers</a></h2><a href="http://www.digitrax.com/tsd/product/PR4/">The
+      "http://www.digitrax.com/tsd/product/PR4/">Drivers</a></h2>
+      
+      The
       PR4 needs to have a driver installed when used with any Microsoft
       Windows Operating System. See the PR4 support articles at the web links for the PR4.
       Make sure to follow the instructions exactly, particularly

@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,14 +56,14 @@ public class JsonManifest extends TrainCommon {
 
     public void build() throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
-        if (!this.train.getTrainRailroadName().equals(Train.NONE)) {
-            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getTrainRailroadName()));
+        if (!this.train.getRailroadName().equals(Train.NONE)) {
+            root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getRailroadName()));
         } else {
             root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(Setup.getRailroadName()));
         }
         root.put(JSON.NAME, StringEscapeUtils.escapeHtml4(this.train.getName()));
         root.put(JSON.DESCRIPTION, StringEscapeUtils.escapeHtml4(this.train.getDescription()));
-        root.put(JsonOperations.LOCATIONS, this.getLocations());
+        root.set(JsonOperations.LOCATIONS, this.getLocations());
         if (!this.train.getManifestLogoURL().equals(Train.NONE)) {
             // The operationsServlet will need to change this to a usable URL
             root.put(JSON.IMAGE, this.train.getManifestLogoURL());
@@ -98,7 +98,7 @@ public class JsonManifest extends TrainCommon {
             ObjectNode locationNode = this.mapper.createObjectNode();
             locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment()));
             locationNode.put(JSON.ID, routeLocation.getLocation().getId());
-            jsonLocation.put(JsonOperations.LOCATION, locationNode);
+            jsonLocation.set(JsonOperations.LOCATION, locationNode);
             jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getComment()));
             // engine change or helper service?
             if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -116,7 +116,7 @@ public class JsonManifest extends TrainCommon {
                 if (routeLocation == train.getSecondLegEndLocation()) {
                     options.add(JSON.REMOVE_HELPERS);
                 }
-                jsonLocation.put(JSON.OPTIONS, options);
+                jsonLocation.set(JSON.OPTIONS, options);
             }
             if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
@@ -133,13 +133,13 @@ public class JsonManifest extends TrainCommon {
                 if (routeLocation == train.getThirdLegEndLocation()) {
                     options.add(JSON.ADD_HELPERS);
                 }
-                jsonLocation.put(JSON.OPTIONS, options);
+                jsonLocation.set(JSON.OPTIONS, options);
             }
 
             ObjectNode engines = this.mapper.createObjectNode();
-            engines.put(JSON.ADD, pickupEngines(engineList, routeLocation));
-            engines.put(JSON.REMOVE, dropEngines(engineList, routeLocation));
-            jsonLocation.put(JSON.ENGINES, engines);
+            engines.set(JSON.ADD, pickupEngines(engineList, routeLocation));
+            engines.set(JSON.REMOVE, dropEngines(engineList, routeLocation));
+            jsonLocation.set(JSON.ENGINES, engines);
 
             // block cars by destination
             ArrayNode pickups = this.mapper.createArrayNode();
@@ -150,7 +150,7 @@ public class JsonManifest extends TrainCommon {
                     }
                 }
             }
-            jsonCars.put(JSON.ADD, pickups);
+            jsonCars.set(JSON.ADD, pickups);
             // car set outs
             ArrayNode setouts = this.mapper.createArrayNode();
             for (Car car : carList) {
@@ -158,15 +158,15 @@ public class JsonManifest extends TrainCommon {
                     setouts.add(this.utilities.getCar(car));
                 }
             }
-            jsonCars.put(JSON.REMOVE, setouts);
+            jsonCars.set(JSON.REMOVE, setouts);
 
             if (routeLocation != train.getRoute().getTerminatesRouteLocation()) {
-                jsonLocation.put(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
+                jsonLocation.set(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
                 jsonLocation.put(JSON.DIRECTION, routeLocation.getTrainDirection());
                 ObjectNode length = this.mapper.createObjectNode();
                 length.put(JSON.LENGTH, train.getTrainLength(routeLocation));
                 length.put(JSON.UNIT, Setup.getLengthUnit());
-                jsonLocation.put(JSON.LENGTH, length);
+                jsonLocation.set(JSON.LENGTH, length);
                 jsonLocation.put(JsonOperations.WEIGHT, train.getTrainWeight(routeLocation));
                 int cars = train.getNumberCarsInTrain(routeLocation);
                 int emptyCars = train.getNumberEmptyCarsInTrain(routeLocation);
@@ -177,7 +177,7 @@ public class JsonManifest extends TrainCommon {
                 log.debug("Train terminates in {}", locationName);
                 jsonLocation.put("TrainTerminatesIn", StringEscapeUtils.escapeHtml4(locationName));
             }
-            jsonLocation.put(JsonOperations.CARS, jsonCars);
+            jsonLocation.set(JsonOperations.CARS, jsonCars);
             locations.add(jsonLocation);
         }
         return locations;
@@ -233,7 +233,7 @@ public class JsonManifest extends TrainCommon {
                 }
                 if (pickup || setout) {
                     jsonTrack.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(track.getComment()));
-                    comments.put(track.getId(), jsonTrack);
+                    comments.set(track.getId(), jsonTrack);
                 }
             }
         }

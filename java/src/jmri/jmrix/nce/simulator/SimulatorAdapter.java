@@ -91,7 +91,7 @@ import org.slf4j.LoggerFactory;
   0xAC Perform hard reset of command station. Reset to factory defaults (Note: will change baud rate to 9600)(0) Returns nothing
   0xAD <4 data bytes>Accy/signal and macro commands (1) !,1 
 }
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
@@ -119,10 +119,17 @@ public class SimulatorAdapter extends NcePortController implements
     char NCE_DATA_OUT_OF_RANGE = '3';
     char NCE_BYTE_OUT_OF_RANGE = '4';
 
+    /**
+     * Create a new SimulatorAdapter.
+     */
     public SimulatorAdapter() {
         super(new NceSystemConnectionMemo());
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -172,6 +179,10 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     // Base class methods for the NcePortController interface.
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -180,6 +191,9 @@ public class SimulatorAdapter extends NcePortController implements
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
@@ -188,6 +202,9 @@ public class SimulatorAdapter extends NcePortController implements
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -195,6 +212,8 @@ public class SimulatorAdapter extends NcePortController implements
 
     /**
      * Get an array of valid baud rates.
+     *
+     * @return null
      */
     @Override
     public String[] validBaudRates() {
@@ -255,7 +274,7 @@ public class SimulatorAdapter extends NcePortController implements
     /**
      * Get characters from the input source.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private NceMessage loadChars() throws java.io.IOException {

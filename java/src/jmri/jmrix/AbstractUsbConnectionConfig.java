@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConfig {
     /**
@@ -70,7 +70,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     public void actionPerformed(ActionEvent e) {
                         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                         }
                     }
                 });
@@ -79,7 +79,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                     public void focusLost(FocusEvent e) {
                         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                         }
                     }
 
@@ -296,7 +296,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS = NUMOPTIONS + 2;
         }

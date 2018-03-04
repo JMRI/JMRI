@@ -28,11 +28,11 @@ import org.slf4j.LoggerFactory;
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying to send
  * some commands while slot manager is active
  * 
- * Updated April 2016 by Andrew Crosland remove the checks on slot manager
+ * Updated April 2016 by Andrew Crosland - remove the checks on slot manager
  * status, implement a timeout and look for the correct replies which may be
  * delayed by replies for slot manager.
  *
- * Refactored
+ * Refactored, I18N
  *
  * @author	Andrew Crosland Copyright (C) 2008, 2016
  */
@@ -72,10 +72,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
         IDLE,
         CURRENTQUERYSENT, // awaiting reply to "I"
-        MODEQUERYSENT, // awaiting reply to "M"
-        CURRENTSENT, // awaiting reply to "I xxx"
-        MODESENT, // awaiting reply to "M xxx"
-        WRITESENT   		// awaiting reply to "W"
+        MODEQUERYSENT,    // awaiting reply to "M"
+        CURRENTSENT,      // awaiting reply to "I xxx"
+        MODESENT,         // awaiting reply to "M xxx"
+        WRITESENT   	  // awaiting reply to "W"
     }
 
     public SprogConsoleFrame(SprogSystemConnectionMemo memo) {
@@ -267,7 +267,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Validate the current limit value entered by the user, depending ion the
+     * Validate the current limit value entered by the user, depending on the
      * SPROG version.
      */
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
@@ -344,8 +344,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Handle a SprogVersion notification
-     * 
+     * Handle a SprogVersion notification.
+     * <p>
      * Decode the SPROG version and populate the console gui appropriately with 
      * the features applicable to the version.
      * 
@@ -358,15 +358,15 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // Save it for others
         _memo.setSprogVersion(v);
         if (log.isDebugEnabled()) {
-            log.debug("Found: " + sv.toString());
+            log.debug("Found: {}", sv.toString());
         }
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
-            JOptionPane.showMessageDialog(null, "SPROG prompt not found",
-                    "SPROG Console", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
+                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
         } else {
             if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) &&(sv.sprogType.sprogType < SprogType.NANO)) {
-                currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
+                currentTextField.setToolTipText(Bundle.getMessage("CurrentLimitFieldTooltip2500"));
             }
             // We know what we're connected to
             setTitle(title() + " - Connected to " + sv.toString());
@@ -420,21 +420,21 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * {@inheritDoc}
      */
     @Override
-    public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
+    public synchronized void notifyMessage(SprogMessage l) { // receive a message and log it
         nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
     }
 
     /**
-     * Handle a SprogReply in a console specific way
-     * 
+     * Handle a SprogReply in a console specific way.
+     * <p>
      * Parse replies from the SPROG using a state machine to determine what we are
      * expecting in response to commands sent to the SPROG. Extract data to populate
-     * various fileds in the gui.
+     * various fields in the gui.
      * 
      * @param l The SprogReply to be parsed
      */
     @Override
-    public synchronized void notifyReply(SprogReply l) {  // receive a reply message and log it
+    public synchronized void notifyReply(SprogReply l) { // receive a reply message and log it
         SprogMessage msg;
         int currentLimitFromHardware;
         replyString = l.toString();
@@ -460,8 +460,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     try {
                         currentLimitFromHardware = Integer.parseInt(tmpString);
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Malformed Reply for current limit",
-                                "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogLimit"),
+                                Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
@@ -491,8 +491,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     try {
                         modeWord = Integer.parseInt(tmpString, 16);
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Malformed Reply for mode word",
-                                "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogWord"),
+                                Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
@@ -570,8 +570,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
-        JOptionPane.showMessageDialog(null, "Timeout talking to SPROG",
-                "Timeout", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeTimeoutTalkingToSPROG"),
+                Bundle.getMessage("Timeout"), JOptionPane.ERROR_MESSAGE);
         state = State.IDLE;
     }
 
@@ -596,7 +596,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
+     *
      * @param delay milliseconds to delay
      */
     protected void restartTimer(int delay) {

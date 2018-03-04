@@ -9,7 +9,7 @@
   <title>JMRI: Light Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -53,7 +53,7 @@
         <li>or switched on for a specified time by a Sensor.</li>
       </ul>
       One or more of these controls may be specified when the
-      Light is created, or when it is edited via the Light Table.</p>
+      Light is created, or when it is edited via the Light Table.
 
       <p>When a Light is created, or when it is read from a
       configuration file, the Light is 'activated'; it is set up to

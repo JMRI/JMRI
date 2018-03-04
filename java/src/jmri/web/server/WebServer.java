@@ -68,7 +68,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
      * Create a WebServer instance with the default preferences.
      */
     public WebServer() {
-        this(WebServerPreferences.getDefault());
+        this(InstanceManager.getDefault(WebServerPreferences.class));
     }
 
     /**

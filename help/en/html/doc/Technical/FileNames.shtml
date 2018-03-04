@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Portable File Access</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code portable file location">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
   <!-- easily replace the common header/footer code for all the web pages -->
@@ -31,12 +30,13 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Portable File Access</h1>JMRI uses files for icons,
+      <h1>JMRI Code: Portable File Access</h1>
+      <p>JMRI uses files for icons,
       images, panel files, scripts, and lots of other things.
       References to those are routinely used by various code, and
       stored in XML files. Some of the files are distributed with
       JMRI, and some are created outside the JMRI distribution
-      directory by the local user.
+      directory by the local user.</p>
 
       <p>In addition, JMRI is a cross-platform application, and we
       want to be able to move JMRI XML files from one computer to
@@ -73,7 +73,8 @@
       case, absolute pathnames will work, but won't be
       cross-platform compatible.
 
-      <h2>Implementation</h2>The <a href=
+      <h2>Implementation</h2>
+      The <a href=
       "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
       class provides translation routines to make this automatic:
 
@@ -95,12 +96,13 @@
 
         <dt>Convert a File or filename string into a string name
         with the appropriate prefix.</dt>
-      </dl>You should call getExternalFilename() before passing the
+      </dl>
+      <p>You should call getExternalFilename() before passing the
       filename to any Java common, and getPortableFilename()
       whenever you get a file or filename from a Java class. It's
       OK to call either one multiple times, as they'll just pass
       through in that case. In particular, call
-      getPortableFilename() before storing to an XML file. 
+      getPortableFilename() before storing to an XML file.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

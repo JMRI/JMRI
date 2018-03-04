@@ -17,9 +17,9 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Acela system. This connects an Acela
- * interface to the CTI network via a serial com port. Normally controlled by
+ * interface to the CTI network via a serial comm port. Normally controlled by
  * the SerialDriverFrame class.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -89,13 +89,11 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return
-
     }
 
     /**

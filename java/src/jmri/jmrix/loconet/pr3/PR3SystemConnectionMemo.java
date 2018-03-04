@@ -76,7 +76,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
                 getThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
@@ -198,7 +198,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         InstanceManager.setThrottleManager(super.getThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
@@ -206,13 +206,19 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
         InstanceManager.setReporterManager(getReporterManager());
 
-        InstanceManager.addClockControl(getClockControl());
+        jmri.ClockControl cc = getClockControl();
+        // make sure InstanceManager knows about that
+        InstanceManager.store(cc, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, cc);
 
     }
 
     @Override
     public void dispose() {
         InstanceManager.deregister(this, PR3SystemConnectionMemo.class);
+        if(tm!=null){
+           tm.dispose();
+        }
         super.dispose();
     }
     private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class);

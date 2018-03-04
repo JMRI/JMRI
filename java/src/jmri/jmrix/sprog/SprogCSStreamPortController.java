@@ -3,6 +3,7 @@ package jmri.jmrix.sprog;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import jmri.jmrix.AbstractStreamPortController;
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,13 +12,13 @@ import org.slf4j.LoggerFactory;
  * communications port
  * <p>
  * NOTE: This currently only supports the SPROG Command Station interfaces.
- * <p>
  *
  * @author	Paul Bender Copyright (C) 2014
  */
 public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
 
     private Thread rcvNotice = null;
+    private SprogMode operatingMode = SprogMode.SERVICE;
 
     public SprogCSStreamPortController(DataInputStream in, DataOutputStream out, String pname) {
         super(new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS), in, out, pname);
@@ -28,6 +29,8 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         log.debug("configure() called.");
         SprogTrafficController control = new SprogTrafficController(this.getSystemConnectionMemo());
 
+        this.getSystemConnectionMemo().setSprogMode(operatingMode); // first update mode in memo
+
         // connect to the traffic controller
         this.getSystemConnectionMemo().setSprogTrafficController(control);
         control.setAdapterMemo(this.getSystemConnectionMemo());
@@ -37,9 +40,8 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
 
         // start thread to notify controller when data is available
         rcvNotice = new Thread(new RcvCheck(input, control));
-        rcvNotice.setName("SPROG rcvCheck thread");
+        rcvNotice.setName("SPROG Stream Port Controller Receive thread");
         rcvNotice.start();
-
     }
 
     /**

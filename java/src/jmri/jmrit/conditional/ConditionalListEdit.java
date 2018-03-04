@@ -365,6 +365,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     /**
      * Display reminder to save.
      */
+    @Override
     void showSaveReminder() {
         /*if (_showReminder && !_suppressReminder) {
          javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
@@ -622,6 +623,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         return false;
     }
 
+    @Override
     boolean checkConditionalUserName(String uName, Logix logix) {
         if ((uName != null) && (!(uName.equals("")))) {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
@@ -1312,10 +1314,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         try {
             _curLogix.activateLogix();
         } catch (NumberFormatException nfe) {
-            if (log.isDebugEnabled()) {
-                log.error("NumberFormatException on activation of Logix " + nfe);  // NOI18N
-            }
-            //nfe.printStackTrace();
+            log.debug("NumberFormatException on activation of Logix " + nfe);  // NOI18N
             javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error4") + nfe.toString() + Bundle.getMessage("Error7"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);  // NOI18N
@@ -4198,7 +4197,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                                justification="better to keep cases in column order rather than to combine")
+                justification = "better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case SNAME_COLUMN:
@@ -4681,6 +4680,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
     }
 
+    @Override
     protected String getClassName() {
         return ConditionalListEdit.class.getName();
     }

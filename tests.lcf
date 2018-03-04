@@ -4,46 +4,29 @@
 #  Log4J configuration
 # #############################################################
 
-# Output is sent to system.err, generally a console window.
-# The output info consists of relative time, 
-# category (usually name of the class doing the logging), 
-# priority, message text and thread name in
-# that order.
-
 # For the general syntax of property based configuration files see the
-# documenation of org.apache.log4j.PropertyConfigurator.
+# documentation of org.apache.log4j.PropertyConfigurator
+# or jmri.org/help/en/html/doc/Technical/Logging.shtml
 
-# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
+# This configures two appenders:  J and R.
 
-# The root category uses the appender called A1, which is set to log 
-# priority WARN and above. This is what's expected by the default
-# message parsing in the JUnit tests.
+# The default level for logging is WARN:  All the specific
+# class loggers are set to ignore everything below that.
+# You can set a specific class to e.g. debug so that it does
+# log its information instead of ignoring it, see examples
+# at the bottom.  Then the logging level on each appender (see
+# below) is used to decide if the data is actually logged.
 
-# The root category is the only category that is given
-# a default priority. All other categories do not have a default
-# priority. in which case the priority is inherited from the
-# hierarchy.  See the end of the file for examples of how to 
-# control this at a finer level.
+log4j.rootCategory= WARN, R, J
 
-log4j.rootCategory= WARN, A1
+# The J appender is a JMRI-specific one, configured so that JMRI tests
+# can examine their output. Changing the levels or 
+# format of J can result in obscure test failures. 
 
-# Note that many JMRI tests assume that INFO, WARN, ERROR and FATAL will 
-# be logged so that they can test for their presence in specific cases.
-# Raising that level will cause errors. Extraneous messages should be 
-# handled within the tests to keep the volume down.
+# The R appender writes all logging output to the tests.log
+# file.
 
-# A1 is set to be a jmri.util.JUnitAppender which outputs to System.err. 
-# The JUnitAppender provides hooks used to test whether a given
-# log message is expected or not, and whether ERROR messages have been logged.
-log4j.appender.A1=jmri.util.JUnitAppender
-
-# A1 writes to system.err to synchronize with e.g. exception traces
-log4j.appender.A1.target=System.err
-
-# A1 uses PatternLayout to control the format of the log messages.
-log4j.appender.A1.layout=org.apache.log4j.PatternLayout
-
-# The conversion pattern uses format specifiers. For details, see
+# The conversion patterns use format specifiers. For details, see
 # the org.apache.log4j.PatternLayout Javadocs. To summarize:
 #
 # c category, e.g. %c{2} for right-most two tokens
@@ -64,17 +47,29 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Justification, padding and truncation can be controlled e.g. %-5.10p 
 # is left justified, at least 5 and no more than 10 characters wide
 
-log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
-# always limit output to INFO; if you want more, add R to the rootCategory above and log there
-log4j.appender.A1.Threshold=INFO
+# J is a jmri.util.JUnitAppender which provides hooks used to test 
+# whether a given log message is expected or not, and whether ERROR messages 
+# have been logged.
+log4j.appender.J=jmri.util.JUnitAppender
+# J writes to system.err to synchronize with e.g. exception traces
+log4j.appender.J.target=System.err
+# J uses PatternLayout to control the format of the log messages.
+log4j.appender.J.layout=org.apache.log4j.PatternLayout
+log4j.appender.J.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
+# always limit output to INFO
+log4j.appender.J.Threshold=INFO
 
-# R is set to output to a log file, but then not used in normal testing
+# R is set to output all enabled logging to the tests.log file
 log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=tests.log
 log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
 log4j.appender.R.Threshold=DEBUG
+
+# ###################################################################
+#   Configure some verbose components
+# ###################################################################
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
@@ -100,6 +95,12 @@ log4j.category.jmri.util.JUnitAppenderTest = INFO
 log4j.category.apps.Apps = INFO
 log4j.category.apps.PanelPro.PanelPro = INFO
 
+# ###################################################################
+#    Examples of how you can ask for more detailed logging
+# ###################################################################
+
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
+
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
@@ -109,6 +110,6 @@ log4j.category.apps.PanelPro.PanelPro = INFO
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
-# log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
+# log4j.category.jmri.jmrix.nce.NceTrafficController=DEBUG
 
 

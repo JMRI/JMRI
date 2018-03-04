@@ -42,15 +42,15 @@ public class TrainPrintUtilities {
     /**
      * Print or preview a train manifest, build report, or switch list.
      *
-     * @param file File to be printed or previewed
-     * @param name Title of document
-     * @param isPreview true if preview
-     * @param fontName optional font to use when printing document
+     * @param file          File to be printed or previewed
+     * @param name          Title of document
+     * @param isPreview     true if preview
+     * @param fontName      optional font to use when printing document
      * @param isBuildReport true if build report
-     * @param logoURL optional pathname for logo
-     * @param printerName optional default printer name
-     * @param orientation Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
-     * @param fontSize font size
+     * @param logoURL       optional pathname for logo
+     * @param printerName   optional default printer name
+     * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
+     * @param fontSize      font size
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName,
             boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
@@ -164,23 +164,23 @@ public class TrainPrintUtilities {
                 if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
                         .getPickupEnginePrefix()))
                         || (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup
-                                .getPickupCarPrefix()))
+                        .getPickupCarPrefix()))
                         || (!Setup.getSwitchListPickupCarPrefix().equals("") && line
-                                .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                        .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
                     // log.debug("found a pickup line");
                     c = Setup.getPickupColor();
                 } else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
                         .getDropEnginePrefix()))
                         || (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup
-                                .getDropCarPrefix()))
+                        .getDropCarPrefix()))
                         || (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup
-                                .getSwitchListDropCarPrefix()))) {
+                        .getSwitchListDropCarPrefix()))) {
                     // log.debug("found a drop line");
                     c = Setup.getDropColor();
                 } else if ((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup
                         .getLocalPrefix()))
                         || (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup
-                                .getSwitchListLocalPrefix()))) {
+                        .getSwitchListLocalPrefix()))) {
                     // log.debug("found a drop line");
                     c = Setup.getLocalColor();
                 } else if (!line.startsWith(TrainCommon.TAB)) {

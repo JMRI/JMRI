@@ -8,10 +8,7 @@
 
   <title>JMRI: Adding/Editing Signal Mast Logic</title>
   <!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta name="Date.Modified" content="20140515">
-  <meta name="Author" content="Kevin Dickerson, Egbert Broerse">
+  <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content=
   "JMRI help SignalMast Logic Add Edit"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -29,6 +26,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1><a name="Adding/Editing Routes"></a>Adding/Editing Signal
       Mast Logic</h1>
 
@@ -126,7 +124,9 @@
 
       <p>Back to the <a href=
       "../beantable/SignalMastLogicTable.shtml">Signal Mast Logic
-      Table help page</a>. <!--#include virtual="/Footer" --></p>
+      Table help page</a>.</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

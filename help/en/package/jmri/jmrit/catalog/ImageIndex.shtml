@@ -7,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Panel Editor Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Pete Cressman" name="Author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Index Editor">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -118,7 +116,7 @@
 
       <ul>
         <li><b>Add Node</b>. First select a node in the Image Index
-        tree. Then, use this menu item to add a sub-node the the
+        tree. Then, use this menu item to add a sub-node the
         selected node. A "sub-node" is a node that branches from
         under the selected node.</li>
 

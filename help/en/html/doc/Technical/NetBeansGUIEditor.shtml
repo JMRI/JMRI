@@ -7,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>Using the NetBeans Swing GUI Builder</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code NetBeans">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code NetBeans GUI">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
   <!-- easily replace the common header/footer code for all the web pages -->
@@ -30,18 +30,18 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <!-- - - - - - - - - -->
 
+      <h1>JMRI Code: Using the NetBeans Swing GUI Builder</h1>
+
+      <!-- - - - - - - - - -->
       <p>Portions of the JMRI Graphical User Interface (GUI) code
       are maintained using the <a href=
       "https://netbeans.org/features/java/swing.html">NetBeans
-      Swing GUI Builder</a> (the "Builder"). This page is a guide
+        Swing GUI Builder</a> (the "Builder"). This page is a guide
       to using the Builder tool. See <a href=
       "NetBeans.shtml">Building with NetBeans</a> for a general
       introduction to using NetBeans for maintaining JMRI.</p>
       <!-- - - - - - - - - -->
-
-      <h1>Using the NetBeans Swing GUI Builder</h1>
 
       <ul>
         <li><a href="#intro">Introduction</a></li>
@@ -202,7 +202,8 @@
         <li><a href=
         "https://netbeans.org/kb/trails/matisse.html">Java GUI
         Applications Learning Trail</a></li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div>
 </body>

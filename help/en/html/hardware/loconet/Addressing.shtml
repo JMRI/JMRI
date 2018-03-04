@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI LocoNet Address Addressing Sensors Turnout">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -552,10 +552,10 @@
 
       <table border="2">
         <tr>
-          <th width="80px">Old<br>
+          <th width="80">Old<br>
           Style</th>
 
-          <th width="80px">JMRI<br>
+          <th width="80">JMRI<br>
           Number</th>
         </tr>
 
@@ -599,9 +599,8 @@
     &lt;/programming&gt;
 </pre>
 
-      <p>LocoNet SV Version 1 protocol is the same exception you
-      specify LOCONETSV1MODE. For more information, see the
-      <a href="">schema definition file</a>.</p>
+      <p>LocoNet SV Version 1 protocol is the same except you
+      specify LOCONETSV1MODE. </p>
 
       <p>Note that the version 1 protocol is no longer recommended.
       If you're writing a decoder definition for a board that can
@@ -622,7 +621,7 @@
         <p>CVs are specified with the format "113.3", 
         where the part after the period is the specific
         Op Switch number, and the part before is 
-        board-specific:<p>
+        board-specific:
         <UL>
             <LI>0x70 - 112 - PM4
             <LI>0x71 - 113 - BDL16

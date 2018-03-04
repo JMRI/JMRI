@@ -542,8 +542,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-     * Special internal class to allow drawing of layout to a JLayeredPane This
-     * is the 'target' pane where the layout is displayed
+     * Special internal class to allow drawing of layout to a JLayeredPane. This
+     * is the 'target' pane where the layout is displayed.
      */
     public class TargetPane extends JLayeredPane {
 
@@ -599,7 +599,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             int hnew = Math.max(h, c.getLocation().y + c.getSize().height);
             int wnew = Math.max(w, c.getLocation().x + c.getSize().width);
             if (hnew > h || wnew > w) {
-//                log.debug("adding of {} with Object - i=", c.getSize(), o);
+                // log.debug("adding of {} with Object - i=", c.getSize(), o);
                 setSize(wnew, hnew);
             }
         }
@@ -2817,7 +2817,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 double rad = p.getDegrees() * Math.PI / 180.0;
                 java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
                 double[] pt = new double[2];
-                // bit shift to avoid Findbugs paranoia
+                // bit shift to avoid SpotBugs paranoia
                 pt[0] = x - rect.x - (rect.width >>> 1);
                 pt[1] = y - rect.y - (rect.height >>> 1);
                 t.transform(pt, 0, pt, 0, 1);

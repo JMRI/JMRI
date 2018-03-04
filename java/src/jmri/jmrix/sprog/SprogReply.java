@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SprogReply.java
- *
- * Description:	Carries the reply to a SprogMessage
+ * Carries the reply to a SprogMessage.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Berridge - refactored, cleaned up, Feb 2010
@@ -18,12 +16,21 @@ public class SprogReply extends AbstractMRReply {
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
     static public final int maxSize = 515;
     private boolean _isBoot = false;
+    protected int _id = -1;
 
     // create a new one
     public SprogReply() {
         super();
     }
 
+    public void setId(int id) {
+        _id = id;
+    }
+    
+    public int getId() {
+        return _id;
+    }
+    
     // no need to do anything
     @Override
     protected int skipPrefix(int index) {
@@ -50,6 +57,7 @@ public class SprogReply extends AbstractMRReply {
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = m._dataChars[i];
         }
+        _id = m._id;
     }
 
     /**
@@ -69,20 +77,26 @@ public class SprogReply extends AbstractMRReply {
 
     /**
      * Is this reply indicating that an overload condition was detected?
+     * 
+     * @return boolean true for overload
      */
     public boolean isOverload() {
-        return (this.toString().indexOf("!O") >= 0);
+        return (this.toString().contains("!O"));
     }
 
     /**
      * Is this reply indicating that a general error has occurred?
+     *
+     * @return boolean true for error message
      */
     public boolean isError() {
-        return (this.toString().indexOf("!E") >= 0);
+        return (this.toString().contains("!E"));
     }
 
     /**
      * Check and strip framing characters and DLE from a SPROG bootloader reply.
+     * 
+     * @return boolean result of message validation
      */
     public boolean strip() {
         char tmp[] = new char[_nDataChars];
@@ -119,6 +133,8 @@ public class SprogReply extends AbstractMRReply {
      * Check and strip checksum from a SPROG bootloader reply.
      * <p>
      * Assumes framing and DLE chars have been stripped
+     * 
+     * @return boolean result of checksum validation
      */
     public boolean getChecksum() {
         int checksum = 0;
@@ -131,6 +147,8 @@ public class SprogReply extends AbstractMRReply {
 
     /**
      * Return a string representation of this SprogReply.
+     * 
+     * @return String The string representation
      */
     @Override
     public String toString() {
@@ -156,8 +174,10 @@ public class SprogReply extends AbstractMRReply {
      * Extract Read-CV returned value from a message.
      * <p>
      * SPROG is assumed to not be echoing commands. A reply to a command may
-     * include the prompt that was printed after the previous command Reply to a
-     * CV read is of the form " = hvv" where vv is the CV value in hex
+     * include the prompt that was printed after the previous command.
+     * <p>
+     * Reply to a CV read is of the form " = hvv" where vv is the CV value in hex
+     *
      * @return -1 if message can't be parsed
      */
     @Override
@@ -170,12 +190,11 @@ public class SprogReply extends AbstractMRReply {
         String s2 = "" + (char) getElement(index + 1);
         int val = -1;
         try {
-            int sum = Integer.valueOf(s2, 16).intValue();
-            sum += 16 * Integer.valueOf(s1, 16).intValue();
+            int sum = Integer.valueOf(s2, 16);
+            sum += 16 * Integer.valueOf(s1, 16);
             val = sum;  // don't do this assign until now in case the conversion throws
         } catch (NumberFormatException e) {
-            log.error("Unable to get number from reply: \"" + s1 + s2 + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+            log.error("Unable to get number from reply: \"{}{}\" index: {} message: \"{}\"", s1, s2, index, toString());
         }
         return val;
     }
@@ -204,11 +223,10 @@ public class SprogReply extends AbstractMRReply {
         return index;
     }
 
-    /*
-     * Normal SPROG replies will end with the prompt for the next command
-     * Bootloader will end with ETX with no preceding DLE.
-     * SPROG v4 bootloader replies "L>" on entry and replies "." at other
-     * times.
+    /**
+     * Normal SPROG replies will end with the prompt for the next command.
+     * 
+     * @return true if end of normal reply is found
      */
     public boolean endNormalReply() {
         // Detect that the reply buffer ends with "P> " or "R> " (note ending space)
@@ -239,10 +257,15 @@ public class SprogReply extends AbstractMRReply {
         }
     }
 
+    /**
+     * Bootloader will end with ETX with no preceding DLE.
+     * 
+     * @return true if end of bootloader reply is found
+     */
     public boolean endBootReply() {
-        // Detect that the reply buffer ends with ETX with no preceding DLE
+        // Detect that the reply buffer ends with ETX with no preceding DLE.
         // This is the end of a SPROG II bootloader reply or the end of
-        // a SPROG v4 echoing the botloader version request
+        // a SPROG v4 echoing the bootloader version request
         int num = this.getNumDataElements();
         if (num >= 2) {
             // ptr is offset of last element in SprogReply
@@ -259,6 +282,13 @@ public class SprogReply extends AbstractMRReply {
         }
     }
 
+    /**
+     * @param sprogState the current SPROG state
+     * 
+     * @return true if end of bootloader reply is found
+     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
+     */
+    @Deprecated
     public boolean endBootloaderReply(SprogState sprogState) {
         // Detect that the reply buffer ends with "L>" or "." from a SPROG v4
         // bootloader
@@ -273,10 +303,7 @@ public class SprogReply extends AbstractMRReply {
             if (this.getElement(ptr) != '>') {
                 return false;
             }
-            if (this.getElement(ptr - 1) != 'L') {
-                return false;
-            }
-            return true;
+            return this.getElement(ptr - 1) == 'L';
         } else {
             return false;
         }

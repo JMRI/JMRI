@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Developing with JMRI Code</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git download">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -23,19 +22,15 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <!-- ============= -->
-      <!-- Page Contents --><!-- Required -->
-      <!-- ============= -->
+      <h1>JMRI Code: Developing with JMRI</h1>
 
-      <h1>JMRI: Developing with JMRI Code</h1>
-
-      <h2>Background</h2>Anybody is welcome to get a copy of the
-      JMRI code and modify it for their own purposes. What makes
-      one a JMRI developer is contributing those modifications back
-      for others to use. This page discusses how to do that,
-      assuming that you've gotten a copy of the code following the
-      <a href="getgitcode.shtml">previously described
-      procedures</a>.
+      <h2>Background</h2>
+      Anybody is welcome to get a copy of the JMRI code and modify
+      it for their own purposes. What makes one a JMRI developer is
+      contributing those modifications back for others to use.<br>
+      This page discusses how to do that, assuming that you have
+      access to a copy of the code following
+      <a href="getgitcode.shtml">this procedure</a>.
 
       <p>See the <a href="GitFAQ.shtml">JMRI Git FAQ page</a> for
       more details on these processes.</p>
@@ -239,7 +234,7 @@ To push the current branch and set the remote as upstream, use
     git push --set-upstream origin my-branch
 </pre>
     And occasionally, your local repository can be out of 
-    synch with your GitHub repository.  If you get a 
+    sync with your GitHub repository.  If you get a
     message about "failed to push some refs" or similar, 
     without specific commands to fix it, do
     (the first command here is why we created that
@@ -247,8 +242,11 @@ To push the current branch and set the remote as upstream, use
     and substitute your GitHub name in the first line):
 <pre style="font-family: monospace;">        
     git pull yourname
-    (If any lines are flagged as conflicts, edit those to remove the conflicts, then "git add" them to resolve the conflict)
-    git commit -m"merging pull back"
+</pre>
+    (If any lines are flagged as conflicts, edit those to remove the conflicts,
+    then "git add" them to resolve the conflict)
+<pre style="font-family: monospace;">
+    git commit -m "merging pull back"
     git push
 </pre>
     It is definitely easier to do this if you 
@@ -339,7 +337,7 @@ To push the current branch and set the remote as upstream, use
      <p>
       While all this is happening, you can work on something else by creating another 
       branch and making changes there.
-      But first, pick up the most recent contents of our central repository with:
+      But first, pick up the most recent contents of our central repository with:</p>
 <pre style="font-family: monospace;">        
     git checkout master
     git pull
@@ -348,10 +346,9 @@ To push the current branch and set the remote as upstream, use
  <pre style="font-family: monospace;">        
     git checkout -b another-new-feature
 </pre>
-     just like you did at the start of this process, and continue
-     to develop
-     
-     
+     <p>just like you did at the start of this process, and continue
+     to develop.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

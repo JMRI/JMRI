@@ -6,8 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Building JMRI with Command Line Tools</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <title>JMRI: Building with Command Line Tools</title>
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code ant">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -32,7 +32,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Building JMRI with Command Line Tools</h1>
+      <h1>JMRI Code: Building with Command Line Tools</h1>
 
       Those of you who prefer a command line approach might want to
       investigate <cite><a href="#ant">ant</a></cite> and

@@ -6,8 +6,8 @@
 <meta name="generator"
  content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<title>JMRI - Operations</title>
-<meta name="Author" content="Dan Boudreau">
+<title>JMRI: Operations</title>
+<meta name="author" content="Dan Boudreau">
 <meta name="keywords"
  content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
 <!-- Style -->
@@ -600,7 +600,7 @@
 
    <p>
     Now try restricting your <a href="#Yards">tracks</a> to only certain types of cars by modifying
-    the car types serviced for a track. Now when you build the train, the train will only set out of
+    the car types serviced for a track. Now when you build the train, the train will only set out
     cars to tracks that are willing to accept them.
    </p>
 
@@ -893,7 +893,7 @@
    mode will not fill every track to capacity which is more prototypical. However, normal mode won't
    swap a set of cars, cars are picked up or set out based on the available track space. Normal mode
    prevents track overloading. In aggressive mode you can "accidentally" create track overloading by
-   the order you build and run your trains or by using the the train reset function.
+   the order you build and run your trains or by using the Train Reset function.
 
    <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for
     a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
@@ -915,7 +915,7 @@
     decide that you don't want to run the first train, and reset the train. Now the original cars on
     still sitting on the track, and you now run and terminate the second train. The program will
     deliver the new cars, while the old cars are still sitting there, which unfortunately will
-    overload the track. You could also overload the the track if you ran the second train before the
+    overload the track. You could also overload the track if you ran the second train before the
     first, the second train would try and deliver cars to the track that still has cars sitting on
     it.</p>
 
@@ -1500,13 +1500,15 @@
    When the option "Save Train Manifests" is selected, OperationsPro will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
-   using the <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under
-   tools in the <a href="#Trains">Trains</a> window.
-   <p>
-   This option also makes backup copies of any switch list that you create.  They are stored in a 
-   directory called "switchListBackups" located in the "operations" directory. A separate directory
-   is created for each location's switch list that you create.
-   </p>
+   using the
+   <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the <a href="#Trains">Trains</a>
+   window.
+   <p>The program will also store a copy of each train's build report in a directory called
+    "buildStatusBackups" also located in the "operations" directory.</p>
+    
+   <p>This option also makes backup copies of any switch list that you create. They are stored
+    in a directory called "switchListBackups" located in the "operations" directory. A separate
+    directory is created for each location's switch list that you create.</p>
 
    <h4>Enable Value Fields and Identification Tag Fields</h4>
 
@@ -1963,7 +1965,7 @@
    <h4>Show Cars</h4>
    <p>If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
     menu. This tool is also useful when you want to print out cars for a specific location or track.
-    Note that the the export cars tool will only export cars for a location or track, and the delete
+    Note that the Export Cars tool will only export cars for a location or track, and the delete
     cars tool when only showing cars on a track, will only delete those cars.</p>
 
    <a name="LocationReporter" id="LocationReporter"></a>
@@ -2153,6 +2155,11 @@
     any load to be received by the spur/industry. When the "Ship" field is blank, the program will
     only place the default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a>
     for how the program deals with the default loads.
+   </p>
+   
+   <p>The "Receive" pull down menu will only show the loads that the spur can service for that particular
+   car type. To review which car loads are available see the <a href="#LoadOptions">load
+     options</a> for this spur.
    </p>
 
    <p>
@@ -2529,7 +2536,7 @@
     (multiple trains)", the program will check all spurs with a schedule for a request, and try to <a
      href="#CarRouting">route</a> the car with a custom load to that spur. For a spur to request a
     custom load, the spur must have a <a href="#Schedules">schedule</a>. The program when
-    determining now many car loads to generate, will consider the value in the <a href="#Schedules">Percentage
+    determining how many car loads to generate, will consider the value in the <a href="#Schedules">Percentage
      of custom loads generated by staging</a>. Also, if the spur is full or becomes full, the program
     will send cars to the spur's <a href="#AlternateTrack">Alternate Track</a> if there's one
     specified, and then to any yard tracks at the spur's location.
@@ -2830,7 +2837,7 @@
 
    <h4>Show Cars</h4>
    <p>This will open a "Cars" window displaying only the cars for the track selected. Note that
-    the the export cars tool will only export cars for the track selected, and the delete cars tool
+    the Export Cars tool will only export cars for the track selected, and the delete cars tool
     will only delete the cars for the track selected.</p>
 
    <a name="LocationsTools" id="LocationsTools"></a>
@@ -2973,7 +2980,7 @@
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Cars window. Then select "Tools-&gt;Car Roster-&gt;Import from file".
-    Note that the program will only add cars that don't exist in the program's car roster. It the
+    Note that the program will only add cars that don't exist in the program's car roster. If the
     car already exists, the import will be skipped by the program.</p>
 
    <p>
@@ -3445,7 +3452,7 @@
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
     Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Locomotive Roster-&gt;Import from
     file. Note that the program will only add locomotives that don't exist in the program's
-    locomotive roster. It the locomotive already exists, it will be skipped by the program.</p>
+    locomotive roster. If the locomotive already exists, it will be skipped by the program.</p>
 
    <p>After importing your locomotives, you must save them if you want to keep them as part of
     your roster. Press the "Save" button located at the bottom of the Locomotives window, or select
@@ -3767,7 +3774,7 @@
     <img src="images/Trains.png">
    </p>
 
-   <p>The "Trains" window shows all of your trains. For each train, the there's a checkbox in
+   <p>The "Trains" window shows all of your trains. For each train, there's a checkbox in
     the "Build" column used to select which trains to build, print, and terminate. The buttons on
     the bottom of the page will build, print or terminate the trains selected. You can also modify
     an existing train using the "Edit" button for that train. For each train there's also an action

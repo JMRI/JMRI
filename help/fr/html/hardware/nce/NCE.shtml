@@ -5,7 +5,7 @@
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
+<META name="author" CONTENT="Bob Jacobsen">
 <META NAME="keywords" CONTENT="JMRI help NCE">
 
 <!-- Style -->
@@ -272,7 +272,7 @@ s&#233;lectionnez le port s&#233;rie appropri&#233; dans la deuxi&#232;me de bo&
 <LI> Si l'option de s&#233;lectionnion d'un d&#233;bit en bauds est de 9600, c'est le choix par d&#233;faut pour NCE.</LI>
 <LI> S&#233;lectionnez le type de syst&#232;me que vous connectez sur l'adaptateur USB, Cabine Power, SB3, ou Power Pro (centrale). La valeur par d&#233;faut est Cab Power, aucun cavaliers install&#233;s.</LI>
 <LI> Maintenant confirmer que la vitesse de transmission de l'adaptateur est &#233;galement pr&#233;vue pour 9600
-en supprimant le cavalier nÂ°1. L'a mise en place du cavalier nÂ°1 fixe le taux de transmission &#224; 19200.</LI> 
+en supprimant le cavalier n°1. L'a mise en place du cavalier n°1 fixe le taux de transmission &#224; 19200.</LI> 
 	<LI> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style graphique" vous permet de
 s&#233;lectionnez la fa&#231;on dont le programme sera affich&#233;. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
@@ -346,7 +346,7 @@ centrale NCE soient r&#233;gl&#233;s sur la m&#234;me vitesse.</LI>
 
  <H3>syt&#232;me Console</H3>
 
-JMRI fournit une connexion information via le syst&#232;me console. Vous pouvez trouver le syst&#232;me console sous l'en-t&#234;te du menu principal "Aide" puis console syst&#232;me Â»... Ci-Dessousi il y a une image de la fen&#234;tre console quand le programme fonctionne normalement. Notez que la taille de la fen&#234;tre a &#233;t&#233; ajust&#233;e afin que nous
+JMRI fournit une connexion information via le syst&#232;me console. Vous pouvez trouver le syst&#232;me console sous l'en-t&#234;te du menu principal "Aide" puis console syst&#232;me »... Ci-Dessousi il y a une image de la fen&#234;tre console quand le programme fonctionne normalement. Notez que la taille de la fen&#234;tre a &#233;t&#233; ajust&#233;e afin que nous
 puissions lire un peu plus facilement. 
 <P><IMG SRC="../images/jmriConsoleOk.jpg" ALT="JMRI Console"></P>
 <P> Si vous rencontrez des probl&#232;mes, la fen&#234;tre de la console peut ressembler &#224;

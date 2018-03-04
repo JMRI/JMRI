@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
-public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
+public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OBlock> {
 
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
@@ -92,18 +92,18 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     }
 
     @Override
-    public Manager getManager() {
+    public Manager<OBlock> getManager() {
         _manager = InstanceManager.getDefault(OBlockManager.class);
         return _manager;
     }
 
     @Override
-    public NamedBean getBySystemName(String name) {
+    public OBlock getBySystemName(String name) {
         return _manager.getBySystemName(name);
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
+    public OBlock getByUserName(String name) {
         return _manager.getByUserName(name);
     }
 
@@ -113,7 +113,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     }
 
     @Override
-    public void clickOn(NamedBean t) {
+    public void clickOn(OBlock t) {
     }
 
     @Override

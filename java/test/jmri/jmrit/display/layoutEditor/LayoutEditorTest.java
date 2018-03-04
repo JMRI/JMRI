@@ -4,14 +4,15 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrit.display.EditorFrameOperator;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -224,15 +225,15 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testGetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, le.getSideTrackWidth());
+        Assert.assertEquals("side track width", 2, le.getSidelineTrackWidth());
     }
 
     @Test
     public void testSetSideTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        le.setSideTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, le.getSideTrackWidth());
+        le.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, le.getSidelineTrackWidth());
     }
 
     @Test
@@ -268,7 +269,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testGetDefaultTrackColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Track Color",ColorUtil.ColorBlack, le.getDefaultTrackColor());
+        Assert.assertEquals("Default Track Color",ColorUtil.ColorDarkGray, le.getDefaultTrackColor());
     }
 
     @Test
@@ -348,7 +349,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testGetTurnoutDrawUnselectedLeg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true
-        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.getTurnoutDrawUnselectedLeg());
+        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.isTurnoutDrawUnselectedLeg());
     }
 
     @Test
@@ -356,7 +357,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true, so set to false.
         le.setTurnoutDrawUnselectedLeg(false);
-        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", le.getTurnoutDrawUnselectedLeg());
+        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", le.isTurnoutDrawUnselectedLeg());
     }
 
     @Test
@@ -712,6 +713,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     }
 
     @Test
+    @Ignore("unreliable on CI servers")
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         le.setHighlightSelectedBlock(false);

@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager.
+ * Implement Turnout Manager for DCC++ systems.
  * <p>
- * System names are "DCCppTnnn", where nnn is the turnout number without padding.
+ * System names are "DxppTnnn", where Dx is the system prefix and nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
@@ -16,8 +16,15 @@ import org.slf4j.LoggerFactory;
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
     protected DCCppTrafficController tc = null;
+    protected String prefix = null;
 
-    // ctor has to register for DCCpp events
+    /**
+     * Create an new DCC++ TurnoutManager.
+     * Has to register for DCC++ events.
+     *
+     * @param controller the TrafficController to connect the TurnoutManager to
+     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     */
     public DCCppTurnoutManager(DCCppTrafficController controller, String prefix) {
         super();
         tc = controller;
@@ -29,7 +36,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
 
     // DCCpp-specific methods
 
@@ -175,7 +181,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return VALID if system name has a valid format, else return INVALID
      */

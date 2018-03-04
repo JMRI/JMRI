@@ -7,7 +7,6 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
-  <!-- $Id$ -->
 
   <title>JMRI: DecoderPro Service Mode Programmer</title>
   <!-- Style -->
@@ -135,7 +134,7 @@
       checked. They also do not change for steps above if a lower
       step is changed.</p>
 
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

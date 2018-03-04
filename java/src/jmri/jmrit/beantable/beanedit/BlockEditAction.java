@@ -37,7 +37,6 @@ public class BlockEditAction extends BeanEditAction {
     private String severeText = Bundle.getMessage("BlockSevere");
     public String[] curveOptions = {noneText, gradualText, tightText, severeText};
     static final java.util.Vector<String> speedList = new java.util.Vector<String>();
-    private final static Logger log = LoggerFactory.getLogger(BlockEditAction.class);
 
     @Override
     public String helpTarget() {
@@ -314,5 +313,5 @@ public class BlockEditAction extends BeanEditAction {
         bei.add(basic);
         return basic;
     }
-
+    // private final static Logger log = LoggerFactory.getLogger(BlockEditAction.class);
 }

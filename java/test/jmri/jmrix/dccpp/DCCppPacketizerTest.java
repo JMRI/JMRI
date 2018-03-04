@@ -128,7 +128,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         DCCppCommandStation lcs = new DCCppCommandStation();
         tc = new StoppingDCCppPacketizer(lcs);
     }
@@ -136,8 +136,9 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPacketizerTest.class);

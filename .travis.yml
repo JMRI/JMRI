@@ -49,13 +49,16 @@ env:
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
   matrix:
-  - HEADLESS=true
-  - HEADLESS=false
+  - HEADLESS=true STATIC=true
+  - HEADLESS=true STATIC=false
+  - HEADLESS=false STATIC=false
 
 matrix:
   exclude:
   - os: osx
-    env: HEADLESS=true
+    env: HEADLESS=true STATIC=true
+  - os: osx
+    env: HEADLESS=true STATIC=false
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi

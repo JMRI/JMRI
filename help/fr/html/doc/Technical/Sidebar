@@ -2,7 +2,7 @@
 <!-- This is the French common sidebar definition for Technical (developer) pages -->
     <hr class="hide">
 
-<!-- UpDated  by Blorec Herv&#233; le 2013-09-08--> 
+<!-- Updated  by Blorec Herv&#233; le 2013-09-08-->
     <div id="mBody">
 
 	<div id="side"> <!-- Block of text on left side of page -->
@@ -55,7 +55,7 @@
 			<LI><a href="Logging.shtml">Connexion &amp; Gestion des erreurs</a>
 			<LI><a href="JUnit.shtml">Test Unitaire avec JUnit</a>
 			<LI><a href="JavaDoc.shtml">Documentation avec JavaDoc et UML</a>
-			<LI><a href="FindBugs.shtml">Ex&#233;cutez l'outil d'analyse statistique FindBug</a>
+			<LI><a href="FindBugs.shtml">Ex&#233;cutez l'outil d'analyse statistique SpotBugs</a>
 			<LI><a href="Help.shtml">Fournir de l'aide avec Java</a>
 			<LI><a href="FileNames.shtml">M&#233;thode Nom Portable</a>
 			<LI><a href="XmlPersistance.shtml">XML Persistance</a>

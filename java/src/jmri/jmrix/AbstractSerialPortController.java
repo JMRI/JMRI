@@ -8,10 +8,12 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
 
 /**
  * Provide an abstract base for *PortController classes.
- * <P>
+ * <p>
  * This is complicated by the lack of multiple inheritance. SerialPortAdapter is
  * an Interface, and its implementing classes also inherit from various
  * PortController types. But we want some common behaviours for those, so we put
@@ -47,7 +49,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Standard error handling for port-not-found case
+     * Standard error handling for port-not-found case.
      */
     public String handlePortNotFound(NoSuchPortException p, String portName, Logger log) {
         log.error("Serial port " + portName + " not found");
@@ -70,7 +72,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public void setPort(String port) {
-        log.debug("Setting port to " + port);
+        log.debug("Setting port to {}", port);
         mPort = port;
     }
     protected String mPort = null;
@@ -107,8 +109,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @param dtr        set DTR active if true
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
+        // (Jan 2018) PJC seems to mix termios and ioctl access, so it's not clear
+        // what's preserved and what's not. Experimentally, it seems necessary
+        // to write the control leads, set flow control, and then write the control 
+        // leads again.
         serialPort.setRTS(rts);
         serialPort.setDTR(dtr);
+
         try {
             if (flow != purejavacomm.SerialPort.FLOWCONTROL_NONE) {
                 serialPort.setFlowControlMode(flow);
@@ -116,14 +123,12 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-        if (flow != purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-            serialPort.setRTS(rts);  // not connected in some serial ports and adapters
-        }
+        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
         serialPort.setDTR(dtr);
     }
 
     /**
-     * Sets the flow control, while also setting RTS and DTR to active.
+     * Set the flow control, while also setting RTS and DTR to active.
      *
      * @param serialPort Port to be updated
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}
@@ -160,8 +165,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * currentBaudNumber, which requires it.
      */
     public int[] validBaudNumber() {
-        log.error("default validBaudNumber implementation should not be used");
-        new Exception().printStackTrace();
+        log.error("default validBaudNumber implementation should not be used", new Exception());
         return null;
     }
 
@@ -201,6 +205,87 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         // no match
         log.error("no match to (" + currentBaudRate + ") in currentBaudNumber");
         return -1;
+    }
+
+    /**
+     * Set event logging
+     */
+    protected void setPortEventLogging(SerialPort port) {
+        // arrange to notify later
+        try {
+            port.addEventListener(new SerialPortEventListener() {
+                @Override
+                public void serialEvent(SerialPortEvent e) {
+                    int type = e.getEventType();
+                    switch (type) {
+                        case SerialPortEvent.DATA_AVAILABLE:
+                            log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+                            log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.CTS:
+                            log.info("SerialEvent: CTS is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.DSR:
+                            log.info("SerialEvent: DSR is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.RI:
+                            log.info("SerialEvent: RI is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.CD:
+                            log.info("SerialEvent: CD is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.OE:
+                            log.info("SerialEvent: OE (overrun error) is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.PE:
+                            log.info("SerialEvent: PE (parity error) is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.FE:
+                            log.info("SerialEvent: FE (framing error) is " + e.getNewValue()); // NOI18N
+                            return;
+                        case SerialPortEvent.BI:
+                            log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue()); // NOI18N
+                            return;
+                        default:
+                            log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
+                            return;
+                    }
+                }
+            }
+            );
+        } catch (java.util.TooManyListenersException ex) {
+            log.warn("cannot set listener for SerialPortEvents; was one already set?");
+        }
+        
+        try {
+            port.notifyOnFramingError(true);
+        } catch (Exception e) {
+            log.debug("Could not notifyOnFramingError: " + e); // NOI18N
+        }
+
+        try {
+            port.notifyOnBreakInterrupt(true);
+        } catch (Exception e) {
+            log.debug("Could not notifyOnBreakInterrupt: " + e); // NOI18N
+        }
+
+        try {
+            port.notifyOnParityError(true);
+        } catch (Exception e) {
+            log.debug("Could not notifyOnParityError: " + e); // NOI18N
+        }
+
+        try {
+            port.notifyOnOverrunError(true);
+        } catch (Exception e) {
+            log.debug("Could not notifyOnOverrunError: " + e); // NOI18N
+        }
+
+        port.notifyOnCarrierDetect(true);
+        port.notifyOnCTS(true);
+        port.notifyOnDSR(true);
     }
 
     Vector<String> portNameVector = null;
@@ -349,4 +434,5 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class);
+
 }

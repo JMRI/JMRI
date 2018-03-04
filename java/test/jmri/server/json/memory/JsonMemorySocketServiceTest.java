@@ -38,7 +38,7 @@ public class JsonMemorySocketServiceTest extends TestCase {
             JsonMemorySocketService service = new JsonMemorySocketService(connection);
             MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
             Memory memory1 = manager.provideMemory("IM1");
-            service.onMessage(JsonMemory.MEMORY, message, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in MemoryManager
             // default null value of memory1 has text representation "null" in JSON
             Assert.assertEquals("null", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
@@ -69,22 +69,22 @@ public class JsonMemorySocketServiceTest extends TestCase {
             Memory memory1 = manager.provideMemory("IM1");
             // Memory "close"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "close");
-            service.onMessage(JsonMemory.MEMORY, message, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals("close", memory1.getValue());
             // Memory "throw"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "throw");
-            service.onMessage(JsonMemory.MEMORY, message, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals("throw", memory1.getValue());
             // Memory UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").putNull(JSON.VALUE);
-            service.onMessage(JsonMemory.MEMORY, message, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(null, memory1.getValue());
             memory1.setValue("throw");
             // Memory no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonMemory.MEMORY, message, Locale.ENGLISH);
+                service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }

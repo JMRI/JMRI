@@ -229,7 +229,7 @@ public class SRCPClientParserTest {
 
     // valid Service Mode (SM) responses
     @Test
-    public void testSMInfoResponse() {
+    public void testSMCVInfoResponse() {
         boolean exceptionOccured = false;
         String code = "12345678910 100 INFO 1 SM 1234 CV 2 28\n\r";
         SRCPClientParser p = new SRCPClientParser(new StringReader(code));
@@ -239,6 +239,22 @@ public class SRCPClientParserTest {
             exceptionOccured = true;
         }
         Assert.assertFalse(exceptionOccured);
+    }
+
+    @Test
+    public void testSMCVBITInfoResponse() throws ParseException {
+        String code = "12345678910 100 INFO 0 SM 1234 CVBIT 2 0 1\n\r";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        new SRCPClientVisitor();
+        p.commandresponse();
+    }
+
+    @Test
+    public void testSMREGInfoResponse() throws ParseException {
+        String code = "12345678910 100 INFO 0 SM 1234 REG 2 28\n\r";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        new SRCPClientVisitor();
+        p.commandresponse();
     }
 
     @Test
@@ -794,6 +810,13 @@ public class SRCPClientParserTest {
     }
 
     // handshake mode responses (Defined in section 4.3 of the SRCP protocol)
+    @Test
+    public void testHandshakeResponseServiceVersion() throws ParseException {
+        String code = "12345678910 SRCP 0.8.3\n\r";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        p.handshakeresponse();
+    }
+
     @Test
     public void testHandshakeResponse200() {
         boolean exceptionOccured = false;

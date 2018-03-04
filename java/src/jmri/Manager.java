@@ -2,11 +2,13 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -30,7 +32,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * may have other properties that will also notify.
  * <p>
  * Probably should have been called NamedBeanManager
- * 
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -41,7 +42,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
+ * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
 public interface Manager<E extends NamedBean> {
@@ -71,25 +73,24 @@ public interface Manager<E extends NamedBean> {
     public String makeSystemName(@Nonnull String s);
 
     /**
-     * Code the validity (including just as a prefix)
-     * of a proposed name string.
+     * Code the validity (including just as a prefix) of a proposed name string.
+     *
      * @since 4.9.5
      */
     enum NameValidity {
         /**
-         * Indicates the name is valid as is,
-         * and can also be a valid prefix for longer names
+         * Indicates the name is valid as is, and can also be a valid prefix for
+         * longer names
          */
         VALID,
-         /**
-          * Indicates name is not valid as-is, nor
-          * can it be made valid by adding more characters;
-          * just a bad start.
-          */
+        /**
+         * Indicates name is not valid as-is, nor can it be made valid by adding
+         * more characters; just a bad start.
+         */
         INVALID,
         /**
-         * Indicates that adding additional characters might (or might not)
-         * turn this into a valid name; it is not a valid name now.
+         * Indicates that adding additional characters might (or might not) turn
+         * this into a valid name; it is not a valid name now.
          */
         VALID_AS_PREFIX_ONLY
     }
@@ -97,7 +98,8 @@ public interface Manager<E extends NamedBean> {
     /**
      * Test if parameter is a properly formatted system name.
      *
-     * @since 4.9.5, although similar methods existed previously in lower-level classes
+     * @since 4.9.5, although similar methods existed previously in lower-level
+     * classes
      * @param systemName the system name
      * @return enum indicating current validity, which might be just as a prefix
      */
@@ -155,6 +157,17 @@ public interface Manager<E extends NamedBean> {
     @CheckReturnValue
     @CheckForNull
     public E getNamedBean(@Nonnull String name);
+
+    /**
+     * Return the descriptors for the system-specific properties of the
+     * NamedBeans that are kept in this manager.
+     *
+     * @return list of known properties, or empty list if there are none.
+     */
+    @Nonnull
+    default public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        return new LinkedList<>();
+    }
 
     /**
      * At a minimum, subclasses must notify of changes to the list of available
@@ -290,7 +303,7 @@ public interface Manager<E extends NamedBean> {
     String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
 
     /**
-     * Provides length of the system prefix of the given system name. 
+     * Provides length of the system prefix of the given system name.
      * <p>
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
@@ -298,29 +311,37 @@ public interface Manager<E extends NamedBean> {
      * @param inputName System name to provide the prefix
      * @throws NamedBean.BadSystemNameException If the inputName can't be
      *                                          converted to normalized form
-     * @return The length of the system-prefix part of the system name in standard normalized form
+     * @return The length of the system-prefix part of the system name in
+     *         standard normalized form
      */
     @CheckReturnValue
-    static public
-    int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        if (inputName.isEmpty()) throw new NamedBean.BadSystemNameException();
-    
+    static public int getSystemPrefixLength(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        if (inputName.isEmpty()) {
+            throw new NamedBean.BadSystemNameException();
+        }
+        if (!Character.isLetter(inputName.charAt(0))) {
+            throw new NamedBean.BadSystemNameException();
+        }
+
         // As a very special case, check for legacy prefixs - to be removed
         // This is also quite a bit slower than the tuned implementation below
         int p = startsWithLegacySystemPrefix(inputName);
-        if (p > 0) return p;
+        if (p > 0) {
+            return p;
+        }
 
         // implementation for well-formed names
-        int i = 1;
+        int i;
         for (i = 1; i < inputName.length(); i++) {
-            if ( !Character.isDigit(inputName.charAt(i)))
+            if (!Character.isDigit(inputName.charAt(i))) {
                 break;
+            }
         }
         return i;
     }
 
     /**
-     * Provides the system prefix of the given system name. 
+     * Provides the system prefix of the given system name.
      * <p>
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
@@ -328,34 +349,34 @@ public interface Manager<E extends NamedBean> {
      * @param inputName System name to provide the prefix
      * @throws NamedBean.BadSystemNameException If the inputName can't be
      *                                          converted to normalized form
-     * @return The system-prefix part of the system name in standard normalized form
+     * @return The system-prefix part of the system name in standard normalized
+     *         form
      */
     @CheckReturnValue
     static public @Nonnull
     String getSystemPrefix(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName.substring(0,getSystemPrefixLength(inputName));
+        return inputName.substring(0, getSystemPrefixLength(inputName));
     }
 
     /**
      * Indicate whether a system-prefix is one of the legacy non-parsable ones
      * that are being removed during the JMRI 4.11 cycle.
+     *
+     * @param prefix the system prefix
      * @deprecated to make sure we remember to remove this post-4.11
      * @since 4.11.2
      * @return true if a legacy prefix, hence non-parsable
      */
     @Deprecated
-    @SuppressWarnings("fallthrough")
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification="intentional to make code more readable")
     @CheckReturnValue
     public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
-        return legacyPrefixes.contains(prefix);
+        return LEGACY_PREFIXES.contains(prefix);
     }
-    
+
     @Deprecated
-    static final java.util.TreeSet<String> legacyPrefixes 
-        = new java.util.TreeSet<>(java.util.Arrays.asList(
+    static final TreeSet<String> LEGACY_PREFIXES = new TreeSet<>(Arrays.asList(
             new String[]{
-                "DX", "DCCPP", "DP", "json", "MR", "MC", "PI", "TM" 
+                "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
             }));
 
     /**
@@ -363,7 +384,8 @@ public interface Manager<E extends NamedBean> {
      * indicate its length.
      * <p>
      * This is a slightly-expensive operation, and should be used sparingly
-     * 
+     *
+     * @param prefix the system prefix
      * @deprecated to make sure we remember to remove this post-4.11
      * @since 4.11.2
      * @return length of a legacy prefix, if present, otherwise -1
@@ -372,10 +394,16 @@ public interface Manager<E extends NamedBean> {
     @CheckReturnValue
     public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
         // implementation replies on legacy suffix length properties to gain a bit of speed...
-        if (legacyPrefixes.contains(prefix.substring(0,2))) return 2;
-        else if (prefix.startsWith("DCCPP"))  return 5;
-        else if (prefix.startsWith("json"))  return 5;
-        else return -1;
+        if (prefix.length() < 2) {
+            return -1;
+        }
+        if (LEGACY_PREFIXES.contains(prefix.substring(0, 2))) {
+            return 2;
+        } else if (prefix.startsWith("DCCPP")) {
+            return 5;
+        } else {
+            return -1;
+        }
     }
 
     /**

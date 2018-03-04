@@ -97,6 +97,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         setAlwaysOnTop(true);
     }
 
+    @SuppressWarnings("unused") // not used now, preserved for later use
     private JPanel makeInstructions() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));

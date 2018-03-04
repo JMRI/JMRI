@@ -67,6 +67,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<>();
     private long _startTime;
+    private float _speedFactor;
     private float _speed;
     private long _TTP = 0;
     private boolean _forward = true;
@@ -84,6 +85,7 @@ public class WarrantFrame extends WarrantRoute {
     JRadioButton _isWarrant = new JRadioButton(Bundle.getMessage("NormalWarrant"), true);
     JRadioButton _addSpeeds = new JRadioButton(Bundle.getMessage("AddTrackSpeeds"), false);
     JCheckBox    _runForward = new JCheckBox(Bundle.getMessage("Forward"));
+    JFormattedTextField _speedFactorTextField = new JFormattedTextField();
     JFormattedTextField _TTPtextField = new JFormattedTextField();
     JCheckBox    _noRampBox = new JCheckBox();
     JCheckBox    _shareRouteBox = new JCheckBox();
@@ -146,6 +148,7 @@ public class WarrantFrame extends WarrantRoute {
 
         List<ThrottleSetting> tList = warrant.getThrottleCommands();
         if (warrant instanceof SCWarrant) {
+            _speedFactor = ((SCWarrant)warrant).getSpeedFactor();
             _TTP = ((SCWarrant)warrant).getTimeToPlatform();
             _forward = ((SCWarrant)warrant).getForward();
         }
@@ -500,19 +503,32 @@ public class WarrantFrame extends WarrantRoute {
 
         scParamPanel.add(_runForward);
         _runForward.setSelected(_forward);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        JLabel l = new JLabel(Bundle.getMessage(Bundle.getMessage("TTP")));
+        
+        JPanel ttpPanel = new JPanel();
+        ttpPanel.setLayout(new BoxLayout(ttpPanel, BoxLayout.LINE_AXIS));
+        JLabel ttp_l = new JLabel(Bundle.getMessage("TTP"));
         _TTPtextField.setValue(Long.valueOf(_TTP));
         _TTPtextField.setColumns(6);
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        ttp_l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         _TTPtextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(l);
-        panel.add(_TTPtextField);
-        panel.setToolTipText(Bundle.getMessage("TTPtoolTip"));
-        scParamPanel.add(panel);
+        ttpPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        ttpPanel.add(ttp_l);
+        ttpPanel.add(_TTPtextField);
+        ttpPanel.setToolTipText(Bundle.getMessage("TTPtoolTip"));
+        scParamPanel.add(ttpPanel);
+        
+        JPanel sfPanel = new JPanel();
+        sfPanel.setLayout(new BoxLayout(sfPanel, BoxLayout.LINE_AXIS));
+        JLabel sf_l = new JLabel(Bundle.getMessage("SF"));
+        _speedFactorTextField.setValue(Long.valueOf((long)(100*_speedFactor)));
+        _speedFactorTextField.setColumns(3);
+        sf_l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        _speedFactorTextField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+        sfPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        sfPanel.add(sf_l);
+        sfPanel.add(_speedFactorTextField);
+        sfPanel.setToolTipText(Bundle.getMessage("sfToolTip"));
+        scParamPanel.add(sfPanel);        
 
         if (_isWarrant.isSelected()) {
             setPanelEnabled(scParamPanel,false);
@@ -1341,6 +1357,9 @@ public class WarrantFrame extends WarrantRoute {
         if (_isSCWarrant.isSelected()) {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
+            long sf = (long)_speedFactorTextField.getValue();
+            float sf_float = sf;
+            ((SCWarrant)_warrant).setSpeedFactor(sf_float / 100);
         }
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());

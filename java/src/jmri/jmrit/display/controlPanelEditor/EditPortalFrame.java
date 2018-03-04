@@ -594,7 +594,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             label.setName(Bundle.getMessage("BeanNamePortal"));
             panel.add(label);
         } catch (java.lang.ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
         }
         _dndPanel.add(panel);
         return _dndPanel;

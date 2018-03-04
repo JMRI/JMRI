@@ -9,7 +9,7 @@
   <title>JMRI: Adding/Editing LRoutes</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help LRoute Add Edit">
   <!--#include virtual="/Style" -->
 </head>
@@ -19,7 +19,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1><a name="Adding/Editing LRoutes"></a>Adding/Editing
+      <h1><a name="Adding_Editing LRoutes"></a>Adding/Editing
       LRoutes</h1>
 
       <p>There are four tabs for adding and editing LRoutes:</p>

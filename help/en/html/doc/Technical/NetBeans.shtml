@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Building with NetBeans</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code NetBeans">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -33,8 +33,9 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Building with NetBeans</h1>
+      <h1>JMRI Code: Building with NetBeans</h1>
 
+    <div class="toc">
       <ul>
         <li><a href="#intro">Introduction</a></li>
 
@@ -55,13 +56,14 @@
 
         <li><a href="#xmltools">Using NetBeans XML tools</a></li>
 
-        <li><a href="#findbugs">Running FindBugs</a></li>
+        <li><a href="#SpotBugs">Running SpotBugs</a></li>
 
         <li><a href="#compileIndividualFile">NetBeans and compiling
         individual files</a></li>
 
         <li><a href="#patch">Making a Patch File</a></li>
       </ul><a href="#SeeAlso">See Also</a>
+    </div>
 
       <h2><a id="intro" name="intro">Introduction</a></h2>
 
@@ -167,7 +169,7 @@
       <a href="images/NetbeansChangeLineEndingsPluginDisabled.png">
         <img src="images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55"></a></p>
 
-      <p>When a file is saved (assuming the the plug-in is
+      <p>When a file is saved (assuming the plug-in is
       configured and is enabled) and that file has line-endings
       which do not match the type configured for the plug-in, the
       following message pops up.</p>
@@ -375,9 +377,9 @@
           <p style="font-family: monospace">
           nsis.home=/opt/nsis/nsis-2.46/</p>
 
-          <p>If you will be installing a "findbugs" tool, you will
-          also define findbugs.home in this file. You may also
-          define several other machine-specific and user-specific
+          <p>If you will be installing the SpotBugs tool, you will
+              also define spotbugs.home in this file. You may also
+              define several other machine-specific and user-specific
           information as described in various locations in the
           build.xml file.</p>
 
@@ -404,48 +406,48 @@
           JMRI branches, whichever branch you add the catalog from,
           that branch's schema is what is used.</p>
 
-          <h2><a id="findbugs" name="findbugs">Running
-          FindBugs</a></h2>
+          <h2><a id="spotbugs" name="spotbugs">Running
+                  SpotBugs</a></h2>
 
-          <p>The FindBugs tool is a static code analysis tool which
-          examines JAVA source code for common coding issues.
-          Installation of a FindBugs tool allows an ant task
-          defined in build.xml to run FindBugs analysis across all
+          <p>The SpotBugs tool is a static code analysis tool which
+              examines JAVA source code for common coding issues.
+          Installation of a SpotBugs tool allows an ant task
+          defined in build.xml to run SpotBugs analysis across all
           of the JAVA source code in JMRI.</p>
 
           <p>It appears that the build.xml file is not configured
-          to allow a NetBeans FindBugs "plugin" to run analysis on
-          the JMRI code except on a one-file-at- a-time basis. As
+              to allow a NetBeans SpotBugs "plugin" to run analysis on
+              the JMRI code except on a one-file-at- a-time basis. As
           such, it seems advisable to download and install the
-          appropriate stand-alone FindBugs tool for your operating
-          system. FindBugs downloads may be found at <a href=
-          "http://findbugs.sourceforge.net">the FindBugs web
-          site</a>.</p>
+          appropriate stand-alone SpotBugs tool for your operating
+          system. SpotBugs downloads may be found at <a href=
+                                                        "https://spotbugs.github.io">the SpotBugs web
+              site</a>.</p>
 
-          <p>Once you have the FindBugs tool installed, you must
-          provide a path to the directory containing the executable
+          <p>Once you have the SpotBugs tool installed, you must
+              provide a path to the directory containing the executable
           for use by the build.xml ant file. If necessary, create
           the local.properties file in the same directory as the
           JMRI build.xml file. In the local.properties file, add
-          the variable findbugs.home with a path to the findbugs
+          the variable spotbugs.home with a path to the spotbugs
           executable, such as:</p>
 
           <p style="font-family: monospace">
-          findbugs.home=C:/findbugs-1.3.8</p>
+              spotbugs.home=C:/spotbugs-3.1.1</p>
 
           <p>or</p>
 
           <p style="font-family: monospace">
-          findbugs.home=/opt/findbugs-1.3.8</p>
+              spotbugs.home=/opt/spotbugs-3.1.1</p>
 
-          <p>To run the FindBugs tool on JMRI code, execute the ant
-          target "findbugs" which is defined in build.xml. Within
-          NetBeans this can be accomplished by right-clicking
-          build.xml in the "Files" pane and "Run"ing the "findbugs"
-          target. When FindBugs completes, the NetBeans Output
+          <p>To run the SpotBugs tool on JMRI code, execute the ant
+              target "spotbugs" which is defined in build.xml. Within
+              NetBeans this can be accomplished by right-clicking
+          build.xml in the "Files" pane and "Run"ing the "spotbugs"
+          target. When SpotBugs completes, the NetBeans Output
           window will show the path to a report file in HTML
           format. Open that file with a browser to review the
-          FindBugs results.</p>
+          SpotBugs results.</p>
 
           <h2><a id="compileIndividualFile" name=
           "compileIndividualFile">NetBeans and compiling individual
@@ -488,8 +490,8 @@
             <li><a href="http://sourceforge.net/projects/nsis">The
             NSIS project web site</a></li>
 
-            <li><a href="http://findbugs.sourceforge.net">The
-            SourceForge FindBugs web site</a></li>
+            <li><a href="https://spotbugs.github.io">The
+                    SpotBugs web site</a></li>
           </ul>
 
           <h2><a id="patch" name="patch">Making a Patch
@@ -518,8 +520,9 @@
             <li>After it finishes calculating the diffs, the file
             you selected will contain the patches, along with an
             information header.</li>
-          </ul><!--#include virtual="/Footer" -->
+          </ul>
 
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

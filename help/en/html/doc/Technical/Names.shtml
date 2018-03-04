@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Names and Naming</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code names user name system name">
   <!-- The combination of "Define" and {Header, Style, Logo and Footer} comments -->
@@ -32,10 +31,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Names and Naming</h1>This page discusses how JMRI
-      objects are named, how those names are used to reference the
-      objects (hardware and software), and how user-readable names
-      are used.
+      <h1>JMRI: Names and Naming</h1>
+      <p>This page discusses how JMRI objects are named, how those
+      names are used to reference the objects (hardware and software),
+      and how user-readable names are used.</p>
 
       <span class="since">Since JMRI 4.7.4</span>
         <b>As of March 2017, we have changed
@@ -72,7 +71,11 @@
 
         <li>Conditionals (for logiX, although these are not entirely named beans)</li>
 
+        <li>signal mast Groups</li>
+        
         <li>signal Heads</li>
+        
+        <li>signal masts (F, for some reason)</li>
 
         <li>Lights (a type of output)</li>
 
@@ -89,6 +92,9 @@
         <li>Turnouts</li>
 
         <li>logiX</li>
+        
+        <li>Sections (Y, for some reason)</li>
+        
       </ul>Some of these are associated with a specific hardware
       device, e.g. a particular turnout. Others are more virtual,
       e.g. a route, which is a collection on control information
@@ -190,8 +196,12 @@
         serial</a></li>
 
         <li>D <a href=
-        "../../hardware/SRCP/index.shtml">SRCP</a></li>
-
+        "../../hardware/SRCP/index.shtml">SRCP</a>,
+        <br>Anyma DX512
+        <br><a href="../../hardware/dccpp/index.shtml">DCC++</a> (previously written DCCpp)
+        <br><a href="../../hardware/dcc4pc/index.shtml">DCC4PC</a>
+        </li>
+        
         <li>E <a href=
         "../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
 
@@ -217,9 +227,9 @@
         <li>M Model railroad layout control buses, including
         <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
         and <a href="../../hardware/can/cbus/index.shtml">MERG
-        CBUS</a>. Also used for the <a href=
-        "../../hardware/modbus/index.shtml">Modbus</a> master and
-        slave implementation.
+        CBUS</a>
+        <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
+        <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
 
         <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
@@ -231,7 +241,9 @@
 
         <li>P <a href=
         "../../hardware/powerline/index.shtml">Powerline
-        transmission</a>, e.g. X10 and Insteon</li>
+        transmission</a>, e.g. X10 and Insteon,
+        <br>Raspberry Pi native pins
+        </li>
 
         <li>Q <a href="../../hardware/qsi/index.shtml">QSI
         programmer interface</a></li>
@@ -242,9 +254,10 @@
         <li>S <a href=
         "../../hardware/sprog/SPROG.shtml">SPROG</a></li>
 
-        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel
-        TMCC</a></li>
-
+        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>, 
+        <br><a href="../../hardware/tams/index.shtml">TAMS</a>
+        </li>
+        
         <li>U <a href="../../hardware/ecos/index.shtml">ESU
         ECoS</a></li>
 
@@ -280,7 +293,8 @@
         position in 3d space</li>
 
         <li>B Block - A software object that keeps track of the
-        contents of a specific block of track</li>
+        contents of a specific block of track.
+        Block system names are all upper case, have no trailing whitespace and start with IB.</li>
 
         <li>D iDentity - A software object that holds information
         about an identity tag that is, typically, attached to a
@@ -297,11 +311,15 @@
         <li>H signal Head - One part of a signal (which may have
         multiple heads). Also interpreted to include indicators on
         control panels that are acting to display signal
-        aspects</li>
+        aspects.
+        SignalHead system names are all upper case, have no trailing whitespace and mostly, 
+        but not always, start with IH.
+        </li>
 
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
-        information temporarily and display it on panels, etc.</li>
+        information temporarily and display it on panels, etc.
+        Memory system names are all upper case, have no trailing whitespace and start with IM.</li>
 
         <li>L Light - another form of output, used to e.g. control
         lights on a layout</li>
@@ -322,12 +340,24 @@
         generally be either ACTIVE or INACTIVE. This is most
         commonly used for block occupancy detectors.</li>
 
+        <li>Y Sections - holds a map of trackwork.
+        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
+        
+        <li>SignalGroups - hold a set of signal heads or masts.
+            SignalGroup system names are all upper case and have no trailing whitespace.
+            For historical reasons, they're not required to have a system prefix or 
+            type letter; the example name is "R12".  This might change, so
+            using "IG" at the start is recommended.
+
         <li>T Turnout - actually a general purpose output on the
         layout</li>
 
         <li>X logiX - a set of logic equations used to control the
-        layout</li>
+        layout.
+        Logix system names are all upper case, have no trailing whitespace and start with IX.</li>
       </ul>
+
+
 
       <a name="systeminfo" id="systeminfo"></a>
       <h3>System-specific suffix</h3>
@@ -453,7 +483,7 @@
           <td>i</td>
           <td>4:3</td>
           <td>(converts to 50)</td>
-          <td>DCCPP50</td>
+          <td>DT50</td>
           <td>node : pin</td>
           <td> </td>
           <td>0</td>
@@ -464,7 +494,7 @@
           <td>o</td>
           <td>12</td>
           <td>ID in internal DCC++ table</td>
-          <td>DCCPP12</td>
+          <td>DT1212</td>
           <td>integer</td>
           <td> </td>
           <td>0</td>
@@ -814,7 +844,7 @@
         </tbody></table>
       <!-- this table is maintained on the help/en/html/doc/Technical/Names.shtml based on information from the
       Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->
-
+    
       <h2>Naming Conventions For Automated Use</h2>Some
       higher-level constructs create their own items. For example,
       a "Sensor Group" is really just a collection of Routes that

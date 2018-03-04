@@ -59,8 +59,9 @@
     <li>NCE USB Interface via a USB cable</li>
   </ul>They are shown in the JMRI Preferences Connection pane as
   NCE, NCE via network, and NCE USB Interface,
-  respectively.<a name="limitations" id="limitations"></a>
+  respectively.
 
+  <a name="limitations" id="limitations"></a>
   <h2>Limitations</h2>
 
   <p>A very small number of early (pre-2002) NCE Power Pro
@@ -267,8 +268,9 @@
   <p>For reliable operation, we recommend that you disable "AIU
   broadcast", and set the baud rate to 9,600. These are the normal
   defaults for NCE. Both of these parameters can be found in your
-  NCE user's manual under "Setup Command Station".</p><a name=
-  "vianetwork" id="vianetwork"></a>
+  NCE user's manual under "Setup Command Station".</p>
+
+  <a name="vianetwork" id="vianetwork"></a>
 
   <h3>Power Pro (PowerHouse) via Network</h3>Instead of connecting
   a serial cable from your computer to a Power Pro, you can also
@@ -398,7 +400,7 @@
 
     <li>Restart the program. You should be up and running.</li>
 
-    <li>If not see the <a hhref="#troubleShoot">trouble
+    <li>If not see the <a href="#troubleShoot">trouble
     shooting</a> section below.</li>
   </ul>
 

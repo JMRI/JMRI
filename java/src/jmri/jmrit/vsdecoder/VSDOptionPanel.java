@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriPanel;
@@ -67,7 +68,7 @@ public class VSDOptionPanel extends JmriPanel {
         JLabel x = new JLabel();
         x.setText("Operations Train: ");
         this.add(x);
-        opsTrainComboBox = TrainManager.instance().getTrainComboBox();
+        opsTrainComboBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
         this.add(opsTrainComboBox);
         opsTrainComboBox.addActionListener(new ActionListener() {
             @Override
@@ -96,7 +97,7 @@ public class VSDOptionPanel extends JmriPanel {
                 selected_train.removePropertyChangeListener(main_frame.getDecoder());
             }
             String opsTrain = opsTrainComboBox.getSelectedItem().toString();
-            if ((selected_train = TrainManager.instance().getTrainByName(opsTrain)) != null) {
+            if ((selected_train = InstanceManager.getDefault(TrainManager.class).getTrainByName(opsTrain)) != null) {
                 selected_train.addPropertyChangeListener(main_frame.getDecoder());
             }
         }

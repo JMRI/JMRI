@@ -141,7 +141,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void configureManagers() {
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

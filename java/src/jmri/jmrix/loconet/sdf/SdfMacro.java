@@ -174,12 +174,9 @@ public abstract class SdfMacro implements SdfConstants {
         } else // generics
         if ((m = FourByteMacro.match(buff)) != null) {
             return m;
-        } else if ((m = TwoByteMacro.match(buff)) != null) {
-            return m;
+        } else  { // only case left is TwoByteMacro, which has to match
+            return TwoByteMacro.match(buff);
         }
-
-        log.warn("dropped through");
-        return null;
     }
 
     /**
@@ -201,9 +198,7 @@ public abstract class SdfMacro implements SdfConstants {
      */
     String decodeFlags(int input, int[] values, int[] masks, String[] labels) {
         String[] names = jmri.util.StringUtil.getNamesFromStateMasked(input, values, masks, labels);
-        if (names == null) {
-            return "<ERROR>"; // unexpected case, internal error, should also log? // NOI18N
-        } else if (names.length == 0) {
+        if (names.length == 0) {
             return labels[labels.length - 1];  // last name is non-of-above special case
         } else if (names.length == 1) {
             return names[0];
@@ -223,6 +218,6 @@ public abstract class SdfMacro implements SdfConstants {
         return val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
+    // private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
 
 }

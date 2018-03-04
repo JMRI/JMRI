@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Continuous Integration</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code Continuous Integration jenkins">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -32,10 +31,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Continuous Integration</h1>"Continuous Integration"
-      is the process of rebuilding a system every time it changes,
-      so that you rapidly learn of new problems and are motivated
-      to remove existing ones.
+      <h1>JMRI Code: Continuous Integration</h1>
+      <p>"Continuous Integration" is the process of rebuilding a
+      system every time it changes, so that you rapidly learn of
+      new problems and are motivated to remove existing ones.</p>
 
       <p>The core of our system is a series of <a href=
       "#jenkins">Jenkins</a> jobs that routinely build the code,
@@ -113,27 +112,27 @@
 
       <ul>
         <li><a href=
-        "http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">
+        "http://builds.jmri.org/jenkins/job/Development/job/Builds/">
         Builds</a> page, showing status of the builds done after
         every series of commits. Successful builds are followed by
         builds installers via the <a href=
-        "http://jmri.tagadab.com/jenkins/view/All/job/Development/job/Packages">
+        "http://builds.jmri.org/jenkins/view/All/job/Development/job/Packages">
         Packages</a> job.</li>
 
         <li>
           <a href=
-          "http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/">
-          FindBugs</a> page, showing status of the more-extensive
-          <a href="FindBugs.shtml">FindBugs</a> tests done
+          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/">
+              SpotBugs</a> page, showing status of the more-extensive
+          <a href="SpotBugs.shtml">SpotBugs</a> tests done
           periodically. There are also pages of the <a href=
-          "http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/changes">
+          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/changes">
           most recent changes</a> and the <a href=
-          "http://jmri.tagadab.com/jenkins/job/Development/job/Findbugs/lastBuild/">
+          "http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/lastBuild/">
           most recent results</a>.
 
-          <p>For more information on JMRI's use of FindBugs, see
-          the <a href="FindBugs.shtml">separate FindBugs
-          page</a>.</p>
+          <p>For more information on JMRI's use of SpotBugs, see
+              the <a href="SpotBugs.shtml">separate SpotBugs
+                  page</a>.</p>
         </li>
       </ul>
 
@@ -194,8 +193,8 @@
       entry under 'Hudson Builders'.</p>
 
       <p><img src="images/NetBeansJenkinsOverview.png" width="342"
-      height="452" alt="Jenkins Overview"> 
-      <!--#include virtual="/Footer" --></p>
+      height="452" alt="Jenkins Overview"></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

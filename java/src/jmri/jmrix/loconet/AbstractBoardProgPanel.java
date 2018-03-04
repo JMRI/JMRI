@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -275,7 +276,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     protected JPanel provideAddressing() {
         return this.provideAddressing(boardTypeName);
     }
-    
+
     /**
      * Creates a JPanel to allow the user to specify a board address and to
      * read and write the device.  The "read" and "write" buttons have text which
@@ -349,7 +350,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Provides a mechanism to read several OpSw values in a sequence. The
-     * sequence is defined by the nextState method.
+     * sequence is defined by the {@link #nextState(int)} method.
      */
     public void readAll() {
         // check the address
@@ -451,7 +452,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * Converts the GUI text field containing the address into a valid integer
      * address, and handles user-input errors as needed.
      *
-     * @param maxValid - highest Board ID number allowed for the given device type.
+     * @param maxValid   highest Board ID number allowed for the given device type.
      * @throws jmri.JmriException - when the board address is invalid
      */
     void setAddress(int maxValid) throws jmri.JmriException {
@@ -503,16 +504,14 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Provides a mechanism to write several OpSw values in a sequence. The
-     * sequence is defined by the nextState method.
+     * sequence is defined by the {@link #nextState(int)} method.
      */
     public void writeAll() {
         // check the address
         try {
             setAddress(256);
         } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug(Bundle.getMessage("ERROR_WRITEALL_ABORTED") + " " + e);
-            }
+            log.debug(Bundle.getMessage("ERROR_WRITEALL_ABORTED") + " " + e);
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             status.setText(" "); // NOI18N
@@ -529,7 +528,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         // copy over the display
         copyToOpsw();
 
-        // Start the first operation
+        // start the first operation
         read = false;
         state = 1;
         // specify as single request, not multiple
@@ -574,7 +573,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Processes incoming LocoNet message m for OpSw responses to read and write
      * operation messages, and automatically advances to the next OpSw operation
-     * as directed by nextState().
+     * as directed by {@link #nextState(int)}.
      *
      *@param m - incoming LocoNet message
      */
@@ -654,7 +653,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         }
     }
 
-    private java.awt.event.ActionListener responseTimerListener = new java.awt.event.ActionListener() {
+    private ActionListener responseTimerListener = new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -700,7 +699,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         }
     }
 
-    private java.awt.event.ActionListener pacingTimerListener = new java.awt.event.ActionListener() {
+    private ActionListener pacingTimerListener = new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {

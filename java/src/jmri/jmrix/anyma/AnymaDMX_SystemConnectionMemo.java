@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Minimal SystemConnectionMemo for anyma dmx systems.
  *
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
@@ -24,7 +24,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * constructor
      */
     public AnymaDMX_SystemConnectionMemo() {
-        this("DX", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "DX" prefix
+        this("D", AnymaDMX_ConnectionTypeList.ANYMA_DMX); // default to "D" prefix
         log.debug("* Constructor()");
     }
 
@@ -99,7 +99,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         log.debug("* getChannelFromSystemName('{}')", systemName);
 
         int offset = checkSystemPrefix(systemName);
-        if (offset > 1) {
+        if (offset > 0) {
             if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
                 // Find the beginning of the channel number field
                 int k = 0;
@@ -120,7 +120,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 log.error("No point in normalizing if a valid system name format is not present");
             }
         } else {
-            log.error("invalid system prefix in anyma dmx system name: {}", systemName);
+            log.error("invalid system prefix in anyma dmx system name in getChannelFromSystemName: {}", systemName);
         }
         return result;
     }
@@ -158,7 +158,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         log.debug("* normalizeSystemName('{}')", systemName);
 
         int offset = checkSystemPrefix(systemName);
-        if (offset > 1) {
+        if (offset > 0) {
             if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
                 int channelNum = Integer.parseInt(systemName.substring(offset + 1));
                 result = systemName.substring(0, offset + 1) + Integer.toString(channelNum);
@@ -166,7 +166,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 // No point in normalizing if a valid system name format is not present
             }
         } else {
-            log.error("invalid system prefix in anyma dmx system name: '{}'", systemName); // fix test first
+            log.error("invalid system prefix in anyma dmx system name in normalizeSystemName: '{}'", systemName); // fix test first
         }
         return result;
     }
@@ -192,7 +192,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 log.error("valid system name format not present in anyma dmx system name: {}", systemName);
             }
         } else {
-            log.error("invalid system prefix in anyma dmx system name: {}", systemName);
+            log.error("invalid system prefix in anyma dmx system name in convertSystemNameToAlternate: {}", systemName);
         }
         return result;
     }
@@ -228,7 +228,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 log.error("invalid type character in anyma dmx system name: {}", systemName);
             }
         } else {
-            log.error("invalid system prefix in anyma dmx system name: {}", systemName);
+            log.error("invalid system prefix in anyma dmx system name in validSystemNameFormat: {}", systemName);
         }
         return result;
     }
@@ -241,7 +241,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * 0 - 127 range, or the channel number is out of the 1 - 512 range, an
      * error message is logged and the null string "" is returned.
      *
-     * @return a system name in the DXaLnnnxxx format
+     * @return a system name in the DaLnnnxxx format
      */
     public String makeSystemName(String type, int nAddress, int channelNum) {
         log.debug("* makeSystemName('{}', {}, {})", type, nAddress, channelNum);
@@ -303,7 +303,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         int result = -1;    // assume failure (pessimist!)
         log.debug("* getNodeAddressFromSystemName('{}')", systemName);
         int offset = checkSystemPrefix(systemName);
-        if (offset > 1) {
+        if (offset > 0) {
             if (systemName.charAt(offset) == 'L') {
                 int num = Integer.parseInt(systemName.substring(offset + 1));
                 if (num > 0) {

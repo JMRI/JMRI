@@ -67,11 +67,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
-public class TransitTableAction extends AbstractTableAction {
+public class TransitTableAction extends AbstractTableAction<Transit> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -100,7 +100,7 @@ public class TransitTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Transit>() {
 
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DUPLICATECOL = EDITCOL + 1;
@@ -120,17 +120,17 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public TransitManager getManager() {
                 return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Transit getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Transit getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
@@ -140,7 +140,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Transit t) {
             }
 
             @Override
@@ -156,7 +156,7 @@ public class TransitTableAction extends AbstractTableAction {
                         log.debug("row is greater than name list");
                         return "";
                     }
-                    Transit z = (Transit) getBySystemName(sysNameList.get(row));
+                    Transit z = getBySystemName(sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {
@@ -375,7 +375,7 @@ public class TransitTableAction extends AbstractTableAction {
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
     /**
-     * Responds to the Add... button and the Edit buttons in Transit Table
+     * Responds to the Add... button and the Edit buttons in Transit Table.
      */
     @Override
     protected void addPressed(ActionEvent e) {
@@ -1257,7 +1257,7 @@ public class TransitTableAction extends AbstractTableAction {
         if (_autoSystemName.isSelected()) {
             curTransit = transitManager.createNewTransit(uName);
         } else {
-            String sName = sysName.getText().toUpperCase();
+            String sName = InstanceManager.getDefault(jmri.TransitManager.class).normalizeSystemName(sysName.getText());
             curTransit = transitManager.createNewTransit(sName, uName);
         }
         if (curTransit == null) {
@@ -2540,7 +2540,7 @@ public class TransitTableAction extends AbstractTableAction {
         String s = sectionList.get(r).getSystemName();
         String u = sectionList.get(r).getUserName();
         if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+            return (s + " ( " + u + " )");
         }
         return s;
     }
@@ -2575,6 +2575,9 @@ public class TransitTableAction extends AbstractTableAction {
         public Class<?> getColumnClass(int c) {
             if (c == ACTION_COLUMN) {
                 return JButton.class;
+            }
+            if (c == SAFE_COLUMN) {
+                return Boolean.class;
             }
             return String.class;
         }
@@ -2613,7 +2616,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case ALTERNATE_COLUMN:
                     return rbx.getString("AlternateColName");
                 case SAFE_COLUMN:
-                    return "Safe"; //rbx.getString("SafeColName");
+                    return rbx.getString("SafeColName");
                 default:
                     return "";
             }
@@ -2634,7 +2637,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case ALTERNATE_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 case SAFE_COLUMN:
-                    return new JTextField(12).getPreferredSize().width;
+                    return new JTextField(4).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2668,11 +2671,8 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                     return rbx.getString("Primary");
                 case SAFE_COLUMN:
-                    if (safe[rx]) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    boolean val = safe[rx];
+                    return Boolean.valueOf(val);
                 default:
                     return Bundle.getMessage("BeanStateUnknown");
             }
@@ -2683,11 +2683,8 @@ public class TransitTableAction extends AbstractTableAction {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
             } else if (col == SAFE_COLUMN) {
-                if ( value.equals("true")) {
-                    safe[row] = true;
-                } else if (value.equals("false")) {
-                    safe[row] = false;
-                }
+                boolean val = ((Boolean) value).booleanValue();
+                safe[row] = val; // use checkbox to show Safe
             }
             return;
         }
@@ -2835,4 +2832,5 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class);
+
 }

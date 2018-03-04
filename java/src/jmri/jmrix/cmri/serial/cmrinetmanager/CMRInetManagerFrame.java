@@ -176,39 +176,42 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // --------------------------
         haltPollButton.setVisible(true);
         haltPollButton.setToolTipText(Bundle.getMessage("HaltPollButtonTip") );
-		haltPollButton.addActionListener(new java.awt.event.ActionListener()
+	haltPollButton.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					haltpollButtonActionPerformed(e);
 				}
 			});
-		panel3.add(haltPollButton);
+	panel3.add(haltPollButton);
 
         // --------------------------
         // Set up Open monitor button
         // --------------------------
         monitorButton.setVisible(true);
         monitorButton.setToolTipText(Bundle.getMessage("MonitorButtonTip") );
-		monitorButton.addActionListener(new java.awt.event.ActionListener()
+	monitorButton.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					monitorButtonActionPerformed(e);
 				}
 			});
-		panel3.add(monitorButton);
+	panel3.add(monitorButton);
 
         // -----------------------------
         // Set up Network Metrics button
         // -----------------------------
-        netStatsButton.setVisible(true);
+        netStatsButton.setVisible(false);
         netStatsButton.setToolTipText(Bundle.getMessage("NetStatsButtonTip") );
-		netStatsButton.addActionListener(new java.awt.event.ActionListener()
+	netStatsButton.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					netStatsButtonActionPerformed(e);
 				}
 			});
-		panel3.add(netStatsButton);
+	panel3.add(netStatsButton);
         panel3.add(Box.createRigidArea(new Dimension(30,0)));
 
         // ------------------
@@ -216,13 +219,14 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
         // ------------------
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("DoneButtonTip") );
-		doneButton.addActionListener(new java.awt.event.ActionListener()
+	doneButton.addActionListener(new java.awt.event.ActionListener()
         {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
 					doneButtonActionPerformed();
 				}
 			});
-		panel3.add(doneButton);
+	panel3.add(doneButton);
         contentPane13.add(panel3);
 
         addHelpMenu("package.jmri.jmrix.cmri.serial.CMRInetManagerFrame", true);
@@ -315,7 +319,9 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
      */
     public class NodeTableModel extends AbstractTableModel
     {
+        @Override
         public String getColumnName(int c) {return pollListColumnsNames[c];}
+        @Override
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case ENABLED_COLUMN:
@@ -327,7 +333,8 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
                 default:
                     return String.class;
             }
-        };
+        }
+        @Override
 	public boolean isCellEditable(int r,int c)
         {
             switch (c)
@@ -340,8 +347,11 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
             return (false);
 
         }
+        @Override
         public int getColumnCount () {return NUM_COLUMNS;}
+        @Override
         public int getRowCount () {return cmriNode.size();}
+        @Override
         public Object getValueAt (int r,int c)
         {
           switch(c)
@@ -373,6 +383,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
           return "";
         }
 
+        @Override
 	public void setValueAt(Object value, int r, int c)
         {
 	  switch(c)

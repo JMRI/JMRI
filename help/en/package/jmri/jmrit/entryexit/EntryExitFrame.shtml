@@ -5,14 +5,12 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
 
   <title>JMRI: Entry/Exit Tools</title>
+  <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta name="Date.Modified" content="20140515">
-  <meta name="Author" content="Kevin Dickerson, Egbert Broerse">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -23,75 +21,87 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <div class="nomenu" id="mBody">
 
     <div id="mainContent">
-    <h1>JMRI: Entry/Exit (NX) Tools</h1>
+    <h1>JMRI: Entry/Exit (NX) Tool</h1>
 
     For a full description of Entry/Exit (NX), see
     <a href="../../../../html/tools/EntryExit.shtml">Entry/Exit (NX)
     Documentation</a>.
 
-    <h2>Entry/Exit (NX) Window</h2>
-    <p>The <strong>Add Entry Exit Points</strong> window is used to create
-    and delete Entry Exit Pairs for a given layout panel. It is also used to
-    enable the Both Way option and enable/disable NX Pairs. The panel is
-    accessed from the Layout Editor Tools menu.</p>
+    <h2>Add Entry/Exit Points</h2>
+    <p>The <strong>Add Entry Exit Points</strong> pane is accessed from the
+    Layout Editor <b>Tools</b> menu.<br>
+    It is used to create and delete Entry Exit Pairs for a given Layout Editor
+    panel. It is also used to enable the <b>Both Way</b> option and to
+    enable/disable specific NX Pairs by checking the boxes in the corresponding
+    column.</p>
 
     <div style="margin-left: 1em">
-    <img src="images/EntryExitWindow.png" height="517" width="896" alt="NX Window">
+    <a href="images/EntryExitWindow.png">
+      <img src="images/EntryExitWindow.png" height="517" width="896"
+      alt="NX Window"></a>
     </div>
 
-    <p>Sensors are assigned at <strong>block</strong> boundaries
-    on the layout editor panel by using the pop up window on anchor points,
-    turnouts, level crossings, end bumpers and edge connectors. These sensors
-    act as the NX selection buttons and are used to create the
+    <p>NX Panel Sensors are assigned at <strong>Block</strong> boundaries
+    on the Layout Editor panel by using the pop up menu on anchor points,
+    turnouts, level crossings, end bumpers and edge connectors.<br>
+    These sensors act as the NX selection buttons and are used to create the
     <strong>Entry Point</strong> and <strong>Exit Point</strong> combo box
     content.</p>
 
-    <p>When the panel is opened, the <strong>Select Panel</strong> selection
-    will be the current layout editor panel. Use the combo box to select the
-    NX content for other panels.  The <strong>Entry Point</strong> list
-    contains the sensors for the currently selected panel.  The <strong>Exit
-    Point</strong> list contains all of the sensors from all layout editor
-    panels. <em>The Exit Point can be on another panel as long as the panels
+    <h3>Combo Boxes</h3>
+    <p>When the Add Entry/Exit Points pane is first opened, the <strong>Select
+    Panel</strong> selection will be the current Layout Editor panel.<br>
+    Use the top combo box to configure NX settings for another panel.<br>
+    The <strong>Entry Point</strong> combo box list now
+    contains the sensors for the currently selected panel. The <strong>Exit
+    Point</strong> list will contain all of the sensors from all layout editor
+    panels.</p>
+    <p><em>The Exit Point can be on another panel as long as the panels
     are linked using edge connectors.</em><span class="since">since 4.11.1</span></p>
-    <p>The <strong>NX Type</strong> defaults to <strong>Set Turnouts
-    Only</strong>.</p>
+    <p>The <strong>
+    <a href="../../../../html/tools/EntryExit.shtml#nxtypes">NX Type</a></strong>
+    defaults to <strong>Set Turnouts Only</strong>.</p>
 
     <h3>Buttons</h3>
+    <p>At the center of the pane are two buttons to populate the NX Pair Table:</p>
     <ul>
     <li><strong>Add Pair</strong> &mdash; Select sensors from the Entry Point
-    and Exit Point lists, select the NX Type and click on Add Pair.
+    and Exit Point lists, select the NX Type and click on <b>Add Pair</b>.
     <strong>Notice:</strong> <em>The sensor pair is not checked for validity</em>.</li>
 
     <li><strong>Auto Generate Entry-Exit Pairs</strong> &mdash; The auto generate
-    process will find all of the valid sensors pairs on all of the panels using
-    the layout block routing utilities.</li>
+    process will find all of the valid sensor pairs on all of the panels using
+    the Layout Editor Block routing utilities.</li>
     </ul>
 
-    <h3>Columns</h3>
+    <h3>NX Pair Table Columns</h3>
     <ul>
-    <li><strong>Entry</strong> &mdash; The sensor name for the entry point. If the
-    block boundary has a signal mast, it will be listed in parenthesis.</li>
-    <li><strong>Exit</strong> &mdash; The sensor name for the exit point. If the
-    block boundary has a signal mast, it will be listed in parenthesis.</li>
-    <li><strong>Active</strong> &mdash; Yes when there is a active route.</li>
-    <li><strong>Clear</strong> &mdash; If the entry is active, cancel the route
-    segment.</li>
-    <li><strong>Both Way</strong> &mdash; Enable the ability to press the entry
-    and exit buttons in either order.</li>
-    <li><strong>Delete</strong> &mdash; Delete the NX sensor pair.</li>
-    <li><strong>NX Type</strong> &mdash; The selected NX type for the NX sensor
-    pair.</li>
-    <li><strong>Disabled</strong> &mdash; When checked, the NX pair is Inactive.
-    Attempts to create a route will result in a error dialog.</li>
+      <li><strong>Entry</strong> &mdash; The sensor name for the entry point. If the
+      block boundary has a signal mast, it will be listed in parenthesis.</li>
+      <li><strong>Exit</strong> &mdash; The sensor name for the exit point. If the
+      block boundary has a signal mast, it will be listed in parenthesis.</li>
+      <li><strong>Active</strong> &mdash; Yes when there is a active route.</li>
+      <li><strong>Clear</strong> &mdash; If the entry is active, cancel the route
+      segment.</li>
+      <li><strong>Both Way</strong> &mdash; Enable the ability to press the entry
+      and exit buttons in either order.</li>
+      <li><strong>Delete</strong> &mdash; Delete the NX sensor pair.</li>
+      <li><strong>NX Type</strong> &mdash; The selected NX type for the NX sensor
+      pair.</li>
+      <li><strong>Disabled</strong> &mdash; When checked, the NX pair is Inactive.
+      Attempts to create a route will result in a error dialog.</li>
     </ul>
 
-    <h2>Options</h2>
-    <p><strong>Route Re-selection</strong> &mdash; Determines what should occur when the
+    <h2>NX Options</h2>
+    <p><img src="images/NxOptionsPane.png" width="394" height="194"
+    alt="NX Window" align="right">While the Entry/Exit (NX) Tools is displayed,
+    its Options menu allows you to set shared settings for the tool.<br>
+    The <b>Entry Exit Options</b> pane contains the following items:
+    </p>
+    <p><strong>Route Re-selection Result</strong> &mdash; Determines what should occur when the
     NX route is reselected by the user.</p>
 
     <ul>
@@ -100,22 +110,28 @@
       route will become active and then inactive as if a train had traversed
       the route. The final block will left active.</li>
       <li>Cancel Route - Cancel the route.</li>
-      <li>Stack Route - Stack the route.</li>
+      <li>Stack Route - Stack the route.<span class="since">since 3.4</span></li>
     </ul>
 
-    <p><strong>Initial colour of path while route it Setup</strong> &mdash;
-    While the route is being setup, set the track colour to that in the drop
+    <p><strong>Initial color of path while route it set up</strong> &mdash;
+    While the route is being setup, set the track color to that in the drop
     down, after a predetermined time the track will revert back to that defined
     in the block configuration.</p>
 
-    <p><strong>Duration of setting Colour(ms)</strong> &mdash; How long the
-    initial colour will be displayed for after the route has initial been
+    <p><strong>Duration of setting Color (ms)</strong> &mdash; How long the
+    initial color will be displayed for after the route has initially been
     selected.</p>
 
-    <p><strong>Integrate With Dispatcher</strong> &mdash; Select this option if
-    the NX route is to extend the path of an Active Train in the
-    dispatcher. This option will only work if the block prior to the NX route
-    is allocated to an active train and that block is also the end block.</p>
+    <p><strong>Integrate with Dispatcher</strong> &mdash; Select this option if
+    the NX route is to extend the path of an <b>Active Train</b> in the
+    <a href="../dispatcher/Dispatcher.shtml">Dispatcher</a> module.<br>
+    This option will only work if the Block prior to the NX route
+    is allocated to a Dispatcher Active Train and that Block is also the
+    end block.</p>
+
+    <p>Back to the
+      <a href="../../../../html/tools/EntryExit.shtml">Entry/Exit (NX)
+        main help page</a>.</p>
 
     <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

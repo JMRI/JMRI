@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Create a Dialog to display the images in a file system directory.
  * <p>
- * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog panels and
- * functioning of the catalog panels without dismissing this dialog.
+ * PreviewDialog is not modal to allow dragNdrop of icons from it to catalog
+ * panels and functioning of the catalog panels without dismissing this dialog.
  * Component is used in {@link jmri.jmrit.catalog.DirectorySearcher}, accessed
  * from {@link jmri.jmrit.catalog.ImageIndexEditor} File menu items.
  *
@@ -48,9 +48,10 @@ public class PreviewDialog extends JDialog {
     JPanel _selectedImage;
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
-    protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
+    protected Color[] colorChoice = new Color[]{Color.white, _grayColor, _darkGrayColor};
     /**
-     * Active base color for Preview background, copied from active Panel where available.
+     * Active base color for Preview background, copied from active Panel where
+     * available.
      */
     protected BufferedImage[] _backgrounds;
 
@@ -68,10 +69,10 @@ public class PreviewDialog extends JDialog {
 
     /**
      *
-     * @param frame     JFrame on screen to center this dialog over
-     * @param title     title for the frame
-     * @param dir       starting icon file directory
-     * @param filter    file patterns to display in icon tree
+     * @param frame  JFrame on screen to center this dialog over
+     * @param title  title for the frame
+     * @param dir    starting icon file directory
+     * @param filter file patterns to display in icon tree
      */
     protected PreviewDialog(Frame frame, String title, File dir, String[] filter) {
         super(frame, Bundle.getMessage(title), false);
@@ -171,9 +172,9 @@ public class PreviewDialog extends JDialog {
     }
 
     /**
-     * Set up a display panel to display icons.
-     * Includes a "View on:" drop down list.
-     * Employs a normal JComboBox, no Panel Background option.
+     * Set up a display panel to display icons. Includes a "View on:" drop down
+     * list. Employs a normal JComboBox, no Panel Background option.
+     *
      * @see jmri.jmrit.catalog.CatalogPanel#makeButtonPanel()
      *
      * @return a JPanel with preview pane and background color drop down
@@ -280,7 +281,7 @@ public class PreviewDialog extends JDialog {
         c.gridx = 0;
         _cnt = 0;       // number of images displayed in this panel
         int cnt = 0;    // total number of images in directory
-        if (_currentDir.listFiles() != null) { // prevent findbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
+        if (_currentDir.listFiles() != null) { // prevent spotbugs NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
             File[] files = _currentDir.listFiles(); // all files, filtered below
             int nCols = 1;
             int nRows = 1;
@@ -349,7 +350,7 @@ public class PreviewDialog extends JDialog {
                         try {
                             image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                         } catch (java.lang.ClassNotFoundException cnfe) {
-                            cnfe.printStackTrace();
+                            log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
                             image = new JLabel(cnfe.getMessage());
                         }
                         image.setOpaque(false);
@@ -408,7 +409,9 @@ public class PreviewDialog extends JDialog {
             for (int i = 0; i < memoryTest.size(); i++) {
                 memoryTest.remove(i);
             }
-            if (log.isDebugEnabled()) log.debug("availableMemory= {}", total);
+            if (log.isDebugEnabled()) {
+                log.debug("availableMemory= {}", total);
+            }
         }
         return total;
     }

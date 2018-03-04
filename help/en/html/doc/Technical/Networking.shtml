@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Network Access</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI network access">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -31,10 +30,11 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Network Access</h1>This page describes various
+      <h1>JMRI Code: Network Access</h1>
+      <p>This page describes various
       forms of network access available in JMRI. More capabilities
       are added all the time, so please check with the user group
-      for up-to-date information.
+      for up-to-date information.</p>
 
       <h2>Methods of Network Access</h2>JMRI interacts with
       networks in two basic forms: downstream connections and
@@ -228,9 +228,9 @@
       page for more information on Zeroconf/Bonjour/"DNS Service
       Discovery" networking.</p>
 
-      <p>See also "man dns-sd" for more information on the dns-sd
-      debugging command-line tool. 
-      <!--#include virtual="/Footer" --></p>
+      <p>Search "man dns-sd" for more information on the dns-sd
+      debugging command-line tool.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

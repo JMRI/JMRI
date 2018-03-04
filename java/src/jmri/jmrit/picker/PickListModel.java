@@ -47,12 +47,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel implements PropertyChangeListener {
+public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> implements PropertyChangeListener {
 
-    protected ArrayList<NamedBean> _pickList;
+    protected ArrayList<E> _pickList;
     protected String _name;
     private JTable _table;       // table using this model
-    protected TableRowSorter<PickListModel> _sorter;
+    protected TableRowSorter<PickListModel<E>> _sorter;
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
@@ -93,14 +93,14 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
      * @return bean at index or null if index is out of range
      */
     @CheckForNull
-    public NamedBean getBeanAt(int index) {
+    public E getBeanAt(int index) {
         if (index >= _pickList.size()) {
             return null;
         }
         return _pickList.get(index);
     }
 
-    public int getIndexOf(@Nonnull NamedBean bean) {
+    public int getIndexOf(@Nonnull E bean) {
         for (int i = 0; i < _pickList.size(); i++) {
             if (_pickList.get(i).equals(bean)) {
                 return i;
@@ -110,7 +110,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     }
 
     @Nonnull
-    public List<NamedBean> getBeanList() {
+    public List<E> getBeanList() {
         return _pickList;
     }
 
@@ -130,7 +130,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             }
         }
         List<String> systemNameList = getManager().getSystemNameList();
-        TreeSet<NamedBean> ts = new TreeSet<>(new NamedBeanComparator());
+        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
 
         Iterator<String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
@@ -138,9 +138,9 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         }
         _pickList = new ArrayList<>(systemNameList.size());
 
-        Iterator<NamedBean> it = ts.iterator();
+        Iterator<E> it = ts.iterator();
         while (it.hasNext()) {
-            NamedBean elt = it.next();
+            E elt = it.next();
             _pickList.add(elt);
         }
         // add name change listeners
@@ -152,21 +152,24 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public NamedBean getBySystemName(@Nonnull String name) {
+    public E getBySystemName(@Nonnull String name) {
         return getManager().getBeanBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     @CheckForNull
-    protected NamedBean getByUserName(@Nonnull String name) {
+    protected E getByUserName(@Nonnull String name) {
         return getManager().getBeanByUserName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull
-    abstract public Manager getManager();
+    abstract public Manager<E> getManager();
 
     /**
      * Return bean with name given in parameter. Create if needed and possible.
@@ -175,10 +178,10 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
      * @return the bean or null if not made
      */
     @CheckForNull
-    abstract public NamedBean addBean(@Nonnull String name);
+    abstract public E addBean(@Nonnull String name);
 
     @CheckForNull
-    abstract public NamedBean addBean(@Nonnull String sysName, String userName);
+    abstract public E addBean(@Nonnull String sysName, String userName);
 
     /**
      * Check if beans can be added by this model.
@@ -188,25 +191,30 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     abstract public boolean canAddBean();
 
     // these BeanTableDataModel abstract methods not needed
+    /** {@inheritDoc} */
     @Override
     protected String getMasterClassName() {
         return "PickListModel";
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void clickOn(@Nonnull NamedBean t) {
+    public void clickOn(@Nonnull E t) {
     }
 
+    /** {@inheritDoc} */
     @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getColumnCount() {
         return 2;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getColumnName(int c) {
         if (c == SNAME_COLUMN) {
@@ -217,16 +225,19 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return "";
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getRowCount() {
         return _pickList.size();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getValueAt(int r, int c) {
         // some error checking
@@ -242,11 +253,13 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setValueAt(Object type, int r, int c) {
     }
 
     // these BeanTableDataModel abstract methods not needed
+    /** {@inheritDoc} */
     @Override
     public String getValue(String systemName) {
         return systemName;
@@ -256,6 +269,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return _name;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getBeanType() {
         return _name;
@@ -306,7 +320,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
                 }
             }
         };
-        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 
         _table.setRowSelectionAllowed(true);
@@ -338,7 +351,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     public void makeSorter(@Nonnull JTable table) {
         _sorter = new TableRowSorter<>(this);
-        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         table.setRowSorter(_sorter);
     }
 
@@ -347,6 +359,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return _table;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void dispose() {
         getManager().removePropertyChangeListener(this);
@@ -484,7 +497,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return new EntryExitPickModel();
     }
 
-    public static PickListModel logixPickModelInstance() {
+    public static PickListModel<Logix> logixPickModelInstance() {
         Integer num = _listMap.get("logix");
         if (num != null) {
             _listMap.put("logix", num + 1);
@@ -504,22 +517,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleTurnoutTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Turnout> getManager() {
             manager = InstanceManager.turnoutManagerInstance();
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Turnout addBean(String name) throws IllegalArgumentException {
             return manager.provideTurnout(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Turnout addBean(String sysName, String userName) {
             return manager.newTurnout(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -534,22 +551,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleSensorTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Sensor> getManager() {
             manager = InstanceManager.sensorManagerInstance();
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Sensor addBean(String name) throws IllegalArgumentException {
             return manager.provideSensor(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Sensor addBean(String sysName, String userName) {
             return manager.newSensor(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -564,6 +585,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             super();
         }
 
+        /** {@inheritDoc} */
         @Override
         public Object getValueAt(int r, int c) {
             if (c == POSITION_COL) {
@@ -572,6 +594,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             return super.getValueAt(r, c);
         }
 
+        /** {@inheritDoc} */
         @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == POSITION_COL) {
@@ -588,19 +611,22 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleSignalTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<SignalHead> getManager() {
             manager = InstanceManager.getDefault(SignalHeadManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) {
+        public SignalHead addBean(String name) {
             return manager.getSignalHead(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public SignalHead addBean(String sysName, String userName) {
             SignalHead sh = manager.getSignalHead(userName);
             if (sh == null) {
                 sh = manager.getSignalHead(sysName);
@@ -608,6 +634,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             return sh;
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return false;
@@ -622,19 +649,22 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleSignalMastTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<SignalMast> getManager() {
             manager = InstanceManager.getDefault(SignalMastManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public SignalMast addBean(String name) throws IllegalArgumentException {
             return manager.provideSignalMast(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) throws IllegalArgumentException {
+        public SignalMast addBean(String sysName, String userName) throws IllegalArgumentException {
             SignalMast sm = manager.getSignalMast(userName);
             if (sm == null) {
                 sm = manager.provideSignalMast(sysName);
@@ -642,6 +672,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             return sm;
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return false;
@@ -656,22 +687,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleMemoryTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Memory> getManager() {
             manager = InstanceManager.memoryManagerInstance();
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Memory addBean(String name) throws IllegalArgumentException {
             return manager.provideMemory(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Memory addBean(String sysName, String userName) {
             return manager.newMemory(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -686,22 +721,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleBlockTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Block> getManager() {
             manager = InstanceManager.getDefault(BlockManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Block addBean(String name) throws IllegalArgumentException {
             return manager.provideBlock(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Block addBean(String sysName, String userName) {
             return manager.createNewBlock(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -716,22 +755,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleReporterTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Reporter> getManager() {
             manager = InstanceManager.getDefault(ReporterManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Reporter addBean(String name) throws IllegalArgumentException {
             return manager.provideReporter(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Reporter addBean(String sysName, String userName) {
             return manager.newReporter(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -746,22 +789,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleLightTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Light> getManager() {
             manager = InstanceManager.lightManagerInstance();
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Light addBean(String name) throws IllegalArgumentException {
             return manager.provideLight(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Light addBean(String sysName, String userName) {
             return manager.newLight(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -776,22 +823,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleBlockTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<OBlock> getManager() {
             manager = InstanceManager.getDefault(OBlockManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public OBlock addBean(String name) throws IllegalArgumentException {
             return manager.provideOBlock(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public OBlock addBean(String sysName, String userName) {
             return manager.createNewOBlock(sysName, userName);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return true;
@@ -806,22 +857,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleWarrantTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<Warrant> getManager() {
             manager = InstanceManager.getDefault(WarrantManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) throws IllegalArgumentException {
+        public Warrant addBean(String name) throws IllegalArgumentException {
             return manager.provideWarrant(name);
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Warrant addBean(String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName, false, 0);
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return false;
@@ -836,27 +891,32 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _name = rb.getString("TitleEntryExitTable");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Manager<DestinationPoints> getManager() {
             manager = InstanceManager.getDefault(EntryExitPairs.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) {
+        public DestinationPoints addBean(String name) {
             return null;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public DestinationPoints addBean(String sysName, String userName) {
             return null;
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return false;
         }
 
+        /** {@inheritDoc} */
         @Override
         public String getColumnName(int c) {
             if (c == SNAME_COLUMN) {
@@ -868,7 +928,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         }
     }
 
-    static class LogixPickModel extends PickListModel {
+    static class LogixPickModel extends PickListModel<Logix> {
 
         LogixManager manager;
 
@@ -876,22 +936,26 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
            _name = rb.getString("TitleLogixTable");
         }
 
+        /** {@inheritDoc} */
         @Override
-        public Manager getManager() {
+        public Manager<Logix> getManager() {
             manager = InstanceManager.getDefault(LogixManager.class);
             return manager;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String name) {
+        public Logix addBean(String name) {
             return null;
         }
 
+        /** {@inheritDoc} */
         @Override
-        public NamedBean addBean(String sysName, String userName) {
+        public Logix addBean(String sysName, String userName) {
             return null;
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean canAddBean() {
             return false;

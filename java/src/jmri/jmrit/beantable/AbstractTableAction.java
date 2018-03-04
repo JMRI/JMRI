@@ -1,14 +1,16 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 import jmri.Manager;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractTableAction extends AbstractAction {
+abstract public class AbstractTableAction<E extends NamedBean> extends AbstractAction {
 
     public AbstractTableAction(String actionName) {
         super(actionName);
@@ -27,7 +29,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         super(actionName);
     }
 
-    protected BeanTableDataModel m;
+    protected BeanTableDataModel<E> m;
 
     /**
      * Create the JTable DataModel, along with the changes for the specific
@@ -46,7 +48,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        TableRowSorter<BeanTableDataModel<E>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
 
         // allow reordering of the columns
@@ -63,11 +65,8 @@ abstract public class AbstractTableAction extends AbstractAction {
                 if (includeAddButton) {
                     JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                     addToBottomBox(addButton, this.getClass().getName());
-                    addButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            addPressed(e);
-                        }
+                    addButton.addActionListener((ActionEvent e1) -> {
+                        addPressed(e1);
                     });
                 }
             }
@@ -79,12 +78,12 @@ abstract public class AbstractTableAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    public BeanTableDataModel getTableDataModel() {
+    public BeanTableDataModel<E> getTableDataModel() {
         createModel();
         return m;
     }
 
-    public void setFrame(BeanTableFrame frame) {
+    public void setFrame(@Nonnull BeanTableFrame frame) {
         f = frame;
     }
 
@@ -98,7 +97,7 @@ abstract public class AbstractTableAction extends AbstractAction {
      *
      * @param f the Frame to add to
      */
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(@Nonnull BeanTableFrame f) {
     }
 
     /**
@@ -117,7 +116,7 @@ abstract public class AbstractTableAction extends AbstractAction {
      *
      * @param man Manager for this table tab
      */
-    protected void setManager(Manager man) {
+    protected void setManager(@Nonnull Manager<E> man) {
     }
 
     /**
@@ -159,7 +158,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         options.put(0x00, Bundle.getMessage("DeleteAsk"));
         options.put(0x01, Bundle.getMessage("DeleteNever"));
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(), "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
     }
 
     protected abstract String getClassName();
@@ -178,8 +177,8 @@ abstract public class AbstractTableAction extends AbstractAction {
      * @param headerFormat messageFormat for header
      * @param footerFormat messageFormat for footer
      */
-    public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat) {
-        log.error("Caught here");
+    public void print(JTable.PrintMode mode, MessageFormat headerFormat, MessageFormat footerFormat) {
+        log.error("Printing not handled for {} tables.", m.getBeanType());
     }
 
     protected abstract void addPressed(ActionEvent e);

@@ -7,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Unit testing with JUnit</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content="JMRI technical code">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code JUnit testing">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
   <!-- easily replace the common header/footer code for all the web pages -->
@@ -30,7 +30,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Unit testing with JUnit</h1>
+      <h1>JMRI Code: Unit testing with JUnit</h1>
 
       <ul>
         <li><a href="#Introduction">Introduction</a></li>
@@ -642,7 +642,7 @@
      
 
         <li>(Pre-JUnit4 only; use the above if using JUnit 4)
-        Place the temporary file(s) in the the "temp" directory
+        Place the temporary file(s) in the "temp" directory
         which is a sub- directory of the jmri run-time directory.
         This directory is used by some testcases and is already
         configured as excluded from the JMRI code repository. It

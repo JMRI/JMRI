@@ -10,12 +10,15 @@ package jmri.util.junit.rules;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RetryRule implements TestRule {
     private int retryCount;
 
     public RetryRule (int retryCount) {
         this.retryCount = retryCount;
+        if (retryCount <= 0) log.error("retryCount must be greater than zero");
     }
 
     public Statement apply(Statement base, Description description) {
@@ -26,7 +29,7 @@ public class RetryRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                Throwable caughtThrowable = null;
+                Throwable caughtThrowable = new Exception("Internal error in RetryRule");
 
                 // implement retry logic here
                 for (int i = 0; i < retryCount; i++) {
@@ -35,13 +38,14 @@ public class RetryRule implements TestRule {
                         return;
                     } catch (Throwable t) {
                         caughtThrowable = t;
-                        //  System.out.println(": run " + (i+1) + " failed");
-                        System.err.println(description.getDisplayName() + ": run " + (i + 1) + " failed.");
+                        log.info("{} : run  {} failed",description.getDisplayName(), (i + 1));
                     }
                 }
-                System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures.");
+                log.error("{} : giving up after {} failures",description.getDisplayName(), retryCount);
                 throw caughtThrowable;
             }
         };
     }
+
+    private final static Logger log = LoggerFactory.getLogger(RetryRule.class);
 }

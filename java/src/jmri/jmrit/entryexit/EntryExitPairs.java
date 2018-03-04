@@ -687,44 +687,256 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         log.info("panel maintenance has resulting in the request to remove a sensor: {}", sensor.getDisplayName());
     }
 
-    public void deleteNxPair(NamedBean source, NamedBean destination, LayoutEditor panel) {
-        PointDetails sourcePoint = getPointDetails(source, panel);
-        if (sourcePoint == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("source " + source.getDisplayName() + " does not exist so can not delete pair");  // NOI18N
+    // ============ NX Pair Delete Methods ============
+    // The request will be for all NX Pairs containing a sensor or
+    // a specific entry and exit sensor pair.
+
+    /**
+     * Entry point to delete all of the NX pairs for a specific sensor.
+     * 1) Build a list of affected NX pairs.
+     * 2) Check for Conditional references.
+     * 3) If no references, do the delete process with user approval.
+     * <p>
+     * @since 4.11.2
+     * @param sensor The sensor whose pairs should be deleted.
+     * @return true if the delete was successful. False if prevented by
+     * Conditional references or user choice.
+     */
+    public boolean deleteNxPair(NamedBean sensor) {
+        if (sensor == null) {
+            log.error("deleteNxPair: sensor is null");  // NOI18N
+            return false;
+        }
+        createDeletePairList(sensor);
+        if (checkNxPairs()) {
+            // No Conditional references.
+            if (confirmDeletePairs()) {
+                deleteNxPairs();
+                return true;
             }
-            return;
+        }
+        return false;
+    }
+
+    /**
+     * Entry point to delete a specific NX pair.
+     *
+     * @since 4.11.2
+     * @param entrySensor The sensor that acts as the entry point.
+     * @param exitSensor The sensor that acts as the exit point.
+     * @param panel The layout editor panel that contains the entry sensor.
+     * @return true if the delete was successful. False if there are Conditional references.
+     */
+    public boolean deleteNxPair(NamedBean entrySensor, NamedBean exitSensor, LayoutEditor panel) {
+        if (entrySensor == null || exitSensor == null || panel == null) {
+            log.error("deleteNxPair: One or more null inputs");  // NOI18N
+            return false;
+        }
+        deletePairList.clear();
+        deletePairList.add(new DeletePair(entrySensor, exitSensor, panel));
+        if (checkNxPairs()) {
+            // No Conditional references.
+            deleteNxPairs();  // Delete with no prompt
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Find Logix Conditionals that have Variables or Actions for the affected NX Pairs
+     * If any are found, display a dialog box listing the Conditionals and return false.
+     * <p>
+     * @since 4.11.2
+     * @return true if there are no references.
+     */
+    private boolean checkNxPairs() {
+        jmri.LogixManager mgr = InstanceManager.getDefault(jmri.LogixManager.class);
+        List<String> conditionalReferences = new ArrayList<>();
+        for (DeletePair dPair : deletePairList) {
+            if (dPair.dp == null) {
+                continue;
+            }
+            for (String lgxName : mgr.getSystemNameList()) {
+                jmri.Logix lgx = mgr.getLogix(lgxName);
+                for (int i = 0; i < lgx.getNumConditionals(); i++) {
+                    String cdlName = lgx.getConditionalByNumberOrder(i);
+                    jmri.implementation.DefaultConditional cdl = (jmri.implementation.DefaultConditional) lgx.getConditional(cdlName);
+                    String cdlUserName = (cdl.getUserName() == null) ? "" : cdl.getUserName();
+                    for (jmri.ConditionalVariable var : cdl.getStateVariableList()) {
+                        if (var.getBean() == dPair.dp) {
+                            String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
+                            if (!conditionalReferences.contains(refName)) {
+                                conditionalReferences.add(refName);
+                            }
+                        }
+                    }
+                    for (jmri.ConditionalAction act : cdl.getActionList()) {
+                        if (act.getBean() == dPair.dp) {
+                            String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
+                            if (!conditionalReferences.contains(refName)) {
+                                conditionalReferences.add(refName);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (conditionalReferences.isEmpty()) {
+            return true;
         }
 
-        PointDetails destPoint = getPointDetails(destination, panel);
-        if (destPoint == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("destination " + destination.getDisplayName() + " does not exist so can not delete pair");  // NOI18N
-            }
-            return;
+        conditionalReferences.sort(null);
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("DeleteReferences"));
+        for (String ref : conditionalReferences) {
+            msg.append("\n    " + ref);  // NOI18N
         }
+        JOptionPane.showMessageDialog(null,
+                msg.toString(),
+                Bundle.getMessage("WarningTitle"),  // NOI18N
+                JOptionPane.WARNING_MESSAGE);
 
-        if (nxpair.containsKey(sourcePoint)) {
-            // See if there are any vetos to the delete request
-            DestinationPoints dp = nxpair.get(sourcePoint).getDestForPoint(destPoint);
-            try {
-                vcs.fireVetoableChange("CanDelete", dp, null);  // NOI18N
-            } catch (PropertyVetoException e) {
-                JOptionPane.showMessageDialog(null,
-                        e.getMessage(),
-                        Bundle.getMessage("DeleteWarningTitle"),  // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
-                return;
+        return false;
+    }
+
+    /**
+     * Display a list of pending deletes and ask for confirmation.
+     * @since 4.11.2
+     * @return true if deletion confirmation is Yes.
+     */
+    private boolean confirmDeletePairs() {
+        if (deletePairList.size() > 0) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("DeletePairs"));  // NOI18N
+            for (DeletePair dPair : deletePairList) {
+                if (dPair.dp != null) {
+                    msg.append("\n    " + dPair.dp.getDisplayName());  // NOI18N
+                }
             }
+            msg.append("\n" + Bundle.getMessage("DeleteContinue"));  // NOI18N
+            int resp = JOptionPane.showConfirmDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (resp != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    /**
+     * Delete the pairs in the delete pair list.
+     * @since 4.11.2
+     */
+    private void deleteNxPairs() {
+        for (DeletePair dp : deletePairList) {
+            PointDetails sourcePoint = getPointDetails(dp.src, dp.pnl);
+            PointDetails destPoint = getPointDetails(dp.dest, dp.pnl);
             nxpair.get(sourcePoint).removeDestination(destPoint);
             firePropertyChange("length", null, null);  // NOI18N
             if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
                 nxpair.remove(sourcePoint);
             }
-        } else if (log.isDebugEnabled()) {
-            log.debug("source " + source.getDisplayName() + " is not a valid source so can not delete pair");  // NOI18N
         }
+    }
+
+    /**
+     * List of NX pairs that are scheduled for deletion.
+     * @since 4.11.2
+     */
+    List<DeletePair> deletePairList = new ArrayList<>();
+
+    /**
+     * Class to store NX pair components.
+     * @since 4.11.2
+     */
+    class DeletePair {
+        NamedBean src = null;
+        NamedBean dest = null;
+        LayoutEditor pnl = null;
+        DestinationPoints dp = null;
+
+        /**
+         * Constructor for a DeletePair row.
+         * @param src Source sensor bean
+         * @param dest Ddestination sensor bean
+         * @param pnl The LayoutEditor panel for the source bean
+         */
+        DeletePair(NamedBean src, NamedBean dest, LayoutEditor pnl) {
+            this.src = src;
+            this.dest = dest;
+            this.pnl = pnl;
+
+            // Get the actual destination point, if any.
+            PointDetails sourcePoint = getPointDetails(src, pnl);
+            PointDetails destPoint = getPointDetails(dest, pnl);
+            if (sourcePoint != null && destPoint != null) {
+                if (nxpair.containsKey(sourcePoint)) {
+                    this.dp = nxpair.get(sourcePoint).getDestForPoint(destPoint);
+                }
+            }
+        }
+    }
+
+    /**
+     * Rebuild the delete pair list based on the supplied sensor.
+     * Find all of the NX pairs that use this sensor as either a source or
+     * destination.  They will be candidates for deletion.
+     * <p>
+     * @since 4.11.2
+     * @param sensor The sensor being deleted,
+     */
+    void createDeletePairList(NamedBean sensor) {
+        deletePairList.clear();
+        nxpair.forEach((pdSrc, src) -> {
+            Sensor sBean = pdSrc.getSensor();
+            LayoutEditor sPanel = pdSrc.getPanel();
+            for (PointDetails pdDest : src.getDestinationPoints()) {
+                Sensor dBean = pdDest.getSensor();
+                if (sensor == sBean || sensor == dBean) {
+                    log.debug("Delete pair: {} to {}, panel = {}",  // NOI18N
+                            sBean.getDisplayName(), dBean.getDisplayName(), sPanel.getLayoutName());
+                    deletePairList.add(new DeletePair(sBean, dBean, sPanel));
+                }
+            }
+        });
+    }
+
+    // ============ End NX Pair Delete Methods ============
+
+    /**
+     * Create a list of sensors that have the layout block as either
+     * facing or protecting.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutTrackEditors#hasNxSensorPairs}.
+     * @since 4.11.2
+     * @param layoutBlock The layout block to be checked.
+     * @return the a list of sensors affected by the layout block or an empty list.
+     */
+    public List<String> layoutBlockSensors(@Nonnull LayoutBlock layoutBlock) {
+        log.debug("layoutBlockSensors: {}", layoutBlock.getDisplayName());
+        List<String> blockSensors = new ArrayList<>();
+        nxpair.forEach((pdSrc, src) -> {
+            Sensor sBean = pdSrc.getSensor();
+            for (LayoutBlock sProtect : pdSrc.getProtecting()) {
+                if (layoutBlock == pdSrc.getFacing() || layoutBlock == sProtect) {
+                    log.debug("  Source = '{}', Facing = '{}', Protecting = '{}'         ",
+                            sBean.getDisplayName(), pdSrc.getFacing().getDisplayName(), sProtect.getDisplayName());
+                    blockSensors.add(sBean.getDisplayName());
+                }
+            }
+
+            for (PointDetails pdDest : src.getDestinationPoints()) {
+                Sensor dBean = pdDest.getSensor();
+                for (LayoutBlock dProtect : pdDest.getProtecting()) {
+                    if (layoutBlock == pdDest.getFacing() || layoutBlock == dProtect) {
+                        log.debug("    Destination = '{}', Facing = '{}', Protecting = '{}'     ",
+                                dBean.getDisplayName(), pdDest.getFacing().getDisplayName(), dProtect.getDisplayName());
+                        blockSensors.add(dBean.getDisplayName());
+                    }
+                }
+            }
+        });
+        return blockSensors;
     }
 
     public boolean isDestinationValid(Object source, Object dest, LayoutEditor panel) {

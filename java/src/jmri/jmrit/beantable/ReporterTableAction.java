@@ -8,6 +8,7 @@ import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public class ReporterTableAction extends AbstractTableAction {
+public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
     /**
      * Create an action with a specific title.
@@ -53,8 +54,10 @@ public class ReporterTableAction extends AbstractTableAction {
 
     protected ReporterManager reportManager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
-    public void setManager(ReporterManager man) {
-        reportManager = man;
+    /** {@inheritDoc} */
+    @Override
+    public void setManager(@Nonnull Manager<Reporter> man) {
+        reportManager = (ReporterManager) man;
     }
 
     public ReporterTableAction() {
@@ -67,9 +70,10 @@ public class ReporterTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Reporter>() {
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
+            /** {@inheritDoc} */
             @Override
             public String getValue(String name) {
                 Object value;
@@ -80,36 +84,42 @@ public class ReporterTableAction extends AbstractTableAction {
                 return (value = r.getCurrentReport()) == null ? "" : value.toString();
             }
 
+            /** {@inheritDoc} */
             @Override
-            public Manager getManager() {
+            public ReporterManager getManager() {
                 return reportManager;
             }
 
+            /** {@inheritDoc} */
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Reporter getBySystemName(String name) {
                 return reportManager.getBySystemName(name);
             }
 
+            /** {@inheritDoc} */
             @Override
-            public NamedBean getByUserName(String name) {
+            public Reporter getByUserName(String name) {
                 return reportManager.getByUserName(name);
             }
 
+            /** {@inheritDoc} */
             @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            /** {@inheritDoc} */
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Reporter t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
 
+            /** {@inheritDoc} */
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
-                    Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
+                    Reporter t = getBySystemName(sysNameList.get(row));
                     t.setReport(value);
                     fireTableRowsUpdated(row, row);
                 }
@@ -120,11 +130,13 @@ public class ReporterTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public int getColumnCount() {
                 return LASTREPORTCOL + 1;
             }
 
+            /** {@inheritDoc} */
             @Override
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
@@ -136,6 +148,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getColumnName(col);
             }
 
+            /** {@inheritDoc} */
             @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
@@ -147,6 +160,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getColumnClass(col);
             }
 
+            /** {@inheritDoc} */
             @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == LASTREPORTCOL) {
@@ -155,16 +169,18 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.isCellEditable(row, col);
             }
 
+            /** {@inheritDoc} */
             @Override
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
-                    Reporter t = (Reporter) getBySystemName(sysNameList.get(row));
+                    Reporter t = getBySystemName(sysNameList.get(row));
                     return t.getLastReport();
                 }
                 return super.getValueAt(row, col);
             }
 
-            @Override
+             /** {@inheritDoc} */
+           @Override
             public int getPreferredWidth(int col) {
                 if (col == LASTREPORTCOL) {
                     return super.getPreferredWidth(VALUECOL);
@@ -172,23 +188,27 @@ public class ReporterTableAction extends AbstractTableAction {
                 return super.getPreferredWidth(col);
             }
 
+            /** {@inheritDoc} */
             @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
+            /** {@inheritDoc} */
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("Report")>=0);
             }
 
+            /** {@inheritDoc} */
             @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
+            /** {@inheritDoc} */
             @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameReporter");
@@ -196,11 +216,13 @@ public class ReporterTableAction extends AbstractTableAction {
         };
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleReporterTable"));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.ReporterTable";
@@ -221,6 +243,7 @@ public class ReporterTableAction extends AbstractTableAction {
     String connectionChoice = "";
     jmri.UserPreferencesManager pref;
 
+    /** {@inheritDoc} */
     @Override
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -273,6 +296,7 @@ public class ReporterTableAction extends AbstractTableAction {
             addButton.addActionListener(createListener);
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {
@@ -544,6 +568,7 @@ public class ReporterTableAction extends AbstractTableAction {
             // set default background color for invalid field data
             Color mark = Color.orange;
 
+            /** {@inheritDoc} */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -562,6 +587,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -571,6 +597,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JTextField source = (JTextField) e.getSource();
@@ -580,11 +607,13 @@ public class ReporterTableAction extends AbstractTableAction {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getClassName() {
         return ReporterTableAction.class.getName();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleReporterTable");

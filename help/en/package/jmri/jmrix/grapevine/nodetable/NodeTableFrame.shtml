@@ -1,18 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Configure Grapevine Nodes</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <title>JMRI: Grapevine Node Table</title>
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help configure grapevine node"><!-- Style -->
+  "JMRI help configure grapevine node">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -20,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -28,12 +27,11 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Configure Grapevine Nodes</h1>This is the
-      help/jmri/jmrix/grapevine/nodetable/NodeTableFrame help page
+      <h1>Grapevine Node Table</h1>
 
-      <p>The "Node Table" tool lets you see all your nodes at once.
-      Each line in the table corresponds to one node address. The
-      columns are:</p>
+      <p>The "Node Table" tool lets you see all your Grapevine nodes at
+      once. Each line in the table corresponds to one node address.<br>
+      The columns are:</p>
 
       <dl>
         <dt>Address</dt>
@@ -57,21 +55,21 @@
             it you need to configure it before you can access it in
             the program.</dd>
 
-            <dt>(blank)</dt>
+            <dt>Absent</dt>
 
             <dd>The node is not configured, and has not been seen
             on the Grapevine.</dd>
           </dl>
         </dd>
 
-        <dt>Add/Edit</dt>
+        <dt>Add/Edit Node</dt>
 
         <dd>The third column provides a button for you to add a
         missing node or edit the configuration of an existing node.
         If you do add or edit a node, remember to save your
-        preferences again!</dd>
+        JMRI Preferences again!</dd>
 
-        <dt>Init</dt>
+        <dt>Initialize</dt>
 
         <dd>If the node is configured, there's a button in the 4th
         column that lets you send the initialization messages to
@@ -80,9 +78,10 @@
         available for configured nodes.</dd>
       </dl>
 
-      <p>At the bottom of the window is a "Check" button and a
-      status field. Click "Check" to scan the Grapevine to check
-      its status and locate nodes. The status field is:</p>
+      <p>Below the table is a "Check" button and a status field.
+      <br>
+      Click "Check" to scan the Grapevine to check its status and
+      locate nodes. The status field displays:</p>
 
       <dl>
         <dt>Starting</dt>
@@ -90,10 +89,10 @@
         <dd>A scan is starting, but no reply has been heard from
         the Grapevine yet.</dd>
 
-        <dt>Checking</dt>
+        <dt>Checking node x</dt>
 
         <dd>Scan in progress, and the Grapevine seems to be
-        working.</dd>
+        working. Wait for the chack to complete with node 127.</dd>
 
         <dt>OK</dt>
 
@@ -106,10 +105,14 @@
         some piece isn't powered up.</dd>
       </dl>
 
-      <p>There's also a "Change Node Board Address" button, which
-      can be used to change the address of a Grapevine node. It
-      opens a <a href="RenumberFrame.shtml">new window</a>. 
-      <!--#include virtual="/Footer" --></p>
+      <p>Click the "Change Node Board Address..." button to change
+      the address of a Grapevine node. It opens the
+      <a href="RenumberFrame.shtml">Change Grapevine Board Address</a> pane.</p>
+
+      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
+      page.</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

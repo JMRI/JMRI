@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Use of JavaHelp</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code Java Help JavaHelp"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -27,7 +27,7 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Use of JavaHelp</h1>
+      <h1>JMRI Code: Use of JavaHelp</h1>
       
       This page talks about technical
       aspects of how JMRI provides help information using <a href=
@@ -120,6 +120,10 @@ confuses JavaHelp.
 
         <li>Anchors need to use the "name" attribute rather than
         the "id" attribute. See the item above for an example.</li>
+
+        <li>Do not use spaces or <code>%20</code> in anchor names.
+        If you must use a phrase for a name, use the underscore character:
+        "This_Anchor", not "This Anchor.</li>
 
         <li>You can use the <code>&lt;code&gt;</code> element, or
         the <code>&lt;pre&gt;</code> element, but you can't use
@@ -250,7 +254,8 @@ confuses JavaHelp.
       files for themselves. <a name="tocAndIndex" id=
       "tocAndIndex"></a></p>
 
-      <h3>Table of Contents and Index</h3>Java Help includes a
+      <h3>Table of Contents and Index</h3>
+      Java Help includes a
       <a href="http://jmri.org/help/en/webtoc.shtml">table of
       contents</a> and an <a href=
       "http://jmri.org/help/en/webindex.shtml">index</a>. These are
@@ -280,12 +285,13 @@ confuses JavaHelp.
       Remember to run "ant" after that to include your updates on
       the web versions. <a name="site" id="site"></a></p>
 
-      <h2>Updating the JMRI.org site</h2>Changes to Help pages
+      <h2>Updating the JMRI.org site</h2>
+      <p>Changes to Help pages
       which are checked-in should show up automatically on the
       JMRI.org site after a short while. There's a <a href=
       "http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">
       Jenkins job</a> that handles periodic updates for the static
-      (from repository, unlike e.g. Javadoc) pages. 
+      (from repository, unlike e.g. Javadoc) pages.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

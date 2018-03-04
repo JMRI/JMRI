@@ -72,7 +72,7 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     /**
-     * function returning the SprogVersionQuery instance to use.
+     * Return the SprogVersionQuery instance to use.
      *
      * @return The registered SprogVersionQuery instance for general use, if
      *         need be creating one.
@@ -120,7 +120,6 @@ public class SprogVersionQuery implements SprogListener {
                 log.warn("notify: During dispatch to " + listener + "\nException " + e);
             }
         }
-
     }
 
     /**
@@ -147,7 +146,7 @@ public class SprogVersionQuery implements SprogListener {
             }
 
             case CRSENT: {
-                log.debug("reply in CRSENT state" + replyString);
+                log.debug("reply in CRSENT state {}", replyString);
                 if ((replyString.indexOf("P>")) >= 0) {
                     stopTimer();
                     msg = new SprogMessage(1);
@@ -160,16 +159,16 @@ public class SprogVersionQuery implements SprogListener {
             }
 
             case QUERYSENT: {
-                log.debug("reply in QUERYSENT state" + replyString);
+                log.debug("reply in QUERYSENT state {}", replyString);
                 if (replyString.contains("SPROG")) {
                     stopTimer();
                     String[] splits = replyString.split("\n");
                     splits = splits[1].split(" ");
                     int index = 1;
                     log.debug("Elements in version reply: " + splits.length);
-                    log.debug("First element: <" + splits[0] + ">");
+                    log.debug("First element: <{}>", splits[0]);
                     if (splits[0].contains("Pi-SPROG")) {
-                        log.debug("Found a Pi-SPROG " + splits[index]);
+                        log.debug("Found a Pi-SPROG {}", splits[index]);
                         switch (splits[1]) {
                             case "Nano":
                                 v = new SprogVersion(new SprogType(SprogType.PISPROGNANO), splits[2].substring(1));
@@ -179,13 +178,13 @@ public class SprogVersionQuery implements SprogListener {
                                 break;
                             default:
                                 if (log.isDebugEnabled()) {
-                                    log.debug("Unrecognised Pi-SPROG " + splits[1]);
+                                    log.debug("Unrecognised Pi-SPROG {}", splits[1]);
                                 }
                                 v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                                 break;
                         }                
                     } else if (splits[0].contains("SPROG")) {
-                        log.debug("Found a SPROG " + splits[index]);
+                        log.debug("Found a SPROG {}", splits[index]);
                         switch (splits[index]) {
                             case "3":
                                 index += 2;
@@ -221,15 +220,13 @@ public class SprogVersionQuery implements SprogListener {
                                 v = new SprogVersion(new SprogType(SprogType.SPROGV4), splits[index]);
                                 break;
                             default:
-                                if (log.isDebugEnabled()) {
-                                    log.debug("Unrecognised SPROG" + splits[index]);
-                                }
+                                log.debug("Unrecognised SPROG {}", splits[index]);
                                 v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                                 break;
                         }
                     } else {
                         // Reply contained "SPROG" but couldn't be parsed
-                        log.warn("Found an unknown SPROG " + splits[index]);
+                        log.warn("Found an unknown SPROG {}", splits[index]);
                         v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                     }
 
@@ -239,7 +236,7 @@ public class SprogVersionQuery implements SprogListener {
                     } else if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() >= 4)) {
                         v = new SprogVersion(new SprogType(SprogType.SPROGIIv4), v.sprogVersion);
                     }
-                    log.debug("Found: " + v.toString());
+                    log.debug("Found: {}", v.toString());
                     notifyVersion(v);
                     state = QueryState.DONE;
                     break;
@@ -276,7 +273,7 @@ public class SprogVersionQuery implements SprogListener {
                 break;
             case DONE:
             case IDLE:
-                log.error("Timeout in unexpected state: " + state);
+                log.error("Timeout in unexpected state: {}", state);
                 break;
             default:
                 log.warn("Unhandled timeout state code: {}", state);
@@ -322,4 +319,5 @@ public class SprogVersionQuery implements SprogListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class);
+
 }

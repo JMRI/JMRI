@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Threading</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -31,15 +30,15 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Threading</h1>
+      <h1>JMRI Code: Threading</h1>
       
-      The vast majority of JMRI code (and
+      <p>The vast majority of JMRI code (and
       programmers) don't have to worry about threading. Their code
       gets invoked, and invokes other code, and threading takes
       care of itself. This is particularly true of event-based
       code, which responds to events from e.g. the GUI or a layout
       object changing, and calls methods on other objects, which
-      may in turn create more events.
+      may in turn create more events.</p>
 
       <p>This simplicity comes from using a single thread for
       processing most of JMRI's activity: The Java Swing event

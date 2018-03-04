@@ -122,7 +122,7 @@ public interface LightManager extends Manager<Light> {
     public boolean validSystemNameConfig(@Nonnull String systemName);
 
     /**
-     * Normalize the system name
+     * Normalize the system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
@@ -137,10 +137,11 @@ public interface LightManager extends Manager<Light> {
      */
     @CheckReturnValue
     @Nonnull
+    @Override
     public String normalizeSystemName(@Nonnull String systemName);
 
     /**
-     * Convert the system name to a normalized alternate name
+     * Convert the system name to a normalized alternate name.
      * <P>
      * This routine is to allow testing to ensure that two Lights with alternate
      * names that refer to the same output bit are not created.

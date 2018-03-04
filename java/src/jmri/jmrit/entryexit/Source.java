@@ -3,18 +3,14 @@ package jmri.jmrit.entryexit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Source {
 
-    JMenu entryExitPopUp = null;
     JMenuItem clear = null;
     JMenuItem cancel = null;
     JMenuItem editCancel = null;
@@ -260,5 +256,5 @@ public class Source {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Source.class);
+    // private final static Logger log = LoggerFactory.getLogger(Source.class);
 }

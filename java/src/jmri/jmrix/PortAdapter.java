@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 
 /**
  * Enables basic setup of a interface for a jmrix implementation.
- * <P>
+ * <p>
  * This is the basic interface. Subclasses provide extensions for specific
  * connection types (network, serial, etc).
  * <p>
@@ -24,15 +24,15 @@ import java.io.DataOutputStream;
 public interface PortAdapter {
 
     /**
-     * Configure all of the other jmrix widgets needed to work with this adapter
+     * Configure all of the other jmrix widgets needed to work with this adapter.
      */
     public void configure();
 
     /**
-     * Query the status of this connection. If all OK, at least as far as is
-     * known, return true
+     * Query the status of this connection.
+     * This is a question of configuration, not transient hardware status.
      *
-     * @return true if OK
+     * @return true if OK, at least as far as known
      */
     public boolean status();
 
@@ -45,10 +45,18 @@ public interface PortAdapter {
 
     public String getCurrentPortName();
 
-    // returns the InputStream from the port
+    /**
+     * Get the InputStream from the port.
+     *
+     * @return the InputStream from the port
+     */
     public DataInputStream getInputStream();
 
-    // returns the outputStream to the port
+    /**
+     * Get the outputStream to the port.
+     *
+     * @return the outputStream to the port
+     */
     public DataOutputStream getOutputStream();
 
     public String getOption1Name();
@@ -60,49 +68,76 @@ public interface PortAdapter {
     public String getOption4Name();
 
     /**
-     * Set the first port option. Only to be used after construction, but before
-     * the openPort call
+     * Set the first port option. Only to be used after construction,
+     * but before the openPort call.
      *
+     * @param value to set the option to
      */
     public void configureOption1(String value);
 
     /**
-     * Set the second port option. Only to be used after construction, but
-     * before the openPort call
+     * Set the second port option. Only to be used after construction,
+     * but before the openPort call.
      *
+     * @param value to set the option to
      */
     public void configureOption2(String value);
 
     /**
-     * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * Set the third port option. Only to be used after construction,
+     * but before the openPort call.
      *
+     * @param value to set the option to
      */
     public void configureOption3(String value);
 
     /**
-     * Set the fourth port option. Only to be used after construction, but
-     * before the openPort call
+     * Set the fourth port option. Only to be used after construction,
+     * but before the openPort call.
      *
+     * @param value to set the option to
      */
     public void configureOption4(String value);
 
+    /**
+     * Get a list of all the options configured against this adapter.
+     *
+     * @return Array of option identifier strings
+     */
     public String[] getOptions();
 
     public boolean isOptionAdvanced(String option);
 
     public String getOptionDisplayName(String option);
 
+    /**
+     * Set the value of an option.
+     *
+     * @param option the name string of the option
+     * @param value the string value to set the option to
+     */
     public void setOptionState(String option, String value);
 
+    /**
+     * Get the string value of a specific option.
+     *
+     * @param option the name of the option to query
+     * @return the option value
+     */
     public String getOptionState(String option);
 
+    /**
+     * Get a list of the various choices allowed with an given option.
+     *
+     * @param option the name of the option to query
+     * @return list of valid values for the option
+     */
     public String[] getOptionChoices(String option);
 
     /**
-     * Return the system manufacturer's name.
+     * Get the system manufacturer's name.
      *
-     * @return Manufacturer's Name
+     * @return manufacturer's name
      */
     public String getManufacturer();
 
@@ -121,7 +156,7 @@ public interface PortAdapter {
     public boolean getDisabled();
 
     /**
-     * Sets whether the connection is disabled.
+     * Set whether the connection is disabled.
      *
      * @param disabled When true, disables operation
      */

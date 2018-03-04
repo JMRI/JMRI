@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
@@ -58,17 +59,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a LightTable GUI.
- * <P>
+ * <p>
  * Based on SignalHeadTableAction.java
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class LightTableAction extends AbstractTableAction {
+public class LightTableAction extends AbstractTableAction<Light> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -90,8 +91,9 @@ public class LightTableAction extends AbstractTableAction {
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
+    /** {@inheritDoc} */
     @Override
-    public void setManager(Manager man) {
+    public void setManager(@Nonnull Manager<Light> man) {
         lightManager = (LightManager) man;
     }
 
@@ -104,18 +106,20 @@ public class LightTableAction extends AbstractTableAction {
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Light>() {
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int INTENSITYCOL = ENABLECOL + 1;
             static public final int EDITCOL = INTENSITYCOL + 1;
             protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
             protected String intensityString = Bundle.getMessage("ColumnHeadIntensity");
 
+            /** {@inheritDoc} */
             @Override
             public int getColumnCount() {
                 return NUMCOLUMN + 3;
             }
 
+            /** {@inheritDoc} */
             @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
@@ -131,6 +135,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public Class<?> getColumnClass(int col) {
                 if (col == EDITCOL) {
@@ -148,6 +153,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public int getPreferredWidth(int col) {
                 // override default value for UserName column
@@ -167,6 +173,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == EDITCOL) {
@@ -182,6 +189,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public String getValue(String name) {
                 Light l = lightManager.getBySystemName(name);
@@ -209,6 +217,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public Object getValueAt(int row, int col) {
                 switch (col) {
@@ -223,6 +232,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public void setValueAt(Object value, int row, int col) {
                 switch (col) {
@@ -290,8 +300,8 @@ public class LightTableAction extends AbstractTableAction {
              * Deactivate the light, then use the superclass to delete it.
              */
             @Override
-            void doDelete(NamedBean bean) {
-                ((Light) bean).deactivateLight();
+            void doDelete(Light bean) {
+                bean.deactivateLight();
                 super.doDelete(bean);
             }
 
@@ -301,29 +311,34 @@ public class LightTableAction extends AbstractTableAction {
                 return true;
             }
 
+            /** {@inheritDoc} */
             @Override
-            public Manager getManager() {
+            public LightManager getManager() {
                 return lightManager;
             }
 
+            /** {@inheritDoc} */
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Light getBySystemName(String name) {
                 return lightManager.getBySystemName(name);
             }
 
+            /** {@inheritDoc} */
             @Override
-            public NamedBean getByUserName(String name) {
+            public Light getByUserName(String name) {
                 return InstanceManager.getDefault(LightManager.class).getByUserName(name);
             }
 
+            /** {@inheritDoc} */
             @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
+            /** {@inheritDoc} */
             @Override
-            public void clickOn(NamedBean t) {
-                int oldState = ((Light) t).getState();
+            public void clickOn(Light t) {
+                int oldState = t.getState();
                 int newState;
                 switch (oldState) {
                     case Light.ON:
@@ -337,14 +352,16 @@ public class LightTableAction extends AbstractTableAction {
                         log.warn("Unexpected Light state {} becomes OFF", oldState);
                         break;
                 }
-                ((Light) t).setState(newState);
+                t.setState(newState);
             }
 
+            /** {@inheritDoc} */
             @Override
             public JButton configureButton() {
                 return new JButton(" " + Bundle.getMessage("StateOff") + " ");
             }
 
+            /** {@inheritDoc} */
             @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameLight");
@@ -492,11 +509,13 @@ public class LightTableAction extends AbstractTableAction {
         }; // end of custom data model
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLightTable"));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LightTable";
@@ -553,6 +572,7 @@ public class LightTableAction extends AbstractTableAction {
     JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime"));
     JSpinner transitionTime = new JSpinner(); // 2 digit decimal format field, initialized later as instance
 
+    /** {@inheritDoc} */
     @Override
     protected void addPressed(ActionEvent e) {
         if (inEditMode) {
@@ -596,6 +616,7 @@ public class LightTableAction extends AbstractTableAction {
             hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {
@@ -1815,7 +1836,9 @@ public class LightTableAction extends AbstractTableAction {
                     if (t == null) {
                         // not user name, try system name
                         t = InstanceManager.turnoutManagerInstance().
-                                getBySystemName(turnoutName.toUpperCase());
+                                getBySystemName(
+                                    InstanceManager.getDefault(jmri.TurnoutManager.class).normalizeSystemName(turnoutName)
+                                );
                         if (t != null) {
                             // update turnout system name in case it changed
                             turnoutName = t.getSystemName();
@@ -2114,6 +2137,7 @@ public class LightTableAction extends AbstractTableAction {
             super();
         }
 
+        /** {@inheritDoc} */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
@@ -2122,6 +2146,7 @@ public class LightTableAction extends AbstractTableAction {
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public Class<?> getColumnClass(int c) {
             if (c == TYPE_COLUMN) {
@@ -2139,16 +2164,19 @@ public class LightTableAction extends AbstractTableAction {
             return String.class;
         }
 
+        /** {@inheritDoc} */
         @Override
         public int getColumnCount() {
             return REMOVE_COLUMN + 1;
         }
 
+        /** {@inheritDoc} */
         @Override
         public int getRowCount() {
             return (controlList.size());
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean isCellEditable(int r, int c) {
             if (c == TYPE_COLUMN) {
@@ -2166,6 +2194,7 @@ public class LightTableAction extends AbstractTableAction {
             return (false);
         }
 
+        /** {@inheritDoc} */
         @Override
         public String getColumnName(int col) {
             if (col == TYPE_COLUMN) {
@@ -2195,6 +2224,7 @@ public class LightTableAction extends AbstractTableAction {
             return new JTextField(8).getPreferredSize().width;
         }
 
+        /** {@inheritDoc} */
         @Override
         public Object getValueAt(int r, int c) {
             int rx = r;
@@ -2216,6 +2246,7 @@ public class LightTableAction extends AbstractTableAction {
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
@@ -2360,6 +2391,7 @@ public class LightTableAction extends AbstractTableAction {
             // set default background color for invalid field data
             Color mark = Color.orange;
 
+            /** {@inheritDoc} */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -2378,6 +2410,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -2387,6 +2420,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
 
+            /** {@inheritDoc} */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JTextField source = (JTextField) e.getSource();
@@ -2396,11 +2430,13 @@ public class LightTableAction extends AbstractTableAction {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLightTable");
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String getClassName() {
         return LightTableAction.class.getName();

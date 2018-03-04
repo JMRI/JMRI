@@ -5,8 +5,8 @@
 
 <html lang="fr">
 <head>
-	<TITLE>JMRI: Acknowledgements</TITLE>
-	<meta content="Bob Jacobsen" name="Author">
+	<title>JMRI: Acknowledgements</title>
+	<meta name="author" content="Bob Jacobsen">
 	<meta name="keywords" content="java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
 
 	<!-- Style -->

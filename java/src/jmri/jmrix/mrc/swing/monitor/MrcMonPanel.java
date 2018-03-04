@@ -102,13 +102,13 @@ public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTraffi
                 previousPollMessage = null;
                 return;
             }
-            prefix = Bundle.getMessage("MrcMonPanelTextRxCab") + Integer.toString(previousPollMessage.getElement(0)); //NOI18N
+            prefix = Bundle.getMessage("MrcMonPanelTextRxCab", Integer.toString(previousPollMessage.getElement(0))); //NOI18N
             previousPollMessage = null;
         }
         logMessage(timestamp, m, prefix);
     }
 
-    private void logMessage(Date timestamp, MrcMessage m, String src) {  // receive a Mrc message and log it
+    private void logMessage(Date timestamp, MrcMessage m, String src) {  // receive an Mrc message and log it
         String raw = "";
         for (int i = 0; i < m.getNumDataElements(); i++) {
             if (i > 0) {
