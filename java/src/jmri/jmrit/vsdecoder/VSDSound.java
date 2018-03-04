@@ -1,6 +1,11 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+import jmri.util.PhysicalLocation;
+import org.jdom2.Element;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -16,13 +21,7 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
- * 
  */
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import jmri.util.PhysicalLocation;
-import org.jdom2.Element;
-
 abstract public class VSDSound {
 
     public final static String SrcSysNamePrefix = "IAS$VSD:";
@@ -31,8 +30,9 @@ abstract public class VSDSound {
     public final static String BufUserNamePrefix = "IVSDB_";
 
     public final static float default_gain = 0.8f;
+    public final static float default_reference_distance = 1.0f;
 
-    javax.swing.Timer t;
+    Timer t;
 
     boolean is_playing;
     String name;
@@ -47,7 +47,7 @@ abstract public class VSDSound {
     }
 
     public boolean isPlaying() {
-        return (is_playing);
+        return is_playing;
     }
 
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
@@ -55,7 +55,7 @@ abstract public class VSDSound {
         t = new Timer(time, al);
         t.setInitialDelay(time);
         t.setRepeats(repeat);
-        return (t);
+        return t;
     }
 
     // Required methods - abstract because all subclasses MUST implement
@@ -80,7 +80,7 @@ abstract public class VSDSound {
     }
 
     public PhysicalLocation getPosition() {
-        return (myposition);
+        return myposition;
     }
 
     // Optional methods - overridden in subclasses where needed.  Do nothing otherwise
@@ -95,11 +95,11 @@ abstract public class VSDSound {
     }
 
     public String getName() {
-        return (name);
+        return name;
     }
 
     public float getGain() {
-        return (gain);
+        return gain;
     }
 
     public void setGain(float g) {
@@ -111,7 +111,7 @@ abstract public class VSDSound {
 
         me.setAttribute("name", name);
         me.setAttribute("type", "empty");
-        return (me);
+        return me;
     }
 
     public void setXml(Element e) {
