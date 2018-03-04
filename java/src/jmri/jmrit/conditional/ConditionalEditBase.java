@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is the base class for the Conditional edit view classes. Contains shared
  * variables and methods.
- * <p>
+ *
  * @author Dave Sand copyright (c) 2017
  */
 public class ConditionalEditBase {
@@ -181,7 +181,7 @@ public class ConditionalEditBase {
     public HashMap<String, String> logixData = new HashMap<>();
 
     /**
-     * Add a listener
+     * Add a listener.
      *
      * @param listener The recipient
      */
@@ -190,7 +190,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Remove a listener -- not used
+     * Remove a listener -- not used.
      *
      * @param listener The recipient
      */
@@ -208,8 +208,9 @@ public class ConditionalEditBase {
     }
 
     // ------------ Shared Conditional Methods ------------
+
     /**
-     * Verify that the user name is not a duplicate for the selected Logix
+     * Verify that the user name is not a duplicate for the selected Logix.
      *
      * @param uName is the user name to be checked
      * @param logix is the Logix that is being updated
@@ -330,6 +331,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Single Pick List Table Methods ------------
+
     /**
      * Create a single panel picklist JFrame for choosing action and variable
      * names.
@@ -462,6 +464,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Pick List Table Methods ------------
+
     /**
      * Open a new drag-n-drop Pick List to drag Variable and Action names from
      * to form Logix Conditionals.
@@ -476,7 +479,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Hide the drag-n-drop Pick List if the last detail edit is closing
+     * Hide the drag-n-drop Pick List if the last detail edit is closing.
      */
     void hidePickListTable() {
         if (_pickTables != null) {
@@ -485,8 +488,8 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Set the pick list tab based on the variable or action type If there is
-     * not a corresponding tab, hide the picklist
+     * Set the pick list tab based on the variable or action type. If there is
+     * not a corresponding tab, hide the picklist.
      *
      * @param curType    is the current type
      * @param actionType True if Action, false if Variable.
@@ -551,7 +554,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Recursive search for the tab panel
+     * Recursive search for the tab panel.
      *
      * @param compList The components for the current Level
      * @param level    The current level in the structure
@@ -577,6 +580,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Manage Conditional Reference map ------------
+
     /**
      * Build a tree set from conditional references.
      *
@@ -595,7 +599,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Check for conditional references
+     * Check for conditional references.
      *
      * @since 4.7.4
      * @param logixName The Logix under consideration
