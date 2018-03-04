@@ -658,7 +658,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
         protected void cancelDelay() {
             if (this.delay != null) {
-                this.delay.cancel();
+                this.delay.cancel(); // cancel complete before dropping reference
                 this.delay = null;
             }
         }
@@ -673,7 +673,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
          */
         private void saveState() {
             cancelDelay();
-            delay = new Timer();
+            delay = new Timer("JmriJTablePersistenceManager save delay");
             delay.schedule(new TimerTask() {
                 @Override
                 public void run() {
