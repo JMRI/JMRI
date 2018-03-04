@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -302,6 +304,10 @@ public interface Manager<E extends NamedBean> {
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
 
+    static final Pattern UUID = Pattern.compile(
+        "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",   // NOI18N
+        Pattern.CASE_INSENSITIVE);
+
     /**
      * Provides length of the system prefix of the given system name.
      * <p>
@@ -320,7 +326,9 @@ public interface Manager<E extends NamedBean> {
             throw new NamedBean.BadSystemNameException();
         }
         if (!Character.isLetter(inputName.charAt(0))) {
-            throw new NamedBean.BadSystemNameException();
+            if (!UUID.matcher(inputName).find()) {
+                throw new NamedBean.BadSystemNameException();
+            }
         }
 
         // As a very special case, check for legacy prefixs - to be removed

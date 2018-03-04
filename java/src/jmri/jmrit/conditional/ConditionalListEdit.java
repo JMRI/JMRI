@@ -2586,6 +2586,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
+                jmri.jmrit.entryexit.DestinationPoints dp = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                        getNamedBean(name);
+                if (dp == null) {
+                    return false;
+                }
+                _curVariable.setName(dp.getUniqueId());
+                _curVariable.setGuiName(dp.getDisplayName());
                 break;
             default:
                 javax.swing.JOptionPane.showMessageDialog(_editConditionalFrame,
@@ -3918,9 +3925,15 @@ public class ConditionalListEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
+                jmri.jmrit.entryexit.DestinationPoints dp = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+                        getNamedBean(name);
+                if (dp == null) {
+                    return false;
+                }
                 actionType = Conditional.ITEM_TO_ENTRYEXIT_ACTION[selection - 1];
-                _actionNameField.setText(name);
-                _curAction.setDeviceName(name);
+                _actionNameField.setText(dp.getDisplayName());
+                _curAction.setDeviceName(dp.getUniqueId());
+                _curAction.setGuiName(dp.getDisplayName());
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection - 1];

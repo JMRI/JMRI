@@ -352,7 +352,7 @@ public class ConditionalEditBase {
         }
 
         PickSinglePanel _pickSingle;
-        
+
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:      // 1
                 _pickSingle = new PickSinglePanel<Sensor>(PickListModel.sensorPickModelInstance());
@@ -1222,16 +1222,17 @@ public class ConditionalEditBase {
      * Show a message if not found.
      *
      * @param name the name to look for
-     * @return the system name of the corresponding EntryExit pair, null if not
+     * @return the system name (UUID) of the corresponding EntryExit pair, null if not
      *         found
      */
     String validateEntryExitReference(String name) {
         NamedBean nb = null;
         if (name != null) {
             if (name.length() > 0) {
-                nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(name);
-                if (nb != null) {
-                    return name;
+                jmri.jmrit.entryexit.DestinationPoints dp = InstanceManager.
+                        getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(name);
+                if (dp != null) {
+                    return dp.getUniqueId();
                 }
             }
         }

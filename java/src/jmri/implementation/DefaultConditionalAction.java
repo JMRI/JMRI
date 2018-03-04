@@ -43,6 +43,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     private String _deviceName = " ";
     private int _actionData = 0;
     private String _actionString = "";
+    private String _guiName = "";       // Contains the user name of the NX Pair
     private NamedBeanHandle<?> _namedBean = null;
 
     private Timer _timer = null;
@@ -63,6 +64,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         _deviceName = name;
         _actionData = actionData;
         _actionString = actionStr;
+        _guiName = "";
 
         NamedBean bean = getIndirectBean(_deviceName);
         if (bean == null) {
@@ -316,6 +318,25 @@ public class DefaultConditionalAction implements ConditionalAction {
             return getNamedBean().getBean();
         }
         return null;
+    }
+
+     /**
+     * @since 4.11.4
+     * @return the GUI name for the NX Pair.
+     */
+    @Override
+    public String getGuiName() {
+        return _guiName;
+    }
+
+    /**
+     * Set the GUI name for the NX Pair.
+     * @since 4.11.4
+     * @param guiName The referenced Conditional user name.
+     */
+    @Override
+    public void setGuiName(String guiName) {
+        _guiName = guiName;
     }
 
     /**
@@ -866,10 +887,12 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DEALLOCATE_BLOCK:
                 case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
                 case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
+                    str = str + ", \"" + _deviceName + "\".";
+                    break;
                 case Conditional.ACTION_SET_NXPAIR_ENABLED:
                 case Conditional.ACTION_SET_NXPAIR_DISABLED:
                 case Conditional.ACTION_SET_NXPAIR_SEGMENT:
-                    str = str + ", \"" + _deviceName + "\".";
+                    str = str + ", \"" + getGuiName() + "\".";
                     break;
                 case Conditional.ACTION_SET_ROUTE_TURNOUTS:
                 case Conditional.ACTION_AUTO_RUN_WARRANT:

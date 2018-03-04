@@ -52,7 +52,7 @@ public class ConditionalVariable {
     private String _dataString = "";
     private int _num1 = 0;
     private int _num2 = 0;
-    private String _guiName = "";       // Contains the user name of the referenced conditional
+    private String _guiName = "";       // Contains the user name of the referenced conditional or NX Pair
     private NamedBeanHandle<?> _namedBean = null;
     //private NamedBeanHandle<Sensor> _namedSensorBean = null;
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
@@ -333,14 +333,14 @@ public class ConditionalVariable {
 
      /**
      * @since 4.7.4
-     * @return the GUI name for the referenced conditional.
+     * @return the GUI name for the referenced conditional or NX Pair.
      */
     public String getGuiName() {
         return _guiName;
     }
 
     /**
-     * Set the GUI name for the conditional state variable.
+     * Set the GUI name for the conditional state variable or NX Pair.
      * @since 4.7.4
      * @param guiName The referenced Conditional user name.
      */
@@ -1087,7 +1087,7 @@ public class ConditionalVariable {
                         new Object[]{rbx.getString("OBlockStatus"), getName(), _dataString});
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("EntryExit"), getBean().getUserName(), type}); // NOI18N
+                        new Object[]{Bundle.getMessage("EntryExit"), getGuiName(), type}); // NOI18N
             case Conditional.TYPE_NONE:
                 return getName() + " type " + type;
             default:
