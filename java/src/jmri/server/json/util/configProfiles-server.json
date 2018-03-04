@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-configProfile-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"configProfile\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of configuration profile"
+        },
+        "id": {
+            "type": "string",
+            "description": "Configuration profile identity"
+        },
+        "uniqueId": {
+            "type": "string",
+            "description": "Uniqueness portion of configuration profile Id"
+        },
+        "isActiveProfile": {
+            "type": "boolean",
+            "description": "True if this configuration profile is active; false otherwise"
+        },
+        "isAutoStart": {
+            "type": "boolean",
+            "description": "True if this configuration profile will be automatically selected next time JMRI is started; false otherwise"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "id", "uniqueId", "isActiveProfile", "isAutoStart"]
+}

@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-engine-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"engine\"",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Id for engine"
+        },
+        "number": {
+            "type": "string",
+            "description": "The engine number"
+        },
+        "road": {
+            "type": "string",
+            "description": "The engine owning railroad"
+        },
+        "type": {
+            "type": "string",
+            "description": "The engine type"
+        },
+        "length": {
+            "type": "int",
+            "description": "Current engine length for available siding calculations"
+        },
+        "color": {
+            "type": "string",
+            "description": "The color of the engine"
+        },
+        "owner": {
+            "type": "string",
+            "description": "The engine owner"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning engine"
+        },
+        "location": {
+            "type": "string",
+            "description": "The current location of the engine"
+        },
+        "destination": {
+            "type": "string",
+            "description": "the current destination of the engine"
+        },
+        "model": {
+            "type": "string",
+            "description": "The model of engine"
+        },
+        "consist": {
+            "type": "string",
+            "description": "The name of the consist the engine is in"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["id", "number", "road", "type", "length", "owner", "comment", "model", "consist"]
+}

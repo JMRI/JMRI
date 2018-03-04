@@ -22,15 +22,48 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
 
     /**
      * Get the service type(s) for services created by this factory respond to.
+     * These type must have valid schemas for messages received from a client
+     * and sent to a client.
      * <p>
      * Types should be single words, in camelCase if needed, unless supporting a
-     * plural noun exposed in the JSON 3.0 protocol.
+     * plural noun exposed in the JSON 3.0 or newer protocol.
      * <p>
      * If a service returns no types, it will never be used.
      *
      * @return An array of types this service responds to.
      */
-    public @Nonnull String[] getTypes();
+    @Nonnull
+    public String[] getTypes();
+
+    /**
+     * Get the message type(s) services created by this factory send, if not
+     * also listed in {@link #getTypes()}. These types must only have schemas
+     * for messages sent to a client.
+     * <p>
+     * Types should be single words, in camelCase if needed, unless supporting a
+     * plural noun exposed in the JSON 3.0 or newer protocol.
+     *
+     * @return An array of types this service sends, but does not respond to.
+     */
+    @Nonnull
+    public default String[] getSentTypes() {
+        return new String[0];
+    }
+
+    /**
+     * Get the message type(s) services created by this factory receive, if not
+     * also listed in {@link #getTypes()}. These types must only have schemas
+     * for messages received from a client.
+     * <p>
+     * Types should be single words, in camelCase if needed, unless supporting a
+     * plural noun exposed in the JSON 3.0 or newer protocol.
+     *
+     * @return An array of types this service sends, but does not respond to.
+     */
+    @Nonnull
+    public default String[] getReceivedTypes() {
+        return new String[0];
+    }
 
     /**
      * Create a JSON service for the given connection. This connection can be a
@@ -39,7 +72,8 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @param connection The connection for this service to respond to.
      * @return A service or null if the service does not support sockets.
      */
-    public @Nonnull S getSocketService(JsonConnection connection);
+    @Nonnull
+    public S getSocketService(JsonConnection connection);
 
     /**
      * Create a JSON HTTP service.
@@ -47,5 +81,6 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @param mapper The object mapper for the HTTP service to use.
      * @return A servlet or null if the service does not support HTTP.
      */
-    public @Nonnull H getHttpService(ObjectMapper mapper);
+    @Nonnull
+    public H getHttpService(ObjectMapper mapper);
 }

@@ -96,7 +96,7 @@ public class JsonServlet extends WebSocketServlet {
      * <ul>
      * <li>/json/sensor/IS22 (return data for sensor with system name
      * "IS22")</li>
-     * <li>/json/sensors (returns a list of all sensors known to JMRI)</li>
+     * <li>/json/sensor (returns a list of all sensors known to JMRI)</li>
      * </ul>
      * sample responses:
      * <ul>

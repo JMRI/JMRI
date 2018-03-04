@@ -1,6 +1,5 @@
 package jmri.server.json.route;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
@@ -16,11 +15,10 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,15 +27,11 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonRouteHttpServiceTest extends TestCase {
+public class JsonRouteHttpServiceTest {
 
     private final static Logger log = LoggerFactory.getLogger(JsonRouteHttpServiceTest.class);
 
-    public void testCtorSuccess() {
-        JsonRouteHttpService service = new JsonRouteHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
+    @Test
     public void testDoGetWithRouteSensor() throws JmriException {
         JsonRouteHttpService service = new JsonRouteHttpService(new ObjectMapper());
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
@@ -64,6 +58,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoGetWithoutRouteSensor() throws JmriException {
         JsonRouteHttpService service = new JsonRouteHttpService(new ObjectMapper());
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
@@ -87,6 +82,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPostWithRouteSensor() throws JmriException {
         log.debug("testDoPostWithRouteSensor");
         ObjectMapper mapper = new ObjectMapper();
@@ -169,6 +165,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPostWithoutRouteSensor() throws JmriException {
         ObjectMapper mapper = new ObjectMapper();
         JsonRouteHttpService service = new JsonRouteHttpService(mapper);
@@ -211,6 +208,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPut() {
         ObjectMapper mapper = new ObjectMapper();
         JsonRouteHttpService service = new JsonRouteHttpService(mapper);
@@ -230,6 +228,7 @@ public class JsonRouteHttpServiceTest extends TestCase {
         Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, exception.getCode());
     }
 
+    @Test
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -249,9 +248,10 @@ public class JsonRouteHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDelete() {
         try {
-            (new JsonRouteHttpService(new ObjectMapper())).doDelete(JsonRouteServiceFactory.ROUTE, null, Locale.ENGLISH);
+            (new JsonRouteHttpService(new ObjectMapper())).doDelete(JsonRouteServiceFactory.ROUTE, "", Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
@@ -259,39 +259,17 @@ public class JsonRouteHttpServiceTest extends TestCase {
         Assert.fail("Did not throw expected error.");
     }
 
-    // from here down is testing infrastructure
-    public JsonRouteHttpServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonRouteHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonRouteHttpServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRouteManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

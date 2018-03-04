@@ -9,12 +9,14 @@ import static jmri.server.json.JSON.THROWN;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.server.json.JSON;
@@ -109,5 +111,19 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case TURNOUT:
+            case TURNOUTS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/turnout/turnout-server.json",
+                        "jmri/server/json/turnout/turnout-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

@@ -80,4 +80,10 @@ public class JsonOperations {
      */
     public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
 
+    /**
+     * Prevent instantiation, since this class only contains static values
+     */
+    private JsonOperations() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
+    }
 }
