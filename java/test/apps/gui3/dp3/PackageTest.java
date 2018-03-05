@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
      DecoderPro3PanesTest.class,
      DecoderPro3WindowTest.class,
      PaneProgDp3ActionTest.class,
-     DecoderPro3PActionTest.class,
+     DecoderPro3ActionTest.class,
 })
 
 /**
