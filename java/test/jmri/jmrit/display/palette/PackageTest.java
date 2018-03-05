@@ -33,6 +33,7 @@ import org.junit.runners.Suite;
     IconDialogTest.class,
     IndicatorTOIconDialogTest.class,
     MultiSensorIconDialogTest.class,
+    DragJComponentTest.class,
 })
 public class PackageTest {
 }
