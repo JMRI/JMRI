@@ -227,7 +227,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         String id = null;
                         if (destinationList.get(j).getAttribute("uniqueid") != null) {  // NOI18N
                             id = destinationList.get(j).getAttribute("uniqueid").getValue();  // NOI18N
-                            if (id.length() > 3 && !id.startsWith("IN:")) {     // NOI18N
+                            if (!id.startsWith("IN:")) {     // NOI18N
                                 id = "IN:" + id;    // NOI18N
                             }
                         }
