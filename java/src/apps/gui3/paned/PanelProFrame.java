@@ -36,7 +36,7 @@ public class PanelProFrame extends MultiPaneWindow {
         DefaultMutableTreeNode top = JTreeUtil.loadTree(treeFile, rightTopWI, null);  // no context
 
         // as a test, we manually create a loconet tree
-        System.err.print("Manually attempting to create two LocoNet trees for testing purposes");
+        log.info("Manually attempting to create two LocoNet trees for testing purposes");
 
         LocoNetSystemConnectionMemo lm1 = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class).get(0);
         if (lm1 != null) {
