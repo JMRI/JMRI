@@ -23,9 +23,51 @@ public final class SprogConstants {
         SERVICE, OPS
     }
 
-    /* Maximum number of slots for soft command station */
-    public final static int MAX_SLOTS = 16;
+    /* The following parameters may be overridden by scripts if the user desires */
+    /**
+     * Maximum number of slots for soft command station 
+     * 
+     * More slots allows more throttles to be opened but the refresh rate for
+     * each throttle will reduce.
+     * 
+     * The code limits the value used to between 8 and 32 inclusive
+     *
+     */
+    public static int MAX_SLOTS = 16;
 
+    /**
+     * Threshold to warn of long delays between DCC packets to the rails.
+     * 
+     * Worst case DCC packet transmission time is ~10 ms, which equates to 100
+     * packets/s. Wait for a somewhat arbitrary time before reporting a possible
+     * issue with the system performance. A delay of 33 ms equates to 30 packets/s
+     * if sustained.
+     * 
+     * Slower systems such as Raspberry Pi with flash based file systems are
+     * more likely to exhibit longer delays between packets.
+     */
+    public static int PACKET_DELAY_WARN_THRESHOLD = 33;
+
+    /**
+     * Timeout for command station to wait for reply from hardware.
+     * 
+     * Slower systems such as Raspberry Pi with flash based file systems are more
+     * likely to exhibit longer delays.
+     */
+    public static int CS_REPLY_TIMEOUT = 2500;
+
+    /**
+     * Timeout for traffic controller to wait for reply from hardware.
+     * 
+     * Most replies are received from SPROG hardware with a few seconds, but
+     * paged mode programming operations can take considerably longer when
+     * reading a high value from a CV. Therefore we set a very long timeout,
+     * which should longer than the programmer timeout.
+     */
+    public static int TC_REPLY_TIMEOUT = 70*1000;
+
+    
+    /* The following should be altered only if you know what you are doing */
     /* How many times to repeat an accessory or function packet in the S queue */
     public final static int S_REPEATS = 1;
 
@@ -39,6 +81,12 @@ public final class SprogConstants {
     public final static int SLOT_FREE = 0;
     public final static int SLOT_IN_USE = 1;
 
+    /* Minimum number of slots */
+    public final static int MIN_SLOTS = 8;
+    
+    /* Maimum number of slots */
+    public final static int SLOTS_LIMIT = 32;
+    
     /* various bit masks */
     public final static int F8 = 0x100; /* Function 8 bit */
 

@@ -56,6 +56,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
 //            initIconFamiliesPanel();
             add(_iconFamilyPanel, 1);
+            hideIcons();
         }
     }
 
@@ -113,7 +114,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _iconFamilyPanel.add(_iconPanel);
         }
         _iconPanel.setVisible(false);
-        hideIcons();
     }
 
     @Override
@@ -168,7 +168,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             addUpdateButtonToBottom(doneAction);
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
-        updateBackgrounds(); // create array of backgrounds
         _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame));
         add(_bottom1Panel);
     }
@@ -197,7 +196,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             return;
         }
         _family = _mast.getSignalSystem().getSystemName();
-        _currentIconMap = new HashMap<String, NamedIcon>();
+        _currentIconMap = new HashMap<>();
         SignalAppearanceMap appMap = _mast.getAppearanceMap();
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
@@ -230,14 +229,35 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         return new NamedIcon(fileName, fileName);
     }
 
-    @Override
+/*    @Override
     protected void setEditor(Editor ed) {
-        _editor = ed;
+        super.setEditor(ed);
         if (_initialized) {
             makeDragIconPanel(0);
             makeDndIconPanel(_currentIconMap, ""); // empty key OK, this uses getDragIcon()
         }
+    }*/
+
+    @Override
+    protected void setFamily(String family) {
+        _family = family;
+        _iconPanel.removeAll(); // just clear contents
+        HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        if (map != null) {
+            _currentIconMap = map;
+        } else {
+            log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);                
+        }
+        if (!_suppressDragging) {
+            makeDragIconPanel(0);
+            makeDndIconPanel(_currentIconMap, ""); // empty key OK, this uses getDragIcon()
+        }
+        if (_currentIconMap != null) {
+            addIconsToPanel(_currentIconMap);
+        }
+        _iconFamilyPanel.revalidate(); // force redraw
     }
+
 
     /**
      * ListSelectionListener action.

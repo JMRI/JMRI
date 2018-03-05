@@ -45,4 +45,10 @@ public class JsonTestHttpService extends JsonHttpService {
         return array;
     }
 
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        // return an empty schema, which is valid, but accepts anything
+        return mapper.createObjectNode();
+    }
+
 }
