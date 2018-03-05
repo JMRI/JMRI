@@ -1493,7 +1493,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             if (!(_dccAddress.isEmpty())) {
                 w.write(newLine, 0, 1);
                 title = String.format("%-" + labelColumn + "s",
-                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldModel")))); // I18N DCC Address:
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDCCAddress")))); // I18N DCC Address:
                 String s = leftMargin + title + _dccAddress;
                 w.write(s, 0, s.length());
                 linesadded++;

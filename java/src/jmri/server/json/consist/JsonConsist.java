@@ -15,5 +15,11 @@ public class JsonConsist {
      * {@value #CONSISTS}
      */
     public static final String CONSISTS = "consists"; // NOI18N
+    /**
+     * Prevent instantiation, since this class only contains static values
+     */
+    private JsonConsist() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
+    }
 
 }

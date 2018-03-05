@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-block-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"block\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the block"
+        },
+        "userName": {
+            "type": "string",
+            "description": "If present, set the user name of the block"
+        },
+        "comment": {
+            "type": "string",
+            "description": "If present, set the comment for the block"
+        },
+        "value": {
+            "type": "string",
+            "description": "If present, sets the value of the block"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

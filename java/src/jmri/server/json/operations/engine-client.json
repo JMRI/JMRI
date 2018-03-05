@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-engine-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"engine\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Id of the engine being requested"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

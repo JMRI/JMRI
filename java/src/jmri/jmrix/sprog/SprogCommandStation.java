@@ -3,8 +3,13 @@ package jmri.jmrix.sprog;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
+import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +51,14 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016, 2018
  */
-public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
+public class SprogCommandStation implements CommandStation, SprogListener, Runnable,
+        java.beans.PropertyChangeListener {
 
     protected int currentSlot = 0;
     protected int currentSprogAddress = -1;
 
     protected LinkedList<SprogSlot> slots;
+    protected int numSlots = SprogConstants.MIN_SLOTS;
     protected Queue<SprogSlot> sendNow;
 
     private SprogTrafficController tc = null;
@@ -63,8 +70,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private boolean replyAvailable = false;
     private boolean sendSprogAddress = false;
     private long time, timeNow, packetDelay;
-    final static int MAX_PACKET_DELAY = 25;
     private int lastId;
+    
+    PowerManager powerMgr = null;
+    int powerState = PowerManager.OFF;
+    boolean powerChanged = false;
     
     public SprogCommandStation(SprogTrafficController controller) {
         sendNow = new LinkedList<>();
@@ -72,7 +82,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
          * Create a default length queue
          */
         slots = new LinkedList<>();
-        for (int i = 0; i < SprogConstants.MAX_SLOTS; i++) {
+        numSlots = SprogSlotMonDataModel.getSlotCount();
+        for (int i = 0; i < numSlots; i++) {
             slots.add(new SprogSlot(i));
         }
         tc = controller;
@@ -108,11 +119,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     protected void sendMessage(SprogMessage m) {
         // Limit to one message in flight from the command station
-        while (waitingForReply) {
+        if (waitingForReply) {
             try {
                 log.debug("Waiting for a reply");
                 synchronized (lock2) {
-                    lock2.wait(100); // Will wait until notify()ed or 100ms timeout
+                    lock2.wait(SprogConstants.CS_REPLY_TIMEOUT); // Will wait until notify()ed or timeout
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
@@ -121,7 +132,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return;
             }
             if (waitingForReply) {
+                // Should never get here
                 log.warn("Timeout Waiting for reply");
+                return;
             }
         }
         waitingForReply = true;
@@ -207,7 +220,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -219,7 +232,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -231,7 +244,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -243,7 +256,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 return s;
             }
         }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+        if (getInUseCount() < numSlots) {
             return findFree();
         }
         return (null);
@@ -402,14 +415,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * 
      */
     public void run() {
-        time = System.currentTimeMillis();
-        log.debug("Slot thread starts at time {}", time);
-        // Send a decoder idle packet to prompt a reply from hardware and set things running
-        sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+        log.debug("Command station slot thread starts");
         while(true) {
             try {
                 synchronized(lock) {
-                   lock.wait(1000);
+                    lock.wait(SprogConstants.CS_REPLY_TIMEOUT);
                 }
             } catch (InterruptedException e) {
                log.debug("Slot thread interrupted");
@@ -419,53 +429,78 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                // and exit
                return;
             }
-            log.debug("Slot thread wakes at time {}", System.currentTimeMillis());
+            log.debug("Slot thread wakes");
             
-            // If we need to change the SPROGs default address, do that immediately.
-            // Reply to that will 
-            if (sendSprogAddress) {
-                sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
-                replyAvailable = false;
-                sendSprogAddress = false;
-            } else if (replyAvailable) {
-                if (reply.isUnsolicited() && reply.isOverload()) {
-                    log.error("Overload");
-
-                    // *** turn power off
-                }
-
-                // Get next packet to send
-                byte[] p;
-                SprogSlot s = sendNow.poll();
-                if (s != null) {
-                    // New throttle action to be sent immediately
-                    p = s.getPayload();
-                    log.debug("Packet from immediate send queue");
+            if (powerMgr == null) {
+                // Wait until power manager is available
+                powerMgr = InstanceManager.getNullableDefault(jmri.PowerManager.class);
+                if (powerMgr == null) {
+                    log.info("No power manager instance found");
                 } else {
-                    // Or take the next one from the stack
-                    p = getNextPacket();
-                    if (p != null) {
-                        log.debug("Packet from stack");
-                    }
-                }
-                replyAvailable = false;
-                if (p != null) {
-                    // Send the packet
-                    sendPacket(p, SprogConstants.S_REPEATS);
-                    log.debug("Packet sent");
-                } else {
-                    // Send a decoder idle packet to prompt a reply from hardware and keep things running
-                    sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
-                }
-                timeNow = System.currentTimeMillis();
-                packetDelay = timeNow - time;
-                time = timeNow;
-                // Useful for debug if packets are being delayed; Set to trace level to be able to debug other stuff
-                if (packetDelay > MAX_PACKET_DELAY) {
-                    log.trace("Packet delay was {} ms time now {}", packetDelay, time);
+                    log.info("Registering with power manager");
+                    powerMgr.addPropertyChangeListener(this);
                 }
             } else {
-                log.warn("Slot thread wait timeout");
+                if (sendSprogAddress) {
+                    // If we need to change the SPROGs default address, do that immediately,
+                    // regardless of the power state.
+                    sendMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
+                    replyAvailable = false;
+                    sendSprogAddress = false;
+                } else if (powerChanged && (powerState == PowerManager.ON) && !waitingForReply) {
+                    // Power has been turned on so send an idle packet to start the
+                    // message/reply handshake
+                    sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+                    powerChanged = false;
+                    time = System.currentTimeMillis();
+                } else if (replyAvailable && (powerState == PowerManager.ON)) {
+                    // Received a reply whilst power is on, so send another packet
+                    // Get next packet to send if track power is on
+                    byte[] p;
+                    SprogSlot s = sendNow.poll();
+                    if (s != null) {
+                        // New throttle action to be sent immediately
+                        p = s.getPayload();
+                        log.debug("Packet from immediate send queue");
+                    } else {
+                        // Or take the next one from the stack
+                        p = getNextPacket();
+                        if (p != null) {
+                            log.debug("Packet from stack");
+                        }
+                    }
+                    replyAvailable = false;
+                    if (p != null) {
+                        // Send the packet
+                        sendPacket(p, SprogConstants.S_REPEATS);
+                        log.debug("Packet sent");
+                    } else {
+                        // Send a decoder idle packet to prompt a reply from hardware and keep things running
+                        sendPacket(jmri.NmraPacket.idlePacket(), SprogConstants.S_REPEATS);
+                    }
+                    timeNow = System.currentTimeMillis();
+                    packetDelay = timeNow - time;
+                    time = timeNow;
+                    // Useful for debug if packets are being delayed
+                    if (packetDelay > SprogConstants.PACKET_DELAY_WARN_THRESHOLD) {
+                        log.warn("Packet delay was {} ms", packetDelay);
+                    }
+                } else {
+                    if (powerState == PowerManager.ON) {
+
+                        // Should never get here. Something is wrong so turn power off
+                        // Kill reply wait so send doesn't block
+                        log.warn("Slot thread timeout - removing power");
+                        waitingForReply = false;
+                        try {
+                            powerMgr.setPower(PowerManager.OFF);
+                        } catch (JmriException ex) {
+                            log.error("Exception turning power off {}", ex);
+                        }
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
+                            Bundle.getMessage("SprogCSTitle"), JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         }
     }
@@ -483,7 +518,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         while (slots.get(currentSlot).isFree()) {
             currentSlot++;
-            currentSlot = currentSlot % SprogConstants.MAX_SLOTS;
+            currentSlot = currentSlot % numSlots;
         }
         s = slots.get(currentSlot);
         byte[] ret = s.getPayload();
@@ -492,7 +527,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         // next packet to send
         if (!s.isOpsPkt() || (s.getRepeat() == 0)) {
             currentSlot++;
-            currentSlot = currentSlot % SprogConstants.MAX_SLOTS;
+            currentSlot = currentSlot % numSlots;
         }
 
         if (s.isFinished()) {
@@ -523,7 +558,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     public void notifyReply(SprogReply m) {
         if (m.getId() != lastId) {
             // Not my id, so not interested, message send still locked
-            log.debug("Ignore reply with mismatched id");
+            log.debug("Ignore reply with mismatched id {} looking for {}", m.getId(), lastId);
             return;
         } else {
             // Unblock sending messages
@@ -534,10 +569,27 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             }
             log.debug("Reply received [{}]", m.toString());
             // Log the reply and wake the slot thread
-            replyAvailable = true;
             synchronized (lock) {
+                replyAvailable = true;
                 lock.notifyAll();
             }
+        }
+    }
+
+    /**
+     * implement a property change listener for power and throttle Set the GUI's
+     * to correspond to the throttle settings
+     */
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+        log.debug("propertyChange " + evt.getPropertyName() + " = " + evt.getNewValue());
+        if (evt.getPropertyName().equals("Power")) {
+            try {
+                powerState = powerMgr.getPower();
+            } catch (JmriException ex) {
+                log.error("Exception getting power state {}", ex);
+            }
+            powerChanged = true;
         }
     }
 
