@@ -6,6 +6,8 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.swing.JTreeUtil;
 import jmri.util.swing.multipane.MultiPaneWindow;
 import jmri.util.swing.multipane.PanedInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Standalone, but paned, PanelPro window. Note: This is test code!
@@ -53,4 +55,6 @@ public class PanelProFrame extends MultiPaneWindow {
 
         return top;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(PanelProFrame.class);
 }
