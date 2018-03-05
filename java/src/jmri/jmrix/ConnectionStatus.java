@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.util.HashMap;
 import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * {@link SystemConnectionMemo#getUserName}. 
  * Not clear whether {@link ConnectionConfig#getConnectionName} is correct.
  * It's not intended to
- * be the prefix from i.e. {@link PortAdapter.getSystemPrefix}.
+ * be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
  * Maybe the right thing is to pass in the SystemConnectionMemo?
  *
  * @author Daniel Boudreau Copyright (C) 2007
