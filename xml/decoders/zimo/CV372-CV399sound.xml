@@ -16,6 +16,7 @@
 <!-- version 1.1 - Mark Waters Jan 30 2015 -->
 <!-- Added CVs from Nigel Cliffe's 'CV372-CV399sound_v34.xml' file, using qualifiers to combine them into a single file -->
 <!-- version 1.2 - Ronald Kuhn - add german translation 06 Jun 2016 -->
+<!-- version 1.3 - Alain Carasso - CV396/397 were inverted 05 March 2018 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   
   
@@ -392,7 +393,7 @@
     <label xml:lang="de">Maximale Lautstärke</label>
     <label xml:lang="cs">Maximální hlasitost</label>
   </variable>
-  <variable item="Function Key to Decrease Volume"  CV="396"  default="0" tooltip="CV396">
+   <variable item="Function Key to Reduce Volume"  CV="396"  default="0" tooltip="CV396">
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
@@ -488,7 +489,7 @@
     <label xml:lang="de">Leiser Taste</label>
     <label xml:lang="cs">Funkční klávesa pro zvýšení hlasitosti</label>
   </variable>
-  <variable item="Function Key to Increase Volume"  CV="397"  default="0"  tooltip="CV397">
+   <variable item="Function Key to Increase Volume"  CV="397"  default="0"  tooltip="CV397">
      <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
