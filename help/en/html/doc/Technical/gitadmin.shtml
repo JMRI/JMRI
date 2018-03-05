@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <title>JMRI: GitHub Administration</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI Git Github">
+  <!--#include virtual="/Style" -->
+</head>
+<!--#include virtual="/Header" -->
+
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI Code: GitHub Administration</h1>
+
+      <h2>Background</h2>
+      
+      JMRI uses
+      <a href="https://github.com">GitHub</a>
+      to host our 
+      <a href="https://github.com/JMRI/JMRI">main code repository</a>, 
+      <a href="https://github.com/JMRI/JMRI/releases">releases and downloads</a>
+      and 
+      <a href="https://github.com/JMRI/JMRI/issues">issues lists</a>.
+      It also hosts 
+      <a href="https://github.com/JMRI">several related repositories</a>.
+      
+      <p>
+      The rest of this page records how we configure and use GitHub,
+      along with associated procedures.
+      
+      <p>
+      Related info on other pages:
+      <ul>
+        <li><a href="ContinuousIntegration.shtml">Continuous Integration</a>
+            - doesn't really talk about how GitHub is configured for this, now how the services
+                are configured
+        <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a>
+      </ul>
+      
+      <h2>Merging a PR</h2>
+      
+      Should we write a few words about things to do before/during 
+      merging a PR?  E.g.
+      when to set the milestone, whether to set the submitter as an assignee.
+      What to record when restarting after a CI error?
+      When to (unilaterally) set WIP?
+      How to handle reviews?  Etc.
+
+      <h2>How we use "Teams"<h2>
+      
+      What each team does
+      
+      Terms for adding people to developer status
+        Have to have a real name on their GitHub account?
+        Have to subscribe (and stay subscribed) to jmri-developers?
+        Have to have worked on something other than their own projects?
+      
+      <h2>Branches</h2>
+      
+      What do we keep as
+      <a href="https://github.com/JMRI/JMRI/branches">main repository branches</a>
+      (as opposed to in user repositories, which is not our problem)?
+      When do we clean them out?
+      
+    
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
