@@ -61,6 +61,9 @@ public class Pr2Throttle extends AbstractThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected int intSpeed(float fSpeed) {
         int speed = super.intSpeed(fSpeed);
@@ -181,6 +184,9 @@ public class Pr2Throttle extends AbstractThrottle {
         writeData();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendFunctionGroup3() {
         writeData();
@@ -224,41 +230,24 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     /**
-     * Release the loco from this throttle, then clean up the object.
+     * {@inheritDoc}
      */
-    @Override
-    public void release() {
-        dispose();
-    }
-
-    /**
-     * Dispatch the loco from this throttle, then clean up the object.
-     */
-    @Override
-    public void dispatch() {
-        dispose();
-    }
-
     @Override
     public String toString() {
         return getLocoAddress().toString();
     }
 
     /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
+     * {@inheritDoc}
      */
-    @Override
-    public void dispose() {
-        log.debug("dispose");
-        super.dispose();
-    }
-
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void throttleDispose() {
         finishRecord();

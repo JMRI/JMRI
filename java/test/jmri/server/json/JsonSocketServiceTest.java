@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonSocketServiceTest {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonSocketServiceTest.class);
-
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,5 +34,7 @@ public class JsonSocketServiceTest {
         instance.setLocale(Locale.ITALY);
         Assert.assertEquals("Default locale", Locale.ITALY, instance.getLocale());
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(JsonSocketServiceTest.class);
 
 }

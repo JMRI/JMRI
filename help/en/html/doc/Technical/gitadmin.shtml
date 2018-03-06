@@ -40,6 +40,9 @@
             - doesn't really talk about how GitHub is configured for this, now how the services
                 are configured
         <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a>
+        <li>The
+            <a href="https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md">release process</a>
+            works with GitHub repositories, Issues and releases.
       </ul>
       
       <h2>Merging a PR</h2>
@@ -51,7 +54,7 @@
       When to (unilaterally) set WIP?
       How to handle reviews?  Etc.
 
-      <h2>How we use "Teams"<h2>
+      <h2>How we use "Teams"</h2>
       
       What each team does
       
