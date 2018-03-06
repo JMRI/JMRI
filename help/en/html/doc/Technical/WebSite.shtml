@@ -248,6 +248,7 @@ LoadModule php5_module libexec/apache2/libphp5.so
 <pre>
 cd /Library/WebServer/Documents
 </pre>
+    <a name="locallink">
     <li>Set symbolic links to bring in content from the two repositories:
 <pre>
 ~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website

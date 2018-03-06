@@ -1,6 +1,8 @@
 package jmri.jmrix;
 
 import java.util.HashMap;
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Maintains a single instance, as there is only one set of connections for the
  * running program.
+ * <p>
+ * The "system name" referred to here is the human-readable name like "LocoNet 2"
+ * which can be obtained from i.e. 
+ * {@link SystemConnectionMemo#getUserName}. 
+ * Not clear whether {@link ConnectionConfig#getConnectionName} is correct.
+ * It's not intended to
+ * be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
+ * Maybe the right thing is to pass in the SystemConnectionMemo?
  *
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Paul Bender Copyright (C) 2016
@@ -45,7 +55,7 @@ public class ConnectionStatus {
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName the system name
+     * @param systemName human-readable name for system
      * @param portName   the port name
      */
     public synchronized void addConnection(String systemName, String portName) {
@@ -67,19 +77,19 @@ public class ConnectionStatus {
      * instead.
      */
     @Deprecated
-    public synchronized void setConnectionState(String portName, String state) {
+    public synchronized void setConnectionState(String portName, @Nonnull String state) {
         setConnectionState(null, portName, state);
     }
 
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName the system name
+     * @param systemName human-readable name for system
      * @param portName   the port name
      * @param state      one of ConnectionStatus.UP, ConnectionStatus.DOWN, or
      *                   ConnectionStatus.UNKNOWN.
      */
-    public synchronized void setConnectionState(String systemName, String portName, String state) {
+    public synchronized void setConnectionState(String systemName, String portName, @Nonnull String state) {
         log.debug("set {} connection status: {}", portName, state);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
@@ -99,7 +109,7 @@ public class ConnectionStatus {
      * {@link #getConnectionState(java.lang.String, java.lang.String)} instead.
      */
     @Deprecated
-    public synchronized String getConnectionState(String portName) {
+    public synchronized String getConnectionState(@Nonnull String portName) {
         ConnectionKey newKey = new ConnectionKey(null, portName);
         if (portStatus.containsKey(newKey)) {
             return getConnectionState(null, portName);
@@ -120,10 +130,10 @@ public class ConnectionStatus {
     /**
      * get the status of a communication port based on the system name.
      *
-     * @param systemName the system name
+     * @param systemName human-readable name for system
      * @return the status
      */
-    public synchronized String getSystemState(String systemName) {
+    public synchronized String getSystemState(@Nonnull String systemName) {
         ConnectionKey newKey = new ConnectionKey(systemName, null);
         if (portStatus.containsKey(newKey)) {
             return getConnectionState(systemName, null);
@@ -144,7 +154,7 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port.
      *
-     * @param systemName the system name
+     * @param systemName human-readable name for system
      * @param portName   the port name
      * @return the status
      */
@@ -167,14 +177,14 @@ public class ConnectionStatus {
      * {@link #isConnectionOk(java.lang.String, java.lang.String)} instead.
      */
     @Deprecated
-    public synchronized boolean isConnectionOk(String portName) {
+    public synchronized boolean isConnectionOk(@Nonnull String portName) {
         return isConnectionOk(null, portName);
     }
 
     /**
      * Get the status of a communication port.
      *
-     * @param systemName the system name
+     * @param systemName human-readable name for system
      * @param portName   the port name
      * @return true if port connection is operational or unknown, false if not
      */
@@ -186,10 +196,10 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port based on the system name.
      *
-     * @param systemName the system name
+     * @param systemName human-readable name for system
      * @return true if port connection is operational or unknown, false if not
      */
-    public synchronized boolean isSystemOk(String systemName) {
+    public synchronized boolean isSystemOk(@Nonnull String systemName) {
         ConnectionKey newKey = new ConnectionKey(systemName, null);
         if (portStatus.containsKey(newKey)) {
             return isConnectionOk(systemName, null);
@@ -213,7 +223,7 @@ public class ConnectionStatus {
         pcs.addPropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(String p, Object old, Object n) {
+    protected void firePropertyChange(@Nonnull String p, Object old, Object n) {
         log.debug("firePropertyChange {} old: {} new: {}", p, old, n);
         pcs.firePropertyChange(p, old, n);
     }
@@ -235,13 +245,13 @@ public class ConnectionStatus {
     static private class ConnectionKey {
 
         String portName = null;
-        String systemName = null;
+        String systemName = null;  // human-readable name for system
 
         /**
          * constructor
          *
-         * @param system String system name
-         * @param port   String port name
+         * @param system human-readable name for system
+         * @param port   port name
          * @throws IllegalArgumentException if both system and port are null;
          */
         public ConnectionKey(String system, String port) {
