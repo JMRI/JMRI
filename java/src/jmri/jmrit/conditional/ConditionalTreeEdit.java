@@ -323,7 +323,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _leftButtonBar.add(_labelPanel);
 
         // ------------ Add Button ------------
-        JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));    // NOI18N
+        JButton addButton = new JButton(Bundle.getMessage("AddButtonText"));    // NOI18N
         addButton.setToolTipText(Bundle.getMessage("HintAddButton"));       // NOI18N
         addButton.addActionListener(new ActionListener() {
             @Override

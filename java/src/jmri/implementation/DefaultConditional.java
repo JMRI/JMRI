@@ -49,15 +49,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the Conditional interface. This file is
  * part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
@@ -67,7 +66,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditional extends AbstractNamedBean
         implements Conditional {
 
-    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");  // NOI18N
+    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");  // NOI18N
 
     public DefaultConditional(String systemName, String userName) {
         super(systemName, userName);
@@ -148,10 +147,8 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public void setStateVariables(ArrayList<ConditionalVariable> arrayList) {
-        if (log.isDebugEnabled()) {
-            log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName()  // NOI18N
-                    + ") updated ConditionalVariable list.");  // NOI18N
-        }
+        log.debug("Conditional \"{}\" ({}) updated ConditionalVariable list.",
+                getUserName(), getSystemName());  // NOI18N
         _variableList = arrayList;
     }
 

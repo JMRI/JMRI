@@ -368,8 +368,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
     @Override
     void showSaveReminder() {
         /*if (_showReminder && !_suppressReminder) {
-         javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
-         .getString("Reminder1"),
+         javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+         Bundle.getMessage("Reminder1"),
          Bundle.getMessage("ReminderTitle"),
          javax.swing.JOptionPane.INFORMATION_MESSAGE);
          }*/

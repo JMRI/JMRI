@@ -801,9 +801,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_TURNOUT_CLOSED:
                 return Bundle.getMessage("TurnoutStateClosed"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_TRUE:
-                return rbx.getString("True"); // NOI18N
+                return Bundle.getMessage("True"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_FALSE:
-                return rbx.getString("False"); // NOI18N
+                return Bundle.getMessage("False"); // NOI18N
             case Conditional.TYPE_LIGHT_ON:
                 return rbx.getString("LightOn"); // NOI18N
             case Conditional.TYPE_LIGHT_OFF:

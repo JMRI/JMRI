@@ -24,11 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ConditionalAction.java
- *
  * The consequent of the antecedent of the conditional proposition. The data for
  * the action to be taken when a Conditional calculates to True
- * <P>
+ * <p>
  * This is in the implementations package because of a Swing dependence via the
  * times. Java 1.5 or Java 1.6 might make it possible to break that, which will
  * simplify things.
@@ -51,7 +49,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     private boolean _indirectAction = false;
     private Sound _sound = null;
 
-    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     public DefaultConditionalAction() {
@@ -127,7 +125,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * If this is an indirect reference return the Memory bean
+     * If this is an indirect reference, return the Memory bean.
      *
      */
     private Memory getIndirectBean(String devName) {
@@ -138,7 +136,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 _indirectAction = true;
                 return m;
             }
-            log.error("\"" + devName + "\" invalid indirect memory name in action " + _actionString + " of type " + _type);
+            log.error("\"{}\" invalid indirect memory name in action {} of type {}", devName, _actionString, _type);
         } else {
             _indirectAction = false;
         }
@@ -146,7 +144,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Return the device bean that will do the action
+     * Return the device bean that will do the action.
      *
      */
     private NamedBean getActionBean(String devName) {
@@ -158,7 +156,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.sensorManagerInstance().provideSensor(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid sensor name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid sensor name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_TURNOUT:
@@ -166,7 +164,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.turnoutManagerInstance().provideTurnout(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid turnout name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid turnout name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_MEMORY:
@@ -174,7 +172,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.memoryManagerInstance().provideMemory(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid memory name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid memory name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_LIGHT:
@@ -182,7 +180,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.lightManagerInstance().getLight(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid light name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid light name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALMAST:
@@ -190,7 +188,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid signal mast name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid signal mast name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_SIGNALHEAD:
@@ -198,7 +196,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid signal head name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid signal head name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_WARRANT:
@@ -206,7 +204,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid Warrant name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid Warrant name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_OBLOCK:
@@ -214,7 +212,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid OBlock name= \"" + _deviceName + "\" in conditional action");
+                        log.error("invalid OBlock name= \"{}\" in conditional action", devName);
                     }
                     break;
                 case Conditional.ITEM_TYPE_ENTRYEXIT:
@@ -222,7 +220,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
-                        log.error("invalid NX name= \"" + devName + "\" in conditional action");
+                        log.error("invalid NX name= \"{}\" in conditional action", devName);
                     }
                     break;
                 default:
@@ -231,18 +229,18 @@ public class DefaultConditionalAction implements ConditionalAction {
                             bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
                         } catch (IllegalArgumentException e) {
                             bean = null;
-                            log.error("invalid Route name= \"" + _deviceName + "\" in conditional action");
+                            log.error("invalid Route name= \"{}\" in conditional action", devName);
                         }
                     }
             }
         } catch (java.lang.NumberFormatException ex) {
-            //Can be considered normal if the logixs are loaded prior to any other beans
+            // ingonred, can be considered normal if the logixs are loaded prior to any other beans
         }
         return bean;
     }
 
     /**
-     * The consequent device or element type
+     * The consequent device or element type.
      */
     @Override
     public int getType() {
@@ -255,7 +253,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Sets type from user's name for it
+     * Set type from user name for it.
      */
     @Override
     public void setType(String type) {
@@ -263,7 +261,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Name of the device or element that is effected
+     * Name of the device or element that is affected.
      */
     @Override
     public String getDeviceName() {
@@ -319,7 +317,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Options on when action is taken
+     * Options on when action is taken.
      */
     @Override
     public int getOption() {
@@ -332,7 +330,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Integer data for action
+     * Integer data for action.
      */
     @Override
     public int getActionData() {
@@ -345,7 +343,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Sets action data from user's name for it
+     * Set action data from user's name for it.
      */
     @Override
     public void setActionData(String actionData) {
@@ -353,7 +351,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * String data for action
+     * String data for action.
      */
     @Override
     public String getActionString() {
@@ -369,7 +367,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * get timer for delays and other timed events
+     * Get timer for delays and other timed events.
      */
     @Override
     public Timer getTimer() {
@@ -377,7 +375,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * set timer for delays and other timed events
+     * Set timer for delays and other timed events.
      */
     @Override
     public void setTimer(Timer timer) {
@@ -395,7 +393,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             _timer.start();
             _timerActive = true;
         } else {
-            log.error("timer is null for " + _deviceName + " of type " + getTypeString());
+            log.error("timer is null for {] of type {}", _deviceName, getTypeString());
         }
     }
 
@@ -408,7 +406,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * set listener for delays and other timed events
+     * Set listener for delays and other timed events.
      */
     @Override
     public ActionListener getListener() {
@@ -424,7 +422,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * get Sound file
+     * Get Sound file.
      */
     @Override
     public Sound getSound() {
@@ -440,11 +438,12 @@ public class DefaultConditionalAction implements ConditionalAction {
         _sound = sound;
     }
 
-    /**
+    /*
      * ** Methods that return user interface strings ****
      */
+
     /**
-     * return String name of this consequent type
+     * @return name of this consequent type
      */
     @Override
     public String getTypeString() {
@@ -452,7 +451,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * return String name of the option for this consequent type
+     * @return name of the option for this consequent type
      */
     @Override
     public String getOptionString(boolean type) {
@@ -465,9 +464,9 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Convert Variable Type to Text String
+     * Convert Variable Type to Text String.
      *
-     * @param t the type
+     * @param t the Action type
      * @return a human readable description of the type or an empty String
      */
     public static String getItemTypeString(int t) {
@@ -510,7 +509,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     /**
      * Convert Consequent Type to Text String.
      *
-     * @param t the type
+     * @param t the Action type
      * @return a human readable description of the type or an empty String
      */
     public static String getActionTypeString(int t) {
@@ -625,7 +624,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 // fall through
                 break;
         }
-        log.warn("Unexpected parameter to getActionTypeString(" + t + ")");
+        log.warn("Unexpected parameter to getActionTypeString({})", t);
         return ("");
     }
 
@@ -660,7 +659,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 // fall through
                 break;
         }
-        log.warn("Unexpected parameter to getOptionString(" + opt + ")");
+        log.warn("Unexpected parameter to getOptionString({})", opt);
         return "";
     }
 
@@ -678,7 +677,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 }
             }
         }
-        log.warn("Unexpected parameter to stringToActionType(" + str + ")");
+        log.warn("Unexpected parameter to stringToActionType({})", str);
         return 0;
     }
 
@@ -746,7 +745,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
         // empty strings can occur frequently with types that have no integer data
         if (str.length() > 0) {
-            log.warn("Unexpected parameter to stringToActionData(" + str + ")");
+            log.warn("Unexpected parameter to stringToActionData({})", str);
         }
         return -1;
     }
@@ -967,4 +966,5 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalAction.class);
+
 }
