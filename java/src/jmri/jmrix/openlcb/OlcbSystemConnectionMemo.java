@@ -87,7 +87,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

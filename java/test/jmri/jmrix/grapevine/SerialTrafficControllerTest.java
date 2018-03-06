@@ -66,7 +66,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 1, going to state 1");
+        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 1. going to state 1");
         Assert.assertEquals("not invoked", false, invoked);
     }
 
@@ -97,7 +97,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129,32");
+        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129, 32");
         Assert.assertEquals("not invoked", false, invoked);
     }
 
@@ -243,7 +243,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         c.doNextStep(new SerialReply(), i);
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 129, going to state 1");
+        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 129. going to state 1");
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte) 129, testBuffer[0]);
         Assert.assertEquals("byte 1", (byte) 90, testBuffer[1]);
@@ -263,7 +263,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         c.doNextStep(new SerialReply(), i);
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 25, going to state 2 with content 129,90");
+        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 25, going to state 2 with content 129, 90");
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte) 129, testBuffer[0]);
         Assert.assertEquals("byte 1", (byte) 90, testBuffer[1]);

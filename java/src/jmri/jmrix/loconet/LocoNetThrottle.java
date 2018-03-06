@@ -296,6 +296,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @Override
     public void setSpeedSettingAgain(float speed) {
         setSpeedSetting(speed, true, true);
     }
@@ -313,6 +314,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      *
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         log.debug("setSpeedSetting: called with speed {} for LocoNet slot {}", speed, slot.getSlot());
         if (LnConstants.CONSIST_MID == slot.consistStatus()

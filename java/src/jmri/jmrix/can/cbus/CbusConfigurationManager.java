@@ -51,13 +51,13 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 getThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        jmri.InstanceManager.setCommandStation(getCommandStation());
+        jmri.InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
 
         jmri.InstanceManager.setReporterManager(getReporterManager());
 

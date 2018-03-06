@@ -22,17 +22,11 @@ import org.junit.Test;
 public class JsonSignalHeadHttpServiceTest {
 
     @Test
-    public void testCtorSuccess() {
-        JsonSignalHeadHttpService service = new JsonSignalHeadHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     public void testDoGet() throws JmriException {
-        
+
         //create a signalhead for testing
         String sysName = "IH1";
-        String userName = "SH1";        
+        String userName = "SH1";
         SignalHead s = new jmri.implementation.VirtualSignalHead(sysName, userName);
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         Assert.assertNotNull(s);
@@ -42,15 +36,15 @@ public class JsonSignalHeadHttpServiceTest {
         try {
             //retrieve by systemname
             result = service.doGet(JsonSignalHead.SIGNAL_HEAD, sysName, Locale.ENGLISH);
-            Assert.assertNotNull(result); 
+            Assert.assertNotNull(result);
             Assert.assertEquals(JsonSignalHead.SIGNAL_HEAD, result.path(JSON.TYPE).asText());
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
             //retrieve by username, should get systemname back
             result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, Locale.ENGLISH);
-            Assert.assertNotNull(result); 
+            Assert.assertNotNull(result);
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
-            
+
             //verify initial aspect/state is Dark
             Assert.assertEquals(SignalHead.DARK, result.path(JSON.DATA).path(JSON.STATE).asInt());
             //change to Green, then verify change
@@ -74,7 +68,7 @@ public class JsonSignalHeadHttpServiceTest {
     public void testDoPost() throws JmriException {
         //create a signalhead for testing
         String sysName = "IH1";
-        String userName = "SH1";        
+        String userName = "SH1";
         SignalHead s = new jmri.implementation.VirtualSignalHead(sysName, userName);
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         Assert.assertNotNull(s);
@@ -84,7 +78,7 @@ public class JsonSignalHeadHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonSignalHeadHttpService service = new JsonSignalHeadHttpService(new ObjectMapper());
         Assert.assertNotNull(service);
-       
+
         try {
             //set signalhead to Green and verify change
             message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.GREEN);
@@ -96,7 +90,7 @@ public class JsonSignalHeadHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
 
-        // try to set to FLASHLUNAR, which should not be allowed for this signalHead, 
+        // try to set to FLASHLUNAR, which should not be allowed for this signalHead,
         //  so check for error, and verify state does not change
         JsonException exception = null;
         result = null;
@@ -111,7 +105,7 @@ public class JsonSignalHeadHttpServiceTest {
         Assert.assertEquals(SignalHead.GREEN, s.getState());
 
         Assert.assertEquals(false, s.getHeld());
-        // set signalmast to Held, then verify 
+        // set signalmast to Held, then verify
         try {
             message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.HELD);
             result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, Locale.ENGLISH);
@@ -121,7 +115,7 @@ public class JsonSignalHeadHttpServiceTest {
         }
 
         Assert.assertEquals(true, s.getHeld());
-        // set signalmast to something other than Held, then verify Held is released 
+        // set signalmast to something other than Held, then verify Held is released
         try {
             message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.RED);
             result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, Locale.ENGLISH);
@@ -130,7 +124,7 @@ public class JsonSignalHeadHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
     }
-   
+
     @Test
     public void testDoGetList() {
         try {
@@ -149,7 +143,7 @@ public class JsonSignalHeadHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 
@@ -15,9 +16,9 @@ import jmri.ThrottleManager;
  * is needed since multiple JsonThrottle objects may be controlling the same
  * {@link jmri.DccLocoAddress}.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonThrottleManager {
+public class JsonThrottleManager implements InstanceManagerAutoDefault {
 
     private final HashMap<DccLocoAddress, JsonThrottle> throttles = new HashMap<>();
     private final HashMap<JsonThrottle, ArrayList<JsonThrottleSocketService>> services = new HashMap<>();
@@ -27,10 +28,14 @@ public class JsonThrottleManager {
         // do nothing
     }
 
+    /**
+     *
+     * @return the default JsonThrottleManager
+     * @deprecated since 4.11.4; use
+     * {@link InstanceManager#getDefault(java.lang.Class)} directly
+     */
+    @Deprecated
     public static JsonThrottleManager getDefault() {
-        if (InstanceManager.getNullableDefault(JsonThrottleManager.class) == null) {
-            InstanceManager.setDefault(JsonThrottleManager.class, new JsonThrottleManager());
-        }
         return InstanceManager.getDefault(JsonThrottleManager.class);
     }
 
@@ -75,7 +80,7 @@ public class JsonThrottleManager {
     public ObjectMapper getObjectMapper() {
         return this.mapper;
     }
-    
+
     public boolean canBeLongAddress(int asInt) {
         return InstanceManager.getDefault(ThrottleManager.class).canBeLongAddress(asInt);
     }

@@ -309,6 +309,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void initButtonActionPerformed() {
         // Find Serial Node address
         int nodeAddress = readNodeAddress();
+        log.debug("node read {}", nodeAddress);
         if (nodeAddress < 0) {
             return;
         }
@@ -321,7 +322,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             resetNotes2();
             return;
         }
-        // ok, do thie init
+        // ok, do the init
+        log.debug("init packet sent to node {}", nodeAddress);
         memo.getTrafficController().sendSerialMessage((SerialMessage) curNode.createInitPacket(), null);
     }
 
@@ -451,7 +453,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Do the done action if the window is closed early.
+     * Do the Done action if the window is closed early.
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -459,8 +461,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to set node parameters The node must exist, and be in 'curNode'
-     * Also, the node type must be set and in 'nodeType'
+     * Set node parameters. The node must exist, and be in 'curNode'.
+     * Also, the node type must be set and in 'nodeType'.
      */
     void setNodeParameters() {
         // set curNode type
@@ -501,28 +503,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Read node address and check for legal range.
      *
-     * @return if successful, a node address in the range 0-255.
-     * If not successful, return -1 and an
-     * appropriate error message is placed in statusText1.
+     * @return a node address in the range 0-127.
+     * Valid range guarded by SpinnerNumberModel.
      */
     private int readNodeAddress() {
         int addr = -1;
-//        try {
         addr = (Integer) nodeAddrSpinner.getValue();
-//        } catch (Exception e) {
-//            statusText1.setText(Bundle.getMessage("Error5"));
-//            statusText1.setVisible(true);
-//            errorInStatus1 = true;
-//            resetNotes2();
-//            return -1;
-//        }
-//        if ((addr < 0) || (addr > 255)) {
-//            statusText1.setText(Bundle.getMessage("Error6"));
-//            statusText1.setVisible(true);
-//            errorInStatus1 = true;
-//            resetNotes2();
-//            return -1;
-//        }
         return (addr);
     }
 

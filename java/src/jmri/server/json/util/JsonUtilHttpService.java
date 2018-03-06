@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.Container;
 import java.awt.Frame;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -47,7 +48,7 @@ import jmri.web.server.WebServerPreferences;
 
 /**
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2016, 2017, 2018
  */
 public class JsonUtilHttpService extends JsonHttpService {
 
@@ -410,4 +411,49 @@ public class JsonUtilHttpService extends JsonHttpService {
         return new DccLocoAddress(number, isLong);
     }
 
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        try {
+            switch (type) {
+                case JSON.NETWORK_SERVICE:
+                case JSON.NETWORK_SERVICES:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/networkService-server.json",
+                            "jmri/server/json/util/networkService-client.json");
+                case JsonException.ERROR:
+                case JSON.PONG:
+                    if (server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/" + type + "-server.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAClientType", type));
+                    }
+                case JSON.LOCALE:
+                case JSON.PING:
+                    if (!server) {
+                        return doSchema(type, server,
+                                this.mapper.readTree(this.getClass().getClassLoader().getResource("jmri/server/json/util/" + type + "-client.json")));
+                    } else {
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "NotAServerType", type));
+                    }
+                case JSON.GOODBYE:
+                case JSON.HELLO:
+                case JSON.METADATA:
+                case JSON.NODE:
+                case JSON.PANELS:
+                case JSON.RAILROAD:
+                case JSON.SYSTEM_CONNECTIONS:
+                case JSON.CONFIG_PROFILES:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/" + type + "-server.json",
+                            "jmri/server/json/util/" + type + "-client.json");
+                default:
+                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+            }
+        } catch (IOException ex) {
+            throw new JsonException(500, ex);
+        }
+    }
 }

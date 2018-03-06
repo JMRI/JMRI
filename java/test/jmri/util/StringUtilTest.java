@@ -165,12 +165,6 @@ public class StringUtilTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, b[7] & 0xFF);
     }
 
-    public void testJoinA1() {
-        String input[] = new String[]{"A", "B", "C"};
-        String results = StringUtil.join(input, ".");
-        Assert.assertEquals("output", "A.B.C", results);
-    }
-
     public void testSort1() {
         String input[] = new String[]{"A", "B", "C"};
         String output[] = new String[]{"A", "B", "C"};

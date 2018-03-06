@@ -160,7 +160,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
 
         // register new one with InstanceManager
         AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
-        InstanceManager.setSignalHeadManager(pManager);
+        InstanceManager.setDefault(SignalHeadManager.class, pManager);
         // register new one for configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {

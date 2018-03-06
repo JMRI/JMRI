@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-train-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"train\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of train"
+        },
+        "icon_name": {
+            "type": "string",
+            "description": "Name of icon for train in panels"
+        },
+        "id": {
+            "type": "string",
+            "description": "Id for train"
+        },
+        "departureTime": {
+            "type": "string",
+            "description": "Formatted departure time"
+        },
+        "description": {
+            "type": "string",
+            "description": "Freeform description of train"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning train"
+        },
+        "status": {
+            "type": "string",
+            "description": "Human readable train status"
+        },
+        "statusCode": {
+            "type": "int",
+            "description": "Machine readable train status"
+        },
+        "length": {
+            "type": "int",
+            "description": "Current train length"
+        },
+        "weight": {
+            "type": "int",
+            "description": "Current train weight"
+        },
+        "caboose": {
+            "type": "string",
+            "description": "Caboose's road and number"
+        }
+    },
+    "additionalProperties": true,
+    "required": ["name", "id"]
+}

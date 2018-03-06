@@ -270,6 +270,7 @@
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
         <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
@@ -338,6 +339,7 @@
         <exclude name="jmri/util/swing/SamplePane.class" />
         <exclude name="apps/tests/Log4JFixture.class" />
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
+        <exclude name="jmri/util/web/BrowserFactory.class" />
     </fileset>
 
 
@@ -482,8 +484,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png"/>
-            <fileset dir="${source}" includes="META-INF/**"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json"/>
         </copy>
     </target>
 

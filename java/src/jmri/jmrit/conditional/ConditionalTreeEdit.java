@@ -3673,6 +3673,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _actionNameField.setText(_curAction.getBean().getUserName());
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_ENTRYEXIT_ACTION, actionType) + 1);
                 break;
@@ -4797,6 +4798,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
     }
 
+    @Override
     protected String getClassName() {
         return ConditionalTreeEdit.class.getName();
     }

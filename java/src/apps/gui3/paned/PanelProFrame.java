@@ -6,6 +6,8 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.swing.JTreeUtil;
 import jmri.util.swing.multipane.MultiPaneWindow;
 import jmri.util.swing.multipane.PanedInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Standalone, but paned, PanelPro window. Note: This is test code!
@@ -36,7 +38,7 @@ public class PanelProFrame extends MultiPaneWindow {
         DefaultMutableTreeNode top = JTreeUtil.loadTree(treeFile, rightTopWI, null);  // no context
 
         // as a test, we manually create a loconet tree
-        System.err.print("Manually attempting to create two LocoNet trees for testing purposes");
+        log.info("Manually attempting to create two LocoNet trees for testing purposes");
 
         LocoNetSystemConnectionMemo lm1 = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class).get(0);
         if (lm1 != null) {
@@ -53,4 +55,6 @@ public class PanelProFrame extends MultiPaneWindow {
 
         return top;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(PanelProFrame.class);
 }
