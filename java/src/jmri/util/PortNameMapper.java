@@ -94,7 +94,7 @@ public class PortNameMapper {
                                 name = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "FriendlyName");
                             }
                             catch (Win32Exception | NullPointerException e) {
-                                    log.debug("'FriendlyName' not found while querying 'HKLM.{}`.  JMRI cannot use the device, so will skip it.", pathKey );
+                                    log.warn("'FriendlyName' not found while querying 'HKLM.{}`.  JMRI cannot use the device, so will skip it.", pathKey );
                                     };
                             try {
                                 String pathKey2 = path + regEntry + "\\" + subRegEntries[0] + "\\Device Parameters";
