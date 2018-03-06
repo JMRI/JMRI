@@ -254,9 +254,11 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         if (table.getRowSorter() == null) {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
-            // only sort on columns that are String or Integer
+            // only sort on columns that are String, Integer or Boolean (check boxes)
             for (int i = 0; i < table.getColumnCount(); i++) {
-                if (table.getColumnClass(i) == String.class || table.getColumnClass(i) == Integer.class) {
+                if (table.getColumnClass(i) == String.class ||
+                        table.getColumnClass(i) == Integer.class ||
+                        table.getColumnClass(i) == Boolean.class) {
                     continue; // allow sorting
                 }
                 sorter.setSortable(i, false);
