@@ -150,8 +150,7 @@
       operation. If you would prefer to have your engine sounds
       start immediately when you advance the throttle, without
       first pressing "Engine Start", there is a setting in the
-      VSDecoder Preferences to change this. (This feature is
-      currently not active ...)<br>
+      VSDecoder Preferences to change this.<br>
       <hr>
 
       <h3>Options Dialog</h3>
@@ -235,23 +234,31 @@
         Roster entry</li>
       </ul>To store the current VSDecoder profile setting to a
       Roster Entry, select the Roster Entry and click the "Save"
-      button.<br>
-
+      button.
       <hr>
-      <h2>Bugs and other notes</h2>A few notes on limitations
-      (bugs, mostly):
+
+      <h2>Bugs and other notes</h2>
+      <hr>
+      A few notes on limitations and bug reporting:
 
       <ul>
-        <li>All of the sounds are still "rough". Expect odd
-        transitions between speed settings, strange effects when
-        you press buttons rapidly (and sometimes not), and so
-        on.</li>
+        <li>Some of the sounds are still "rough". Expect odd
+          transitions between speed settings, strange effects when
+          you press buttons rapidly (and sometimes not), and so on.
+        </li>
 
-        <li>Not all of the sound buttons are functional.</li>
+        <li>
+          Not all of the sound buttons in example.vsd are functional.
+        </li>
 
-        <li>Many other things are buggy or broken. Please log a bug
-        report if something appears truly broken.</li>
+        <li>Please post a bug report on the
+          <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
+          JMRIUsers Yahoo! Group</a> or open an issue
+          <a href="https://github.com/JMRI/JMRI/issues">on github</a>
+          if something appears truly broken.
+        </li>
       </ul>
+
       <hr>
       <a id="prefs" name="prefs">(This is the
       jmri.jmrit.vsdecoder.swing.VSDManagerFrame help page) 
