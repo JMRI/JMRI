@@ -120,7 +120,6 @@ public class DefaultConditionalAction implements ConditionalAction {
         if (_deviceName != null) {
             hash += _deviceName.hashCode();
         }
-
         return hash;
     }
 
@@ -343,7 +342,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Set action data from user's name for it.
+     * Set action data from user name for it.
      */
     @Override
     public void setActionData(String actionData) {
@@ -507,7 +506,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /**
-     * Convert Consequent Type to Text String.
+     * Convert Consequent Type to text String.
      *
      * @param t the Action type
      * @return a human readable description of the type or an empty String
