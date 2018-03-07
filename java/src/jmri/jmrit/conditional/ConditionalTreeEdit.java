@@ -880,7 +880,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case "Antecedent":      // NOI18N
-                antecedentChanged(_antecedent, _antecedentLocalized); //_editAntecedent.getText().trim()); // non-localized + localized forms
+                antecedentChanged(_antecedent); //_editAntecedent.getText().trim()); // non-localized + localized forms
                 break;
 
             case "LogicType":       // NOI18N
@@ -1025,10 +1025,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      *
      * @param newAntecedent the new, non-localized antecedent
      */
-    void antecedentChanged(String newAntecedent, String newAntecedentLocalized) {
+    void antecedentChanged(String newAntecedent) {
         _antecedent = newAntecedent;
         // build localized display string from _antecedent EBR TODO
-        _antecedentLocalized = newAntecedentLocalized;
+        //_antecedentLocalized = newAntecedentLocalized;
         if (validateAntecedent()) {
             _curConditional.setLogicType(_logicType, _antecedent); // non-localized string to store Conditional Antecedent
             _curNode.setText(buildNodeText("Antecedent", _curConditional, 0));  // TODO translate to non-localized? EBR
@@ -1040,50 +1040,50 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Build the localized and universal antecedent statement.
      */
     void makeAntecedent() {
-        String str = "";
-        String strI18N = "";
+        String stri18n = "";
+        String strUni = "";
         if (_variableList.size() > 0) {
             String not = Bundle.getMessage("LogicNOT").toLowerCase();   // NOI18N
             String notI18N = "not"; // NOI18N
-            String row = "R"; // NOI18N
-            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
-            String andI18N = " " + "and" + " ";  // NOI18N
-            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";    // NOI18N
-            String orI18N = " " + "_or" + " ";    // lenth must be identical to "and" and "not" NOI18N
+            String row = "R";       // NOI18N
+            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " "; // NOI18N
+            String andI18N = " and ";                                             // NOI18N
+            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
+            String orI18N = " or ";                                               // NOI18N
             if (_variableList.get(0).isNegated()) {
-                str = not + " ";
-                strI18N = notI18N + " ";
+                stri18n = not + " ";
+                strUni = notI18N + " ";
             }
-            str = str + row + "1";
-            strI18N = strI18N + row + "1";
+            stri18n = stri18n + row + "1";
+            strUni = strUni + row + "1";
             for (int i = 1; i < _variableList.size(); i++) {
                 ConditionalVariable variable = _variableList.get(i);
                 switch (variable.getOpern()) {
                     case Conditional.OPERATOR_AND:
-                        str = str + and;
-                        strI18N = strI18N + andI18N;
+                        stri18n = stri18n + and;
+                        strUni = strUni + andI18N;
                         break;
                     case Conditional.OPERATOR_OR:
-                        str = str + or;
-                        strI18N = strI18N + orI18N;
+                        stri18n = stri18n + or;
+                        strUni = strUni + orI18N;
                         break;
                     default:
                         break;
                 }
                 if (variable.isNegated()) {
-                    str = str + not + " ";
-                    strI18N = strI18N + notI18N + " ";
+                    stri18n = stri18n + not + " ";
+                    strUni = strUni + notI18N + " ";
                 }
-                str = str + row + (i + 1);
-                strI18N = strI18N + row + (i + 1);
+                stri18n = stri18n + row + (i + 1);
+                strUni = strUni + row + (i + 1);
                 if (i > 0 && i + 1 < _variableList.size()) {
-                    str = "(" + str + ")";
-                    strI18N = "(" + strI18N + ")";
+                    stri18n = "(" + stri18n + ")";
+                    strUni = "(" + strUni + ")";
                 }
             }
         }
-        _antecedentLocalized = str;
-        _antecedent = strI18N;
+        _antecedentLocalized = stri18n;
+        _antecedent = strUni;
     }
 
     /**
@@ -1096,10 +1096,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
                 _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
-                _antecedent = _antecedent + " " + "_or" + " ";   // NOI18N
+                _antecedent = _antecedent + " or ";   // NOI18N
             } else {
                 _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
-                _antecedent = _antecedent + " " + "and" + " ";  // NOI18N
+                _antecedent = _antecedent + " and ";  // NOI18N
             }
         }
         _antecedentLocalized = _antecedentLocalized + "R" + _variableList.size(); // localized, NOI18N
@@ -1276,7 +1276,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
                 // Update the antecedent
                 _curNode = (ConditionalTreeNode) parentNode.getPreviousSibling();
-                antecedentChanged("", "");
+                antecedentChanged("");
 
                 // Update the variable children
                 parentNode.removeAllChildren();
@@ -1853,7 +1853,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "LogicType":  // NOI18N
                 cdl = (Conditional) component;
                 int logicType = cdl.getLogicType();
-                String logicName;
+                String logicName; // used for display only
                 switch (logicType) {
                     case Conditional.ALL_AND:
                         logicName = Bundle.getMessage("LogicAND");      // NOI18N
@@ -1896,7 +1896,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "Variable":  // NOI18N
                 var = (ConditionalVariable) component;
 
-                String rowNum = "R" + (idx + 1) + (idx > 9 ? " " : "  ");
+                String rowNum = "R" + (idx + 1) + (idx > 9 ? " " : "  "); // NOI18N
                 String rowOper = var.getOpernString() + " ";
 
                 String rowNot = "";
@@ -3101,8 +3101,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                String str = (String) _variableStateBox.getSelectedItem();
-                _curVariable.setDataString(OBlock.getSystemStatusName(str));
+                String stri18n = (String) _variableStateBox.getSelectedItem();
+                _curVariable.setDataString(OBlock.getSystemStatusName(stri18n));
                 log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
                         name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
                 break;

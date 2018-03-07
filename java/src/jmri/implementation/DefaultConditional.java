@@ -444,9 +444,9 @@ public class DefaultConditional extends AbstractNamedBean
                 i++;
                 argsUsed.set(k - 1);
             } else if (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length()))) ||
-                    ("not").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
-                if (("not").equals(s.substring(i, i + 3))) {
-                    i += 8;
+                    ("NOT").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
+                if (("NOT").equals(s.substring(i, i + 3))) {
+                    i += 3;
                 } else {
                     i += Bundle.getMessage("LogicNOT").length(); // NOI18N
                 }
@@ -484,17 +484,17 @@ public class DefaultConditional extends AbstractNamedBean
             if (s.charAt(i) != ')') {
                 // must be either AND or OR
                 if (Bundle.getMessage("LogicAND").equals(s.substring(i, i + (Bundle.getMessage("LogicAND").length()))) ||
-                        ("and").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
-                    if (("and").equals(s.substring(i, i + 3))) {
-                        i += 8;
+                        ("AND").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
+                    if (("AND").equals(s.substring(i, i + 3))) {
+                        i += 3;
                     } else {
                         i += Bundle.getMessage("LogicAND").length(); // EN AND: 3;  // NOI18N
                     }
                     oper = OPERATOR_AND;
                 } else if (Bundle.getMessage("LogicOR").equals(s.substring(i, i + (Bundle.getMessage("LogicOR").length()))) ||
-                        ("_or").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
-                    if (("_or").equals(s.substring(i, i + 3))) {
-                        i += 7;
+                        ("OR").equals(s.substring(i, i + 2))) { // compare the right length with and without i18n  // NOI18N
+                    if (("OR").equals(s.substring(i, i + 2))) {
+                        i += 2;
                     } else {
                         i += Bundle.getMessage("LogicOR").length(); // EN OR: 2;  // NOI18N
                     }
@@ -524,9 +524,9 @@ public class DefaultConditional extends AbstractNamedBean
                         i++;
                         argsUsed.set(k - 1);
                     } else if ((i + 3) < s.length() && (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length()))) ||
-                            ("not").equals(s.substring(i, i + 3)))) { // compare the right length with and without i18n  // NOI18N
-                        if (("not").equals(s.substring(i, i + 3))) {
-                            i += 8;
+                            ("NOT").equals(s.substring(i, i + 3)))) { // compare the right length with and without i18n  // NOI18N
+                        if (("NOT").equals(s.substring(i, i + 3))) {
+                            i += 3;
                         } else {
                             i += Bundle.getMessage("LogicNOT").length(); // EN NOT: 3;  // NOI18N
                         }

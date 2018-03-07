@@ -13,20 +13,20 @@ import org.slf4j.LoggerFactory;
  * The variable used in the antecedent (the 'if' part) of the Conditional.
  * proposition. The states of ConditionalVariables and logic expression of the
  * antecedent determine the state of the Conditional.
- * <P>
+ * <p>
  * ConditionalVariable objects are fully mutable, so use the default equals()
  * operator that checks for identical objects, not identical contents.
  *
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Pete Cressman Copyright (C) 2009
  * @author Bob Jacobsen Copyright (C) 2016
  */
@@ -383,6 +383,11 @@ public class ConditionalVariable {
         return getTestTypeString(_type);
     }
 
+    /**
+     * Provide a localized text for screen display of the logic operand.
+     *
+     * @return translated string (from jmri.NamedBeanBundle.properties)
+     */
     public String getOpernString() {
         switch (_opern) {
             case Conditional.OPERATOR_AND:
