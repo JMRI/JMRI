@@ -161,7 +161,7 @@ public abstract class Apps3 extends AppsBase {
      * @deprecated since 4.5.3
      */
     @Deprecated
-    abstract protected ResourceBundle getActionModelResourceBundle();
+    protected ResourceBundle getActionModelResourceBundle() { return null; }
 
     /**
      * @deprecated since 4.5.1
