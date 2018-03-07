@@ -36,7 +36,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
             systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
             if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
             }
             if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                 jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -44,7 +44,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             /* the "raw" Command Station only works on systems that support
              Ops Mode Programming */
             systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-            jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+            jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
             systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
             systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
             jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
@@ -79,7 +79,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 }
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -87,7 +87,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 /* the "raw" Command Station only works on systems that support
                  Ops Mode Programming */
                 systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-                jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+                jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
                 systemMemo.getXNetTrafficController()
                         .getCommandStation()
                         .setTrafficController(systemMemo.getXNetTrafficController());
@@ -110,13 +110,13 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
                 }
                 systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-                jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+                jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
                 // multMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
             } else {
                 /* If we still don't  know what we have, load everything */
@@ -125,7 +125,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 }
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
                 }
                 if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
                     jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
@@ -133,7 +133,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 /* the "raw" Command Station only works on systems that support
                  Ops Mode Programming */
                 systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-                jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+                jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
                 systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());

@@ -213,6 +213,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * @return Always WriteConfirmMode.NotVerified
      */
     @Nonnull
+    @Override
     public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
     
 

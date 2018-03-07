@@ -61,7 +61,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     boolean[] isReserved = new boolean[MAX_OPTION];
 
     /**
-     * Ctor
+     * Create a new instance of a Command Station Configuration Pane
      */
     public CmdStnConfigPane() {
         super();

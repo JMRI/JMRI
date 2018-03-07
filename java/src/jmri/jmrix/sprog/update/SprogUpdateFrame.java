@@ -152,25 +152,16 @@ abstract public class SprogUpdateFrame
 
         getContentPane().add(paneA);
 
-        openFileChooserButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                openFileChooserButtonActionPerformed(e);
-            }
+        openFileChooserButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            openFileChooserButtonActionPerformed(e);
         });
 
-        programButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                programButtonActionPerformed(e);
-            }
+        programButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            programButtonActionPerformed(e);
         });
 
-        setSprogModeButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setSprogModeButtonActionPerformed(e);
-            }
+        setSprogModeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            setSprogModeButtonActionPerformed(e);
         });
 
         // connect to data source
@@ -288,7 +279,7 @@ abstract public class SprogUpdateFrame
             if (log.isDebugEnabled()) {
                 log.debug("hex file chosen: " + hexFile.getName());
             }
-            if ((hexFile.getName().indexOf("sprog") < 0)) {
+            if ((!hexFile.getName().contains("sprog"))) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("HexFileSelectDialogString"),
                         Bundle.getMessage("HexFileSelectTitle"), JOptionPane.ERROR_MESSAGE);
                 hexFile = null;
@@ -386,14 +377,13 @@ abstract public class SprogUpdateFrame
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts.
+     * 
+     * @param delay milliseconds until action
      */
     synchronized protected void restartTimer(int delay) {
         if (timer == null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    timeout();
-                }
+            timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
+                timeout();
             });
         }
         timer.stop();

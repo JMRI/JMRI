@@ -758,7 +758,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput,
                 singleTurnout, se8c4Aspect, tripleTurnout, tripleOutput, virtualHead
             }));
-            //If no DCC Command station is found remove the DCC Signal Decoder option.
+            // If no DCC Command station is found, remove the DCC Signal Decoder option.
             if (prefixBox.getItemCount() == 0) {
                 typeBox.removeItem(dccSignalDecoder);
             }
@@ -972,6 +972,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (grapevine.equals(typeBox.getSelectedItem())) { // Need to see how this works with username
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use Grapevine specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1072,6 +1073,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (lsDec.equals(typeBox.getSelectedItem())) { // LDT LS-DEC
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use LDT specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1127,6 +1129,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
+            // TODO use MERG specific tooltip
             systemNameLabel.setVisible(true);
             systemNameTextField.setVisible(true);
             userNameLabel.setText(Bundle.getMessage("LabelUserName"));
@@ -1277,7 +1280,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     return;
                 }
                 if (inputsysname.length() > 2) {
-                    if (inputsysname.substring(0, 2).equals("AH")) {
+                    if (inputsysname.substring(0, 2).equals("AH")) { // TODO add real check for A123H
                         headnumber = Integer.parseInt(inputsysname.substring(2, inputsysname.length()));
                     } else if (checkIntegerOnly(inputsysname)) {
                         headnumber = Integer.parseInt(inputsysname);
@@ -1329,15 +1332,16 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 }
 
             } else if (grapevine.equals(typeBox.getSelectedItem())) {
-                // the turnout field must hold a GH system name
+                // the turnout field must hold a GH system name (G = multichar prefix)
                 if (systemNameTextField.getText().length() == 0) {
                     // TODO Add user dialog
                     log.warn("must supply a signalhead number (i.e. GH23)");
                     return;
                 }
                 String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(systemNameTextField.getText());
-                if (!inputsysname.substring(0, 2).equals("GH")) {
-                    log.warn("skipping creation of signal, " + inputsysname + " does not start with GH");
+                int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
+                if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
+                    log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
                     String msg = Bundle.getMessage("GrapevineSkippingCreation", new Object[]{inputsysname});
                     JOptionPane.showMessageDialog(addFrame, msg,
                             Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);

@@ -177,19 +177,6 @@ public class JsonClientHandler {
         }
     }
 
-    /**
-     *
-     * @param heartbeat seconds until heartbeat must be received before breaking
-     *                  connection to client; currently ignored
-     * @throws IOException if communications broken with client
-     * @deprecated since 4.5.2; use {@link #onMessage(java.lang.String)} with
-     * the parameter {@link #HELLO_MSG} instead
-     */
-    @Deprecated
-    public void sendHello(int heartbeat) throws IOException {
-        this.onMessage(HELLO_MSG);
-    }
-
     private void sendErrorMessage(int code, String message) throws IOException {
         JsonException ex = new JsonException(code, message);
         this.sendErrorMessage(ex);

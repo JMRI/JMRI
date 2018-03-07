@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class RfidTrafficController extends AbstractMRTrafficController implements RfidInterface {
 
+    /**
+     * Create a new RfidTrafficController instance.
+     */
     public RfidTrafficController() {
         super();
         logDebug = log.isDebugEnabled();

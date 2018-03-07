@@ -398,7 +398,6 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testRelease_0args() {
         instance.release();
-        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
     }
 
     /**
@@ -408,7 +407,6 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testDispatch_0args() {
         instance.dispatch();
-        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
     }
 
 

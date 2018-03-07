@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         implements TurnoutManager, java.beans.VetoableChangeListener {
@@ -219,7 +219,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30.
+     * turnouts in numerical order eg 10 to 30, primarily used to enable/disable the Add
+     * range box in the Add new turnout panel.
      *
      * @param systemName configured system connection name
      * @return false as default, unless overridden by implementations as supported
@@ -229,6 +230,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {

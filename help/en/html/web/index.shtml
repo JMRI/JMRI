@@ -167,7 +167,7 @@
       panels is at <a href=
       "http://localhost:12080/panel">http://localhost:12080/panel</a>.</p>
 
-      <h3><a id="roster" name="RosterServlet.shtml">Roster</a></h3>
+      <h3><a id="roster" name="roster">Roster</a></h3>
       <!-- rosterServlet intro -->
 
       <p>The web roster at <a href=

@@ -395,6 +395,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 if (_graphicState) { // respond to clicking on ImageIconRenderer CellEditor
                     clickOn(s);
                     fireTableRowsUpdated(row, row);
+                } else {
+                    super.setValueAt(value, row, col);
                 }
                 break;
             default:

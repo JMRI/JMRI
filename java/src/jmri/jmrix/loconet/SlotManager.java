@@ -1349,7 +1349,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Internal routine to forward a programing reply. This is delayed to
+     * Internal routine to forward a programming reply. This is delayed to
      * prevent overruns of the command station.
      *<p>
      * @param p a ProgListener object
@@ -1462,7 +1462,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // schedule next read if needed
         if (nextReadSlot < 127) {
-            javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+            javax.swing.Timer t = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     readNextSlot();

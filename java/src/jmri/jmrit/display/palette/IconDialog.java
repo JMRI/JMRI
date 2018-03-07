@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ public class IconDialog extends ItemDialog {
     protected FamilyItemPanel _parent;
     protected String _family;
     protected HashMap<String, NamedIcon> _iconMap;
-    protected JPanel _iconPanel;
+    protected ImagePanel _iconPanel;
     protected CatalogPanel _catalog;
 
     /**
@@ -73,7 +74,6 @@ public class IconDialog extends ItemDialog {
         _iconPanel = makeIconPanel(_iconMap);
         panel.add(_iconPanel); // put icons above buttons
         panel.add(buttonPanel);
-        //panel.setMaximumSize(panel.getPreferredSize());
 
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -86,12 +86,18 @@ public class IconDialog extends ItemDialog {
         pack();
     }
 
+    // for _parent to update background
+    protected ImagePanel getIconPanel() {
+        return _iconPanel;
+    }
+
     // Only multiSensor adds and deletes icons 
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
     }
 
     /**
      * Action for both create new family and change existing family.
+     * @return true if success
      */
     protected boolean doDoneAction() {
         _parent.reset();
@@ -99,12 +105,7 @@ public class IconDialog extends ItemDialog {
         _parent._currentIconMap = _iconMap;
         if (!_parent.isUpdate()) {  // don't touch palette's maps. just modify individual device icons
             ItemPalette.removeIconMap(_type, _family);
-            if (!ItemPalette.addFamily(_parent._paletteFrame, _type, _family, _iconMap)) {
-                return false;
-            } else {
-                _parent.updateFamiliesPanel();
-                _parent.setFamily(_family);
-            }
+            return _parent.addFamily(_type, _family, _iconMap);
         }
         return true;
     }
@@ -134,14 +135,20 @@ public class IconDialog extends ItemDialog {
         buttonPanel.add(panel);
     }
 
-    protected JPanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {
+    protected ImagePanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {
         if (iconMap == null) {
             log.error("iconMap is null for type {}, family {}", _type, _family);
             return null;
         }
-        JPanel iconPanel = new JPanel();
+        ImagePanel iconPanel = new ImagePanel();
         GridBagLayout gridbag = new GridBagLayout();
         iconPanel.setLayout(gridbag);
+        iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        if (!_parent.isUpdate()) {
+            iconPanel.setImage(_parent._backgrounds[_parent.getParentFrame().getPreviewBg()]);
+        } else {
+            iconPanel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
+        }
 
         int cnt = _iconMap.size();
         int numCol = cnt;
@@ -174,6 +181,7 @@ public class IconDialog extends ItemDialog {
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     borderName));
             panel.add(Box.createHorizontalStrut(100));
+            panel.setOpaque(false);
             JLabel image = new DropJLabel(icon, _iconMap, _parent.isUpdate());
             image.setName(entry.getKey());
             if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
@@ -182,6 +190,7 @@ public class IconDialog extends ItemDialog {
             }
             image.setToolTipText(icon.getName());
             JPanel iPanel = new JPanel();
+            iPanel.setOpaque(false);
             iPanel.add(image);
 
             c.gridx += gridwidth;
@@ -209,6 +218,7 @@ public class IconDialog extends ItemDialog {
             JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
                     new Object[]{CatalogPanel.printDbl(scale, 2)}));
             JPanel sPanel = new JPanel();
+            sPanel.setOpaque(false);
             sPanel.add(label);
             panel.add(sPanel);
             panel.add(Box.createHorizontalStrut(20));
@@ -230,7 +240,7 @@ public class IconDialog extends ItemDialog {
     protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = null;
         if (map != null) {
-            clone = new HashMap<String, NamedIcon>();
+            clone = new HashMap<>();
             Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();

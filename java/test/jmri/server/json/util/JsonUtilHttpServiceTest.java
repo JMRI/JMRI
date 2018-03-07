@@ -1,6 +1,5 @@
 package jmri.server.json.util;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -8,20 +7,22 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Metadata;
+import jmri.Version;
 import jmri.jmris.json.JsonServerPreferences;
+import jmri.profile.NullProfile;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,25 +38,16 @@ public class JsonUtilHttpServiceTest {
     public JsonUtilHttpServiceTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-        Log4JFixture.setUp();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        Log4JFixture.tearDown();
-    }
-
     @Before
     public void setUp() throws IOException {
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initConfigureManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.initConnectionConfigManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         ZeroConfService.stopAll();
     }
 
@@ -70,7 +62,7 @@ public class JsonUtilHttpServiceTest {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         Assert.assertEquals(instance.getHello(locale, 10), instance.doGet(JSON.HELLO, null, locale));
         Assert.assertEquals(instance.getMetadata(locale, Metadata.JMRIVERCANON), instance.doGet(JSON.METADATA, Metadata.JMRIVERCANON, locale));
         Assert.assertEquals(instance.getMetadata(locale), instance.doGet(JSON.METADATA, null, locale));
@@ -112,7 +104,7 @@ public class JsonUtilHttpServiceTest {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, locale));
         Assert.assertEquals(instance.getNetworkServices(locale), instance.doGetList(JSON.NETWORK_SERVICES, locale));
         Assert.assertEquals(instance.getSystemConnections(locale), instance.doGetList(JSON.SYSTEM_CONNECTIONS, locale));
@@ -147,14 +139,18 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getHello(locale, heartbeat);
-        Assert.assertEquals(JSON.HELLO, result.path(JSON.TYPE).asText());
+        Assert.assertEquals("Hello type", JSON.HELLO, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
-        Assert.assertEquals(jmri.Version.name(), data.path(JSON.JMRI).asText());
-        Assert.assertEquals(JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
-        Assert.assertEquals(Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText());
-        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
-        Assert.assertEquals(ProfileManager.getDefault().getActiveProfile().getName(), data.path(JSON.ACTIVE_PROFILE).asText());
+        Assert.assertEquals("JMRI Version", Version.name(), data.path(JSON.JMRI).asText());
+        Assert.assertEquals("JSON Version", JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
+        Assert.assertEquals("Heartbeat", Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
+        Assert.assertEquals("RR Name", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText());
+        Assert.assertEquals("Node Identity", NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        Assert.assertNotNull(profile);
+        Assert.assertEquals("Profile", profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText());
+        Assert.assertEquals("Message has 2 elements", 2, result.size());
+        Assert.assertEquals("Message data has 6 elements", 6, data.size());
     }
 
     /**

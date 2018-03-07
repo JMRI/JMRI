@@ -101,6 +101,7 @@ public interface SignalMastLogic extends NamedBean {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();
 
     /**
@@ -240,6 +241,7 @@ public interface SignalMastLogic extends NamedBean {
      * @return the number of listeners; -1 if the information is not available
      *         for some reason.
      */
+    @Override
     public int getNumPropertyChangeListeners();
 
     /**
@@ -658,8 +660,10 @@ public interface SignalMastLogic extends NamedBean {
 
     public void disableLayoutEditorUse();
 
+    @Override
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
 
+    @Override
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
 
     /**
@@ -683,6 +687,7 @@ public interface SignalMastLogic extends NamedBean {
      */
     public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException;
 
 }

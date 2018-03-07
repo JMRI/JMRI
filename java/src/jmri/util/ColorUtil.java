@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ColorUtil {
 
-    /* 
-     * Color lists for screne colors.  
+    /*
+     * Color lists for screen colors.
      */
     public final static String ColorTrack = "track";
     public final static String ColorBlack = "black";
@@ -32,9 +32,13 @@ public class ColorUtil {
     public final static String ColorBlue = "blue";
     public final static String ColorMagenta = "magenta";
     public final static String ColorCyan = "cyan";
+    public final static String ColorClear = "clear";
+
+    public final static Color clear = setAlpha(Color.BLACK, 0);
+    public final static Color CLEAR = clear;
 
     /**
-     * Handles known colors plus special value for track
+     * Handles known colors plus special value for track.
      *
      * @param color the color or null
      * @return the name of the color or "black" if a color was provided; "track"
@@ -54,7 +58,7 @@ public class ColorUtil {
     }
 
     /**
-     * Returns known color name or hex value in form #RRGGBB
+     * Returns known color name or hex value in form #RRGGBB.
      *
      * @param color the color
      * @return the name or hex value of color; returns null if color is null
@@ -72,14 +76,14 @@ public class ColorUtil {
     }
 
     /**
-     * @param string Either a hexidecimal representation of the rgb value of a 
-     * color or a color name defined as a constant. 
+     * @param string Either a hexadecimal representation of the rgb value of a
+     * color or a color name defined as a constant.
      */
     public static Color stringToColor(String string) {
         try {
             return Color.decode(string);
-        } catch(NumberFormatException nfe) {
-            switch(string) {
+        } catch (NumberFormatException nfe) {
+            switch (string) {
                case ColorBlack:
                    return Color.black;
                case ColorDarkGray:
@@ -110,38 +114,52 @@ public class ColorUtil {
                    return null;
                default:
                    // check translated strings, just in case there is one in a data file.
-                   if( string.equals(Bundle.getMessage("Black"))) {
+                    if (string.equals(Bundle.getMessage("Black"))) {
                       return Color.black;
-                   } if( string.equals(Bundle.getMessage("DarkGray"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("DarkGray"))) {
                       return Color.darkGray;
-                   } if( string.equals(Bundle.getMessage("Gray"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Gray"))) {
                       return Color.gray;
-                   } if( string.equals(Bundle.getMessage("LightGray"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("LightGray"))) {
                       return Color.lightGray;
-                   } if( string.equals(Bundle.getMessage("White"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("White"))) {
                       return Color.white;
-                   } if( string.equals(Bundle.getMessage("Red"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Red"))) {
                       return Color.red;
-                   } if( string.equals(Bundle.getMessage("Pink"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Pink"))) {
                       return Color.pink;
-                   } if( string.equals(Bundle.getMessage("Yellow"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Yellow"))) {
                       return Color.yellow;
-                   } if( string.equals(Bundle.getMessage("Green"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Green"))) {
                       return Color.green;
-                   } if( string.equals(Bundle.getMessage("Orange"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Orange"))) {
                       return Color.orange;
-                   } if( string.equals(Bundle.getMessage("Blue"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Blue"))) {
                       return Color.blue;
-                   } if( string.equals(Bundle.getMessage("Magenta"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Magenta"))) {
                       return Color.magenta;
-                   } if( string.equals(Bundle.getMessage("Cyan"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("Cyan"))) {
                       return Color.cyan;
-                   } if( string.equals(Bundle.getMessage("ColorClear"))) {
-                       return null;
-                   } if( string.equals(Bundle.getMessage("None"))) {
+                    }
+                    if (string.equals(Bundle.getMessage("ColorClear"))) {
+                        return clear;
+                    }
+                    if (string.equals(Bundle.getMessage("None"))) {
                        return null;
                    } else {
-                      log.error("unknown color text '" + string + "' sent to stringToColor");
+                      log.error("unknown color text '{}' sent to stringToColor", string);
                       return Color.black;
                    }
             }
@@ -163,11 +181,10 @@ public class ColorUtil {
     }
 
     /**
-     * Internal method to return string name of several known colors, returns
-     * null if not in list.
+     * Internal method to return string name of several known colors.
      *
      * @param color the color
-     * @return the color name or null if not known
+     * @return the color name or null if not known/not in list
      */
     @CheckForNull
     private static String colorToName(@Nullable Color color) {
@@ -205,7 +222,23 @@ public class ColorUtil {
     }
 
     /**
-     * calculate the linear interpolation between two colors
+     * Return the color (Black/White) that most contrasts with the specified
+     * color.
+     *
+     * @param color the source color
+     * @return the contrasting color
+     */
+    public static Color contrast(@Nonnull Color color) {
+        int red = color.getRed();
+        int green = color.getGreen();
+        int blue = color.getBlue();
+        int average = (red + green + blue) / 3;
+
+        return (average >= 128) ? Color.BLACK : Color.WHITE;
+    }
+
+    /**
+     * Calculate the linear interpolation between two colors.
      *
      * @param colorA the first color
      * @param colorB the second color
@@ -223,7 +256,7 @@ public class ColorUtil {
     }
 
     /**
-     * set the alpha component of a color
+     * Set the alpha component of a color.
      *
      * @param color the color
      * @param alpha the alpha component (integer 0 - 255)
@@ -235,7 +268,7 @@ public class ColorUtil {
     }
 
     /**
-     * set the alpha component of a color
+     * Set the alpha component of a color.
      *
      * @param color the color
      * @param alpha the alpha component (double 0.0 - 1.0)
@@ -243,7 +276,7 @@ public class ColorUtil {
      */
     @CheckReturnValue
     public static Color setAlpha(@Nonnull Color color, double alpha) {
-        return new Color(color.getRed(), color.getGreen(), color.getBlue(), 
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(),
                 (int) (255.0 * alpha));
     }
 

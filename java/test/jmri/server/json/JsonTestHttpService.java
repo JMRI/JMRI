@@ -19,6 +19,9 @@ public class JsonTestHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        if (name.equals("JsonException")) {
+            throw new JsonException(499, "Thrown for test"); // not a standard code
+        }
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, type);
         ObjectNode data = root.putObject(JSON.DATA);
@@ -40,6 +43,12 @@ public class JsonTestHttpService extends JsonHttpService {
         array.add(mapper.createObjectNode());
         array.add(mapper.createObjectNode());
         return array;
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        // return an empty schema, which is valid, but accepts anything
+        return mapper.createObjectNode();
     }
 
 }

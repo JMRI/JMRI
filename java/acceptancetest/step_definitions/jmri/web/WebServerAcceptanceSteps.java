@@ -5,21 +5,14 @@ import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.GraphicsEnvironment;
-import java.util.concurrent.TimeUnit;
 
 /**
- * Cucumber step defintions for Web Server Acceptance tests.
+ * Cucumber step definitions for Web Server Acceptance tests.
  *
- * @author  Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class WebServerAcceptanceSteps implements En {
      
@@ -31,34 +24,12 @@ public class WebServerAcceptanceSteps implements En {
    
    public WebServerAcceptanceSteps(jmri.InstanceManager instance) {
 
-      Before(chrometags,()->{
-            WebDriverManager.getInstance(ChromeDriver.class).setup();
-      });
-      Before(firefoxtags,()->{
-            WebDriverManager.getInstance(FirefoxDriver.class).setup();
-      });
       Given("^I am using firefox$", () -> {
-         if(GraphicsEnvironment.isHeadless()) {
-            FirefoxBinary firefoxBinary = new FirefoxBinary();
-            firefoxBinary.addCommandLineOptions("--headless");
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setBinary(firefoxBinary);
-            webDriver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
-         } else {
-            webDriver = new EventFiringWebDriver(new FirefoxDriver());
-         }
-         webDriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+         webDriver = jmri.util.web.BrowserFactory.getBrowser("Firefox");
       });
 
       Given("^I am using chrome$", () -> {
-         if(GraphicsEnvironment.isHeadless()) {
-             ChromeOptions chromeOptions = new ChromeOptions();
-             chromeOptions.addArguments("--headless");
-             webDriver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
-         } else {
-             webDriver = new EventFiringWebDriver(new ChromeDriver());
-         }
-         webDriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+         webDriver = jmri.util.web.BrowserFactory.getBrowser("Chrome");
       });
 
       When("^I ask for the url (.*)$", (String url) -> {
@@ -85,10 +56,5 @@ public class WebServerAcceptanceSteps implements En {
         });
         Assert.assertEquals("Page Title",pageTitle,webDriver.getTitle());
       });
-
-      After(tags,()->{
-         webDriver.close();
-      });
-
    }
 }

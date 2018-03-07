@@ -5,13 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the SerialTrafficController class
+ * Stands in for the SerialTrafficController class.
  *
  * @author	Bob Jacobsen Copyright 2004, 2007
   */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
-    public SerialTrafficControlScaffold() {
+    public SerialTrafficControlScaffold(GrapevineSystemConnectionMemo memo) {
+        super(memo);
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
@@ -25,9 +26,9 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     /**
-     * record messages sent, provide access for making sure they are OK
+     * Record messages sent, provide access for making sure they are OK.
      */
-    public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
+    public Vector<SerialMessage> outbound = new Vector<SerialMessage>(); // public OK here, so long as this is a test class
 
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
@@ -35,17 +36,19 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
             log.debug("sendSerialMessage [" + m + "]");
         }
         // save a copy
+        //log.debug("outbound.sendSerialMessage [" + m + "] added, size = " + outbound.size());
         outbound.addElement(m);
         // we don't return an echo so that the processing before the echo can be
         // separately tested
     }
 
     // test control member functions
+
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
-        // forward a test message to NceListeners
+        // forward a test message to GrapevineListeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestMessage    [" + m + "]");
         }
@@ -54,7 +57,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     /*
-     * Check number of listeners, used for testing dispose()
+     * Check number of listeners, used for testing dispose().
      */
     public int numListeners() {
         return cmdListeners.size();

@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 /**
  * Provides common services for classes representing objects on the layout, and
  * allows a common form of access by their Managers.
- * <P>
+ * <p>
  * Each object has two types of names:
  * <p>
  * The "system" name is provided by the system-specific implementations, and
@@ -43,15 +43,15 @@ import javax.annotation.Nonnull;
  * Info</a> pages.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
@@ -96,7 +96,6 @@ public interface NamedBean extends Comparable<NamedBean> {
      * Get a system-specific name. This encodes the hardware addressing
      * information. Any given system name must be unique within the layout.
      *
-     *
      * @return the system-specific name.
      */
     @CheckReturnValue
@@ -109,6 +108,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * @return the system-specific name.
      */
     @Nonnull
+    @Override
     public String toString(); 
 
     /**
@@ -207,15 +207,15 @@ public interface NamedBean extends Comparable<NamedBean> {
     /**
      * Deactivate this object, so that it releases as many resources as possible
      * and no longer effects others.
-     * <P>
+     * <p>
      * For example, if this object has listeners, after a call to this method it
      * should no longer notify those listeners. Any native or system-wide
      * resources it maintains should be released, including threads, files, etc.
-     * <P>
+     * <p>
      * It is an error to invoke any other methods on this object once dispose()
      * has been called. Note, however, that there is no guarantee about behavior
      * in that case.
-     * <P>
+     * <p>
      * Afterwards, references to this object may still exist elsewhere,
      * preventing its garbage collection. But it's formally dead, and shouldn't
      * be keeping any other objects alive. Therefore, this method should null
@@ -225,7 +225,7 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     /**
      * Provide generic access to internal state.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use the class-specific
      * form instead (e.g. setCommandedState in Turnout). This is provided to
      * make scripts access easier to read.
@@ -237,7 +237,7 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     /**
      * Provide generic access to internal state.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use the class-specific
      * form instead (e.g. getCommandedState in Turnout). This is provided to
      * make scripts easier to read.
@@ -249,7 +249,7 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     /**
      * Provide human-readable, localized version of state value.
-     * <P>
+     * <p>
      * This method is intended for use when presenting to a human operator.
      *
      * @param state the state to describe
@@ -362,6 +362,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
      */
     @CheckReturnValue
+    @Override
     public default int compareTo(@Nonnull NamedBean n2) {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();

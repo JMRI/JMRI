@@ -2,9 +2,9 @@ package jmri.server.json;
 
 /**
  * Common and utility constants used in the JMRI JSON protocol starting with
- * protocol version 4.0.
+ * protocol version 4.1.
  *
- * @author Randall Wood (C) 2013, 2014, 2016
+ * @author Randall Wood (C) 2013, 2014, 2016, 2018
  */
 public final class JSON {
 
@@ -15,6 +15,8 @@ public final class JSON {
      * the protocol, while changes to the minor number represent an addition to
      * the protocol.
      * <p>
+     * Protocol version 4.1 was first introduced in JMRI 4.11.4.
+     * <p>
      * Protocol version 4.0 was first introduced in JMRI 4.3.4.
      * <p>
      * Prior to version 4.0, the JSON servers had a single definition for all
@@ -24,7 +26,7 @@ public final class JSON {
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = "4.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "4.1"; // NOI18N
 
     /* JSON structure */
     /**
@@ -758,6 +760,26 @@ public final class JSON {
      */
     public static final String SYSTEM_CONNECTIONS = "systemConnections"; // NOI18N
 
+    /* JSON Schema */
+    /**
+     * {@value #SCHEMA}
+     *
+     * @since 4.1
+     */
+    public static final String SCHEMA = "schema"; // NOI18N
+    /**
+     * {@value #TYPES}
+     *
+     * @since 4.1
+     */
+    public static final String TYPES = "types"; // NOI18N
+    /**
+     * {@value #SERVER}
+     *
+     * @since 4.1
+     */
+    public static final String SERVER = "server"; // NOI18N
+
     /* ZeroConf support */
     /**
      * {@value #ZEROCONF_SERVICE_TYPE} Not used within the protocol, but used to
@@ -767,5 +789,6 @@ public final class JSON {
 
     /* prevent the constructor from being documented */
     private JSON() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

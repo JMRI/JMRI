@@ -1,6 +1,5 @@
 package jmri.server.json.light;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
@@ -12,24 +11,19 @@ import jmri.LightManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonLightHttpServiceTest extends TestCase {
+public class JsonLightHttpServiceTest {
 
-    public void testCtorSuccess() {
-        JsonLightHttpService service = new JsonLightHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
+    @Test
     public void testDoGet() throws JmriException {
         JsonLightHttpService service = new JsonLightHttpService(new ObjectMapper());
         LightManager manager = InstanceManager.getDefault(LightManager.class);
@@ -54,6 +48,7 @@ public class JsonLightHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPost() throws JmriException {
         ObjectMapper mapper = new ObjectMapper();
         JsonLightHttpService service = new JsonLightHttpService(mapper);
@@ -95,6 +90,7 @@ public class JsonLightHttpServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoPut() {
         ObjectMapper mapper = new ObjectMapper();
         JsonLightHttpService service = new JsonLightHttpService(mapper);
@@ -110,7 +106,8 @@ public class JsonLightHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
+    @Test
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -129,52 +126,29 @@ public class JsonLightHttpServiceTest extends TestCase {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
+    @Test
     public void testDelete() {
         try {
-            (new JsonLightHttpService(new ObjectMapper())).doDelete(JsonLight.LIGHT, null, Locale.ENGLISH);
+            (new JsonLightHttpService(new ObjectMapper())).doDelete(JsonLight.LIGHT, "", Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
         }
         Assert.fail("Did not throw expected error.");
     }
-    
-    // from here down is testing infrastructure
-    public JsonLightHttpServiceTest(String s) {
-        super(s);
-    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonLightHttpServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonLightHttpServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalLightManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

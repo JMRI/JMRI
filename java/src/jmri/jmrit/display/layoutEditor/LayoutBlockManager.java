@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * the user for the most part.
  *
  * @author Dave Duchamp Copyright (C) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
 
@@ -1944,8 +1945,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * If the panel variable is null, search all LE panels.
      * This was added to support multi panel entry/exit.
-     * @param bean The sensor, mast or head to be located.
-     * @param panel The panel to search.  If null, search all LE panels.
+     * <p>
+     * @param bean  The sensor, mast or head to be located.
+     * @param panel The panel to search. If null, search all LE panels.
      * @return a list of protected layout blocks.
      */
     @Nonnull
@@ -2212,8 +2214,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     /**
      * If the panel variable is null, search all LE panels.
      * This was added to support multi panel entry/exit.
-     * @param bean The sensor, mast or head to be located.
-     * @param panel The panel to search.  Search all LE panels if null.
+     * @param bean  The sensor, mast or head to be located.
+     * @param panel The panel to search. Search all LE panels if null.
      * @return the facing layout block.
      */
     @CheckReturnValue
@@ -2724,6 +2726,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return result;
     }	//getLayoutBlocksOccupiedByRosterEntry
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(LayoutBlockManager.class);
 }

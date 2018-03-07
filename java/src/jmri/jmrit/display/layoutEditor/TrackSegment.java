@@ -1,12 +1,15 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -14,18 +17,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
+import jmri.util.QuickPromptUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +55,8 @@ import org.slf4j.LoggerFactory;
  * TrackSegments may be drawn as dashed lines or solid lines. In addition
  * TrackSegments may be hidden when the panel is not in EditMode.
  *
- * @author Dave Duchamp Copyright (c) 2004-2009
+ * @author Dave Duchamp Copyright (p) 2004-2009
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class TrackSegment extends LayoutTrack {
 
@@ -131,6 +140,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @return text showing id and connections of this segment
      */
+    @Override
     public String toString() {
         return "TrackSegment " + getName()
                 + " c1:{" + getConnect1Name() + " (" + type1 + "},"
@@ -141,8 +151,9 @@ public class TrackSegment extends LayoutTrack {
     /*
      * Accessor methods
      */
+    @Nonnull
     public String getBlockName() {
-        return blockName;
+        return (blockName == null) ? "" : blockName;
     }
 
     public int getType1() {
@@ -182,7 +193,6 @@ public class TrackSegment extends LayoutTrack {
         connect2 = connectTrack;
         type2 = connectionType;
     }
-
 
     /**
      * replace old track connection with new track connection
@@ -251,6 +261,7 @@ public class TrackSegment extends LayoutTrack {
         if (dashed != dash) {
             dashed = dash;
             layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
         }
     }
 
@@ -266,6 +277,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return true if track segment is a main line
      */
+    @Override
     public boolean isMainline() {
         return mainline;
     }
@@ -274,6 +286,7 @@ public class TrackSegment extends LayoutTrack {
         if (mainline != main) {
             mainline = main;
             layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
         }
     }
 
@@ -298,6 +311,7 @@ public class TrackSegment extends LayoutTrack {
             arc = boo;
             if (arc) {
                 bezier = false;
+                hideConstructionLines(SHOWCON);
             }
             changed = true;
         }
@@ -324,6 +338,7 @@ public class TrackSegment extends LayoutTrack {
             circle = boo;
             if (circle) {
                 bezier = false;
+                hideConstructionLines(SHOWCON);
             }
             changed = true;
         }
@@ -349,6 +364,9 @@ public class TrackSegment extends LayoutTrack {
         if (flip != boo) {
             flip = boo;
             changed = true;
+            hideConstructionLines(SHOWCON);
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
         }
     }
 
@@ -374,6 +392,7 @@ public class TrackSegment extends LayoutTrack {
             if (bezier) {
                 arc = false;
                 circle = false;
+                hideConstructionLines(SHOWCON);
             }
             changed = true;
         }
@@ -386,6 +405,37 @@ public class TrackSegment extends LayoutTrack {
     public void setAngle(double x) {
         angle = MathUtil.pin(x, 0.0D, 180.0D);
         changed = true;
+    }
+
+    /**
+     * get the direction from end point 1 to 2
+     * <p>
+     * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
+     * (PI*3/2), etc.
+     *
+     * @return the direction (in radians)
+     */
+    public double getDirectionRAD() {
+        Point2D ep1 = center, ep2 = center;
+        if (connect1 != null) {
+            ep1 = LayoutEditor.getCoords(connect1, getType1());
+        }
+        if (connect2 != null) {
+            ep2 = LayoutEditor.getCoords(connect2, getType2());
+        }
+        return (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep1, ep2);
+    }
+
+    /**
+     * get the direction from end point 1 to 2
+     * <p>
+     * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
+     * etc.
+     *
+     * @return the direction (in degrees)
+     */
+    public double getDirectionDEG() {
+        return Math.toDegrees(getDirectionRAD());
     }
 
     /**
@@ -416,11 +466,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private String getConnectName(@Nullable LayoutTrack layoutTrack, int type) {
-        String result = null;
-        if (layoutTrack != null) {
-            result = layoutTrack.getName();
-        }
-        return result;
+        return (layoutTrack == null) ? null : layoutTrack.getName();
     }
 
     /**
@@ -430,6 +476,7 @@ public class TrackSegment extends LayoutTrack {
      * {@link #getConnect2} should be used instead.
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
+    @Override
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to see here, move along
         return null;
@@ -442,6 +489,7 @@ public class TrackSegment extends LayoutTrack {
      * {@link #setNewConnect2} should be used instead.
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
+    @Override
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
@@ -505,6 +553,7 @@ public class TrackSegment extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         // nothing to see here, move along
     }
@@ -515,6 +564,7 @@ public class TrackSegment extends LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
+    @Override
     public void translateCoords(float xFactor, float yFactor) {
         // nothing to see here, move along
     }
@@ -524,6 +574,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param newCenterPoint the coordinates to set
      */
+    @Override
     public void setCoordsCenter(@Nullable Point2D newCenterPoint) {
         if (center != newCenterPoint) {
             if ((newCenterPoint != null) && isBezier()) {
@@ -549,6 +600,7 @@ public class TrackSegment extends LayoutTrack {
     @SuppressWarnings("deprecation")
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
+    @Override
     public void setObjects(LayoutEditor p) {
         if (!tBlockName.isEmpty()) {
             layoutBlock = p.getLayoutBlock(tBlockName);
@@ -626,21 +678,35 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlPointRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+            Point2D p, minPoint = MathUtil.zeroPoint2D;
+
+            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double distance, minDistance = POSITIVE_INFINITY;
 
             if (isCircle()) {
-                if (r.contains(getCoordsCenterCircle())) {
+                p = getCoordsCenterCircle();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
                     result = TRACK_CIRCLE_CENTRE;
                 }
             } else if (isBezier()) {
                 // hit testing for the control points
-                // note: control points will override center circle
                 for (int index = 0; index < bezierControlPoints.size(); index++) {
-                    if (r.contains(bezierControlPoints.get(index))) {
+                    p = bezierControlPoints.get(index);
+                    distance = MathUtil.distance(p, hitPoint);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        minPoint = p;
                         result = BEZIER_CONTROL_POINT_OFFSET_MIN + index;
-                        break;
                     }
                 }
+            }
+            if ((useRectangles && !r.contains(minPoint))
+                    || (!useRectangles && (minDistance > circleRadius))) {
+                result = NONE;
             }
             if (result == NONE) {
                 if (r.contains(getCentreSeg())) {
@@ -657,6 +723,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCentreSeg();
         if (connectionType == TRACK_CIRCLE_CENTRE) {
@@ -670,6 +737,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return the bounds of this track segment
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -687,10 +755,11 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    private JPopupMenu popup = null;
-    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Mainline"));
-    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Dashed"));
+    private JPopupMenu popupMenu = null;
+    private JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
+    private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
+    private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
+    private JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
     /**
      * {@inheritDoc}
@@ -698,10 +767,10 @@ public class TrackSegment extends LayoutTrack {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        if (popup != null) {
-            popup.removeAll();
+        if (popupMenu != null) {
+            popupMenu.removeAll();
         } else {
-            popup = new JPopupMenu();
+            popupMenu = new JPopupMenu();
         }
 
         String info = Bundle.getMessage("TrackSegment");
@@ -717,13 +786,13 @@ public class TrackSegment extends LayoutTrack {
             info = info + " (" + Bundle.getMessage("Line") + ")";
         }
 
-        JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", info) + getName());
+        JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", info) + getName());
         jmi.setEnabled(false);
 
         if (blockName.isEmpty()) {
-            jmi = popup.add(Bundle.getMessage("NoBlock"));
+            jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
         } else {
-            jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
+            jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
         }
         jmi.setEnabled(false);
 
@@ -758,37 +827,589 @@ public class TrackSegment extends LayoutTrack {
                     }
                 });
             }
-            popup.add(connectionsMenu);
+            popupMenu.add(connectionsMenu);
         }
 
-        popup.add(new JSeparator(JSeparator.HORIZONTAL));
+        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        mainlineCheckBoxMenuItem.setSelected(mainline);
-        popup.add(mainlineCheckBoxMenuItem);
+        popupMenu.add(mainlineCheckBoxMenuItem);
         mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
             setMainline(mainlineCheckBoxMenuItem.isSelected());
         });
+        mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
+        mainlineCheckBoxMenuItem.setSelected(mainline);
 
-        hiddenCheckBoxMenuItem.setSelected(hidden);
-        popup.add(hiddenCheckBoxMenuItem);
+        popupMenu.add(hiddenCheckBoxMenuItem);
         hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
             setHidden(hiddenCheckBoxMenuItem.isSelected());
         });
+        hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
+        hiddenCheckBoxMenuItem.setSelected(hidden);
 
-        dashedCheckBoxMenuItem.setSelected(dashed);
-        popup.add(dashedCheckBoxMenuItem);
+        popupMenu.add(dashedCheckBoxMenuItem);
         dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
             setDashed(dashedCheckBoxMenuItem.isSelected());
         });
+        dashedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("DashedCheckBoxMenuItemToolTip"));
+        dashedCheckBoxMenuItem.setSelected(dashed);
 
-        popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+        if (isArc()) {
+            popupMenu.add(flippedCheckBoxMenuItem);
+            flippedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                setFlip(flippedCheckBoxMenuItem.isSelected());
+            });
+            flippedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("FlippedCheckBoxMenuItemToolTip"));
+            flippedCheckBoxMenuItem.setSelected(isFlip());
+        }
+
+        //
+        // decorations menu
+        //
+        JMenu decorationsMenu = new JMenu(Bundle.getMessage("DecorationMenuTitle"));
+        decorationsMenu.setToolTipText(Bundle.getMessage("DecorationMenuToolTip"));
+
+        //
+        // arrows menus
+        //
+        JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
+        decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
+        decorationsMenu.add(arrowsMenu);
+
+        JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationStyleMenuTitle"));
+        arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        arrowsMenu.add(arrowsCountMenu);
+
+        JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(0);
+        });
+        jcbmi.setSelected(arrowStyle == 0);
+
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle1.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(1);
+        });
+        jcbmi.setSelected(arrowStyle == 1);
+
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle2.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(2);
+        });
+        jcbmi.setSelected(arrowStyle == 2);
+
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle3.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(3);
+        });
+        jcbmi.setSelected(arrowStyle == 3);
+
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle4.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(4);
+        });
+        jcbmi.setSelected(arrowStyle == 4);
+
+        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle5.png"));
+        jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowStyle(5);
+        });
+        jcbmi.setSelected(arrowStyle == 5);
+
+        JMenu arrowsEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+        arrowsEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+        arrowsMenu.add(arrowsEndMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        arrowsEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowEndStart(false);
+            setArrowEndStop(false);
+        });
+        jcbmi.setSelected(!arrowEndStart && !arrowEndStop);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
+        arrowsEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowEndStart(true);
+            setArrowEndStop(false);
+        });
+        jcbmi.setSelected(arrowEndStart && !arrowEndStop);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
+        arrowsEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowEndStop(true);
+            setArrowEndStart(false);
+        });
+        jcbmi.setSelected(!arrowEndStart && arrowEndStop);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+        arrowsEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowEndStart(true);
+            setArrowEndStop(true);
+        });
+        jcbmi.setSelected(arrowEndStart && arrowEndStop);
+
+        JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
+        arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
+        arrowsMenu.add(arrowsDirMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        arrowsDirMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowDirIn(false);
+            setArrowDirOut(false);
+        });
+        jcbmi.setSelected(!arrowDirIn && !arrowDirOut);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
+        arrowsDirMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowDirIn(true);
+            setArrowDirOut(false);
+        });
+        jcbmi.setSelected(arrowDirIn && !arrowDirOut);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
+        arrowsDirMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowDirOut(true);
+            setArrowDirIn(false);
+        });
+        jcbmi.setSelected(!arrowDirIn && arrowDirOut);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
+        arrowsDirMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setArrowDirIn(true);
+            setArrowDirOut(true);
+        });
+        jcbmi.setSelected(arrowDirIn && arrowDirOut);
+
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", arrowColor);
+            if ((newColor != null) && !newColor.equals(arrowColor)) {
+                setArrowColor(newColor);
+            }
+        });
+        jmi.setForeground(arrowColor);
+        jmi.setBackground(ColorUtil.contrast(arrowColor));
+
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + arrowLineWidth));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for arrow line width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    arrowLineWidth);
+            setArrowLineWidth(newValue);
+        });
+
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLengthMenuItemTitle")) + arrowLength));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for arrow length
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    arrowLength);
+            setArrowLength(newValue);
+        });
+
+        jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationGapMenuItemTitle")) + arrowGap));
+        jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for arrow gap
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationGapMenuItemTitle"),
+                    Bundle.getMessage("DecorationGapMenuItemTitle"),
+                    arrowGap);
+            setArrowGap(newValue);
+        });
+
+        //
+        // bridge menus
+        //
+        JMenu bridgeMenu = new JMenu(Bundle.getMessage("BridgeMenuTitle"));
+        decorationsMenu.setToolTipText(Bundle.getMessage("BridgeMenuToolTip"));
+        decorationsMenu.add(bridgeMenu);
+
+        JMenu bridgeSideMenu = new JMenu(Bundle.getMessage("DecorationSideMenuTitle"));
+        bridgeSideMenu.setToolTipText(Bundle.getMessage("DecorationSideMenuToolTip"));
+        bridgeMenu.add(bridgeSideMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        bridgeSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeSideLeft(false);
+            setBridgeSideRight(false);
+        });
+        jcbmi.setSelected(!bridgeSideLeft && !bridgeSideRight);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
+        bridgeSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeSideLeft(true);
+            setBridgeSideRight(false);
+        });
+        jcbmi.setSelected(bridgeSideLeft && !bridgeSideRight);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
+        bridgeSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeSideRight(true);
+            setBridgeSideLeft(false);
+        });
+        jcbmi.setSelected(!bridgeSideLeft && bridgeSideRight);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+        bridgeSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeSideLeft(true);
+            setBridgeSideRight(true);
+        });
+        jcbmi.setSelected(bridgeSideLeft && bridgeSideRight);
+
+        JMenu bridgeEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+        bridgeEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+        bridgeMenu.add(bridgeEndMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        bridgeEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeHasEntry(false);
+            setBridgeHasExit(false);
+        });
+        jcbmi.setSelected(!bridgeHasEntry && !bridgeHasExit);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
+        bridgeEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeHasEntry(true);
+            setBridgeHasExit(false);
+        });
+        jcbmi.setSelected(bridgeHasEntry && !bridgeHasExit);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
+        bridgeEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeHasExit(true);
+            setBridgeHasEntry(false);
+        });
+        jcbmi.setSelected(!bridgeHasEntry && bridgeHasExit);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+        bridgeEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBridgeHasEntry(true);
+            setBridgeHasExit(true);
+        });
+        jcbmi.setSelected(bridgeHasEntry && bridgeHasExit);
+
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", bridgeColor);
+            if ((newColor != null) && !newColor.equals(bridgeColor)) {
+                setBridgeColor(newColor);
+            }
+        });
+        jmi.setForeground(bridgeColor);
+        jmi.setBackground(ColorUtil.contrast(bridgeColor));
+
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bridgeLineWidth));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for bridge line width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    bridgeLineWidth);
+            setBridgeLineWidth(newValue);
+        });
+
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("BridgeApproachWidthMenuItemTitle")) + bridgeApproachWidth));
+        jmi.setToolTipText(Bundle.getMessage("BridgeApproachWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for bridge approach width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("BridgeApproachWidthMenuItemTitle"),
+                    Bundle.getMessage("BridgeApproachWidthMenuItemTitle"),
+                    bridgeApproachWidth);
+            setBridgeApproachWidth(newValue);
+        });
+
+        jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("BridgeDeckWidthMenuItemTitle")) + bridgeDeckWidth));
+        jmi.setToolTipText(Bundle.getMessage("BridgeDeckWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for bridge deck width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("BridgeDeckWidthMenuItemTitle"),
+                    Bundle.getMessage("BridgeDeckWidthMenuItemTitle"),
+                    bridgeDeckWidth);
+            setBridgeDeckWidth(newValue);
+        });
+
+        //
+        // end bumper menus
+        //
+        JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
+        decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
+        decorationsMenu.add(endBumperMenu);
+
+        JMenu endBumperEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+        endBumperEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+        endBumperMenu.add(endBumperEndMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        endBumperEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBumperEndStart(false);
+            setBumperEndStop(false);
+        });
+        jcbmi.setSelected(!bumperEndStart && !bumperEndStop);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
+        endBumperEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBumperEndStart(true);
+            setBumperEndStop(false);
+        });
+        jcbmi.setSelected(bumperEndStart && !bumperEndStop);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
+        endBumperEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setBumperEndStop(true);
+            setBumperEndStart(false);
+        });
+        jcbmi.setSelected(!bumperEndStart && bumperEndStop);
+
+        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", bumperColor);
+            if ((newColor != null) && !newColor.equals(bumperColor)) {
+                setBumperColor(newColor);
+            }
+        });
+        jmi.setForeground(bumperColor);
+        jmi.setBackground(ColorUtil.contrast(bumperColor));
+
+        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bumperLineWidth));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    bumperLineWidth);
+            setBumperLineWidth(newValue);
+        });
+
+        jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLengthMenuItemTitle")) + bumperLength));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for length
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                    bumperLength);
+            setBumperLength(newValue);
+        });
+
+        //
+        // tunnel menus
+        //
+        JMenu tunnelMenu = new JMenu(Bundle.getMessage("TunnelMenuTitle"));
+        decorationsMenu.setToolTipText(Bundle.getMessage("TunnelMenuToolTip"));
+        decorationsMenu.add(tunnelMenu);
+
+        JMenu tunnelSideMenu = new JMenu(Bundle.getMessage("DecorationSideMenuTitle"));
+        tunnelSideMenu.setToolTipText(Bundle.getMessage("DecorationSideMenuToolTip"));
+        tunnelMenu.add(tunnelSideMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        tunnelSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelSideLeft(false);
+            setTunnelSideRight(false);
+        });
+        jcbmi.setSelected(!tunnelSideLeft && !tunnelSideRight);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
+        tunnelSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelSideLeft(true);
+            setTunnelSideRight(false);
+        });
+        jcbmi.setSelected(tunnelSideLeft && !tunnelSideRight);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
+        tunnelSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelSideRight(true);
+            setTunnelSideLeft(false);
+        });
+        jcbmi.setSelected(!tunnelSideLeft && tunnelSideRight);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+        tunnelSideMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelSideLeft(true);
+            setTunnelSideRight(true);
+        });
+        jcbmi.setSelected(tunnelSideLeft && tunnelSideRight);
+
+        JMenu tunnelEndMenu = new JMenu(Bundle.getMessage("DecorationEndMenuTitle"));
+        tunnelEndMenu.setToolTipText(Bundle.getMessage("DecorationEndMenuToolTip"));
+        tunnelMenu.add(tunnelEndMenu);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+        tunnelEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelHasEntry(false);
+            setTunnelHasExit(false);
+        });
+        jcbmi.setSelected(!tunnelHasEntry && !tunnelHasExit);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
+        tunnelEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelHasEntry(true);
+            setTunnelHasExit(false);
+        });
+        jcbmi.setSelected(tunnelHasEntry && !tunnelHasExit);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
+        tunnelEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelHasExit(true);
+            setTunnelHasEntry(false);
+        });
+        jcbmi.setSelected(!tunnelHasEntry && tunnelHasExit);
+
+        jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
+        tunnelEndMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
+        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            setTunnelHasEntry(true);
+            setTunnelHasExit(true);
+        });
+        jcbmi.setSelected(tunnelHasEntry && tunnelHasExit);
+
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+        jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", tunnelColor);
+            if ((newColor != null) && !newColor.equals(tunnelColor)) {
+                setTunnelColor(newColor);
+            }
+        });
+        jmi.setForeground(tunnelColor);
+        jmi.setBackground(ColorUtil.contrast(tunnelColor));
+
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("TunnelFloorWidthMenuItemTitle")) + tunnelFloorWidth));
+        jmi.setToolTipText(Bundle.getMessage("TunnelFloorWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for tunnel floor width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("TunnelFloorWidthMenuItemTitle"),
+                    Bundle.getMessage("TunnelFloorWidthMenuItemTitle"),
+                    tunnelFloorWidth);
+            setTunnelFloorWidth(newValue);
+        });
+
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + tunnelLineWidth));
+        jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for tunnel line width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                    tunnelLineWidth);
+            setTunnelLineWidth(newValue);
+        });
+
+        jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                Bundle.getMessage("TunnelEntranceWidthMenuItemTitle")) + tunnelEntranceWidth));
+        jmi.setToolTipText(Bundle.getMessage("TunnelEntranceWidthMenuItemToolTip"));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            //prompt for tunnel entrance width
+            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    Bundle.getMessage("TunnelEntranceWidthMenuItemTitle"),
+                    Bundle.getMessage("TunnelEntranceWidthMenuItemTitle"),
+                    tunnelEntranceWidth);
+            setTunnelEntranceWidth(newValue);
+        });
+
+        popupMenu.add(decorationsMenu);
+
+        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 layoutEditor.getLayoutTrackEditors().editTrackSegment(TrackSegment.this);
             }
         });
-        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 layoutEditor.removeTrackSegment(TrackSegment.this);
@@ -796,59 +1417,10 @@ public class TrackSegment extends LayoutTrack {
                 dispose();
             }
         });
-        popup.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
+        popupMenu.add(new AbstractAction(Bundle.getMessage("SplitTrackSegment")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TrackSegment ts_this = TrackSegment.this;
-                // create a new anchor
-                Point2D p = getCentreSeg();
-                PositionablePoint newAnchor = layoutEditor.addAnchor(p);
-                // link it to me
-                layoutEditor.setLink(newAnchor, POS_POINT, ts_this, TRACK);
-
-                //get unique name for a new track segment
-                String name = layoutEditor.getFinder().uniqueName("T", 0);
-
-                //create it between the new anchor and my connect2(/type2)
-                TrackSegment newTrackSegment = new TrackSegment(name,
-                        newAnchor, POS_POINT,
-                        connect2, type2,
-                        isDashed(), isMainline(), layoutEditor);
-                // add it to known tracks
-                layoutEditor.getLayoutTracks().add(newTrackSegment);
-                layoutEditor.setDirty();
-
-                // copy attributes to new track segment
-                newTrackSegment.setArc(ts_this.isArc());
-                newTrackSegment.setCircle(ts_this.isCircle());
-                //newTrackSegment.setBezier(ts_this.isBezier());
-                newTrackSegment.setFlip(ts_this.isFlip());
-
-                // link my connect2 to the new track segment
-                if (connect2 instanceof PositionablePoint) {
-                    PositionablePoint pp = (PositionablePoint) connect2;
-                    pp.replaceTrackConnection(ts_this, newTrackSegment);
-                } else {
-                    layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
-                }
-
-                // link the new anchor to the new track segment
-                layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
-
-                // link me to the new newAnchor
-                connect2 = newAnchor;
-                type2 = POS_POINT;
-
-                //check on layout block
-                LayoutBlock b = ts_this.getLayoutBlock();
-
-                if (b != null) {
-                    newTrackSegment.setLayoutBlock(b);
-                    layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-                    newTrackSegment.updateBlockInfo();
-                }
-                layoutEditor.setDirty();
-                layoutEditor.redrawPanel();
+                splitTrackSegment();
             }
         });
 
@@ -885,26 +1457,18 @@ public class TrackSegment extends LayoutTrack {
         }));
         jmi.setSelected(!isArc() && isBezier());
 
-        popup.add(lineType);
+        popupMenu.add(lineType);
 
-        if (isArc()) {
-            popup.add(new AbstractAction(Bundle.getMessage("FlipAngle")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    flipAngle();
-                }
-            });
-        }
         if (isArc() || isBezier()) {
             if (hideConstructionLines()) {
-                popup.add(new AbstractAction(Bundle.getMessage("ShowConstruct")) {
+                popupMenu.add(new AbstractAction(Bundle.getMessage("ShowConstruct")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(SHOWCON);
                     }
                 });
             } else {
-                popup.add(new AbstractAction(Bundle.getMessage("HideConstruct")) {
+                popupMenu.add(new AbstractAction(Bundle.getMessage("HideConstruct")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         hideConstructionLines(HIDECON);
@@ -913,7 +1477,7 @@ public class TrackSegment extends LayoutTrack {
             }
         }
         if ((!blockName.isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
-            popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+            popupMenu.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
@@ -921,34 +1485,90 @@ public class TrackSegment extends LayoutTrack {
                 }
             });
         }
-        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-        return popup;
+        popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        return popupMenu;
     }   // showPopup
+
+    /**
+     * split track segment into two track segments with an anchor between
+     */
+    public void splitTrackSegment() {
+        // create a new anchor
+        Point2D p = getCentreSeg();
+        PositionablePoint newAnchor = layoutEditor.addAnchor(p);
+        // link it to me
+        layoutEditor.setLink(newAnchor, POS_POINT, this, TRACK);
+
+        //get unique name for a new track segment
+        String name = layoutEditor.getFinder().uniqueName("T", 1);
+
+        //create it between the new anchor and my connect2(/type2)
+        TrackSegment newTrackSegment = new TrackSegment(name,
+                newAnchor, POS_POINT,
+                connect2, type2,
+                isDashed(), isMainline(), layoutEditor);
+        // add it to known tracks
+        layoutEditor.getLayoutTracks().add(newTrackSegment);
+        layoutEditor.setDirty();
+
+        // copy attributes to new track segment
+        newTrackSegment.setLayoutBlock(this.getLayoutBlock());
+        newTrackSegment.setArc(this.isArc());
+        newTrackSegment.setCircle(this.isCircle());
+        //newTrackSegment.setBezier(this.isBezier());
+        newTrackSegment.setFlip(this.isFlip());
+
+        // link my connect2 to the new track segment
+        if (connect2 instanceof PositionablePoint) {
+            PositionablePoint pp = (PositionablePoint) connect2;
+            pp.replaceTrackConnection(this, newTrackSegment);
+        } else {
+            layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+        }
+
+        // link the new anchor to the new track segment
+        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+
+        // link me to the new newAnchor
+        connect2 = newAnchor;
+        type2 = POS_POINT;
+
+        //check on layout block
+        LayoutBlock b = this.getLayoutBlock();
+
+        if (b != null) {
+            newTrackSegment.setLayoutBlock(b);
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            newTrackSegment.updateBlockInfo();
+        }
+        layoutEditor.setDirty();
+        layoutEditor.redrawPanel();
+    }   // splitTrackSegment
 
     /**
      * Display popup menu for information and editing.
      */
     protected void showBezierPopUp(MouseEvent e, int hitPointType) {
         int bezierControlPointIndex = hitPointType - BEZIER_CONTROL_POINT_OFFSET_MIN;
-        if (popup != null) {
-            popup.removeAll();
+        if (popupMenu != null) {
+            popupMenu.removeAll();
         } else {
-            popup = new JPopupMenu();
+            popupMenu = new JPopupMenu();
         }
 
-        JMenuItem jmi = popup.add(Bundle.getMessage("BezierControlPoint") + " #" + bezierControlPointIndex);
+        JMenuItem jmi = popupMenu.add(Bundle.getMessage("BezierControlPoint") + " #" + bezierControlPointIndex);
         jmi.setEnabled(false);
-        popup.add(new JSeparator(JSeparator.HORIZONTAL));
+        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
         if (bezierControlPoints.size() < BEZIER_CONTROL_POINT_OFFSET_MAX - BEZIER_CONTROL_POINT_OFFSET_MIN) {
-            popup.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
+            popupMenu.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     addBezierControlPointAfter(bezierControlPointIndex);
                 }
             });
-            popup.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointBefore")) {
+            popupMenu.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointBefore")) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -958,7 +1578,7 @@ public class TrackSegment extends LayoutTrack {
         }
 
         if (bezierControlPoints.size() > 2) {
-            popup.add(new AbstractAction(Bundle.getMessage("DeleteBezierControlPoint") + " #" + bezierControlPointIndex) {
+            popupMenu.add(new AbstractAction(Bundle.getMessage("DeleteBezierControlPoint") + " #" + bezierControlPointIndex) {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -966,7 +1586,7 @@ public class TrackSegment extends LayoutTrack {
                 }
             });
         }
-        popup.show(e.getComponent(), e.getX(), e.getY());
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
     private void addBezierControlPointBefore(int index) {
@@ -1019,8 +1639,8 @@ public class TrackSegment extends LayoutTrack {
                 setCircle(true);
                 setBezier(false);
                 break;
-            case 2:
-                setArc(true);   // arc
+            case 2: // arc
+                setArc(true);
                 setAngle(90.0D);
                 setCircle(false);
                 setBezier(false);
@@ -1033,14 +1653,14 @@ public class TrackSegment extends LayoutTrack {
                     Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
                     Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
-                    // compute offset one third the distance from ep1 to ep2
+                    // compute orthogonal offset0 with length one third the distance from ep1 to ep2
                     Point2D offset = MathUtil.subtract(ep2, ep1);
-                    offset = MathUtil.multiply(MathUtil.normalize(offset), MathUtil.length(offset) / 3);
+                    offset = MathUtil.normalize(offset, MathUtil.length(offset) / 3.0);
+                    offset = MathUtil.orthogonal(offset);
 
-                    // swap x & y so the offset is orthogonal to orginal line
-                    offset = new Point2D.Double(offset.getY(), offset.getX());
+                    // add orthogonal offset0 to 1/3rd and 2/3rd points
                     Point2D pt1 = MathUtil.add(MathUtil.oneThirdPoint(ep1, ep2), offset);
-                    Point2D pt2 = MathUtil.subtract(MathUtil.oneThirdPoint(ep2, ep1), offset);
+                    Point2D pt2 = MathUtil.subtract(MathUtil.twoThirdsPoint(ep1, ep2), offset);
 
                     bezierControlPoints.add(pt1);
                     bezierControlPoints.add(pt2);
@@ -1054,12 +1674,6 @@ public class TrackSegment extends LayoutTrack {
         layoutEditor.setDirty();
     }
 
-    void flipAngle() {
-        setFlip(!isFlip());
-        layoutEditor.redrawPanel();
-        layoutEditor.setDirty();
-    }
-
     /**
      * Clean up when this object is no longer needed.
      * <p>
@@ -1068,10 +1682,10 @@ public class TrackSegment extends LayoutTrack {
      * @see #remove()
      */
     void dispose() {
-        if (popup != null) {
-            popup.removeAll();
+        if (popupMenu != null) {
+            popupMenu.removeAll();
         }
-        popup = null;
+        popupMenu = null;
     }
 
     /**
@@ -1098,9 +1712,9 @@ public class TrackSegment extends LayoutTrack {
 
     public int showConstructionLine = SHOWCON;
 
-    //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowConstructionLinesLE()"
-    protected boolean showConstructionLinesLE() {
-        if ((showConstructionLine & HIDECON) == HIDECON || (showConstructionLine & HIDECONALL) == HIDECONALL) {
+    public boolean isShowConstructionLines() {
+        if ((showConstructionLine & HIDECON) == HIDECON
+                || (showConstructionLine & HIDECONALL) == HIDECONALL) {
             return false;
         }
         return true;
@@ -1134,7 +1748,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * The following are used only as a temporary store after a circle or arc
      * has been calculated. This prevents the need to recalculate the values
-     * each time a re-drawHidden is required.
+     * each time a re-draw is required.
      */
     private Point2D pt1;
     private Point2D pt2;
@@ -1157,7 +1771,6 @@ public class TrackSegment extends LayoutTrack {
         changed = true;
     }
 
-    //private int startadj;
     private double cX;
 
     public double getCX() {
@@ -1198,14 +1811,14 @@ public class TrackSegment extends LayoutTrack {
         cH = CH;
     }
 
-    private double startadj;
+    private double startAdj;
 
-    public double getStartadj() {
-        return startadj;
+    public double getStartAdj() {
+        return startAdj;
     }
 
-    public void setStartadj(double Startadj) {
-        startadj = Startadj;
+    public void setStartAdj(double startAdj) {
+        this.startAdj = startAdj;
     }
 
     // this is the center of the track segment (it is "on" the track segment)
@@ -1353,7 +1966,7 @@ public class TrackSegment extends LayoutTrack {
      */
     //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
-
+        if (!isBezier()) {
         double pt2x;
         double pt2y;
         double pt1x;
@@ -1387,6 +2000,7 @@ public class TrackSegment extends LayoutTrack {
         double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
         setAngle(newangle);
     }
+    }
 
     /*
      * Calculate the initally parameters for drawing a circular track segment.
@@ -1415,7 +2029,7 @@ public class TrackSegment extends LayoutTrack {
                 setTmpAngle(getAngle());
             }
             // Convert angle to radiants in order to speed up math
-            double halfAngleRAD = Math.toRadians(getTmpAngle()) / 2.0D;
+            double halfAngleRAD = Math.toRadians(getTmpAngle()) / 2.D;
 
             // Compute arc's chord
             double a = pt2x - pt1x;
@@ -1425,11 +2039,11 @@ public class TrackSegment extends LayoutTrack {
 
             // Make sure chord is not null
             // In such a case (ep1 == ep2), there is no arc to draw
-            if (chord > 0.0D) {
-                double radius = (chord / 2) / Math.sin(halfAngleRAD);
+            if (chord > 0.D) {
+                double radius = (chord / 2.D) / Math.sin(halfAngleRAD);
                 // Circle
                 double startRad = Math.atan2(a, o) - halfAngleRAD;
-                setStartadj(Math.toDegrees(startRad));
+                setStartAdj(Math.toDegrees(startRad));
                 if (isCircle()) {
                     // Circle - Compute center
                     setCentreX(pt2x - Math.cos(startRad) * radius);
@@ -1448,7 +2062,7 @@ public class TrackSegment extends LayoutTrack {
                     setCentreSeg(MathUtil.add(getCentre(), offset));
                 } else {
                     // Ellipse - Round start angle to the closest multiple of 90
-                    setStartadj(Math.round(getStartadj() / 90.0D) * 90.0D);
+                    setStartAdj(Math.round(getStartAdj() / 90.0D) * 90.0D);
                     // Ellipse - Compute rectangle required by Arc2D.Double
                     setCW(Math.abs(a) * 2.0D);
                     setCH(Math.abs(o) * 2.0D);
@@ -1469,111 +2083,120 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void draw(Graphics2D g2) {
-        // hidden, dashed & solid track segments are drawn interleaved
-        // so save and restore the previous stroke before & after drawing
-        Stroke oldStroke = g2.getStroke();  // save previous stroke
-        setColorForTrackBlock(g2, getLayoutBlock());
-
-        if (isHidden()) {
-            if (layoutEditor.isEditable()) {
-                drawHidden(g2);
-            }
-        } else if (isDashed()) {
-            drawDashed(g2);
-        } else if (!isHidden()) {
-            drawSolid(g2);
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (!isBlock && getDashed() && getLayoutBlock() != null) {
+            // Skip the dashed rail layer, the block layer will display the dashed track
+            // This removes random rail fragments from between the block dashes
+            return;
         }
-        g2.setStroke(oldStroke);    // restore previous stroke
+        if (isMain == mainline) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlock());
+            }
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                    g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+                    trackRedrawn();
+            } else if (isBezier()) {
+                Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
+
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
+
+                MathUtil.drawBezier(g2, points);
+            } else {
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+
+                g2.draw(new Line2D.Double(end1, end2));
+            }
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
-        // TrackSegments are always connected
-        // nothing to see here... move along...
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        if (getDashed() && getLayoutBlock() != null) {
+            // Skip the dashed rail layer, the block layer will display the dashed track
+            // This removes random rail fragments from between the block dashes
+            return;
+        }
+        if (isMain == mainline) {
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                Rectangle2D cRectangle2D = new Rectangle2D.Double(
+                        getCX(), getCY(), getCW(), getCH());
+                Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
+                double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
+                g2.draw(new Arc2D.Double(
+                        cLeftRectangle2D.getX(),
+                        cLeftRectangle2D.getY(),
+                        cLeftRectangle2D.getWidth(),
+                        cLeftRectangle2D.getHeight(),
+                        startAdj, tmpAngle, Arc2D.OPEN));
+                Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +railDisplacement);
+                g2.draw(new Arc2D.Double(
+                        cLRightRectangle2D.getX(),
+                        cLRightRectangle2D.getY(),
+                        cLRightRectangle2D.getWidth(),
+                        cLRightRectangle2D.getHeight(),
+                        startAdj, tmpAngle, Arc2D.OPEN));
+                trackRedrawn();
+            } else if (isBezier()) {
+                Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
+
+                int cnt = bezierControlPoints.size();
+                Point2D[] points = new Point2D[cnt + 2];
+                points[0] = pt1;
+                for (int idx = 0; idx < cnt; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt + 1] = pt2;
+
+                MathUtil.drawBezier(g2, points, -railDisplacement);
+                MathUtil.drawBezier(g2, points, +railDisplacement);
+            } else {
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
+
+                Point2D delta = MathUtil.subtract(end2, end1);
+                Point2D vector = MathUtil.normalize(delta, railDisplacement);
+                vector = MathUtil.orthogonal(vector);
+
+                Point2D ep1L = MathUtil.add(end1, vector);
+                Point2D ep2L = MathUtil.add(end2, vector);
+                g2.draw(new Line2D.Double(ep1L, ep2L));
+
+                Point2D ep1R = MathUtil.subtract(end1, vector);
+                Point2D ep2R = MathUtil.subtract(end2, vector);
+                g2.draw(new Line2D.Double(ep1R, ep2R));
+            }
+        }
     }
 
-    private void drawHidden(Graphics2D g2) {
-        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        g2.draw(new Line2D.Double(LayoutEditor.getCoords(getConnect1(), getType1()),
-                LayoutEditor.getCoords(getConnect2(), getType2())));
-    }   // drawHidden
-
-    private void drawDashed(Graphics2D g2) {
-        float trackWidth = layoutEditor.setTrackStrokeWidth(g2, mainline);
-        if (isArc()) {
-            calculateTrackSegmentAngle();
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-            g2.setStroke(drawingStroke);
-            g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-        } else if (isBezier()) {
-            Stroke drawingStroke = new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-            g2.setStroke(drawingStroke);
-
-            Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-            int cnt = bezierControlPoints.size();
-            Point2D[] points = new Point2D[cnt + 2];
-            points[0] = pt1;
-            for (int idx = 0; idx < cnt; idx++) {
-                points[idx + 1] = bezierControlPoints.get(idx);
-            }
-            points[cnt + 1] = pt2;
-
-            MathUtil.drawBezier(g2, points);
-        } else {
-            Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-            double delX = end1.getX() - end2.getX();
-            double delY = end1.getY() - end2.getY();
-            double cLength = Math.hypot(delX, delY);
-
-            // note: The preferred dimension of a dash (solid + blank space) is
-            //         5 * the track width - about 60% solid and 40% blank.
-            int nDashes = (int) (cLength / ((trackWidth) * 5.0));
-            if (nDashes < 3) {
-                nDashes = 3;
-            }
-            double delXDash = -delX / ((nDashes) - 0.5);
-            double delYDash = -delY / ((nDashes) - 0.5);
-            double begX = end1.getX();
-            double begY = end1.getY();
-            for (int k = 0; k < nDashes; k++) {
-                g2.draw(new Line2D.Double(new Point2D.Double(begX, begY),
-                        new Point2D.Double(begX + (delXDash * 0.5), begY + (delYDash * 0.5))));
-                begX += delXDash;
-                begY += delYDash;
-            }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawUnconnected(Graphics2D g2
+    ) {
+        // TrackSegments are always connected
+        // nothing to see here... move along...
         }
-    }   // drawDashed
 
-    private void drawSolid(Graphics2D g2) {
-        if (isArc()) {
-            calculateTrackSegmentAngle();
-            g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartadj(), getTmpAngle(), Arc2D.OPEN));
-        } else if (isBezier()) {
-            Point2D pt0 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D pt3 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-            Point2D pt1 = bezierControlPoints.get(0);
-            Point2D pt2 = bezierControlPoints.get(1);
-            MathUtil.drawBezier(g2, pt0, pt1, pt2, pt3);
-        } else {
-            Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
-            Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
-            g2.draw(new Line2D.Double(end1, end2));
-        }
-        trackRedrawn();
-    }   // drawSolid
-
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
-        if (showConstructionLinesLE()) {
+        if (isShowConstructionLines()) {
             Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
             Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
             if (isCircle()) {
@@ -1583,22 +2206,23 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
                 // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
-                g2.draw(layoutEditor.trackControlCircleAt(circleCenterPoint));
-                g2.draw(layoutEditor.trackControlCircleRectAt(circleCenterPoint));
+                g2.draw(layoutEditor.trackEditControlCircleAt(circleCenterPoint));
+                g2.draw(layoutEditor.trackEditControlRectAt(circleCenterPoint));
             } else if (isBezier()) {
                 //draw construction lines and control circles
                 Point2D lastPt = ep1;
                 for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
-                    g2.draw(layoutEditor.trackControlPointRectAt(bcp));
+                    g2.draw(layoutEditor.trackEditControlRectAt(bcp));
                 }
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(layoutEditor.trackControlCircleAt(getCentreSeg()));
+        g2.draw(layoutEditor.trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // TrackSegments don't have turnout controls...
         // nothing to see here... move along...
@@ -1611,6 +2235,1355 @@ public class TrackSegment extends LayoutTrack {
     public void reCheckBlockBoundary() {
         // nothing to see here... move along...
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {
+
+        if (getName().equals("T9")) {
+            log.debug("STOP!");
+        }
+
+        // get end points and calculate start/stop angles (in radians)
+        Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+        Point2D p1, p2, p3, p4, p5, p6, p7;
+        Point2D p1P, p2P, p3P, p4P, p5P, p6P, p7P;
+        double startAngleRAD, stopAngleRAD;
+        if (isArc()) {
+            calculateTrackSegmentAngle();
+            double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
+            startAngleRAD = (Math.PI / 2.D) - Math.toRadians(startAngleDEG);
+            stopAngleRAD = (Math.PI / 2.D) - Math.toRadians(startAngleDEG + extentAngleDEG);
+            if (isFlip()) {
+                startAngleRAD += Math.PI;
+                stopAngleRAD += Math.PI;
+            } else {
+                double temp = startAngleRAD;
+                startAngleRAD = stopAngleRAD;
+                stopAngleRAD = temp;
+            }
+        } else if (isBezier()) {
+            Point2D cp0 = bezierControlPoints.get(0);
+            Point2D cpN = bezierControlPoints.get(bezierControlPoints.size() - 1);
+            startAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(cp0, ep1);
+            stopAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep2, cpN);
+        } else {
+            Point2D delta = MathUtil.subtract(ep2, ep1);
+            startAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(delta);
+            stopAngleRAD = startAngleRAD;
+        }
+
+        //
+        // arrow decorations
+        //
+        if (arrowStyle > 0) {
+            g2.setStroke(new BasicStroke(arrowLineWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+            g2.setColor(arrowColor);
+
+            // draw the out arrows
+            int offset = 1;
+            if (arrowEndStart) {
+                if (arrowDirIn) {
+                    offset = drawArrow(g2, ep1, Math.PI + startAngleRAD, false, offset);
+                }
+                if (arrowDirOut) {
+                    offset = drawArrow(g2, ep1, Math.PI + startAngleRAD, true, offset);
+                }
+            }
+            offset = 1;
+            if (arrowEndStop) {
+                if (arrowDirIn) {
+                    offset = drawArrow(g2, ep2, stopAngleRAD, false, offset);
+                }
+                if (arrowDirOut) {
+                    offset = drawArrow(g2, ep2, stopAngleRAD, true, offset);
+                }
+            }
+        }   // arrow decoration
+
+        //
+        //  bridge decorations
+        //
+        if (bridgeSideLeft || bridgeSideRight) {
+            float halfWidth = bridgeDeckWidth / 2.F;
+
+            g2.setStroke(new BasicStroke(bridgeLineWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+            g2.setColor(bridgeColor);
+
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                Rectangle2D cRectangle2D = new Rectangle2D.Double(
+                        getCX(), getCY(), getCW(), getCH());
+                double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
+                if (bridgeSideLeft) {
+                    Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
+                    g2.draw(new Arc2D.Double(
+                            cLeftRectangle2D.getX(),
+                            cLeftRectangle2D.getY(),
+                            cLeftRectangle2D.getWidth(),
+                            cLeftRectangle2D.getHeight(),
+                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                }
+                if (bridgeSideRight) {
+                    Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
+                    g2.draw(new Arc2D.Double(
+                            cLRightRectangle2D.getX(),
+                            cLRightRectangle2D.getY(),
+                            cLRightRectangle2D.getWidth(),
+                            cLRightRectangle2D.getHeight(),
+                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                }
+                trackRedrawn();
+            } else if (isBezier()) {
+                int cnt = bezierControlPoints.size() + 2;
+                Point2D[] points = new Point2D[cnt];
+                points[0] = ep1;
+                for (int idx = 0; idx < cnt - 2; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt - 1] = ep2;
+
+                if (bridgeSideLeft) {
+                    MathUtil.drawBezier(g2, points, -halfWidth);
+                }
+                if (bridgeSideRight) {
+                    MathUtil.drawBezier(g2, points, +halfWidth);
+                }
+            } else {
+                Point2D delta = MathUtil.subtract(ep2, ep1);
+                Point2D vector = MathUtil.normalize(delta, halfWidth);
+                vector = MathUtil.orthogonal(vector);
+
+                if (bridgeSideLeft) {
+                    Point2D ep1L = MathUtil.add(ep1, vector);
+                    Point2D ep2L = MathUtil.add(ep2, vector);
+                    g2.draw(new Line2D.Double(ep1L, ep2L));
+                }
+                if (bridgeSideRight) {
+                    Point2D ep1R = MathUtil.subtract(ep1, vector);
+                    Point2D ep2R = MathUtil.subtract(ep2, vector);
+                    g2.draw(new Line2D.Double(ep1R, ep2R));
+                }
+            }   // if isArc() {} else if isBezier() {} else...
+
+            if (bridgeHasEntry) {
+                if (bridgeSideRight) {
+                    p1 = new Point2D.Double(-bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
+                    p2 = new Point2D.Double(0.0, -halfWidth);
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                    g2.draw(new Line2D.Double(p1P, p2P));
+                }
+                if (bridgeSideLeft) {
+                    p1 = new Point2D.Double(-bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
+                    p2 = new Point2D.Double(0.0, +halfWidth);
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                    g2.draw(new Line2D.Double(p1P, p2P));
+                }
+            }
+            if (bridgeHasExit) {
+                if (bridgeSideRight) {
+                    p1 = new Point2D.Double(+bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
+                    p2 = new Point2D.Double(0.0, -halfWidth);
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                    g2.draw(new Line2D.Double(p1P, p2P));
+                }
+                if (bridgeSideLeft) {
+                    p1 = new Point2D.Double(+bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
+                    p2 = new Point2D.Double(0.0, +halfWidth);
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                    g2.draw(new Line2D.Double(p1P, p2P));
+                }
+            }
+        }   // if (bridgeValue != null)
+
+        //
+        //  end bumper decorations
+        //
+        if (bumperEndStart || bumperEndStop) {
+            if (getName().equals("T15")) {
+                log.debug("STOP!");
+            }
+            g2.setStroke(new BasicStroke(bumperLineWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+            g2.setColor(bumperColor);
+
+            float halfLength = bumperLength / 2.F;
+
+            if (bumperFlipped) {
+                double temp = startAngleRAD;
+                startAngleRAD = stopAngleRAD;
+                stopAngleRAD = temp;
+            }
+
+            // draw cross ties
+            if (bumperEndStart) {
+                p1 = new Point2D.Double(halfLength, -halfLength);
+                p2 = new Point2D.Double(halfLength, +halfLength);
+                p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                g2.draw(new Line2D.Double(p1P, p2P));
+            }
+            if (bumperEndStop) {
+                p1 = new Point2D.Double(-halfLength, -halfLength);
+                p2 = new Point2D.Double(-halfLength, +halfLength);
+                p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                g2.draw(new Line2D.Double(p1P, p2P));
+            }
+        }   // if (bumperEndStart || bumperEndStop)
+
+        //
+        //  tunnel decorations
+        //
+        if (tunnelSideRight || tunnelSideLeft) {
+            float halfWidth = tunnelFloorWidth / 2.F;
+            g2.setStroke(new BasicStroke(tunnelLineWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
+                    new float[]{6.F, 4.F}, 0));
+            g2.setColor(tunnelColor);
+
+            if (isArc()) {
+                calculateTrackSegmentAngle();
+                Rectangle2D cRectangle2D = new Rectangle2D.Double(
+                        getCX(), getCY(), getCW(), getCH());
+                double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
+                if (tunnelSideRight) {
+                    Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
+                    g2.draw(new Arc2D.Double(
+                            cLeftRectangle2D.getX(),
+                            cLeftRectangle2D.getY(),
+                            cLeftRectangle2D.getWidth(),
+                            cLeftRectangle2D.getHeight(),
+                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                }
+                if (tunnelSideLeft) {
+                    Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
+                    g2.draw(new Arc2D.Double(
+                            cLRightRectangle2D.getX(),
+                            cLRightRectangle2D.getY(),
+                            cLRightRectangle2D.getWidth(),
+                            cLRightRectangle2D.getHeight(),
+                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                }
+                trackRedrawn();
+            } else if (isBezier()) {
+                int cnt = bezierControlPoints.size() + 2;
+                Point2D[] points = new Point2D[cnt];
+                points[0] = ep1;
+                for (int idx = 0; idx < cnt - 2; idx++) {
+                    points[idx + 1] = bezierControlPoints.get(idx);
+                }
+                points[cnt - 1] = ep2;
+
+                if (tunnelSideRight) {
+                    MathUtil.drawBezier(g2, points, -halfWidth);
+                }
+                if (tunnelSideLeft) {
+                    MathUtil.drawBezier(g2, points, +halfWidth);
+                }
+            } else {
+                Point2D delta = MathUtil.subtract(ep2, ep1);
+                Point2D vector = MathUtil.normalize(delta, halfWidth);
+                vector = MathUtil.orthogonal(vector);
+
+                if (tunnelSideRight) {
+                    Point2D ep1L = MathUtil.add(ep1, vector);
+                    Point2D ep2L = MathUtil.add(ep2, vector);
+                    g2.draw(new Line2D.Double(ep1L, ep2L));
+                }
+                if (tunnelSideLeft) {
+                    Point2D ep1R = MathUtil.subtract(ep1, vector);
+                    Point2D ep2R = MathUtil.subtract(ep2, vector);
+                    g2.draw(new Line2D.Double(ep1R, ep2R));
+                }
+            }   // if isArc() {} else if isBezier() {} else...
+
+            g2.setStroke(new BasicStroke(tunnelLineWidth,
+                    BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
+            g2.setColor(tunnelColor);
+
+            double halfEntranceWidth = tunnelEntranceWidth / 2.0;
+            double halfFloorWidth = tunnelFloorWidth / 2.0;
+            double halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+
+            if (tunnelHasEntry) {
+                if (tunnelSideLeft) {
+                    p1 = new Point2D.Double(0.0, 0.0);
+                    p2 = new Point2D.Double(0.0, -halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, -halfEntranceWidth);
+                    p4 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth);
+                    p5 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p6 = new Point2D.Double(-halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p7 = new Point2D.Double(-halfDiffWidth, 0.0);
+
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
+                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, startAngleRAD), ep1);
+                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, startAngleRAD), ep1);
+                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, startAngleRAD), ep1);
+                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, startAngleRAD), ep1);
+
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1P.getX(), p1P.getY());
+                    path.lineTo(p2P.getX(), p2P.getY());
+                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
+                    path.lineTo(p5P.getX(), p5P.getY());
+                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
+                    path.closePath();
+                    g2.fill(path);
+                }
+                if (tunnelSideRight) {
+                    p1 = new Point2D.Double(0.0, 0.0);
+                    p2 = new Point2D.Double(0.0, +halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, +halfEntranceWidth);
+                    p4 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth);
+                    p5 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p6 = new Point2D.Double(-halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p7 = new Point2D.Double(-halfDiffWidth, 0.0);
+
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
+                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, startAngleRAD), ep1);
+                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, startAngleRAD), ep1);
+                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, startAngleRAD), ep1);
+                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, startAngleRAD), ep1);
+
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1P.getX(), p1P.getY());
+                    path.lineTo(p2P.getX(), p2P.getY());
+                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
+                    path.lineTo(p5P.getX(), p5P.getY());
+                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
+                    path.closePath();
+                    g2.fill(path);
+                }
+            }
+            if (tunnelHasExit) {
+                if (tunnelSideLeft) {
+                    p1 = new Point2D.Double(0.0, 0.0);
+                    p2 = new Point2D.Double(0.0, -halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, -halfEntranceWidth);
+                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth);
+                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p6 = new Point2D.Double(halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p7 = new Point2D.Double(halfDiffWidth, 0.0);
+
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, stopAngleRAD), ep2);
+                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, stopAngleRAD), ep2);
+                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, stopAngleRAD), ep2);
+                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, stopAngleRAD), ep2);
+                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, stopAngleRAD), ep2);
+
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1P.getX(), p1P.getY());
+                    path.lineTo(p2P.getX(), p2P.getY());
+                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
+                    path.lineTo(p5P.getX(), p5P.getY());
+                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
+                    path.closePath();
+                    g2.fill(path);
+                }
+                if (tunnelSideRight) {
+                    p1 = new Point2D.Double(0.0, 0.0);
+                    p2 = new Point2D.Double(0.0, +halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, +halfEntranceWidth);
+                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth);
+                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p6 = new Point2D.Double(halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p7 = new Point2D.Double(halfDiffWidth, 0.0);
+
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, stopAngleRAD), ep2);
+                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, stopAngleRAD), ep2);
+                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, stopAngleRAD), ep2);
+                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, stopAngleRAD), ep2);
+                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, stopAngleRAD), ep2);
+
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1P.getX(), p1P.getY());
+                    path.lineTo(p2P.getX(), p2P.getY());
+                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
+                    path.lineTo(p5P.getX(), p5P.getY());
+                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
+                    path.closePath();
+                    g2.fill(path);
+                }
+            }
+        }   // if (tunnelValue != null)
+    }   // drawDecorations
+
+    private int drawArrow(
+            Graphics2D g2,
+            Point2D ep,
+            double angleRAD,
+            boolean dirOut,
+            int offset) {
+        Point2D p1, p2, p3, p4, p5, p6;
+        switch (arrowStyle) {
+            default:
+                arrowStyle = 0;
+            //$FALL-THROUGH$
+            case 0: {
+                break;
+            }
+            case 1: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, -arrowLength);
+                    p2 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p3 = new Point2D.Double(offset, +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(offset, 0.0);
+                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+
+                g2.draw(new Line2D.Double(p1, p2));
+                g2.draw(new Line2D.Double(p2, p3));
+                offset += arrowLength + arrowGap;
+                break;
+            }
+            case 2: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, -arrowLength);
+                    p2 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p3 = new Point2D.Double(offset, +arrowLength);
+                    p4 = new Point2D.Double(offset + arrowLineWidth + arrowGap, -arrowLength);
+                    p5 = new Point2D.Double(offset + arrowLineWidth + arrowGap + arrowLength, 0.0);
+                    p6 = new Point2D.Double(offset + arrowLineWidth + arrowGap, +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(offset, 0.0);
+                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
+                    p4 = new Point2D.Double(offset + arrowLineWidth + arrowGap + arrowLength, -arrowLength);
+                    p5 = new Point2D.Double(offset + arrowLineWidth + arrowGap, 0.0);
+                    p6 = new Point2D.Double(offset + arrowLineWidth + arrowGap + arrowLength, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+                p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), ep);
+                p5 = MathUtil.add(MathUtil.rotateRAD(p5, angleRAD), ep);
+                p6 = MathUtil.add(MathUtil.rotateRAD(p6, angleRAD), ep);
+
+                g2.draw(new Line2D.Double(p1, p2));
+                g2.draw(new Line2D.Double(p2, p3));
+                g2.draw(new Line2D.Double(p4, p5));
+                g2.draw(new Line2D.Double(p5, p6));
+                offset += arrowLength + (2 * (arrowLineWidth + arrowGap));
+                break;
+            }
+            case 3: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, -arrowLength);
+                    p2 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p3 = new Point2D.Double(offset, +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + arrowLength, -arrowLength);
+                    p2 = new Point2D.Double(offset, 0.0);
+                    p3 = new Point2D.Double(offset + arrowLength, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+
+                GeneralPath path = new GeneralPath();
+                path.moveTo(p1.getX(), p1.getY());
+                path.lineTo(p2.getX(), p2.getY());
+                path.lineTo(p3.getX(), p3.getY());
+                path.closePath();
+                if (arrowLineWidth > 1) {
+                    g2.fill(path);
+                } else {
+                    g2.draw(path);
+                }
+                offset += arrowLength + arrowGap;
+                break;
+            }
+            case 4: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, 0.0);
+                    p2 = new Point2D.Double(offset + (2 * arrowLength), -arrowLength);
+                    p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p4 = new Point2D.Double(offset + (2 * arrowLength), +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p2 = new Point2D.Double(offset, -arrowLength);
+                    p3 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p4 = new Point2D.Double(offset, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+                p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), ep);
+
+                g2.draw(new Line2D.Double(p1, p3));
+                g2.draw(new Line2D.Double(p2, p3));
+                g2.draw(new Line2D.Double(p3, p4));
+                offset += (3 * arrowLength) + arrowGap;
+                break;
+            }
+            case 5: {
+                if (dirOut) {
+                    p1 = new Point2D.Double(offset, 0.0);
+                    p2 = new Point2D.Double(offset + (2 * arrowLength), -arrowLength);
+                    p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p4 = new Point2D.Double(offset + (2 * arrowLength), +arrowLength);
+                } else {
+                    p1 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p2 = new Point2D.Double(offset, -arrowLength);
+                    p3 = new Point2D.Double(offset + arrowLength, 0.0);
+                    p4 = new Point2D.Double(offset, +arrowLength);
+                }
+                p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
+                p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
+                p3 = MathUtil.add(MathUtil.rotateRAD(p3, angleRAD), ep);
+                p4 = MathUtil.add(MathUtil.rotateRAD(p4, angleRAD), ep);
+
+                GeneralPath path = new GeneralPath();
+                path.moveTo(p4.getX(), p4.getY());
+                path.lineTo(p2.getX(), p2.getY());
+                path.lineTo(p3.getX(), p3.getY());
+                path.closePath();
+                if (arrowLineWidth > 1) {
+                    g2.fill(path);
+                } else {
+                    g2.draw(path);
+                }
+                g2.draw(new Line2D.Double(p1, p3));
+
+                offset += (3 * arrowLength) + arrowGap;
+                break;
+            }
+        }
+        return offset;
+    }   // drawArrow
+
+    /*======================*\
+    |* decoration accessors *|
+    \*======================*/
+    /**
+     * get decorations
+     *
+     * @return decorations to set
+     */
+    @Override
+    public Map<String, String> getDecorations() {
+        if (decorations == null) {
+            decorations = new HashMap<>();
+        } //if (decorathions != null)
+
+        //
+        // arrow decorations
+        //
+        if (arrowStyle > 0) {
+            // <decoration name="arrow" value="double;both;linewidth=1;length=12;gap=1" />
+            List<String> arrowValues = new ArrayList<String>();
+
+            arrowValues.add("style=" + arrowStyle);
+
+            if (arrowEndStart && arrowEndStop) {
+                // default behaviour is both
+            } else if (arrowEndStop) {
+                arrowValues.add("stop");
+            } else {
+                arrowEndStart = true;
+                arrowValues.add("start");
+            }
+
+            if (arrowDirIn && !arrowDirOut) {
+                arrowValues.add("in");
+            } else if (!arrowDirIn && arrowDirOut) {
+                arrowValues.add("out");
+            } else {
+                arrowDirIn = true;
+                arrowDirOut = true;
+                arrowValues.add("both");
+            }
+            arrowValues.add("color=" + ColorUtil.colorToHexString(arrowColor));
+            arrowValues.add("linewidth=" + arrowLineWidth);
+            arrowValues.add("length=" + arrowLength);
+            arrowValues.add("gap=" + arrowGap);
+            decorations.put("arrow", String.join(";", arrowValues));
+        }   // if (arrowCount > 0)
+
+        //
+        //  bridge decorations
+        //
+        if (bridgeSideLeft || bridgeSideRight) {
+            // <decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
+            List<String> bridgeValues = new ArrayList<String>();
+
+            if (bridgeHasEntry && !bridgeHasExit) {
+                bridgeValues.add("entry");
+            } else if (!bridgeHasEntry && bridgeHasExit) {
+                bridgeValues.add("exit");
+            } else if (bridgeHasEntry && bridgeHasExit) {
+                bridgeValues.add("both");
+            }
+            if (bridgeSideLeft && !bridgeSideRight) {
+                bridgeValues.add("left");
+            } else if (!bridgeSideLeft && bridgeSideRight) {
+                bridgeValues.add("right");
+            }
+            bridgeValues.add("color=" + ColorUtil.colorToHexString(bridgeColor));
+            bridgeValues.add("linewidth=" + bridgeLineWidth);
+            bridgeValues.add("approachwidth=" + bridgeApproachWidth);
+            bridgeValues.add("deckwidth=" + bridgeDeckWidth);
+
+            decorations.put("bridge", String.join(";", bridgeValues));
+        }   // if (bridgeSideLeft || bridgeSideRight)
+
+        //
+        //  end bumper decorations
+        //
+        if (bumperEndStart || bumperEndStop) {
+            // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
+            List<String> bumperValues = new ArrayList<String>();
+            if (bumperEndStart) {
+                bumperValues.add("start");
+            } else if (bumperEndStop) {
+                bumperValues.add("stop");
+            }
+
+            if (bumperFlipped) {
+                bumperValues.add("flip");
+            }
+            bumperValues.add("color=" + ColorUtil.colorToHexString(bumperColor));
+            bumperValues.add("length=" + bumperLength);
+            bumperValues.add("linewidth=" + bumperLineWidth);
+
+            decorations.put("bumper", String.join(";", bumperValues));
+        }   // if (bumperCount > 0)
+
+        //
+        //  tunnel decorations
+        //
+        if (tunnelSideLeft || tunnelSideRight) {
+            // <decoration name="tunnel" value="both;linewidth=2;floorwidth=8" />
+            List<String> tunnelValues = new ArrayList<String>();
+
+            if (tunnelHasEntry && !tunnelHasExit) {
+                tunnelValues.add("entry");
+            } else if (!tunnelHasEntry && tunnelHasExit) {
+                tunnelValues.add("exit");
+            } else if (tunnelHasEntry && tunnelHasExit) {
+                tunnelValues.add("both");
+            }
+
+            if (tunnelSideLeft && !tunnelSideRight) {
+                tunnelValues.add("left");
+            } else if (tunnelSideLeft && !tunnelSideRight) {
+                tunnelValues.add("right");
+            }
+            tunnelValues.add("color=" + ColorUtil.colorToHexString(tunnelColor));
+            tunnelValues.add("linewidth=" + tunnelLineWidth);
+            tunnelValues.add("entrancewidth=" + tunnelEntranceWidth);
+            tunnelValues.add("floorwidth=" + tunnelFloorWidth);
+
+            decorations.put("tunnel", String.join(";", tunnelValues));
+        }   // if (tunnelSideLeft || tunnelSideRight)
+        return decorations;
+    } // getDecorations
+
+    /**
+     * set decorations
+     *
+     * @param decorations to set
+     */
+    @Override
+    public void setDecorations(Map<String, String> decorations) {
+        super.setDecorations(decorations);
+        if (decorations != null) {
+            for (Map.Entry<String, String> entry : decorations.entrySet()) {
+                log.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                String key = entry.getKey();
+                //
+                // arrow decorations
+                //
+                if (key.equals("arrow")) {
+                    String arrowValue = entry.getValue();
+                    // <decoration name="arrow" value="double;both;linewidth=1;length=12;gap=1" />
+                    boolean atStart = true, atStop = true;
+                    boolean hasIn = false, hasOut = false;
+                    int lineWidth = 1, length = 3, gap = 1, count = 1;
+                    Color color = defaultTrackColor;
+                    String[] values = arrowValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        if (value.equals("single")) {
+                            count = 1;
+                        } else if (value.equals("double")) {
+                            count = 2;
+                        } else if (value.equals("triple")) {
+                            count = 3;
+                        } else if (value.startsWith("style=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            count = Integer.parseInt(valueString);
+                        } else if (value.equals("start")) {
+                            atStop = false;
+                        } else if (value.equals("stop")) {
+                            atStart = false;
+                        } else if (value.equals("in")) {
+                            hasIn = true;
+                        } else if (value.equals("out")) {
+                            hasOut = true;
+                        } else if (value.equals("both")) {
+                            hasIn = true;
+                            hasOut = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("length=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            length = Integer.parseInt(valueString);
+                        } else if (value.startsWith("gap=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            gap = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("arrow value ignored: " + value);
+                        }
+                    }
+                    hasIn |= !hasOut;   // if hasOut is false make hasIn true
+                    if (!atStart && !atStop) {   // if both false
+                        atStart = true; // set both true
+                        atStop = true;
+                    }
+                    setArrowEndStart(atStart);
+                    setArrowEndStop(atStop);
+                    setArrowDirIn(hasIn);
+                    setArrowDirOut(hasOut);
+                    setArrowColor(color);
+                    setArrowLineWidth(lineWidth);
+                    setArrowLength(length);
+                    setArrowGap(gap);
+                    // set count last so it will fix ends and dir (if necessary)
+                    setArrowStyle(count);
+                } // if (key.equals("arrow")) {
+                //
+                //  bridge decorations
+                //
+                else if (key.equals("bridge")) {
+                    String bridgeValue = entry.getValue();
+                    // <decoration name="bridge" value="both;linewidth=2;deckwidth=8" />
+                    // right/left default true; in/out default false
+                    boolean hasLeft = true, hasRight = true, hasEntry = false, hasExit = false;
+                    int approachWidth = 4, lineWidth = 1, deckWidth = 2;
+                    Color color = defaultTrackColor;
+                    String[] values = bridgeValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        //log.info("value[{}]: \"{}\"", i, value);
+                        if (value.equals("left")) {
+                            hasRight = false;
+                        } else if (value.equals("right")) {
+                            hasLeft = false;
+                        } else if (value.equals("entry")) {
+                            hasEntry = true;
+                        } else if (value.equals("exit")) {
+                            hasExit = true;
+                        } else if (value.equals("both")) {
+                            hasEntry = true;
+                            hasExit = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("approachwidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            approachWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("deckwidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            deckWidth = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("bridge value ignored: " + value);
+                        }
+                    }
+                    // these both can't be false
+                    if (!hasLeft && !hasRight) {
+                        hasLeft = true;
+                        hasRight = true;
+                    }
+                    setBridgeSideRight(hasRight);
+                    setBridgeSideLeft(hasLeft);
+                    setBridgeHasEntry(hasEntry);
+                    setBridgeHasExit(hasExit);
+                    setBridgeColor(color);
+                    setBridgeDeckWidth(deckWidth);
+                    setBridgeLineWidth(lineWidth);
+                    setBridgeApproachWidth(approachWidth);
+                } // if (key.equals("bridge")) {
+                //
+                //  bumper decorations
+                //
+                else if (key.equals("bumper")) {
+                    String bumperValue = entry.getValue();
+                    if (getName().equals("T15")) {
+                        log.debug("STOP!");
+                    }
+                    // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
+                    int lineWidth = 1, length = 4;
+                    boolean isFlipped = false, atStart = true, atStop = true;
+                    Color color = defaultTrackColor;
+                    String[] values = bumperValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        //log.info("value[{}]: \"{}\"", i, value);
+                        if (value.equals("start")) {
+                            atStop = false;
+                        } else if (value.equals("stop")) {
+                            atStart = false;
+                        } else if (value.equals("both")) {
+                            // this is the default behaviour; parameter ignored
+                        } else if (value.equals("flip")) {
+                            isFlipped = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("length=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            length = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("bumper value ignored: " + value);
+                        }
+                    }
+                    atStop |= !atStart;   // if atStart is false make atStop true
+                    setBumperEndStart(atStart);
+                    setBumperEndStop(atStop);
+                    setBumperColor(color);
+                    setBumperLineWidth(lineWidth);
+                    setBumperLength(length);
+                    setBumperFlipped(isFlipped);
+                } // if (key.equals("bumper")) {
+                //
+                //  tunnel decorations
+                //
+                else if (key.equals("tunnel")) {
+                    String tunnelValue = entry.getValue();
+                    // <decoration name="tunnel" value="both;linewidth=2;floorwidth=8" />
+                    // right/left default true; in/out default false
+                    boolean hasLeft = true, hasRight = true, hasIn = false, hasOut = false;
+                    int entranceWidth = 4, lineWidth = 1, floorWidth = 2;
+                    Color color = defaultTrackColor;
+                    String[] values = tunnelValue.split(";");
+                    for (int i = 0; i < values.length; i++) {
+                        String value = values[i];
+                        //log.info("value[{}]: \"{}\"", i, value);
+                        if (value.equals("left")) {
+                            hasRight = false;
+                        } else if (value.equals("right")) {
+                            hasLeft = false;
+                        } else if (value.equals("entry")) {
+                            hasIn = true;
+                        } else if (value.equals("exit")) {
+                            hasOut = true;
+                        } else if (value.equals("both")) {
+                            hasIn = true;
+                            hasOut = true;
+                        } else if (value.startsWith("color=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            color = Color.decode(valueString);
+                        } else if (value.startsWith("entrancewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            entranceWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("linewidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            lineWidth = Integer.parseInt(valueString);
+                        } else if (value.startsWith("floorwidth=")) {
+                            String valueString = value.substring(value.lastIndexOf("=") + 1);
+                            floorWidth = Integer.parseInt(valueString);
+                        } else {
+                            log.debug("tunnel value ignored: " + value);
+                        }
+                    }
+                    // these both can't be false
+                    if (!hasLeft && !hasRight) {
+                        hasLeft = true;
+                        hasRight = true;
+                    }
+                    setTunnelSideRight(hasRight);
+                    setTunnelSideLeft(hasLeft);
+                    setTunnelHasEntry(hasIn);
+                    setTunnelHasExit(hasOut);
+                    setTunnelColor(color);
+                    setTunnelEntranceWidth(entranceWidth);
+                    setTunnelLineWidth(lineWidth);
+                    setTunnelFloorWidth(floorWidth);
+                } // if (tunnelValue != null)
+                else {
+                    log.debug("Unknown decoration key: " + key + ", value: " + entry.getValue());
+                }
+            }   // for (Map.Entry<String, String> entry : decorations.entrySet())
+        } //if (decorathions != null)
+    }   // setDirections
+
+    //
+    //  arrow decoration accessors
+    //
+    public int getArrowStyle() {
+        return arrowStyle;
+    }
+
+    public void setArrowStyle(int newVal) {
+        if (arrowStyle != newVal) {
+            if (newVal > 0) {
+                if (!arrowEndStart && !arrowEndStop) {
+                    arrowEndStart = true;
+                    arrowEndStop = true;
+                }
+                if (!arrowDirIn && !arrowDirOut) {
+                    arrowDirOut = true;
+                }
+            }
+            arrowStyle = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int arrowStyle = 0;
+
+    public boolean isArrowEndStart() {
+        return arrowEndStart;
+    }
+
+    public void setArrowEndStart(boolean newVal) {
+        if (arrowEndStart != newVal) {
+            arrowEndStart = newVal;
+            if (!arrowEndStart && !arrowEndStop) {
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
+            }
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean arrowEndStart = false;
+
+    public boolean isArrowEndStop() {
+        return arrowEndStop;
+    }
+
+    public void setArrowEndStop(boolean newVal) {
+        if (arrowEndStop != newVal) {
+            arrowEndStop = newVal;
+            if (!arrowEndStart && !arrowEndStop) {
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
+            }
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean arrowEndStop = false;
+
+    public boolean isArrowDirIn() {
+        return arrowDirIn;
+    }
+
+    public void setArrowDirIn(boolean newVal) {
+        if (arrowDirIn != newVal) {
+            arrowDirIn = newVal;
+            if (!arrowDirIn && !arrowDirOut) {
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
+            }
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean arrowDirIn = false;
+
+    public boolean isArrowDirOut() {
+        return arrowDirOut;
+    }
+
+    public void setArrowDirOut(boolean newVal) {
+        if (arrowDirOut != newVal) {
+            arrowDirOut = newVal;
+            if (!arrowDirIn && !arrowDirOut) {
+                arrowStyle = 0;
+            } else if (arrowStyle == 0) {
+                arrowStyle = 1;
+            }
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean arrowDirOut = false;
+
+    public Color getArrowColor() {
+        return arrowColor;
+    }
+
+    public void setArrowColor(Color newVal) {
+        if (arrowColor != newVal) {
+            arrowColor = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private Color arrowColor = Color.BLACK;
+
+    public int getArrowLineWidth() {
+        return arrowLineWidth;
+    }
+
+    public void setArrowLineWidth(int newVal) {
+        if (arrowLineWidth != newVal) {
+            arrowLineWidth = Math.max(1, newVal);
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int arrowLineWidth = 4;
+
+    public int getArrowLength() {
+        return arrowLength;
+    }
+
+    public void setArrowLength(int newVal) {
+        if (arrowLength != newVal) {
+            arrowLength = Math.max(2, newVal);
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int arrowLength = 4;
+
+    public int getArrowGap() {
+        return arrowGap;
+    }
+
+    public void setArrowGap(int newVal) {
+        if (arrowGap != newVal) {
+            arrowGap = Math.max(0, newVal);
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int arrowGap = 1;
+
+    //
+    //  bridge decoration accessors
+    //
+    public boolean isBridgeSideRight() {
+        return bridgeSideRight;
+    }
+
+    public void setBridgeSideRight(boolean newVal) {
+        if (bridgeSideRight != newVal) {
+            bridgeSideRight = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bridgeSideRight = false;
+
+    public boolean isBridgeSideLeft() {
+        return bridgeSideLeft;
+    }
+
+    public void setBridgeSideLeft(boolean newVal) {
+        if (bridgeSideLeft != newVal) {
+            bridgeSideLeft = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bridgeSideLeft = false;
+
+    public boolean isBridgeHasEntry() {
+        return bridgeHasEntry;
+    }
+
+    public void setBridgeHasEntry(boolean newVal) {
+        if (bridgeHasEntry != newVal) {
+            bridgeHasEntry = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bridgeHasEntry = false;
+
+    public boolean isBridgeHasExit() {
+        return bridgeHasExit;
+    }
+
+    public void setBridgeHasExit(boolean newVal) {
+        if (bridgeHasExit != newVal) {
+            bridgeHasExit = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bridgeHasExit = false;
+
+    public Color getBridgeColor() {
+        return bridgeColor;
+    }
+
+    public void setBridgeColor(Color newVal) {
+        if (bridgeColor != newVal) {
+            bridgeColor = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private Color bridgeColor = Color.BLACK;
+
+    public int getBridgeDeckWidth() {
+        return bridgeDeckWidth;
+    }
+
+    public void setBridgeDeckWidth(int newVal) {
+        if (bridgeDeckWidth != newVal) {
+            bridgeDeckWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int bridgeDeckWidth = 10;
+
+    public int getBridgeLineWidth() {
+        return bridgeLineWidth;
+    }
+
+    public void setBridgeLineWidth(int newVal) {
+        if (bridgeLineWidth != newVal) {
+            bridgeLineWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int bridgeLineWidth = 1;
+
+    public int getBridgeApproachWidth() {
+        return bridgeApproachWidth;
+    }
+
+    public void setBridgeApproachWidth(int newVal) {
+        if (bridgeApproachWidth != newVal) {
+            bridgeApproachWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int bridgeApproachWidth = 4;
+
+    //
+    //  bumper decoration accessors
+    //
+    public boolean isBumperEndStart() {
+        return bumperEndStart;
+    }
+
+    public void setBumperEndStart(boolean newVal) {
+        if (bumperEndStart != newVal) {
+            bumperEndStart = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bumperEndStart = false;
+
+    public boolean isBumperEndStop() {
+        return bumperEndStop;
+    }
+
+    public void setBumperEndStop(boolean newVal) {
+        if (bumperEndStop != newVal) {
+            bumperEndStop = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bumperEndStop = false;
+
+    public Color getBumperColor() {
+        return bumperColor;
+    }
+
+    public void setBumperColor(Color newVal) {
+        if (bumperColor != newVal) {
+            bumperColor = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private Color bumperColor = Color.BLACK;
+
+    public int getBumperLineWidth() {
+        return bumperLineWidth;
+    }
+
+    public void setBumperLineWidth(int newVal) {
+        if (bumperLineWidth != newVal) {
+            bumperLineWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int bumperLineWidth = 2;
+
+    public int getBumperLength() {
+        return bumperLength;
+    }
+
+    public void setBumperLength(int newVal) {
+        if (bumperLength != newVal) {
+            bumperLength = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int bumperLength = 6;
+
+    public boolean isBumperFlipped() {
+        return bumperFlipped;
+    }
+
+    public void setBumperFlipped(boolean newVal) {
+        if (bumperFlipped != newVal) {
+            bumperFlipped = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean bumperFlipped = false;
+
+    //
+    //  tunnel decoration accessors
+    //
+    public boolean isTunnelSideRight() {
+        return tunnelSideRight;
+    }
+
+    public void setTunnelSideRight(boolean newVal) {
+        if (tunnelSideRight != newVal) {
+            tunnelSideRight = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean tunnelSideRight = false;
+
+    public boolean isTunnelSideLeft() {
+        return tunnelSideLeft;
+    }
+
+    public void setTunnelSideLeft(boolean newVal) {
+        if (tunnelSideLeft != newVal) {
+            tunnelSideLeft = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean tunnelSideLeft = false;
+
+    public boolean isTunnelHasEntry() {
+        return tunnelHasEntry;
+    }
+
+    public void setTunnelHasEntry(boolean newVal) {
+        if (tunnelHasEntry != newVal) {
+            tunnelHasEntry = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean tunnelHasEntry = false;
+
+    public boolean isTunnelHasExit() {
+        return tunnelHasExit;
+    }
+
+    public void setTunnelHasExit(boolean newVal) {
+        if (tunnelHasExit != newVal) {
+            tunnelHasExit = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private boolean tunnelHasExit = false;
+
+    public Color getTunnelColor() {
+        return tunnelColor;
+    }
+
+    public void setTunnelColor(Color newVal) {
+        if (tunnelColor != newVal) {
+            tunnelColor = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private Color tunnelColor = Color.BLACK;
+
+    public int getTunnelFloorWidth() {
+        return tunnelFloorWidth;
+    }
+
+    public void setTunnelFloorWidth(int newVal) {
+        if (tunnelFloorWidth != newVal) {
+            tunnelFloorWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int tunnelFloorWidth = 10;
+
+    public int getTunnelLineWidth() {
+        return tunnelLineWidth;
+    }
+
+    public void setTunnelLineWidth(int newVal) {
+        if (tunnelLineWidth != newVal) {
+            tunnelLineWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int tunnelLineWidth = 1;
+
+    public int getTunnelEntranceWidth() {
+        return tunnelEntranceWidth;
+    }
+
+    public void setTunnelEntranceWidth(int newVal) {
+        if (tunnelEntranceWidth != newVal) {
+            tunnelEntranceWidth = newVal;
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        }
+    }
+    private int tunnelEntranceWidth = 16;
 
     /*
      * {@inheritDoc}
@@ -1793,9 +3766,8 @@ public class TrackSegment extends LayoutTrack {
          *     (in blockNamesToTrackNameSetMap)
          */
         List<Set<String>> TrackNameSets = null;
-        Set<String> TrackNameSet = null;
+        Set<String> TrackNameSet = null;    // assume not found (pessimist!)
         if (blockName != null) {
-            TrackNameSet = null;    // assume not found (pessimist!)
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -1805,7 +3777,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
             } else {    // (#3)
-                log.info("-New block ('{}') trackNameSets", blockName);
+                log.debug("*New block ('{}') trackNameSets", blockName);
                 TrackNameSets = new ArrayList<>();
                 blockNamesToTrackNameSetsMap.put(blockName, TrackNameSets);
             }
@@ -1814,7 +3786,7 @@ public class TrackSegment extends LayoutTrack {
                 TrackNameSets.add(TrackNameSet);
             }
             if (TrackNameSet.add(getName())) {
-                log.info("-    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
+                log.debug("*    Add track '{}' to TrackNameSets for block '{}'", getName(), blockName);
             }
             // (#4)
             if (connect1 != null) {
@@ -1829,6 +3801,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -1836,7 +3809,7 @@ public class TrackSegment extends LayoutTrack {
             if (this.blockName.equals(blockName)) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
-                    log.info("-    Add track '{}'for block '{}'", getName(), blockName);
+                    log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
                 }
                 // these should never be null... but just in case...
                 // it's time to play... flood your neighbours!
@@ -1853,10 +3826,11 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
-
+    private final static Logger log
+            = LoggerFactory.getLogger(TrackSegment.class);
 }

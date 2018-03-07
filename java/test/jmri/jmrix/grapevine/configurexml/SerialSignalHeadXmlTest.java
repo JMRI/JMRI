@@ -10,9 +10,7 @@ import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
- * SerialSignalHeadXmlTest.java
- *
- * Description: tests for the SerialSignalHeadXml class
+ * Tests for the SerialSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -22,15 +20,15 @@ public class SerialSignalHeadXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("SerialSignalHeadXml constructor",new SerialSignalHeadXml());
+      Assert.assertNotNull("SerialSignalHeadXml constructor", new SerialSignalHeadXml());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
         jmri.InstanceManager.store(memo,GrapevineSystemConnectionMemo.class);
     }

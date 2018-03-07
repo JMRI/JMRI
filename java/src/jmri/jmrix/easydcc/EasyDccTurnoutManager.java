@@ -23,6 +23,11 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         log.debug("EasyDCC Turnout Manager null");
     }
 
+    /**
+     * Create an new EasyDCC TurnoutManager.
+     *
+     * @param memo the SystemConnectionMemo for this connection (contains the prefix string needed to parse names)
+     */
     public EasyDccTurnoutManager(EasyDccSystemConnectionMemo memo) {
         _memo = memo;
         prefix = memo.getSystemPrefix();

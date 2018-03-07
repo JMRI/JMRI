@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
- * Swing action to create and register a NodeTableFrame object
+ * Swing action to create and register a NodeTableFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
@@ -15,13 +15,13 @@ public class NodeTableAction extends AbstractAction {
 
     private GrapevineSystemConnectionMemo memo = null;
 
-    public NodeTableAction(String s,GrapevineSystemConnectionMemo _memo) {
+    public NodeTableAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
         memo = _memo;
     }
 
     public NodeTableAction(GrapevineSystemConnectionMemo _memo) {
-        this(Bundle.getMessage("WindowTitle"),_memo);
+        this(Bundle.getMessage("WindowTitle"), _memo);
     }
 
     @Override

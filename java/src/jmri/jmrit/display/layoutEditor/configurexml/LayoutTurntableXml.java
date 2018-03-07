@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTurntableXml extends AbstractXmlAdapter {
 
@@ -61,6 +62,12 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 } else {
                     rElem.setAttribute("turnoutstate", "closed");
                 }
+                if (p.isRayDisabled(i)) {
+                    rElem.setAttribute("disabled", "yes");
+                }
+                if (p.isRayDisabledWhenOccupied(i)) {
+                    rElem.setAttribute("disableWhenOccupied", "yes");
+                }
             }
             element.addContent(rElem);
         }
@@ -74,7 +81,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Load, starting with the layoutturntable element, then all the other data
+     * Load, starting with the layout turntable element, then all the other data
      *
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
@@ -107,7 +114,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
-        // load ray tracks 
+        // load ray tracks
         List<Element> rayTrackList = element.getChildren("raytrack");
         if (rayTrackList.size() > 0) {
             for (int i = 0; i < rayTrackList.size(); i++) {
@@ -127,11 +134,22 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                 }
                 l.addRayTrack(angle, index, connectName);
                 if (l.isTurnoutControlled() && relem.getAttribute("turnout") != null) {
-                    //Turnout t = jmri.InstanceManager.turnoutManagerInstance().getTurnout();
                     if (relem.getAttribute("turnoutstate").getValue().equals("thrown")) {
                         l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
                         l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.CLOSED);
+                    }
+                    try {
+                        l.setRayDisabled(index, relem.getAttribute("disabled").getBooleanValue());
+                    } catch (DataConversionException e1) {
+                        log.warn("unable to convert layout turnout disabled attribute");
+                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                    }
+                    try {
+                        l.setRayDisabledWhenOccupied(index, relem.getAttribute("disableWhenOccupied").getBooleanValue());
+                    } catch (DataConversionException e1) {
+                        log.warn("unable to convert layout turnout disableWhenOccupied attribute");
+                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
                     }
                 }
             }

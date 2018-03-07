@@ -242,6 +242,7 @@ class SteamSound extends EngineSound {
             sb = new SoundBite(vf, fn, name + "_Steam_n" + i, name + "_Steam_" + i);
             sb.setLooped(true);
             sb.setFadeTimes(100, 100);
+            sb.setReferenceDistance(setXMLReferenceDistance(el)); // Handle reference distance
             sb.setGain(setXMLGain(el));
             // Store in the list.
             boolean chuff = false;

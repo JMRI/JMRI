@@ -45,7 +45,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
-    // The minimal setup for log4J
+    // reset objects
     @After
     public void tearDown() {
         tcis.terminateThreads();

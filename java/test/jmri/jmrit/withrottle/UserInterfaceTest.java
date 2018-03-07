@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,12 +32,13 @@ public class UserInterfaceTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDefaultUserMessagePreferences();
+        InstanceManager.setDefault(DeviceManager.class,new FacelessServer(){
+           @Override
+           public void listen(){
+           }
+        });
         if(!GraphicsEnvironment.isHeadless()){
-           panel = new UserInterface(){
-              @Override
-              public void listen(){
-              } 
-           };
+           panel = new UserInterface();
         }
     }
 

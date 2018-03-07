@@ -94,6 +94,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
         JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
         searchItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 InstanceManager.getDefault(DirectorySearcher.class).searchFS();
             }

@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Traffic controller for Anyma DMX
- * <P>
- * @author George Warner Copyright (c) 2017
+ * Traffic controller for Anyma DMX.
+ *
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class AnymaDMX_TrafficController {
@@ -25,7 +25,7 @@ public class AnymaDMX_TrafficController {
     private AnymaDMX_UsbPortAdapter controller = null;
 
     /**
-     * constructor
+     * Create a new AnymaTrafficController instance.
      */
     public AnymaDMX_TrafficController() {
        // this forces first pass to transmit everything
@@ -87,7 +87,7 @@ public class AnymaDMX_TrafficController {
      *
      * @param from the beginning index (inclusive)
      * @param to   the ending index (inclusive)
-     * @param buf  the data to send 
+     * @param buf  the data to send
      * note: the from/to indexes are 1-512 (inclusive)
      */
     public void setChannelRangeValues(int from, int to, byte buf[]) {
@@ -131,4 +131,5 @@ public class AnymaDMX_TrafficController {
 
     private final static Logger log
             = LoggerFactory.getLogger(AnymaDMX_TrafficController.class);
+
 }
