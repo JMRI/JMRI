@@ -57,7 +57,7 @@ public class ConditionalVariable {
     //private NamedBeanHandle<Sensor> _namedSensorBean = null;
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
-    // a listener was installed for this device and thus trigger calcuation of the Conditional.
+    // a listener was installed for this device and thus trigger calculation of the Conditional.
     // Now named '_triggersActions' because listeners are always installed for activated Logix
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.

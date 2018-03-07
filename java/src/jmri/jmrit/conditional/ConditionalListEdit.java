@@ -63,21 +63,27 @@ import org.slf4j.LoggerFactory;
  * included in LogixTableAction.
  * <p>
  * Conditionals now have two policies to trigger execution of their action
- * lists:<br>
- * 1. the previous policy - Trigger on change of state only <br>
- * 2. the new default - Trigger on any enabled state calculation Jan 15, 2011 -
- * Pete Cressman
+ * lists:
+ * <ol>
+ *   <li>the previous policy - Trigger on change of state only
+ *   <li>the new default - Trigger on any enabled state calculation
+ * </ol>
+ * Jan 15, 2011 - Pete Cressman
  * <p>
- * Two additional action and variable name selection methods have been added: 1)
- * Single Pick List 2) Combo Box Selection The traditional tabbed Pick List with
- * text entry is the default method. The Options menu has been expanded to list
- * the 3 methods. Mar 27, 2017 - Dave Sand
+ * Two additional action and variable name selection methods have been added:
+ * <ol>
+ *     <li>Single Pick List
+ *     <li>Combo Box Selection
+ * </ol>
+ * The traditional tabbed Pick List with text entry is the default method.
+ * The Options menu has been expanded to list the 3 methods.
+ * Mar 27, 2017 - Dave Sand
  * <p>
- * Add a Browse Option to the Logix Select Menu This will display a window that
+ * Add a Browse Option to the Logix Select Menu. This will display a window that
  * creates a formatted list of the contents of the selected Logix with each
  * Conditional, Variable and Action. The code is courtesy of Chuck Catania and
  * is used with his permission. Apr 2, 2017 - Dave Sand
- * <p>
+ *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
@@ -86,7 +92,7 @@ import org.slf4j.LoggerFactory;
 public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
-     * Constructor to create a Conditional List View editor.
+     * Create a new Conditional List View editor.
      *
      * @param sName name of the Logix being edited
      */
@@ -135,6 +141,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     JPanel _antecedentPanel;
     int _logicType = Conditional.ALL_AND;
     String _antecedent = null;
+    String _antecedentLocalized;
     boolean _newItem = false; // marks a new Action or Variable object was added
 
     // ------------ Components of Edit Variable panes ------------
@@ -579,7 +586,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     /**
      * Respond to Edit Button in the Conditional table of the Edit Logix Window.
      *
-     * @param rx index (row number) of Conditional te be edited
+     * @param rx index (row number) of Conditional to be edited
      */
     void editConditionalPressed(int rx) {
         if (_inEditConditionalMode) {
@@ -693,12 +700,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
             JPanel logicPanel = new JPanel();
             logicPanel.setLayout(new BoxLayout(logicPanel, BoxLayout.Y_AXIS));
 
-            // add Antecedent Expression Panel -ONLY appears for MIXED operator statements
+            // add Antecedent Expression Panel - ONLY appears for MIXED operator statements
             _antecedent = _curConditional.getAntecedentExpression();
             _logicType = _curConditional.getLogicType();
             _antecedentField = new JTextField(65);
             _antecedentField.setFont(new Font("SansSerif", Font.BOLD, 14));  // NOI18N
-            _antecedentField.setText(_antecedent);
+            // _antecedentField.setText(_antecedentLocalized); // is empty at first TODO force refresh of _antecedentLocalized EBR
             _antecedentPanel = makeEditPanel(_antecedentField, "LabelAntecedent", "LabelAntecedentHint");  // NOI18N
 
             JButton helpButton = new JButton(Bundle.getMessage("MenuHelp"));  // NOI18N
@@ -1011,7 +1018,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _editConditionalFrame.pack();
         _editConditionalFrame.setVisible(true);
         _inEditConditionalMode = true;
-        checkVariablePressed(null);     // update variables to their current states
+        checkVariablePressed(null); // update variables to their current states
+        // force refresh of _antecedentLocalized  and display in field
+        makeAntecedent();
+
     }
 
     /**
@@ -1284,7 +1294,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         // complete update
         _curConditional.setStateVariables(_variableList);
         _curConditional.setAction(_actionList);
-        _curConditional.setLogicType(_logicType, _antecedent);
+        _curConditional.setLogicType(_logicType, _antecedent); // non-localized string to store Conditional Antecedent
         _curConditional.setTriggerOnChange(_triggerOnChangeButton.isSelected());
         TreeSet<String> newTargetNames = new TreeSet<String>();
         loadReferenceNames(_variableList, newTargetNames);
@@ -1425,39 +1435,51 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * Build the antecedent statement.
      */
     void makeAntecedent() {
-        String str = "";
+        String stri18n = "";
+        String strUni = "";
         if (_variableList.size() != 0) {
             String not = Bundle.getMessage("LogicNOT").toLowerCase();  // NOI18N
-            String row = "R"; //NOI18N
-            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
-            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";  // NOI18N
+            String notI18N = "not"; // NOI18N
+            String row = "R";       //NOI18N
+            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " "; // NOI18N
+            String andI18N = " and ";                                             // NOI18N
+            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
+            String orI18N = " or ";                                               // NOI18N
             if (_variableList.get(0).isNegated()) {
-                str = not + " ";
+                stri18n = not + " ";
+                strUni = notI18N + " ";
             }
-            str = str + row + "1";
+            stri18n = stri18n + row + "1";
+            strUni = strUni + row + "1";
             for (int i = 1; i < _variableList.size(); i++) {
                 ConditionalVariable variable = _variableList.get(i);
                 switch (variable.getOpern()) {
                     case Conditional.OPERATOR_AND:
-                        str = str + and;
+                        stri18n = stri18n + and;
+                        strUni = strUni + andI18N;
                         break;
                     case Conditional.OPERATOR_OR:
-                        str = str + or;
+                        stri18n = stri18n + or;
+                        strUni = strUni + orI18N;
                         break;
                     default:
                         break;
                 }
                 if (variable.isNegated()) {
-                    str = str + not + " ";
+                    stri18n = stri18n + not + " ";
+                    strUni = strUni + notI18N + " ";
                 }
-                str = str + row + (i + 1);
+                stri18n = stri18n + row + (i + 1);
+                strUni = strUni + row + (i + 1);
                 if (i > 0 && i + 1 < _variableList.size()) {
-                    str = "(" + str + ")";
+                    stri18n = "(" + stri18n + ")";
+                    strUni = "(" + strUni + ")";
                 }
             }
         }
-        _antecedent = str;
-        _antecedentField.setText(_antecedent);
+        _antecedentLocalized = stri18n;
+        _antecedent = strUni;
+        _antecedentField.setText(_antecedentLocalized);
         _showReminder = true;
     }
 
@@ -1469,13 +1491,20 @@ public class ConditionalListEdit extends ConditionalEditBase {
     void appendToAntecedent(ConditionalVariable variable) {
         if (_variableList.size() > 1) {
             if (_logicType == Conditional.OPERATOR_OR) {
-                _antecedent = _antecedent + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";  // NOI18N
+                _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
+                _antecedent = _antecedent + " or ";   // NOI18N
             } else {
-                _antecedent = _antecedent + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
+                _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
+                _antecedent = _antecedent + " and ";  // NOI18N
             }
         }
-        _antecedent = _antecedent + "R" + _variableList.size(); //NOI18N
-        _antecedentField.setText(_antecedent);
+        _antecedentLocalized = _antecedentLocalized + "R" + _variableList.size(); // localized, NOI18N
+        _antecedent = _antecedent + "R" + _variableList.size(); // NOI18N
+
+        // Update antecedent field text
+        _antecedentField.setText(_antecedentLocalized);
+        // store in conditional
+        _curConditional.setLogicType(_logicType, _antecedent); // store Conditional Antecedent as non-localized string
     }
 
     /**
@@ -1487,21 +1516,25 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_logicType != Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
             return true;
         }
-        _antecedent = _antecedentField.getText();
-        if (_antecedent == null || _antecedent.trim().length() == 0) {
+        // _antecedent = _antecedentField.getText();
+        if (_antecedent == null || _antecedent.trim().length() == 0 || _antecedentLocalized == null || _antecedentLocalized.length() == 0) {
+            // Create a default antecedent (non-localized value and localized display string)
             makeAntecedent();
         }
-        String message = _curConditional.validateAntecedent(_antecedent, _variableList);
-        if (message != null) {
-            javax.swing.JOptionPane.showMessageDialog(_editConditionalFrame,
-                    message + Bundle.getMessage("ParseError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-            return false;
+        if (_antecedent.length() > 0) {
+            String message = _curConditional.validateAntecedent(_antecedent, _variableList);
+            if (message != null) {
+                javax.swing.JOptionPane.showMessageDialog(_editConditionalFrame,
+                        message + Bundle.getMessage("ParseError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         }
         return true;
     }
 
     // ============ Shared Variable and Action Methods ============
+
     /**
      * Check if an editing session is going on.
      * <p>
@@ -1580,6 +1613,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Build sub-panels ------------
+
     /**
      * Create Variable and Action editing pane top part.
      *
@@ -1662,6 +1696,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ============ Edit Variable Window and Methods ============
+
     /**
      * Create and/or initialize the Edit a Variable pane.
      * <p>
@@ -1847,6 +1882,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Main Variable methods ------------
+
     /**
      * Set display to show current state variable (_curVariable) parameters.
      */
@@ -2167,7 +2203,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Update the name combo box selection based on the current contents of the
-     * name field. Called by variableItemChanged
+     * name field. Called by {@link #variableItemChanged(int)}.
      *
      * @since 4.7.3
      * @param itemType The type of name box to be created.
@@ -2343,7 +2379,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Load the Conditional selection box. The first row is a prompt
+     * Load the Conditional selection box. The first row is a prompt.
      *
      * @since 4.7.4
      * @param logixName The Logix system name for selecting the owned
@@ -2393,6 +2429,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Variable update processes ------------
+
     /**
      * Validate Variable data from Edit Variable Window, and transfer it to
      * current action object as appropriate.
@@ -2599,6 +2636,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Variable detail listeners ------------
+
     transient ActionListener variableSignalTestStateListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -2671,6 +2709,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     };
 
     // ============ Edit Action Window and Methods ============
+
     /**
      * Create and/or initialize the Edit Action window.
      * <p>
@@ -2847,6 +2886,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Main Action methods ------------
+
     /**
      * Set display to show current action (curAction) parameters.
      */
@@ -3437,7 +3477,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Update the name combo box selection based on the current contents of the
-     * name field. Called by actionItemChanged
+     * name field. Called by {@link #actionItemChanged(int)}.
      *
      * @since 4.7.3
      * @param itemType The type of name box to be created.
@@ -3459,6 +3499,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Action detail methods ------------
+
     /**
      * Respond to Update Action button in the Edit Action pane.
      */
@@ -3640,6 +3681,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Action update processes ------------
+
     /**
      * Validate Action data from Edit Action Window, and transfer it to current
      * action object as appropriate.
@@ -4669,4 +4711,5 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalListEdit.class);
+
 }
