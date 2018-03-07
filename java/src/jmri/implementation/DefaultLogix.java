@@ -303,7 +303,8 @@ public class DefaultLogix extends AbstractNamedBean
      * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
      * <p>
      * For Entry/Exit references, replace NX user names and old style NX UUID references
-     * with the new style "IN:" + UUID reference (4.11.4).
+     * with the new style "IN:" + UUID reference.  If the referenced NX does not exist,
+     * it will be removed from the the Variable or Action list. (4.11.4)
      * <p>
      * Called by {@link jmri.managers.DefaultLogixManager#activateAllLogixs}
      * @since 4.7.4
