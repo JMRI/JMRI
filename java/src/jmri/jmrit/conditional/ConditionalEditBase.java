@@ -908,7 +908,7 @@ public class ConditionalEditBase {
         if (!_suppressIndirectRef) {
             int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
                     Bundle.getMessage("ConfirmIndirectReference"), memName), // NOI18N
-                    Bundle.getMessage("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION, // NOI18N
+                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_CANCEL_OPTION, // NOI18N
                     JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
                 return false;

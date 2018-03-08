@@ -968,7 +968,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 int result = JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
                         rbx.getString("ConfirmLogixDuplicate"), // NOI18N
                         new Object[]{sName, _logixSysName}),
-                        rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_OPTION, // NOI18N
+                        Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, // NOI18N
                         JOptionPane.QUESTION_MESSAGE);
                 if (JOptionPane.NO_OPTION == result) {
                     return;
@@ -1346,7 +1346,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         } else {
             final JDialog dialog = new JDialog();
             String msg;
-            dialog.setTitle(rbx.getString("ConfirmTitle"));     // NOI18N
+            dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
             dialog.setLocationRelativeTo(null);
             dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             JPanel container = new JPanel();
