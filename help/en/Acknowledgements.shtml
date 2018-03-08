@@ -906,7 +906,7 @@
         <li>Alfredo Sola provides the Spanish translation</li>
 
         <li>The good people at <a href=
-        "http://www.sf.net">SourceForge</a> who provide site
+        "http://www.sf.net">SourceForge</a> who provided the original site
         hosting, download servers and computing resources for JMRI
         development</li>
 
@@ -930,6 +930,11 @@
 
         <li>Francois Taburet, who provided the French translation
         for DecoderPro</li>
+
+        <LI>The good people at
+            <A HREF="http://www.tagadab.com">Tagadab</a>
+            who provide site hosting, and continuous integration resources
+            for JMRI development
 
         <li>Suzie Tall, who provided several North American and
         international signal definitions, including definitions for
