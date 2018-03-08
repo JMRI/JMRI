@@ -51,6 +51,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @After
     public void tearDown() {
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

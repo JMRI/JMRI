@@ -253,7 +253,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             try {
                 messageToSend = new MessageTuple(sendQueue.take());
             } catch (InterruptedException e) {
-                log.error("Exception when dequeuing message to send {}", e);
+                log.debug("Thread interrupted while dequeuing message to send");
                 return;
             }
             log.debug("Message dequeued id: {}", messageToSend.message.getId());
@@ -466,6 +466,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
         //Create a new reply, ready to be filled
         reply = new SprogReply();
+    }
+
+    public void dispose(){
+       tcThread.interrupt();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class);
