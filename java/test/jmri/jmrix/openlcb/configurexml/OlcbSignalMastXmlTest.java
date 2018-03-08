@@ -36,6 +36,8 @@ import org.junit.Test;
  */
 public class OlcbSignalMastXmlTest {
 
+    private OlcbSystemConnectionMemo memo = null;
+ 
     @Test
     public void testCtor(){
         Assert.assertNotNull("OlcbSignalMastXml constructor",new OlcbSignalMastXml());
@@ -75,12 +77,13 @@ public class OlcbSignalMastXmlTest {
             }
         };
 
-        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
+        memo = OlcbTestInterface.createForLegacyTests();
         memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 
     @After
     public void tearDown() {
+        memo.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 

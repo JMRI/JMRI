@@ -12,18 +12,20 @@ import org.junit.Before;
  */
 public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
+    private OlcbSystemConnectionMemo m;
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
+        m = OlcbTestInterface.createForLegacyTests();
         tm = new OlcbThrottleManager(m,new OlcbConfigurationManagerScaffold(m));
     }
 
     @After
     public  void tearDown() {
+        m.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 }

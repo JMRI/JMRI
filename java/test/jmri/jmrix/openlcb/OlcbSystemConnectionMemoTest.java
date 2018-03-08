@@ -34,6 +34,7 @@ public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Override
     @After
     public void tearDown() {
+       ((OlcbSystemConnectionMemo)scm).getInterface().dispose();
         JUnitUtil.tearDown();
     }
 }

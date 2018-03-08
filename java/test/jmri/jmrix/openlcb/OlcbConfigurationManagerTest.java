@@ -11,17 +11,17 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class OlcbConfigurationManagerTest {
+        
+    private OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
-        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
         OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testConfigureManagers() {
-        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
         OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
         // this tet verifies this does not throw an exception
         t.configureManagers(); 
@@ -31,10 +31,12 @@ public class OlcbConfigurationManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
     }
 
     @After
     public void tearDown() {
+        memo.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 
