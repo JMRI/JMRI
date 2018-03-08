@@ -132,9 +132,9 @@
       <a href="VSD_File_and_Config.shtml#engine-startstop">can be
       activated</a> by a throttle key, if desired.</p>
       <p><em>Note 1:</em> To start the Engine the throttle speed must be 0.<br>
-      <em>Note 2:</em> Diesel engines normaly have a starting-sound. 
-      Throttle changes will be processed not util the starting-sound
-      has been finished.</p>
+      <em>Note 2:</em> Diesel engines normally have a starting-sound. 
+      Throttle changes will not be processed util the starting-sound
+      has finished.</p>
 
       <h5>Volume / Mute control</h5>
 

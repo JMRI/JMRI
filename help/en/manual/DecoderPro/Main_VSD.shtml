@@ -68,7 +68,7 @@
       on the Mac, but must be installed on Windows.</p>
 
       <p>OpenAL is available free from Creative Labs. You can
-      <a href="http://www.openal.org/downloads/">
+      <a target="_blank" href="http://www.openal.org/downloads/">
       download the installer for your operating system</a> from the
       OpenAL site.</p>
 
@@ -281,9 +281,9 @@
       <p>If checked, the Engine sounds will react immediately to
       Throttle changes, without the Engine Start button first
       having to be pressed.</p>
-      <p><em>Note:</em> Diesel engines normaly have a starting-sound. 
-      Throttle changes will be processed not util the starting-sound
-      has been finished.</p>
+      <p><em>Note:</em> Diesel engines normally have a starting-sound. 
+      Throttle changes will not be processed util the starting-sound
+      has finished.</p>
 
       <h5>Auto-Load VSD File</h5>
 
