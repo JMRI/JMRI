@@ -1420,13 +1420,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
     void helpPressed(ActionEvent e) {
         javax.swing.JOptionPane.showMessageDialog(_editConditionalFrame,
                 new String[]{
-                    Bundle.getMessage("LogicHelpText1"), // NOI18N
-                    Bundle.getMessage("LogicHelpText2"), // NOI18N
-                    Bundle.getMessage("LogicHelpText3"), // NOI18N
-                    Bundle.getMessage("LogicHelpText4"), // NOI18N
-                    Bundle.getMessage("LogicHelpText5"), // NOI18N
-                    Bundle.getMessage("LogicHelpText6"), // NOI18N
-                    Bundle.getMessage("LogicHelpText7") // NOI18N
+                    Bundle.getMessage("ConditionalHelpText1"), // NOI18N
+                    Bundle.getMessage("ConditionalHelpText2"), // NOI18N
+                    Bundle.getMessage("ConditionalHelpText3"), // NOI18N
+                    Bundle.getMessage("ConditionalHelpText4"), // NOI18N
+                    Bundle.getMessage("ConditionalHelpText5"), // NOI18N
+                    Bundle.getMessage("ConditionalHelpText6"), // NOI18N
+                    Bundle.getMessage("ConditionalHelpText7") // NOI18N
                 },
                 Bundle.getMessage("MenuHelp"), javax.swing.JOptionPane.INFORMATION_MESSAGE);  // NOI18N
     }

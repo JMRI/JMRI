@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConditionalVariable {
 
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
 
     public static final int NUM_COMPARE_OPERATIONS = 5;
     public static final int LESS_THAN = 1;

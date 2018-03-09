@@ -759,7 +759,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else if (data == Turnout.THROWN) {
                     return (Bundle.getMessage("TurnoutStateThrown"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
             case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
@@ -772,7 +772,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else if (data == Sensor.INACTIVE) {
                     return (Bundle.getMessage("SensorStateInactive"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
             case Conditional.ACTION_SET_LIGHT:
@@ -781,7 +781,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else if (data == Light.OFF) {
                     return (rbx.getString("LightOff"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
             case Conditional.ACTION_LOCK_TURNOUT:
@@ -790,7 +790,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else if (data == Turnout.LOCKED) {
                     return (rbx.getString("TurnoutLock"));
                 } else if (data == Route.TOGGLE) {
-                    return (rbx.getString("Toggle"));
+                    return (Bundle.getMessage("Toggle"));
                 }
                 break;
             case Conditional.ACTION_CONTROL_AUDIO:
