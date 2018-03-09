@@ -22,7 +22,7 @@
     <choice xml:lang="cs">Rozsvíceno</choice>
     <choice xml:lang="fr">Allumé</choice>
     <choice xml:lang="it">On</choice>
-    <choice xml:lang="de">An</choice>
+    <choice xml:lang="de">Ein</choice>
     <choice xml:lang="nl">Aan</choice>
   </enumChoice>
 </enumVal>
