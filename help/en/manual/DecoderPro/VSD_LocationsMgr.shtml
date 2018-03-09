@@ -39,9 +39,9 @@
       Locations</strong> window provides a consolidated location to
       manage and set the apparent physical location of sounds for
       trains using Virtual Sound Decoder</span></p>The
-      <strong>Manage VSD Locations</strong> window has three tabs:
-      Reporters, Operations Locations, and Listeners. Each tab
-      shows a list of objects, each with a check-box to
+      <strong>Manage VSD Locations</strong> window has four tabs:
+      Reporters, Blocks, Operations Locations, and Listeners. Each
+      tab shows a list of objects, each with a check-box to
       enable/disable use (for VSD purposes, not for other JMRI
       purposes), and entry cells for X, Y, and Z location
       coordinates.
