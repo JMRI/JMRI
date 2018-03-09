@@ -44,14 +44,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private int _syncIdx;           // block order index of current command
     protected DccThrottle _throttle;
     private final Warrant _warrant;
-    private List<ThrottleSetting> _commands;
+    private final List<ThrottleSetting> _commands;
     private Sensor _waitSensor;
     private int _sensorWaitState;
     private ThrottleRamp _ramp;
     final ReentrantLock _lock = new ReentrantLock(true);    // Ramp needs to block script speeds
     private boolean _atHalt = false;
     private boolean _atClear = false;
-    private SpeedUtil _speedUtil;
+    private final SpeedUtil _speedUtil;
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -1099,7 +1099,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             log.debug("Ramp down ends in block \"{}\" at command #{}", name, _idxCurrentCommand);
                         // if there is a ramp overrun to another block, skip commands in previous blocks.
                         // Look back i index for NOOP into current block
-                        for (int idx = _idxCurrentCommand - 1; idx < _commands.size(); idx++) {
+                        int start;
+                        if (_idxCurrentCommand > 0) {
+                            start = _idxCurrentCommand - 1;
+                        } else {
+                            start = 0;
+                        }
+                        for (int idx = start; idx < _commands.size(); idx++) {
                             ThrottleSetting ts = _commands.get(idx);
                             NamedBean bean = ts.getNamedBeanHandle().getBean();
                             if (bean instanceof OBlock ) {

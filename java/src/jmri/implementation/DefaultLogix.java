@@ -303,7 +303,8 @@ public class DefaultLogix extends AbstractNamedBean
      * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
      * <p>
      * For Entry/Exit references, replace NX user names and old style NX UUID references
-     * with the new style "IN:" + UUID reference (4.11.4).
+     * with the new style "IN:" + UUID reference.  If the referenced NX does not exist,
+     * it will be removed from the the Variable or Action list. (4.11.4)
      * <p>
      * Called by {@link jmri.managers.DefaultLogixManager#activateAllLogixs}
      * @since 4.7.4
@@ -329,6 +330,7 @@ public class DefaultLogix extends AbstractNamedBean
             }
             ArrayList<ConditionalVariable> varList = conditional.getCopyOfStateVariables();
             boolean isDirty = false;
+            ArrayList<ConditionalVariable> badVariable = new ArrayList<>();
             for (ConditionalVariable var : varList) {
                 // Find any Conditional State Variables
                 if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
@@ -367,9 +369,14 @@ public class DefaultLogix extends AbstractNamedBean
                         } else {
                             log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced Entry Exit Pair, '{}',  does not exist",  // NOI18N
                                  cName, getSystemName(), var.getName());
+                            badVariable.add(var);
                         }
                     }
                 }
+            }
+            if (badVariable.size() > 0) {
+                isDirty = true;
+                badVariable.forEach((badVar) -> varList.remove(badVar));
             }
             if (isDirty) {
                 conditional.setStateVariables(varList);
@@ -377,6 +384,7 @@ public class DefaultLogix extends AbstractNamedBean
 
             ArrayList<ConditionalAction> actionList = conditional.getCopyOfActions();
             isDirty = false;
+            ArrayList<ConditionalAction> badAction = new ArrayList<>();
             for (ConditionalAction action : actionList) {
                 // Find any Entry/Exit Actions
                 if (action.getType() == Conditional.ACTION_SET_NXPAIR_ENABLED
@@ -394,9 +402,14 @@ public class DefaultLogix extends AbstractNamedBean
                         } else {
                             log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced Entry Exit Pair, '{}',  does not exist",  // NOI18N
                                  cName, getSystemName(), action.getDeviceName());
+                            badAction.add(action);
                         }
                     }
                 }
+            }
+            if (badAction.size() > 0) {
+                isDirty = true;
+                badAction.forEach((badAct) -> actionList.remove(badAct));
             }
             if (isDirty) {
                 conditional.setAction(actionList);
