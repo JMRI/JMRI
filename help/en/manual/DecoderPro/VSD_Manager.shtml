@@ -133,7 +133,7 @@
       activated</a> by a throttle key, if desired.</p>
       <p><em>Note 1:</em> To start the Engine the throttle speed must be 0.<br>
       <em>Note 2:</em> Diesel engines normally have a starting-sound. 
-      Throttle changes will not be processed util the starting-sound
+      Throttle changes will not be processed until the starting-sound
       has finished.</p>
 
       <h5>Volume / Mute control</h5>

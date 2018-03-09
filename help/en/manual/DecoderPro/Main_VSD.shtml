@@ -282,7 +282,7 @@
       Throttle changes, without the Engine Start button first
       having to be pressed.</p>
       <p><em>Note:</em> Diesel engines normally have a starting-sound. 
-      Throttle changes will not be processed util the starting-sound
+      Throttle changes will not be processed until the starting-sound
       has finished.</p>
 
       <h5>Auto-Load VSD File</h5>
