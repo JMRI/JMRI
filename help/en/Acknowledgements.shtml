@@ -1,7 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- This page is created from the content (not formatting) -->
-<!-- of http://jmri.org/community/index.html -->
 
 <html lang="en">
 <head>
@@ -1070,7 +1068,9 @@
       files that make up a project. More information is available
       on the <a href=
       "http://jmri.org/community/codeswarm.shtml">Code Swarm</a>
-      page.</p><!--#include virtual="/Footer" -->
+      page.</p>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
