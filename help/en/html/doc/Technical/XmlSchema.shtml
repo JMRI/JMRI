@@ -256,10 +256,9 @@ browser. For an example of that, click on this link to the
         file against the schema.
 
           <p>That's done by having a SchemaTest class in your
-          test-tree package (see e.g. <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/SchemaTest.java"
-          target=
-          "_blank">test/jmri/configurexml/SchemaTest.java</a> for
+          test-tree package (see e.g. 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/SchemaTest.java"">
+            test/jmri/configurexml/SchemaTest.java</a> for
           an example) that checks all the XML files kept there. If
           that's in place, just put a copy of a (new) typical XML
           file in the existing "verify" subdirectory.</p>
@@ -292,10 +291,9 @@ browser. For an example of that, click on this link to the
         errors).
 
           <p>That's done by having a LoadAndStoreTest class in your
-          test-tree package (see e.g. <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/LoadAndStoreTest.java"
-          target=
-          "_blank">test/jmri/configurexml/LoadAndStoreTest.java</a>
+          test-tree package (see e.g. 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/LoadAndStoreTest.java">
+            test/jmri/configurexml/LoadAndStoreTest.java</a>
           for an example) that checks all the XML files kept there.
           If that's in place, just put a copy of a (new) typical
           XML file in the existing "load" subdirectory.</p>
