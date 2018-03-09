@@ -18,6 +18,7 @@ public class SprogTrafficControllerTest {
        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
        SprogTrafficController tc = new SprogTrafficController(m);
        Assert.assertNotNull(tc);
+       tc.dispose();
    }
 
     // The minimal setup for log4J

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -66,5 +67,18 @@ public class JsonTimeHttpService extends JsonHttpService {
         ArrayNode result = this.mapper.createArrayNode();
         result.add(this.doGet(type, null, locale));
         return result;
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case TIME:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/time/time-server.json",
+                        "jmri/server/json/time/time-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

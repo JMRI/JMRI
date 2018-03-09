@@ -20,6 +20,11 @@ public class JsonMessageServiceFactory implements JsonServiceFactory<JsonMessage
     }
 
     @Override
+    public String[] getSentTypes() {
+        return new String[]{JsonMessage.MESSAGE};
+    }
+
+    @Override
     public JsonMessageSocketService getSocketService(JsonConnection connection) {
         return new JsonMessageSocketService(connection);
     }

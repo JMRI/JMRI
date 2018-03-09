@@ -317,7 +317,7 @@
             <li>It is possible in some circumstances to omit either
             or both of "gridx" and "gridy" from a "griditem" and
             specify a default value in "grid". See <a href=
-            "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4fnOutPane.xml"
+            "https://github.com/JMRI/JMRI/blob/master/jmri/xml/decoders/esu/v4fnOutPane.xml"
             target="_blank">xml/decoders/esu/v4fnOutPane.xml</a>
             for an example of this usage to generate a simple
             single-column right-aligned grid. (However if you are
@@ -333,7 +333,7 @@
 
           <p>For an example of Grid Layout use (with some
           explanations of attributes used), see <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4soundPane.xml"
+          "https://github.com/JMRI/JMRI/blob/master/jmri/xml/decoders/esu/v4soundPane.xml"
           target="_blank">xml/decoders/esu/v4soundPane.xml</a>. The
           LokSound Select (and V4) definitions use this file.</p>
         </dd>

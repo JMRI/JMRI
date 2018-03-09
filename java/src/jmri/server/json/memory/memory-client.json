@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-memory-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"memory\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the memory"
+        },
+        "userName": {
+            "type": "string",
+            "description": "If present, set the user name of the memory"
+        },
+        "comment": {
+            "type": "string",
+            "description": "If present, set the comment for the memory"
+        },
+        "value": {
+            "type": "string",
+            "description": "If present, sets the value of the memory"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

@@ -354,7 +354,7 @@ public class ConditionalEditBase {
         }
 
         PickSinglePanel _pickSingle;
-        
+
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:      // 1
                 _pickSingle = new PickSinglePanel<Sensor>(PickListModel.sensorPickModelInstance());
@@ -1235,7 +1235,7 @@ public class ConditionalEditBase {
             if (name.length() > 0) {
                 nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(name);
                 if (nb != null) {
-                    return name;
+                    return nb.getSystemName();
                 }
             }
         }
