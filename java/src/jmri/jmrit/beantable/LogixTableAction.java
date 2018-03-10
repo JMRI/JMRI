@@ -780,13 +780,13 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     /**
      * Create or copy Logix frame.
      *
-     * @param titleId   property key to fetch as title of the frame
+     * @param titleId   property key to fetch as title of the frame (using Bundle)
      * @param messageId part 1 of property key to fetch as user instruction on
      *                  pane, either 1 or 2 is added to form the whole key
      * @return the button JPanel
      */
     JPanel makeAddLogixFrame(String titleId, String messageId) {
-        addLogixFrame = new JmriJFrame(rbx.getString(titleId));
+        addLogixFrame = new JmriJFrame(Bundle.getMessage(titleId));
         addLogixFrame.addHelpMenu(
                 "package.jmri.jmrit.beantable.LogixAddEdit", true);     // NOI18N
         addLogixFrame.setLocation(50, 30);
@@ -1670,7 +1670,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
 // ------------ Methods for Conditional Browser Window ------------
     /**
-     * Responds to the Browse button pressed in Logix table
+     * Respond to the Browse button pressed in Logix table.
      *
      * @param sName The selected Logix system name
      */
@@ -1681,7 +1681,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     /**
-     * creates and initializes the conditionals browser window
+     * Create and initialize the conditionals browser window.
      */
     void makeBrowserWindow() {
         JmriJFrame condBrowserFrame = new JmriJFrame(rbx.getString("BrowserTitle"), false, true);   // NOI18N
