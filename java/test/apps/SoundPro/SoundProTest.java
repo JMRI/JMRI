@@ -69,6 +69,7 @@ public class SoundProTest {
     }
 
     @Test
+    @Ignore("Replaced with Cucumber test")
     public void testLaunchEasyDcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -98,6 +99,7 @@ public class SoundProTest {
     }
 
     @Test
+    @Ignore("Replaced with Cucumber test")
     public void testLaunchGrapevine() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -127,6 +129,7 @@ public class SoundProTest {
     }
 
     @Test
+    @Ignore("Replaced with Cucumber test")
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -186,6 +189,7 @@ public class SoundProTest {
     }
 
     @Test
+    @Ignore("Replaced with Cucumber test")
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 

@@ -27,7 +27,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
-            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox'"
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox' --tags 'not @headed'"
     fi
 else
     # run full GUI test suite and fail on coverage issues

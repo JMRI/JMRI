@@ -41,6 +41,7 @@ public class PanelProTest {
     public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
     @Test
+    @Ignore("Replaced with a cucumber test")
     public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -76,6 +77,7 @@ public class PanelProTest {
     }
 
     @Test
+    @Ignore("Replaced with a cucumber test")
     public void testLaunchEasyDcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -108,6 +110,7 @@ public class PanelProTest {
     }
 
     @Test
+    @Ignore("Replaced with a cucumber test")
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -140,6 +143,7 @@ public class PanelProTest {
     }
 
     @Test
+    @Ignore("Replaced with a cucumber test")
     public void testLaunchGrapevine() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -205,6 +209,7 @@ public class PanelProTest {
     }
 
     @Test
+    @Ignore("Replaced with a cucumber test")
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

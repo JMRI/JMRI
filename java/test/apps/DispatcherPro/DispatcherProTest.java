@@ -37,6 +37,7 @@ public class DispatcherProTest {
 
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -69,6 +70,7 @@ public class DispatcherProTest {
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchEasyDcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -99,6 +101,7 @@ public class DispatcherProTest {
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchGrapevine() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -159,32 +162,34 @@ public class DispatcherProTest {
         }
     }
 
-//    @Test
-//    public void testLaunchSprog() throws IOException {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//
-//        try {
-//            // create a custom profile
-//            File tempFolder = folder.newFolder();
-//            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Sprog_Simulator"), tempFolder);
-//            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-//
-//            // launch!
-//            DispatcherPro.main(new String[]{"DispatcherPro"});
-//            log.debug("started SprogSim");
-//
-//            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("DispatcherPro") != null;}, "window up");
-//
-//            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("DispatcherPro version") != null;}, "first Info line seen");
-//
-//            // DispatcherPro
-//        } finally {
-//            // wait for threads, etc
-//            jmri.util.JUnitUtil.releaseThread(this, 5000);
-//        }
-//    }
+      @Test
+      @Ignore("Replaced with a Cucumber test")
+      public void testLaunchSprog() throws IOException {
+         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+ 
+         try {
+             // create a custom profile
+             File tempFolder = folder.newFolder();
+             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Sprog_Simulator"), tempFolder);
+             System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+
+             // launch!
+             DispatcherPro.main(new String[]{"DispatcherPro"});
+             log.debug("started SprogSim");
+ 
+             JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("DispatcherPro") != null;}, "window up");
+
+             JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("DispatcherPro version") != null;}, "first Info line seen");
+
+             // DispatcherPro
+         } finally {
+             // wait for threads, etc
+             jmri.util.JUnitUtil.releaseThread(this, 5000);
+         }
+     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 
