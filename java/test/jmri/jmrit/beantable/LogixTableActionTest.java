@@ -64,7 +64,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
 
         lgxTable.browserPressed("IX101");  // NOI18N
 
-        JFrame frame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("BrowserTitle"), true, true);  // NOI18N
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("BrowserTitle"), true, true);  // NOI18N
         Assert.assertNotNull(frame);
         JUnitUtil.dispose(frame);
     }
@@ -76,7 +76,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
 
         lgxTable.makeWhereUsedWindow();
 
-        JFrame frame = JFrameOperator.waitJFrame(LogixTableAction.rbx.getString("DisplayWhereUsed"), true, true);  // NOI18N
+        JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("DisplayWhereUsed"), true, true);  // NOI18N
         Assert.assertNotNull(frame);
         JUnitUtil.dispose(frame);
     }
