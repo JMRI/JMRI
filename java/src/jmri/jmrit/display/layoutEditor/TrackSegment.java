@@ -32,6 +32,7 @@ import javax.swing.JSeparator;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.ColorUtil;
+import jmri.util.FileUtil;
 import jmri.util.MathUtil;
 import jmri.util.QuickPromptUtil;
 import org.slf4j.Logger;
@@ -887,7 +888,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 0);
 
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle1.png"));
+        ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -896,7 +897,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 1);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle2.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -905,7 +906,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 2);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle3.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -914,7 +915,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 3);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle4.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -923,7 +924,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 4);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle5.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
