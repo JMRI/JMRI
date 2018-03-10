@@ -51,9 +51,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.annotation.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -5067,6 +5065,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     beginObject = foundObject;
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
+                    //BUGFIX: prevents initial drawTrackSegmentInProgress to {0, 0}
+                    currentLocation = beginLocation;
                 } else {
                     //TODO: auto-add anchor point?
                     beginObject = null;

@@ -1822,7 +1822,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         //check the C connection point
-        if (!requireUnconnected || (getConnectB() == null)) {
+        if (!requireUnconnected || (getConnectC() == null)) {
             p = getCoordsC();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
