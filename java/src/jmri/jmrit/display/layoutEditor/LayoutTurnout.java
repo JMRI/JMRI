@@ -3972,17 +3972,19 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2
-    ) {
-        if (getConnectA() == null) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if (((specificType == NONE) || (specificType == TURNOUT_A))
+                && (getConnectA() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
         }
 
-        if (getConnectB() == null) {
+        if (((specificType == NONE) || (specificType == TURNOUT_B))
+                && (getConnectB() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
         }
 
-        if (getConnectC() == null) {
+        if (((specificType == NONE) || (specificType == TURNOUT_C))
+                && (getConnectC() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
         }
         if ((getTurnoutType() == DOUBLE_XOVER)
@@ -3990,7 +3992,8 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == LH_XOVER)
                 || (getTurnoutType() == SINGLE_SLIP)
                 || (getTurnoutType() == DOUBLE_SLIP)) {
-            if (getConnectD() == null) {
+            if (((specificType == NONE) || (specificType == TURNOUT_D))
+                    && (getConnectD() == null)) {
                 g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
             }
         }

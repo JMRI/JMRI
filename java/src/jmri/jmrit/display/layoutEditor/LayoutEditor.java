@@ -9865,11 +9865,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             for (LayoutTrack lt : getLayoutTracks()) {
                 if (lt != beginObject) {
                     if (lt == foundObject) {
+                        lt.highlightUnconnected(g2);
                         g2.setColor(connectColor);
-                        lt.drawUnconnected(g2);
+                        lt.highlightUnconnected(g2, foundPointType);
                         g2.setColor(highlightColor);
                     } else {
-                        lt.drawUnconnected(g2);
+                        lt.highlightUnconnected(g2);
                     }
                 }
             }
