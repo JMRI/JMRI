@@ -68,6 +68,8 @@ import org.slf4j.LoggerFactory;
  * Most of the text used in this GUI is in LogixTableBundle.properties, accessed
  * via rbx.getString(), and the remainder of the text is in
  * BeanTableBundle.properties, accessed via the Bundle.getMessage() method.
+ * We plan to move all keys from LogixTableBundle.properties to
+ * BeanTableBundle.properties to simplify i18n TODO
  * <p>
  * Conditionals now have two policies to trigger execution of their action lists:
  * <ol>
@@ -1754,7 +1756,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         if (file.exists()) {
             Object[] options = {rbx.getString("BrowserSaveDuplicateReplace"),  // NOI18N
                     rbx.getString("BrowserSaveDuplicateAppend"),  // NOI18N
-                    rbx.getString("BrowserSaveDuplicateCancel")};  // NOI18N
+                    Bundle.getMessage("ButtonCancel")};  // NOI18N
             int selectedOption = JOptionPane.showOptionDialog(null,
                     java.text.MessageFormat.format(
                             rbx.getString("BrowserSaveDuplicatePrompt"),  // NOI18N
