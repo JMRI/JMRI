@@ -230,6 +230,14 @@ Directory "/Library/WebServer/Documents"
 LoadModule rewrite_module libexec/apache2/mod_rewrite.so
 </pre>
         By default, that's commented out with a leading # character.
+<p>
+        JMRI's web site uses index.shtml files as index pages.
+        To make sure that those will display by default, 
+        e.g. if you use a partial URL like 
+        <a href="http://jmri.org/download">http://jmri.org/download</a>,
+        find the line containing "DirectoryIndex" and add 
+        "index.shtml" to the existing list of index-like file names.
+
 <p>          
         We also want PHP turned on, so that the indices for the resources pages will work.
         Find the follow line and make sure it's not commented out:

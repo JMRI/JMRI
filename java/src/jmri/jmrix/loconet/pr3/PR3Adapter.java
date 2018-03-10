@@ -22,6 +22,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
+
     }
 
     /**
@@ -98,7 +99,8 @@ public class PR3Adapter extends LocoBufferAdapter {
         } else {
             // MS100 modes - connecting to a separate command station
             // connect to a packetizing traffic controller
-            LnPacketizer packets = new LnPacketizer();
+
+            LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
 
             // create memo
@@ -177,6 +179,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             return null;
         }
     }
+
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }

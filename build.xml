@@ -31,8 +31,6 @@
     <!-- local.properties file      (not an error if doesn't exist)                      -->
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
-    <!--    # Your SourceForge ID (used for Javadocs, distribution) if different         -->
-    <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
     <!--    # paths to append to the classpath                                           -->
@@ -1668,9 +1666,9 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
+                        <A href="http://www.tagadab.com"> 
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
@@ -1735,9 +1733,9 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
+                        <A href="http://www.tagadab.com"> 
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
@@ -1816,9 +1814,9 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
+                        <A href="http://www.tagadab.com"> 
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
@@ -1857,12 +1855,14 @@
         </plantuml>
     </target>
 
+    <!-- This target requires access to the JMRI webserver -->
+    <!-- so it's only for use by JMRI maintainers -->
     <target name="uploadjavadoc" description="upload existing Javadocs to jmri.org without recreating">
         <exec executable="rsync">
             <arg value="-avz"/>
             <arg value="--delete"/>
             <arg value="${doctarget}"/>
-            <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
+            <arg value="jmri@webserver.jmri.net:htdocs/JavaDoc/"/>
         </exec>
     </target>
 
