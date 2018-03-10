@@ -519,16 +519,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fadeOutTime;
     }
 
-    @Override
-    public void setDopplerFactor(float dopplerFactor) {
-        this.dopplerFactor = dopplerFactor;
-    }
-
-    @Override
-    public float getDopplerFactor() {
-        return this.dopplerFactor;
-    }
-
     /**
      * Used to return the current calculated fade gain for this AudioSource
      *

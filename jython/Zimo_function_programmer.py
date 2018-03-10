@@ -92,7 +92,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
 		self.waitMsec(1000)
 			# setup ops mode
 		self.status.text = "writing ops mode"
-		self.programmer.writeCV(61, 98, None)
+		self.programmer.writeCV("61", 98, None)
 		self.waitMsec(1000)
 		# make UI visible
 		self.address.enabled = False

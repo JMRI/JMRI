@@ -43,7 +43,7 @@
 
       <h4>How it works</h4>
 
-      <p><span id="product-desc">Locomotive sound "Profiles" are
+      <p>Locomotive sound "Profiles" are
       stored in a file called a "VSD File". When the Virtual Sound
       Decoder ("VSDecoder" or "VSD") is launched, the user chooses
       the desired Profile, and then assigns the VSDecoder an
@@ -51,12 +51,15 @@
       pressing function buttons or changing the speed, the Virtual
       Sound Decoder responds just like a hardware sound decoder
       installed in the locomotive would by playing sounds through
-      the computer speakers.</span></p>
+      the computer speakers.</p>
 
       <p>An example VSD file is included with the package, 
       more examples are available for download
       <a href="https://github.com/JMRI/vsdecoder">on the web</a>
       and you can make (and share!) your own.</p>
+
+      <p>See <a href="VSD_File_and_Config.shtml">more details</a>
+      on the VSD File and its Configuration.</p>
 
       <h4>OpenAL Required</h4>
 
@@ -252,10 +255,6 @@
       <p>For more information on Operations, see the JMRI&reg;
       Operating User's Guide.</p>
 
-      <p><em>Note:</em> Operations Locations following is
-      temporarily disabled in version 3.1.6. It will be re-enabled
-      in 3.1.7.</p>
-
       <h5>Menu Items</h5>
 
       <h6>File-&gt;Load VSD File</h6>
@@ -282,6 +281,9 @@
       <p>If checked, the Engine sounds will react immediately to
       Throttle changes, without the Engine Start button first
       having to be pressed.</p>
+      <p><em>Note:</em> Diesel engines normally have a starting-sound. 
+      Throttle changes will not be processed until the starting-sound
+      has finished.</p>
 
       <h5>Auto-Load VSD File</h5>
 
