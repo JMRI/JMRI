@@ -90,7 +90,7 @@ public class ConditionalEditBase {
     JmriBeanComboBox _comboNameBox = null;
 
     /**
-     * Input selection names
+     * Input selection names.
      *
      * @since 4.7.3
      */
@@ -162,7 +162,7 @@ public class ConditionalEditBase {
     // 2) Notify the calling Logix that the conditional view is closing
     // 3) Notify the calling Logix that it is to be deleted
     /**
-     * Create a custom listener event
+     * Create a custom listener event.
      */
     public interface LogixEventListener extends EventListener {
 
@@ -176,7 +176,7 @@ public class ConditionalEditBase {
 
     /**
      * This contains a list of commands to be processed by the listener
-     * recipient
+     * recipient.
      */
     public HashMap<String, String> logixData = new HashMap<>();
 
@@ -199,7 +199,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Notify the listeners to check for new data
+     * Notify the listeners to check for new data.
      */
     void fireLogixEvent() {
         for (LogixEventListener l : listenerList) {
@@ -899,7 +899,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Check if user will provide a valid item name in a Memory variable
+     * Check if user will provide a valid item name in a Memory variable.
      *
      * @param memName Memory location to provide item name at run time
      * @return false if user replies No
@@ -1349,6 +1349,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Error Dialogs ------------
+
     /**
      * Send an Invalid Conditional SignalHead state message for Edit Logix pane.
      *
@@ -1392,4 +1393,5 @@ public class ConditionalEditBase {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class);
+
 }

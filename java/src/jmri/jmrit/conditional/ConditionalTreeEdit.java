@@ -68,6 +68,8 @@ import org.slf4j.LoggerFactory;
  * selected Logix. The second level contains the antecedent, logic type and
  * trigger mode settings. The third level contains the detail Variable and
  * Action lines.
+ * <p>
+ * Compare with the other Conditional Edit tool {@link ConditionalListEdit}
  *
  * @author Dave Sand copyright (c) 2017
  */
@@ -203,6 +205,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JButton _actionSetButton;
 
     // ============  Edit conditionals for the current Logix ============
+
     /**
      * Create the edit logix window.
      * <p>
@@ -468,6 +471,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     // ------------ Create Conditional GridBag panels ------------
+
     /**
      * Build new GridBag content. The grid panel is hidden, emptied, re-built and
      * made visible.
@@ -812,8 +816,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     /**
-     * Set up the edit environment for the selected node Called from.
-     * {@link #treeRowSelected} This takes the place of an actual button
+     * Set up the edit environment for the selected node Called from
+     * {@link #treeRowSelected}. This takes the place of an actual button.
      */
     void editPressed() {
         switch (_curNodeType) {
@@ -2016,7 +2020,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     /**
-     * Ceate tabbed Pick Taba;e or Pick Single based on Selection Mode
+     * Ceate tabbed Pick Taba;e or Pick Single based on Selection Mode.
      * Called by {@link #setEditMode} when edit mode becomes active.
      * Called by {@link #variableTypeChanged} and {@link #actionItemChanged} when item type changes.
      *
@@ -2714,6 +2718,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     // ------------ Variable detail methods ------------
+
     /**
      * Respond to Cancel variable button
      */
@@ -4776,7 +4781,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     };
 
     /**
-     * Conditional Tree Node Definition
+     * Conditional Tree Node Definition.
      */
     static class ConditionalTreeNode extends DefaultMutableTreeNode {
 

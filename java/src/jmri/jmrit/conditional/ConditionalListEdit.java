@@ -83,6 +83,8 @@ import org.slf4j.LoggerFactory;
  * creates a formatted list of the contents of the selected Logix with each
  * Conditional, Variable and Action. The code is courtesy of Chuck Catania and
  * is used with his permission. Apr 2, 2017 - Dave Sand
+ * <p>
+ * Compare with the other Conditional Edit tool {@link ConditionalTreeEdit}
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
@@ -199,6 +201,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     static final int STRUT = 10;
 
     // ------------ Methods for Edit Logix Pane ------------
+
     /**
      * Create and/or initialize the Edit Logix pane.
      */
@@ -426,7 +429,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Responds to the Calculate Button in the Edit Logix window
+     * Responds to the Calculate Button in the Edit Logix window.
      *
      * @param e The event heard
      */
@@ -583,6 +586,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Methods for Edit Conditional Pane ------------
+
     /**
      * Respond to Edit Button in the Conditional table of the Edit Logix Window.
      *
@@ -667,6 +671,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ============ Edit Conditional Window and Methods ============
+
     /**
      * Create and/or initialize the Edit Conditional window.
      * <p>
@@ -2225,6 +2230,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     // ------------ Variable detail methods ------------
+
     /**
      * Respond to Update Variable button in the Edit Action pane.
      */
@@ -2328,7 +2334,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Load the Logix selection box. Set the selection to the current Logix
+     * Load the Logix selection box. Set the selection to the current Logix.
      *
      * @since 4.7.4
      */
