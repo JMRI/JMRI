@@ -1791,12 +1791,14 @@ public class LayoutTurnout extends LayoutTrack {
         double distance, minDistance = POSITIVE_INFINITY;
 
         // check center coordinates
-        p = getCoordsCenter();
-        distance = MathUtil.distance(p, hitPoint);
-        if (distance < minDistance) {
-            minDistance = distance;
-            minPoint = p;
-            result = TURNOUT_CENTER;
+        if (!requireUnconnected) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = TURNOUT_CENTER;
+            }
         }
 
         //check the A connection point
@@ -3334,7 +3336,6 @@ public class LayoutTurnout extends LayoutTrack {
 
         // Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
         // Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
-
         Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
         Point2D pAP = MathUtil.subtract(pM, vDisAP);
         Point2D pAPR = MathUtil.add(pAP, vAMo);
