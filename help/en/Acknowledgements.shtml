@@ -1,7 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- This page is created from the content (not formatting) -->
-<!-- of http://jmri.org/community/index.html -->
 
 <html lang="en">
 <head>
@@ -553,11 +551,15 @@
 
         <li>Tony Koester, who helped with signaling</li>
 
+        <li>W.D. Kok created and maintained some Umelec decoder definitions</li>
+        
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
 
         <li>Matjaz Krajnc, who provided better code and icons for
         the web throttle</li>
+        
+        <li>Andrew Kroll, who improved the Operations documentation</a>
 
         <li>Ross Kudlick, who researched options switches on
         Digitrax command stations</li>
@@ -726,9 +728,11 @@
         <li>Seth Neumann, who provided information on Wangrow
         decoders</li>
 
-        <li>Mark Noble, who found some broken links <a name="O" id=
-        "O"></a></li>
+        <li>Mark Noble, who found some broken links 
 
+        <a name="O" id="O"></a></li>
+        <li>John O'Duffy, who improved low-speed profiling</li>
+        
         <li>Glen Oberhauser, who added LocoNet throttles</li>
 
         <li>David Phillip Oster provided key information and a
@@ -838,6 +842,8 @@
         <li>Mark Schutzer, who helped debug some significant NCE
         improvements and contributed the Lenz Gold decoder
         definition</li>
+        
+        <li>Thurgau Schweiz, who provided some Umelec decoder definitions.</li>
 
         <li>Knut Schwichtenberg, who contributed the FREDI
         definition files</li>
@@ -898,7 +904,7 @@
         <li>Alfredo Sola provides the Spanish translation</li>
 
         <li>The good people at <a href=
-        "http://www.sf.net">SourceForge</a> who provide site
+        "http://www.sf.net">SourceForge</a> who provided the original site
         hosting, download servers and computing resources for JMRI
         development</li>
 
@@ -922,6 +928,11 @@
 
         <li>Francois Taburet, who provided the French translation
         for DecoderPro</li>
+
+        <LI>The good people at
+            <A HREF="http://www.tagadab.com">Tagadab</a>
+            who provide site hosting, and continuous integration resources
+            for JMRI development
 
         <li>Suzie Tall, who provided several North American and
         international signal definitions, including definitions for
@@ -1062,7 +1073,9 @@
       files that make up a project. More information is available
       on the <a href=
       "http://jmri.org/community/codeswarm.shtml">Code Swarm</a>
-      page.</p><!--#include virtual="/Footer" -->
+      page.</p>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

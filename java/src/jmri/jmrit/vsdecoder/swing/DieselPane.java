@@ -226,6 +226,6 @@ public class DieselPane extends EnginePane {
         lastSpeed = s;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
 
 }

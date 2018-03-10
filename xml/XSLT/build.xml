@@ -262,18 +262,20 @@
   <target name="xslt" depends="init, models, index, selection, csv, id, properties"
   		description="run the whole sequence of processing" />
   		
+  <!-- This target requires access to the JMRI webserver -->
+  <!-- so it's only for use by JMRI maintainers -->
   <target name="upload" description="Upload existing results to web site" >
     <exec executable="rsync">
       <arg value="-avz"/>
       <arg value="--delete"/>
       <arg value="pages"/>
-      <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
+      <arg value="jmri@webserver.jmri.org:htdocs/xml/XSLT/"/>
     </exec>
     <exec executable="rsync">
       <arg value="-avz"/>
       <arg value="--delete"/>
       <arg value="properties"/>
-      <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
+      <arg value="jmri@webserver.jmri.org:htdocs/xml/XSLT/"/>
     </exec>
   </target>
 

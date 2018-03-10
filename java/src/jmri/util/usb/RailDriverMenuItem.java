@@ -570,7 +570,7 @@ public class RailDriverMenuItem extends JMenuItem
             String newValue = event.getNewValue().toString();
             //log.info("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
 
-            double value = NaN;
+            double value;
             try {
                 value = Double.parseDouble(newValue);
             } catch (NumberFormatException ex) {

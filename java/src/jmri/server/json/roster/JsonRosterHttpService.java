@@ -44,7 +44,7 @@ import jmri.server.json.JsonHttpService;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonRosterHttpService extends JsonHttpService {
 
@@ -124,7 +124,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     /**
      * Returns the JSON representation of a roster entry.
-     *
+     * <p>
      * Note that this returns, for images and icons, a URL relative to the root
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
@@ -145,7 +145,7 @@ public class JsonRosterHttpService extends JsonHttpService {
 
     /**
      * Returns the JSON representation of a roster entry.
-     *
+     * <p>
      * Note that this returns, for images and icons, a URL relative to the root
      * folder of the JMRI server. It is expected that clients will fill in the
      * server IP address and port as they know it to be.
@@ -236,6 +236,26 @@ public class JsonRosterHttpService extends JsonHttpService {
             return root;
         } else {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_GROUP, name));
+        }
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case JsonRoster.ROSTER:
+            case JsonRoster.ROSTER_ENTRY:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/roster/" + type + "-server.json",
+                        "jmri/server/json/roster/" + type + "-client.json");
+            case JsonRoster.ROSTER_GROUP:
+            case JsonRoster.ROSTER_GROUPS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/roster/rosterGroup-server.json",
+                        "jmri/server/json/roster/rosterGroup-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 

@@ -11,7 +11,7 @@
 # change this to test to copy into SF.net test release area
 DEST="production"
 
-# Download a test release from Jenkins and move it to SF.net FRS
+# Download a test release from Jenkins and unpack
 curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/$1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"
 rm release/JMRI*
 unzip release.zip

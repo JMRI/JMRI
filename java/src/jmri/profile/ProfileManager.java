@@ -256,7 +256,8 @@ public class ProfileManager extends Bean {
             os = new FileOutputStream(config);
             p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
             os.close();
-        } catch (IOException ex) {
+        } catch (Throwable ex) { // IOException, but also misc errors in Java XML processing
+            log.error("While trying to save active profile {}", config,ex);
             if (os != null) {
                 os.close();
             }

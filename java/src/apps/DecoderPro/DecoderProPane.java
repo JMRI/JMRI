@@ -39,7 +39,7 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
     @Override
     protected String logo() {
-        return "resources/DecoderPro.gif";
+        return "resources/decoderpro.gif";
     }
 
     @Override

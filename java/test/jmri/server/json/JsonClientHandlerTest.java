@@ -23,13 +23,6 @@ import org.junit.Test;
  */
 public class JsonClientHandlerTest {
 
-    @Test
-    public void testCTor() {
-        JsonMockConnection mc = new JsonMockConnection((DataOutputStream) null);
-        JsonClientHandler t = new JsonClientHandler(mc);
-        Assert.assertNotNull("exists", t);
-    }
-
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();

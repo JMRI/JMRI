@@ -866,10 +866,12 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DEALLOCATE_BLOCK:
                 case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
                 case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
+                    str = str + ", \"" + _deviceName + "\".";
+                    break;
                 case Conditional.ACTION_SET_NXPAIR_ENABLED:
                 case Conditional.ACTION_SET_NXPAIR_DISABLED:
                 case Conditional.ACTION_SET_NXPAIR_SEGMENT:
-                    str = str + ", \"" + _deviceName + "\".";
+                    str = str + ", \"" + getBean().getUserName() + "\".";
                     break;
                 case Conditional.ACTION_SET_ROUTE_TURNOUTS:
                 case Conditional.ACTION_AUTO_RUN_WARRANT:

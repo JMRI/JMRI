@@ -104,6 +104,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         String result = "PositionalablePoint";
         switch (type) {
@@ -151,6 +152,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
@@ -171,6 +173,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * @return the bounds of this positional point
      */
+    @Override
     public Rectangle2D getBounds() {
         Point2D c = getCoordsCenter();
         //Note: empty bounds don't draw...
@@ -616,6 +619,7 @@ public class PositionablePoint extends LayoutTrack {
      * PositionablePointXml, then the following method is called after the
      * entire LayoutEditor is loaded to set the specific TrackSegment objects.
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         if (type == EDGE_CONNECTOR) {
             connect1 = p.getFinder().findTrackSegmentByName(trackSegment1Name);
@@ -1352,6 +1356,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
         if (connectionType != POS_POINT) {
@@ -1410,6 +1415,7 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
+    @Override
     public boolean isMainline() {
         boolean result = false; // assume failure (pessimist!)
         if (getConnect1() != null) {
@@ -1709,6 +1715,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -1753,6 +1760,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // positionable points don't have blocks...
         // nothing to see here, move along...

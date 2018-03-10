@@ -365,6 +365,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     /**
      * Display reminder to save.
      */
+    @Override
     void showSaveReminder() {
         /*if (_showReminder && !_suppressReminder) {
          javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
@@ -622,6 +623,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         return false;
     }
 
+    @Override
     boolean checkConditionalUserName(String uName, Logix logix) {
         if ((uName != null) && (!(uName.equals("")))) {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
@@ -3000,6 +3002,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_ENTRYEXIT_ACTION, actionType) + 1);
+                _actionNameField.setText(_curAction.getBean().getUserName());
                 break;
 
             case Conditional.ITEM_TYPE_AUDIO:
@@ -4678,6 +4681,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
     }
 
+    @Override
     protected String getClassName() {
         return ConditionalListEdit.class.getName();
     }

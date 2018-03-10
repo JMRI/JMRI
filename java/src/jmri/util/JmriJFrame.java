@@ -37,16 +37,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JFrame extended for common JMRI use.
- * <P>
+ * <p>
  * We needed a place to refactor common JFrame additions in JMRI code, so this
  * class was created.
- * <P>
+ * <p>
  * Features:
  * <ul>
  * <li>Size limited to the maximum available on the screen, after removing any
  * menu bars (Mac) and taskbars (Windows)
  * <li>Cleanup upon closing the frame: When the frame is closed (WindowClosing
- * event), the dispose() method is invoked to do cleanup. This is inherited from
+ * event), the {@link #dispose()} method is invoked to do cleanup. This is inherited from
  * JFrame itself, so super.dispose() needs to be invoked in the over-loading
  * methods.
  * <li>Maintains a list of existing JmriJFrames
@@ -58,8 +58,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * If you want this behavior, but need to do something when the window is
  * closing, override the {@link #windowClosing(java.awt.event.WindowEvent)}
- * method to do what you want. Also, if you override dispose(), make sure to
- * call super.dispose().
+ * method to do what you want. Also, if you override {@link #dispose()}, make
+ * sure to call super.dispose().
  * <p>
  * If you want the window to just do nothing or just hide, rather than be
  * disposed, when closed, set the DefaultCloseOperation to DO_NOTHING_ON_CLOSE
@@ -493,7 +493,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /**
      * Provide a maximum frame size that is limited to what can fit on the
      * screen after toolbars, etc are deducted.
-     * <P>
+     * <p>
      * Some of the methods used here return null pointers on some Java
      * implementations, however, so this will return the superclasses's maximum
      * size if the algorithm used here fails.
@@ -835,7 +835,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * When window is finally destroyed, remove it from the list of windows.
-     * <P>
+     * <p>
      * Subclasses that over-ride this method must invoke this implementation
      * with super.dispose() right before returning.
      */
@@ -1023,4 +1023,5 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class);
+    
 }

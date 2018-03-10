@@ -84,7 +84,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     transient Source src = null;
 
     DestinationPoints(PointDetails point, String id, Source src) {
-        super(id != null ? id : UUID.randomUUID().toString());
+        super(id != null ? id : "IN:" + UUID.randomUUID().toString());
         this.src = src;
         this.point = point;
         setUserName(src.getPoint().getDisplayName() + " to " + this.point.getDisplayName());

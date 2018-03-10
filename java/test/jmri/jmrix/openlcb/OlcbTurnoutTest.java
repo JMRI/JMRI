@@ -25,8 +25,6 @@ public class OlcbTurnoutTest extends TestCase {
 
     protected PropertyChangeListenerScaffold l; 
 
-    private static final String COMMANDED_STATE = "CommandedState";
-    private static final String KNOWN_STATE = "KnownState";
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);

@@ -101,6 +101,7 @@ public class SCWarrant extends Warrant {
     /**
      * This method has been overridden in order to avoid allocation of occupied blocks.
      */
+    @Override
      public String setRoute(int delay, List<BlockOrder> orders) {
         return allocateStartBlock();
     }
@@ -146,6 +147,7 @@ public class SCWarrant extends Warrant {
     /**
      * Callback from acquireThrottle() when the throttle has become available.sync
      */
+    @Override
     public void notifyThrottleFound(DccThrottle throttle) {
         if (throttle == null) {
             abortWarrant("notifyThrottleFound: null throttle(?)!");
@@ -172,6 +174,7 @@ public class SCWarrant extends Warrant {
     /**
      * Generate status message to show in warrant table
      **/
+    @Override
     synchronized protected String getRunningMessage() {
         if (_engineer == null) {
             // The warrant is not active
@@ -406,6 +409,7 @@ public class SCWarrant extends Warrant {
      * Make sure to allocate the rest of the route, update our present location and then tell
      * the main loop to find a new throttle setting.
      */
+    @Override
     protected void goingActive(OBlock block) {
         if (_runMode != MODE_RUN) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
@@ -449,6 +453,7 @@ public class SCWarrant extends Warrant {
      * Release the blocks that we have left.
      * Check if current block has been left (i.e. we have left our route) and stop the train in that case.
      */
+    @Override
     protected void goingInactive(OBlock block) {
         if (_runMode != MODE_RUN) {
             return;
@@ -572,6 +577,7 @@ public class SCWarrant extends Warrant {
     /**
      * Make sure to free up additional resources for a running SCWarrant.
      */
+    @Override
     synchronized public void stopWarrant(boolean abort) {
         if (_nextSignal != null) {
             _nextSignal.removePropertyChangeListener(this);
@@ -591,6 +597,7 @@ public class SCWarrant extends Warrant {
             _warrant = warrant;
         }
         
+        @Override
         public void run() {
             synchronized(_warrant) {
                 

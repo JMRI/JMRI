@@ -308,6 +308,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      * Sorts by decoded EventID(s)
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
         return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }

@@ -102,10 +102,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
         thrownRadioButton.addFocusListener(new java.awt.event.FocusListener() {
 
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (thrownRadioButton.isSelected()) {
                     setIsClosed(false);
@@ -115,10 +117,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
 
         closedRadioButton.addFocusListener(new java.awt.event.FocusListener() {
 
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (closedRadioButton.isSelected()) {
                     setIsClosed(true);
@@ -165,10 +169,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         }
         
         thrownRadioButton.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (thrownRadioButton.isSelected()) {
                     setIsClosed(false);
@@ -177,10 +183,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         });
 
         closedRadioButton.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (closedRadioButton.isSelected()) {
                     setIsClosed(true);
@@ -189,10 +197,12 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         });
 
         unusedRadioButton.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent e) {
                 // eat this focus change event.
             }
 
+            @Override
             public void focusLost(java.awt.event.FocusEvent e) {
                 if (unusedRadioButton.isSelected()) {
                     setIsUnused();
@@ -271,6 +281,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         return addressField;
     }
 
+    @Override
     public void setAddress(Integer addr) {
         log.debug("simpleturnoutstateentry - setaddress "+addr);
         super.setAddress(addr);
@@ -293,6 +304,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
         addressField.setLastQueriedValue(String.valueOf(addr));
     }
 
+    @Override
     public void setIsClosed(boolean isclosed) {
         super.setIsClosed(isclosed);
         closedRadioButton.setSelected(getIsClosed());

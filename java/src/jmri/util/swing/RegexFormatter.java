@@ -48,6 +48,7 @@ public class RegexFormatter extends DefaultFormatter {
         return matcher;
     }
 
+    @Override
     public Object stringToValue(String text) throws ParseException {
         Pattern pattern = getPattern();
 

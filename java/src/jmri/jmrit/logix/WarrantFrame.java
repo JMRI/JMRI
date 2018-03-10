@@ -262,10 +262,6 @@ public class WarrantFrame extends WarrantRoute {
             }
         });
 
-        int numBlocks = InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size();
-        if (numBlocks / 6 > getDepth()) {
-            setDepth(numBlocks / 6);
-        }
         panel.add(searchDepthPanel(true));
 
         JPanel p = new JPanel();
@@ -1358,7 +1354,7 @@ public class WarrantFrame extends WarrantRoute {
             ((SCWarrant)_warrant).setForward(_runForward.isSelected());
             ((SCWarrant)_warrant).setTimeToPlatform((long)_TTPtextField.getValue());
             long sf = (long)_speedFactorTextField.getValue();
-            float sf_float = (float)sf;
+            float sf_float = sf;
             ((SCWarrant)_warrant).setSpeedFactor(sf_float / 100);
         }
         _warrant.setTrainName(getTrainName());

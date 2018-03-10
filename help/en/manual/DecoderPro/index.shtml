@@ -608,7 +608,11 @@
                 <li><a href="VSD_LocationsMgr.shtml">Manage VSD
                 Locations</a></li>
 
-                <li>VSDecoder Preferences</li>
+                <li><a href="Main_VSD.shtml#preferences">VSDecoder
+                Preferences</li>
+
+                <li><a href="VSD_File_and_Config.shtml">VSDFile and
+                Configuration</li>
               </ul>
             </li>
 
