@@ -971,7 +971,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             // Bottom Buttons - Update Conditional
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            JButton updateConditional = new JButton(Bundle.getMessage("UpdateConditionalButton"));  // NOI18N
+            JButton updateConditional = new JButton(Bundle.getMessage("ButtonUpdate"));  // NOI18N
             panel5.add(updateConditional);
             updateConditional.addActionListener(new ActionListener() {
                 @Override
