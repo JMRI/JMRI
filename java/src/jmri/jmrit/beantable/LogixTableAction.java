@@ -1834,7 +1834,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             condText.append("\n  " + showSystemName + "  " + showCondName + "   \n");
             if (curConditional.getLogicType() == Conditional.MIXED) {
                 _antecedent = curConditional.getAntecedentExpression();
-                condText.append("   " + rbx.getString("BrowserAntecedent") + " " + _antecedent + "  \n");   // NOI18N
+                condText.append("   " + Bundle.getMessage("LogixAntecedent") + " " + _antecedent + "  \n");   // NOI18N
             }
 
             for (int i = 0; i < variableList.size(); i++) {

@@ -1848,7 +1848,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (cdl.getLogicType() != Conditional.MIXED) {
                     antecedent = "- - - - - - - - -";
                 }
-                return Bundle.getMessage("BrowserAntecedent") + " " + antecedent;   // NOI18N
+                return Bundle.getMessage("LogixAntecedent") + " " + antecedent;   // NOI18N
 
             case "LogicType":  // NOI18N
                 cdl = (Conditional) component;
