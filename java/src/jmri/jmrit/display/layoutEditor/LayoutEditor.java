@@ -5066,7 +5066,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
                     //BUGFIX: prevents initial drawTrackSegmentInProgress to {0, 0}
-                    currentLocation = beginLocation;
+                    currentLocation.setLocation(beginLocation);
                 } else {
                     //TODO: auto-add anchor point?
                     beginObject = null;
