@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
       <enumChoice choice="Both directions">
        <choice>Both directions</choice>
@@ -8,6 +8,7 @@
        <choice xml:lang="de">beide Richtungen ein</choice>
        <choice xml:lang="fr">Dans les deux directions</choice>
        <choice xml:lang="it">Entrambe le direzioni</choice>
+       <choice xml:lang="nl">In beide richtingen</choice>
       </enumChoice>
       <enumChoice choice="Only in forward">
         <choice>Only in forward</choice>
@@ -15,6 +16,7 @@
         <choice xml:lang="de">wenn Rückwärts aus</choice>
         <choice xml:lang="fr">Seulement marche avant</choice>
         <choice xml:lang="it">Solo in Avanti</choice>
+        <choice xml:lang="nl">Alleen vooruit</choice>
       </enumChoice>
       <enumChoice choice="Only in reverse">
         <choice>Only in reverse</choice>
@@ -22,5 +24,6 @@
         <choice xml:lang="de">wenn Vorwärts aus</choice>
         <choice xml:lang="fr">Seulement marche arrière</choice>
         <choice xml:lang="it">Solo in Retro</choice>
+        <choice xml:lang="nl">Alleen achteruit</choice>
       </enumChoice>
 </enumVal>

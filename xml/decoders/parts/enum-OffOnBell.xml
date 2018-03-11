@@ -14,7 +14,7 @@
     <choice xml:lang="cs">Zapnout</choice>
     <choice xml:lang="fr">Allumé</choice>
     <choice xml:lang="it">On</choice>
-    <choice xml:lang="de">An</choice>
+    <choice xml:lang="de">Ein</choice>
     <choice xml:lang="nl">Aan</choice>
   </enumChoice>
   <enumChoice choice="On with Bell">
@@ -22,7 +22,7 @@
     <choice xml:lang="cs">Zapnout se zazvoněním</choice>
     <choice xml:lang="fr">Allumé avec la cloche</choice>
     <choice xml:lang="it">On con Campana</choice>
-    <choice xml:lang="de">An mit Bell</choice>
+    <choice xml:lang="de">Ein mit Bell</choice>
     <choice xml:lang="nl">Aan met bel</choice>
   </enumChoice>
 </enumVal>

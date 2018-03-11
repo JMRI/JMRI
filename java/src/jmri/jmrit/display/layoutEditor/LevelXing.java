@@ -919,8 +919,8 @@ public class LevelXing extends LayoutTrack {
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         double distance, minDistance = POSITIVE_INFINITY;
 
+        //check the center point
         if (!requireUnconnected) {
-            //check the center point
             p = getCoordsCenter();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -930,8 +930,8 @@ public class LevelXing extends LayoutTrack {
             }
         }
 
+        //check the A connection point
         if (!requireUnconnected || (getConnectA() == null)) {
-            //check the A connection point
             p = getCoordsA();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -941,8 +941,8 @@ public class LevelXing extends LayoutTrack {
             }
         }
 
+        //check the B connection point
         if (!requireUnconnected || (getConnectB() == null)) {
-            //check the B connection point
             p = getCoordsB();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -952,8 +952,8 @@ public class LevelXing extends LayoutTrack {
             }
         }
 
+        //check the C connection point
         if (!requireUnconnected || (getConnectC() == null)) {
-            //check the C connection point
             p = getCoordsC();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -963,8 +963,8 @@ public class LevelXing extends LayoutTrack {
             }
         }
 
+        //check the D connection point
         if (!requireUnconnected || (getConnectD() == null)) {
-            //check the D connection point
             p = getCoordsD();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -1395,15 +1395,15 @@ public class LevelXing extends LayoutTrack {
         if (isMain == isMainlineAC()) {
             if (isBlock) {
                 setColorForTrackBlock(g2, getLayoutBlockAC());
+            }
+            g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
         }
-        g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
-    }
         if (isMain == isMainlineBD()) {
             if (isBlock) {
-        setColorForTrackBlock(g2, getLayoutBlockBD());
+                setColorForTrackBlock(g2, getLayoutBlockBD());
             }
-        g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
-    }
+            g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+        }
     }
 
     /**
@@ -1492,20 +1492,24 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
-        if (getConnectA() == null) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if (((specificType == NONE) || (specificType == LEVEL_XING_A))
+                && (getConnectA() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
         }
 
-        if (getConnectB() == null) {
+        if (((specificType == NONE) || (specificType == LEVEL_XING_B))
+                && (getConnectB() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
         }
 
-        if (getConnectC() == null) {
+        if (((specificType == NONE) || (specificType == LEVEL_XING_C))
+                && (getConnectC() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
         }
 
-        if (getConnectD() == null) {
+        if (((specificType == NONE) || (specificType == LEVEL_XING_D))
+                && (getConnectD() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
         }
     }
