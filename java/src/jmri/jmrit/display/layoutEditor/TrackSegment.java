@@ -1967,39 +1967,39 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
-        double pt2x;
-        double pt2y;
-        double pt1x;
-        double pt1y;
+            double pt2x;
+            double pt2y;
+            double pt1x;
+            double pt1y;
 
-        if (isFlip()) {
-            pt1x = getTmpPt2().getX();
-            pt1y = getTmpPt2().getY();
-            pt2x = getTmpPt1().getX();
-            pt2y = getTmpPt1().getY();
-        } else {
-            pt1x = getTmpPt1().getX();
-            pt1y = getTmpPt1().getY();
-            pt2x = getTmpPt2().getX();
-            pt2y = getTmpPt2().getY();
+            if (isFlip()) {
+                pt1x = getTmpPt2().getX();
+                pt1y = getTmpPt2().getY();
+                pt2x = getTmpPt1().getX();
+                pt2y = getTmpPt1().getY();
+            } else {
+                pt1x = getTmpPt1().getX();
+                pt1y = getTmpPt1().getY();
+                pt2x = getTmpPt2().getX();
+                pt2y = getTmpPt2().getY();
+            }
+            //Point 1 to new point distance
+            double a;
+            double o;
+            double la;
+            // Compute arc's chord
+            a = pt2x - x;
+            o = pt2y - y;
+            la = Math.hypot(a, o);
+
+            double lb;
+            a = pt1x - x;
+            o = pt1y - y;
+            lb = Math.hypot(a, o);
+
+            double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
+            setAngle(newangle);
         }
-        //Point 1 to new point distance
-        double a;
-        double o;
-        double la;
-        // Compute arc's chord
-        a = pt2x - x;
-        o = pt2y - y;
-        la = Math.hypot(a, o);
-
-        double lb;
-        a = pt1x - x;
-        o = pt1y - y;
-        lb = Math.hypot(a, o);
-
-        double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
-        setAngle(newangle);
-    }
     }
 
     /*
@@ -2095,8 +2095,8 @@ public class TrackSegment extends LayoutTrack {
             }
             if (isArc()) {
                 calculateTrackSegmentAngle();
-                    g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
-                    trackRedrawn();
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+                trackRedrawn();
             } else if (isBezier()) {
                 Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
                 Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
@@ -2187,11 +2187,10 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2
-    ) {
+    protected void highlightUnconnected(Graphics2D g2, int selectedType) {
         // TrackSegments are always connected
         // nothing to see here... move along...
-        }
+    }
 
     @Override
     protected void drawEditControls(Graphics2D g2) {

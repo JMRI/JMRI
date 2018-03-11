@@ -145,11 +145,11 @@ public abstract class LayoutTrack {
             } else {
                 result = layoutBlock.getBlockColor();
             }
-            }
-        return result;
         }
+        return result;
+    }
 
-    // optional prameter forceTrack = false
+    // optional parameter forceTrack = false
     protected Color getColorForTrackBlock(@Nullable LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
@@ -161,7 +161,7 @@ public abstract class LayoutTrack {
         return result;
     }
 
-    // optional prameter forceTrack = false
+    // optional parameter forceTrack = false
     protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
@@ -171,7 +171,7 @@ public abstract class LayoutTrack {
     /**
      * draw one line (Ballast, ties, center or 3rd rail, block lines)
      *
-     * @param g2 the graphics context
+     * @param g2      the graphics context
      * @param isMain  true if drawing mainlines
      * @param isBlock true if drawing block lines
      */
@@ -202,8 +202,14 @@ public abstract class LayoutTrack {
      * highlight unconnected connections
      *
      * @param g2 the graphics context
+     * @param specificType the specific connection to draw (or NONE for all)
      */
-    protected abstract void drawUnconnected(Graphics2D g2);
+    protected abstract void highlightUnconnected(Graphics2D g2, int specificType);
+
+    // optional parameter specificType = NONE
+    protected void highlightUnconnected(Graphics2D g2) {
+        highlightUnconnected(g2, NONE);
+    }
 
     /**
      * draw the edit controls
@@ -616,8 +622,8 @@ public abstract class LayoutTrack {
      * block/track) to blockNamesToTrackNameSetMap and #4) check all the
      * connections in this block (by calling the 2nd method below)
      * <p>
-     *     Basically, we're maintaining contiguous track sets for each block found
-     *     (in blockNamesToTrackNameSetMap)
+     * Basically, we're maintaining contiguous track sets for each block found
+     * (in blockNamesToTrackNameSetMap)
      *
      * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
      *                                     of track name sets for those blocks
@@ -630,7 +636,7 @@ public abstract class LayoutTrack {
     /**
      * recursive routine to check for all contiguous tracks in this blockName
      *
-     * @param blockName  the block that we're checking for
+     * @param blockName    the block that we're checking for
      * @param TrackNameSet the set of track names in this block
      */
     public abstract void collectContiguousTracksNamesInBlockNamed(
