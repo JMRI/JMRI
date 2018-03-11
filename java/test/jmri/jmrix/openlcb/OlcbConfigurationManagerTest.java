@@ -5,6 +5,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openlcb.NodeID;
+import jmri.InstanceManager;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  *
@@ -13,11 +18,14 @@ import org.junit.Test;
 public class OlcbConfigurationManagerTest {
         
     private OlcbSystemConnectionMemo memo;
+    public TestTrafficController tc;
+    public OlcbConfigurationManager configurationManager;
 
     @Test
     public void testCTor() {
         OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     @Test
@@ -25,18 +33,21 @@ public class OlcbConfigurationManagerTest {
         OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
         // this tet verifies this does not throw an exception
         t.configureManagers(); 
+        t.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
+        tc = new TestTrafficController();
+        memo = new OlcbSystemConnectionMemo();
+        memo.setTrafficController(tc);
+        memo.setProtocol(ConfigurationManager.OPENLCB);
     }
 
     @After
     public void tearDown() {
-        memo.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 

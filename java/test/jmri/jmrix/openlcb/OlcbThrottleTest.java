@@ -363,7 +363,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.setUp();
         m = OlcbTestInterface.createForLegacyTests();
         OlcbConfigurationManager ocm = new OlcbConfigurationManagerScaffold(m);
-        m.configureManagers();
+        //m.configureManagers();
         ocm.configureManagers();
         instance = new OlcbThrottle(new DccLocoAddress(100,true),m,ocm);
     }

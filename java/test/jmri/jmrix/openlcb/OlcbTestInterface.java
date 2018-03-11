@@ -44,7 +44,7 @@ public class OlcbTestInterface {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setProtocol(ConfigurationManager.OPENLCB);
-        memo.configureManagers();
+        //memo.configureManagers();
         configurationManager = InstanceManager.getDefault(OlcbConfigurationManager.class);
         canInterface = configurationManager.olcbCanInterface;
         iface = canInterface.getInterface();
