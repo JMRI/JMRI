@@ -223,10 +223,10 @@ public class ConditionalEditBase {
                 // Conditional with this user name already exists
                 log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
                         + uName);
-                javax.swing.JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("Error10"), // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("Error10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         } // else return true;
@@ -627,9 +627,9 @@ public class ConditionalEditBase {
                     Conditional cRef = xRef.getConditional(refName);
                     String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
-                    javax.swing.JOptionPane.showMessageDialog(null,
-                            java.text.MessageFormat.format(Bundle.getMessage("Error11"), (Object[]) msgs), // NOI18N
-                            Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);        // NOI18N
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("Error11", msgs), // NOI18N
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                     return false;
                 }
             }
@@ -716,9 +716,9 @@ public class ConditionalEditBase {
                     }
                     validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"), // NOI18N
-                                    intReference), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE); // NOI18N
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("Error24", intReference),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE); // NOI18N
                 }
                 return true;    // above is a warning to set memory correctly
             }
@@ -736,9 +736,9 @@ public class ConditionalEditBase {
      */
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"), // NOI18N
-                            time, Bundle.getMessage("Error42")), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);   // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error38", time, Bundle.getMessage("Error42")),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
             return false;
         }
         return true;
@@ -782,9 +782,9 @@ public class ConditionalEditBase {
                     }
                     validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
                 } catch (NumberFormatException ex) {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"), // NOI18N
-                                    memRef), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);   // NOI18N
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("Error24", memRef),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);   // NOI18N
                 }
                 return true;    // above is a warning to set memory correctly
             }
@@ -825,9 +825,9 @@ public class ConditionalEditBase {
                 default:
                     break;
             }
-            javax.swing.JOptionPane.showMessageDialog(
-                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"), // NOI18N
-                            time, Bundle.getMessage(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error38", time, Bundle.getMessage(errorNum)),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
             return false;
         }
         return true;
@@ -856,9 +856,9 @@ public class ConditionalEditBase {
                 errorNum = "Error27";       // NOI18N
                 break;
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                javax.swing.JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("Error43"), // NOI18N
-                        Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("Error43"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
                 return;
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 errorNum = "Error29";       // NOI18N
@@ -866,9 +866,9 @@ public class ConditionalEditBase {
             default:
                 log.warn("Unexpected action type {} in displayBadNumberReference", actionType);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(
-                null, java.text.MessageFormat.format(Bundle.getMessage("Error9"), // NOI18N
-                        Bundle.getMessage(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error9", Bundle.getMessage(errorNum)),
+                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
     }
 
     /**
@@ -906,8 +906,10 @@ public class ConditionalEditBase {
      */
     boolean confirmIndirectMemory(String memName) {
         if (!_suppressIndirectRef) {
-            int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                    Bundle.getMessage("ConfirmIndirectReference"), memName), // NOI18N
+            int response = JOptionPane.showConfirmDialog(null,
+                    Bundle.getMessage("ConfirmIndirectReference", memName,
+                            Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            Bundle.getMessage("ButtonCancel")), // NOI18N
                     Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_CANCEL_OPTION, // NOI18N
                     JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
@@ -1310,10 +1312,10 @@ public class ConditionalEditBase {
         }
         if (error) {
             // if unsuccessful, print error message
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    java.text.MessageFormat.format(Bundle.getMessage("Error26"), // NOI18N
-                            new Object[]{s}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error26", s),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
             return (-1);
         }
         // here if successful
@@ -1357,10 +1359,10 @@ public class ConditionalEditBase {
      * @param appearance to compare to
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
-        javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error21"), // NOI18N
-                        new Object[]{name, appearance}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error21", name, appearance),
+                Bundle.getMessage("ErrorTitle"), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1370,10 +1372,10 @@ public class ConditionalEditBase {
      * @param itemType type of Bean to look for
      */
     void messageInvalidActionItemName(String name, String itemType) {
-        javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error22"), // NOI18N
-                        new Object[]{name, Bundle.getMessage("BeanName" + itemType)}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error22", name, Bundle.getMessage("BeanName" + itemType)),
+                Bundle.getMessage("ErrorTitle"), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1382,10 +1384,10 @@ public class ConditionalEditBase {
      * @param svName proposed name that duplicates an existing name
      */
     void messageDuplicateConditionalUserName(String svName) {
-        javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error30"), // NOI18N
-                        new Object[]{svName}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error30", svName),
+                Bundle.getMessage("ErrorTitle"), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
     }
 
     protected String getClassName() {

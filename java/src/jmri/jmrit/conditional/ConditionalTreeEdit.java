@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -251,9 +252,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         if (p != null) {
                             // Logix with this user name already exists
                             log.error("Failure to update Logix with Duplicate User Name: {}", uName); // NOI18N
-                            javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                            JOptionPane.showMessageDialog(_editLogixFrame,
                                     Bundle.getMessage("Error6"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.ERROR_MESSAGE);
                             return;
                         }
                     }
@@ -734,9 +735,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void newVariable() {
         if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
-            javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+            JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error49"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -1142,9 +1143,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         if (_antecedent.length() > 0) {
             String message = _curConditional.validateAntecedent(_antecedent, _variableList);
             if (message != null) {
-                javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                JOptionPane.showMessageDialog(_editLogixFrame,
                         message + Bundle.getMessage("ParseError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -1222,9 +1223,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _curLogix.activateLogix();
                 if (msgs != null) {
                     // Unable to delete due to existing conditional references
-                    javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
-                            java.text.MessageFormat.format(Bundle.getMessage("Error11"), (Object[]) msgs), // NOI18N
-                            Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    JOptionPane.showMessageDialog(_editLogixFrame,
+                            Bundle.getMessage("Error11", msgs), // NOI18N
+                            Bundle.getMessage("ErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);  // NOI18N
                     return;
                 }
                 updateWhereUsed(oldTargetNames, newTargetNames, _curNodeName);
@@ -1244,9 +1246,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
                 if (_curLogix.getNumConditionals() < 1 && !_suppressReminder) {
                     // warning message - last Conditional deleted
-                    javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                    JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Warn1"), Bundle.getMessage("WarningTitle"), // NOI18N
-                            javax.swing.JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.WARNING_MESSAGE);
                 }
                 setMoveButtons();
                 break;
@@ -1255,9 +1257,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 loadReferenceNames(_variableList, oldTargetNames);
                 if (_variableList.size() < 2 && !_suppressReminder) {
                     // warning message - last State Variable deleted
-                    javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                    JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Warn3"), Bundle.getMessage("WarningTitle"), // NOI18N
-                            javax.swing.JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.WARNING_MESSAGE);
                 }
 
                 // Adjust operator
@@ -1536,7 +1538,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * using mixed mode and an antecedent node is selected.
      */
     void helpPressed() {
-        javax.swing.JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(null,
                 new String[]{
                     Bundle.getMessage("ConditionalHelpText1"), // NOI18N
                     Bundle.getMessage("ConditionalHelpText2"), // NOI18N
@@ -1546,7 +1548,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     Bundle.getMessage("ConditionalHelpText6"), // NOI18N
                     Bundle.getMessage("ConditionalHelpText7") // NOI18N
                 },
-                Bundle.getMessage("MenuHelp"), javax.swing.JOptionPane.INFORMATION_MESSAGE);  // NOI18N
+                Bundle.getMessage("MenuHelp"), JOptionPane.INFORMATION_MESSAGE);  // NOI18N
     }
 
     /**
@@ -2984,9 +2986,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 testType = Conditional.ITEM_TO_ENTRYEXIT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             default:
-                javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                JOptionPane.showMessageDialog(_editLogixFrame,
                         Bundle.getMessage("ErrorVariableType"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
         }
         _curVariable.setType(testType);
@@ -3067,9 +3069,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     String appStr = (String) _variableSignalBox.getSelectedItem();
                     int type = ConditionalVariable.stringToVariableTest(appStr);
                     if (type < 0) {
-                        javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                        JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("ErrorAppearance"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                javax.swing.JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                     _curVariable.setType(type);
@@ -3085,9 +3087,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 if (testType == Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
                     if (_variableSignalBox.getSelectedIndex() < 0) {
-                        javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                        JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("ErrorAspect"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                javax.swing.JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                     // save the selected aspect for comparison
@@ -3118,9 +3120,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
             default:
-                javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+                JOptionPane.showMessageDialog(_editLogixFrame,
                         Bundle.getMessage("ErrorVariableType"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
         }
         _curVariable.setName(name);
@@ -3129,9 +3131,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 name, ConditionalVariable.getTestTypeString(testType),
                 result, _curVariable.getType());  // NOI18N
         if (_curVariable.getType() == Conditional.TYPE_NONE) {
-            javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
+            JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("ErrorVariableState"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return (true);
@@ -4357,9 +4359,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         int actionType = Conditional.ACTION_NONE;
         int selection = _actionTypeBox.getSelectedIndex();
         if (selection == 0) {
-            javax.swing.JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     _editLogixFrame, Bundle.getMessage("makeSelection"),
-                    Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         String name = _actionNameField.getText().trim();
@@ -4460,10 +4462,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                     if (!lgtx.isIntensityVariable()) {
-                        javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
-                                java.text.MessageFormat.format(
-                                        Bundle.getMessage("Error45"), new Object[]{name}), // NOI18N
-                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);  // NOI18N
+                        JOptionPane.showMessageDialog(_editLogixFrame,
+                                Bundle.getMessage("Error45", name), // NOI18N
+                                Bundle.getMessage("ErrorTitle"),
+                                JOptionPane.ERROR_MESSAGE);  // NOI18N
                         return (false);
                     }
                     if (!validateIntensityReference(actionType, actionString)) {
@@ -4477,10 +4479,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                     if (!lgtx.isTransitionAvailable()) {
-                        javax.swing.JOptionPane.showMessageDialog(_editLogixFrame,
-                                java.text.MessageFormat.format(
-                                        Bundle.getMessage("Error40"), new Object[]{name}), // NOI18N
-                                Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);  // NOI18N
+                        JOptionPane.showMessageDialog(_editLogixFrame,
+                                Bundle.getMessage("Error40", name), // NOI18N
+                                Bundle.getMessage("ErrorTitle"),
+                                JOptionPane.ERROR_MESSAGE);  // NOI18N
                         return (false);
                     }
                     if (!validateTimeReference(actionType, actionString)) {
@@ -4531,8 +4533,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 if (referenceByMemory) {
-                    javax.swing.JOptionPane.showMessageDialog(_editLogixFrame, Bundle.getMessage("Warn6"), Bundle.getMessage("WarningTitle"), // NOI18N
-                            javax.swing.JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(_editLogixFrame, Bundle.getMessage("Warn6"), Bundle.getMessage("WarningTitle"), // NOI18N
+                            JOptionPane.WARNING_MESSAGE);
                     return false;
                 }
                 name = validateMemoryReference(name);
