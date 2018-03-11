@@ -3989,9 +3989,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == RH_XOVER)
-                || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == SINGLE_SLIP)
-                || (getTurnoutType() == DOUBLE_SLIP)) {
+                || (getTurnoutType() == LH_XOVER)) {
             if (((specificType == NONE) || (specificType == TURNOUT_D))
                     && (getConnectD() == null)) {
                 g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));

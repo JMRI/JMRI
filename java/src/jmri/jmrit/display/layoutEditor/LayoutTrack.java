@@ -149,7 +149,7 @@ public abstract class LayoutTrack {
         return result;
     }
 
-    // optional prameter forceTrack = false
+    // optional parameter forceTrack = false
     protected Color getColorForTrackBlock(@Nullable LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
@@ -161,7 +161,7 @@ public abstract class LayoutTrack {
         return result;
     }
 
-    // optional prameter forceTrack = false
+    // optional parameter forceTrack = false
     protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
@@ -206,7 +206,7 @@ public abstract class LayoutTrack {
      */
     protected abstract void highlightUnconnected(Graphics2D g2, int specificType);
 
-    // optional prameter specificType = NONE
+    // optional parameter specificType = NONE
     protected void highlightUnconnected(Graphics2D g2) {
         highlightUnconnected(g2, NONE);
     }
