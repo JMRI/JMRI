@@ -361,7 +361,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         float newSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);
         // if already at requested speed or ramping to it return;
-        if (Math.abs(newSpeed - getSpeedSetting()) < 0.002f || Math.abs(newSpeed - _rampEndSpeed) < 0.002f) {
+        if (Math.abs(newSpeed - getSpeedSetting()) < 0.002f || 
+                (_rampEndSpeed >= 0.0 && Math.abs(newSpeed - _rampEndSpeed) < 0.002f)) {
             if (log.isDebugEnabled()) log.debug("rampSpeedTo type= {}, throttle= {} _endSpeed= {} _rampEndSpeed= {}. warrant {}",
                     endSpeedType, getSpeedSetting(), newSpeed, _rampEndSpeed, _warrant.getDisplayName());
             return;
@@ -392,7 +393,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             log.debug("ThrottleRamp {} for \"{}\" at speed= {}. _waitForClear= {} _halt= {} on warrant {}",
                     (stop?"stopped":"completed"), type, _rampEndSpeed, _waitForClear, _halt, _warrant.getDisplayName());        
         _ramp = null;
-        _rampEndSpeed = -0.5f;
+        _rampEndSpeed = -0.5f;      // indicates not ramping
         ThreadingUtil.runOnLayoutEventually(() -> {
             _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
         });
@@ -456,7 +457,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     protected void setSpeedToType(String speedType) {
-        if (log.isTraceEnabled()) log.trace("setSpeedToType({})", speedType);
+        if (log.isDebugEnabled()) log.debug("setSpeedToType({})", speedType);
         if (!setSpeedRatio(speedType)) {
             return;
         }
