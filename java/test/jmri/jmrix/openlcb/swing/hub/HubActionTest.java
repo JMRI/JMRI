@@ -36,6 +36,7 @@ public class HubActionTest {
 
     @After
     public void tearDown() {
+        ((jmri.jmrix.openlcb.OlcbSystemConnectionMemo)memo).getInterface().dispose(); 
         JUnitUtil.tearDown();
     }
 }

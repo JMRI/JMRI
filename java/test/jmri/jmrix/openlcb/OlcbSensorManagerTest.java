@@ -14,6 +14,8 @@ import org.junit.Test;
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private OlcbSystemConnectionMemo m;
+
     @Override
     public String getSystemName(int i) {
         return "MSX010203040506070" + i;
@@ -72,7 +74,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void setUp() {
         JUnitUtil.setUp();
 
-        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
+        m = OlcbTestInterface.createForLegacyTests();
 
         l = new OlcbSensorManager(m);
     }
@@ -80,6 +82,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
+        m.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 

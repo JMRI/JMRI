@@ -50,7 +50,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
         tcThread = new Thread(this);
-        tcThread.setName("TC thread");
+        tcThread.setName("SPROG TC thread");
         tcThread.setPriority(Thread.MAX_PRIORITY-1);
         tcThread.start();
     }

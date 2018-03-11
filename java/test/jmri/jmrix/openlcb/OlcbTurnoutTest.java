@@ -408,6 +408,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        t.dispose();
         JUnitUtil.tearDown();
     }
 }

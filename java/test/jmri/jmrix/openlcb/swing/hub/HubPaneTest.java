@@ -38,6 +38,7 @@ public class HubPaneTest {
     @After
     public void tearDown() {
         hub.stopHubThread();
+        ((jmri.jmrix.openlcb.OlcbSystemConnectionMemo)memo).getInterface().dispose(); 
         JUnitUtil.tearDown();
     }
 }

@@ -5,15 +5,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.can.TestTrafficController;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class OlcbConfigurationManagerTest {
-
-    OlcbSystemConnectionMemo scm;
+        
+    private OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
