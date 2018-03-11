@@ -5,10 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openlcb.NodeID;
-import jmri.InstanceManager;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TestTrafficController;
 
 /**
@@ -16,34 +12,32 @@ import jmri.jmrix.can.TestTrafficController;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class OlcbConfigurationManagerTest {
-        
-    private OlcbSystemConnectionMemo memo;
-    public TestTrafficController tc;
-    public OlcbConfigurationManager configurationManager;
+
+    OlcbSystemConnectionMemo scm;
 
     @Test
     public void testCTor() {
-        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
+        OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     @Test
     public void testConfigureManagers() {
-        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
+        OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         // this tet verifies this does not throw an exception
         t.configureManagers(); 
-        t.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new TestTrafficController();
-        memo = new OlcbSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        memo.setProtocol(ConfigurationManager.OPENLCB);
+        //OlcbTestInterface testIf = new OlcbTestInterface();
+        scm  = new OlcbSystemConnectionMemo();
+        //scm.setTrafficController(testIf.tc);
+        //scm.setInterface(testIf.iface);
+        TestTrafficController tc = new TestTrafficController();
+        scm.setTrafficController(tc);
     }
 
     @After

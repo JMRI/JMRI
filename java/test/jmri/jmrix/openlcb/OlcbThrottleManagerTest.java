@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottleManager class.
@@ -12,20 +13,20 @@ import org.junit.Before;
  */
 public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    private OlcbSystemConnectionMemo m;
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        m = OlcbTestInterface.createForLegacyTests();
+        OlcbSystemConnectionMemo m = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
+        TestTrafficController tc = new TestTrafficController();
+        m.setTrafficController(tc);
         tm = new OlcbThrottleManager(m,new OlcbConfigurationManagerScaffold(m));
     }
 
     @After
     public  void tearDown() {
-        m.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 }

@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  * OlcbSystemConnectionMemoTest.java
@@ -28,13 +29,15 @@ public class OlcbSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm = OlcbTestInterface.createForLegacyTests();
+        scm  = new OlcbSystemConnectionMemo();
+        TestTrafficController tc = new TestTrafficController();
+        ((OlcbSystemConnectionMemo)scm).setTrafficController(tc);
     }
 
     @Override
     @After
     public void tearDown() {
-       ((OlcbSystemConnectionMemo)scm).getInterface().dispose();
+        scm = null;
         JUnitUtil.tearDown();
     }
 }

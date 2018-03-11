@@ -10,23 +10,18 @@ import org.junit.Test;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2018
  */
-public class LnPacketizerTest {
-
-    protected LnPacketizer lnp;
-
-    @Test
-    public void testCtor() {
-       Assert.assertNotNull("exists", lnp );
-    }
+public class LnPacketizerStrictTest extends LnPacketizerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnPacketizer();
+        lnp = new LnPacketizerStrict();
     }
 
     @After
+    @Override
     public void tearDown() {
         lnp = null;
         JUnitUtil.tearDown();

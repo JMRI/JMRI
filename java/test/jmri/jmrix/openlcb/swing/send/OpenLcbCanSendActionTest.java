@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  * @author Bob Jacobsen Copyright 2013
@@ -29,7 +30,9 @@ public class OpenLcbCanSendActionTest {
     public void setUp() {
         JUnitUtil.setUp();
 
-        memo = jmri.jmrix.openlcb.OlcbTestInterface.createForLegacyTests();
+        memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
+        TestTrafficController tc = new TestTrafficController();
+        memo.setTrafficController(tc);
     }
 
     @After
