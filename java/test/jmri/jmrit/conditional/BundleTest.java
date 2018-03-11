@@ -26,7 +26,7 @@ public class BundleTest  {
 
     @Test public void testGoodKeyMessageArg() {
         Assert.assertEquals("Row", Bundle.getMessage("ColumnLabelRow", new Object[]{}));  // NOI18N
-        Assert.assertEquals("Test \"test\" state is 2", Bundle.getMessage("VarStateDescrpt", "Test", "test", "2"));  // NOI18N
+        Assert.assertEquals("Test \"test\" state is \"2\"", Bundle.getMessage("VarStateDescrpt", "Test", "test", "2"));  // NOI18N
     }
 
     @Test public void testBadKeyMessageArg() {

@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * Most of the text used in this GUI is in BeanTableBundle.properties, accessed
  * via Bundle.getMessage().
  * 201803 Moved all keys from LogixTableBundle.properties to
- * LogixTableBundle.properties to fromBeanTableBundle.properties to simplify i18n
+ * BeanTableBundle.properties to simplify i18n.
  * <p>
  * Conditionals now have two policies to trigger execution of their action lists:
  * <ol>
