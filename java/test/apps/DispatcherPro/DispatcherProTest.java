@@ -37,7 +37,6 @@ public class DispatcherProTest {
 
 
     @Test
-    @Ignore("Until this can be made more reliable")
     public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

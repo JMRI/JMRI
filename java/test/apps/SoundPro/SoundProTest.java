@@ -37,7 +37,6 @@ public class SoundProTest {
 
 
     @Test
-    @Ignore("until this can be made more reliable")
     public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 
@@ -187,7 +186,6 @@ public class SoundProTest {
     }
 
     @Test
-    @Ignore("until this can be made more reliable")
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
                 

@@ -41,7 +41,6 @@ public class DecoderProTest {
     public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
     @Test
-    @Ignore("needs to be more reliable")
     public void testLaunchLocoNet() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -74,7 +73,6 @@ public class DecoderProTest {
     }
 
     @Test
-    @Ignore("needs to be more reliable")
     public void testLaunchEasyDcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -105,7 +103,6 @@ public class DecoderProTest {
     }
 
     @Test
-    @Ignore("needs to be more reliable")
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -167,7 +164,6 @@ public class DecoderProTest {
     }
 
     @Test
-    @Ignore("needs to be more reliable")
     public void testLaunchInitLoop() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
