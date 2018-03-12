@@ -25,13 +25,13 @@
       </personname>
     </author>
   </authorgroup>
-  <revision>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
       <revnumber>4</revnumber>
       <date>2018-03-11</date>
       <authorinitials>WK</authorinitials>
       <revremark>Dutch translating inserted</revremark>
     </revision>
-  <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>3</revnumber>
       <date>2016-10-23</date>
