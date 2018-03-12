@@ -55,7 +55,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
-        slotModel = new SlotMonDataModel(128, 16, memo);
+        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), 16, memo);
         slotTable = new JTable(slotModel);
         slotTable.setName(this.getTitle());
         sorter = new TableRowSorter<>(slotModel);
@@ -193,8 +193,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
                 int slotNum = entry.getIdentifier();
                 // default filter is IN-USE and regular systems slot
-                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE && (slotNum > 0 && slotNum < 121);
-                if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 121)) {
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE && ((slotNum > 0 && slotNum < 121) || slotNum > 127);
+                if (!include && showUnusedCheckBox.isSelected() && ((slotNum > 0 && slotNum < 121) || slotNum > 127)) {
                     include = true;
                 }
                 if (!include && showSystemCheckBox.isSelected() && (slotNum == 0 || slotNum > 120)) {

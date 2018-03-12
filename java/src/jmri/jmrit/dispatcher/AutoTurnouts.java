@@ -194,7 +194,7 @@ public class AutoTurnouts {
                 nextBlockSeqNum = curBlockSeqNum - 1;
             }
             if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
-                log.error("Error in block sequence numbers when setting/checking turnouts");
+                log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",curBlock.getUserName());
                 return false;
             }
         }

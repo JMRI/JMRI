@@ -572,6 +572,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private boolean isStopping() {
         // here add indicator for new stopping methods, if any are added
+        log.info("isStopping[{}][{}][{}]",_stoppingBySensor , _stoppingByBlockOccupancy , _stoppingUsingSpeedProfile);
         return (_stoppingBySensor || _stoppingByBlockOccupancy || _stoppingUsingSpeedProfile);
     }
 
@@ -756,7 +757,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             // a held signal always stop
-            if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.HELD ) {
+            if ( _controllingSignal != null && _controllingSignal.getAppearance() == SignalHead.FLASHRED ) {
                 // Held - Stop
                 stopInCurrentSection(NO_TASK);
                 _stoppingForStopSignal = true;
@@ -1131,15 +1132,18 @@ public class AutoActiveTrain implements ThrottleListener {
             // train will fit, but no way to stop it reliably
             setStopNow();
         }
-        if (task > NO_TASK) {
+        //if (task > NO_TASK) {
             Runnable waitForStop = new WaitForTrainToStop(task);
             Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
             tWait.start();
-        }
+        //} else {
+        //    log.info("No TASK");
+        //}
     }
 
     protected synchronized void executeStopTasks(int task) {
         if (task <= 0) {
+            cancelStopInCurrentSection();
             return;
         }
         switch (task) {
@@ -1150,7 +1154,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.debug("End Reversal");
                 _previousBlock = _currentBlock;
                 _activeTrain.setTransitReversed(true);
-                AllocatedSection aSec = _activeTrain.reverseAllAllocatedSections();
+                AllocatedSection aSec = _activeTrain.reverseOneAllocatedSections(_currentAllocatedSection.getSectionName());
                 setEngineDirection();
                 if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                     InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
@@ -1448,6 +1452,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 while (waitingOnTrain) {
                     if ((getAutoEngineer() != null) && (getAutoEngineer().isStopped())) {
                         waitingOnTrain = false;
+                        if (isStopping()) {
+                            log.info("isStoppingXXXX[{}][{}][{}]",_stoppingBySensor , _stoppingByBlockOccupancy , _stoppingUsingSpeedProfile);
+                        }
                     } else {
                         Thread.sleep(_delay);
                     }
@@ -1631,6 +1638,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             }
                         }
                         // test if need to change speed
+                        _currentSpeed = _throttle.getSpeedSetting();
                         if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.001) {
                             if (_currentRampRate == RAMP_NONE) {
                                 // set speed immediately

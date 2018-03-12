@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.slotmon;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -42,13 +43,38 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int F6COLUMN = 16;
     static public final int F7COLUMN = 17;
     static public final int F8COLUMN = 18;
+    static public final int F9COLUMN = 19;
+    static public final int F10COLUMN = 20;
+    static public final int F11COLUMN = 21;
+    static public final int F12COLUMN = 22;
+    static public final int F13COLUMN = 23;
+    static public final int F14COLUMN = 24;
+    static public final int F15COLUMN = 25;
+    static public final int F16COLUMN = 26;
+    static public final int F17COLUMN = 27;
+    static public final int F18COLUMN = 28;
+    static public final int F19COLUMN = 29;
+    static public final int F20COLUMN = 30;
+    static public final int F21COLUMN = 31;
+    static public final int F22COLUMN = 32;
+    static public final int F23COLUMN = 33;
+    static public final int F24COLUMN = 34;
+    static public final int F25COLUMN = 35;
+    static public final int F26COLUMN = 36;
+    static public final int F27COLUMN = 37;
+    static public final int F28COLUMN = 38;
 
-    static public final int NUMCOLUMN = 19;
+    static public final int NUMCOLUMN = 39;
+
+    private int numRows = 128;
 
     private final transient LocoNetSystemConnectionMemo memo;
 
     SlotMonDataModel(int row, int column, LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
+
+        // set number of rows;
+        numRows = row;
 
         // connect to SlotManager for updates
         memo.getSlotManager().addSlotListener(this);
@@ -69,7 +95,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      */
     @Override
     public int getRowCount() {
-        return 128;
+        return numRows;
     }
 
     @Override
@@ -116,6 +142,46 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return Throttle.F7;
             case F8COLUMN:
                 return Throttle.F8;
+            case F9COLUMN:
+                return Throttle.F9;
+            case F10COLUMN:
+                return Throttle.F10;
+            case F11COLUMN:
+                return Throttle.F11;
+            case F12COLUMN:
+                return Throttle.F12;
+            case F13COLUMN:
+                return Throttle.F13;
+            case F14COLUMN:
+                return Throttle.F14;
+            case F15COLUMN:
+                return Throttle.F15;
+            case F16COLUMN:
+                return Throttle.F16;
+            case F17COLUMN:
+                return Throttle.F17;
+            case F18COLUMN:
+                return Throttle.F18;
+            case F19COLUMN:
+                return Throttle.F19;
+            case F20COLUMN:
+                return Throttle.F20;
+            case F21COLUMN:
+                return Throttle.F21;
+            case F22COLUMN:
+                return Throttle.F22;
+            case F23COLUMN:
+                return Throttle.F23;
+            case F24COLUMN:
+                return Throttle.F24;
+            case F25COLUMN:
+                return Throttle.F25;
+            case F26COLUMN:
+                return Throttle.F26;
+            case F27COLUMN:
+                return Throttle.F27;
+            case F28COLUMN:
+                return Throttle.F28;
             case THROTCOLUMN:
                 return Bundle.getMessage("ThrottleIDCol");
             default:
@@ -148,6 +214,26 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
+            case F9COLUMN:
+            case F10COLUMN:
+            case F11COLUMN:
+            case F12COLUMN:
+            case F13COLUMN:
+            case F14COLUMN:
+            case F15COLUMN:
+            case F16COLUMN:
+            case F17COLUMN:
+            case F18COLUMN:
+            case F19COLUMN:
+            case F20COLUMN:
+            case F21COLUMN:
+            case F22COLUMN:
+            case F23COLUMN:
+            case F24COLUMN:
+            case F25COLUMN:
+            case F26COLUMN:
+            case F27COLUMN:
+            case F28COLUMN:
                 return Boolean.class;
             default:
                 return null;
@@ -168,8 +254,28 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
+            case F9COLUMN:
+            case F10COLUMN:
+            case F11COLUMN:
+            case F12COLUMN:
+            case F13COLUMN:
+            case F14COLUMN:
+            case F15COLUMN:
+            case F16COLUMN:
+            case F17COLUMN:
+            case F18COLUMN:
+            case F19COLUMN:
+            case F20COLUMN:
+            case F21COLUMN:
+            case F22COLUMN:
+            case F23COLUMN:
+            case F24COLUMN:
+            case F25COLUMN:
+            case F26COLUMN:
+            case F27COLUMN:
+            case F28COLUMN:
                 // only loco slots (1-120 incl) to be marked writeable only, system slot are read only
-                return (row > 0 & row < 121);
+                return ((row > 0 & row < 121) || (row > 128));
             default:
                 return false;
         }
@@ -274,6 +380,46 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return s.isF7();
             case F8COLUMN:
                 return s.isF8();
+            case F9COLUMN:
+                return s.isF9();
+            case F10COLUMN:
+                return s.isF10();
+            case F11COLUMN:
+                return s.isF11();
+            case F12COLUMN:
+                return s.isF12();
+            case F13COLUMN:
+                return s.isF13();
+            case F14COLUMN:
+                return s.isF14();
+            case F15COLUMN:
+                return s.isF15();
+            case F16COLUMN:
+                return s.isF16();
+            case F17COLUMN:
+                return s.isF17();
+            case F18COLUMN:
+                return s.isF18();
+            case F19COLUMN:
+                return s.isF19();
+            case F20COLUMN:
+                return s.isF20();
+            case F21COLUMN:
+                return s.isF21();
+            case F22COLUMN:
+                return s.isF22();
+            case F23COLUMN:
+                return s.isF23();
+            case F24COLUMN:
+                return s.isF24();
+            case F25COLUMN:
+                return s.isF25();
+            case F26COLUMN:
+                return s.isF26();
+            case F27COLUMN:
+                return s.isF27();
+            case F28COLUMN:
+                return s.isF28();
             case THROTCOLUMN:
                 int upper = (s.id() >> 7) & 0x7F;
                 int lower = s.id() & 0x7F;
@@ -315,6 +461,26 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
+            case F9COLUMN:
+            case F10COLUMN:
+            case F11COLUMN:
+            case F12COLUMN:
+            case F13COLUMN:
+            case F14COLUMN:
+            case F15COLUMN:
+            case F16COLUMN:
+            case F17COLUMN:
+            case F18COLUMN:
+            case F19COLUMN:
+            case F20COLUMN:
+            case F21COLUMN:
+            case F22COLUMN:
+            case F23COLUMN:
+            case F24COLUMN:
+            case F25COLUMN:
+            case F26COLUMN:
+            case F27COLUMN:
+            case F28COLUMN:
                 return new JLabel("       ").getPreferredSize().width; // to show checkboxes
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
@@ -408,6 +574,26 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
+            case F9COLUMN:
+            case F10COLUMN:
+            case F11COLUMN:
+            case F12COLUMN:
+            case F13COLUMN:
+            case F14COLUMN:
+            case F15COLUMN:
+            case F16COLUMN:
+            case F17COLUMN:
+            case F18COLUMN:
+            case F19COLUMN:
+            case F20COLUMN:
+            case F21COLUMN:
+            case F22COLUMN:
+            case F23COLUMN:
+            case F24COLUMN:
+            case F25COLUMN:
+            case F26COLUMN:
+            case F27COLUMN:
+            case F28COLUMN:
                 log.debug("F5-F8 change requested {}", row);
 
                 boolean tempF5 = (col == F5COLUMN) ? !s.isF5() : s.isF5();

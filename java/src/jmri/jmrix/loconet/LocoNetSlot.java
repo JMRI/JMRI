@@ -266,6 +266,102 @@ public class LocoNetSlot {
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {
+            case 0xd5:
+                if ((l.getElement(1) & 0b11110000) == 0) {
+                    // speed and direction
+                    spd = l.getElement(4);
+                    dirf = dirf & 0b11011111;
+                    if ((l.getElement(1) & 0b00001000) != 0) {
+                        dirf = dirf | 0b00100000;
+                    }
+                } else if ((l.getElement(1) & 0b11111000) == 0b00010000) {
+                    // function grp 1
+                    dirf = dirf & 0b11100000;
+                    dirf = dirf | (l.getElement(4) & 0b00011111);
+                    snd = snd & 0b11111100;
+                    snd = snd | ((l.getElement(4) & 0b01100000) >> 5);
+                } else if ((l.getElement(1) & 0b11111000) == 0b00011000) {
+                    // function grp 2
+                    snd = snd & 0b11110011;
+                    snd = snd | ((l.getElement(4) & 0b00000011) << 2);
+                    localF9 = ((l.getElement(4) & 0b00000100) != 0);
+                    localF10 = ((l.getElement(4) & 0b00001000) != 0);
+                    localF11 = ((l.getElement(4) & 0b00010000) != 0);
+                    localF12 = ((l.getElement(4) & 0b00100000) != 0);
+                    localF13 = ((l.getElement(4) & 0b01000000) != 0);
+                } else if ((l.getElement(1) & 0b11111000) == 0b00100000) {
+                    localF14 = ((l.getElement(4) & 0b00000001) != 0);
+                    localF15 = ((l.getElement(4) & 0b00000010) != 0);
+                    localF16 = ((l.getElement(4) & 0b00000100) != 0);
+                    localF17 = ((l.getElement(4) & 0b00001000) != 0);
+                    localF18 = ((l.getElement(4) & 0b00010000) != 0);
+                    localF19 = ((l.getElement(4) & 0b00100000) != 0);
+                    localF20 = ((l.getElement(4) & 0b01000000) != 0);
+                } else if ((l.getElement(1) & 0b11111000) == 0b00101000 || (l.getElement(1) & 0b11111000) == 0b00110000) {
+                    localF21 = ((l.getElement(4) & 0b00000001) != 0);
+                    localF22 = ((l.getElement(4) & 0b00000010) != 0);
+                    localF23 = ((l.getElement(4) & 0b00000100) != 0);
+                    localF24 = ((l.getElement(4) & 0b00001000) != 0);
+                    localF25 = ((l.getElement(4) & 0b00010000) != 0);
+                    localF26 = ((l.getElement(4) & 0b00100000) != 0);
+                    localF27 = ((l.getElement(4) & 0b01000000) != 0);
+                    localF28 = ((l.getElement(1) & 0b00010000) != 0);
+                }
+                notifySlotListeners();
+                break;
+            case 0xe6:
+            case 0xee:
+                lastUpdateTime = System.currentTimeMillis();
+                stat = l.getElement(4);
+                addr = l.getElement(5) + 128 * l.getElement(6);
+                spd = l.getElement(8);
+                //dirf = dirf & 0b11011111;
+                //if ((l.getElement(2) & 0b00001000) != 0) {
+                //    dirf = dirf | 0b00100000;
+                //}
+                dirf = l.getElement(10) & 0b00111111;
+                id = l.getElement(18) + 256 * l.getElement(19);
+                //dirf = dirf & 0b11100000;
+                //dirf = dirf | (l.getElement(10) & 0b00011111);
+                snd = snd & 0b11111100;
+                snd = snd |  ( (l.getElement(11) & 0b01100000) >> 5) ;
+                snd = l.getElement(11) & 0b00001111;
+                localF9  = ((l.getElement(11) & 0b00010000 ) != 0);
+                localF10 = ((l.getElement(11) & 0b00100000 ) != 0);
+                localF11 = ((l.getElement(11) & 0b01000000 ) != 0);
+                localF12 = ((l.getElement(9)  & 0b00010000 ) != 0);
+                localF13 = ((l.getElement(12) & 0b00000001 ) != 0);
+                localF14 = ((l.getElement(12) & 0b00000010 ) != 0);
+                localF15 = ((l.getElement(12) & 0b00000100 ) != 0);
+                localF16 = ((l.getElement(12) & 0b00001000 ) != 0);
+                localF17 = ((l.getElement(12) & 0b00010000 ) != 0);
+                localF18 = ((l.getElement(12) & 0b00100000 ) != 0);
+                localF19 = ((l.getElement(12) & 0b01000000 ) != 0);
+                localF20 = ((l.getElement(9)  & 0b00100000 ) != 0);
+                localF21 = ((l.getElement(13) & 0b00000001 ) != 0);
+                localF22 = ((l.getElement(13) & 0b00000010 ) != 0);
+                localF23 = ((l.getElement(13) & 0b00000100 ) != 0);
+                localF24 = ((l.getElement(13) & 0b00001000 ) != 0);
+                localF25 = ((l.getElement(13) & 0b00010000 ) != 0);
+                localF26 = ((l.getElement(13) & 0b00100000 ) != 0);
+                localF27 = ((l.getElement(13) & 0b01000000 ) != 0);
+                localF28 = ((l.getElement(9)  & 0b01000000 ) != 0);
+
+                notifySlotListeners();
+                break;
+            case 0xd4:
+                // change status
+                if ((l.getElement(1) & 0x11111000 ) == 0x00111000 ) {
+                    if (( l.getElement(3) & 0x0110000) == 0x0110000) {
+                        stat = stat & ~LnConstants.LOCO_IN_USE;
+                        log.info("set idle");
+                    }
+                    if (( l.getElement(3) & 0x0110000) == 0x00000010) {
+                        //prep for consisting
+                        log.info("Prep for consisting");
+                    }
+                }
+                break;
             case LnConstants.OPC_SL_RD_DATA:
                 lastUpdateTime = System.currentTimeMillis();
             //fall through
@@ -436,7 +532,7 @@ public class LocoNetSlot {
     }
     
     public LocoNetMessage writeThrottleID(int newID) {
-        id = (newID & 0x17F);
+        id = (newID & 0x7f7f);
         return writeSlot();
     }
 
@@ -496,25 +592,49 @@ public class LocoNetSlot {
      * @return LocoNet message which "releases" the slot to the "Common" state
     */
     public LocoNetMessage releaseSlot() {
-        return writeStatus(LnConstants.LOCO_COMMON);
+        if (slot < 128 ) {
+            return writeStatus(LnConstants.LOCO_COMMON);
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xd4);
+            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0x60);
+            l.setElement(4, 0x13);
+            return l;
+        }
     }
 
     public LocoNetMessage writeSlot() {
-        LocoNetMessage l = new LocoNetMessage(14);
-        l.setOpCode(LnConstants.OPC_WR_SL_DATA);
-        l.setElement(1, 0x0E);
-        l.setElement(2, slot & 0x7F);
-        l.setElement(3, stat & 0x7F);
-        l.setElement(4, addr & 0x7F);
-        l.setElement(9, (addr / 128) & 0x7F);
-        l.setElement(5, spd & 0x7F);
-        l.setElement(6, dirf & 0x7F);
-        l.setElement(7, trk & 0x7F);
-        l.setElement(8, ss2 & 0x7F);
-        // item 9 is add2
-        l.setElement(10, snd & 0x7F);
-        l.setElement(11, id & 0x7F);
-        l.setElement(12, (id / 128) & 0x7F);
+        if (slot < 128) {
+            LocoNetMessage l = new LocoNetMessage(14);
+            l.setOpCode(LnConstants.OPC_WR_SL_DATA);
+            l.setElement(1, 0x0E);
+            l.setElement(2, slot & 0x7F);
+            l.setElement(3, stat & 0x7F);
+            l.setElement(4, addr & 0x7F);
+            l.setElement(9, (addr / 128) & 0x7F);
+            l.setElement(5, spd & 0x7F);
+            l.setElement(6, dirf & 0x7F);
+            l.setElement(7, trk & 0x7F);
+            l.setElement(8, ss2 & 0x7F);
+            // item 9 is add2
+            l.setElement(10, snd & 0x7F);
+            l.setElement(12, id & 0x7F); // loco id is specified as to 2 byte hex the wrong way round.... 
+            l.setElement(11, (id / 256) & 0x7F); // loco id is specified as to 2 byte hex
+            return l;
+        }
+        LocoNetMessage l = new LocoNetMessage(21);
+        l.setOpCode(0xee);
+        l.setElement(1, 0x15);
+        l.setElement(2, (slot / 128) & 0x07);
+        l.setElement(3, slot & 0x7F);
+        l.setElement(4, stat & 0x7F);
+        l.setElement(6, (addr / 128) & 0x7F);
+        l.setElement(5, addr & 0x7F);
+        l.setElement(7, 0x47);
+        l.setElement(19, (id / 256) & 0x7F); // loco id is specified as to 2 byte hex the wrong way round....
+        l.setElement(18, id & 0x7F); // loco id is specified as to 2 byte hex
         return l;
     }
 
