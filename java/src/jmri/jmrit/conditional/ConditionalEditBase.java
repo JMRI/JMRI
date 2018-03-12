@@ -628,7 +628,7 @@ public class ConditionalEditBase {
                     String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
                     JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("Error11", msgs), // NOI18N
+                            Bundle.getMessage("Error11", (Object[])msgs), // NOI18N
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                     return false;
                 }
