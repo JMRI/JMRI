@@ -13,11 +13,11 @@
   <meta name="author" content="Egbert Broerse">
   <meta name="Date.Modified" content="20160516">
   <meta name="keywords" content="JMRI help Signal Heads Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -404,24 +404,7 @@
       Table help page</a>. <!-- Footer --></p>
       <hr class="hide">
 
-      <div id="footer">
-        <!-- Piwik -->
-        <script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/jmri/" : "http://apps.sourceforge.net/piwik/jmri/");
-        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-        </script><script type="text/javascript">
-piwik_action_name = '';
-        piwik_idsite = 1;
-        piwik_url = pkBaseURL + "piwik.php";
-        piwik_log(piwik_action_name, piwik_idsite, piwik_url);
-        </script> <object>
-          <noscript>
-          <p><img src=
-          "http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1"
-          alt="piwik"></p></noscript>
-        </object> <!-- End Piwik Tag -->
-      </div><!-- closes #footer-->
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

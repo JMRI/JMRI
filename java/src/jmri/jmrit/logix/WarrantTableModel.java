@@ -56,7 +56,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     WarrantManager _manager;
     WarrantTableFrame _frame;
     private ArrayList<Warrant> _warList;
-    private ArrayList<Warrant> _warNX; // temporary warrants appended to table
+    private final ArrayList<Warrant> _warNX; // temporary warrants appended to table
     static Color myGreen = new Color(0, 100, 0);
     static Color myGold = new Color(200, 100, 0);
 
@@ -66,8 +66,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         _manager = InstanceManager
                 .getDefault(jmri.jmrit.logix.WarrantManager.class);
         // _manager.addPropertyChangeListener(this); // for adds and deletes
-        _warList = new ArrayList<Warrant>();
-        _warNX = new ArrayList<Warrant>();
+        _warList = new ArrayList<>();
+        _warNX = new ArrayList<>();
     }
 
     public void addHeaderListener(JTable table) {
@@ -114,7 +114,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
      * propertyChange
      */
     public synchronized void init() {
-        ArrayList<Warrant> tempList = new ArrayList<Warrant>();
+        ArrayList<Warrant> tempList = new ArrayList<>();
         List<String> systemNameList = _manager.getSystemNameList();
         Iterator<String> iter = systemNameList.iterator();
         // copy over warrants still listed
@@ -142,7 +142,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     protected void haltAllTrains() {
-        ArrayList<Warrant> abortList = new ArrayList<Warrant>();
+        ArrayList<Warrant> abortList = new ArrayList<>();
         Iterator<Warrant> iter = _warList.iterator();
         while (iter.hasNext()) {
             Warrant w = iter.next();
@@ -402,7 +402,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-green.gif",
                         "off");
-            } else if (/*w.hasRouteSet() &&*/ w.isAllocated()) {
+            } else if (w.hasRouteSet() && w.isAllocated()) {
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
                         "occupied");
@@ -488,15 +488,17 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case SET_COLUMN:
-            msg = w.setRoute(1, null);
-            if (msg == null) {
-                _frame.setStatusText(
-                        Bundle.getMessage("pathsSet", w.getDisplayName()),
-                        myGreen, false);
-            } else {
-                w.deAllocate();
-                _frame.setStatusText(msg, myGold, false);
-                msg = null;
+            if (w.getRunMode() == Warrant.MODE_NONE) {
+                msg = w.setRoute(1, null);
+                if (msg == null) {
+                    _frame.setStatusText(
+                            Bundle.getMessage("pathsSet", w.getDisplayName()),
+                            myGreen, false);
+                } else {
+                    w.deAllocate();
+                    _frame.setStatusText(msg, myGold, false);
+                    msg = null;
+                }
             }
             break;
         case AUTO_RUN_COLUMN:

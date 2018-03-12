@@ -100,6 +100,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
 
     @After
     public void tearDown() {
+        stc.dispose();
         JUnitUtil.tearDown();
     }
 

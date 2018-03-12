@@ -181,9 +181,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         Attribute a;
         if ((a = layoutParm.getAttribute(LAYOUT_SCALE)) != null) {
             try {
-                setScale(a.getFloatValue());
+                setLayoutScale(a.getFloatValue());
             } catch (DataConversionException ex) {
-                setScale(87.1f);
+                setLayoutScale(87.1f);
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }

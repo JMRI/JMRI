@@ -50,12 +50,9 @@ import org.slf4j.LoggerFactory;
 
  */
 public class SignalGroupSubTableAction {
-
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -76,8 +73,11 @@ public class SignalGroupSubTableAction {
     /**
      * Set choice for conditional evaluation.
      * <p>
-     * Set to AND when you want all conditionals to be met for the Signal Head to turn On when an included Aspect is shown on the main Mast.
-     * Set to OR when you at least one of the conditionals to be met for the Signal Head to turn On when an included Aspect is shown.
+     * Set to AND when you want all conditionals to be met for the Signal Head
+     * to turn On when an included Aspect is shown on the main Mast.
+     * Set to OR when you at least one of the conditionals to be met for the
+     * Signal Head to turn On when an included Aspect is shown.
+     *
      * @see operFromBox operFromBox()
      * @param mode True for AND
      * @param box the comboBox object to set
@@ -93,6 +93,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Get the user choice for conditional evaluation.
+     *
      * @see setoperBox setoperBox()
      * @param box the comboBox object containing the user choice
      * @return True for AND, False for OR
@@ -116,7 +117,9 @@ public class SignalGroupSubTableAction {
     private static int[] operValues = new int[]{0x00, 0x01};
 
     /**
-     * Get the user choice for a Signal Group Signal Head's On and Off Appearance from a comboBox at the top of the Edit Head sub pane.
+     * Get the user choice for a Signal Group Signal Head's On and Off Appearance
+     * from a comboBox at the top of the Edit Head sub pane.
+     *
      * @param box the comboBox object containing the user choice
      * @return Value for the Appearance (color) set i.e. 0 for DARK
      */
@@ -140,7 +143,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set selected item in a Signal Group Signal Head's On and Off Appearance in a comboBox at the top of the Edit Head sub pane.
+     * Set selected item in a Signal Group Signal Head's On and Off Appearance
+     * in a comboBox at the top of the Edit Head sub pane.
+     *
      * @param mode Value for an Appearance (color) i.e. 0 for DARK
      * @param box the comboBox object to set
      */
@@ -172,7 +177,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set selected item for a Sensor conditional's On state in the comboBox on the Edit Head sub pane.
+     * Set selected item for a Sensor conditional's On state in the
+     * comboBox on the Edit Head sub pane.
+     *
      * @see turnoutModeFromBox turnoutModeFromBox()
      * @param mode Value for ACTIVE/INACTIVE
      * @param box the comboBox object to set
@@ -183,7 +190,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Get the user choice for a Control Turnout conditional's On state from the comboBox on the Edit Head sub pane.
+     * Get the user choice for a Control Turnout conditional's On state
+     * from the comboBox on the Edit Head sub pane.
+     *
      * @see sensorModeFromBox sensorModeFromBox()
      * @param box the comboBox object containing the user choice
      * @return Value for CLOSED/THROWN
@@ -200,7 +209,9 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Set selected item for a Control Turnout conditional's On state in the comboBox on the Edit Head sub pane.
+     * Set selected item for a Control Turnout conditional's On state
+     * in the comboBox on the Edit Head sub pane.
+     *
      * @see turnoutModeFromBox turnoutModeFromBox()
      * @param mode Value for CLOSED/THROWN
      * @param box the comboBox object to set
@@ -248,6 +259,7 @@ public class SignalGroupSubTableAction {
     /**
      * Open an editor to set the details of a Signal Head as part of a Signal Group.
      * Called when user clicks the Edit button for a Head in the Add/Edit Signal Group pane.
+     *
      * @see SignalGroupTableAction#signalHeadEditPressed(int) SignalGroupTableAction.signalHeadEditPressed
      * @param g Parent Signal Head
      * @param headName System or User Name of this Signal Head
@@ -592,7 +604,8 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Initialize the list of included turnouts and sensors for a Signal Head item on the sub pane.
+     * Initialize the list of included turnouts and sensors for a
+     * Signal Head item on the sub pane.
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<SignalGroupTurnout>();
@@ -653,7 +666,8 @@ public class SignalGroupSubTableAction {
      * Respond to the Update button on the Edit Head sub pane - update to SignalGroup.
      *
      * @param e the event heard
-     * @param newSignalGroup True if this is a newly created Signal Group for which additional actions are required
+     * @param newSignalGroup True if this is a newly created Signal
+     *                       Group for which additional actions are required
      */
     void updateSubPressed(ActionEvent e, boolean newSignalGroup) {
         curSignalGroup.clearHeadTurnout(curSignalHead);
@@ -977,8 +991,10 @@ public class SignalGroupSubTableAction {
         }
 
         /**
-         * Get the configured On state for the Control Sensor Conditional to be True
-         * @return A string describing the On state for use in the GUI (read from a Properties file, localizable)
+         * Get the configured On state for the Control Sensor Conditional to be True.
+         *
+         * @return A string describing the On state for use in the GUI
+         * (read from a Properties file, localizable)
          */
         @Override
         String getSetToState() {
@@ -1068,6 +1084,7 @@ public class SignalGroupSubTableAction {
 
         /**
          * Get the Turnout object.
+         *
          * @return The Turnout Bean acting as Control Turnout for this Head and Group
          */
         Turnout getTurnout() {
@@ -1076,4 +1093,5 @@ public class SignalGroupSubTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class);
+
 }
