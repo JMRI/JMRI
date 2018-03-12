@@ -666,7 +666,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     // ------------ variable definitions ------------
-    
+
     // Multi use variables
     ConditionalManager _conditionalManager = null;  // set when LogixAction is created
     LogixManager _logixManager = null;  // set when LogixAction is created
@@ -740,7 +740,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     private HashMap<String, ArrayList<String>> _saveTargetList = new HashMap<>();
 
     // ------------ Methods for Add Logix Window ------------
-    
+
     /**
      * Respond to the Add button in Logix table Creates and/or initialize the
      * Add Logix pane.
@@ -1223,7 +1223,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     // ------------ Methods for Edit Logix Pane ------------
-    
+
     /**
      * Respond to the Edit button pressed in Logix table.
      *
@@ -1493,9 +1493,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                             cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
                         JOptionPane.showMessageDialog(null,
-                                Bundle.getMessage("LogixError11", msgs), // NOI18N
-                                Bundle.getMessage("ErrorTitle"),
-                                JOptionPane.ERROR_MESSAGE);  // NOI18N
+                                Bundle.getMessage("LogixError11", (Object[]) msgs), // NOI18N
+                                Bundle.getMessage("ErrorTitle"),  // NOI18N
+                                JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
                 }

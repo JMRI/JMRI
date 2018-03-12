@@ -1367,9 +1367,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
         String[] msgs = _curLogix.deleteConditional(sName);
         if (msgs != null) {
             JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Error11", msgs), // NOI18N
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);  // NOI18N
+                    Bundle.getMessage("Error11", (Object[]) msgs), // NOI18N
+                    Bundle.getMessage("ErrorTitle"),  // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
         }
 
         // complete deletion
@@ -1379,7 +1379,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_numConditionals < 1 && !_suppressReminder) {
             // warning message - last Conditional deleted
             JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Warn1"),
+                    Bundle.getMessage("Warn1"),  // NOI18N
                     Bundle.getMessage("WarningTitle"), // NOI18N
                     JOptionPane.WARNING_MESSAGE);
         }
