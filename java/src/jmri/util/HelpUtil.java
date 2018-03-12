@@ -129,7 +129,7 @@ public class HelpUtil {
             globalHelpBroker.enableHelpOnButton(component, ref, null);
             log.debug("Help added for {}", ref);
         } else {
-            log.warn("globalHelpBroker is null");
+            log.debug("globalHelpBroker is null");
         }
     }
 
