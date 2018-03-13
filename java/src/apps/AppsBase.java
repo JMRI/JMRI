@@ -124,7 +124,7 @@ public abstract class AppsBase {
             }, "Initialize TabbedPreferences").start();
         }
 
-        if (Boolean.valueOf("org.jmri.python.preload")) {
+        if (Boolean.getBoolean("org.jmri.python.preload")) {
             new Thread(() -> {
                 try {
                     JmriScriptEngineManager.getDefault().initializeAllEngines();
