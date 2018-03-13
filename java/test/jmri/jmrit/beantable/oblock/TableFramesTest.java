@@ -19,6 +19,7 @@ public class TableFramesTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TableFrames t = new TableFrames();
         Assert.assertNotNull("exists",t);
+        t.initComponents();
     }
 
     // The minimal setup for log4J

@@ -76,7 +76,7 @@ public class OlcbSignalMastXmlTest {
         };
 
         OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
-        memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
+        //memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 
     @After
