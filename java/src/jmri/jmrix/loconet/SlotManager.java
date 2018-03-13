@@ -903,7 +903,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
         if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
-            numSlots = 432;
+            numSlots = 600;  // base 128 then 400 extended
             extendedSlots = true;
         }
         loadSlots();

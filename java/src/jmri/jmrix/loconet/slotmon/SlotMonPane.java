@@ -55,7 +55,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
-        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), 16, memo);
+        slotModel = new SlotMonDataModel(memo.getSlotManager().getNumSlots(), 39, memo);
         slotTable = new JTable(slotModel);
         slotTable.setName(this.getTitle());
         sorter = new TableRowSorter<>(slotModel);

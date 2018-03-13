@@ -350,17 +350,24 @@ public class LocoNetSlot {
                 notifySlotListeners();
                 break;
             case 0xd4:
-                // change status
-                if ((l.getElement(1) & 0x11111000 ) == 0x00111000 ) {
-                    if (( l.getElement(3) & 0x0110000) == 0x0110000) {
-                        stat = stat & ~LnConstants.LOCO_IN_USE;
-                        log.info("set idle");
-                    }
-                    if (( l.getElement(3) & 0x0110000) == 0x00000010) {
-                        //prep for consisting
+                // null move or change status if byte 1 bits 5-3 on
+                if ((l.getElement(1) & 0b11111000 ) == 0b00111000 ) {
+                    if (( l.getElement(3) & 0b01100010) == 0b01100000) {
+                        // new status in byte 4 update status
+                        stat = l.getElement(4);
+                    } else if (( l.getElement(3) & 0b0110010) == 0b00000010) {
+                        // add loco in slot 1 to top slot 2
+                        // there will be a status response.
                         log.info("Prep for consisting");
+                    } else {
+                        // slot move slot zero = dispatch same slot is null move
+                        if (l.getElement(3) == 0 && l.getElement(4) == 0) {
+                            stat = stat & ~LnConstants.LOCO_IN_USE;
+                            log.info("set idle");
+                        }
                     }
                 }
+                notifySlotListeners();
                 break;
             case LnConstants.OPC_SL_RD_DATA:
                 lastUpdateTime = System.currentTimeMillis();
@@ -524,11 +531,21 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeMode(int status) {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
-        return l;
+        if (slot < 128 ) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_SLOT_STAT1);
+            l.setElement(1, slot);
+            l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xd4);
+            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0x60);
+            l.setElement(4, (stat & ~LnConstants.DEC_MODE_MASK) | status);
+            return l;
+        }
     }
     
     public LocoNetMessage writeThrottleID(int newID) {
@@ -543,24 +560,45 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeStatus(int status) {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
-        return l;
+        if (slot < 128 ) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_SLOT_STAT1);
+            l.setElement(1, slot);
+            l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xd4);
+            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0x60);
+            l.setElement(4, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
+            return l;
+        }
     }
 
     /**
-     * Update the status mode bits in STAT1 (D5, D4)
+     * Update Speed
      *
-     * @param status New values for STAT1 (D5, D4)
+     * @param speed new speed
+     * @return Formatted LocoNet message to change value.
      */
-    public void sendWriteStatus(int status) {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
-        
+    public LocoNetMessage writeSpeed(int speed) {
+        if (slot  < 128) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_LOCO_SPD);
+            l.setElement(1, slot );
+            l.setElement(2, speed);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xd5);
+            l.setElement(1, ((slot / 128) & 0x07) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, (id & 0x7f));
+            l.setElement(4, speed);
+            return l;
+        }
     }
 
     /**
@@ -572,11 +610,21 @@ public class LocoNetSlot {
      * @return LocoNet message which "dispatches" the slot
     */
     public LocoNetMessage dispatchSlot() {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-        l.setElement(1, slot);
-        l.setElement(2, 0);
-        return l;
+        if (slot < 128) {
+            LocoNetMessage l = new LocoNetMessage(4);
+            l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+            l.setElement(1, slot);
+            l.setElement(2, 0);
+            return l;
+        } else {
+            LocoNetMessage l = new LocoNetMessage(6);
+            l.setOpCode(0xd4);
+            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(2, slot & 0x7f);
+            l.setElement(3, 0);
+            l.setElement(4, 0);
+            return l;
+        }
     }
 
     /**
@@ -592,17 +640,7 @@ public class LocoNetSlot {
      * @return LocoNet message which "releases" the slot to the "Common" state
     */
     public LocoNetMessage releaseSlot() {
-        if (slot < 128 ) {
-            return writeStatus(LnConstants.LOCO_COMMON);
-        } else {
-            LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xd4);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
-            l.setElement(2, slot & 0x7f);
-            l.setElement(3, 0x60);
-            l.setElement(4, 0x13);
-            return l;
-        }
+        return writeStatus(LnConstants.LOCO_COMMON);
     }
 
     public LocoNetMessage writeSlot() {

@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -9,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.ThrottleListener;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -29,12 +33,14 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
   */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
-        implements LocoNetListener {
+        implements LocoNetListener, ThrottleListener {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+
+    javax.swing.JButton add10Throttles = new javax.swing.JButton("Add 10 Throttles");
 
     public LocoGenPanel() {
         super();
@@ -89,7 +95,15 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
+            pane1.add(add10Throttles);
             pane1.add(Box.createVerticalGlue());
+
+            add10Throttles.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    add10ThrottlesActionPerformed(e);
+                }
+            });
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
@@ -143,6 +157,48 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         memo.getLnTrafficController().sendLocoNetMessage(createPacket(packetTextField.getText()));
+    }
+
+    private ArrayList<DccThrottle> throttles = new ArrayList<>();
+    private int throttleAddr = 300;
+    public void add10ThrottlesActionPerformed(java.awt.event.ActionEvent e) {
+        int count=0;
+        while (count < 10) {
+        log.debug("requesting throttle address={}",  throttleAddr);
+        boolean ok;
+        ok = InstanceManager.throttleManagerInstance().requestThrottle(throttleAddr, this);
+        if (!ok) {
+            log.warn("Throttle for locomotive address {} could not be setup.", throttleAddr);
+        }
+        throttleAddr+=1;
+        try{Thread.sleep(10);} catch (Exception e2) {log.info("Ahh");}
+        count++;
+        }
+    }
+
+    // Throttle feedback method - Initiates running AutoEngineer with the new throttle
+    @Override
+    public void notifyThrottleFound(DccThrottle t) {
+        throttles.add(t);
+        throttles.get(throttles.size()-1).setSpeedSetting(0.5f);
+        if (t == null) {
+            log.error("Null Throttle returned");
+            return;
+        }
+    }
+
+    @Override
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+        log.error("Throttle request failed for {} because {}", address, reason);
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        // this is an automatically stealing impelementation.
+        log.warn("Stealing");
+        //InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
+        //
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     // control sequence operation
