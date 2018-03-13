@@ -24,7 +24,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>DCC++ Turnouts and Outputs</h1>
-      <h2 name="types" id="types">Types of DCC++ Turnout Control</h2>
+
+      <a name="types" id="types"></a></a><h2>Types of DCC++ Turnout Control</h2>
       <p>There are 3 ways to control a turnout via DCC++:</p>
       <ul>
           <li>Direct DCC Accessory Command ("a" command)</li>
@@ -131,13 +132,13 @@
       
       <h3>3: Configure the Base Station</h3>
       
-      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store
+      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors &amp; Turnouts") tool to store
       the turnout ID and DCC Address in the Base Station.</p>
       <p>Note: DCC++ requires the use of an Address/Subaddress pair.  If your Stationary Decoder does not have
           subaddresses, take the address and divide by 4.  The result is the address, the remainder is the subaddress.
           For example, Address 51 (no subaddress) is DCC++ Address 12, Subaddress 3.
       <ol>
-          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors & Turnouts")</li>
+          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &amp; Turnouts")</li>
           <li>Choose the "Turnouts" tab</li>
           <li>Click the "Add Turnout" button. This will add a new row to the table.</li>
           <li>In the new row, set the "Index" to the ID value of the new turnout</li>
@@ -190,10 +191,10 @@
       
       <h3>3: Configure the Base Station</h3>
       
-      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") tool to store
+      <p>Use the JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors &amp; Turnouts") tool to store
       the turnout ID and Arduino pin number in the Base Station.</p>
       <ol>
-          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors & Turnouts")</li>
+          <li>From the DCC++ Menu, choose "Configure Base Station" (or "Configure Sensors &amp; Turnouts")</li>
           <li>Choose the "Outputs" tab</li>
           <li>Click the "Add Output" button. This will add a new row to the table.</li>
           <li>In the new row, set the "Index" to the ID value of the new output</li>
@@ -239,6 +240,8 @@
       for example, set up your Base Station's tables using the DCC++ serial command interface, or the
       DCC++ Controller software.  As long as the IDs assigned in the Base Station match the Hardware Address
       assigned in JMRI's Turnout Table, all will be well.</p>
+
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
