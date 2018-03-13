@@ -1791,12 +1791,14 @@ public class LayoutTurnout extends LayoutTrack {
         double distance, minDistance = POSITIVE_INFINITY;
 
         // check center coordinates
-        p = getCoordsCenter();
-        distance = MathUtil.distance(p, hitPoint);
-        if (distance < minDistance) {
-            minDistance = distance;
-            minPoint = p;
-            result = TURNOUT_CENTER;
+        if (!requireUnconnected) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = TURNOUT_CENTER;
+            }
         }
 
         //check the A connection point
@@ -1822,7 +1824,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         //check the C connection point
-        if (!requireUnconnected || (getConnectB() == null)) {
+        if (!requireUnconnected || (getConnectC() == null)) {
             p = getCoordsC();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -3334,7 +3336,6 @@ public class LayoutTurnout extends LayoutTrack {
 
         // Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
         // Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
-
         Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
         Point2D pAP = MathUtil.subtract(pM, vDisAP);
         Point2D pAPR = MathUtil.add(pAP, vAMo);
@@ -3971,25 +3972,26 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2
-    ) {
-        if (getConnectA() == null) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if (((specificType == NONE) || (specificType == TURNOUT_A))
+                && (getConnectA() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
         }
 
-        if (getConnectB() == null) {
+        if (((specificType == NONE) || (specificType == TURNOUT_B))
+                && (getConnectB() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
         }
 
-        if (getConnectC() == null) {
+        if (((specificType == NONE) || (specificType == TURNOUT_C))
+                && (getConnectC() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
         }
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == RH_XOVER)
-                || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == SINGLE_SLIP)
-                || (getTurnoutType() == DOUBLE_SLIP)) {
-            if (getConnectD() == null) {
+                || (getTurnoutType() == LH_XOVER)) {
+            if (((specificType == NONE) || (specificType == TURNOUT_D))
+                    && (getConnectD() == null)) {
                 g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
             }
         }

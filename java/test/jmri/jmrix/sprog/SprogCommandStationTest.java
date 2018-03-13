@@ -19,6 +19,7 @@ public class SprogCommandStationTest {
        SprogTrafficController tc = new SprogTrafficControlScaffold(m);
        SprogCommandStation cs = new SprogCommandStation(tc);
        Assert.assertNotNull(cs);
+       tc.dispose();
    }
 
     // The minimal setup for log4J

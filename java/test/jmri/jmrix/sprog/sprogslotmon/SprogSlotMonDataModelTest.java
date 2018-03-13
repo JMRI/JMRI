@@ -41,6 +41,7 @@ public class SprogSlotMonDataModelTest {
     @After
     public void tearDown() {
         m.getSlotThread().interrupt();
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 }
