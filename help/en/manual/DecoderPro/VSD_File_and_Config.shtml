@@ -77,11 +77,10 @@
         <em>Since JMRI 4.11.3</em>
       </p>
 
-      <p>Example:
+      <p>Example:</p>
       <pre>
       &lt;auto-start&gt;yes&lt;/auto-start&gt;
       </pre>
-      </p>
 
       <h5><a name="engine-startstop">
         Engine Start and Stop by a throttle key</a>
@@ -94,7 +93,7 @@
       <strong>sound-event name="ENGINE"</strong>.<br>
       <em>Since JMRI 4.11.4</em></p>
 
-      <p>Example:
+      <p>Example:</p>
       <pre>
       &lt;trigger name="ENGINE_STARTSTOP" type="THROTTLE"&gt;
           &lt;event-name&gt;F4&lt;/event-name&gt;
@@ -102,9 +101,8 @@
           &lt;action>NOTHING&lt;/action&gt;
       &lt;/trigger&gt;
       </pre>
-      </p>
 
-      <h5>Reference Distance</h5
+      <h5>Reference Distance</h5>
 
       <p>Description:<br>
       It's recommended to setup this value for each sound tag.
@@ -117,11 +115,10 @@
 	  previous to a gain value. Default value: 1.0<br>
       <em>Since JMRI 4.11.4</em></p>
 
-      <p>Example:
+      <p>Example:</p>
       <pre>
       &lt;reference-distance&gt;3.0&lt;/reference-distance&gt;
       </pre>
-      </p>
 
       <div align="right">
         <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>

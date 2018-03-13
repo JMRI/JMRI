@@ -40,13 +40,13 @@ public final class SprogConstants {
      * 
      * Worst case DCC packet transmission time is ~10 ms, which equates to 100
      * packets/s. Wait for a somewhat arbitrary time before reporting a possible
-     * issue with the system performance. A delay of 33 ms equates to 30 packets/s
+     * issue with the system performance. A delay of 50 ms equates to 20 packets/s
      * if sustained.
      * 
      * Slower systems such as Raspberry Pi with flash based file systems are
      * more likely to exhibit longer delays between packets.
      */
-    public static int PACKET_DELAY_WARN_THRESHOLD = 33;
+    public static int PACKET_DELAY_WARN_THRESHOLD = 50;
 
     /**
      * Timeout for command station to wait for reply from hardware.
@@ -64,7 +64,8 @@ public final class SprogConstants {
      * reading a high value from a CV. Therefore we set a very long timeout,
      * which should longer than the programmer timeout.
      */
-    public static int TC_REPLY_TIMEOUT = 70*1000;
+    public static int TC_PROG_REPLY_TIMEOUT = 70*1000;
+    public static int TC_OPS_REPLY_TIMEOUT = 200;
 
     
     /* The following should be altered only if you know what you are doing */
