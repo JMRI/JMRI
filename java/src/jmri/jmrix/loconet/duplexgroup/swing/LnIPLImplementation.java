@@ -373,7 +373,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             return true;
         }
     }
-    
+
     public static final boolean isIplPr4IdentityReportMessage(LocoNetMessage m) {
         return isIplSpecificIdentityReportMessage(m,
                 LnConstants.RE_IPL_MFR_DIGITRAX,
@@ -437,12 +437,12 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         }
         if (isIplUt4DIdentityReportMessage(m)) {
             return forcedUt4DManufacturerDevice();
-        } 
+        }
         if (isIplPr4IdentityReportMessage(m)) {
             return forcedPr4ManufacturerDevice();
         }
         if (isIplBxp88IdentityReportMessage(m)) {
-            return forcedBxp88ManufacturerDevice();        
+            return forcedBxp88ManufacturerDevice();
         }
         if (isIplDcs240IdentityReportMessage(m)) {
             return forcedDcs240ManufacturerDevice();
@@ -453,7 +453,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         if (isIplLnwiIdentityReportMessage(m)) {
             return forcedLnwiManufacturerDevice();
         }
-        
+
         return interpretHostManufacturerDevice(extractIplIdentityHostManufacturer(m), extractIplIdentityHostDevice(m));
     }
 

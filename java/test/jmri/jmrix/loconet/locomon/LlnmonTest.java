@@ -1174,7 +1174,7 @@ public class LlnmonTest extends TestCase {
                 "IPL Identity report.\n\tHost: Digitrax DB220 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
     }
-    
+
     public void testIplHostNumbers() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         String s;
@@ -1241,7 +1241,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
          }
     }
-    
+
     public void testIplPingMessages() {
         LocoNetMessage l;
 
