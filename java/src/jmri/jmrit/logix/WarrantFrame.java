@@ -262,10 +262,6 @@ public class WarrantFrame extends WarrantRoute {
             }
         });
 
-        int numBlocks = InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size();
-        if (numBlocks / 6 > getDepth()) {
-            setDepth(numBlocks / 6);
-        }
         panel.add(searchDepthPanel(true));
 
         JPanel p = new JPanel();

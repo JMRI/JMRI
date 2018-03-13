@@ -80,8 +80,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //    static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
-    private static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
-    private static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
+    private static final HashMap<String, Integer> _statusMap = new HashMap<>();
+    private static final HashMap<String, String> _statusNameMap = new HashMap<>();
 
     static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 
@@ -126,7 +126,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         return _statusNameMap.get(str);
     }
-    ArrayList<Portal> _portals = new ArrayList<Portal>();     // portals to this block
+    ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
 
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
@@ -135,8 +135,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // path keys a list of Blocks whose paths conflict with the path.  These Blocks key 
     // a list of their conflicting paths.
-    private HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
-            = new HashMap<String, List<HashMap<OBlock, List<OPath>>>>();
+    private final HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
+            = new HashMap<>();
     private boolean _ownsTOs = false;
     private Color _markerForeground = Color.WHITE;
     private Color _markerBackground = DEFAULT_FILL_COLOR;
@@ -327,25 +327,25 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                             return true;
                         }
                     } else {
-                        List<OPath> pathList = new ArrayList<OPath>();
+                        List<OPath> pathList = new ArrayList<>();
                         pathList.add(path);
                         map.put(block, pathList);
                         return true;
                     }
                 }
             }
-            HashMap<OBlock, List<OPath>> map = new HashMap<OBlock, List<OPath>>();
-            List<OPath> pathList = new ArrayList<OPath>();
+            HashMap<OBlock, List<OPath>> map = new HashMap<>();
+            List<OPath> pathList = new ArrayList<>();
             pathList.add(path);
             map.put(block, pathList);
             blockList.add(map);
             return true;
         } else {
-            List<OPath> pathList = new ArrayList<OPath>();
+            List<OPath> pathList = new ArrayList<>();
             pathList.add(path);
-            HashMap<OBlock, List<OPath>> map = new HashMap<OBlock, List<OPath>>();
+            HashMap<OBlock, List<OPath>> map = new HashMap<>();
             map.put(block, pathList);
-            blockList = new ArrayList<HashMap<OBlock, List<OPath>>>();
+            blockList = new ArrayList<>();
             blockList.add(map);
             _sharedTO.put(key.getName(), blockList);
             return true;
@@ -417,7 +417,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return msg;
     }
 
-    protected Warrant getWarrant() {
+    public Warrant getWarrant() {
         return _warrant;
     }
     
@@ -512,7 +512,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return name of block if block is already allocated to another warrant or
      *         block is OUT_OF_SERVICE
      */
-    protected String allocate(Warrant warrant) {
+    public String allocate(Warrant warrant) {
         if (warrant == null) {
             return "ERROR! allocate called with null warrant in block \"" + getDisplayName() + "\"!";
         }

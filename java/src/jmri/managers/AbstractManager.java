@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
- * <P>
+ * <p>
  * It does include, with AbstractNamedBean, the implementation of the normalized
  * user name.
  *

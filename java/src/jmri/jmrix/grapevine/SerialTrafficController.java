@@ -6,6 +6,7 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.grapevine.SerialNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * This handles the state transitions, based on the necessary state in each
  * message.
  * <p>
- * Handles initialization, polling, output, and input for multiple Serial Nodes.
+ * Handles initialization, polling, output, and input for multiple SerialNodes.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2008
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
@@ -51,6 +52,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     // have several debug statements in tight loops, e.g. every character;
     // only want to check once
     boolean logDebug = false;
+
+    /**
+     * Get minimum address of an Grapevine node as set on this TrafficController.
+     */
+    public int getMinimumNodeAddress() {
+        return minNode;
+    }
 
     // The methods to implement the SerialInterface
 
@@ -151,7 +159,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             setMustInit(curSerialNodeIndex, false);
             SerialMessage m = (SerialMessage) (getNode(curSerialNodeIndex).createInitPacket());
             if (m != null) {
-                log.debug("send init message: {}", m.toString());
+                log.debug("send init message: {} to node {}", m.toString(), curSerialNodeIndex);
                 m.setTimeout(50);  // wait for init to finish (milliseconds)
                 return m;
             }   // else fall through to continue
@@ -207,6 +215,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+        if (m == null) {
+            log.debug("empty message");
+            return;
+        }
+        log.debug("Grapevine SerialTrafficController sendMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 
@@ -215,7 +228,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
-     * @deprecated JMRI Since 4.12.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.11.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SerialTrafficController instance() {
@@ -224,7 +237,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * @deprecated JMRI Since 4.12.4 instance() shouldn't be used
+     * @deprecated JMRI Since 4.11.4 instance() shouldn't be used
      */
     @Deprecated
     static volatile protected SerialTrafficController self = null;
@@ -306,9 +319,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             case 0:
                 // get 1st char, check for address bit
                 buffer[0] = readByteProtected(istream);
-                if (logDebug) {
-                    log.debug("state 0, rcv " + (buffer[0] & 0xFF));
-                }
+                log.debug("state 0, rcv {}", (buffer[0] & 0xFF));
                 if ((buffer[0] & 0x80) == 0) {
                     log.warn("1st byte not address: {}", (buffer[0] & 0xFF));
                     return true;  // try again with next
@@ -337,9 +348,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                     ((SerialReply) msg).setNumDataElements(2); // flag short reply
                     nextReplyLen = 4; // only happens once
                     state = 0;
-                    if (logDebug) {
-                        log.debug("Short message complete: {}", msg.toString());
-                    }
+                    log.debug("Short message complete: {}", msg.toString());
                     return false;  // have received a message
                 }
                 // here for normal four byte message expected
@@ -347,7 +356,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 log.debug("state 2, rcv {}", (buffer[2] & 0xFF));
                 if (buffer[0] != buffer[2]) {
                     // no match, consider buffer[2] start of new message
-                    log.warn("addresses don't match: {}, {}, going to state 1", (buffer[0] & 0xFF), (buffer[2] & 0xFF));
+                    log.warn("addresses don't match: {}, {}. going to state 1", (buffer[0] & 0xFF), (buffer[2] & 0xFF));
                     buffer[0] = buffer[2];
                     state = 1;
                     return true;
@@ -373,7 +382,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                         + ((buffer[1] * 2) & 0xF) + (((buffer[1] * 2) & 0xF0) >> 4)
                         + (buffer[3] & 0xF) + ((buffer[3] & 0x70) >> 4);
                 if (((parity & 0xF) != 0) && !pollMsg && !errMsg) {
-                    log.warn("parity mismatch: {}, going to state 2 with content {},{}", parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
+                    log.warn("parity mismatch: {}, going to state 2 with content {}, {}", parity, (buffer[2] & 0xFF), (buffer[3] & 0xFF));
                     buffer[0] = buffer[2];
                     buffer[1] = buffer[3];
                     state = 2;
@@ -385,7 +394,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 state = 0;
                 return false;
             default:
-                log.error("unexpected loadChars state: {}, go direct to state 0", state);
+                log.error("unexpected loadChars state: {}. go direct to state 0", state);
                 state = 0;
                 return true;
         }

@@ -1,0 +1,35 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="author" content="Bob Jacobsen, JMRI">
+    <title>JMRI Decoder Comma-Separated Values files</title>
+    <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+<div class="nomenu" id="mBody">
+    <a href="http://jmri.org/index.shtml"><img src="http://jmri.org/images/logo-jmri.gif" align="right" width="160" height="135"
+                               hspace="0" vspace="0"></a>
+    <div id="mainContent">
+    <h1>JMRI Decoder Comma-Separated Values files</h1>
+    <p>
+    <ul>
+        <li><a href="pages/decodersizes.csv">decodersizes.csv</a>&nbsp;&nbsp;&nbsp;Physical size for each defined decoder</li>
+        <li><a href="pages/decoderpower.csv">decoderpower.csv</a>&nbsp;&nbsp;&nbsp;Power limits and connector by decoder</li>
+        <li><a href="pages/cvsummary.csv">cvsummary.csv</a>&nbsp;&nbsp;&nbsp;CVs present in each decoder -
+        this is limited by the CSV file format, and doesn't include all the information in the JMRI decoder definitions</li>
+        <li><a href="pages/reservedCVs.csv">reservedCVs.csv</a>&nbsp;&nbsp;&nbsp;NMRA reserved CVs present in each decoder</li>
+    </ul>
+        <p>Right-click on one of the underlined hyperlinks and choose "Download linked file" to save a local
+        copy.</p>
+        <p>International users using a comma as the decimal separator may want to replace the comma used in these
+        files as the field separator by a semicolon ";" and then replace the decimal separator period "." by a comma to
+        process these files in their localized spreadsheet application.</p>
+
+  <hr class="hide">
+<!--#include virtual="/Footer.shtml" -->
+
+    </div><!-- closes #mainContent-->
+</div><!-- closes #mBody-->
+</body>
+</html>

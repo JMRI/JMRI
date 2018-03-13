@@ -1449,10 +1449,12 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
-        if ((getConnect1() == null)
-                || ((getType() == ANCHOR) && (getConnect2() == null))) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if ((specificType == NONE) || (specificType == POS_POINT)) {
+            if ((getConnect1() == null)
+                    || ((getType() == ANCHOR) && (getConnect2() == null))) {
+                g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+            }
         }
     }
 

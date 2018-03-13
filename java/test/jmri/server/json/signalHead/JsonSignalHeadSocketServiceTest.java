@@ -24,12 +24,6 @@ import org.junit.Test;
 public class JsonSignalHeadSocketServiceTest {
 
     @Test
-    public void testCtorSuccess() {
-        JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     public void testSignalHeadChange() {
         try {
             //create a signalhead for testing

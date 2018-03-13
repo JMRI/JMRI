@@ -1855,7 +1855,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (item == null) {
                     return;
                 }
-                item.setLocation(pt.x, pt.y);
+                item.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 // now set display level in the pane.
                 item.setDisplayLevel(item.getDisplayLevel());
                 item.setEditor(this);
@@ -1877,7 +1877,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 } else {
                     ni.setDisplayLevel(ICONS);
                 }
-                ni.setLocation(pt.x, pt.y);
+                ni.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 ni.setEditor(this);
                 putItem(ni);
                 ni.updateSize();
@@ -1888,7 +1888,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 PositionableLabel l = new PositionableLabel(text, this);
                 l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
                 l.setDisplayLevel(LABELS);
-                l.setLocation(pt.x, pt.y);
+                l.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 l.setEditor(this);
                 putItem(l);
                 evt.dropComplete(true);
@@ -1897,6 +1897,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         = (List<Positionable>) tr.getTransferData(_positionableListDataFlavor);
                 for (Positionable pos : dragGroup) {
                     pos.setEditor(this);
+                    pos.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                     putItem(pos);
                     pos.updateSize();
                     log.debug("DnD Add {}", pos.getNameString());
