@@ -375,7 +375,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             }
         }, "initialize decoder index").start();
 
-        if (Boolean.getBoolean("org.jmri.python.preload")) {
+        if (Boolean.valueOf("org.jmri.python.preload")) {
             new Thread(() -> {
                 try {
                     JmriScriptEngineManager.getDefault().initializeAllEngines();
