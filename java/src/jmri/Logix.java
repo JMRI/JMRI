@@ -4,28 +4,28 @@ package jmri;
  * A Logix is a group of Conditionals that monitor one or more conditions
  * (internal or on the layout). It services these Conditionals by installing and
  * deinstalling the proper listeners for their variables.
- * <P>
+ * <p>
  * A Logix can be enabled or not. It passes this attribute to its Conditionals.
  * By default it is enabled. When not enabled, a Conditional will still respond
  * to callbacks from its listeners and calculate its state, however it will not
  * execute its actions. Enabled is a bound property of a Logix.
- * <P>
+ * <p>
  * A Logix can be deactivated or not. When deactivated, the listeners of the
  * Conditional variables are deinstalled.
- * <P>
+ * <p>
  * A Logix does not have a "state", however, each of its Conditionals does.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Additional modifications Pete Cressman 2009
  */
@@ -118,11 +118,11 @@ public interface Logix extends NamedBean {
     public Conditional getConditional(String systemName);
 
     /**
-     * Delete a Conditional from this Logix
-     * <P>
+     * Delete a Conditional from this Logix.
+     * <p>
      * Note: Since each Logix must have at least one Conditional, the last
      * Conditional will not be deleted.
-     * <P>
+     * <p>
      * Returns An array of names used in an error message explaining why
      * Conditional should not be deleted.
      *
@@ -141,7 +141,7 @@ public interface Logix extends NamedBean {
     /**
      * Activate the Logix, starts Logix processing by connecting all inputs that
      * are included the Conditionals in this Logix.
-     * <P>
+     * <p>
      * A Logix must be activated before it will calculate any of its
      * Conditionals.
      */
@@ -150,7 +150,7 @@ public interface Logix extends NamedBean {
     /**
      * Deactivate the Logix. This method disconnects the Logix from all input
      * objects and stops it from being triggered to calculate.
-     * <P>
+     * <p>
      * A Logix must be deactivated before it's Conditionals are changed.
      */
     public void deActivateLogix();
@@ -168,7 +168,7 @@ public interface Logix extends NamedBean {
     public void setGuiNames();
 
     /**
-     * Assembles a list of state variables that both trigger the Logix, and are
+     * Assemble a list of state variables that both trigger the Logix, and are
      * changed by it. Returns true if any such variables were found. Returns
      * false otherwise.
      */
@@ -195,4 +195,5 @@ public interface Logix extends NamedBean {
      * not modify the supplied variable list in any way.
      */
     //public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);
+    
 }

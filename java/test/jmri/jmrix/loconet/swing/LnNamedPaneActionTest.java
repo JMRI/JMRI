@@ -28,6 +28,7 @@ public class LnNamedPaneActionTest {
         LnNamedPaneAction t = new LnNamedPaneAction("Test Action",jf,"test",memo);
         Assert.assertNotNull("exists",t);
         jf.dispose();
+        memo.dispose();
     }
 
     // The minimal setup for log4J

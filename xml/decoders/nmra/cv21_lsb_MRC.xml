@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>5</revnumber>
+      <date>2018-03-12</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>German and Dutch translating inserted</revremark>
+    </revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2016-10-23</date>
       <authorinitials>PS</authorinitials>
@@ -57,9 +63,13 @@
         <label xml:lang="cs">Funkce reaguje na adrese</label>
         <label xml:lang="fr">Fonctions répondront à l'adresse</label>
         <label xml:lang="it">Indirizzo valido per le Funzioni</label>
+        <label xml:lang="de">Funktionen reagieren auf Adresse</label>
+        <label xml:lang="nl">Functies reageren op adres</label>
         <tooltip>Selects the address accessory functions will respond to</tooltip>
         <tooltip xml:lang="cs">Vyberte adresu na které bude reagovat funkce</tooltip>
         <tooltip xml:lang="fr">Sélectionne l'adresse à laquelle les fonctions répondront</tooltip>
         <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
+        <tooltip xml:lang="de">Wählt die Adresse, wo auf die Funktionen reagieren.</tooltip>
+        <tooltip xml:lang="nl">Hiermee selecteert u het accessoire adres waar de functies op reageren zal</tooltip>
       </variable>
 </variables>

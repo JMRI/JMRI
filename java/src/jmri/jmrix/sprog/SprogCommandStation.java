@@ -46,7 +46,9 @@ import org.slf4j.LoggerFactory;
  * Jan-18 Re-written again due to threading issues. Previous changes removed
  * activity from the slot thread, which could result in loading the swing thread
  * to the extent that the gui becomes very slow to respond.
- * Moved status message generation to the slot monitor.</P>
+ * Moved status message generation to the slot monitor.
+ * Interact with power control as a way to allow the user to recover after a
+ * timeout error due to loss of communication with the hardware.</P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016, 2018
@@ -64,7 +66,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private SprogTrafficController tc = null;
 
     final Object lock = new Object();
-    final Object lock2 = new Object();
     private SprogReply reply;
     private boolean waitingForReply = false;
     private boolean replyAvailable = false;
@@ -118,26 +119,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * @param m       The message to be sent
      */
     protected void sendMessage(SprogMessage m) {
-        // Limit to one message in flight from the command station
-        if (waitingForReply) {
-            try {
-                log.debug("Waiting for a reply");
-                synchronized (lock2) {
-                    lock2.wait(SprogConstants.CS_REPLY_TIMEOUT); // Will wait until notify()ed or timeout
-                }
-            } catch (InterruptedException e) {
-                log.debug("waitingForReply interrupted");
-                // Save the interrupted status for anyone who may be interested
-                Thread.currentThread().interrupt();
-                return;
-            }
-            if (waitingForReply) {
-                // Should never get here
-                log.warn("Timeout Waiting for reply");
-                return;
-            }
-        }
-        waitingForReply = true;
         log.debug("Sending message [{}] id {}", m.toString(tc.isSIIBootMode()), m.getId());
         lastId = m.getId();
         tc.sendSprogMessage(m, this);
@@ -557,16 +538,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     @Override
     public void notifyReply(SprogReply m) {
         if (m.getId() != lastId) {
-            // Not my id, so not interested, message send still locked
+            // Not my id, so not interested, message send still blocked
             log.debug("Ignore reply with mismatched id {} looking for {}", m.getId(), lastId);
             return;
         } else {
-            // Unblock sending messages
-            waitingForReply = false;
             reply = new SprogReply(m);
-            synchronized (lock2) {
-                lock2.notifyAll();
-            }
             log.debug("Reply received [{}]", m.toString());
             // Log the reply and wake the slot thread
             synchronized (lock) {
@@ -577,8 +553,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     /**
-     * implement a property change listener for power and throttle Set the GUI's
-     * to correspond to the throttle settings
+     * implement a property change listener for power
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
