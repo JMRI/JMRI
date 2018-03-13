@@ -504,7 +504,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
-        if (isIcon() && _displayLevel > Editor.BKG) {
+        if (isIcon() && (_displayLevel > Editor.BKG) && (_namedIcon != null)) {
             popup.add(new AbstractAction(Bundle.getMessage("RotateOrthoSign",
                     (_namedIcon.getRotation() * 90))) { // Bundle property includes degree symbol
                 @Override
