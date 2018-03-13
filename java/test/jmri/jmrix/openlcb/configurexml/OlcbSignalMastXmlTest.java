@@ -83,7 +83,6 @@ public class OlcbSignalMastXmlTest {
 
     @After
     public void tearDown() {
-        memo.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 
