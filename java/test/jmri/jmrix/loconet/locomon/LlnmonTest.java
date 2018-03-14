@@ -706,7 +706,7 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         assertEquals("IPL test 9",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x1b, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
@@ -721,431 +721,527 @@ public class LlnmonTest extends TestCase {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x18, 0x00, 0x08, 0x00, 0x06, 0x59, 0x01, 0x00, 0x18, 0x03, 0x10, 0x12, 0x34, 0x77});
         assertEquals("IPL test 12",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax RF24 slave, S/N=B4121003, S/W Version=0.6.\n",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax RF24 slave, S/N=B4121003, S/W Version=0.6.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x01, 0x00, 0x08, 0x00, 0x18, 0x59, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x77});
         assertEquals("IPL test 13",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax (unknown slave device type 1), S/N=800000, S/W Version=3.0.\n",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax (unknown slave device type 1), S/N=800000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x19, 0x00, 0x08, 0x00, 0x06, 0x59, 0x01, 0x00, 0x12, 0x03, 0x10, 0x12, 0x34, 0x77});
         assertEquals("IPL test 14",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax (unknown slave device type 25), S/N=34129003, S/W Version=0.6.\n",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax (unknown slave device type 25), S/N=34129003, S/W Version=0.6.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x08, 0x00, 0x18, 0x59, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x77});
         assertEquals("IPL test 15",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax (unknown slave device type 54), S/N=80, S/W Version=3.0.\n",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: Digitrax (unknown slave device type 54), S/N=80, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=0, S/W Version=3.0.\n",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=0, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x01, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=1, S/W Version=3.0.\n",
+        assertEquals("IPL test 17",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=1, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x02, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=2, S/W Version=3.0.\n",
+        assertEquals("IPL test 18",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=2, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x04, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=4, S/W Version=3.0.\n",
+        assertEquals("IPL test 19",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=4, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x08, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=8, S/W Version=3.0.\n",
+        assertEquals("IPL test 20",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=8, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x10, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=10, S/W Version=3.0.\n",
+        assertEquals("IPL test 21",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=10, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x20, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=20, S/W Version=3.0.\n",
+        assertEquals("IPL test 22",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=20, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x40, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=40, S/W Version=3.0.\n",
+        assertEquals("IPL test 23",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=40, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x01, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=80, S/W Version=3.0.\n",
+        assertEquals("IPL test 24",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=80, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x01, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=100, S/W Version=3.0.\n",
+        assertEquals("IPL test 25",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=100, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x02, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=200, S/W Version=3.0.\n",
+        assertEquals("IPL test 26",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=200, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x04, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=400, S/W Version=3.0.\n",
+        assertEquals("IPL test 27",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=400, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x08, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=800, S/W Version=3.0.\n",
+        assertEquals("IPL test 28",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=800, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x10, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=1000, S/W Version=3.0.\n",
+        assertEquals("IPL test 29",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=1000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x20, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=2000, S/W Version=3.0.\n",
+        assertEquals("IPL test 30",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=2000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x40, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=4000, S/W Version=3.0.\n",
+        assertEquals("IPL test 31",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=4000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x02, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=8000, S/W Version=3.0.\n",
+        assertEquals("IPL test 32",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=8000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x01, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=10000, S/W Version=3.0.\n",
+        assertEquals("IPL test 33",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=10000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x02, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=20000, S/W Version=3.0.\n",
+        assertEquals("IPL test 34",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=20000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x04, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=40000, S/W Version=3.0.\n",
+        assertEquals("IPL test 35",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=40000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x08, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=80000, S/W Version=3.0.\n",
+        assertEquals("IPL test 36",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=80000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x10, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=100000, S/W Version=3.0.\n",
+        assertEquals("IPL test 37",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=100000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x20, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=200000, S/W Version=3.0.\n",
+        assertEquals("IPL test 38",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=200000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x40, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=400000, S/W Version=3.0.\n",
+        assertEquals("IPL test 38",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=400000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x04, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=800000, S/W Version=3.0.\n",
+        assertEquals("IPL test 40",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=800000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x01, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=1000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 41",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=1000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x02, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=2000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 42",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=2000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x04, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=4000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 43",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=4000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x08, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=8000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 44",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=8000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x10, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=10000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 45",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=10000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x20, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=20000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 46",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=20000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x00, 0x00, 0x00, 0x00, 0x40, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=40000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 47",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=40000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x36, 0x00, 0x13, 0x00, 0x18, 0x00, 0x32, 0x21, 0x08, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=80000000, S/W Version=3.0.\n",
+        assertEquals("IPL test 48",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=213200, S/W Version=2.3\n\tSlave: Digitrax (unknown slave device type 54), S/N=80000000, S/W Version=3.0.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 49",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=0.1\n\tSlave: None.\n",
+        assertEquals("IPL test 50",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=0.1\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=0.2\n\tSlave: None.\n",
+        assertEquals("IPL test 51",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=0.2\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=0.4\n\tSlave: None.\n",
+        assertEquals("IPL test 52",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=0.4\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=1.0\n\tSlave: None.\n",
+        assertEquals("IPL test 53",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=1.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=2.0\n\tSlave: None.\n",
+        assertEquals("IPL test 54",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=2.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=4.0\n\tSlave: None.\n",
+        assertEquals("IPL test 55",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=4.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=0, S/W Version=8.0\n\tSlave: None.\n",
+        assertEquals("IPL test 56",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=0, S/W Version=8.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x01, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
+        assertEquals("IPL test 57",
                 "IPL Identity report.\n\tHost: Unknown device (Manufacturer code 1, product code 50), S/N=1, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=1, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 58",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=1, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=2, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 59",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=2, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=4, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 60",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=4, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=8, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 61",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=8, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=10, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 62",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=10, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=20, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 63",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=20, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=40, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 64",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=40, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=80, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 65",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=80, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=100, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 66",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=100, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=200, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 67",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=200, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=400, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 68",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=400, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=800, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 69",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=800, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=1000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 70",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=1000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=2000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 71",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=2000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=4000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 72",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=4000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=8000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 73",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=8000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=800000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 74",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=800000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=10000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 75",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=10000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=20000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 76",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=20000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=40000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 77",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=40000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=80000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 78",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=80000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=100000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 79",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=100000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=200000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 80",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=200000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
-        assertEquals("IPL test 16",
-                "IPL Identity report.\n\tHost: Digitrax DT500 host, S/N=400000, S/W Version=0.0\n\tSlave: None.\n",
+        assertEquals("IPL test 81",
+                "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=400000, S/W Version=0.0\n\tSlave: None.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 82",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 01 00 00 00 00 00 00 01 00 00 00 00 00 00 00 08\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 83",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 20 00 00 00 01 00 00 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 84",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 40 00 00 01 00 00 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 85",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 10 00 01 00 00 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 86",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 09 01 00 00 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 87",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 03 00 00 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 88",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 04 00 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 89",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 02 00 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 90",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 70 00 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 91",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 03 00 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 92",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 17 00 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x23, 0x00, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 93",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 00 23 00 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x45, 0x00});
-        assertEquals("IPL test 2",
+        assertEquals("IPL test 94",
                 "Unable to parse LocoNet message.\ncontents: E5 14 0F 08 00 00 00 00 00 00 00 01 00 00 00 00 00 00 45 00\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x00, 0x18, 0x01, 0x00, 0x00, 0x00, 0x6A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3F});
-        assertEquals("IPL test 3",
+        assertEquals("IPL test 95",
                 "Discover Digitrax (no host device type specified) devices and/or Digitrax RF24 slave devices.\n",
                 f.displayMessage(l));
 
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x08, 0x00, 0x5C, 0x18, 0x01, 0x00, 0x00, 0x00, 0x6A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3F});
-        assertEquals("IPL test 3",
+        assertEquals("IPL test 96",
                 "Discover Digitrax UR92 host devices and/or Digitrax RF24 slave devices.\n",
                 f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        assertEquals("IPL identity test 97",
+                "IPL Identity report.\n\tHost: Digitrax PR4 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
 
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x58, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        assertEquals("IPL identity test 98",
+                "IPL Identity report.\n\tHost: Digitrax BXP88 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x63, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        assertEquals("IPL identity test 99",
+                "IPL Identity report.\n\tHost: Digitrax LNWI host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        assertEquals("IPL identity test 100",
+                "IPL Identity report.\n\tHost: Digitrax DB210 Opto host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        assertEquals("IPL identity test 101",
+                "IPL Identity report.\n\tHost: Digitrax DB210 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        assertEquals("IPL identity test 102",
+                "IPL Identity report.\n\tHost: Digitrax DB220 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
     }
+
+    public void testIplHostNumbers() {
+        LocoNetMessage l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        String s;
+        for (int i = 0; i < 128; ++i) {
+            l.setElement(5, i);
+            switch (i) {
+                case 0:
+                    s = "Digitrax (no host device type specified)";
+                    break;
+                case 0x01:
+                    s = "Digitrax LNRP host";
+                    break;
+                case 0x04:
+                    s = "Digitrax UT4(x) host";
+                    break;
+                case 0x0C:
+                    s = "Walthers (Digitrax) WTL12 host";
+                    break;
+                case 0x14:
+                    s = "Digitrax DB210 Opto host";
+                    break;
+                case 0x15:
+                    s = "Digitrax DB210 host";
+                    break;
+                case 0x16:
+                    s = "Digitrax DB220 host";
+                    break;
+                case 0x1B:
+                    s = "Digitrax DCS210 host";
+                    break;
+                case 0x1C:
+                    s = "Digitrax DCS240 host";
+                    break;
+                case 0x23:
+                    s = "Digitrax PR3 host";
+                    break;
+                case 0x24:
+                    s = "Digitrax PR4 host";
+                    break;
+                case 0x2A:
+                    s = "Digitrax DT402(x) host";
+                    break;
+                case 0x32:
+                    s = "Digitrax DT500(x) host";
+                    break;
+                case 0x33:
+                    s = "Digitrax DCS51 host";
+                    break;
+                case 0x58:
+                    s = "Digitrax BXP88 host";
+                    break;
+                case 0x5C:
+                    s = "Digitrax UR92 host";
+                    break;
+                case 0x63:
+                    s = "Digitrax LNWI host";
+                    break;
+                default:
+                    s = "Digitrax (unknown host device type "+i+")";
+                    break;
+            }
+            assertEquals("IPL HOST NAME Test "+i,
+                "IPL Identity report.\n\tHost: "+s+", S/N=0, S/W Version=0.0\n\tSlave: None.\n",
+                f.displayMessage(l));
+         }
+    }
+
     public void testIplPingMessages() {
         LocoNetMessage l;
 

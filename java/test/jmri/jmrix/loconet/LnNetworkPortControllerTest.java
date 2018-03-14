@@ -12,11 +12,13 @@ import org.junit.Before;
  */
 public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
+    private LocoNetSystemConnectionMemo memo;
+ 
     @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+       memo = new LocoNetSystemConnectionMemo();
        apc = new LnNetworkPortController(memo){
             @Override
             public void configure(){
@@ -27,6 +29,7 @@ public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortC
     @Override
     @After
     public void tearDown(){
+       memo.dispose();
        JUnitUtil.tearDown();
     }
 }

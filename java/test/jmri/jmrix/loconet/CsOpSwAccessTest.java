@@ -36,6 +36,7 @@ public class CsOpSwAccessTest {
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

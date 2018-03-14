@@ -374,6 +374,36 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         }
     }
 
+    public static final boolean isIplPr4IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_PR4);
+    }
+
+    public static final boolean isIplBxp88IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_BXP88);
+    }
+
+    public static final boolean isIplLnwiIdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_LNWI);
+    }
+
+    public static final boolean isIplDcs240IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS240);
+    }
+
+    public static final boolean isIplDcs210IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS210);
+    }
+
     /**
      * Determines if message is IPL Identity Report with RF24 as slave device
      * <p>
@@ -407,10 +437,24 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         }
         if (isIplUt4DIdentityReportMessage(m)) {
             return forcedUt4DManufacturerDevice();
-        } else {
-            return interpretHostManufacturerDevice(extractIplIdentityHostManufacturer(m), extractIplIdentityHostDevice(m));
+        }
+        if (isIplPr4IdentityReportMessage(m)) {
+            return forcedPr4ManufacturerDevice();
+        }
+        if (isIplBxp88IdentityReportMessage(m)) {
+            return forcedBxp88ManufacturerDevice();
+        }
+        if (isIplDcs240IdentityReportMessage(m)) {
+            return forcedDcs240ManufacturerDevice();
+        }
+        if (isIplDcs210IdentityReportMessage(m)) {
+            return forcedDcs210ManufacturerDevice();
+        }
+        if (isIplLnwiIdentityReportMessage(m)) {
+            return forcedLnwiManufacturerDevice();
         }
 
+        return interpretHostManufacturerDevice(extractIplIdentityHostManufacturer(m), extractIplIdentityHostDevice(m));
     }
 
     private static final String forcedDt402DManufacturerDevice() {
@@ -427,6 +471,55 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 LnConstants.RE_IPL_DIGITRAX_HOST_UT4,
                 LnConstants.RE_IPL_MFR_DIGITRAX,
                 LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
+    }
+
+    private static final String forcedPr4DManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_PR4,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
+    }
+
+    private static final String forcedBxp88DManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_BXP88,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
+    }
+
+    private static final String forcedLnwiManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_LNWI,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
+    }
+
+    private static final String forcedBxp88ManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_BXP88,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
+    }
+
+    private static final String forcedPr4ManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_PR4,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
+    }
+
+    private static final String forcedDcs240ManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS240,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
+    }
+
+    private static final String forcedDcs210ManufacturerDevice() {
+        return interpretHostManufacturerDevice(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS210,
+                LnConstants.RE_IPL_MFR_DIGITRAX, 0);
     }
 
     /**
@@ -663,6 +756,30 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                         } else {
                             s = "Digitrax UT4(x)"; // NOI18N
                         }
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO:
+                        s = "Digitrax DB210Opto";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
+                        s = "Digitrax DB210";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DB220:
+                        s = "Digitrax DB220";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
+                        s = "Digitrax PR4";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
+                        s = "Digitrax BXP88";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_LNWI:
+                        s = "Digitrax LNWI";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                        s = "Digitrax DCS210";
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                        s = "Digitrax DCS240";
                         break;
                     default:
                         break;
