@@ -453,8 +453,6 @@
    OperationsPro&trade;. The back up files are created when you make a change to one of the
    operation files.
 
-   <p>
-   
    <table>
     <tr>
      <td>File Name</td>
@@ -502,6 +500,7 @@
 
    <a name="demo" id="demo"></a> 
    <h3>Operations Demo Files</h3>
+
    The operations program provides a set of demo files to help introduce you to the some of the
    features and capabilities of this program. To load the demo files, first open the Operations
    <a href="#Settings">Settings</a> window "Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the Setting
@@ -5270,6 +5269,7 @@
    </p>
 
    <p>End of OperationsPro&trade; help.</p>
+
   </div>
   <!-- closes #mainContent-->
  </div>

@@ -26,7 +26,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>Hardware Support: Signals with C/MRI</h2>
+      <h1>Hardware Support: Chubb C/MRI</h1>
+
+      <h2>Signals with C/MRI</h2>
 
       <p>For model signals with separate Red/Yellow/Green diodes,
       the situation is simple: Connect each one to a separate
@@ -91,6 +93,7 @@
 
       <p>Back to the <a href="CMRI.shtml">C/MRI Hardware Support
       Help page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
