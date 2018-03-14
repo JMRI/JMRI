@@ -870,6 +870,14 @@
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
       </variable>
+      <variable CV="217" mask="XXXXXXVX" item="EMF Enable" default="1" tooltip="Enable back-EMF motor control">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+          <label>Back-EMF Enable</label>
+      </variable>
+      <variable CV="217" mask="XXXXVXXX" item="Load Control" default="0" tooltip="Direction commands will bring the motor to a full stop for a duration of 500ms before the decoder changes locomotive direction">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+          <label>Auto-Stop Enable</label>
+      </variable>
       <variable CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="20">
         <decVal/>
         <label>Analog Mode Engine Sound Start</label>
