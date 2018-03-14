@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: DecoderPro Symbolic Programmer</title><!-- Style -->
+  <title>JMRI: DecoderPro Symbolic Programmer</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -55,8 +57,8 @@
       DecoderPro looks and how you may use it.</p>
 
       <p>DecoderPro is also covered in Joe Fugate's <a href=
-      "http://trainmasters.tv/videos/3-4-siskiyou-line-dcc-programming-decoderpro"
-      target="_new">TrainMasters.TV video library, part 3.4</a>, as
+      "http://trainmasters.tv/videos/3-4-siskiyou-line-dcc-programming-decoderpro">
+      TrainMasters.TV video library, part 3.4</a>, as
       he shows how he used DP on his Siskiyou Line layout.</p>
 
       <h2>What you need to use DecoderPro</h2>
@@ -129,6 +131,7 @@
       decoders from many manufacturers, which we make freely
       available in several forms. To learn more, see the <a href=
       "http://jmri.org/xml/XSLT/">Decoder information page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

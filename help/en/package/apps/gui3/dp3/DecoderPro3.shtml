@@ -209,12 +209,13 @@
         <li>Hide/Show Roster Image</li>
         <li>Hide/Show Roster Groups</li>
         <li>--------------</li>
-        <li>Programming -&gt;</li>
+        <li>Programming -&gt;
           <ul>
             <li>Programming Track</li>
             <li>Programming On Main</li>
             <li>Edit Only</li>
           </ul>
+        </li>
         <li>--------------</li>
         <li>Create Roster Group</li>
         <li>Rename Roster Group</li>

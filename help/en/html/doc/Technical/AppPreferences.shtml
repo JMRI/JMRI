@@ -17,7 +17,8 @@
         <link rel="stylesheet" type="text/css" href="/css/print.css"
               media="print">
         <link rel="icon" href="/images/jmri.ico" type="image/png">
-        <link rel="home" title="Home" href="/"><!-- /Style -->
+        <link rel="home" title="Home" href="/">
+        <!-- /Style -->
     </head><!--#include virtual="/Header" -->
 
     <body>
@@ -25,7 +26,8 @@
             <!--#include virtual="Sidebar" -->
 
             <div id="mainContent">
-                <!-- created by pasting output of pandoc --from=markdown --to=html AppPreferences.txt into this div -->
+                <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
+                this div (remove @ between the hyphens (-), not allowed in an HTML comment) -->
                 <!-- 2018 note that this output may contain invalid characters like curly quotes, which should be
                 replaced by straight quotes before uploading -->
                 <h1 id="jmri-preferences">JMRI Preferences</h1>
@@ -62,7 +64,7 @@
                 <h2 id="java-preferences">Java Preferences</h2>
                 <p>JMRI application preferences that a simple (a number, boolean, or string), or a list of simple preferences, and can only be meaningfully used once within a single Profile are candidates for storage as <a href="https://docs.oracle.com/javase/8/docs/api/java/util/prefs/Preferences.html">Java Preferences</a>.</p>
                 <p>JMRI uses a Properties format for storing Java Preferences in the file <code>profile.properties</code> within both Shared and Private spaces in a single Profile.</p>
-                <p>JMRI further constrains Java Preferences by putting them in separate "namespaces" based on package names. This allows preferences in two different packages to use the same name for a preference (for example, the JMRI Web Server and Simple Server both have a "port” property, but because these are in different packages, they do not conflict).</p>
+                <p>JMRI further constrains Java Preferences by putting them in separate "namespaces" based on package names. This allows preferences in two different packages to use the same name for a preference (for example, the JMRI Web Server and Simple Server both have a "port" property, but because these are in different packages, they do not conflict).</p>
                 <h1 id="accessing-preferences">Accessing Preferences</h1>
                 <p>If another class is already controlling the preferences you want to access, use that class's methods to access that preference. If not, create a class to manage that preference on behalf of other classes within a JMRI application.</p>
                 <p>Direct access to the preferences files outlined above is strongly discouraged, as direct access could result in one preferences manager overwriting another manager's preferences. Use the methods in <a href="http://www.jmri.org/JavaDoc/doc/jmri/profile/ProfileUtils.html">ProfileUtils</a> to access the AuxiliaryConfiguration and Java Preferences for a single Profile or the application settings (pass null for the profile to get application settings).</p>
