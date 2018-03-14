@@ -730,9 +730,11 @@
         <li>Seth Neumann, who provided information on Wangrow
         decoders</li>
 
-        <li>Mark Noble, who found some broken links <a name="O" id=
-        "O"></a></li>
+        <li>Mark Noble, who found some broken links 
 
+        <a name="O" id="O"></a></li>
+        <li>John O'Duffy, who improved low-speed profiling</li>
+        
         <li>Glen Oberhauser, who added LocoNet throttles</li>
 
         <li>David Phillip Oster provided key information and a

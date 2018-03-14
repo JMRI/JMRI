@@ -39,15 +39,6 @@ import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// JOD Feb18 BugFix
-// To fix slow running locos stopping dead as they exit timed block.
-// caused by (speedProfile/2) throttle setting which may be < the loco is capable of, so it stops.
-// create a var profileSpeedAtStart
-// populate with profileSpeed at start of a profile in notifyThrottleFound()
-// in stopCurrentSpeedStep() test that current speed /2 > profileSpeedAtStart 
-// if not, profileSpeedAtStart will be our minimum otherwise default behav half speed. 
-// JOD
-
 /**
  * Set up and run automated speed table calibration.
  * <p>
@@ -312,9 +303,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     protected float profileBlockLength;
     RosterSpeedProfile rosterSpeedProfile;
 
-    // JOD Feb18 adding var
     protected float profileSpeedAtStart;
-    // JOD
     
     void setupProfile() {
         String text;
@@ -506,9 +495,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         log.debug("Speed step mode {}", profileSpeedStepMode);
         profileSpeed = profileIncrement * profileStep;
 
-        // JOD Feb18  store the starting speed
         profileSpeedAtStart = profileSpeed;
-        // JOD
         
         if (profile) {
             startSensor = middleBlockSensor.getSensor();
@@ -686,18 +673,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         finishSensor.removePropertyChangeListener(finishListener);
         sourceLabel.setText(Bundle.getMessage("StatusLabelCalculating"));
 
-        //JOD Feb18
-        //
-        //  if (profileStep >= 4) {
-        //    t.setSpeedSetting(profileSpeed / 2);
-        //  }
-        // replace the above with ...
         if (profileSpeed/2 > profileSpeedAtStart) {
             t.setSpeedSetting(profileSpeed / 2);
         } else {
             t.setSpeedSetting(profileSpeedAtStart);
         }
-        // JOD
         
         calculateSpeed();
         sourceLabel.setText(Bundle.getMessage("StatusLabelWaitingToClear"));

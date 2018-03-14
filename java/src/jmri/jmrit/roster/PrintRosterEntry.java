@@ -216,9 +216,7 @@ public class PrintRosterEntry implements PaneContainer {
         }
         log.debug("List size length: {}", _paneList.size());
         for (int i = 0; i < _paneList.size(); i++) {
-            if (log.isDebugEnabled()) {
-                log.debug("start printing page " + i);
-            }
+            log.debug("start printing page {}", i);
             PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             if (pane.includeInPrint()) {
                 pane.printPane(w);
@@ -344,7 +342,7 @@ public class PrintRosterEntry implements PaneContainer {
                 w.write(s, 0, s.length());
             }
         } catch (IOException e) {
-            log.warn("error during printing: " + e);
+            log.warn("error during printing: ", e);
         }
         _rosterEntry.printEntry(w);
         w.setFontStyle(Font.PLAIN);

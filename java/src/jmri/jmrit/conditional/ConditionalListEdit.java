@@ -3002,6 +3002,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_ENTRYEXIT_ACTION, actionType) + 1);
+                _actionNameField.setText(_curAction.getBean().getUserName());
                 break;
 
             case Conditional.ITEM_TYPE_AUDIO:

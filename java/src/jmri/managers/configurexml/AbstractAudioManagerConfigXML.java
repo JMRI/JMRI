@@ -249,10 +249,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce.setAttribute("out", "" + as.getFadeOut());
                     e.addContent(ce);
 
-                    ce = new Element("dopplerfactor");
-                    ce.addContent("" + as.getDopplerFactor());
-                    e.addContent(ce);
-
                     ce = new Element("positionrelative");
                     ce.addContent("" + (as.isPositionRelative() ? "yes" : "no"));
                     e.addContent(ce);
@@ -439,10 +435,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     if ((value = ce.getAttributeValue("out")) != null) {
                         as.setFadeOut(Integer.parseInt(value));
                     }
-                }
-
-                if ((ce = e.getChild("dopplerfactor")) != null && ce.getValue().length() != 0) {
-                    as.setDopplerFactor(Float.parseFloat(ce.getValue()));
                 }
 
                 if ((ce = e.getChild("positionrelative")) != null) {

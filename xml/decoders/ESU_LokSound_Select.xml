@@ -189,11 +189,11 @@
         </programming>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-            <variable CV="48" item="Sound Option 2" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic">
+            <variable CV="48" item="Sound Option 2" default="0">
                 <decVal/>
                 <label>Sound Configuration Value</label>
             </variable>
-            <variable CV="48" mask="XXXXVVVV" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 1">
+            <variable CV="48" mask="XXXXVVVV" default="0" exclude="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461,Diesel Generic" item="Sound Select 1">
                 <decVal max="15"/>
                 <label>Horn/Whistle</label>
             </variable>
@@ -201,7 +201,7 @@
                 <decVal max="15"/>
                 <label>Airhorn</label>
             </variable>
-            <variable CV="48" mask="XXXXVVVV" default="3" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 1">
+            <variable CV="48" mask="XXXXVVVV" default="3" include="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461" item="Sound Select 1">
                 <enumVal>
                     <enumChoice choice="Nathan K5LA">
                         <choice>Nathan K5LA</choice>
@@ -254,7 +254,7 @@
                 </enumVal>
                 <label>Airhorn</label>
             </variable>
-            <variable CV="48" mask="XXVVXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 2">
+            <variable CV="48" mask="XXVVXXXX" default="0" exclude="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461,Diesel Generic" item="Sound Select 2">
                 <decVal max="3"/>
                 <label>Loco Type</label>
             </variable>
@@ -504,11 +504,11 @@
                 </enumVal>
                 <label>Prime Mover</label>
             </variable>
-            <variable CV="48" mask="XVXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
+            <variable CV="48" mask="XVXXXXXX" default="0" exclude="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461" item="Sound Select 3">
                 <decVal max="1"/>
                 <label>Bell</label>
             </variable>
-            <variable CV="48" mask="XVXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
+            <variable CV="48" mask="XVXXXXXX" default="0" include="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461" item="Sound Select 3">
                 <enumVal>
                     <enumChoice choice="Slow">
                         <choice>Slow</choice>
@@ -519,11 +519,11 @@
                 </enumVal>
                 <label>Bell</label>
             </variable>
-            <variable CV="48" mask="VXXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
+            <variable CV="48" mask="VXXXXXXX" default="0" exclude="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461" item="Sound Select 4">
                 <decVal max="1"/>
                 <label>Brake Squeal</label>
             </variable>
-            <variable CV="48" mask="VXXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
+            <variable CV="48" mask="VXXXXXXX" default="0" include="73401,73402,73403,73404,73405,73406,73407,73408,73410,73411,73418,73425,73426,73427,73428,73430,73431,73439,73443,73444,73445,73446,73447,73450,73461" item="Sound Select 4">
                 <enumVal>
                     <enumChoice choice="Squeal #1">
                         <choice>Squeal #1</choice>
