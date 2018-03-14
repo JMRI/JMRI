@@ -215,7 +215,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     /**
      * Implement a shorter name for setKnownState.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use setKnownState instead.
      * The is provided to make Jython script access easier to read.
      */
@@ -226,7 +226,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     /**
      * Implement a shorter name for getKnownState.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use getKnownState instead.
      * The is provided to make Jython script access easier to read.
      */
@@ -258,7 +258,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     /**
      * Get the inverted state. If true, the electrical signal that results in an
      * ACTIVE state now results in an INACTIVE state.
-     * <P>
+     * <p>
      * Used in polling loops in system-specific code, so made final to allow
      * optimization.
      */
@@ -270,6 +270,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     /**
      * By default, all implementations based on this can invert
      */
+    @Override
     public boolean canInvert() { return true; }
 
     protected boolean _inverted = false;
@@ -285,7 +286,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * train identities via such methods as RailCom. The setting and creation of
      * the reporter against the sensor should be done when the sensor is
      * created. This information is not saved.
-     * <p>
+     *
      * @param er the reporter to set
      */
     @Override
@@ -310,10 +311,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
     /**
-     * Get the pull resistance
+     * Get the pull resistance.
      *
      * @return the currently set PullResistance value.  In this default 
-     * impelmetnation, PullResistance.PULL_OFF is always returned.
+     * implementation, PullResistance.PULL_OFF is always returned.
      */
     @Override
     public PullResistance getPullResistance(){

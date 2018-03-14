@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
@@ -69,16 +70,16 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
-        instance.onMessage(JSON.LOCALE, empty, locale);
+        instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale);
         assertNull(connection.getMessage());
         // JSON.PING
-        instance.onMessage(JSON.PING, empty, locale);
+        instance.onMessage(JSON.PING, empty, JSON.POST, locale);
         JsonNode result = connection.getMessage().path(JSON.TYPE);
         assertNotNull(result);
         assertTrue(JsonNode.class.isInstance(result));
         assertEquals(JSON.PONG, result.asText());
         // JSON.GOODBYE
-        instance.onMessage(JSON.GOODBYE, empty, locale);
+        instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
         result = connection.getMessage().path(JSON.TYPE);
         assertNotNull(result);
         assertTrue(JsonNode.class.isInstance(result));
@@ -99,7 +100,7 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         instance.onList(JSON.METADATA, empty, locale);
         Assert.assertEquals(helper.getMetadata(locale), connection.getMessage());
         instance.onList(JSON.NETWORK_SERVICES, empty, locale);

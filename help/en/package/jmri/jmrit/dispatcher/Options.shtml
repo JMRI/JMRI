@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -67,7 +68,7 @@
           correctly. This item must be checked if Dispatcher is to
           set turnouts when a Section is allocated (see below), and
           if trains are to be run automatically.</p>
-          <p>Select the type of Signalling control that is use on
+          <p>Select the type of Signaling control that is use on
           the panel from the drop down:</p>
 
           <ul>
@@ -209,6 +210,7 @@
         </li>
 
         <li>
+          <span class="since">since 4.3.7</span>
           <p><b>Time to Fully Ramp</b> is used to calculate the
           Ramping values. Specifically, it is how long (in
           milliseconds) it would take to go from 0&#37; to 100&#37;.
@@ -217,6 +219,7 @@
         </li>
 
         <li>
+          <span class="since">since 3.4</span>
           <p>Check the <b>Open Dispatcher with Panel</b> to open up
           the Dispatcher window when the panel file is loaded.
           Please note that this option is saved when the panel file
@@ -271,13 +274,13 @@
             Dispatcher Options to disk.</p></li>
       </ul>
 
-      <a id="saveoptions" name="saveoptions"></a></a>
+      <a id="saveoptions" name="saveoptions"></a>
       <h2>Saving Dispatcher Options</h2>
 
           <p>To save the Dispatcher settings currently in effect into
           a small XML file (<i>dispatcheroptions.xml</i>) in the user's
           preferences directory, select <b>Save Options...</b> from the
-          <b>Options</b> menu.</b> This is the same location where
+          <b>Options</b> menu. This is the same location where
           JMRI preference files are saved. When Dispatcher is
           started, if a file named "<i>dispatcheroptions.xml</i>"
           is found in the user's preference directory, that file is
@@ -289,6 +292,7 @@
           save Dispatcher Options.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

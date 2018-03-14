@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an Ops mode programing interface for XpressNet Currently only Byte
+ * Provides an Ops mode programming interface for XpressNet Currently only Byte
  * mode is implemented, though XpressNet also supports bit mode writes for POM
  *
  * @see jmri.Programmer
@@ -51,7 +51,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
-         back to the screen when the programing screen when we receive
+         back to the screen when the programming screen when we receive
          something from the command station */
         progListener = p;
         value = val;

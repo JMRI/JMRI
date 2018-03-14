@@ -41,6 +41,7 @@ public class SprogIIUpdateFrame
 
     /** 
      * {@inheritDoc}
+     * @param v SPROG version to be decoded
      */
     @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     @Override
@@ -124,7 +125,6 @@ public class SprogIIUpdateFrame
                 if (blockLen != SprogType.getBlockLen(bootVer)) {
                     log.error("Bootloader version does not match SPROG type");
                     bootState = BootState.IDLE;
-                    return;
                 }
             } else {
                 // Don't yet have correct SPROG version
@@ -145,7 +145,6 @@ public class SprogIIUpdateFrame
             JOptionPane.showMessageDialog(this, Bundle.getMessage("StatusUnableToConnectBootloader"),
                     Bundle.getMessage("SprogXFirmwareUpdate", " II"), JOptionPane.ERROR_MESSAGE);
             statusBar.setText(Bundle.getMessage("StatusUnableToConnectBootloader"));
-            return;
         }
     }
 
@@ -172,7 +171,6 @@ public class SprogIIUpdateFrame
             statusBar.setText(Bundle.getMessage("StatusBadReplyWriteRequest"));
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
-            return;
         }
     }
 
@@ -212,7 +210,6 @@ public class SprogIIUpdateFrame
             log.error("Bad reply to erase request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
-            return;
         }
     }
 
@@ -238,7 +235,6 @@ public class SprogIIUpdateFrame
             log.error("Bad reply to SPROG Mode request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
-            return;
         }
     }
 

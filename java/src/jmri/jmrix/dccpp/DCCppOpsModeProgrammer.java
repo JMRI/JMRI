@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an Ops mode programing interface for XPressNet Currently only Byte
+ * Provides an Ops mode programming interface for DCC++. Currently only Byte
  * mode is implemented, though XPressNet also supports bit mode writes for POM
  *
  * @see jmri.Programmer
@@ -47,14 +47,14 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     }
 
     /**
-     * Send an ops-mode write request to the DC++.
+     * Send an ops-mode write request to the DCC++.
      */
     @Override
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
-         back to the screen when the programing screen when we recieve 
+         back to the screen when the programming screen when we recieve
          something from the command station */
         progListener = p;
         value = val;

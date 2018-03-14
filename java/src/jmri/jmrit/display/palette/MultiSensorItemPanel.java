@@ -117,7 +117,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
             makeMultiSensorPanel();
             _iconFamilyPanel.add(_multiSensorPanel); // Panel containing up-dn, le-ri radio buttons
         }
-        updateBackgrounds(); // create array of backgrounds
     }
 
     private void makeMultiSensorPanel() {
@@ -172,17 +171,12 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     @Override
-    protected IconDialog openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        IconDialog dialog = new MultiSensorIconDialog(type, family, this, iconMap);
-        dialog.sizeLocate();
-        return dialog;
+    protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
+        closeDialogs();
+        _dialog = new MultiSensorIconDialog(type, family, this, iconMap);
+        _dialog.sizeLocate();
     }
 
-    /*    protected void createNewFamily(String type) {
-     _newFamilyDialog = new MultiSensorIconDialog(_itemType, null, this, null);
-     _newFamilyDialog.sizeLocate();
-     }
-     */
     /**
      * Used by Panel Editor to make updates the icon(s) into the user's Panel.
      */

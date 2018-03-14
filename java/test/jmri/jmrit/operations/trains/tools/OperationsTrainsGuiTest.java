@@ -1,15 +1,9 @@
 package jmri.jmrit.operations.trains.tools;
 
+import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -92,11 +86,31 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         TrainIcon trainicon1 = editor.addTrainIcon("TestName");
         trainicon1.setTrain(train1);
         Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
+        
+        // confirm that there are 6 icon colors
+        Assert.assertEquals("Six colors", 6, TrainIcon.getLocoColors().length);
 
         // test color change
-        String[] colors = TrainIcon.getLocoColors();
-        for (int i = 0; i < colors.length; i++) {
-            trainicon1.setLocoColor(colors[i]);
+        for (String color : TrainIcon.getLocoColors()) {
+            trainicon1.setLocoColor(color);
+            if (color.equals(TrainIcon.WHITE)) {
+                Assert.assertEquals("White train icon", Color.WHITE, trainicon1.getLocoColor());
+            }
+            if (color.equals(TrainIcon.GREEN)) {
+                Assert.assertEquals("Green train icon", Color.GREEN, trainicon1.getLocoColor());
+            }
+            if (color.equals(TrainIcon.GRAY)) {
+                Assert.assertEquals("Gray train icon", Color.GRAY, trainicon1.getLocoColor());
+            }
+            if (color.equals(TrainIcon.RED)) {
+                Assert.assertEquals("Red train icon", Color.RED, trainicon1.getLocoColor());
+            }
+            if (color.equals(TrainIcon.YELLOW)) {
+                Assert.assertEquals("Yellow train icon", Color.YELLOW, trainicon1.getLocoColor());
+            }
+            if (color.equals(TrainIcon.BLUE)) {
+                Assert.assertEquals("Blue train icon", TrainIcon.COLOR_BLUE, trainicon1.getLocoColor());
+            }
         }
         editor.getTargetFrame().dispose();
     }
@@ -106,53 +120,6 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        InstanceManager.getDefault(CarTypes.class).addName("Boxcar");
-        loadTrains();
-    }
-
-    private void loadTrains() {
-        // Add some cars for the various tests in this suite
-        CarManager cm = InstanceManager.getDefault(CarManager.class);
-        // add caboose to the roster
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        Car c = cm.newCar(roadNames[2], "687");
-        c.setCaboose(true);
-        c = cm.newCar(roadNames[4], "435");
-        c.setCaboose(true);
-
-        // load engines
-        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = emanager.newEngine("E", "1");
-        e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
-        e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("UP", "3");
-        e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("UP", "4");
-        e4.setModel("FT");
-
-        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(true);
-        // turn off print preview
-        tmanager.setPrintPreviewEnabled(false);
-
-        // load 5 trains
-        for (int i = 0; i < 5; i++) {
-            tmanager.newTrain("Test_Train " + i);
-        }
-
-        // load 6 locations
-        for (int i = 0; i < 6; i++) {
-            InstanceManager.getDefault(LocationManager.class).newLocation("Test_Location " + i);
-        }
-
-        // load 5 routes
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route A");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route B");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route C");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route D");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route E");
     }
 
     @Override

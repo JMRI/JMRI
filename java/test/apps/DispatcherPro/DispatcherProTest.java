@@ -99,6 +99,37 @@ public class DispatcherProTest {
     }
 
     @Test
+    public void testLaunchGrapevine() throws IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        try {
+            // create a custom profile
+            File tempFolder = folder.newFolder();
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Grapevine_Simulator"), tempFolder);
+            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
+
+            // launch!
+            DispatcherPro.main(new String[]{"DispatcherPro"});
+            log.debug("started GrapevineSim");
+
+            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("DispatcherPro") != null;}, "window up");
+
+            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("DispatcherPro version") != null;}, "first Info line seen");
+
+            // now clean up frames, depending on what's actually left
+            // DispatcherPro
+
+            // gracefully shutdown, but don't exit
+            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
+        }
+    }
+
+    @Test
+    @Ignore // Unreliable and causing too many false failures
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

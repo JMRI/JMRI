@@ -85,13 +85,13 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      */
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
-        String[] fullOpNameComponents = jmri.util.StringUtil.split(op.getClass().getName(), ".");
+        String[] fullOpNameComponents = op.getClass().getName().split("\\.");
         log.debug("getAdapter found class name {}", op.getClass().getName());
         String[] myNameComponents
                 = new String[]{"jmri", "configurexml", "turnoutoperations", "TurnoutOperationXml"};
         myNameComponents[myNameComponents.length - 1]
                 = fullOpNameComponents[fullOpNameComponents.length - 1];
-        String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
+        String fullConfigName = String.join(".", myNameComponents) + "Xml";
         log.debug("getAdapter looks for {}", fullConfigName);
         try {
             Class<?> configClass = Class.forName(fullConfigName);

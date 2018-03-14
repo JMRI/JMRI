@@ -33,7 +33,7 @@ public class JsonWebSocket {
         log.debug("Opening connection");
         try {
             this.connection = new JsonConnection(sn);
-            sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
+            sn.setIdleTimeout((long) (InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval() * 1.1));
             this.handler = new JsonClientHandler(this.connection);
             this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
                 @Override
@@ -59,7 +59,7 @@ public class JsonWebSocket {
     @OnWebSocketClose
     public void onClose(int i, String string) {
         log.debug("Closing connection because {} ({})", string, i);
-        this.handler.dispose();
+        this.handler.onClose();
         InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
     }
 
@@ -84,7 +84,7 @@ public class JsonWebSocket {
             this.handler.onMessage(string);
         } catch (IOException e) {
             if(!e.getMessage().equals("Will not send message on non-open session")) {
-               // This exception did not occured because the connection is 
+               // This exception did not occured because the connection is
                // either closing or already closed, so log it.
                log.error("Error on WebSocket message:\n{}", e.getMessage());
             }

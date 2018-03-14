@@ -115,7 +115,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         sendOpcSwReqMessage(adjustStateForInversion(newstate), true);
         // schedule SWREQ for closed/thrown off, unless in basic mode
         if (!binaryOutput) {
-            meterTimer.schedule(new java.util.TimerTask() {
+            meterTask = new java.util.TimerTask() {
                 int state = newstate;
 
                 @Override
@@ -126,7 +126,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                         log.error("Exception occurred while sending delayed off to turnout: " + e);
                     }
                 }
-            }, METERINTERVAL);
+            };
+            meterTimer.schedule(meterTask, METERINTERVAL);
         }
     }
 
@@ -177,7 +178,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         if (_useOffSwReqAsConfirmation) {
             // Start a timer to resend the command in a couple of seconds in case consistency is not obtained before then
             noConsistencyTimersRunning++;
-            consistencyTimer.schedule(new java.util.TimerTask() {
+            consistencyTask = new java.util.TimerTask() {
                 @Override
                 public void run() {
                     noConsistencyTimersRunning--;
@@ -186,7 +187,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                         forwardCommandChangeToLayout(getCommandedState());
                     }
                 }
-            }, CONSISTENCYTIMER);
+            };
+            consistencyTimer.schedule(consistencyTask, CONSISTENCYTIMER);
         }
     }
 
@@ -346,6 +348,12 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     @Override
     public void dispose() {
+        if(meterTask!=null) {
+           meterTask.cancel();
+        }
+        if(consistencyTask != null ) {
+           consistencyTask.cancel();
+        }
         this.controller.removeLocoNetListener(~0, this);
         super.dispose();
     }
@@ -384,11 +392,13 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     static final int METERINTERVAL = 100;  // msec wait before closed
-    static java.util.Timer meterTimer = new java.util.Timer(true);
+    static java.util.Timer meterTimer = new java.util.Timer("LocoNet Turnout Meter Timer",true);
+    private java.util.TimerTask meterTask = null;
 
     static final int CONSISTENCYTIMER = 3000; // msec wait for command to take effect
-    static java.util.Timer consistencyTimer = new java.util.Timer();
+    static java.util.Timer consistencyTimer = new java.util.Timer("LocoNet Turnout Consistency Timer");
     int noConsistencyTimersRunning = 0;
+    private java.util.TimerTask consistencyTask = null;
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnout.class);
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine.nodetable;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,17 +22,19 @@ import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pane for user management of serial nodes. Contains a table that does the real
  * work.
  * <p>
  * Nodes can be in three states:
- * <OL>
- * <LI>Configured
- * <LI>Present, not configured
- * <LI>Not present
- * </OL>
+ * <ol>
+ *   <li>Configured
+ *   <li>Present, not configured
+ *   <li>Absent (not present)
+ * </ol>
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
  * @author Dave Duchamp Copyright (C) 2004, 2006
@@ -52,7 +55,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     JLabel status;
 
     /**
-     * Initialize the window
+     * Initialize the NodeTable window.
      */
     public void initComponents() {
 
@@ -72,6 +75,9 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         RowSorterUtil.setSortOrder(sorter, NodesModel.STATUSCOL, SortOrder.DESCENDING);
         nodesTable.setRowSorter(sorter);
         nodesTable.setRowSelectionAllowed(false);
+        // ensure the table rows, columns have enough room for buttons
+        JButton spacer = new JButton("spacer");
+        nodesTable.setRowHeight(spacer.getPreferredSize().height - 4); // a bit more compact
         nodesTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580, 80));
 
         JScrollPane scrollPane = new JScrollPane(nodesTable);
@@ -96,12 +102,15 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         });
         p.add(b);
+        p.add(new JLabel("   ")); // spacer
         status = new JLabel("");
+        status.setFont(status.getFont().deriveFont(0.9f * b.getFont().getSize())); // a bit smaller
+        status.setForeground(Color.gray);
         p.add(status);
 
         p.add(Box.createHorizontalGlue());
 
-        // renumber button
+        // Renumber button
         b = new JButton(Bundle.getMessage("ButtonRenumber"));
         b.addActionListener(new ActionListener() {
             @Override
@@ -117,7 +126,8 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     }
 
     /**
-     * Open a renumber frame
+     * Respond to Renumber button click by opening a new
+     * {@link RenumberFrame}.
      */
     void renumber() {
         RenumberFrame f = new RenumberFrame(memo);
@@ -128,7 +138,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     javax.swing.Timer timer;
 
     /**
-     * Start the check of the actual hardware
+     * Start the check of the actual hardware.
      */
     public void startPoll() {
         // mark as none seen
@@ -145,6 +155,8 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // send message to node
+                log.debug("polling node {}", node);
+                status.setText(Bundle.getMessage("StatusRunningX", node, 127));
                 memo.getTrafficController().sendSerialMessage(SerialMessage.getPoll(node), null);
                 // done?
                 node++;
@@ -173,14 +185,14 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     boolean scanSeen[] = new boolean[128];
 
     /**
-     * Ignore messages being sent
+     * Ignore messages being sent.
      */
     @Override
     public void message(SerialMessage m) {
     }
 
     /**
-     * Listen for software version messages to know a node is present
+     * Listen for software version messages to know a node is present.
      */
     @Override
     public void reply(SerialReply m) {
@@ -188,7 +200,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         if (status.getText().equals(Bundle.getMessage("StatusStart"))) {
             status.setText(Bundle.getMessage("StatusRunning"));
         }
-        // is this a software version reply?
+        // is this a software version reply? if not, stop
         if (m.getNumDataElements() != 2) {
             return;
         }
@@ -202,15 +214,15 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         // mark as seen
         scanSeen[num] = true;
         // force redisplay of that line
-        nodesModel.fireTableRowsUpdated(num, num);
+        nodesModel.fireTableRowsUpdated(num - 1, num - 1);
     }
 
     /**
-     * Set up table for selecting showing nodes.
+     * Set up table for selecting and showing nodes.
      * <ol>
-     * <li>Address
-     * <li>Present Y/N
-     * <li>Edit button
+     *   <li>Address
+     *   <li>Present Y/N
+     *   <li>Add/Edit button
      * </ol>
      */
     public class NodesModel extends AbstractTableModel {
@@ -239,7 +251,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                 case STATUSCOL:
                     return Bundle.getMessage("TitleStatus");
                 case EDITCOL:
-                    return ""; // no title over Edit column
+                    return ""; // no title over Add/Edit column
                 default:
                     return "";
             }
@@ -310,9 +322,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                     return;
                 case INITCOL:
                     jmri.jmrix.AbstractNode t = memo.getTrafficController().getNodeFromAddress(r + 1);
-                    if (t == null) {
-                        return;
-                    }
                     memo.getTrafficController().sendSerialMessage((SerialMessage) t.createInitPacket(), null);
                     return;
                 default:
@@ -320,5 +329,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             }
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(NodeTablePane.class);
 
 }

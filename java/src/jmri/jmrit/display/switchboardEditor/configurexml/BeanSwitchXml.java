@@ -2,6 +2,7 @@ package jmri.jmrit.display.switchboardEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.jmrit.display.switchboardEditor.BeanSwitch;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +18,15 @@ public class BeanSwitchXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a BeanSwitch. Used the
-     * display Switchboard switches in JMRI web server.
+     * Default implementation for storing the contents of a BeanSwitch.
+     * Used to display Switchboard switches in JMRI web server.
      *
      * @param o Object to store, of type BeanSwitch
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        SwitchboardEditor.BeanSwitch bs = (SwitchboardEditor.BeanSwitch) o;
+        BeanSwitch bs = (BeanSwitch) o;
         Element element = new Element("beanswitch");
         // include attributes
         element.setAttribute("label", bs.getNameString());
@@ -68,9 +69,10 @@ public class BeanSwitchXml extends AbstractXmlAdapter {
     @Override
     public void load(Element element, Object o) {
         // create the objects
-        //SwitchboardEditor.BeanSwitch bs = (SwitchboardEditor.BeanSwitch) o;
+        //BeanSwitch bs = (BeanSwitch) o;
         log.debug("load xml called");
     }
 
     private static final Logger log = LoggerFactory.getLogger(BeanSwitchXml.class);
+
 }

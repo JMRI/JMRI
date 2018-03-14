@@ -66,6 +66,11 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - provides org.apache.commons.lang3
 - from https://commons.apache.org/proper/commons-lang/
 
+##### commons-text-1.2.jar
+- version 1.2
+- provides Apache Commons string utilities
+- from https://commons.apache.org/proper/commons-text/
+
 ##### javacsv.jar
 - version 2.0 of 2006-12-12
 - from <http://javacsv.sourceforge.net/>

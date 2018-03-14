@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import org.openide.util.lookup.ServiceProvider;
@@ -20,7 +21,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     private JTextField railroadName;
     private WebServerPreferences preferences;
     public RailroadNamePreferencesPanel() {
-        preferences = WebServerPreferences.getDefault();
+        preferences = InstanceManager.getDefault(WebServerPreferences.class);
         initGUI();
         setGUI();
     }

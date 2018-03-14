@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
@@ -112,7 +114,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Start this automat processing.
-     *
+     * <p>
      * Overrides the superclass method to do local accounting.
      */
     public void start() {
@@ -138,7 +140,7 @@ public class AbstractAutomaton implements Runnable {
      */
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE",
-                justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
+            justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
     public void run() {
         try {
             inThread = true;
@@ -176,7 +178,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Stop the thread immediately.
-     *
+     * <p>
      * Overrides superclass method to handle local accounting.
      */
     // The stop method on a thread has been deprecated, we need to find another way to deal with this.
@@ -204,7 +206,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Part of the internal implementation; not for general use.
-     *
+     * <p>
      * Common internal end-time processing
      */
     void done() {
@@ -217,7 +219,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Get the number of times the handle routine has executed.
-     *
+     * <p>
      * Used by classes such as {@link jmri.jmrit.automat.monitor} to monitor
      * progress.
      *
@@ -240,7 +242,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Update the name of this object.
-     *
+     * <p>
      * name is not a bound parameter, so changes are not notified to listeners.
      *
      * @param name the new name
@@ -255,7 +257,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * User-provided initialization routine.
-     *
+     * <p>
      * This is called exactly once for each object created. This is where you
      * put all the code that needs to be run when your object starts up: Finding
      * sensors and turnouts, getting a throttle, etc.
@@ -265,7 +267,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * User-provided main routine.
-     *
+     * <p>
      * This is run repeatedly until it signals the end by returning false. Many
      * automata are intended to run forever, and will always return true.
      *
@@ -316,16 +318,14 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Internal common routine to handle
-     * start-of-wait bookkeeping.
+     * Internal common routine to handle start-of-wait bookkeeping.
      */
     final private void startWait() {
         waiting = true;
     }
 
     /**
-     * Internal common routine to handle
-     * end-of-wait bookkeeping.
+     * Internal common routine to handle end-of-wait bookkeeping.
      */
     final private void endWait() {
         if (promptOnWait) {
@@ -663,7 +663,7 @@ public class AbstractAutomaton implements Runnable {
                 blockChanged = true;
                 blockName = ((OBlock) e.getNewValue()).getDisplayName();
             }
-            if (e.getPropertyName().equals("runMode") && ! Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue()) ) {
+            if (e.getPropertyName().equals("runMode") && !Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue())) {
                 blockName = null;
                 blockChanged = true;
             }
@@ -756,9 +756,9 @@ public class AbstractAutomaton implements Runnable {
      * Wait, up to a specified time, for one of a list of NamedBeans (sensors,
      * signal heads and/or turnouts) to change their state.
      * <p>
-     * Registers a listener on each of the NamedBeans listed.
-     * The listener is likely to run in another thread.
-     * Each fired listener then queues a check to the automaton's thread.
+     * Registers a listener on each of the NamedBeans listed. The listener is
+     * likely to run in another thread. Each fired listener then queues a check
+     * to the automaton's thread.
      *
      * @param mInputs  Array of NamedBeans to watch
      * @param maxDelay maximum amount of time (milliseconds) to wait before
@@ -773,7 +773,7 @@ public class AbstractAutomaton implements Runnable {
         int[] tempState = waitChangePrecheckStates;
         // do we need to create it now?
         boolean recreate = false;
-        if (waitChangePrecheckBeans != null && waitChangePrecheckStates != null ) {
+        if (waitChangePrecheckBeans != null && waitChangePrecheckStates != null) {
             // Seems precheck intended, see if done right
             if (waitChangePrecheckBeans.length != mInputs.length) {
                 log.warn("Precheck ignored because of mismatch in size: before {}, now {}", waitChangePrecheckBeans.length, mInputs.length);
@@ -783,8 +783,8 @@ public class AbstractAutomaton implements Runnable {
                 log.error("Precheck data inconsistent because of mismatch in size: {}, {}", waitChangePrecheckBeans.length, waitChangePrecheckStates.length);
                 recreate = true;
             }
-            if (! recreate) { // have to check if the beans are the same, but only check if the above tests pass
-                for (i = 0 ; i < mInputs.length; i++) {
+            if (!recreate) { // have to check if the beans are the same, but only check if the above tests pass
+                for (i = 0; i < mInputs.length; i++) {
                     if (waitChangePrecheckBeans[i] != mInputs[i]) {
                         log.warn("Precheck ignored because of mismatch in bean {}", i);
                         recreate = true;
@@ -800,12 +800,12 @@ public class AbstractAutomaton implements Runnable {
             // here, have to create a new state array
             log.trace("recreate state array");
             tempState = new int[mInputs.length];
-            for (i = 0 ; i < mInputs.length; i++) {
+            for (i = 0; i < mInputs.length; i++) {
                 tempState[i] = mInputs[i].getState();
             }
         }
         waitChangePrecheckBeans = null;
-        waitChangePrecheckStates  = null;
+        waitChangePrecheckStates = null;
         final int[] initialState = tempState; // needs to be final for off-thread references
 
         log.debug("waitChange[] starts for {} listeners", mInputs.length);
@@ -815,7 +815,9 @@ public class AbstractAutomaton implements Runnable {
         PropertyChangeListener[] listeners = new PropertyChangeListener[mInputs.length];
         for (i = 0; i < mInputs.length; i++) {
             mInputs[i].addPropertyChangeListener(listeners[i] = (PropertyChangeEvent e) -> {
-                waitChangeQueue.offer(e);
+                if (!waitChangeQueue.offer(e)) {
+                    log.warn("Waiting changes capacity exceeded; not adding {} to queue", e);
+                }
             });
 
         }
@@ -823,19 +825,20 @@ public class AbstractAutomaton implements Runnable {
         log.trace("waitChange[] listeners registered");
 
         // queue a check for whether there was a change while registering
-        jmri.util.ThreadingUtil.runOnLayoutEventually(
-            () -> {
-                log.trace("start separate waitChange check");
-                for (int j = 0 ; j < mInputs.length; j++) {
-                    if ( initialState[j] != mInputs[j].getState() ) {
-                        log.trace("notify that input {} changed when initial on-layout check was finally done", j);
-                        waitChangeQueue.offer(new PropertyChangeEvent(mInputs[j], "State", initialState[j], mInputs[j].getState()));
-                        break;
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+            log.trace("start separate waitChange check");
+            for (int j = 0; j < mInputs.length; j++) {
+                if (initialState[j] != mInputs[j].getState()) {
+                    log.trace("notify that input {} changed when initial on-layout check was finally done", j);
+                    PropertyChangeEvent e = new PropertyChangeEvent(mInputs[j], "State", initialState[j], mInputs[j].getState());
+                    if (!waitChangeQueue.offer(e)) {
+                        log.warn("Waiting changes capacity exceeded; not adding {} to queue", e);
                     }
+                    break;
                 }
-                log.trace("end separate waitChange check");
             }
-        );
+            log.trace("end separate waitChange check");
+        });
 
         // wait for notify from a listener
         startWait();
@@ -866,9 +869,8 @@ public class AbstractAutomaton implements Runnable {
     }
 
     NamedBean[] waitChangePrecheckBeans = null;
-    int[] waitChangePrecheckStates  = null;
-    java.util.concurrent.BlockingQueue<PropertyChangeEvent> waitChangeQueue =
-            new java.util.concurrent.ArrayBlockingQueue<PropertyChangeEvent>(5);
+    int[] waitChangePrecheckStates = null;
+    BlockingQueue<PropertyChangeEvent> waitChangeQueue = new ArrayBlockingQueue<PropertyChangeEvent>(5);
 
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads
@@ -879,7 +881,7 @@ public class AbstractAutomaton implements Runnable {
     public void waitChangePrecheck(NamedBean[] mInputs) {
         waitChangePrecheckBeans = new NamedBean[mInputs.length];
         waitChangePrecheckStates = new int[mInputs.length];
-        for (int i = 0 ; i < mInputs.length; i++) {
+        for (int i = 0; i < mInputs.length; i++) {
             waitChangePrecheckBeans[i] = mInputs[i];
             waitChangePrecheckStates[i] = mInputs[i].getState();
         }
@@ -970,7 +972,7 @@ public class AbstractAutomaton implements Runnable {
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
                 InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }
@@ -1040,7 +1042,7 @@ public class AbstractAutomaton implements Runnable {
             }
 
             @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+            public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
                 InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
             }

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     /**
-     * Ctor
+     * Create a new TMCC SerialTrafficController instance.
      *
      * @param adaptermemo the associated SystemConnectionMemo
      */

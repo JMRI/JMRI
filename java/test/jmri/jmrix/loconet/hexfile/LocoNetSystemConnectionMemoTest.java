@@ -28,6 +28,7 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Override
     @After
     public void tearDown() {
+        ((LocoNetSystemConnectionMemo)scm).dispose();
         JUnitUtil.tearDown();
     }
 

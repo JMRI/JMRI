@@ -1,6 +1,5 @@
 package jmri.server.json.reporter;
 
-import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
@@ -23,22 +22,19 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood (C) 2016
  */
-public class JsonReporterSocketService extends JsonSocketService {
+public class JsonReporterSocketService extends JsonSocketService<JsonReporterHttpService> {
 
-    private final JsonReporterHttpService service;
     private final HashMap<String, ReporterListener> reporters = new HashMap<>();
-    private Locale locale;
 
     public JsonReporterSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonReporterHttpService(connection.getObjectMapper());
+        super(connection, new JsonReporterHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        this.setLocale(locale);
         String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(PUT)) {
+        if (method.equals(PUT)) {
             this.connection.sendMessage(this.service.doPut(type, name, data, locale));
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
@@ -55,7 +51,7 @@ public class JsonReporterSocketService extends JsonSocketService {
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.locale = locale;
+        this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
@@ -81,7 +77,7 @@ public class JsonReporterSocketService extends JsonSocketService {
             if (e.getPropertyName().equals("currentReport")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(REPORTER, this.reporter.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(REPORTER, this.reporter.getSystemName(), getLocale()));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }

@@ -9,6 +9,7 @@ import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.ThrottleListener;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Glen Oberhauser, Bob Jacobsen Copyright (C) 2003, 2004
  * @author Stephen Williams Copyright (C) 2008
+ * @author B. Milhaupt, Copyright (C) 2018
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
@@ -41,8 +43,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Constructor
+     * <p>
      * @param memo connection details
-     *
      * @param slot The LocoNetSlot this throttle will talk on.
      */
     public LocoNetThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot slot) {
@@ -129,13 +131,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // attached
         startRefresh();
         log.debug("constructed a new throttle using slot {} for loco address {}", slot.getSlot(), slot.locoAddr());
-
     }
 
     /**
      * Convert a LocoNet speed integer to a float speed value
+     * <p>
      * @param lSpeed LocoNet style speed value
-     * @return speed as float 0-&gt;1.0
+     * @return speed as float 0-&gt;1.0, or -1.0 to indicate E-Stop
      */
     protected float floatSpeed(int lSpeed) {
         log.debug("speed (int) is {}", lSpeed);
@@ -161,6 +163,19 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
     }
 
+    /**
+     * Computes the integer speed value from a float.  
+     * <p>
+     * Values of less than 0 indicate Emergency Stop.
+     * <p>
+     * Value of 0.0 indicates stop.
+     * <p>
+     * Values between 0.0+ and 1.0 imply speed step values between 2 and the 
+     * maximum value allowed for the loco's speed step mode.
+     * <p>
+     * @param fSpeed is the floating-point speed value to be converted
+     * @return an integer which represents the speed step value
+     */
     @Override
     protected int intSpeed(float fSpeed) {
         log.debug("intSpeed speed is {}", fSpeed);
@@ -220,20 +235,28 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         network.sendLocoNetMessage(msg);
     }
 
+    /**
+     * Sends Function Group 3 values - F9 thru F12, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
     @Override
     protected void sendFunctionGroup3() {
         // LocoNet practice is to send F9-F12 as a DCC packet
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 100),
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 128),
                 getF9(), getF10(), getF11(), getF12());
 
         log.debug("sendFunctionGroup3 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
     }
 
+    /**
+     * Sends Function Group 4 values - F13 thru F20, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
     @Override
     protected void sendFunctionGroup4() {
         // LocoNet practice is to send F13-F20 as a DCC packet
-        byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address >= 100),
+        byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address >= 128),
                 getF13(), getF14(), getF15(), getF16(),
                 getF17(), getF18(), getF19(), getF20());
 
@@ -241,10 +264,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
     }
 
+    /**
+     * Sends Function Group 5 values - F21 thru F28, using an "OPC_IMM_PACKET" LocoNet
+     * Message.
+     */
     @Override
     protected void sendFunctionGroup5() {
         // LocoNet practice is to send F21-F28 as a DCC packet
-        byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address >= 100),
+        byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address >= 128),
                 getF21(), getF22(), getF23(), getF24(),
                 getF25(), getF26(), getF27(), getF28());
 
@@ -253,16 +280,43 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Set the speed.
+     * Send a LocoNet message to set the loco speed speed.
      * <P>
-     * This intentionally skips the emergency stop value of 1.
+     * @param speed Number from 0 to 1; less than zero is "emergency stop"
+     */
+    @Override
+    public void setSpeedSetting(float speed) {
+        setSpeedSetting(speed, false, false);
+    }
+
+    /**
+     * Set the Speed, ensuring that a Loconet message is sent to update the slot
+     * even if the new speed is effectively the same as the current speed. Note: this
+     * can cause an increase in Loconet traffic.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @Override
+    public void setSpeedSettingAgain(float speed) {
+        setSpeedSetting(speed, true, true);
+    }
+
+    /**
+     * Set the speed. No Loconet message is sent if the new speed would
+     * result in a 'duplicate' - ie. a speed setting no different to the one the slot
+     * currently has - unless the boolean paramters indicate it should be.
+     *
+     * @param speed Number from 0 to 1; less than zero is emergency stop
+     * @param allowDuplicates boolean - if true, send a Loconet message no matter what
+     * @param allowDuplicatesOnStop boolean - if true, send a Loconet message if the new speed is
+     *                              'idle' or 'emergency stop', even if that matches the
+     *                              existing speed.
+     *
+     */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public void setSpeedSetting(float speed) {
-        log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
+    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        log.debug("setSpeedSetting: called with speed {} for LocoNet slot {}", speed, slot.getSlot());
         if (LnConstants.CONSIST_MID == slot.consistStatus()
                 || LnConstants.CONSIST_SUB == slot.consistStatus()) {
             // Digitrax slots use the same memory location to store the
@@ -279,13 +333,30 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
 
         int new_spd = intSpeed(speed);
+
+        // decide whether to send a new loconet message
+        boolean sendLoconetMessage = false;
         if (new_spd != layout_spd) {
+            // the new speed is different - send a message
+            sendLoconetMessage = true;
+        } else if (allowDuplicates) {
+            // calling method wants a new mesage sent regardless
+            sendLoconetMessage = true;
+        } else if (allowDuplicatesOnStop && new_spd <= 1) {
+            // calling method wants a new message sent if the speed is idle or estop, which it is
+            sendLoconetMessage = true;
+        }
+
+        if (sendLoconetMessage) {
+            log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, slot.getSlot());
             log.debug("setSpeedSetting: float speed: " + speed + " LocoNet speed: " + new_spd);
             msg.setElement(2, new_spd);
             network.sendLocoNetMessage(msg);
+        } else {
+            log.debug("setSpeedSetting: not sending LocoNet message to slot {}, new speed == old speed", slot.getSlot());
         }
 
         // reset timeout
@@ -302,8 +373,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
+     * Sends a LocoNet message containing the specified direction of travel.
+     * 
      * LocoNet actually puts forward and backward in the same message as the
      * first function group.
+     * 
+     * @param forward is true for forward movement, else false
      */
     @Override
     public void setIsForward(boolean forward) {
@@ -316,6 +391,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
     }
 
+    /**
+     * Returns the LocoNetSlot which is used for controlling the loco assoicated 
+     * with this throttle.
+     * 
+     * @return the LocoNetSlot 
+     */
     @Nullable
     public LocoNetSlot getLocoNetSlot() {
         if (slot == null) return slot;
@@ -329,8 +410,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
+     * Dispose the LocoNetThrottle when finished with this object. 
+     * 
+     * After this is executed, further use of this Throttle object will 
+     * result in a JmriException.
      */
     @Override
     protected void throttleDispose() {
@@ -338,33 +421,42 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("throttleDispose - disposing of throttle (and setting slot = null)");
         isDisposing = true;
 
-        // stop timeout
-        if (mRefreshTimer != null) {
-            mRefreshTimer.stop();
-            log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
-        }
-
-        // release connections
+        // Release throttle connections
         if (slot != null) {
-            // TODO: stopping a slot upon release is a SUBTRACTIVE change - is it justified?
-            setSpeedSetting(0); // stop the loco (if it is not already stopped).
-            log.debug("Stopping loco address {} slot {} during dispose", slot.locoAddr(), slot.getSlot());
-            network.sendLocoNetMessage(slot.releaseSlot());  // a blind release, since the slot listener is being removed, we cannot get any reply message.
+            if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
+                // Digitrax throttles do not set the slot speed to zero, so do 
+                // not do so here.
+                
+                // Make the slot common, after a little wait
+                log.debug("dispatchThrottle is dispatching slot {}", slot);
+                network.sendLocoNetMessage(slot.releaseSlot());
+            }
+            // Can remove the slot listener at any time; any further messages 
+            // aren't needed.
             slot.removeSlotListener(this);
-            slot.notifySlotListeners();
-            log.debug("Releasing loco address {} slot {} during dispose", slot.locoAddr(), slot.getSlot());
+            // Stop the throttle speed refresh timer
+            if (mRefreshTimer != null) {
+                mRefreshTimer.stop();
+                log.debug("Stopped refresh timer for slot {} address {} as part of throttleDispose", slot.getSlot(), slot.locoAddr());
+            mRefreshTimer = null;
+            }
+
+            slot = null;
+            network = null;
+
+            finishRecord();
+            isDisposing = false;
         }
-
-        mRefreshTimer = null;
-        slot = null;
-        network = null;
-
-        finishRecord();
-        isDisposing = false;
     }
 
     javax.swing.Timer mRefreshTimer = null;
 
+    /**
+     * Starts the "refresh" timer.  The "refresh" timer determines
+     * when to send a new LocoNet message to "refresh" the slot's speed
+     * setting, so that the slot does not get "purged".
+     * 
+     */
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(50000, new java.awt.event.ActionListener() {
             @Override
@@ -394,16 +486,21 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * get notified when underlying slot acquisition process fails
+     * Get notified when underlying slot acquisition process fails.  Slot acquisition
+     * failure is handled by @link LnThrottleManager, so no code is required here.
+     * 
+     * @param addr Locomotive address
+     * @param s reason the acquisition failed
      */
     public void notifyRefused(int addr, String s) {
         // don't do anything here; is handled by LnThrottleManager.
-        return;
     }
 
 
     /**
      * Get notified when underlying slot information changes
+     * 
+     * @param pSlot the slot which was changed
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
@@ -615,8 +712,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * setSpeedStepMode - set the speed step value and the related
      *                    speedIncrement value.
      * <P>
-     * specific implementations should override this function
-     * <P>
      * @param Mode - the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
@@ -671,23 +766,58 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
     }
 
+    /**
+     * Returns the address controlled by this throttle.  If the throttle is controlling
+     * 
+     * 
+     * @return a LocoAddress for the address controlled by this throttle
+     */
     @Override
     public LocoAddress getLocoAddress() {
         if (slot != null) {
-            if (slot.slotStatus() == LnConstants.LOCO_IN_USE) {
-                switch (slot.consistStatus()) {
-                    case LnConstants.CONSIST_NO:
-                    case LnConstants.CONSIST_TOP:
-                        log.debug("getLocoAddress replying address {} for slot {}", address, slot.getSlot());
-                        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
-                    default:
-                        break;
-                    }
+            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE) ||
+                (slot.slotStatus() == LnConstants.LOCO_COMMON)) {
+                log.debug("getLocoAddress replying address {} for slot {}", address, slot.getSlot());
+                return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
             }
-        }
+        } 
         log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
-        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(65536));
+        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
     }
+
+    /**
+     * "Dispatch" a LocoNet throttle by setting the slot as "common" then performing
+     * a slot move to slot 0.
+     * 
+     * The throttle being dispatched no longer has control of the loco, but other
+     * throttles may continue to control the loco. 
+     * 
+     * @param t throttle being dispatched
+     * @param l throttle listener to remove
+     */
+    public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
+        log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
+        // set status to common
+        if (t instanceof LocoNetThrottle){
+            LocoNetThrottle lnt = (LocoNetThrottle) t;
+            LocoNetSlot tSlot = lnt.getLocoNetSlot();
+            if (tSlot.slotStatus() != LnConstants.LOCO_COMMON) {
+                log.debug("dispatchThrottle is writing slot {} status to {}",
+                        tSlot,
+                        LnConstants.LOCO_COMMON);
+                network.sendLocoNetMessage(
+                        tSlot.writeStatus(LnConstants.LOCO_COMMON));
+            }
+
+            jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {
+                // and dispatch to slot 0
+                    log.debug("dispatchThrottle is dispatching slot {}", tSlot);
+                    network.sendLocoNetMessage(tSlot.dispatchSlot());
+                },
+                32);
+        }
+    }
+
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);

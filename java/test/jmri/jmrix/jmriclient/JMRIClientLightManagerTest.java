@@ -18,7 +18,7 @@ public class JMRIClientLightManagerTest {
             @Override
             public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
                 // do nothing to avoid null pointer when sending to non-existant
-                // connection durring test.
+                // connection during test.
             }
         };
         JMRIClientSystemConnectionMemo memo = new JMRIClientSystemConnectionMemo(tc);

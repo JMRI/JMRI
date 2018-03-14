@@ -4,11 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * <P>
@@ -16,7 +11,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * </P>
  * @author Paul Bender Copyright (C) 2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeNodeManagerTest {
 
    XBeeInterfaceScaffold tc = null; // set in setUp.
@@ -35,14 +29,14 @@ public class XBeeNodeManagerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        //apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
     }
 
     @After
     public void tearDown() {
-        //apps.tests.Log4JFixture.tearDown();
         tc = null;
+        jmri.util.JUnitUtil.tearDown();
     }
 
 

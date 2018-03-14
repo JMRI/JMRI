@@ -39,7 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure nodes");
+        JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
 
         details.add(b);
 
@@ -49,7 +49,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "SECSI Layout Bus";
+        return Bundle.getMessage("SecsiBusConnection");
     }
 
     @Override

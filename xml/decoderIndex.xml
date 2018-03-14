@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.11.2ish+given+20180108T0357Z on Sun Jan 07 22:57:26 EST 2018-->
-  <decoderIndex version="882">
+  <!--Written by JMRI version 4.11.4ish+heap+20180314T0215Z+R7ecd3a5 on Wed Mar 14 13:15:35 AEDT 2018-->
+  <decoderIndex version="890">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -169,6 +169,9 @@
       </family>
       <family name="Raw CVs 1-255" mfg="NMRA" file="0NMRA_test.xml">
         <model model="Raw CVs 1-255" />
+      </family>
+      <family name="Raw CVs 1-1024" mfg="NMRA" file="0NMRA_test_1024.xml">
+        <model model="Raw CVs 1-1024" />
       </family>
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
@@ -5017,6 +5020,668 @@
           </protocols>
         </model>
       </family>
+      <family name="Train Decoders (2017)" mfg="Doehler und Haass" file="Doehler_Haass_fw3.08-09_DH05-10C_12-16-18-21-22A_PD12A.xml">
+        <model model="DH05C v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH05C_2016.03" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from February 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3|o SUSI ZCLK</label>
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4|(o. SUSI ZDAT)</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="13.2" width="6.8" height="1.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH10C v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="DH10C_2016.03" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| (o SUSI ZCLK</label>
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4 |(o SUSI ZDAT</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="14.2" width="9.3" height="1.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH12A v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH12A_2016.03" comment="DH12A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llum</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="14.5" width="8" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH16A v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH16A_2016.03" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum poserior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Internsitat de llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">marxa de maniobres</label>
+          </output>
+          <size length="16.7" width="10.9" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH18A v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="8" numFns="16" productID="DH18A_2016.03" comment="DH18A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="ca">Llum Posterior</label>
+            <label xml:lang="de">LR</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
+          </output>
+          <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
+          </output>
+          <output name="9" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
+          </output>
+          <output name="10" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="13.5" width="9.0" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH21A v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="8" numFns="16" productID="DH21A_2016.03" comment="DH21A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
+          </output>
+          <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
+          </output>
+          <output name="9" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
+          </output>
+          <output name="10" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="20.7" width="15.8" height="5.2" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH22A v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="6" numFns="16" productID="DH22A_2016.03" comment="DH22A with update from February 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="20.7" width="15.8" height="5.2" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="PD12A v3.08.27 (firmware 3.08+)" lowVersionID="27" highVersionID="27" numOuts="4" numFns="16" productID="PD12A_2016.03" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from February 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangier-|gang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="24.2" width="11.0" height="2.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+        <model model="DH05C v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="DH05C_2016.06" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from November 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| SUSI ZCLK </label>
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4| SUSI ZDAT</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="13.2" width="6.8" height="1.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH10C v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="DH10C_2016.06" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+            <label xml:lang="ca">AUX 3| SUSI XCLK</label>
+          </output>
+          <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+            <!-- New from fw3.03  -->
+            <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+            <label xml:lang="ca">AUX 4| SUSI ZDAT</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa Maniobres</label>
+          </output>
+          <size length="14.2" width="9.3" height="1.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH12A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH12A_2016.06" comment="DH12A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 12</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa maniobres</label>
+          </output>
+          <size length="14.5" width="8" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH16A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH16A_2016.06" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa Maniobres</label>
+          </output>
+          <size length="16.7" width="10.9" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH18A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="8" numFns="16" productID="DH18A_2016.06" comment="DH18A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
+          </output>
+          <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
+          </output>
+          <output name="9" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llum</label>
+          </output>
+          <output name="10" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="13.5" width="9.0" height="2.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH21A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="8" numFns="16" productID="DH21A_2016.06" comment="DH21A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 5</label>
+            <label xml:lang="ca">AUX 5</label>
+          </output>
+          <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+            <label xml:lang="de">AUX 6</label>
+            <label xml:lang="ca">AUX 6</label>
+          </output>
+          <output name="9" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat de llums</label>
+          </output>
+          <output name="10" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="20.7" width="15.8" height="5.2" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="DH22A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="6" numFns="16" productID="DH22A_2016.06" comment="DH22A with update from November 2017" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Posterior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="5" label="AUX|3" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 3</label>
+            <label xml:lang="ca">AUX 3</label>
+          </output>
+          <output name="6" label="AUX|4" maxcurrent="1.0A">
+            <label xml:lang="de">AUX 4</label>
+            <label xml:lang="ca">AUX 4</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="20.7" width="15.8" height="5.2" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="PD12A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="PD12A_2016.06" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Poserior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangier-|gang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="24.2" width="11.0" height="2.4" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
+      </family>
       <family name="Combo sound decoders" mfg="Doehler und Haass" file="Doehler_Haass_sd_SD18A.xml">
         <model model="SD18A (firmware 1.00+)" lowVersionID="1" highVersionID="1" numOuts="4" numFns="16" productID="SD18A_1.00" comment="SD18A with original firmware" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
           <output name="1" label="Front|Light" maxcurrent="150mA" />
@@ -7658,6 +8323,45 @@
           </output>
         </model>
       </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="27" file="LDH_2F-6Fv27.xml">
+        <model model="LDH 4F1.5 v27" numOuts="6" numFns="6">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+          <output name="5" label="E - Blanco" />
+          <output name="6" label="F - Amarillo" />
+        </model>
+      </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="26" file="LDH_2F-7Fv26.xml">
+        <model model="LDH 2F-7F v26" numOuts="7" numFns="7">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+          <output name="5" label="E - Blanco" />
+          <output name="6" label="F - Amarillo" />
+          <output name="7" label="G - Verde" />
+        </model>
+      </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="55" file="LDH_4F1-5v55.xml">
+        <model model="LDH 4F1.5 v55" numOuts="6" numFns="6">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+          <output name="5" label="E - Blanco" />
+          <output name="6" label="F - Amarillo" />
+        </model>
+      </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="55" file="LDH_SyM-v55.xml">
+        <model model="LDH 4F1.5 v55 Motor y Sonido" numOuts="4" numFns="11">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+        </model>
+      </family>
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="04" file="LaisDcc.xml">
         <model model="860010/LaisDcc-Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860010" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
           <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
@@ -8540,11 +9244,63 @@
         <model show="no" model="Synch Steam Sound 1627" replacementModel="1627 - HO Scale - Steam" replacementFamily="Sound Decoders" numOuts="2" numFns="12" />
         <model model="1627 - HO Scale - Steam" numOuts="2" numFns="12" />
       </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1629.xml">
+        <model model="1629 - HO Scale - Steam" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="48" width="17" height="7.5" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight/Sound on/off</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Air release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="false">Brake squeal/release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Conductor</functionlabel>
+          <functionlabel num="7" lockable="false">Fire box</functionlabel>
+          <functionlabel num="8" lockable="false">Airpump</functionlabel>
+          <functionlabel num="9" lockable="false">Flange squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Water filling</functionlabel>
+          <functionlabel num="11" lockable="false">Blower hiss</functionlabel>
+          <functionlabel num="12" lockable="true">Chuff on/off (drifting)</functionlabel>
+          <functionlabel num="13" lockable="false">Coal auger</functionlabel>
+          <functionlabel num="14" lockable="false">Coupler fire</functionlabel>
+          <functionlabel num="15" lockable="false">Sand drop</functionlabel>
+          <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+          <functionlabel num="17" lockable="false">Short air release</functionlabel>
+          <functionlabel num="18" lockable="false">Injector</functionlabel>
+          <functionlabel num="19" lockable="false">Whistle type select</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1630.xml">
         <model model="1630 - HO Scale - Steam" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="48" width="17" height="7.5" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight/Sound on/off</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Air release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="false">Brake squeal/release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Conductor (idle)/Rail click (moving)</functionlabel>
+          <functionlabel num="7" lockable="false">Fire box</functionlabel>
+          <functionlabel num="8" lockable="false">Air Exhaust</functionlabel>
+          <functionlabel num="9" lockable="false">Flange squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Water filling</functionlabel>
+          <functionlabel num="11" lockable="false">Blower hiss</functionlabel>
+          <functionlabel num="12" lockable="true">Chuff on/off (drifting)</functionlabel>
+          <functionlabel num="13" lockable="false">Coal auger</functionlabel>
+          <functionlabel num="14" lockable="false">Coupler fire</functionlabel>
+          <functionlabel num="15" lockable="false">Sand drop</functionlabel>
+          <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+          <functionlabel num="17" lockable="false">Short air release</functionlabel>
+          <functionlabel num="18" lockable="false">Injector</functionlabel>
+          <functionlabel num="19" lockable="false">Whistle type select</functionlabel>
+        </functionlabels>
       </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1631to1633.xml">
         <model model="1631 - HO Scale - Diesel" numOuts="4" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -10296,6 +11052,9 @@
       </family>
       <family name="MTH HO Expanded PS3" mfg="MTH Electric Trains, Inc." file="MTH_Expanded.xml">
         <model model="MTH HO Expanded PS3" lowVersionID="1" highVersionID="2" />
+      </family>
+      <family name="MTH HO Full PS3 Definition" mfg="MTH Electric Trains, Inc." file="MTH_PS3_Full.xml">
+        <model model="MTH HO Full PS3 Definition" lowVersionID="1" highVersionID="2" />
       </family>
       <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH" file="Massoth_CL_63000.xml">
         <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other" />
@@ -12251,6 +13010,7 @@
         <model model="FX-SD U30B (Atlas)" numFns="14" numOuts="0" productID="1130" />
         <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104" />
         <model model="FX-U 50 Class (Eureka)" numFns="14" numOuts="0" productID="3109" />
+        <model model="FX-U 40 Class (Eureka)" numFns="14" numOuts="0" productID="1173" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -15191,7 +15951,7 @@
           </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
-        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="263" comment="Model 885018">
+        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="293" comment="Model 885018">
           <versionCV lowVersionID="71" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -19282,6 +20042,30 @@
           <output name="Coupler" />
           <functionlabels>
             <functionlabel num="5" lockable="true">Strobe</functionlabel>
+            <functionlabel num="6" lockable="true"># Boards</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GP35" numOuts="4" numFns="14" connector="other" productID="GP35" comment="ATSF, BN, CO, MILW - Diesel Prime Mover EMD567D Turbo">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamic" label="Brakes">
+            <label xml:lang="it">Freni</label>
+          </output>
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="Fans" label="RPM +" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Compressor" label="RPM -" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Beacon</functionlabel>
             <functionlabel num="6" lockable="true"># Boards</functionlabel>
           </functionlabels>
         </model>
@@ -25691,22 +26475,15 @@
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
-        <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" />
-        <model model="ATL2054" lowVersionID="19" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" />
-      </family>
-      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2064.xml">
-        <model model="ATL2064" lowVersionID="12" highVersionID="12" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="8">
-          <output name="3" label="Pad C" />
-          <output name="4" label="Pad D" />
-          <output name="5" label="Whistle" />
-          <output name="6" label="Sound" />
-          <output name="7" label="Signal" />
-          <output name="8" label="Main Sw" />
-          <output name="9" label="Vmid" />
+        <model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ModelA">
+          <size length="25" width="13.5" height="5.5" units="mm" />
+        </model>
+        <model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ModelB">
+          <size length="25" width="12.5" height="5" units="mm" />
         </model>
       </family>
-      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2066.xml">
-        <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="13">
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2064.xml">
+        <model model="ATL2064" lowVersionID="10" highVersionID="11" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelA1">
           <output name="1" label="Pad A">
             <label xml:lang="de">Ausgang A</label>
             <label xml:lang="nl">Uitgang A</label>
@@ -25737,36 +26514,200 @@
           </output>
           <output name="8" label="Main Sw">
             <label xml:lang="de">Hauptschalter</label>
-            <label xml:lang="nl">Hoofdschak.</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+            <label xml:lang="nl">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4.5" units="mm" />
+        </model>
+        <model model="ATL2064-12" lowVersionID="12" highVersionID="12" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelB1">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">E/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+            <label xml:lang="nl">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2066.xml">
+        <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="NEM652">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4" units="mm" />
+        </model>
+        <model model="ATL2066 (21MTC)" lowVersionID="25" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="21MTC" numOuts="9" numFns="13" productID="21MTC">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
           </output>
           <output name="9" label="Vmid">
             <label xml:lang="de">Vmid</label>
           </output>
         </model>
-        <model model="ATL2066p" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" numOuts="9" numFns="13">
+        <model model="ATL2066p" lowVersionID="21" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" connector="Wires/NEM652" numOuts="9" numFns="13" productID="NEM652">
           <output name="1" label="Pad A">
             <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
           </output>
           <output name="2" label="Pad B">
             <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
           </output>
           <output name="3" label="Pad C">
             <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
           </output>
           <output name="4" label="Pad D">
             <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
           </output>
           <output name="5" label="E/Whistle">
             <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
           </output>
           <output name="6" label="F/Sound">
             <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
           </output>
           <output name="7" label="Signal">
             <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
           </output>
           <output name="8" label="Main Sw">
             <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4" units="mm" />
+        </model>
+        <model model="ATL2066p (21MTC)" lowVersionID="25" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" connector="21MTC" numOuts="9" numFns="13" productID="21MTC">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
           </output>
           <output name="9" label="Vmid">
             <label xml:lang="de">Vmid</label>

@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
+    /**
+     * Create a new Oaktree SerialTrafficController instance. Simple implementation.
+     */
     public SerialTrafficController() {
         super();
 

@@ -110,7 +110,7 @@
       route will become active and then inactive as if a train had traversed
       the route. The final block will left active.</li>
       <li>Cancel Route - Cancel the route.</li>
-      <li>Stack Route - Stack the route.</li>
+      <li>Stack Route - Stack the route.<span class="since">since 3.4</span></li>
     </ul>
 
     <p><strong>Initial color of path while route it set up</strong> &mdash;

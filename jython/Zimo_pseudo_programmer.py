@@ -188,7 +188,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
 		return
 
     def whenQuitChanged(self,event) :
-		self.programmer.writeCV(300, 0, None)
+		self.programmer.writeCV("300", 0, None)
 		self.hideShowFunctionButtons(False)
 		self.hideShowSliders(False)
 		self.hideShowRadios(True) 
@@ -275,7 +275,7 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
 		self.hideShowOpsButton(False)
 		# setup ops mode on CV300
 		self.status.text = "Ops mode set for : " + text 
-		self.programmer.writeCV(300, int(data), None)
+		self.programmer.writeCV("300", int(data), None)
 		self.waitMsec(1000)
 		
 		return 0

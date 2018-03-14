@@ -49,7 +49,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                 checkOpsProg();
 
                 // set bit 1 in CV 128
-                pm.writeCV(128, 1, null);
+                pm.writeCV("128", 1, null);
                 power = ON;
                 firePropertyChange("Power", null, null); // NOI18N
                 // start making sure that the power is refreshed
@@ -77,7 +77,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                 checkOpsProg();
 
                 // reset bit 1 in CV 128
-                pm.writeCV(128, 0, null);
+                pm.writeCV("128", 0, null);
                 power = OFF;
             }
         }

@@ -463,6 +463,14 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             addBlock.setToolTipText(rbx.getString("AddBlockButtonHint"));
             p1.add(p13);
             addFrame.getContentPane().add(p1);
+            // add hint for order of blocks irt direction of travel
+            JPanel p34 = new JPanel();
+            p34.setLayout(new FlowLayout());
+            JLabel direction = new JLabel(rbx.getString("DirectionNote")); // placed below first table
+            direction.setFont(direction.getFont().deriveFont(0.9f * blockBox.getFont().getSize())); // a bit smaller
+            direction.setForeground(Color.gray);
+            p34.add(direction);
+            addFrame.getContentPane().add(p34);
             addFrame.getContentPane().add(new JSeparator());
             JPanel p31 = new JPanel();
             p31.setLayout(new FlowLayout());
@@ -532,13 +540,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             p33.add(entryPointTableScrollPane, BorderLayout.CENTER);
             addFrame.getContentPane().add(p33);
             p33.setVisible(true);
-            JPanel p34 = new JPanel();
-            p34.setLayout(new FlowLayout());
-            JLabel direction = new JLabel(rbx.getString("DirectionNote"));
-            direction.setFont(direction.getFont().deriveFont(0.9f * blockBox.getFont().getSize())); // a bit smaller
-            direction.setForeground(Color.gray);
-            p34.add(direction);
-            addFrame.getContentPane().add(p34);
+            // hint p34 is displayed 1 table up
             addFrame.getContentPane().add(new JSeparator());
             // set up pane for direction sensors
             forwardSensorBox = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
@@ -970,7 +972,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     }
 
     /**
-     * Build a combo box to select Blocks for his Section.
+     * Build a combo box to select Blocks for this Section.
      */
     private void initializeBlockCombo() {
         List<String> allBlocks = blockManager.getSystemNameList();
@@ -986,7 +988,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                 if (b != null) {
                     String uname = b.getUserName();
                     if ((uname != null) && (!uname.equals(""))) {
-                        bName = bName + "( " + uname + " )";
+                        bName = bName + " ( " + uname + " )";
                     }
                     blockBox.addItem(bName);
                     blockBoxList.add(b);
@@ -1001,7 +1003,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                     if ((!inSection(b)) && connected(b, endBlock)) {
                         String uname = b.getUserName();
                         if ((uname != null) && (!uname.equals(""))) {
-                            bName = bName + "( " + uname + " )";
+                            bName = bName + " ( " + uname + " )";
                         }
                         blockBox.addItem(bName);
                         blockBoxList.add(b);
@@ -1141,7 +1143,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         String fullName = sName;
         String uname = s.getUserName();
         if (uname != null && uname.length() > 0) {
-            fullName = fullName + "(" + uname + ")";
+            fullName = fullName + " (" + uname + ")";
         }
         ArrayList<Transit> affectedTransits = jmri.InstanceManager.getDefault(jmri.TransitManager.class).getListUsingSection(s);
         final JDialog dialog = new JDialog();
@@ -1161,7 +1163,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                 String tFullName = aTransit.getSystemName();
                 uname = aTransit.getUserName();
                 if (uname != null && uname.length() > 0) {
-                    tFullName = tFullName + "(" + uname + ")";
+                    tFullName = tFullName + " (" + uname + ")";
                 }
                 p1 = new JPanel();
                 p1.setLayout(new FlowLayout());
@@ -1550,7 +1552,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                     String s = entryPointList.get(rx).getBlock().getSystemName();
                     String u = entryPointList.get(rx).getBlock().getUserName();
                     if ((u != null) && (!u.equals(""))) {
-                        s = s + "( " + u + " )";
+                        s = s + " ( " + u + " )";
                     }
                     return s;
 

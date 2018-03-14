@@ -31,13 +31,16 @@ public class GrapevineComponentFactoryTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new SerialTrafficControlScaffold();
+        tc = new SerialTrafficControlScaffold(new GrapevineSystemConnectionMemo());
         m = new GrapevineSystemConnectionMemo();
         m.setSystemPrefix("ABC");
         m.setTrafficController(tc);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        tc = null;
     }
+
 }

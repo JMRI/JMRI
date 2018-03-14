@@ -1,6 +1,5 @@
 package jmri.server.json.sensor;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,24 +12,19 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonSensorSocketServiceTest extends TestCase {
+public class JsonSensorSocketServiceTest {
 
-    public void testCtorSuccess() {
-        JsonSensorSocketService service = new JsonSensorSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
+    @Test
     public void testSensorChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -38,7 +32,7 @@ public class JsonSensorSocketServiceTest extends TestCase {
             JsonSensorSocketService service = new JsonSensorSocketService(connection);
             SensorManager manager = InstanceManager.getDefault(SensorManager.class);
             Sensor sensor1 = manager.provideSensor("IS1");
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in SensorManager
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 not possible value
             sensor1.setKnownState(Sensor.ACTIVE);
@@ -59,6 +53,7 @@ public class JsonSensorSocketServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testOnMessageChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -68,27 +63,27 @@ public class JsonSensorSocketServiceTest extends TestCase {
             Sensor sensor1 = manager.provideSensor("IS1");
             // Sensor INACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INACTIVE);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
             // Sensor ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.ACTIVE);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             // Sensor UNKNOWN - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             sensor1.setKnownState(Sensor.ACTIVE);
             // Sensor INCONSISTENT - remains ACTIVE
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INCONSISTENT);
-            service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+            service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
             sensor1.setKnownState(Sensor.ACTIVE);
             // Sensor no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonSensor.SENSOR, message, Locale.ENGLISH);
+                service.onMessage(JsonSensor.SENSOR, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }
@@ -99,38 +94,15 @@ public class JsonSensorSocketServiceTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public JsonSensorSocketServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonSensorSocketServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonSensorSocketServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -31,6 +32,13 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
     DecoratorPanel _decorator;
 
+    /**
+     * Constructor for Text Labels.
+     *
+     * @param parentFrame ItemPalette instance
+     * @param type        identifier of the ItemPanel type, should be "Text"
+     * @param editor      Editor that called this ItemPalette
+     */
     public TextItemPanel(ItemPalette parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragText"));
@@ -54,30 +62,27 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             JPanel p = new JPanel();
             p.add(blurb);
             add(p);
-            makeDecoratorPanel();
+            DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
+            _decorator = new DecoratorPanel(_editor, _paletteFrame);
+            _decorator.initDecoratorPanel(sample);
+            add(_decorator);
             initLinkPanel();
             _paletteFrame.pack();
             super.init();
         }
-    }
-
-    private void makeDecoratorPanel() {
         if (_decorator != null) {
-            _decorator.removeAll();
-            _decorator.updateSamples();
-        } else {
-            DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
-            _decorator = new DecoratorPanel(_editor, null);
-            _decorator.initDecoratorPanel(sample);
-            add(_decorator, 1);
+            _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
         }
     }
 
     @Override
     protected void setEditor(Editor ed) {
         super.setEditor(ed);
-        if (_initialized) {
-            makeDecoratorPanel();
+        if (_decorator != null) {
+            Color panelBackground = _editor.getTargetPanel().getBackground();
+            // set Panel background color
+            _decorator.setBackgrounds(makeBackgrounds(_decorator.getBackgrounds(), panelBackground));
+            _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
         }
     }
 

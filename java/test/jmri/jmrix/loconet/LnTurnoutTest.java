@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +18,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
+       JUnitUtil.setUp();
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
 
@@ -29,6 +32,12 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
         // create object under test
         t = new LnTurnout("L", 21, lnis);
+    }
+
+    @After
+    public void tearDown(){
+       t.dispose();
+       JUnitUtil.tearDown();
     }
 
     @Override

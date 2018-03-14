@@ -62,7 +62,7 @@ public class JsonUtil {
     public JsonNode getCar(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, CAR);
-        root.put(DATA, this.getCar(InstanceManager.getDefault(CarManager.class).getById(id)));
+        root.set(DATA, this.getCar(InstanceManager.getDefault(CarManager.class).getById(id)));
         return root;
     }
 
@@ -82,7 +82,7 @@ public class JsonUtil {
     public JsonNode getEngine(Locale locale, String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ENGINE);
-        root.put(DATA, this.getEngine(InstanceManager.getDefault(EngineManager.class).getById(id)));
+        root.set(DATA, this.getEngine(InstanceManager.getDefault(EngineManager.class).getById(id)));
         return root;
     }
 
@@ -101,14 +101,14 @@ public class JsonUtil {
         node.put(JSON.KERNEL, car.getKernelName());
         node.put(JSON.UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
-            node.put(JSON.FINAL_DESTINATION, this.getLocationAndTrack(car.getFinalDestinationTrack(), null));
+            node.set(JSON.FINAL_DESTINATION, this.getLocationAndTrack(car.getFinalDestinationTrack(), null));
         } else if (car.getFinalDestination() != null) {
-            node.put(JSON.FINAL_DESTINATION, this.getLocation(car.getFinalDestination(), null));
+            node.set(JSON.FINAL_DESTINATION, this.getLocation(car.getFinalDestination(), null));
         }
         if (car.getReturnWhenEmptyDestTrack() != null) {
-            node.put(JSON.RETURN_WHEN_EMPTY, this.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null));
+            node.set(JSON.RETURN_WHEN_EMPTY, this.getLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null));
         } else if (car.getReturnWhenEmptyDestination() != null) {
-            node.put(JSON.RETURN_WHEN_EMPTY, this.getLocation(car.getReturnWhenEmptyDestination(), null));
+            node.set(JSON.RETURN_WHEN_EMPTY, this.getLocation(car.getReturnWhenEmptyDestination(), null));
         }
         return node;
     }
@@ -142,7 +142,7 @@ public class JsonUtil {
 
     private ObjectNode getLocationAndTrack(Track track, RouteLocation routeLocation) {
         ObjectNode node = this.getLocation(track.getLocation(), routeLocation);
-        node.put(TRACK, this.getTrack(track));
+        node.set(TRACK, this.getTrack(track));
         return node;
     }
 
@@ -166,14 +166,14 @@ public class JsonUtil {
         node.put(OWNER, rs.getOwner());
         node.put(COMMENT, rs.getComment());
         if (rs.getTrack() != null) {
-            node.put(LOCATION, this.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
+            node.set(LOCATION, this.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
         } else if (rs.getLocation() != null) {
-            node.put(LOCATION, this.getLocation(rs.getLocation(), rs.getRouteLocation()));
+            node.set(LOCATION, this.getLocation(rs.getLocation(), rs.getRouteLocation()));
         }
         if (rs.getDestinationTrack() != null) {
-            node.put(DESTINATION, this.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination()));
+            node.set(DESTINATION, this.getLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination()));
         } else if (rs.getDestination() != null) {
-            node.put(DESTINATION, this.getLocation(rs.getDestination(), rs.getRouteDestination()));
+            node.set(DESTINATION, this.getLocation(rs.getDestination(), rs.getRouteDestination()));
         }
         return node;
     }
@@ -193,10 +193,10 @@ public class JsonUtil {
             if (train.getRoute() != null) {
                 data.put(ROUTE, train.getRoute().getName());
                 data.put(JSON.ROUTE_ID, train.getRoute().getId());
-                data.put(JsonOperations.LOCATIONS, this.getRouteLocationsForTrain(locale, train));
+                data.set(JsonOperations.LOCATIONS, this.getRouteLocationsForTrain(locale, train));
             }
-            data.put(JSON.ENGINES, this.getEnginesForTrain(locale, train));
-            data.put(JsonOperations.CARS, this.getCarsForTrain(locale, train));
+            data.set(JSON.ENGINES, this.getEnginesForTrain(locale, train));
+            data.set(JsonOperations.CARS, this.getCarsForTrain(locale, train));
             if (train.getTrainDepartsName() != null) {
                 data.put(JSON.DEPARTURE_LOCATION, train.getTrainDepartsName());
             }
@@ -215,8 +215,8 @@ public class JsonUtil {
                 data.put(JsonOperations.LEAD_ENGINE, train.getLeadEngine().toString());
             }
             data.put(JsonOperations.CABOOSE, train.getCabooseRoadAndNumber());
-        } catch (NullPointerException e) {
-            log.error("Unable to get train id [{}].", id);
+        } catch (NullPointerException ex) {
+            log.error("Unable to get train id [{}].", id, ex);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JsonOperations.TRAIN, id));
         }
         return root;
@@ -263,7 +263,7 @@ public class JsonUtil {
             rln.put(SEQUENCE, rl.getSequenceId());
             rln.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             rln.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
-            rln.put(LOCATION, getLocation(locale, rl.getLocation().getId()).get(DATA));
+            rln.set(LOCATION, getLocation(locale, rl.getLocation().getId()).get(DATA));
             rlan.add(rln); //add this routeLocation to the routeLocation array
         }
         return rlan;  //return array of routeLocations

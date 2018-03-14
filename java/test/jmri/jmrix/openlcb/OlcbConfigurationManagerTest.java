@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  *
@@ -12,18 +13,17 @@ import org.junit.Test;
  */
 public class OlcbConfigurationManagerTest {
 
+    OlcbSystemConnectionMemo scm;
+
     @Test
     public void testCTor() {
-        OlcbConfigurationManager t = new OlcbConfigurationManager(new OlcbSystemConnectionMemo());
+        OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testConfigureManagers() {
-        jmri.jmrix.can.TrafficController tc = new jmri.jmrix.can.TestTrafficController();
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
+        OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         // this tet verifies this does not throw an exception
         t.configureManagers(); 
     }
@@ -32,6 +32,12 @@ public class OlcbConfigurationManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        //OlcbTestInterface testIf = new OlcbTestInterface();
+        scm  = new OlcbSystemConnectionMemo();
+        //scm.setTrafficController(testIf.tc);
+        //scm.setInterface(testIf.iface);
+        TestTrafficController tc = new TestTrafficController();
+        scm.setTrafficController(tc);
     }
 
     @After

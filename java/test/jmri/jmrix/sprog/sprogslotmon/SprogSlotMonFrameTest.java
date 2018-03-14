@@ -40,6 +40,7 @@ public class SprogSlotMonFrameTest {
     @After
     public void tearDown() {
         m.getSlotThread().interrupt();
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 }

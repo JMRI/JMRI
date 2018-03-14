@@ -373,16 +373,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     @After
     public void tearDown() throws Exception {
-        java.lang.reflect.Method throttleDisposeMethod = null;
-        try {
-           throttleDisposeMethod = instance.getClass().getDeclaredMethod("throttleDispose");
-           throttleDisposeMethod.setAccessible(true);
-           throttleDisposeMethod.invoke(instance);
-        } catch(java.lang.NoSuchMethodException | 
-                java.lang.IllegalAccessException | 
-                java.lang.reflect.InvocationTargetException e ) {
-           // error getting method so we could stop threads.
-        }
+        ((Z21XNetThrottle)instance).throttleDispose();
         JUnitUtil.tearDown();
     }
 

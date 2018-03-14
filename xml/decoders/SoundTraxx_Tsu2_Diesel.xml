@@ -109,6 +109,14 @@
             <authorinitials>ALM</authorinitials>
             <revremark>Separate ECO CVs file for Extended Function Map. Add labels to Extended Function map CVs.</revremark>
         </revision>
+        <revision>
+            <revnumber>9</revnumber>
+            <date>2018-02-17</date>
+            <authorinitials>ALM</authorinitials>
+            <revremark>New CVs for SW version 1.2. (Diesel Tech Ref.D):
+                       CV112,136,141,142,168,173,174,223,314,442,2.296,2.301-302,3.270-273.
+                       Added CV123 selection for TSU-4400</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -516,7 +524,7 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
-            <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="263" comment="Model 885018">
+            <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="293" comment="Model 885018">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -1236,10 +1244,45 @@
                     </enumChoice>
                 </enumVal>
                 <label>Emergency Stop</label>
+                <tooltip>&lt;html&gt;
+                        When set to 'engine shutdown', the prime mover will shut down &lt;br&gt;
+                        after receiving and emergency stop command.
+                        &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="112" mask="XXXXXXVX" item="Sound Option 15" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>Low-pressure alarm bell</label>
+                <tooltip>&lt;html&gt;
+                        Controls the low-oil pressure alarm bell feature heard prior to &lt;br&gt;
+                        the startup sequence of the selected prime mover.
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="112" mask="XXXXXVXX" item="Sound Option 17" default="0">
+                <enumVal>
+                    <enumChoice>
+                        <choice>Steam Generator</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>Auxiliary Head End Power (HEP) Generator</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Generator Select</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        HEP: This will change the steam generator sound effect to that of &lt;br&gt;
+                        a small diesel “pup” motor used to provide electrical power &lt;br&gt;
+                        for passenger cars in the train.
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="112" mask="XXXXVXXX" item="Sound Option 18" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+                <label>True-Idle Enable</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        When set, the engine will follow prototypical diesel locomotive operation&lt;br&gt;
+                        and RPM level will remain at idle when the DCC throttle is increased to speed step 1.&lt;br&gt;
+                        If disabled, the engine RPM level is set to notch 2 at speed step 1.
+                        &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="114" mask="XXXXVVVV" item="Sound Option 1" default="7" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
@@ -1297,7 +1340,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="276,280,284,288" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="276,280,284,288,292" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>EMD 567 (No Transition)</choice>
@@ -1329,7 +1372,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="277,281,285,289" default="2" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="277,281,285,289,293" default="2" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>FDL-12</choice>
@@ -1358,7 +1401,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="278,282,286,290" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="278,282,286,290,294" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>ALCO 539 Turbo</choice>
@@ -1390,7 +1433,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXXVVV" item="Sound Option 5" include="279,283,287,291" default="0" tooltip="Select one of prime mover sound effects, GTEL and GenSet only after Sept 2017">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="279,283,287,291,295" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Baldwin VO</choice>
@@ -1430,6 +1473,10 @@
                     </enumChoice>
                 </enumVal>
                 <label>Prime Mover Select</label>
+                <tooltip>&lt;html&gt;
+                        Select one of prime mover sound effects.&lt;br&gt;
+                        GTEL and GenSet only after Sept 2017 (SW version 1.2)&lt;br&gt;
+                        &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="276,280,284,288" default="3" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
@@ -1446,13 +1493,21 @@
             <variable CV="125" mask="XXXXXVVV" item="Sound Option 16" default="0" tooltip="Select one of Poppet Valves sound effects, for decoders built after Sept 2017">
                 <enumVal>
                     <enumChoice>
-                        <choice>Poppet Valves</choice>
+                        <choice>Poppet Valve</choice>
                     </enumChoice>
                     <enumChoice>
                         <choice>Electronic Air Dryer</choice>
                     </enumChoice>
                 </enumVal>
-                <label>Poppet Valves Select</label>
+                <label>Poppet Valve Select</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Selecting the electronic air dryer option will modify the operation &lt;br&gt;
+                        of the automatic poppet valve sound effect to mimic the use of &lt;br&gt;
+                        a Salem or Graham-White type air dryer system. &lt;br&gt;
+                        Like the prototype, when this option is selected the release rate &lt;br&gt;
+                        will be much slower than the poppet valve effect.
+                        &lt;/html&gt;</tooltip>
             </variable>
             <!-- End Sound Selection -->
             <!-- Volume Controls follow -->
@@ -1479,6 +1534,52 @@
             <variable CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="60" tooltip="Sets the volume of the radiator fans">
                 <decVal/>
                 <label>Alarm Bell Volume</label>
+            </variable>
+            <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="136" mask="VVVVVVVV" item="Sound Setting 36" default="200" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <decVal/>
+                <label>Gas Turbine Volume</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the volume of the Gas Turbine
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="141" mask="VVVVVVVV" item="Sound Setting 37" default="185" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>eq</relation>
+                  <value>11</value>
+                </qualifier>
+                <decVal/>
+                <label>GenSet Prime Mover 2 Volume</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the volume of the 2nd Prime Mover
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="142" mask="VVVVVVVV" item="Sound Setting 38" default="220" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>eq</relation>
+                  <value>11</value>
+                </qualifier>
+                <decVal/>
+                <label>GenSet Prime Mover 3 Volume</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the volume of the 3rd Prime Mover
+                        &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="60" tooltip="Sets the volume of the air reservoir poppet valve releasing">
                 <decVal/>
@@ -1532,6 +1633,52 @@
             <variable CV="167" mask="VVVVVVVV" item="Reverb167" default="0" >
                 <decVal/>
                 <label>Alarm Bell Reverb Level</label>
+            </variable>
+            <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="168" mask="VVVVVVVV" item="Reverb200" default="0" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <decVal/>
+                <label>Gas Turbine Reverb Level</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the Reverb Level of the Gas Turbine
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="173" mask="VVVVVVVV" item="Reverb201" default="0" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>eq</relation>
+                  <value>11</value>
+                </qualifier>
+                <decVal/>
+                <label>GenSet Prime Mover 2 Reverb Level</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the Reverb Level of the 2nd Prime Mover
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="174" mask="VVVVVVVV" item="Reverb202" default="0" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>eq</relation>
+                  <value>11</value>
+                </qualifier>
+                <decVal/>
+                <label>GenSet Prime Mover 3 Reverb Level</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the Reverb Level of the 3rd Prime Mover
+                        &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="175" mask="VVVVVVVV" item="Reverb175" default="0" >
                 <decVal/>
@@ -1597,6 +1744,18 @@
                 <decVal/>
                 <label>Analog Mode Engine Start Voltage (0-255)</label>
             </variable>
+            <variable CV="223" item="Sound Group 3 Option 5" default="128">
+                <decVal/>
+                <label>Prime Mover Pitch Shift</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Prime mover pitch shift allows for slight variations in the tone and pitch&lt;br&gt;
+                        between multiple locomotive using the same prime mover selection.&lt;br&gt;
+                        - Values 1 to 127: lower the pitch of the prime mover sound effect.&lt;br&gt;
+                        - Value 128: no effect on the tone or pitch of the prime mover sound.&lt;br&gt;
+                        - Values 129 to 255: increase the pitch of the prime mover effect.&lt;br&gt;
+                        &lt;/html&gt;</tooltip>
+            </variable>
             <variable CV="1.275" item="Extended Function Map Independent/Train Brake" default="11">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Brake</label>
@@ -1647,7 +1806,44 @@
                 <label>General Service</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
             </variable>
-            <variable CV="1.303" item="Extended Function Map HEP Mode" default="16">
+            <variable CV="1.303" item="Extended Function Map HEP Mode" default="16" exclude="279,283,287,291,295">
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>HEP Mode</label>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <variable CV="1.303" item="Extended Function Map Turbine Start-Stop" default="16" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Turbine Start-Stop</label>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <!-- Programming note: need to break in two parts for HEP mode, as there is no OR logic with qualifiers
+                 and a diffrent item label must be used (unlike include/exclude) -->
+            <variable CV="1.303" item="Extended Function Map HEP Mode" default="16" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>lt</relation>
+                  <value>7</value>
+                </qualifier>
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>HEP Mode</label>
+                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <variable CV="1.303" item="Extended Function Map HEP Mode2" default="16" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>gt</relation>
+                  <value>10</value>
+                </qualifier>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>HEP Mode</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
@@ -1669,13 +1865,24 @@
             </variable>
             <variable CV="1.312" item="Extended Function Map Steam Generator" default="20">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-                <label>Steam Generator</label>
-                <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+                <label>Steam/HEP Generator</label>
+                <tooltip>&lt;html&gt;
+                        HEP mode not included in software releases prior to version 1.2.&lt;br&gt;
+                        Mapping function keys F0-F28 to any of the decoder's effects
+                        &lt;/html&gt;</tooltip>
             </variable>
             <variable CV="1.313" item="Extended Function Map Fuel Loading" default="17">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
                 <label>Fuel Loading</label>
                 <tooltip>Mapping function keys F0-F28 to any of the decoder's effects</tooltip>
+            </variable>
+            <variable CV="1.314" item="Extended Function Map Straight-to-Idle" default="19">
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+                <label>Straight-to-Idle</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Mapping function keys F0-F28 to any of the decoder's effects
+                        &lt;/html&gt;</tooltip>
             </variable>
             <!-- Effect Auxiliary Map Registers -->
             <variable CV="1.403" mask="XXXXXXXV" item="Independent/Train Brake Automatic Effects - FWDD" default="0">
@@ -1998,6 +2205,26 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
                 <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
             </variable>
+            <variable CV="1.442" mask="XXXXXXXV" item="Straight-to-Idle Automatic Effects - FWDD" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+            </variable>
+            <variable CV="1.442" mask="XXXXXXVX" item="Straight-to-Idle Automatic Effects - REVD" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+            </variable>
+            <variable CV="1.442" mask="XXXXXVXX" item="Straight-to-Idle Automatic Effects - FWDS" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+            </variable>
+            <variable CV="1.442" mask="XXXXVXXX" item="Straight-to-Idle Automatic Effects - REVS" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+            </variable>
+            <variable CV="1.442" mask="XXXVXXXX" item="Straight-to-Idle Automatic Effects - ESTP" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+                <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+            </variable>
             <variable CV="2.289" mask="VVVVVVVV" item="Alt Sound Setting 1" default="112" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Airhorn Alt Volume</label>
@@ -2022,7 +2249,53 @@
                 <decVal/>
                 <label>Alarm Bell Alt Volume</label>
             </variable>
-            <variable CV="2.298" mask="VVVVVVVV" item="Alt Sound Setting 10" default="64" tooltip="Set the alternate volume levels of each sound effect">
+            <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="2.296" mask="VVVVVVVV" item="Alt Sound Setting 36" default="100" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <decVal/>
+                <label>Gas Turbine Alt Volume</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the alternative volume of the Gas Turbine
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="2.301" mask="VVVVVVVV" item="Alt Sound Setting 37" default="92" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>eq</relation>
+                  <value>11</value>
+                </qualifier>
+                <decVal/>
+                <label>GenSet Prime Mover 2 Alt Volume</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the alternative volume of the 2nd Prime Mover
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="2.302" mask="VVVVVVVV" item="Alt Sound Setting 38" default="110" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>eq</relation>
+                  <value>11</value>
+                </qualifier>
+                <decVal/>
+                <label>GenSet Prime Mover 3 Alt Volume</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Sets the alternative volume of the 3rd Prime Mover
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="2.298" mask="VVVVVVVV" item="Alt Sound Setting 11" default="64" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Train Brake Apply/Release Alt Volume</label>
             </variable>
@@ -2042,47 +2315,143 @@
                 <decVal/>
                 <label>Relay Clicks Alt Volume</label>
             </variable>
-            <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 25" default="75" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.313" mask="VVVVVVVV" item="Alt Sound Setting 26" default="75" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Clickety-Clack Alt Volume</label>
             </variable>
-            <variable CV="2.314" mask="VVVVVVVV" item="Alt Sound Setting 26" default="5" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.314" mask="VVVVVVVV" item="Alt Sound Setting 27" default="5" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Sander Valve Alt Volume</label>
             </variable>
-            <variable CV="2.315" mask="VVVVVVVV" item="Alt Sound Setting 27" default="25" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.315" mask="VVVVVVVV" item="Alt Sound Setting 28" default="25" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Fuel Loading Alt Volume</label>
             </variable>
-            <variable CV="2.316" mask="VVVVVVVV" item="Alt Sound Setting 28" default="10" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.316" mask="VVVVVVVV" item="Alt Sound Setting 29" default="10" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Air Conditioner Alt Volume</label>
             </variable>
-            <variable CV="2.318" mask="VVVVVVVV" item="Alt Sound Setting 30" default="20" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.318" mask="VVVVVVVV" item="Alt Sound Setting 31" default="20" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Pneumatic Oilers Alt Volume</label>
             </variable>
-            <variable CV="2.319" mask="VVVVVVVV" item="Alt Sound Setting 31" default="10" tooltip="Set the alternate volume levels of each sound effect">
+            <variable CV="2.319" mask="VVVVVVVV" item="Alt Sound Setting 32" default="10" tooltip="Set the alternate volume levels of each sound effect">
                 <decVal/>
                 <label>Toilet Flush Alt Volume</label>
             </variable>
             <!-- Dynamic Digital Exhaust Controls follow -->
-            <variable item="Exhaust Low Volume Limit" CV="2.507" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;      locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
+            <variable CV="2.507" item="Exhaust Low Volume Limit" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;      locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
                 <decVal/>
                 <label>Prime Mover Low Volume Limit</label>
             </variable>
-            <variable item="Exhaust High Volume Limit" CV="2.508" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;      locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
+            <variable CV="2.508" item="Exhaust High Volume Limit" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;      locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
                 <decVal/>
                 <label>Prime Mover High Volume Limit</label>
             </variable>
-            <variable item="Motor Load Gain" CV="2.512" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+            <variable CV="2.512" item="Motor Load Gain" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
                 <decVal/>
                 <label>Load Sensitivity</label>
+            </variable>
+            <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
+            <variable CV="3.270" mask="XXXXXXVV" item="Sound Group 1 Option 9" default="1" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice>
+                        <choice>Disabled</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>On first starting attempt only</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>On every starting attempt</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Turbine “Backfire”</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Backfire on first start has been enabled by default allowing&lt;br&gt;
+                        the unique sound effect to play once, then the turbine will start and operate normally.&lt;br&gt;
+                        If power is maintained to the decoder, each subsequent startup sequence&lt;br&gt;
+                        will not contain a backfire sound effect.&lt;br&gt;
+                        If backfire on every startup is selected, the sound effect&lt;br&gt;
+                        will play each time the turbine is started.&lt;br&gt;
+                        Upon completion of the backfire sound effect, the turbine will then conduct&lt;br&gt;
+                        a successful startup sequence and function normally.&lt;br&gt;
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="3.271" mask="XVVVVVVV" item="Sound Group 4 Option 1" default="8" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <decVal max="126"/>
+                <label>Turbine Start Speed Step</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Allows the user to select a speed step between 1 and 126&lt;br&gt;
+                        at which point the turbine will turn on.&lt;br&gt;
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="3.272" mask="XVVVVVVV" item="Sound Group 4 Option 2" default="8" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <decVal max="126"/>
+                <label>Turbine Speed Step Limit</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Limits the maximum speed the locomotive &lt;br&gt;
+                        when the turbine engine is not running.&lt;br&gt;
+                        A value of 0 is selected, the locomotive speed is not limited.&lt;br&gt;
+                        &lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="3.273" mask="VVVVVVVV" item="Sound Group 4 Option 3" default="128" include="279,283,287,291,295">
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>ge</relation>
+                  <value>7</value>
+                </qualifier>
+                <qualifier>
+                  <variableref>Prime Mover Select</variableref>
+                  <relation>le</relation>
+                  <value>10</value>
+                </qualifier>
+                <decVal/>
+                <label>Turbine Timeout</label>
+                <tooltip>&lt;html&gt;
+                        Not included in software releases prior to version 1.2.&lt;br&gt;
+                        Specifies the number of seconds before the turbine engine&lt;br&gt;
+                        will shut down when the locomotive is at speed step 0 (fully stopped)&lt;br&gt;
+                        and the turbine start/stop feature (F16 by default) is off.&lt;br&gt;
+                        A value of 0 will disable this feature.&lt;br&gt;
+                        &lt;/html&gt;</tooltip>
             </variable>
             <!-- highest used so far: -->
             <!-- "Advanced Group 1 Option 8" -->
             <!-- "Advanced Group 2 Option 6" -->
-            <!-- "Sound Option 13"  -->
+            <!-- "Sound Option 18"  -->
             <!-- "Sound Group 1 Option (none yet)" -->
             <!-- "Sound Group 2 Option (none yet)" -->
             <!-- "Sound Group 3 Option 2" -->

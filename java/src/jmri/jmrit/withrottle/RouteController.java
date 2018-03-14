@@ -46,7 +46,7 @@ public class RouteController extends AbstractController implements PropertyChang
             Route r = manager.getBySystemName(sysName);
             if (r != null) {
                 Object o = r.getProperty("WifiControllable");
-                if (o == null || Boolean.getBoolean(o.toString())) {
+                if (o == null || Boolean.valueOf(o.toString())) {
                     //  Only skip if 'false'
                     tempList.add(sysName);
                 }

@@ -24,6 +24,11 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 
     private SpeedoReply reply = new SpeedoReply();
 
+    /**
+     * Create a new SpeedoTrafficController instance.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
     public SpeedoTrafficController(SpeedoSystemConnectionMemo adaptermemo) {
     }
 

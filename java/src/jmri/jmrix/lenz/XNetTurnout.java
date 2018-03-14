@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  * <P>
  * NOTE: Some XpressNet Command stations take no action when the message
- * generated durring the third step is received.
+ * generated during the third step is received.
  * <P>
  * Valid response messages are command station dependent, but there are 4
  * possibilities:
@@ -628,7 +628,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // messages, add a short delay before sending the
             // first off message.
             if (internalState != OFFSENT) {
-                new java.util.Timer().schedule(new OffTask(this), 30);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+                   tc.sendHighPriorityXNetMessage(msg, this);
+                }, 30);
                 newKnownState(getCommandedState());
                 internalState = OFFSENT;
                 return;
@@ -648,31 +650,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 getCommandedState() == _mClosed,
                 getCommandedState() == _mThrown,
                 false) );
-    }
-
-    class OffTask extends java.util.TimerTask {
-
-        XNetTurnout t;
-
-        public OffTask(XNetTurnout turnout) {
-            super();
-            t = turnout;
-        }
-
-        @Override
-        public void run() {
-            // We need to tell the turnout to shut off the output.
-            if (log.isDebugEnabled()) {
-                log.debug("Sending off message for turnout " + mNumber + " commanded state= " + getCommandedState());
-                log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " + java.lang.Thread.currentThread().getName());
-            }
-            synchronized (t) {
-                // Generate the message
-                XNetMessage msg = t.getOffMessage();
-                // Then send the message.
-                tc.sendXNetMessage(msg, t);
-            }
-        }
     }
 
     /**

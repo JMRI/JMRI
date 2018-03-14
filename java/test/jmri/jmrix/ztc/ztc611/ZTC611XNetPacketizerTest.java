@@ -1,5 +1,7 @@
 package jmri.jmrix.ztc.ztc611;
 
+import jmri.jmrix.lenz.XNetPortControllerScaffold;
+import org.junit.Assert;
 import org.junit.Before;
 
 
@@ -22,6 +24,11 @@ public class ZTC611XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
             }
         };
+        try {
+            port = new XNetPortControllerScaffold();
+        } catch (Exception e) {
+            Assert.fail("Error creating test port");
+        }
     }
 
 }

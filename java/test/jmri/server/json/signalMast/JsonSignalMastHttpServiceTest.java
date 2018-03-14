@@ -25,18 +25,12 @@ import org.junit.Test;
 public class JsonSignalMastHttpServiceTest {
 
     @Test
-    public void testCtorSuccess() {
-        JsonSignalMastHttpService service = new JsonSignalMastHttpService(new ObjectMapper());
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     @Ignore("Needs setup completed")
     public void testDoGet() throws JmriException {
 
         //create a signalmast for testing
         String sysName = "IF$shsm:basic:one-searchlight:SM2";
-        String userName = "SM2";        
+        String userName = "SM2";
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(sysName);
         s.setUserName(userName);
 
@@ -45,13 +39,13 @@ public class JsonSignalMastHttpServiceTest {
         try {
             //retrieve by systemname
             result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, Locale.ENGLISH);
-            Assert.assertNotNull(result); 
+            Assert.assertNotNull(result);
             Assert.assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
             //retrieve by username, should get systemname back
             result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, Locale.ENGLISH);
-            Assert.assertNotNull(result); 
+            Assert.assertNotNull(result);
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
             //verify initial aspect/state is "Unknown"
@@ -70,7 +64,7 @@ public class JsonSignalMastHttpServiceTest {
     public void testDoPost() throws JmriException {
         //create a signalmast for testing
         String sysName = "IF$shsm:basic:one-searchlight:SM2";
-        String userName = "SM2";        
+        String userName = "SM2";
         SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(sysName);
         Assert.assertNotNull(s);
         s.setUserName(userName);

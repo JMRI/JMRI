@@ -38,7 +38,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         jmri.InstanceManager.setThrottleManager(getPr2ThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

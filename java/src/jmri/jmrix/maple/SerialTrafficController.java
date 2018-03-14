@@ -32,6 +32,9 @@ import org.slf4j.LoggerFactory;
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
+    /**
+     * Create a new Maple SerialTrafficController instance.
+     */
     public SerialTrafficController() {
         super();
 
@@ -43,13 +46,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
         // initialize input and output utility classes
         mInputBits = new InputBits(this);
-        if (mInputBits == null) {
-            log.error("Error in initializing InputBits utility class");
-        }
         mOutputBits = new OutputBits(this);
-        if (mOutputBits == null) {
-            log.error("Error in initializing OutputBits utility class");
-        }
     }
 
     // InputBits and OutputBits

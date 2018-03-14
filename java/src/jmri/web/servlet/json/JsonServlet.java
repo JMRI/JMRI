@@ -42,10 +42,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide JSON formatted responses for requests to requests for information
  * from the JMRI Web Server.
- *
+ * <p>
  * This server supports long polling in some GET requests, but also provides a
  * WebSocket to provide a more extensive control and monitoring capability.
- *
+ * <p>
  * This server responds to HTTP requests for objects in following manner:
  * <table>
  * <caption>HTTP methods handled by this servlet.</caption>
@@ -73,24 +73,17 @@ public class JsonServlet extends WebSocketServlet {
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
-        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+        for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
             JsonHttpService service = factory.getHttpService(this.mapper);
-            if (service != null) {
-                for (String type : factory.getTypes()) {
-                    HashSet<JsonHttpService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
-                    set.add(factory.getHttpService(this.mapper));
+            for (String type : factory.getTypes()) {
+                HashSet<JsonHttpService> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
                 }
+                set.add(service);
             }
         }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
     }
 
     @Override
@@ -103,7 +96,7 @@ public class JsonServlet extends WebSocketServlet {
      * <ul>
      * <li>/json/sensor/IS22 (return data for sensor with system name
      * "IS22")</li>
-     * <li>/json/sensors (returns a list of all sensors known to JMRI)</li>
+     * <li>/json/sensor (returns a list of all sensors known to JMRI)</li>
      * </ul>
      * sample responses:
      * <ul>

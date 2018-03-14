@@ -13,12 +13,14 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * @author      Paul Bender Copyright (C) 2016,2018
  */
 public class LnStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
+       
+    private LocoNetSystemConnectionMemo memo;
 
     @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+       memo = new LocoNetSystemConnectionMemo();
        memo.setLnTrafficController(new LnStreamPortPacketizer());
        apc = new LnStreamPortController(memo,null,null,"Test Stream Port");
     }
@@ -26,6 +28,7 @@ public class LnStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortCon
     @Override
     @After
     public void tearDown(){
+       memo.dispose();
        JUnitUtil.tearDown();
     }
 

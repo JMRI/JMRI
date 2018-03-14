@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
-import javax.usb.UsbDevice;
 import jmri.*;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
 /**
  * RailDriver support
  * <p>
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class RailDriverMenuItem extends JMenuItem
         implements HidServicesListener, PropertyChangeListener {
@@ -65,9 +64,9 @@ public class RailDriverMenuItem extends JMenuItem
         addActionListener((ActionEvent e) -> {
             // menu item selected
             log.info("RailDriverMenuItem Action!");
-            
+
             setupHidServices();
-            
+
             // Open the device device by Vendor ID, Product ID and serial number
             HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
             if (hidDevice != null) {
@@ -105,7 +104,6 @@ public class RailDriverMenuItem extends JMenuItem
             // do the services have to be started here?
             // They currently wait for the action to be triggered
             // so that they're not starting at ctor time, e.g. in tests
-            
             // Provide a list of attached devices
             //log.info("Enumerating attached devices...");
             //for (HidDevice hidDevice : hidServices.getAttachedHidDevices()) {
@@ -116,7 +114,7 @@ public class RailDriverMenuItem extends JMenuItem
                 // start the HID services
                 InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdMgr -> {
                     // if we're going to start, we have to also stop
-                    sdMgr.register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID"){
+                    sdMgr.register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
                         public boolean execute() {
                             System.err.println("stop start");
                             hidServices.stop();
@@ -129,7 +127,7 @@ public class RailDriverMenuItem extends JMenuItem
                     hidServices.start();
                     System.err.println("start stop");
                 });
-                
+
                 // Open the device device by Vendor ID, Product ID and serial number
                 HidDevice hidDevice = hidServices.getHidDevice(VENDOR_ID, PRODUCT_ID, SERIAL_NUMBER);
                 if (hidDevice != null) {
@@ -144,7 +142,7 @@ public class RailDriverMenuItem extends JMenuItem
             log.error("HidException: {}", ex);
         }
     }
-    
+
     private void setupRailDriver(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
         if (hidDevice != null) {
@@ -175,7 +173,7 @@ public class RailDriverMenuItem extends JMenuItem
                 //throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles);
             }
 
-            // since LoadXmlThrottlesLayoutAction uses an invokeLater to 
+            // since LoadXmlThrottlesLayoutAction uses an invokeLater to
             // open the default throttles layout then we have to delay our
             // actions here until after that one is done.
             SwingUtilities.invokeLater(() -> {
@@ -276,16 +274,16 @@ public class RailDriverMenuItem extends JMenuItem
                     //
                     for (int pass = 0; pass < 3; pass++) {
                         for (char c = 'A'; c < 'Z'; c++) {
-                            String s = "";
+                            StringBuilder s = new StringBuilder();
                             for (int i = 0; i < 3; i++) {
                                 char ci = (char) (c + i);
                                 ci = (char) (((ci - 'A') % 26) + 'A');
-                                s += ci;
+                                s.append(ci);
                                 if (0 == ci % 3) {
-                                    s += '.';
+                                    s.append('.');
                                 }
                             }
-                            setLEDs(s);
+                            setLEDs(s.toString());
                             sleep(0.25);
                         }
                     }
@@ -328,12 +326,12 @@ public class RailDriverMenuItem extends JMenuItem
      */
     public void sendString(@Nonnull String string, double delay) {
         for (int i = 0; i < string.length(); i++) {
-            String ledstring = "";
+            StringBuilder ledstring = new StringBuilder();
             int maxJ = 3;
             for (int j = 0; j < maxJ; j++) {
                 if (i + j < string.length()) {
                     char c = string.charAt(i + j);
-                    ledstring += c;
+                    ledstring.append(c);
                     if (c == '.') {
                         maxJ++;
                     }
@@ -341,7 +339,7 @@ public class RailDriverMenuItem extends JMenuItem
                     break;
                 }
             }
-            setLEDs(ledstring);
+            setLEDs(ledstring.toString());
             sleep(delay);
         }
     }
@@ -368,9 +366,9 @@ public class RailDriverMenuItem extends JMenuItem
 
     // Seven segment lookup table for alphas ('A' thru 'Z')
     private final byte SevenSegmentAlpha[] = {
-        //'A'   'b'   'C'   'd'   'E'   'F'   'g'   'H'   'i'   'J'   
+        //'A'   'b'   'C'   'd'   'E'   'F'   'g'   'H'   'i'   'J'
         0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71, 0x6F, 0x76, 0x04, 0x1E,
-        //'K'   'L'   'm'   'n'   'o'   'P'   'q'   'r'   's'   't'   
+        //'K'   'L'   'm'   'n'   'o'   'P'   'q'   'r'   's'   't'
         0x70, 0x38, 0x54, 0x23, 0x5C, 0x73, 0x67, 0x50, 0x6D, 0x44,
         //'u'   'v'   'W'   'X'   'y'   'z'
         0x1C, 0x62, 0x14, 0x36, 0x72, 0x49
@@ -572,17 +570,17 @@ public class RailDriverMenuItem extends JMenuItem
             String newValue = event.getNewValue().toString();
             //log.info("propertyChange \"Value\" old: " + oldValue + ", new: " + newValue);
 
-            double value = NaN;
+            double value;
             try {
                 value = Double.parseDouble(newValue);
             } catch (NumberFormatException ex) {
-                log.error("RailDriver parse property new value ('{}') exception: {}", newValue, ex);
+                log.error("RailDriver parse property new value ('{}')", newValue, ex);
                 return;
             }
 
             if (oldValue.equals("Axis 0")) {
                 // REVERSER is the state of the reverser lever, values greater
-                // than 0.5 are forward, values near to 0.5 are neutral and 
+                // than 0.5 are forward, values near to 0.5 are neutral and
                 // values (much) less than 0.5 are reverse.
                 log.info("REVERSER value: {}", value);
                 if ((controlPanel != null) && controlPanel.isEnabled()) {
@@ -594,7 +592,7 @@ public class RailDriverMenuItem extends JMenuItem
                 }
             } else if (oldValue.equals("Axis 1")) {
                 // THROTTLE is the state of the Throttle (and dynamic brake).  Values
-                // (much) greater than 0.0 are for throttle (maximum throttle is 
+                // (much) greater than 0.0 are for throttle (maximum throttle is
                 // values close to 1.0), values near 0.0 are at the center position
                 // (idle/coasting), and values (much) less than 0.0 are for dynamic
                 // braking, with values aproaching -1.0 for full dynamic braking.
@@ -810,7 +808,5 @@ public class RailDriverMenuItem extends JMenuItem
         }   // if event.getPropertyName().equals("Value")
     }   // propertyChange
     //initialize logging
-    private transient final static Logger log
-            = LoggerFactory.getLogger(RailDriverMenuItem.class
-            );
+    private transient final static Logger log = LoggerFactory.getLogger(RailDriverMenuItem.class);
 }

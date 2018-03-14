@@ -27,6 +27,7 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
        SprogTrafficController tc = new SprogTrafficControlScaffold(m);
        m.setSprogTrafficController(tc);
        Assert.assertEquals("Traffic Controller", tc, m.getSprogTrafficController());
+       tc.dispose();
    }
 
    @Test
@@ -59,7 +60,6 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        scm = new SprogSystemConnectionMemo();
         SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         SprogTrafficController stcs = new SprogTrafficControlScaffold(memo);
         memo.setSprogTrafficController(stcs);
@@ -70,6 +70,7 @@ public class SprogSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     @Override
     @After
     public void tearDown() {
+        ((SprogSystemConnectionMemo)scm).getSprogTrafficController().dispose();
         JUnitUtil.tearDown();
     }
 

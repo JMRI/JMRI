@@ -17,7 +17,7 @@ public class LnTcpServerTest {
     @Test
     public void getInstanceTest() {
         Assert.assertNotNull("Server getInstance", LnTcpServer.getDefault());
-        LnTcpServer.getDefault().disable();  // turn the server off after enabled durring creation.
+        LnTcpServer.getDefault().disable();  // turn the server off after enabled during creation.
     }
 
     @Before

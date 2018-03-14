@@ -273,6 +273,7 @@ public class SerialTurnout extends AbstractTurnout {
      * Sorts by node number and then by bit
      */
     @CheckReturnValue
+     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
         return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }

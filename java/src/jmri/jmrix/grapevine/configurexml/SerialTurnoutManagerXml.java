@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring SerialTurnoutManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright (c) 2003, 2006, 2007
  */
 public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

@@ -33,7 +33,8 @@ import javax.swing.JTable;
  * retained across application restarts.
  * <p>
  * <strong>Note:</strong> A JTable with UI state being persisted must have a
- * unique non-null name.
+ * unique non-null name; columns in the table must also have unique non-null
+ * identifiers or header text.
  *
  * @author Randall Wood Copyright (C) 2016
  */
@@ -134,4 +135,36 @@ public interface JTablePersistenceManager {
      * @return true if saving persistence data is paused; false otherwise.
      */
     public boolean isPaused();
+
+    /**
+     * Determine if a table is being persisted.
+     *
+     * @param table the table to check against
+     * @return true if the table is being persisted; false otherwise
+     */
+    public boolean isPersisting(@Nonnull JTable table);
+
+    /**
+     * Determine if a table is being persisted by name.
+     *
+     * @param name the name of the table to check against
+     * @return true if the table is being persisted; false otherwise
+     */
+    public boolean isPersisting(@Nonnull String name);
+
+    /**
+     * Determine if persistence data is being held for a table.
+     *
+     * @param table the table to check against
+     * @return true if the table has persistence data; false otherwise
+     */
+    public boolean isPersistenceDataRetained(@Nonnull JTable table);
+
+    /**
+     * Determine if persistence data is being held for a table.
+     *
+     * @param name the name of the table to check against
+     * @return true if the table has persistence data; false otherwise
+     */
+    public boolean isPersistenceDataRetained(@Nonnull String name);
 }

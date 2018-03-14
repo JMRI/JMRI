@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
-import jmri.jmrit.display.switchboardEditor.SwitchboardEditor.BeanSwitch;
+import jmri.jmrit.display.switchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -87,7 +87,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                         Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
                             log.debug("element name: {}", e.getName());
-                            // if (!"button".equals(e.getShape())) { //insert icon details into beanswitch
+                            // if (!"button".equals(e.getShape())) { // insert icon details into beanswitch
                             // do sth;
                             // }
                             try {
@@ -140,4 +140,5 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
 }

@@ -215,6 +215,10 @@ public class LocoIcon extends PositionableLabel {
         String[] colors = {WHITE, GREEN, GRAY, RED, BLUE, YELLOW};
         return colors;
     }
+    
+    public Color getLocoColor() {
+        return _locoColor;
+    }
 
     protected RosterEntry _entry = null;
 
@@ -289,18 +293,20 @@ public class LocoIcon extends PositionableLabel {
     public void init() {
         NamedIcon icon = (NamedIcon) getIcon();
         String name = icon.getURL();
-        if (name.endsWith("loco-white.gif")) {
-            _locoColor = Color.WHITE;
-        } else if (name.endsWith("loco-green.gif")) {
-            _locoColor = Color.GREEN;
-        } else if (name.endsWith("loco-gray.gif")) {
-            _locoColor = Color.GRAY;
-        } else if (name.endsWith("loco-red.gif")) {
-            _locoColor = Color.RED;
-        } else if (name.endsWith("loco-blue.gif")) {
-            _locoColor = COLOR_BLUE;
-        } else if (name.endsWith("loco-yellow.gif")) {
-            _locoColor = Color.YELLOW;
+        if (name != null) {
+            if (name.endsWith("loco-white.gif")) {
+                _locoColor = Color.WHITE;
+            } else if (name.endsWith("loco-green.gif")) {
+                _locoColor = Color.GREEN;
+            } else if (name.endsWith("loco-gray.gif")) {
+                _locoColor = Color.GRAY;
+            } else if (name.endsWith("loco-red.gif")) {
+                _locoColor = Color.RED;
+            } else if (name.endsWith("loco-blue.gif")) {
+                _locoColor = COLOR_BLUE;
+            } else if (name.endsWith("loco-yellow.gif")) {
+                _locoColor = Color.YELLOW;
+            }
         }
     }
 

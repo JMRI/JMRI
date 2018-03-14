@@ -29,7 +29,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     // state machine stuff
     private int _busy = 0;
     private int _replyLen = 0;      // expected byte length
-    private static final int REPLY_1 = 1;   // reply length of 16 bytes expected
+    private static final int REPLY_1 = 1;  // reply length of 16 bytes expected
     private byte _consistNum = 0;    // consist number (short address of consist)
 
     // Initialize a consist for the specific address
@@ -62,6 +62,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
         stopReadNCEconsistThread();
         super.dispose();
+        consistList = null;
     }
 
     // Set the Consist Type
@@ -262,7 +263,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     /**
      * Kills consist using lead loco address
      */
-    private void killConsist(int address, boolean isLong) {
+    void killConsist(int address, boolean isLong) {
         if (isLong) {
             address += 0xC000; // set the upper two bits for long addresses
         }
@@ -313,7 +314,6 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         private boolean _check = false;    // when true update consist to match NCE CS
 
         private int _replyLen = 0;      // expected byte length
-        //private static final int REPLY_1 = 1;  // reply length of 16 bytes expected
         private static final int REPLY_16 = 16;  // reply length of 16 bytes expected
 
         private int _locoNum = LEAD;     // which loco, 0 = lead, 1 = rear, 2 = mid

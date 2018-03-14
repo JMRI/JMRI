@@ -17,22 +17,23 @@ import org.junit.Assert;
 @SuppressWarnings("null")
 public class SerialNodeTest extends TestCase {
 
-    private GrapevineSystemConnectionMemo memo = null; 
+    private GrapevineSystemConnectionMemo memo = null;
+    private SerialTrafficControlScaffold tcis = null;
 
     public void testConstructor1() {
-        SerialNode b = new SerialNode();
+        SerialNode b = new SerialNode(tcis);
         Assert.assertEquals("check default ctor type", SerialNode.NODE2002V6, b.getNodeType());
         Assert.assertEquals("check default ctor address", 1, b.getNodeAddress());
     }
 
     public void testConstructor2() {
-        SerialNode c = new SerialNode(3, SerialNode.NODE2002V1);
+        SerialNode c = new SerialNode(3, SerialNode.NODE2002V1, tcis);
         Assert.assertEquals("check ctor type", SerialNode.NODE2002V1, c.getNodeType());
         Assert.assertEquals("check ctor address", 3, c.getNodeAddress());
     }
 
     public void testAccessors() {
-        SerialNode n = new SerialNode(2, SerialNode.NODE2002V1);
+        SerialNode n = new SerialNode(2, SerialNode.NODE2002V1, tcis);
         n.setNodeAddress(7);
         Assert.assertEquals("check ctor type", SerialNode.NODE2002V1, n.getNodeType());
         Assert.assertEquals("check address", 7, n.getNodeAddress());
@@ -48,7 +49,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testOutputBits1() {
         // mode with several output bits set
-        SerialNode g = new SerialNode(5, SerialNode.NODE2002V6);
+        SerialNode g = new SerialNode(5, SerialNode.NODE2002V6, tcis);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
@@ -72,7 +73,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesRealData1() {
         // parallel format
 
-        SerialNode b = new SerialNode(98, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(98, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS98001");
@@ -103,7 +104,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesRealData1Alt() {
         // parallel format
 
-        SerialNode b = new SerialNode(96, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(96, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS96p1");
@@ -135,7 +136,7 @@ public class SerialNodeTest extends TestCase {
         // advanced serial format, 1st slave card, 
         // sensors 1109 to 1116 adn 1209 to 1216
 
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS1109");
@@ -179,7 +180,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesNewSerial1() {
         // advanced serial format
 
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS1101");
@@ -223,7 +224,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesNewSerial1Alt() {
         // advanced serial format
 
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS1a1");
@@ -267,7 +268,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesOldSerial1() {
         // old serial format
 
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS1021");
@@ -336,7 +337,7 @@ public class SerialNodeTest extends TestCase {
     public void testMarkChangesOldSerial1Alt() {
         // old serial format
 
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS1s1");
@@ -404,7 +405,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChangesParallelLowBankLowNibble() {
         // test with them not created
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         Sensor s1, s2, s3, s4, s5, s6, s7, s8;
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
@@ -488,7 +489,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChangesParallelLowBankLowNibbleAlt() {
         // test with them not created
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         Sensor s1, s2, s3, s4, s5, s6, s7, s8;
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
@@ -572,7 +573,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChangesParallelLowBankHighNibble() {
         // test with them not created
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         Sensor s1, s2, s3, s4, s5, s6, s7, s8;
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
@@ -657,7 +658,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChangesParallelHighBankLowNibble() {
         // test with them not created
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         Sensor s1, s2, s3, s4, s5, s6, s7, s8;
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
@@ -741,7 +742,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChangesParallelHighBankHighNibble() {
         // test with them not created
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         Sensor s1, s2, s3, s4, s5, s6, s7, s8;
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
@@ -826,7 +827,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChangesParallelCreated() {
         // test the low bank with them already created
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
 
         jmri.SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
         Sensor s1 = sm.provideSensor("GS1001");
@@ -915,16 +916,20 @@ public class SerialNodeTest extends TestCase {
         JUnitUtil.setUp();
 
         // replace the traffic manager
-        SerialTrafficControlScaffold tcis = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
         // install a grapevine sensor manager
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.grapevine.SerialSensorManager(memo));
         Assert.assertNotNull("exists", tcis);
     }
 
+    // reset objects
     @Override
-    protected void tearDown() {
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

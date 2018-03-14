@@ -1,6 +1,5 @@
 package jmri.server.json.turnout;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,24 +13,19 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonTurnoutSocketServiceTest extends TestCase {
+public class JsonTurnoutSocketServiceTest {
 
-    public void testCtorSuccess() {
-        JsonTurnoutSocketService service = new JsonTurnoutSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
+    @Test
     public void testTurnoutChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -40,7 +34,7 @@ public class JsonTurnoutSocketServiceTest extends TestCase {
             TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
             Turnout turnout1 = manager.provideTurnout("IT1");
             turnout1.setCommandedState(Turnout.UNKNOWN);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in TurnoutManager
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setCommandedState(Turnout.CLOSED);
@@ -61,6 +55,7 @@ public class JsonTurnoutSocketServiceTest extends TestCase {
         }
     }
 
+    @Test
     public void testOnMessageChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -71,21 +66,21 @@ public class JsonTurnoutSocketServiceTest extends TestCase {
             turnout1.setCommandedState(Turnout.UNKNOWN);
             // Turnout CLOSED
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.CLOSED);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Turnout.CLOSED, turnout1.getState());
             // Turnout THROWN
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.THROWN);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
             // Turnout UNKNOWN - remains THROWN
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+            service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
             // Turnout Invalid State
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, 42); // invalid state
             JsonException exception = null;
             try {
-                service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, Locale.ENGLISH);
+                service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             } catch (JsonException ex) {
                 exception = ex;
             }
@@ -97,38 +92,15 @@ public class JsonTurnoutSocketServiceTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public JsonTurnoutSocketServiceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonTurnoutSocketServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonTurnoutSocketServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

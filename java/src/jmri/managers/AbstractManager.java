@@ -18,16 +18,15 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
- * <P>
+ * <p>
  * It does include, with AbstractNamedBean, the implementation of the normalized
  * user name.
  *
@@ -41,7 +40,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public AbstractManager() {
         registerSelf();
     }
-    
+
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -257,7 +256,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @return empty list
      */
     @Override
-    public List<NamedBeanPropertyDescriptor> getKnownBeanProperties() {
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         return new LinkedList<>();
     }
 

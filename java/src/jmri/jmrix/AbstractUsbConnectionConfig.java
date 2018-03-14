@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @author George Warner Copyright (C) 2017
+ * @author George Warner Copyright (c) 2017-2018
  */
 abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConfig {
     /**

@@ -21,8 +21,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     public NodeConfigAction(OakTreeSystemConnectionMemo memo) {
-        this(Bundle.getMessage("WindowTitle"), memo);
-
+        this(Bundle.getMessage("ConfigNodesTitle"), memo);
     }
 
     @Override

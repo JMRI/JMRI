@@ -42,7 +42,7 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
         try {
-            instance.onMessage(type, data, locale);
+            instance.onMessage(type, data, JSON.POST, locale);
             Assert.assertNull(connection.getMessage());
         } catch (IOException | JmriException | JsonException ex) {
             Assert.fail("Unexpected exception thrown.");

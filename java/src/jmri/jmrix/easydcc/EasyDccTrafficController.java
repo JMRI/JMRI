@@ -27,7 +27,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         implements EasyDccInterface {
 
     /**
-     * Ctor
+     * Create a new EasyDccTrafficController instance.
      *
      * @param adaptermemo the associated SystemConnectionMemo
      */

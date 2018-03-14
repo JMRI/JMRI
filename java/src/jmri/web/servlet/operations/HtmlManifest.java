@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
@@ -16,7 +17,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,14 +100,21 @@ public class HtmlManifest extends HtmlTrainCommon {
                 boolean changeCaboose = false;
                 while (options.hasNext()) {
                     String option = options.next().textValue();
-                    if (option.equals(JSON.CHANGE_ENGINES)) {
-                        changeEngines = true;
-                    } else if (option.equals(JSON.CHANGE_CABOOSE)) {
-                        changeCaboose = true;
-                    } else if (option.equals(JSON.ADD_HELPERS)) {
-                        builder.append(String.format(strings.getProperty("AddHelpersAt"), routeLocationName));
-                    } else if (option.equals(JSON.REMOVE_HELPERS)) {
-                        builder.append(String.format(strings.getProperty("RemoveHelpersAt"), routeLocationName));
+                    switch (option) {
+                        case JSON.CHANGE_ENGINES:
+                            changeEngines = true;
+                            break;
+                        case JSON.CHANGE_CABOOSE:
+                            changeCaboose = true;
+                            break;
+                        case JSON.ADD_HELPERS:
+                            builder.append(String.format(strings.getProperty("AddHelpersAt"), routeLocationName));
+                            break;
+                        case JSON.REMOVE_HELPERS:
+                            builder.append(String.format(strings.getProperty("RemoveHelpersAt"), routeLocationName));
+                            break;
+                        default:
+                            break;
                     }
                 }
                 if (changeEngines && changeCaboose) {
@@ -520,7 +528,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (Setup.isPrintTimetableNameEnabled()) {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
                         getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
-                        TrainScheduleManager.instance().getScheduleById(train.getId()));
+                        InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
             } else {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "Validity"),
                         getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())));

@@ -320,7 +320,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
                 }
             }
         };
-        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         _table.setRowSorter(_sorter);
 
         _table.setRowSelectionAllowed(true);
@@ -352,7 +351,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     public void makeSorter(@Nonnull JTable table) {
         _sorter = new TableRowSorter<>(this);
-        _sorter.setComparator(SNAME_COLUMN, new SystemNameComparator());
         table.setRowSorter(_sorter);
     }
 

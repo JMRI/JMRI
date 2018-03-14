@@ -95,7 +95,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             sysList = trainManager.getTrainsByTimeList();
         }
 
-        if (!_showAll) {
+        if (!isShowAll()) {
             // filter out trains not checked
             for (int i = sysList.size() - 1; i >= 0; i--) {
                 if (!sysList.get(i).isBuildEnabled()) {

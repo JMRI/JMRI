@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
+    /**
+     * Create a new NCE SerialTrafficController instance. Simple implementation.
+     */
     public NceTrafficController() {
         super();
     }
@@ -515,7 +518,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
             }
             self = new NceTrafficController();
             // set as command station too
-            jmri.InstanceManager.setCommandStation(self);
+            jmri.InstanceManager.store(self, jmri.CommandStation.class);
         }
         return self;
     }

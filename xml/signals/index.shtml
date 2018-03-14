@@ -1,9 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<title>JMRI: Signal System Definitions</title>
 
+<title>JMRI: Signal System Definitions</title>
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
@@ -13,9 +12,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -28,9 +27,8 @@ JMRI provides a number of definitions for signal
 systems via this directory.
 
 <p>
-For more information, please see
-the JMRI help page on
-<a href="../../help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>.
+For more information, please see the JMRI help page on
+<a href="../../help/en/html/tools/signaling/AspectSignaling.shtml">Aspect-based signaling</a>.
 
 
 <p>
@@ -59,7 +57,7 @@ The available definitions include:
     <dd>2009 B&amp;O (CSX) Color Position Lights
  
 <dt><a href="B&O-Semaphore/index.shtml">B&amp;O-Semaphore</a>
-    <dd>1969 B&amp;O Semaphore masts only (work with B&amp;O-2009 CPL)
+    <dd>1969 B&amp;O Semaphore masts only (works with B&amp;O-2009 CPL)
  
 <dt><a href="BN-1989/index.shtml">BN-1989</a>
     <dd>1989 October Burlington Northern
@@ -77,13 +75,12 @@ The available definitions include:
     <dd>2008 Transport Canada TC O-0-93 rule book
 
 <dt><a href="CSX-1998/index.shtml">CSX-1998</a>
-    <dd>CSX 1998 rule book
+    <dd>CSX 1998 rule book Rules 281-298
     <br>
     <i>Some errors in aspect mapping, not finished.</i>
 
 <dt><a href="CSX-2014-Chessie/index.shtml">CSX-2014-Chessie</a>
-    <dd>CSX 2014 rule book (Former Chessie rules)
-    <br>
+    <dd>CSX 2014 rule book (former Chessie rules)
     
 <dt><a href="DB-HV-1969/index.shtml">DB HV 1969</a>
     <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
@@ -99,22 +96,22 @@ The available definitions include:
 <dt><a href="LMS-1932/index.shtml">LMS-1932</a>
     <dd>Complete LMS speed signalling from 1932-1988
 
-<dt><a href="NYCS-1937/index.shtml">NYCS-1937</a>
-    <dd>New York Central System 1937 rule book
-    <br>
-    <i>Missing aspect mapping, not finished.</i>
-   
-<dt><a href="NYC-1956/index.shtml">NYC-1956</a>
-    <dd>From the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."
-
 <dt><a href="NS-2008/index.shtml">NS-2008</a>
     <dd>Norfolk Southern Corporation Operating rules book (NORAC)
 
 <dt><a href="NW-1981/index.shtml">NW-1981</a>
     <dd>Norfolk and Western 1981 rule book
 
+<dt><a href="NYCS-1937/index.shtml">NYCS-1937</a>
+    <dd>New York Central System 1937 rule book
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="NYC-1956/index.shtml">NYC-1956</a>
+    <dd>From the New York Central System publication "Rules of the Operating Department, Effective October 28, 1956."
+
 <dt><a href="ProRail-1954/index.shtml">ProRail-1954</a>
-    <dd>1954 Dutch rule book still in use in the Netherlands
+    <dd>1954 Dutch rule book, still in use in the Netherlands
 
 <dt><a href="RG-1965/index.shtml">RG-1965</a>
     <dd>1965 Rio Grande Rules of the Operating Department
@@ -129,23 +126,18 @@ The available definitions include:
 	
 <dt><a href="SPTCO-1930/index.shtml">SPTCO-1930</a>
     <dd>Southern Pacific Railway and Transportation Company 1930 rule book
-    <br>
 
 <dt><a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
     <dd>Southern Pacific Railway and Transportation Company 1960 rule book
-    <br>
 
 <dt><a href="SPTCO-1969/index.shtml">SPTCO-1969</a>
     <dd>Southern Pacific Railway and Transportation Company 1969 rule book
-    <br>
 
 <dt><a href="UP-2008/index.shtml">UP-2008</a>
     <dd>Union Pacific Railroad 2008 rule book
-    <br>
 
 <dt><a href="WM-1980/index.shtml">WM-1980</a>
     <dd>Western Maryland Railroad 1973-1980
-    <br>
 
 </dl>
 

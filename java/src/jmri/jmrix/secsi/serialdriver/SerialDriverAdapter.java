@@ -16,8 +16,8 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Oak Tree via a serial comm port. Normally controlled by the
- * oaktree.serialdriver.SerialDriverFrame class.
+ * Provide access to SECSI via a serial comm port. Normally controlled by the
+ * secsi.serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
  */
@@ -185,7 +185,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"38,400 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{38400};
     protected String selectedSpeed = validSpeeds[0];
 
@@ -198,8 +198,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Get a String that says what Option 2 represents May be an empty string,
-     * but will not be null
+     * Get a String that says what Option 2 represents. May be an empty string,
+     * but will not be null.
      */
     public String option2Name() {
         return "";

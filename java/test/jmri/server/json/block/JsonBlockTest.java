@@ -1,5 +1,7 @@
 package jmri.server.json.block;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -8,17 +10,10 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Randall Wood Copyright 2018
  */
 public class JsonBlockTest {
 
-    @Test
-    public void testCTor() {
-        JsonBlock t = new JsonBlock();
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -29,6 +24,24 @@ public class JsonBlockTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonBlockTest.class);
+    @Test
+    public void testConstructor() throws Exception {
+        try {
+            Constructor<JsonBlock> constructor;
+            constructor = JsonBlock.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            constructor.newInstance();
+            Assert.fail("Instance of JsonBlock created");
+        } catch (InvocationTargetException ex) {
+            // because the constructor throws UnsupportedOperationException, and
+            // that is thrown by newInstance() into an InvocationTargetException
+            // we pass an InvocationTargetException that is caused by an
+            // UnsupportedOperationException and fail everything else by
+            // rethrowing the unexepected exception to get a stack trace
+            if (!ex.getCause().getClass().equals(UnsupportedOperationException.class)) {
+                throw ex;
+            }
+        }
+    }
 
 }

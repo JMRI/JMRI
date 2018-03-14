@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from SRCP messages. The "SRCPInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SRCPPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -32,6 +32,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     protected SRCPSystemConnectionMemo _memo = null;
 
+    /**
+     * Create a new SRCPTrafficController instance.
+     */
     public SRCPTrafficController() {
         super();
         if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {

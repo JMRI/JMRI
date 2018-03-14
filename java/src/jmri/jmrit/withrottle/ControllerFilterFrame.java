@@ -273,7 +273,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     if (t != null) {
                         Object o = t.getProperty("WifiControllable");
                         if (o != null) {
-                            return Boolean.getBoolean(o.toString());
+                            return Boolean.valueOf(o.toString());
                         }
                     }
                     return true;
@@ -359,7 +359,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                     }
                     Object o = rt.getProperty("WifiControllable");
                     if (o != null) {
-                        return Boolean.getBoolean(o.toString());
+                        return Boolean.valueOf(o.toString());
                     }
                     return true;
                 case SNAMECOL:

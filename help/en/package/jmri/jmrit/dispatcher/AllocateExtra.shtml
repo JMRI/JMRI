@@ -6,9 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Dispatcher Allocate Extra Help</title>
+  <title>JMRI: Dispatcher - Allocate Extra Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Dispatcher New Train">
+  <meta name="keywords" content="JMRI help Dispatcher Allocate Extra">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -29,7 +30,7 @@
 
       <h2>Introduction</h2>
 
-      <p>The <b>Allocate Extra</b> pane allows "Extra Sections"
+      <p>The <b>Allocate Extra Section</b> pane allows "Extra Sections"
       to be allocated to any Dispatcher Active Train.
       "Extra Sections" are
       <a href="../beantable/SectionTable.shtml">Sections</a>
@@ -66,7 +67,7 @@
           <p>Click the <b>Allocate Extra...</b> button in the
           <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.
           This brings up the window shown below.</p><img src=
-          "images/AllocateExtraWindow.jpg" height="146" width="267">
+          "images/AllocateExtraWindow.png" width="326" height="141">
         </li>
 
         <li>
@@ -108,6 +109,7 @@
       disappear.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

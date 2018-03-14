@@ -181,9 +181,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         Attribute a;
         if ((a = layoutParm.getAttribute(LAYOUT_SCALE)) != null) {
             try {
-                setScale(a.getFloatValue());
+                setLayoutScale(a.getFloatValue());
             } catch (DataConversionException ex) {
-                setScale(87.1f);
+                setLayoutScale(87.1f);
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }
@@ -431,6 +431,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     public void apply() {
+        log.error("Using deprecated apply() method");
     }
 
     /**
@@ -439,6 +440,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     float getScale() {
+        log.error("Using deprecated getScale() method");
         return this.getLayoutScale();
     }
 
@@ -448,6 +450,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     void setScale(float s) {
+        log.error("Using deprecated setScale() method");
         this.setLayoutScale(s);
     }
 
@@ -497,6 +500,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     int getTimeIncre() {
+        log.error("Using deprecated getTimeIncre() method");
         return getTimeIncrement();
     }
 
@@ -506,6 +510,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     void setTimeIncre(int t) {
+        log.error("Using deprecated setTimeIncre() method");
         setTimeIncrement(t);
     }
 
@@ -515,6 +520,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     float getThrottleIncre() {
+        log.error("Using deprecated getThrottleIncre() method");
         return getThrottleIncrement();
     }
 
@@ -524,6 +530,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     void setThrottleIncre(float ti) {
+        log.error("Using deprecated setThrottleIncre() method");
         setThrottleIncrement(ti);
     }
 
@@ -543,6 +550,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     int getSpeedNamesSize() {
+        log.error("Using deprecated getSpeedNamesSize() method");
         return _speedNames.size();
     }
 
@@ -590,6 +598,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      */
     @Deprecated
     int getAppeaancesSize() {
+        log.error("Using deprecated getAppearencesSize() method");
         return _headAppearances.size();
     }
 

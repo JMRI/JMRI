@@ -1,6 +1,7 @@
 package jmri.server.json.sensor;
 
 import static jmri.server.json.sensor.JsonSensor.SENSOR;
+import static jmri.server.json.sensor.JsonSensor.SENSORS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +20,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
 /**
  * JSON HTTP Service for {@link jmri.Sensor}s.
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonSensorHttpService extends JsonNamedBeanHttpService {
 
@@ -34,7 +35,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(name);
         ObjectNode data = this.getNamedBean(sensor, name, type, locale); // throws JsonException if sensor == null
         if (sensor != null) {
-            root.put(JSON.DATA, data);
+            root.set(JSON.DATA, data);
             switch (sensor.getKnownState()) {
                 case Sensor.ACTIVE:
                     data.put(JSON.STATE, JSON.ACTIVE);
@@ -110,5 +111,19 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case SENSOR:
+            case SENSORS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/sensor/sensor-server.json",
+                        "jmri/server/json/sensor/sensor-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

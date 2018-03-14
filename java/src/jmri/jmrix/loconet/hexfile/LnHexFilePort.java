@@ -156,6 +156,10 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     // base class methods
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (pin == null) {
@@ -164,6 +168,9 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (pout == null) {
@@ -172,6 +179,9 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return (pout != null) && (pin != null);
@@ -206,6 +216,9 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         log.error("openPort should not have been invoked", new Exception());
@@ -253,4 +266,5 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnHexFilePort.class);
+
 }

@@ -7,30 +7,37 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Tests for the jmri.jmrix.grapevine.SerialSensor class.
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class SerialSensorTest {
 
-    private GrapevineSystemConnectionMemo memo = null; 
+    private GrapevineSystemConnectionMemo memo = null;
+    private SerialTrafficControlScaffold tcis = null;
 
     @Test
     public void testCTor() {
-        SerialSensor t = new SerialSensor("GS1",memo);
-        Assert.assertNotNull("exists",t);
+        SerialSensor t = new SerialSensor("GS1", memo);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
-        memo.setTrafficController(tc);
+        tcis = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tcis);
     }
 
+    // reset objects
     @After
     public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
+        //t.dispose();
         JUnitUtil.tearDown();
     }
 

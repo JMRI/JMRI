@@ -24,17 +24,11 @@ import org.junit.Test;
 public class JsonSignalHeadSocketServiceTest {
 
     @Test
-    public void testCtorSuccess() {
-        JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     public void testSignalHeadChange() {
         try {
             //create a signalhead for testing
             String sysName = "IH1";
-            String userName = "SH1";        
+            String userName = "SH1";
             SignalHead s = new jmri.implementation.VirtualSignalHead(sysName, userName);
             jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
             Assert.assertNotNull(s);
@@ -42,8 +36,8 @@ public class JsonSignalHeadSocketServiceTest {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
             JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName);
             JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection);
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, Locale.ENGLISH);
-            
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, Locale.ENGLISH);
+
             //signalhead defaults to Dark
             Assert.assertEquals(SignalHead.DARK, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
 
@@ -53,14 +47,14 @@ public class JsonSignalHeadSocketServiceTest {
                 return s.getState() == SignalHead.GREEN;
             }, "SignalHead is now GREEN");
             Assert.assertEquals(SignalHead.GREEN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
-            
+
             //change to Red, and wait for change to show up, then verify
             s.setAppearance(SignalHead.RED);
             JUnitUtil.waitFor(() -> {
                 return s.getState() == SignalHead.RED;
             }, "SignalHead is now RED");
             Assert.assertEquals(SignalHead.RED, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
-            
+
             service.onClose();
 
         } catch (IOException | JmriException | JsonException ex) {
@@ -76,7 +70,7 @@ public class JsonSignalHeadSocketServiceTest {
 
         //create a signalhead for testing
         String sysName = "IH1";
-        String userName = "SH1";        
+        String userName = "SH1";
         SignalHead s = new jmri.implementation.VirtualSignalHead(sysName, userName);
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
         Assert.assertNotNull(s);
@@ -85,7 +79,7 @@ public class JsonSignalHeadSocketServiceTest {
             // SignalHead Yellow
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
                     .put(JSON.STATE, SignalHead.YELLOW);
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, Locale.ENGLISH);           
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(SignalHead.YELLOW, s.getState()); //state should be Yellow
         } catch (IOException | JmriException | JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -96,13 +90,13 @@ public class JsonSignalHeadSocketServiceTest {
         try {
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName)
                     .put(JSON.STATE, SignalHead.FLASHLUNAR);
-            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, Locale.ENGLISH);
+            service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, Locale.ENGLISH);
         } catch (IOException | JmriException | JsonException ex) {
             exception = ex;
         }
         Assert.assertNotNull(exception);
         Assert.assertEquals(SignalHead.YELLOW, s.getAppearance()); //state should be Yellow
-        
+
     }
 
 

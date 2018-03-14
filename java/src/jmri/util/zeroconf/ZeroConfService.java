@@ -117,7 +117,7 @@ public class ZeroConfService {
      * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
-        return create(type, WebServerPreferences.getDefault().getRailroadName(), port, 0, 0, properties);
+        return create(type, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), port, 0, 0, properties);
     }
 
     /**

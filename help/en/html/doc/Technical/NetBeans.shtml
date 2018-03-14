@@ -169,7 +169,7 @@
       <a href="images/NetbeansChangeLineEndingsPluginDisabled.png">
         <img src="images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55"></a></p>
 
-      <p>When a file is saved (assuming the the plug-in is
+      <p>When a file is saved (assuming the plug-in is
       configured and is enabled) and that file has line-endings
       which do not match the type configured for the plug-in, the
       following message pops up.</p>
