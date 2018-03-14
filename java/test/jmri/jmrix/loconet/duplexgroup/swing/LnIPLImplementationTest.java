@@ -12,11 +12,13 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class LnIPLImplementationTest {
-
+        
     @Test
     public void testCtor() {
-        LnIPLImplementation action = new LnIPLImplementation(new jmri.jmrix.loconet.LocoNetSystemConnectionMemo());
+        jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        LnIPLImplementation action = new LnIPLImplementation(memo);
         Assert.assertNotNull("exists", action);
+        memo.dispose();
     }
 
     @Before

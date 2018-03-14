@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -157,7 +158,7 @@
         </li>
 
         <li>
-          If <a href="Options.shtml">Dispatcher Options</a> is
+          <p>If <a href="Options.shtml">Dispatcher Options</a> is
           set to <b>Trains from User Entry</b>,
           the following pane is displayed.<br>
           Enter a train name in the <b>Train:</b> field, and set a numeric
