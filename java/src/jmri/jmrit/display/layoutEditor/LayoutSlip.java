@@ -1356,7 +1356,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(path);
             } else {
                 g2.draw(new Line2D.Double(pBR, pKR));
-        }
+            }
         }
         if (drawMain == mainlineC) {
             g2.draw(new Line2D.Double(pCL, pVR));
@@ -1369,7 +1369,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(path);
             } else {
                 g2.draw(new Line2D.Double(pCR, pKR));
-        }
+            }
         }
         if (drawMain == mainlineD) {
             g2.draw(new Line2D.Double(pDR, pVR));
@@ -1450,9 +1450,35 @@ public class LayoutSlip extends LayoutTurnout {
             if (drawMain == mainlineD) {
                 g2.draw(new Line2D.Double(pDPL, pKL));
                 g2.draw(new Line2D.Double(pVRtA, pKLH));
-    }
+            }
         }   // DOUBLE_SLIP
     }   // draw2
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if (((specificType == NONE) || (specificType == SLIP_A))
+                && (getConnectA() == null)) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+        }
+
+        if (((specificType == NONE) || (specificType == SLIP_B))
+                && (getConnectB() == null)) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (((specificType == NONE) || (specificType == SLIP_C))
+                && (getConnectC() == null)) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+        }
+
+        if (((specificType == NONE) || (specificType == SLIP_D))
+                && (getConnectD() == null)) {
+            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+        }
+    }
 
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {

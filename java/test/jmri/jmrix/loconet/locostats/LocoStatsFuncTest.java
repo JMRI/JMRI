@@ -23,6 +23,7 @@ public class LocoStatsFuncTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         LocoStatsFunc t = new LocoStatsFunc(memo);
         Assert.assertNotNull("exists",t);
+        memo.dispose();
     }
 
     // The minimal setup for log4J

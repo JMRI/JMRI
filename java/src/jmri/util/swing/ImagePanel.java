@@ -54,7 +54,7 @@ public class ImagePanel extends JPanel {
             // clip part op back image
             clip = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB);
             clip = back.getSubimage(0, 0, Math.min(imgWidth, back.getWidth(this)),
-                    Math.min(imgHeight, back.getWidth(this))); // catch clip size error on change to different pane
+                    Math.min(imgHeight, back.getHeight(this))); // catch clip size error on change to different pane
 
             g.drawImage(clip, 0, 0, getWidth(), getHeight(), this);
         }

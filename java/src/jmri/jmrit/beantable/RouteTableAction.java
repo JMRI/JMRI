@@ -54,7 +54,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a Route Table
+ * Swing action to create and register a Route Table.
  *
  * Based in part on SignalHeadTableAction.java by Bob Jacobsen
  *
@@ -63,15 +63,12 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
- *
  */
 public class RouteTableAction extends AbstractTableAction<Route> {
 
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -91,7 +88,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Routes
+     * of Routes.
      */
     @Override
     protected void createModel() {
@@ -900,7 +897,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Initialize list of included turnout positions
+     * Initialize list of included turnout positions.
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<>();
@@ -918,7 +915,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Responds to the Add button.
+     * Respond to the Add button.
      *
      * @param e the action event
      */
@@ -994,7 +991,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Sets the Turnout information for adding or editing.
+     * Set the Turnout information for adding or editing.
      *
      * @param g the route to add the turnout to
      * @return number of turnouts in route
@@ -1022,7 +1019,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Sets the Sensor, Turnout, and delay control information for adding or
+     * Set the Sensor, Turnout, and delay control information for adding or
      * editing.
      *
      * @param g the route to configure
@@ -1084,7 +1081,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     JFileChooser soundChooser = null;
 
     /**
-     * Set the sound file
+     * Set the sound file.
      */
     void setSoundPressed() {
         if (soundChooser == null) {
@@ -1106,7 +1103,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     JFileChooser scriptChooser = null;
 
     /**
-     * Set the script file
+     * Set the script file.
      */
     void setScriptPressed() {
         if (scriptChooser == null) {
@@ -1125,7 +1122,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Responds to the Edit button.
+     * Respond to the Edit button.
      *
      * @param e the action event
      */
@@ -1247,7 +1244,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }   // editPressed
 
     /**
-     * Responds to the Delete button.
+     * Respond to the Delete button.
      *
      * @param e the action event
      */
@@ -1260,7 +1257,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Responds to the Update button - update to Route Table.
+     * Respond to the Update button - update to Route Table.
      *
      * @param e        the action event
      * @param newRoute true if a new route; false otherwise
@@ -1346,7 +1343,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
 /////////////////////// Export to Logix ////////////////////////////
     /**
-     * Responds to the Export button - export to Logix.
+     * Respond to the Export button - export to Logix.
      *
      * @param e the action event
      */
@@ -1842,7 +1839,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Cancels Add mode.
+     * Cancel Add mode.
      */
     void cancelAdd() {
         curRoute = null;
@@ -1883,7 +1880,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Cancels included Turnouts only option
+     * Cancel included Turnouts only option
      */
     void cancelIncludedOnly() {
         if (!showAll) {

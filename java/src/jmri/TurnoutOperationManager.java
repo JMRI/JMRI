@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author John Harper Copyright 2005
  *
  */
-public class TurnoutOperationManager {
+public class TurnoutOperationManager implements InstanceManagerAutoDefault {
 
     private final SortedMap<String, TurnoutOperation> turnoutOperations = new TreeMap<>();
     private List<TurnoutOperation> operationTypes = new LinkedList<>(); // array of the defining instances of each class, held in order of appearance
@@ -31,6 +31,13 @@ public class TurnoutOperationManager {
 
     private boolean initialized = false;
 
+    /** 
+     * Does deferred initialization.
+     * <p>
+     * This is deferred because it invokes
+     * loadOperationTypes, which gets the current turnout manager, often the
+     * proxy manager, which in turn can invoke loadOperationTypes again. 
+     */
     private void initialize() {
         if (!initialized) {
             initialized = true;
@@ -135,12 +142,12 @@ public class TurnoutOperationManager {
      * Get the default instance.
      *
      * @return the default instance, created if necessary
+     * @deprecated since 4.11.4; get from the InstanceManager instead
      */
+    @Deprecated // since 4.11.4
     public synchronized static @Nonnull
     TurnoutOperationManager getDefault() {
-        return InstanceManager.getOptionalDefault(TurnoutOperationManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(TurnoutOperationManager.class, new TurnoutOperationManager());
-        });
+        return InstanceManager.getDefault(TurnoutOperationManager.class);
     }
 
     /*
@@ -152,13 +159,10 @@ public class TurnoutOperationManager {
      * first. At creation also preload the known TurnoutOperator subclasses
      * (done here to avoid constructor ordering problems).
      *
-     * There's a threading problem here, because this invokes
-     * loadOperationTypes, which gets the current turnout manager, often the
-     * proxy manager, which in turn invokes loadOperationTypes again. This is
-     * bad.
+     * 
      *
      * @return the TurnoutOperationManager
-     * @deprecated since 4.7.1; use {@link #getDefault()} instead
+     * @deprecated since 4.7.1; get from the InstanceManager instead
      */
     @Deprecated
     @Nonnull

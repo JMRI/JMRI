@@ -417,6 +417,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     @Override
     protected void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 }

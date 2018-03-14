@@ -1539,7 +1539,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         };
         if( statusTimer==null) {
-            statusTimer = new java.util.Timer("XPressNet Throtlte Status Timer");
+            statusTimer = new java.util.Timer("XPressNet Throttle Status Timer");
         }
         statusTimer.schedule(statusTask, statTimeoutValue, statTimeoutValue);
     }

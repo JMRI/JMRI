@@ -140,11 +140,12 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         log.debug("start command station queuing thread");
         commandStation = new jmri.jmrix.sprog.SprogCommandStation(st);
         commandStation.setSystemConnectionMemo(this);
-        jmri.InstanceManager.setCommandStation(commandStation);
+        jmri.InstanceManager.store(commandStation, jmri.CommandStation.class);
         switch (sprogMode) {
             case OPS:
                 slotThread = new Thread(commandStation);
                 slotThread.setName("SPROG slot thread");
+                slotThread.setPriority(Thread.MAX_PRIORITY-2);
                 slotThread.start();
                 break;
             case SERVICE:
@@ -238,7 +239,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void configureManagers() {
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            jmri.InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

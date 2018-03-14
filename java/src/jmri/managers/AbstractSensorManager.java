@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base implementation of the SensorManager interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
 

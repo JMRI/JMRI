@@ -303,6 +303,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     protected float profileBlockLength;
     RosterSpeedProfile rosterSpeedProfile;
 
+    protected float profileSpeedAtStart;
+    
     void setupProfile() {
         String text;
         finishSpeedStep = 0;
@@ -493,6 +495,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         log.debug("Speed step mode {}", profileSpeedStepMode);
         profileSpeed = profileIncrement * profileStep;
 
+        profileSpeedAtStart = profileSpeed;
+        
         if (profile) {
             startSensor = middleBlockSensor.getSensor();
             finishSensor = sensorB.getSensor();
@@ -668,9 +672,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         stepCalculated = true;
         finishSensor.removePropertyChangeListener(finishListener);
         sourceLabel.setText(Bundle.getMessage("StatusLabelCalculating"));
-        if (profileStep >= 4) {
+
+        if (profileSpeed/2 > profileSpeedAtStart) {
             t.setSpeedSetting(profileSpeed / 2);
+        } else {
+            t.setSpeedSetting(profileSpeedAtStart);
         }
+        
         calculateSpeed();
         sourceLabel.setText(Bundle.getMessage("StatusLabelWaitingToClear"));
     }
@@ -925,8 +933,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     long startTime;
     long finishTime;
 
-    ArrayList<Double> forwardOverRuns = new ArrayList<Double>();
-    ArrayList<Double> reverseOverRuns = new ArrayList<Double>();
+    ArrayList<Double> forwardOverRuns = new ArrayList<>();
+    ArrayList<Double> reverseOverRuns = new ArrayList<>();
 
     JPanel update;
 
@@ -962,8 +970,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     }
 
-    TreeMap<Integer, SpeedStep> speeds = new TreeMap<Integer, SpeedStep>();
-
+    TreeMap<Integer, SpeedStep> speeds = new TreeMap<>();
+    
     static class SpeedStep {
 
         float forward = 0.0f;

@@ -78,6 +78,8 @@
         <li>signal masts (F, for some reason)</li>
 
         <li>Lights (a type of output)</li>
+        
+        <li>eNtry/exit destination points</li>
 
         <li>Memories</li>
 
@@ -323,6 +325,8 @@
 
         <li>L Light - another form of output, used to e.g. control
         lights on a layout</li>
+
+        <li>N eNtry/exit destination points</li>
 
         <li>P Power manager i.e. layout, district, subdistrict; not
         all systems distinguish between these, so the device type

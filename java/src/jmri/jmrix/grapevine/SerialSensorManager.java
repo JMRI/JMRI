@@ -2,6 +2,7 @@ package jmri.jmrix.grapevine;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "GSnnnn", where G is the (multichar) system connection prefix,
+ * System names are "GiSnnnn", where Gi is the (multichar) system connection prefix,
  * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
@@ -53,7 +54,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @param inputName System name to be normalized
      * @throws NamedBean.BadSystemNameException if the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form 
+     * @return A system name in standard normalized form
      */
     @Override
     @CheckReturnValue
@@ -114,12 +115,26 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
         // register this sensor with the Serial Node
         node.registerSensor(s, bit);
-        log.debug("register {}  in node {}", s.getSystemName(), node);
+        log.debug("registered {}  in node {}", s.getSystemName(), node);
         return s;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+        String tmpSName = prefix + "S" + curAddress;
+        // first, check validity
+        try {
+            validSystemNameFormat(tmpSName);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        log.debug("createSystemName {}", tmpSName);
+        return tmpSName;
+    }
+
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return 'true' if system name has a valid format,
      * else returns 'false'
@@ -139,7 +154,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Dummy routine
+     * Dummy routine.
      */
     @Override
     public void message(SerialMessage r) {
@@ -155,6 +170,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         if (node != null) {
             node.markChanges(r);
         }
+        log.debug("node {} marked as changed by SerialSensorManager", r.getAddr());
     }
 
     /**
@@ -190,6 +206,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return the registered SerialSensorManager instance for general use, if
      *         need be creating one.
+     * @deprecated  Since JMRI 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     static public SerialSensorManager instance() {

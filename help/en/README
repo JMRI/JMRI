@@ -26,7 +26,7 @@ The search index files in JavaHelpSearch/ should NOT be
 manually edited.  JHelpDev will overwrite them when next run.
 
 The build.xml and format.xsl files are used to create the webtoc.html
-and webindex.html files automatically. Those use Server-Side Includes
+and webindex.shtml files automatically. Those use Server-Side Includes
 to display the standard JMRI header and footer, and also some 
 explanatory content from the tocheader and indexheader files.
 

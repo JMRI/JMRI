@@ -139,6 +139,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
             aspectMachine = new StateMachine<String>(connection, node, getAspect());
         
             ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
+                @Override
                 public void put(Message msg, Connection sender) {
                     handleMessage(msg);
                 }
@@ -290,6 +291,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
             if (eventToState.containsKey(msg.getEventID())) {
                 initizalized = true;
@@ -299,6 +301,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
             // process if for here and marked "valid"
             if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
@@ -309,6 +312,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
             // process if for here and marked "valid"
             if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
@@ -320,6 +324,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void handleIdentifyEvents(IdentifyEventsMessage msg, Connection sender){
             // ours?
             if (! node.equals(msg.getDestNodeID())) return;  // not to us
@@ -345,6 +350,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void handleIdentifyProducers(IdentifyProducersMessage msg, Connection sender){
             // process if we have the event
             EventID event = msg.getEventID();
@@ -357,6 +363,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void handleIdentifyConsumers(IdentifyConsumersMessage msg, Connection sender){
             // process if we have the event
             EventID event = msg.getEventID();

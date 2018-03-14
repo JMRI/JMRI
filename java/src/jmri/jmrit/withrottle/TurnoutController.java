@@ -42,7 +42,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
             Turnout t = manager.getBySystemName(sysName);
             if (t != null) {
                 Object o = t.getProperty("WifiControllable");
-                if (o == null || Boolean.getBoolean(o.toString())) {
+                if (o == null || Boolean.valueOf(o.toString())) {
                     //  Only skip if 'false'
                     tempList.add(sysName);
                 }
