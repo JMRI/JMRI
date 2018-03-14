@@ -20,7 +20,7 @@
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.              -->
   <!-- version 1.1 Specific UserID with tooltip indicating version number,
                   from SoundTraxx Product Identification guide Rev.B                         -->
-  <!-- version 2	Fix bug in CV57 and missing cv19                                           -->
+  <!-- version 2	Fix bug in CV57 and add missing cv19 and 217                               -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders">
