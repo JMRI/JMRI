@@ -19,7 +19,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1><a name="Adding_Editing LRoutes"></a>Adding/Editing
+      <h1><a name="Adding_Editing_LRoutes"
+      id="Adding_Editing_LRoutes"></a>Adding/Editing
       LRoutes</h1>
 
       <p>There are four tabs for adding and editing LRoutes:</p>
@@ -128,7 +129,9 @@
       is triggered.</p>
 
       <p>Back to the <a href="LRouteTable.shtml">LRoute Table help
-      page</a>.</p><!--#include virtual="/Footer" -->
+      page</a>.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
