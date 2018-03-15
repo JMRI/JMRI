@@ -15,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -342,7 +343,7 @@
       <p>When done with editing close the <strong>Add Staging
       Track</strong> pane.<br>
       If you did not yet save your new Staging Location, select
-      <input name="button6" id="button6" value="Save Location"
+      <input name="button17" id="button17" value="Save Location"
       type="submit"> in the <strong><a href=
       "Ops_AddLocations.shtml">Add Location</a></strong> pane
       before you close that too.</p>
@@ -357,7 +358,9 @@
 
         <p><a href="index.shtml#Operations">Back to Index</a></p>
       </div>
-    </div><!--#include virtual="/Footer" -->
+    </div>
+
+    <!--#include virtual="/Footer" -->
   </div>
 </body>
 </html>

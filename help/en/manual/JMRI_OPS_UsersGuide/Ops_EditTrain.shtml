@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Operations - Edit Train</title><!-- Style -->
+  <title>JMRI Operations - Edit Train</title>
+  <!-- Style -->
   <meta content="text/html; charset=us-ascii" http-equiv=
   "Content-Type">
   <link media="screen" href="/css/default.css" type="text/css" rel=
@@ -14,7 +15,8 @@
   <link media="print" href="/css/print.css" type="text/css" rel=
   "stylesheet">
   <link type="image/png" href="/images/jmri.ico" rel="icon">
-  <link href="/" title="Home" rel="home"><!-- /Style -->
+  <link href="/" title="Home" rel="home">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -65,7 +67,7 @@
           </tr>
 
           <tr>
-            <td valign="top"><a manifest="" options=""><span style=
+            <td valign="top"><a id="manifest"><span style=
             "font-weight: bold;">Manifest Options
             --<br></span></a><span style=
             "font-weight: bold;"><img style=
@@ -153,7 +155,9 @@
         <p><a href="Ops_Trains.shtml">Back</a></p>
 
         <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

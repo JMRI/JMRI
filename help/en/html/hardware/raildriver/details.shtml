@@ -6,8 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - RailDriver Throttle
-  Details</title><!-- Style -->
+  <title>JMRI Hardware Support - RailDriver Throttle Details</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -32,7 +33,7 @@
       "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
       users Yahoo group</a> for changes.<br>
       <a href="RailDriver.gif"><img src="RailDriver.gif" align=
-      "right" width="389" height="236" alternate=
+      "right" width="389" height="236" alt=
       "RailDriver line drawing"></a></p>
 
       <p>While we develop RailDriver support, it's primarily
@@ -51,6 +52,7 @@
       order.</p>
 
       <p>Back to <a href="index.shtml">RailDriver page</a></p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
