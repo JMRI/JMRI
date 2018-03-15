@@ -36,8 +36,6 @@ import org.junit.Test;
  */
 public class OlcbSignalMastXmlTest {
 
-    private OlcbSystemConnectionMemo memo = null;
- 
     @Test
     public void testCtor(){
         Assert.assertNotNull("OlcbSignalMastXml constructor",new OlcbSignalMastXml());
