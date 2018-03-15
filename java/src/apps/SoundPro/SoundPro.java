@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for controlling audio.
- * <P>
+ * <p>
  * If an argument is provided at startup, it will be used as the name of the
  * configuration file. Note that this is just the name, not the path; the file
  * is searched for in the usual way, first in the preferences tree and then in
@@ -23,11 +23,11 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -62,6 +62,9 @@ public class SoundPro extends Apps {
         return "http://jmri.org/SoundPro ";
     }
 
+    /**
+     * JPanel displayed as SoundPro main screen.
+     */
     @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
@@ -84,8 +87,8 @@ public class SoundPro extends Apps {
 
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
-        JButton h1 = new JButton(Bundle.getMessage("ButtonHelp"));
-        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.SoundPro.SoundPro");
+        h1 = new JButton(Bundle.getMessage("ButtonHelp"));
+        // as globalHelpBroker is still null, wait to attach help target after help menu is created
         h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
@@ -97,6 +100,21 @@ public class SoundPro extends Apps {
         return j;
     }
 
+    /**
+     * Help button on Main Screen.
+     */
+    private JButton h1;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void attachHelp() {
+        if (h1 != null) {
+            jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.SoundPro.SoundPro");
+        }
+    }
+    
     // Main entry point
     public static void main(String args[]) {
 
@@ -115,4 +133,5 @@ public class SoundPro extends Apps {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SoundPro.class);
+
 }

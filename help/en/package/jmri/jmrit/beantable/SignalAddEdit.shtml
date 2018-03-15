@@ -52,11 +52,11 @@
         <dd>This type doesn't connect to the layout at all. Use it
         when you want to e.g. display a signal on a panel, but
         don't have a real one on the layout.</dd>
-
+        <dt>
         <a href="images/SignalHeadAddAcela.png">
           <img src="images/SignalHeadAddAcela.png" align="right"
                height="109" width="118"></a>
-        <dt>Acela</dt>
+        Acela</dt>
 
         <dd>
           This type controls signal heads attached to a <a href=
@@ -401,7 +401,7 @@
       </ul>
 
       <p>Back to the <a href="SignalHeadTable.shtml">Signal Head
-      Table help page</a>. <!-- Footer --></p>
+      Table help page</a>.</p>
       <hr class="hide">
 
       <!--#include virtual="/Footer.shtml" -->

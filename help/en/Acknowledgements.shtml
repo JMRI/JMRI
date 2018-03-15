@@ -495,11 +495,15 @@
         ("Bonjour"-like) networking and WiFi access to throttles.
         <a name="I" id="I"></a></li>
 
-        <li>AJ Ireland of Digitrax, who loaned equipment, answered
-        questions and made valuable suggestions</li>
-
+        <li>Osvaldo Hojvat provided definitions for several
+                    <a href-"http://www.ldhtrenes.com.ar">LDH</a>
+                    decoders</li>
+                    
         <li>Al Huberty, who organized our first users meeting at
         the NMRA Toronto convention <a name="J" id="J"></a></li>
+
+        <li>AJ Ireland of Digitrax, who loaned equipment, answered
+        questions and made valuable suggestions</li>
 
         <li>John Jabour, who created the excellent LocoBuffer and
         thereby made reliable LocoNet communications routine</li>
@@ -654,6 +658,9 @@
         <a href="http://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
         </li>
 
+        <li>Bob McCown, who helped with the migration of the jmriusers list to 
+            groups.io</li>
+        
         <li>David McDowell of the North Raleigh Model Railroad Club
         created a <a href=
         "http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">

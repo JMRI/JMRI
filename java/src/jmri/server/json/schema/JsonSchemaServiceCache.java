@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ServiceLoader;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonHttpService;
@@ -21,12 +22,12 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     private HashMap<String, Set<JsonHttpService>> services = null;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public synchronized Set<JsonHttpService> getServices(String type) {
+    public synchronized @Nonnull Set<JsonHttpService> getServices(@Nonnull String type) {
         this.cacheServices();
-        return services.get(type);
+        return services.getOrDefault(type, new HashSet<>());
     }
 
-    public synchronized Set<String> getTypes() {
+    public synchronized @Nonnull Set<String> getTypes() {
         this.cacheServices();
         return services.keySet();
     }
