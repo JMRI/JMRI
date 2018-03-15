@@ -260,12 +260,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         long staleTimeout = System.currentTimeMillis() - 90000;  // 90 seconds ago
         LocoNetSlot slot;
 
-        // We will just check the normal loco slots 1 to 120
-        for (int i = 1; i <= 120; i++) {
+        // We will just check the normal loco slots 1 to numSlots exclude systemslots
+        for (int i = 1; i < numSlots; i++) {
+            if ( ( i > 0 && i < 121) || ( i > 128 )) {
             slot = _slots[i];
             if ((slot.slotStatus() == LnConstants.LOCO_IN_USE)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
                 sendReadSlot(i);
+            }
             }
         }
     }
@@ -903,7 +905,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
         if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
-            numSlots = 600;  // base 128 then 400 extended
+            numSlots = 432;  // base 128 then 400 extended
             extendedSlots = true;
         }
         loadSlots();
@@ -1479,9 +1481,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
         if (slot > 127) {
-            m.setElement(2, ((slot & 0xff80) >> 7) & 0xff);
+            m.setElement(2, (slot / 128 ) & 0b00000111 );
         } else {
-            m.setElement(2, ((slot & 0xff80) >> 7) & 0xff);
+            m.setElement(2, 0);
         }
         tc.sendLocoNetMessage(m);
     }
@@ -1496,7 +1498,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         sendReadSlot(nextReadSlot++);
 
         // schedule next read if needed
-        if (nextReadSlot < 412) {
+        if (nextReadSlot < numSlots) {
             javax.swing.Timer t = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
