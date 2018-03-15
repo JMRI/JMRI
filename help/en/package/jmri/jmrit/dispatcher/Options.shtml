@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -273,13 +274,13 @@
             Dispatcher Options to disk.</p></li>
       </ul>
 
-      <a id="saveoptions" name="saveoptions"></a></a>
+      <a id="saveoptions" name="saveoptions"></a>
       <h2>Saving Dispatcher Options</h2>
 
           <p>To save the Dispatcher settings currently in effect into
           a small XML file (<i>dispatcheroptions.xml</i>) in the user's
           preferences directory, select <b>Save Options...</b> from the
-          <b>Options</b> menu.</b> This is the same location where
+          <b>Options</b> menu. This is the same location where
           JMRI preference files are saved. When Dispatcher is
           started, if a file named "<i>dispatcheroptions.xml</i>"
           is found in the user's preference directory, that file is
@@ -291,6 +292,7 @@
           save Dispatcher Options.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

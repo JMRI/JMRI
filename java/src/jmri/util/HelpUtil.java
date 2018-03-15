@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Java Help.
- * <P>
+ * <p>
  * This class was created to contain common Java Help information.
- * <P>
+ * <p>
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen Copyright 2007
@@ -54,7 +54,7 @@ public class HelpUtil {
             log.warn("help initialization not completed");
             return null;  // initialization failed
         }
-        JMenu helpMenu = new JMenu(Bundle.getMessage("HELP"));
+        JMenu helpMenu = new JMenu(Bundle.getMessage("ButtonHelp"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
             log.error("Can't make help menu item for {}", ref);
@@ -127,6 +127,9 @@ public class HelpUtil {
     static public void addHelpToComponent(java.awt.Component component, String ref) {
         if (globalHelpBroker != null) {
             globalHelpBroker.enableHelpOnButton(component, ref, null);
+            log.debug("Help added for {}", ref);
+        } else {
+            log.debug("globalHelpBroker is null");
         }
     }
 
@@ -208,4 +211,5 @@ public class HelpUtil {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(HelpUtil.class);
+
 }

@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Updating Decoder
-  Definitions</title><!-- Style -->
+  Definitions</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -47,15 +49,15 @@
       view").</p>
 
       <h2><a name="after236" id="after236">JMRI v 2.3.6 and
-      later</a></h2><a name="after236" id="after236">This section
-      describes adding a new decoder definition when you are using
-      JMRI version 2.3.6 or later.</a>
+      later</a></h2>
+      This section describes adding a new decoder definition
+      when you are using JMRI version 2.3.6 or later.
 
-      <h3><a name="after236" id="after236">Loading a definition
-      from the web</a></h3><a name="after236" id="after236">If you
-      have a URL for a decoder definition, perhaps copied from a
-      web page or email, and your computer has an active Internet
-      connection, you can directly install the definition.</a>
+
+      <h3>Loading a definition from the web</h3>
+      If you have a URL for a decoder definition, perhaps copied
+      from a web page or email, and your computer has an active
+      Internet connection, you can directly install the definition.
 
       <ul>
         <li>Copy the URL address from your mail etc.</li>
@@ -113,19 +115,18 @@
       in the debug menu.</p>
 
       <h2><a name="before236" id="before236">JMRI v 2.3.5 and
-      earlier</a></h2><a name="before236" id="before236">This
-      section describes adding a new decoder definition when you
-      are using JMRI version 2.3.5 or before.</a>
+      earlier</a></h2>
+      This section describes adding a new decoder definition when
+      you are using JMRI version 2.3.5 or before.</a>
 
-      <h3><a name="before236" id="before236">On Windows
-      Systems</a></h3>
+      <h3>On Windows Systems</h3>
 
       <ul>
-        <li><a name="before236" id="before236">In Windows Explorer,
+        <li>In Windows Explorer,
         go to the location where the decoder.xml file is located
         and right click on the file.<br>
         (Don't double click or you will open the file rather than
-        saving it.)</a></li>
+        saving it.)</li>
 
         <li>Choose the menu selection "Save as..." or "Save target
         as...". After you choose this menu item a window will pop
@@ -176,7 +177,9 @@
         says "Rebuild decoder index". After you have rebuilt the
         decoder index, the new decoder should show up in the drop
         down list of the Programmer.</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
