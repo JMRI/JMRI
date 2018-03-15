@@ -97,7 +97,6 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale
      * @throws JsonException if this method is not allowed or other error occurs
      */
-    @Nonnull
     public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
     }
