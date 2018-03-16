@@ -92,12 +92,12 @@
           "Demo load" align="bottom" height="122" width="409">
         </li>
 
-        <li><a name="resetdb"><strong>Reset Databases</strong></a>
+        <li><a name="resetdb" id="resetdb"><strong>Reset Databases</strong></a>
         </li>
 
         <li style="list-style: none">
-          <p><a name="resetdb">Opens the <strong>Reset
-          Databases</strong> dialog box</a></p>
+          <p>Opens the <strong>Reset
+          Databases</strong> dialog box</p>
 
           <p><img src="images/Ops_Setting04.png"
           alt="reset database" height="122" width="445"></p>

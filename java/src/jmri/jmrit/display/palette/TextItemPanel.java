@@ -56,9 +56,6 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             blurb.add(new JLabel(Bundle.getMessage("addTextAndAttrs")));
             blurb.add(new JLabel(Bundle.getMessage("ToolTipDragText")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Text")));
-            blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
-            blurb.add(new JLabel(Bundle.getMessage("enterURL")));
             JPanel p = new JPanel();
             p.add(blurb);
             add(p);
@@ -170,11 +167,12 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator.setAttributes(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
             l.setPopupUtility(util.clone(l, l.getTextComponent()));
-            // l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
             if (util.hasBackground()) { // unrotated
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());
+            System.out.println("TextItemPanel.getTransferData(): PositionableLabel font= "+l.getFont().getFamily());
             return l;
         }
     }

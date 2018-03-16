@@ -232,7 +232,7 @@
   transmit output data to a particular addressed node to change the state of
   the defined output bits in the node.</p>
 
-  <a id="L215"name=""L215></a><h1>Establishing a C/MRI System Connection</h1>
+  <a id="L215" name="L215"></a><h1>Establishing a C/MRI System Connection</h1>
 
   <p>Before C/MRI sensors and turnouts can be defined, a <strong>CMRInet system
   connection</strong> needs to be established. This is done from the

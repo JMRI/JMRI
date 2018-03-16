@@ -43,7 +43,7 @@
         <li><a href="#documentation">Documentation</a></li>
       </ul>
 
-      <a name="overview" id="overview"></a></a><h2>Overview</h2>
+      <a name="overview" id="overview"></a><h2>Overview</h2>
 
       <p>DCC++ is an Open Source Arduino-based <a href=
       "#documentation">Do-it-Yourself</a> DCC Command Station.</p>
