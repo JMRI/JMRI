@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,6 +12,8 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class OlcbConfigurationManagerTest {
+        
+    private OlcbSystemConnectionMemo scm;
 
     @Test
     public void testCTor() {
