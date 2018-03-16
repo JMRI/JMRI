@@ -1176,7 +1176,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * clean up local threads and storage
      */
     public void dispose(){
-       _ramp.cancel(true);
+       if(_ramp != null) {
+          _ramp.cancel(true);
+       }
     }
   
     private final static Logger log = LoggerFactory.getLogger(Engineer.class);
