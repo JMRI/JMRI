@@ -1367,7 +1367,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         String[] msgs = _curLogix.deleteConditional(sName);
         if (msgs != null) {
             JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Error11", msgs), // NOI18N
+                    Bundle.getMessage("Error11", (Object[]) msgs), // NOI18N
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);  // NOI18N
         }
