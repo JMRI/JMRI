@@ -382,7 +382,7 @@ public class BlockBossLogicTest {
     }
 
     @After
-    protected void tearDown() {
+    public void tearDown() {
         stopLogic();
         // reset InstanceManager
         JUnitUtil.tearDown();
