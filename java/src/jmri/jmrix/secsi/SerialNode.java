@@ -58,7 +58,7 @@ public class SerialNode extends AbstractNode {
     // Node address, 0-127 allowed
     protected int nodeType = DAUGHTER;          // See above
 
-    // operational instance variables  (should not be preserved between runs)
+    // operational instance variables (should not be preserved between runs)
     protected boolean[] outputArray = new boolean[MAXTURNOUTS + 1]; // current values of the output bits for this node
     protected boolean[] outputBitChanged = new boolean[MAXTURNOUTS + 1];
 
@@ -249,7 +249,7 @@ public class SerialNode extends AbstractNode {
      */
     public void markChanges(SerialReply l) {
         try {
-            //get all input in one bit string
+            // get all input in one bit string
             int inputBits = (l.getElement(0) & 0xFF) + ((l.getElement(1) & 0xF) << 8);
 
             for (int i = 0; i <= lastUsedSensor; i++) {

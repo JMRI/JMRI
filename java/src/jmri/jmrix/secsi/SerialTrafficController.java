@@ -307,9 +307,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
-        return m.getNumDataElements(); // Length varies by type. A fixed size as
+        return m.getNumDataElements(); // Length varies by type. A fixed size of 5 as
         // was copied from OakTree.SerialTrafficController#lengthOfByteStream
         // caused an ArrayIndexOutOfBounds exception in AbstractSerialTrafficController
+        // over the 9 byte Node Reply message
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);

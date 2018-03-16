@@ -992,7 +992,7 @@ abstract public class AbstractMRTrafficController {
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
+            log.debug("dispatch reply of length {} contains \"{}\", state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
 
         // forward the message to the registered recipients,
@@ -1084,7 +1084,7 @@ abstract public class AbstractMRTrafficController {
                             xmtRunnable.notify();
                         }
                     } else {
-                        unexpectedReplyStateError(mCurrentState,msg.toString());
+                        unexpectedReplyStateError(mCurrentState, msg.toString());
                     }
                 }
             }
@@ -1099,13 +1099,13 @@ abstract public class AbstractMRTrafficController {
     }
 
     /*
-     * log an error message for a message received in an unexpected state. 
+     * Log an error message for a message received in an unexpected state.
      */
-    protected void unexpectedReplyStateError(int State,String msgString) {
+    protected void unexpectedReplyStateError(int State, String msgString) {
        String[] packages = this.getClass().getName().split("\\.");
        String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
                      +(packages.length>=1 ? packages[packages.length-1] :"");
-       log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString,name);
+       log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString, name);
     }
 
     /*

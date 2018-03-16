@@ -15,6 +15,24 @@
         This package handles communications for the TracTronics SECSI hardware.
         <p>
 
+        <h2>Secsi Binary Node Reply Message Format Summary</h2>
+
+        <pre>
+        byte 0: node address            byte 1 - 4: binary pin state
+        (0x0 - 0x7E = 127 poss.)      	(0x01 - 0x3E7 = 999 poss.)
+         0000 0000  -  0111 1110        0000 0000 0000 0000 - 0001 1111 1111 1111
+        </pre>
+
+        <h3>Examples:</h3>
+        <pre>
+        Reply from Node 1 pin 2 active: 	0x01 0000 0000 0000 0010
+        </pre>
+
+        <h2>Tools</h2>
+        <ul>
+            <li>Node Config Tool to add/delete a node
+        </ul>
+
         <h2>Related Documentation</h2>
 
         Other sources of documentation

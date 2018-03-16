@@ -213,7 +213,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
             }
             if (m != null) {
                 r = generateReply(m);
-                if (r != null) { // ignore errors
+                if (r != null) { // ignore errors and null replies
                     writeReply(r);
                     if (log.isDebugEnabled()) {
                         StringBuffer buf = new StringBuffer();
@@ -249,7 +249,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     /**
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
-     * See {@link jmri.jmrix.secsi.SerialMessage#generateReply(SerialMessage)} and
+     * See {@link jmri.jmrix.secsi.SerialNode#markChanges(SerialReply)} and
      * the secsi <a href="../package-summary.html">Binary Message Format Summary</a>.
      *
      * @param msg the message received in the simulated node
@@ -263,12 +263,20 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         SerialReply reply = new SerialReply(); // reply length is determined by highest byte added
         int nodeaddr = msg.getAddr();          // node addres from element(0)
         if (msg.isPoll()) {
-            // only Polls expect a reply from the node
-            log.debug("poll message detected");
-            reply.setElement(0, nodeaddr | 0x80);
+            // only Polls expect a reply from the node, but isPoll() is not recognizing our own Poll requests
+            log.debug("Poll message detected");
+            reply.setElement(0, nodeaddr);
+            for (int j = 1; j < 5; j++) {
+                reply.setElement(j, 0b1111); // pretend all sensors inactive (SerialNode will skip unknown sensors)
+            }
+            // prevent extra reply from Node:
+            ((SecsiSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr).resetMustSend();
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
-        return (reply);
+        return reply;
+        // returning reply gives error:
+        // reply complete in unexpected state: 15 was 0F in class secsi.SerialTrafficController
+        // [secsi.SerialTrafficController Receive thread]
     }
 
     /**

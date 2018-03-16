@@ -343,7 +343,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 }
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
-        return (reply);
+        return reply;
     }
 
     /**
