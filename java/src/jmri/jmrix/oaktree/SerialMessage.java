@@ -20,7 +20,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public SerialMessage(int l) {
-        super(5);  // all messages are five bytes
+        super(5);  // all OakTree messages are five bytes
         setResponseLength(l);
         setBinary(true);
     }

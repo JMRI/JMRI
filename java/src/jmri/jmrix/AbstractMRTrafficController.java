@@ -232,7 +232,7 @@ abstract public class AbstractMRTrafficController {
             }
         }
 
-        // forward to the last listener who send a message
+        // forward to the last listener who sent a message
         // this is done _second_ so monitoring can have already stored the reply
         // before a response is sent
         if (dest != null) {
@@ -415,6 +415,7 @@ abstract public class AbstractMRTrafficController {
                         mCurrentState = WAITMSGREPLYSTATE;
                         forwardToPort(msg, pollReplyHandler());
                         // wait for reply
+                        log.debug("Still waiting for reply");
                         transmitWait(msg.getTimeout(), WAITMSGREPLYSTATE, "interrupted while waiting poll reply");
                         checkReplyInDispatch();
                         // and go around again
@@ -456,9 +457,9 @@ abstract public class AbstractMRTrafficController {
                 String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
                         +(packages.length>=1 ? packages[packages.length-1] :"");
                 if (!threadStopRequest) {
-                    log.error(interruptMessage+" in transmitWait(..) of {}", name);
+                    log.error("{} in transmitWait(..) of {}", interruptMessage, name);
                 } else {
-                    log.debug("during shutdown, "+interruptMessage+" in transmitWait(..) of {}", name);
+                    log.debug("during shutdown, {}  in transmitWait(..) of {}", interruptMessage, name);
                 }
             }
         }
@@ -568,7 +569,7 @@ abstract public class AbstractMRTrafficController {
         int len = m.getNumDataElements();
         int cr = 0;
         if (!m.isBinary()) {
-            cr = 1;  // space for return
+            cr = 1;  // space for return char
         }
         return len + cr;
     }
@@ -585,7 +586,7 @@ abstract public class AbstractMRTrafficController {
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        log.debug("forwardToPort message: [{}]", m);
+        log.debug("forwardToPort message: [{}]", m.toString());
         // remember who sent this
         mLastSender = reply;
 
@@ -596,13 +597,19 @@ abstract public class AbstractMRTrafficController {
         SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        int byteLength = lengthOfByteStream(m);
+        byte msg[] = new byte[byteLength];
+        log.debug("copying message, length = {}", byteLength);
         // add header
         int offset = addHeaderToOutput(msg, m);
 
         // add data content
         int len = m.getNumDataElements();
-        for (int i = 0; i < len; i++) {
+        log.debug("copying data to message, length = {}", len);
+        if (len > byteLength) { // happens somehow
+            log.warn("Invalid message array size {} for {} elements, truncated", byteLength, len);
+        }
+        for (int i = 0; (i < len && i < byteLength); i++) {
             msg[i + offset] = (byte) m.getElement(i);
         }
         // add trailer
@@ -625,9 +632,7 @@ abstract public class AbstractMRTrafficController {
                         log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
                     } else if (m.getRetries() >= 0) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
-                        }
+                        log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
                             synchronized (xmtRunnable) {

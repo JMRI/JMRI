@@ -21,7 +21,7 @@ public class SerialTurnout extends AbstractTurnout {
 
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
     public SerialTurnout(String systemName, String userName, OakTreeSystemConnectionMemo memo) {
@@ -34,7 +34,7 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command
+     * Handle a request to change state by sending a turnout command.
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
@@ -74,7 +74,7 @@ public class SerialTurnout extends AbstractTurnout {
     int tBit;          // bit number of turnout control in Serial node
 
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, _memo.getSystemPrefix(),_memo.getTrafficController());
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, _memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
             return;

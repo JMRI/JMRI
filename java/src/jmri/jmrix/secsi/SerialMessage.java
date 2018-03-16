@@ -1,8 +1,11 @@
 package jmri.jmrix.secsi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * Note that <i>only</i> the payload, not the header or trailer, nor the padding
  * DLE characters are included. These are added during transmission.
  *
@@ -13,7 +16,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Suppress the default ctor, as the response length must always be
-     * specified
+     * specified.
      */
     @SuppressWarnings("unused")
     private SerialMessage() {
@@ -23,12 +26,12 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         super(l);
         setResponseLength(0);  // only polls require a response
         setBinary(true);
+        log.debug("secsi message generated");
     }
 
     /**
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
-     *
      */
     public SerialMessage(String m, int l) {
         super(m);
@@ -79,9 +82,10 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         m.setResponseLength(2);
         m.setElement(0, addr);
         m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
+        log.debug("poll message generated");
         return m;
     }
 
+    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
+
 }
-
-

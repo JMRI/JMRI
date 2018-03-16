@@ -51,7 +51,7 @@ public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
      */
     public SerialTrafficController getTrafficController(){
         if (tc == null) {
-            setTrafficController(new SerialTrafficController());
+            setTrafficController(new SerialTrafficController(this));
             log.debug("Auto create of SerialTrafficController for initial configuration");
         }
         return tc;

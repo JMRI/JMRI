@@ -9,7 +9,7 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 /**
  * Swing action to create and register a NodeConfigFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class NodeConfigAction extends AbstractAction {
 
@@ -30,7 +30,7 @@ public class NodeConfigAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: ", ex.toString());
         }
         f.setLocation(100, 30);
         f.setVisible(true);

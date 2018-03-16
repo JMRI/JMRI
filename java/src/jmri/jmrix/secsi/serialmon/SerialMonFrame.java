@@ -6,9 +6,9 @@ import jmri.jmrix.secsi.SerialReply;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) serial command messages
+ * Frame displaying (and logging) serial command messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -21,7 +21,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     protected String title() {
-        return "SECSI Serial Command Monitor";
+        return Bundle.getMessage("MonitorXTitle", "SECSI");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     /**
-     * Define system-specific help item
+     * Define system-specific help item.
      */
     protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.secsi.serialmon.SerialMonFrame", true);  // NOI18N

@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from Oak Tree serial messages.
- * <P>
+ * <p>
  * The "SerialInterface" side sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
- * <P>
+ * <p>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
@@ -30,10 +30,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Create a new Oaktree SerialTrafficController instance. Simple implementation.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
      */
-    public SerialTrafficController() {
+    public SerialTrafficController(OakTreeSystemConnectionMemo adaptermemo) {
         super();
-
+        memo = adaptermemo;
+        log.debug("creating a new GrapevineTrafficController object on {}", adaptermemo.getSystemPrefix());
         // set node range
         init(0, 255);
 
@@ -159,7 +162,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);
             } else {
-                log.warn("Timeout can't be handled due to missing node index=" + curSerialNodeIndex);
+                log.warn("Timeout can't be handled due to missing node (index {})", curSerialNodeIndex);
             }
         }
     }
@@ -204,6 +207,31 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     @Deprecated
     protected void setInstance() {
         self = this;
+    }
+
+    /**
+     * Reference to the system connection memo.
+     */
+    OakTreeSystemConnectionMemo memo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public OakTreeSystemConnectionMemo getSystemConnectionMemo() {
+        return memo;
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(OakTreeSystemConnectionMemo m) {
+        log.debug("Secsi SerialTrafficController set memo from {} to {}", memo.getUserName(), m.getUserName());
+        memo = m;
     }
 
     @Override

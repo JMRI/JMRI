@@ -28,7 +28,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     /**
      * Create a new AbstractMRMessage instance of a given byte size.
      *
-     * @param i number of elements
+     * @param i number of elements in message
      */
     public AbstractMRMessage(int i) {
         this();
