@@ -195,7 +195,7 @@ public class BlockBossLogicTest {
     public void testSimpleBlockNoSignal() throws jmri.JmriException {
 
         try { 
-            p = new BlockBossLogic(null);
+            BlockBossLogic p1 = new BlockBossLogic(null);
         } catch (java.lang.IllegalArgumentException e) {
             // this is expected
         }
@@ -343,7 +343,7 @@ public class BlockBossLogicTest {
     @Before
     public void setUp() {
         // reset InstanceManager
-        JUnitUtil.tearDown();
+        JUnitUtil.setUp();
         
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
