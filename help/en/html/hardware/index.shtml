@@ -16,7 +16,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -106,8 +107,6 @@
           <dd>
             <p class="dl">Configure: CTI Electronics boards via
             <a href="acela/index.shtml">Acela</a> adapter.</p>
-
-            <p> </p>
           </dd>
 
           <dt class="im"><a href="http://www.cvpusa.com/"><img src=
@@ -121,8 +120,6 @@
             <p class="dl">Configure: EasyDCC command station via
             <a href="easydcc/EasyDCC.shtml">Serial</a> or <a href=
             "TerminalServer.shtml">Terminal Server</a></p>
-
-            <p> </p>
           </dd>
 
           <dt class="im"><a href=
@@ -169,7 +166,8 @@
           <dd>
             <p class="dl">General information on <a href=
             "XBee/index.shtml">connecting to a Digi XBee
-            network</a></p>
+              network</a></p>
+            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href=
@@ -249,8 +247,6 @@
           <dd>
             <p class="dl">Configure connection to <a href=
             "ecos/index.shtml">ECoS</a> command station.</p>
-
-            <p> </p>
           </dd>
 
           <dt class="im"><a href=
@@ -440,6 +436,7 @@
           <dd>
             <p class="dl">Configure: <a href=
             "openlcb/index.shtml">OpenLCB networks</a></p>
+            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://protrak.org"><img src=
@@ -451,6 +448,7 @@
           <dd>
             <p class="dl">Configure: <a href=
             "grapevine/index.shtml">Grapevine nodes</a></p>
+            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href=
@@ -495,6 +493,7 @@
             <p class="dl"><a href="pi/index.shtml">General
             information on connecting to the Raspberry PI GPIO
             pins.</a></p>
+            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.roco.com/"><img src=
@@ -715,7 +714,9 @@
         <dt class="left"><a href="PDA.shtml">PDA</a></dt>
 
         <dd>A way to use a PDA to access JMRI.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

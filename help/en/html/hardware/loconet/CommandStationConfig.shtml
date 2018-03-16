@@ -33,7 +33,7 @@
 
                         <tr>
                             <td align="left" valign="top" colspan="1">
-                        </ul>
+                        <ul>
                         <li><a href="#ConfigurationBasics">Configuring Digitrax Command Station Operation Switch (OpSw) Settings</a>
                             <ul>
                                 <li><a href="#Requirements">Requirements</a></li>
@@ -42,7 +42,6 @@
                         <li><a href="#ConfigViaRoster">Configuration via a &quot;Roster&quot; entry</a></li>
                         <li><a href="#ConfigViaTool">Configuration via the "Command Station Configuration tool</a></li>
                         <li><a href="#Limitation">Limitations</a></li>
-
                         <li><a href="#Support">Support</a></li>
                         </ul> </td>
                         <td align="right" colspan="1"><img src=

@@ -128,7 +128,8 @@
       for DecoderPro&#174;</p><img src="images/separator.png" alt=
       "sep" height="4" width="340">
 
-      <p name="ValidateXML"><strong>Validate XML File</strong></p>
+      <p><a id="ValidateXML" name="ValidateXML"></a><strong>Validate
+        XML File</strong></p>
 
       <blockquote>
         <p>Opens the operating systems <strong>Open</strong>

@@ -15,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -654,8 +655,8 @@
           select 100, you could get any number of moves between 10
           and 0. Be sure to press "Save Route" to save you
           setting.<br>
-          <a href="images/Ops_EditRouteRandom413.png" target=
-          "_new"><img src="images/Ops_EditRouteRandom413.png"
+          <a href="images/Ops_EditRouteRandom413.png"><img
+                  src="images/Ops_EditRouteRandom413.png"
           width="535" height="213"></a></li>
 
           <li>Copy a Location, Locations panel -&gt; Tools -&gt;
@@ -689,8 +690,8 @@
           window. Select a Train in the top pop-up menu and a Car
           Type to the left to view an overview of where this car
           type might be handled:<br>
-          <a href="images/Ops_ShowCarTypesServiced38.png" target=
-          "_new"><img src="images/Ops_ShowCarTypesServiced38.png"
+          <a href="images/Ops_ShowCarTypesServiced38.png"><img
+                  src="images/Ops_ShowCarTypesServiced38.png"
           width="252" height="126"></a></li>
 
           <li>Trains panel -&gt; Tools -&gt; "Trains Table Colors"
@@ -698,13 +699,13 @@
           in the "Trains" panel. There's also an "Auto" option that
           allows you to select a background color for when a train
           is built, build fails, or is terminated.<br>
-          <span width="90%"><a href=
-          "images/Ops_TrainColorManual38.png" target=
-          "_new"><img src="images/Ops_TrainColorManual38.png"
+          <a href=
+          "images/Ops_TrainColorManual38.png"><img
+                  src="images/Ops_TrainColorManual38.png"
           width="200" height="200"></a>   <a href=
-          "images/Ops_TrainColorAuto38.png" target="_new"><img src=
+          "images/Ops_TrainColorAuto38.png"><img src=
           "images/Ops_TrainColorAuto38.png" width="200" height=
-          "200"></a></span></li>
+          "200"></a></li>
 
           <li>Manifests and Switch Lists text is completely
           customizable, no more fixed titles.</li>
@@ -777,6 +778,7 @@
         </tbody>
       </table>
       <hr>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

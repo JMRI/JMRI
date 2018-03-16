@@ -2557,7 +2557,7 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             }
         }
-        if (!foundCar) {
+        if (!foundCar && !isSecondPass) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoCarsAtLocation"),
                     new Object[]{rl.getName()}));
             addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode

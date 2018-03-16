@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -31,7 +32,7 @@
       <h2>Contents</h2>
 
       <p>This document explains some basic <b>programmer tabs</b>,
-      and ideas on how to use them</p>
+      and ideas on how to use them:</p>
 
       <ul>
         <li><a href="#Roster">Roster tab</a></li>
@@ -43,15 +44,14 @@
         <li><a href="#Speed%20Table">Speed Table Tab</a></li>
       </ul>
 
-      <p><a name="Roster" id="Roster"></a></p>
-
+      <a name="Roster" id="Roster"></a>
       <h3>Roster tab</h3>
 
       <p>A roster is a database of all locomotives that your
       installation of Decoder Pro has programmed. It includes the
       information seen in the screen below:</p>
 
-      <p><img src="RosterTab.png"></p>
+      <p><img src="RosterTab.png" alt="DecoderPro Roster Tab"></p>
 
       <p>The first field "ID" becomes the file name in the Roster
       for the locomotive you are programming.</p>
@@ -83,11 +83,10 @@
       Rest and how they work is manufacturer and decoder
       dependent.</p>
 
-      <p><a name="Basic" id="Basic"></a></p>
-
+      <a name="Basic" id="Basic"></a>
       <h3>Basic Tab</h3>
 
-      <p><img src="BasicTab.png"></p>
+      <p><img src="BasicTab.png" alt="DecoderPro Basic Tab"></p>
 
       <p>The Basic pane is where you set the Decoder address, you
       can set the short and the long address and then select which
@@ -113,17 +112,17 @@
       in the decoder by the Manufacture. JMRI uses these to
       identify the decoder.</p>
 
-      <p><a name="Other Tabs"></a></p>
+      <a name="Other_Tabs"></a>
+      <h3>Other tabs</h3>
 
-      <h3>Other tabs</h3>The other tabs are dependent on what the
+      <p>The other tabs are dependent on what the
       manufacture installed in the decoder, if the options were not
-      installed the panes are either gray or not enabled.
+      installed the panes are either gray or not enabled.</p>
 
-      <p><a name="Speed Table"></a></p>
-
+      <a name="Speed_Table"></a>
       <h3>Speed Table Tab</h3>
 
-      <p><img src="SpeedTab.png"></p>
+      <p><img src="SpeedTab.png" alt="DecoderPro Speed Tab"></p>
 
       <p>This panel may look different depending on how the decoder
       xml was built. To use the Speed Table CV's usually the basic

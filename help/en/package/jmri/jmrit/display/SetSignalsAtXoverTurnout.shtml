@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -106,7 +107,7 @@
       rotated.)</p>
 
       <p><a href="./images/DoubleXover8.gif"><img src=
-      "./images/DoubleXover8.gif" align="center" width="207"
+      "./images/DoubleXover8.gif" width="207"
       height="109" hspace="0" vspace="0"></a></p>
 
       <p>Similarly, the diagram below shows the four-signal-head
@@ -116,7 +117,7 @@
       with one crossover track instead of two.</p>
 
       <p><a href="./images/DoubleXover4.gif"><img src=
-      "./images/DoubleXover4.gif" align="center" width="221"
+      "./images/DoubleXover4.gif" width="221"
       height="113" hspace="0" vspace="0"></a></p>
 
       <p>If signal heads at this crossover turnout have been
@@ -217,7 +218,9 @@
       needs.</p>
 
       <p><b>Please remember to save your Panel after using this
-      tool.</b></p><!--#include virtual="/Footer" -->
+      tool.</b></p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
