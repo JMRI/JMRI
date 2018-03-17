@@ -16,8 +16,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     public void setUp() {
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
         SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
 
         t = new SerialTurnout("VT4", "t4",memo);

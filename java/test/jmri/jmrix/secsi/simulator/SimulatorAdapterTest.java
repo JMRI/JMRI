@@ -1,4 +1,4 @@
-package jmri.jmrix.secsi.serialdriver.configurexml;
+package jmri.jmrix.secsi.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,15 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the ConnectionConfigXml class
  *
- * @author Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2017	
  */
-public class ConnectionConfigXmlTest {
+public class SimulatorAdapterTest {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor", new ConnectionConfigXml());
+    public void testCTor() {
+        SimulatorAdapter t = new SimulatorAdapter();
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
@@ -29,5 +29,6 @@ public class ConnectionConfigXmlTest {
         JUnitUtil.tearDown();
     }
 
-}
+    // private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapterTest.class);
 
+}
