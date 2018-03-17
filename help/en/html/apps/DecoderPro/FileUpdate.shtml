@@ -117,9 +117,9 @@
       <h2><a name="before236" id="before236">JMRI v 2.3.5 and
       earlier</a></h2>
       This section describes adding a new decoder definition when
-      you are using JMRI version 2.3.5 or before.</a>
+      you are using JMRI version 2.3.5 or before.
 
-      <h3>On Windows Systems</h3>
+      <xh3>On Windows Systems</h3>
 
       <ul>
         <li>In Windows Explorer,
