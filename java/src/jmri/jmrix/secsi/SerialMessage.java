@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Note that <i>only</i> the payload, not the header or trailer, nor the padding
  * DLE characters are included. These are added during transmission.
  *
- * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2007, 2008
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?

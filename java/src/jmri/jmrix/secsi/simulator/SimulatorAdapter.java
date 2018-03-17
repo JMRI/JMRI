@@ -258,25 +258,21 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
-        log.debug("Generate Reply to message from node {} (string = {})", msg.getAddr(), msg.toString());
-
-        SerialReply reply = new SerialReply(); // reply length is determined by highest byte added
-        int nodeaddr = msg.getAddr();          // node addres from element(0)
-        if (msg.isPoll()) {
-            // only Polls expect a reply from the node, but isPoll() is not recognizing our own Poll requests
-            log.debug("Poll message detected");
-            reply.setElement(0, nodeaddr);
+        int nodeaddr = msg.getAddr();
+        log.debug("Generate Reply to message to node {} (string = {}; {})", nodeaddr, msg.toString(), msg.getElement(1));
+        SerialReply reply = new SerialReply();  // reply length is determined by highest byte added
+        if (msg.getElement(1) == 0) { // only Polls expect a reply from the node, but we're not recognizing our Poll requests
+          log.debug("Poll message detected");
+          reply.setElement(0, nodeaddr); // node addres from msg element(0)
             for (int j = 1; j < 5; j++) {
-                reply.setElement(j, 0b1111); // pretend all sensors inactive (SerialNode will skip unknown sensors)
+                reply.setElement(j, 0x50); // poll reply
             }
-            // prevent extra reply from Node:
-            ((SecsiSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr).resetMustSend();
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
-        return reply;
-        // returning reply gives error:
-        // reply complete in unexpected state: 15 was 0F in class secsi.SerialTrafficController
-        // [secsi.SerialTrafficController Receive thread]
+        return null; //reply;
+        // Poll will give an error:
+        // jmrix.AbstractMRTrafficController ERROR - Transmit thread terminated prematurely by:
+        // java.lang.ArrayIndexOutOfBoundsException: 1 [secsi.SerialTrafficController Transmit thread]
     }
 
     /**
@@ -302,8 +298,10 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         }
     }
 
+    protected int currentAddr = -1; // at startup, can't match
+    protected int incomingLength = 0;
     /**
-     * Get characters from the input source.
+     * Get characters from the input source. No opcode, so read per byte
      * <p>
      * Only used in the Receive thread.
      *
@@ -311,21 +309,43 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @throws IOException when presented by the input source.
      */
     private SerialMessage loadChars() throws java.io.IOException {
-        int nchars;
-        byte[] rcvBuffer = new byte[32];
+        // get 1st byte, see if ending too soon
+        byte char1 = readByteProtected(inpipe);
 
-        nchars = inpipe.read(rcvBuffer, 0, 32);
+        SerialMessage msg = new SerialMessage(5);
+        msg.setElement(0, char1 & 0xFF); // address
         //log.debug("new message received");
-        SerialMessage msg = new SerialMessage(nchars);
 
-        for (int i = 0; i < nchars; i++) {
-            msg.setElement(i, rcvBuffer[i] & 0xFF);
+        if (incomingLength <= 1) {
+            return msg;
+        }
+        for (int i = 1; i < incomingLength; i++) { // reading next four bytes
+            char1 = readByteProtected(inpipe);
+            msg.setElement(i, char1 & 0xFF);
         }
         return msg;
     }
 
-    int BankSize = 16; // theoretically: 16
-    javax.swing.Timer timer;
+    /**
+     * Read a single byte, protecting against various timeouts, etc.
+     * <p>
+     * When a port is set to have a receive timeout (via the
+     * enableReceiveTimeout() method), some will return zero bytes or an
+     * EOFException at the end of the timeout. In that case, the read should be
+     * repeated to get the next real character.
+     * <p>
+     * Copied from DCCppSimulatorAdapter
+     */
+    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
+        byte[] rcvBuffer = new byte[1];
+        while (true) { // loop will repeat until character found
+            int nchars;
+            nchars = istream.read(rcvBuffer, 0, 1);
+            if (nchars > 0) {
+                return rcvBuffer[0];
+            }
+        }
+    }
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
