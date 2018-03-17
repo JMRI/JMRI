@@ -22,6 +22,7 @@ public class UhlenbrockProgrammerManagerTest {
         UhlenbrockSystemConnectionMemo memo = new UhlenbrockSystemConnectionMemo(lnis,slotmanager);
         UhlenbrockProgrammerManager t = new UhlenbrockProgrammerManager(slotmanager,memo);
         Assert.assertNotNull("exists",t);
+        memo.dispose();
     }
 
     // The minimal setup for log4J

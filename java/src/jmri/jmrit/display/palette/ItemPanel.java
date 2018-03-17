@@ -104,13 +104,20 @@ public abstract class ItemPanel extends JPanel {
     }
 
     protected void initLinkPanel() {
+//        Font font = new Font("SansSerif", Font.BOLD, 12);
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Text")));
+        blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("enterURL")));
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
         panel.add(new JLabel(Bundle.getMessage("LinkName")));
         panel.add(_linkName);
         _linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
         panel.setToolTipText(Bundle.getMessage("ToolTipLink"));
-        add(panel);
+        blurb.add(panel);
+        add(blurb);
     }
 
     /**
