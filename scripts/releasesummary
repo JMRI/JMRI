@@ -2,23 +2,16 @@
 #
 # Service operations for a JMRI test release
 # Argument is release version number, e.g. 4.5.8
-# - Download a test release from Jenkins and unpack
-# - Move files to SF.net FRS
+# - Download release files from Jenkins and unpack
 # - Display the checksums
 # - Display sample text for releaselist file
 # - Display sample text for JMRI release note
-
-# change this to test to copy into SF.net test release area
-DEST="production"
 
 # Download a test release from Jenkins and unpack
 curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/$1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"
 rm release/JMRI*
 unzip release.zip
 cd release
-
-# Move files to SF.net FRS - no longer done as of 3/2018
-# scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/${DEST}\ files/"
 
 # Decide command to create checksums
 if [ -x /usr/bin/hdiutil ]
@@ -64,27 +57,6 @@ echo "   sha256: `$SHA *.exe| awk '{print $1}'`</li>"
 echo
 echo '<li>Linux: <a'
 echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`</a><br/>"  | tr + . 
-echo "   sha256: `$SHA *.tgz| awk '{print $1}'`</li>"
-echo '</ul>'
-echo '----------------------------------------------------------------------------------'
-
-echo
-echo
-
-# Display sample text for JMRI release note
-echo "Older release note format using Sf.net:"
-echo '----------------------------------------------------------------------------------'
-echo '<ul>'
-echo '<li>OS X / macOS: <a'
-echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.dmg`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.dmg`/download</a><br/>"  | tr + . 
-echo  "  sha256: `$SHA *.dmg| awk '{print $1}'` </li>"
-echo
-echo '<li>Windows: <a'
-echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.exe`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.exe`/download</a><br/>"  | tr + . 
-echo "   sha256: `$SHA *.exe| awk '{print $1}'`</li>"
-echo
-echo '<li>Linux: <a'
-echo "	href="\""https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.tgz`/download"\"">https://sourceforge.net/projects/jmri/files/${DEST}%20files/`ls *.tgz`/download</a><br/>"  | tr + . 
 echo "   sha256: `$SHA *.tgz| awk '{print $1}'`</li>"
 echo '</ul>'
 echo '----------------------------------------------------------------------------------'
