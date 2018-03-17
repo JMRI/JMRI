@@ -37,10 +37,10 @@
                 </output>
                 <output name="7" label="Aux 5|Green Mot.1" connection="solder">
                   <label xml:lang="de">Aux 5|Grün Mot.1</label>
-                </output>  
+                </output>
                 <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
                   <label xml:lang="de">Aux 6|Blau Mot.2</label>
-                </output>                               
+                </output>
                 <output name="ABV" label="deactivate">
                   <label xml:lang="de">ausschalten</label>
                 </output>
@@ -68,10 +68,10 @@
                 </output>
                 <output name="7" label="Aux 5|Green Mot.1" connection="solder">
                   <label xml:lang="de">Aux 5|Grün Mot.1</label>
-                </output>  
+                </output>
                 <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
                   <label xml:lang="de">Aux 6|Blau Mot.2</label>
-                </output>                 
+                </output>
                 <output name="ABV" label="deactivate">
                   <label xml:lang="de">ausschalten</label>
                 </output>
@@ -100,16 +100,18 @@
             </functionlabels>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <!--
             <capability>
                 <name>Indexed CV access</name>
                 <parameter name="PI">31</parameter>
                 <parameter name="SI">32</parameter>
                 <parameter name="cvFirst">false</parameter>
             </capability>
+            -->
         </programming>
         <variables>
             <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_standardCVs.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightCVs.xml"/>            
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightCVs.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_functionmap.xml"/>
         </variables>
         <resets>
@@ -118,6 +120,6 @@
             </factReset>
         </resets>
     </decoder>
-    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightsPane.xml"/>    
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_advancedPane.xml"/>
 </decoder-config>

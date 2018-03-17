@@ -3736,19 +3736,19 @@
     <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound12</label>
   </variable>
-  <variable item="STOP(f) controls output Sound13" CV="270" mask="XXXXXXXV">
+  <variable item="STOP(f) controls output Sound13" CV="340" mask="XXXXXXXV">
     <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound13</label>
   </variable>
-  <variable item="STOP(f) controls output Sound14" CV="270" mask="XXXXXXVX">
+  <variable item="STOP(f) controls output Sound14" CV="340" mask="XXXXXXVX">
     <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound14</label>
   </variable>
-  <variable item="STOP(f) controls output Sound15" CV="270" mask="XXXXXVXX">
+  <variable item="STOP(f) controls output Sound15" CV="340" mask="XXXXXVXX">
     <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound15</label>
   </variable>
-  <variable item="STOP(f) controls output Sound16" CV="270" mask="XXXXVXXX">
+  <variable item="STOP(f) controls output Sound16" CV="340" mask="XXXXVXXX">
     <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound16</label>
   </variable>
