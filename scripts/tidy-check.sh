@@ -9,7 +9,7 @@ else
 fi
 
 # first, scan for whether there's an issue
-find ${WHERE} -name \*html ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning
+find ${WHERE} -name \*html -exec echo Filename: {} \;  ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning
 
 if [ $? -eq 0 ]; then
     exit 1
