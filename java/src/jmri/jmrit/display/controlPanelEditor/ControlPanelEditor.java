@@ -1650,10 +1650,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     popupSet |= setTextAttributes(pl, popup);       // only for plain icons
                 }   Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
+                    popupSet |= p.setTextEditMenu(popup);
                     popupSet |= setTextAttributes(pl, popup);
-                    if (p instanceof MemoryIcon) {
-                        popupSet |= p.setTextEditMenu(popup);
-                    }
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                     if (pl.isText()) {

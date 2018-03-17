@@ -13,8 +13,6 @@ import org.junit.Test;
  */
 public class LnDplxGrpInfoImplTest {
     
-    private jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
-
     @Test
     public void testCtor() {
         jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
