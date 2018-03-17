@@ -313,7 +313,7 @@ This has the nice property that if multiple things arise, they can definitely be
 
 Run a script to download the created files, create checksums and create text for release notes, etc
 ```
-./releasesummary 4.11.4
+./scripts/releasesummary 4.11.4
 ```
 
 ====================================================================================
@@ -433,7 +433,7 @@ git push github
 
 - Update the web site front page and downloads page:
 ```
-     index.html download/Sidebar download/index.shtml releaselist
+     index.shtml download/Sidebar download/index.shtml releaselist
 ```
 
 - Commit site, push, etc.
