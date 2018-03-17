@@ -124,6 +124,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     // base class methods for the SerialPortController interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -133,6 +136,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -146,13 +152,16 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

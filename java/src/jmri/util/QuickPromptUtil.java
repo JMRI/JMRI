@@ -95,6 +95,5 @@ public class QuickPromptUtil {
     }
 
     // initialize logging
-    private final static Logger log
-            = LoggerFactory.getLogger(QuickPromptUtil.class);
+    // private final static Logger log = LoggerFactory.getLogger(QuickPromptUtil.class);
 }

@@ -136,6 +136,9 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
 
     // base class methods for the PortController interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -145,6 +148,9 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new DataInputStream(serialInStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -153,6 +159,9 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new DataOutputStream(serialOutStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;

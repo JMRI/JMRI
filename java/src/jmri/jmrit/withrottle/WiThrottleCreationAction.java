@@ -50,7 +50,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        DeviceManager manager = InstanceManager.getOptionalDefault(DeviceManager.class).orElseGet(() -> {
+        InstanceManager.getOptionalDefault(DeviceManager.class).orElseGet(() -> {
             return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
         });
         // ensure the GUI is visible if we are not in headless mode.

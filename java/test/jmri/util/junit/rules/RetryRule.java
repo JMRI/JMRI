@@ -18,6 +18,7 @@ public class RetryRule implements TestRule {
 
     public RetryRule (int retryCount) {
         this.retryCount = retryCount;
+        if (retryCount <= 0) log.error("retryCount must be greater than zero");
     }
 
     public Statement apply(Statement base, Description description) {
@@ -28,7 +29,7 @@ public class RetryRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                Throwable caughtThrowable = null;
+                Throwable caughtThrowable = new Exception("Internal error in RetryRule");
 
                 // implement retry logic here
                 for (int i = 0; i < retryCount; i++) {

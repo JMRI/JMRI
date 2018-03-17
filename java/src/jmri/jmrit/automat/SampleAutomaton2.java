@@ -101,9 +101,9 @@ public class SampleAutomaton2 extends AbstractAutomaton {
     void setMomentum(int now) {
         try {
             if (now == Sensor.ACTIVE) {
-                programmer.writeCV(3, 30, null);
+                programmer.writeCV("3", 30, null);
             } else {
-                programmer.writeCV(3, 0, null);
+                programmer.writeCV("3", 0, null);
             }
         } catch (JmriException e) {
             log.error("exception setting turnout:" + e);

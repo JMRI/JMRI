@@ -115,7 +115,7 @@ public class SampleMinimalProgram {
         ConfigureManager cm = new JmriConfigurationManager();
 
         // not setting preference file location!
-        InstanceManager.setConfigureManager(cm);
+        InstanceManager.setDefault(ConfigureManager.class, cm);
         // needs an error handler that doesn't invoke swing; send to log4j?
 
         // start web server

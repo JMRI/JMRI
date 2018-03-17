@@ -230,7 +230,7 @@
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
 </code>
 </pre><code>xmllint</code> can't check schema files themselves,
-unfortunately, because their schema isn't something it can handle.
+      unfortunately, because their schema isn't something it can handle.
 
       <p>Your schema docs should point to our standard stylesheet
       in their head matter:</p>
@@ -239,8 +239,8 @@ unfortunately, because their schema isn't something it can handle.
 &lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
 </code>
 </pre>Stylesheets turn XML code, like this schema, into a
-human-readable form when the XML is parsed and displayed by a
-browser. For an example of that, click on this link to the
+      human-readable form when the XML is parsed and displayed by a
+      browser. For an example of that, click on this link to the
       <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a>
       schema file. Our standard stylesheet is pretty basic. It just
       shows basic structure. If anybody knows of a better
@@ -256,10 +256,9 @@ browser. For an example of that, click on this link to the
         file against the schema.
 
           <p>That's done by having a SchemaTest class in your
-          test-tree package (see e.g. <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/SchemaTest.java"
-          target=
-          "_blank">test/jmri/configurexml/SchemaTest.java</a> for
+          test-tree package (see e.g. 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/SchemaTest.java">
+            test/jmri/configurexml/SchemaTest.java</a> for
           an example) that checks all the XML files kept there. If
           that's in place, just put a copy of a (new) typical XML
           file in the existing "verify" subdirectory.</p>
@@ -292,10 +291,9 @@ browser. For an example of that, click on this link to the
         errors).
 
           <p>That's done by having a LoadAndStoreTest class in your
-          test-tree package (see e.g. <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/LoadAndStoreTest.java"
-          target=
-          "_blank">test/jmri/configurexml/LoadAndStoreTest.java</a>
+          test-tree package (see e.g. 
+          <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/configurexml/LoadAndStoreTest.java">
+            test/jmri/configurexml/LoadAndStoreTest.java</a>
           for an example) that checks all the XML files kept there.
           If that's in place, just put a copy of a (new) typical
           XML file in the existing "load" subdirectory.</p>

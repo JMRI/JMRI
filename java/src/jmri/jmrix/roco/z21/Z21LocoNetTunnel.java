@@ -106,7 +106,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private LocoNetMessage loadChars() throws java.io.IOException {
@@ -234,6 +234,9 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     public void dispose(){
        if(lsc != null){
           lsc.dispose();
+       }
+       if(_memo != null){
+          _memo.dispose();
        }
        sourceThread.stop();
        try {

@@ -7,12 +7,14 @@ import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.block.JsonBlock.BLOCK;
+import static jmri.server.json.block.JsonBlock.BLOCKS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -21,8 +23,8 @@ import jmri.server.json.JsonHttpService;
 
 /**
  *
- * @author mstevetodd Copyright (C) 2016 (copied from JsonMemoryHttpService)
- * @author Randall Wood
+ * @author mstevetodd Copyright 2016
+ * @author Randall Wood Copyright 2018
  */
 public class JsonBlockHttpService extends JsonHttpService {
 
@@ -90,5 +92,19 @@ public class JsonBlockHttpService extends JsonHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case BLOCK:
+            case BLOCKS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/block/block-server.json",
+                        "jmri/server/json/block/block-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

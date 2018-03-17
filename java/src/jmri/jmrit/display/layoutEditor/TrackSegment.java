@@ -32,6 +32,7 @@ import javax.swing.JSeparator;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.ColorUtil;
+import jmri.util.FileUtil;
 import jmri.util.MathUtil;
 import jmri.util.QuickPromptUtil;
 import org.slf4j.Logger;
@@ -140,6 +141,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @return text showing id and connections of this segment
      */
+    @Override
     public String toString() {
         return "TrackSegment " + getName()
                 + " c1:{" + getConnect1Name() + " (" + type1 + "},"
@@ -276,6 +278,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return true if track segment is a main line
      */
+    @Override
     public boolean isMainline() {
         return mainline;
     }
@@ -474,6 +477,7 @@ public class TrackSegment extends LayoutTrack {
      * {@link #getConnect2} should be used instead.
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
+    @Override
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to see here, move along
         return null;
@@ -486,6 +490,7 @@ public class TrackSegment extends LayoutTrack {
      * {@link #setNewConnect2} should be used instead.
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
+    @Override
     public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
@@ -549,6 +554,7 @@ public class TrackSegment extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         // nothing to see here, move along
     }
@@ -559,6 +565,7 @@ public class TrackSegment extends LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
+    @Override
     public void translateCoords(float xFactor, float yFactor) {
         // nothing to see here, move along
     }
@@ -568,6 +575,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param newCenterPoint the coordinates to set
      */
+    @Override
     public void setCoordsCenter(@Nullable Point2D newCenterPoint) {
         if (center != newCenterPoint) {
             if ((newCenterPoint != null) && isBezier()) {
@@ -593,6 +601,7 @@ public class TrackSegment extends LayoutTrack {
     @SuppressWarnings("deprecation")
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
+    @Override
     public void setObjects(LayoutEditor p) {
         if (!tBlockName.isEmpty()) {
             layoutBlock = p.getLayoutBlock(tBlockName);
@@ -715,6 +724,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
      */
+    @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCentreSeg();
         if (connectionType == TRACK_CIRCLE_CENTRE) {
@@ -728,6 +738,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return the bounds of this track segment
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -877,7 +888,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 0);
 
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle1.png"));
+        ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -886,7 +897,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 1);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle2.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -895,7 +906,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 2);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle3.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -904,7 +915,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 3);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle4.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -913,7 +924,7 @@ public class TrackSegment extends LayoutTrack {
         });
         jcbmi.setSelected(arrowStyle == 4);
 
-        imageIcon = new ImageIcon(getClass().getResource("/resources/icons/decorations/ArrowStyle5.png"));
+        imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
         jcbmi = new JCheckBoxMenuItem(imageIcon);
         arrowsCountMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
@@ -1957,39 +1968,39 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: AFAICT this isn't called from anywhere
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         if (!isBezier()) {
-        double pt2x;
-        double pt2y;
-        double pt1x;
-        double pt1y;
+            double pt2x;
+            double pt2y;
+            double pt1x;
+            double pt1y;
 
-        if (isFlip()) {
-            pt1x = getTmpPt2().getX();
-            pt1y = getTmpPt2().getY();
-            pt2x = getTmpPt1().getX();
-            pt2y = getTmpPt1().getY();
-        } else {
-            pt1x = getTmpPt1().getX();
-            pt1y = getTmpPt1().getY();
-            pt2x = getTmpPt2().getX();
-            pt2y = getTmpPt2().getY();
+            if (isFlip()) {
+                pt1x = getTmpPt2().getX();
+                pt1y = getTmpPt2().getY();
+                pt2x = getTmpPt1().getX();
+                pt2y = getTmpPt1().getY();
+            } else {
+                pt1x = getTmpPt1().getX();
+                pt1y = getTmpPt1().getY();
+                pt2x = getTmpPt2().getX();
+                pt2y = getTmpPt2().getY();
+            }
+            //Point 1 to new point distance
+            double a;
+            double o;
+            double la;
+            // Compute arc's chord
+            a = pt2x - x;
+            o = pt2y - y;
+            la = Math.hypot(a, o);
+
+            double lb;
+            a = pt1x - x;
+            o = pt1y - y;
+            lb = Math.hypot(a, o);
+
+            double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
+            setAngle(newangle);
         }
-        //Point 1 to new point distance
-        double a;
-        double o;
-        double la;
-        // Compute arc's chord
-        a = pt2x - x;
-        o = pt2y - y;
-        la = Math.hypot(a, o);
-
-        double lb;
-        a = pt1x - x;
-        o = pt1y - y;
-        lb = Math.hypot(a, o);
-
-        double newangle = Math.toDegrees(Math.acos((-getChordLength() * getChordLength() + la * la + lb * lb) / (2 * la * lb)));
-        setAngle(newangle);
-    }
     }
 
     /*
@@ -2085,8 +2096,8 @@ public class TrackSegment extends LayoutTrack {
             }
             if (isArc()) {
                 calculateTrackSegmentAngle();
-                    g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
-                    trackRedrawn();
+                g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+                trackRedrawn();
             } else if (isBezier()) {
                 Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
                 Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
@@ -2177,12 +2188,12 @@ public class TrackSegment extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2
-    ) {
+    protected void highlightUnconnected(Graphics2D g2, int selectedType) {
         // TrackSegments are always connected
         // nothing to see here... move along...
-        }
+    }
 
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
         if (isShowConstructionLines()) {
@@ -2211,6 +2222,7 @@ public class TrackSegment extends LayoutTrack {
         g2.draw(layoutEditor.trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // TrackSegments don't have turnout controls...
         // nothing to see here... move along...
@@ -2771,6 +2783,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @return decorations to set
      */
+    @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
             decorations = new HashMap<>();
@@ -2894,6 +2907,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param decorations to set
      */
+    @Override
     public void setDecorations(Map<String, String> decorations) {
         super.setDecorations(decorations);
         if (decorations != null) {
@@ -3787,6 +3801,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -3811,6 +3826,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
     }

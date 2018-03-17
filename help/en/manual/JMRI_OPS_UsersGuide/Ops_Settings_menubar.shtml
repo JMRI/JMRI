@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>OperationsPro Settings Menu Bar</title><!-- Style -->
+  <title>OperationsPro Settings Menu Bar</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -44,7 +46,7 @@
       <h3>Tools</h3>
 
       <ul>
-        <li name="OptionsMenu"><strong><a href=
+        <li><strong><a href=
         "Ops_Settings_Tools_Options.shtml">Options</a></strong><br></li>
 
         <li><a href="Ops_PrintOptions.shtml"><strong>Manifest Print
@@ -67,7 +69,7 @@
 
           <p>Opens the OS <strong>Save backup file</strong> dialog
           to select a place to store your OperationsPro backup
-          file</p>
+          file.</p>
         </li>
 
         <li>
@@ -82,7 +84,7 @@
           Files</strong></a>
 
           <p><img style="width: 387px; height: 122px;" alt=
-          "laod demo files" src=
+          "load demo files" src=
           "images/Ops_Setting_tool_LoadDemoFiles.png"></p>
 
           <p>Opens the <strong>Demo load successful!</strong>dialog
@@ -90,18 +92,18 @@
           "Demo load" align="bottom" height="122" width="409">
         </li>
 
-        <li><a name="resetdb"><strong>Reset
-        Databases</strong></a></li>
-
-        <li style="list-style: none">
-          <p><a name="resetdb">Opens the <strong>Reset
-          Databases</strong> dialog box</a></p>
-
-          <p><a name="resetdb"><img src="images/Ops_Setting04.png"
-          alt="reset database" height="122" width="445"></a></p>
+        <li><a name="resetdb" id="resetdb"><strong>Reset Databases</strong></a>
         </li>
 
-        <li><a name="resetdb"></a><a name="resetdb"></a><a name=
+        <li style="list-style: none">
+          <p>Opens the <strong>Reset
+          Databases</strong> dialog box</p>
+
+          <p><img src="images/Ops_Setting04.png"
+          alt="reset database" height="122" width="445"></p>
+        </li>
+
+        <li><a name=
         "manageautobackups"><strong>Manage Auto
         Backups</strong></a><br>
         <img src="images/Ops_Setting_ManageBackupSets.png" alt=
@@ -166,7 +168,9 @@
         <p><a href="Ops_Settings.shtml">Back</a></p>
 
         <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -56,13 +56,13 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         }
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(systemMemo.getProgrammerManager());
+            jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
         }
         systemMemo.setCommandStation(systemMemo.getDCCppTrafficController().getCommandStation());
-        jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+        jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
         systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));

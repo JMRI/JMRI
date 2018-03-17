@@ -14,10 +14,17 @@ import org.junit.Test;
 public class SampleMinimalProgramTest {
 
     @Test
-    @Ignore("Tries to setup connection with real hardware, that does not exist")
     public void testCTor() {
-       String[] args = {"DecoderProConfig3.xml"};
-        SampleMinimalProgram t = new SampleMinimalProgram(args);
+        // the class under test requires a configuration file name as a 
+        // parameter, but the configuration is ignored.
+        String[] args = {"DecoderProConfig3.xml"};
+        SampleMinimalProgram t = new SampleMinimalProgram(args){
+           // actual configuration is performed in the codeConfig method,
+           // so we provide a dummy for testing.
+           @Override
+           protected void codeConfig(String[] args){
+           }
+        };
         Assert.assertNotNull("exists",t);
     }
 

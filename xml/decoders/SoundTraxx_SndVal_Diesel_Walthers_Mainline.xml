@@ -15,10 +15,12 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20171110"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20180103"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20180314"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives        -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.              -->
   <!-- version 1.1 Specific UserID with tooltip indicating version number,
                   from SoundTraxx Product Identification guide Rev.B                         -->
+  <!-- version 2	Fix bug in CV57 and add missing cv19 and 217                               -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders">
@@ -214,6 +216,7 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
       <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
@@ -703,11 +706,15 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
       </variable>
-      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" minOut="4" default="1" tooltip="Used to configure the directionality of FX5A function output">
+      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" minOut="3" default="1" tooltip="Used to configure the directionality of FX5A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Forward Directional Control</label>
       </variable>
-      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="4" default="1" tooltip="Used to configure the directionality of FX5A function output">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="3" default="0" include="SD70ACe" tooltip="Used to configure the directionality of FX5A function output">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FX5 Reverse Directional Control</label>
+      </variable>
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="3" default="1" exclude="SD70ACe" tooltip="Used to configure the directionality of FX5A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
@@ -862,6 +869,14 @@
       <variable CV="216" item="EMF Option 1" default="140" tooltip="Specifies the reference voltage for BEMF">
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
+      </variable>
+      <variable CV="217" mask="XXXXXXVX" item="EMF Enable" default="1" tooltip="Enable back-EMF motor control">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+          <label>Back-EMF Enable</label>
+      </variable>
+      <variable CV="217" mask="XXXXVXXX" item="Load Control" default="0" tooltip="Direction commands will bring the motor to a full stop for a duration of 500ms before the decoder changes locomotive direction">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+          <label>Auto-Stop Enable</label>
       </variable>
       <variable CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="20">
         <decVal/>

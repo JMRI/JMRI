@@ -1397,6 +1397,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
             firePropertyChange("sensors", null, this.destination);
         }
 
+        @SuppressWarnings("unused") // not used now, preserved for later use
         void removeSensor(NamedBeanHandle<Sensor> sen) {
             for (NamedBeanSetting nbh : userSetSensors) {
                 if (nbh.getBean().equals(sen.getBean())) {
@@ -2847,6 +2848,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         }
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
@@ -2856,10 +2858,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
      *
      * @return Always zero
      */
+    @Override
     public int getState() {
         return 0;
     }
 
+    @Override
     public void setState(int i) {
     }
 

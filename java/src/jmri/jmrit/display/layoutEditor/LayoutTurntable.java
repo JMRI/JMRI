@@ -88,6 +88,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @return the string
      */
+    @Override
     public String toString() {
         return "LayoutTurntable " + getName();
     }
@@ -116,6 +117,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * @return the bounds of this turntable
      */
+    @Override
     public Rectangle2D getBounds() {
         Rectangle2D result;
 
@@ -456,6 +458,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param locationType the connection type
      * @return the coordinates
      */
+    @Override
     public Point2D getCoordsForConnectionType(int locationType) {
         Point2D result = getCoordsCenter();
         if (TURNTABLE_CENTER == locationType) {
@@ -553,6 +556,7 @@ public class LayoutTurntable extends LayoutTrack {
         return result;
     }
 
+    @Override
     public boolean isMainline() {
         return false;
     }
@@ -566,6 +570,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
+    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
@@ -634,6 +639,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param p the layout editor
      */
+    @Override
     public void setObjects(LayoutEditor p) {
         for (RayTrack rt : rayList) {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
@@ -1100,9 +1106,9 @@ public class LayoutTurntable extends LayoutTrack {
         if (isBlock && isMain) {
             Stroke stroke = g2.getStroke();
             Color color = g2.getColor();
-        // draw turntable circle - default track color, side track width
+            // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-        g2.setColor(defaultTrackColor);
+            g2.setColor(defaultTrackColor);
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
             g2.setStroke(stroke);
             g2.setColor(color);
@@ -1119,21 +1125,21 @@ public class LayoutTurntable extends LayoutTrack {
                 if (ts == null) {
                     g2.setColor(defaultTrackColor);
                 } else {
-                setColorForTrackBlock(g2, ts.getLayoutBlock());
-            }
+                    setColorForTrackBlock(g2, ts.getLayoutBlock());
+                }
             }
             if (main == isMain) {
                 Point2D pt2 = getRayCoordsOrdered(j);
                 Point2D delta = MathUtil.normalize(MathUtil.subtract(pt2, center), radius);
                 Point2D pt1 = MathUtil.add(center, delta);
-            g2.draw(new Line2D.Double(pt1, pt2));
-            if (isTurnoutControlled() && (getPosition() == j)) {
-                    delta = MathUtil.normalize(delta, radius - halfTrackWidth);
-                pt1 = MathUtil.subtract(center, delta);
                 g2.draw(new Line2D.Double(pt1, pt2));
+                if (isTurnoutControlled() && (getPosition() == j)) {
+                    delta = MathUtil.normalize(delta, radius - halfTrackWidth);
+                    pt1 = MathUtil.subtract(center, delta);
+                    g2.draw(new Line2D.Double(pt1, pt2));
+                }
             }
         }
-    }
     }   // draw1
 
     /**
@@ -1178,11 +1184,13 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
         for (int j = 0; j < getNumberRays(); j++) {
-            if (getRayConnectOrdered(j) == null) {
-                Point2D pt = getRayCoordsOrdered(j);
-                g2.fill(layoutEditor.trackControlCircleAt(pt));
+            if ((specificType == NONE) || (specificType == (TURNTABLE_RAY_OFFSET + j))) {
+                if (getRayConnectOrdered(j) == null) {
+                    Point2D pt = getRayCoordsOrdered(j);
+                    g2.fill(layoutEditor.trackControlCircleAt(pt));
+                }
             }
         }
     }
@@ -1192,6 +1200,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         if (isTurnoutControlled()) {
             // draw control circles at all but current position ray tracks
@@ -1212,6 +1221,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param g2 the graphics port to draw to
      */
+    @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(defaultTrackColor);
@@ -1298,9 +1308,9 @@ public class LayoutTurntable extends LayoutTrack {
             TrackSegment ts = getRayConnectOrdered(k);
             if (ts != null) {
                 String blockName = ts.getBlockName();
-                    blocksAndTracksMap.put(ts, blockName);
-                }
+                blocksAndTracksMap.put(ts, blockName);
             }
+        }
 
         List<Set<String>> TrackNameSets = null;
         Set<String> TrackNameSet = null;
@@ -1336,6 +1346,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
             @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
@@ -1365,6 +1376,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // turntables don't have blocks...
         // nothing to see here, move along...

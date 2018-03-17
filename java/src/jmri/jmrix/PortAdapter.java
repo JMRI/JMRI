@@ -30,6 +30,7 @@ public interface PortAdapter {
 
     /**
      * Query the status of this connection.
+     * This is a question of configuration, not transient hardware status.
      *
      * @return true if OK, at least as far as known
      */
@@ -45,11 +46,15 @@ public interface PortAdapter {
     public String getCurrentPortName();
 
     /**
+     * Get the InputStream from the port.
+     *
      * @return the InputStream from the port
      */
     public DataInputStream getInputStream();
 
     /**
+     * Get the outputStream to the port.
+     *
      * @return the outputStream to the port
      */
     public DataOutputStream getOutputStream();
@@ -63,32 +68,32 @@ public interface PortAdapter {
     public String getOption4Name();
 
     /**
-     * Set the first port option. Only to be used after construction, but before
-     * the openPort call.
+     * Set the first port option. Only to be used after construction,
+     * but before the openPort call.
      *
      * @param value to set the option to
      */
     public void configureOption1(String value);
 
     /**
-     * Set the second port option. Only to be used after construction, but
-     * before the openPort call.
+     * Set the second port option. Only to be used after construction,
+     * but before the openPort call.
      *
      * @param value to set the option to
      */
     public void configureOption2(String value);
 
     /**
-     * Set the third port option. Only to be used after construction, but before
-     * the openPort call.
+     * Set the third port option. Only to be used after construction,
+     * but before the openPort call.
      *
      * @param value to set the option to
      */
     public void configureOption3(String value);
 
     /**
-     * Set the fourth port option. Only to be used after construction, but
-     * before the openPort call.
+     * Set the fourth port option. Only to be used after construction,
+     * but before the openPort call.
      *
      * @param value to set the option to
      */

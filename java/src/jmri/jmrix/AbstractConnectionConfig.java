@@ -37,6 +37,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     }
 
     static public class SystemPrefixFormatter extends javax.swing.text.DefaultFormatter {
+        @Override
         public Object stringToValue(String text) throws java.text.ParseException {
             try {
                 if (jmri.Manager.getSystemPrefixLength(text)!= text.length()) {

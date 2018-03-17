@@ -18,6 +18,12 @@ public class TurnoutOperationManagerTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testDefaultObjectCreation() {
+        TurnoutOperationManager t = jmri.InstanceManager.getDefault(TurnoutOperationManager.class);
+        Assert.assertNotNull("exists",t);
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

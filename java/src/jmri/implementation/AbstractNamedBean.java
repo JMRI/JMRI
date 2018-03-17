@@ -211,6 +211,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * {@inheritDoc}
      */
     @Nonnull
+    @Override
     public String toString() {
         return getSystemName();
     }
@@ -353,6 +354,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * By default, does an alphanumeric-by-chunks comparison.
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         return ac.compare(suffix1, suffix2);

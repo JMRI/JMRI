@@ -51,8 +51,8 @@ public class SerialMonFrameTest {
         f.dispose();
     }
 
-    /*  When uncommented following cause compiler fails
-    @Ignore // Following are timing-specific, occasionally fail, so commented out
+    /*  When uncommented following cause compiler to fail
+    @Ignore("timing-specific, occasionally fail, so commented out")
     @Test
     public void testMsg() {
         NceMessage m = new NceMessage(3);
@@ -69,7 +69,7 @@ public class SerialMonFrameTest {
         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
     }
 
-    @Ignore // Following are timing-specific, occasionally fail, so commented out
+    @Ignore("timing-specific, occasionally fail, so commented out")
     @Test
     public void testReply() {
         NceReply m = new NceReply();

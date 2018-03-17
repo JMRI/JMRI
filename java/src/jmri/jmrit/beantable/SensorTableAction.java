@@ -175,6 +175,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             addButton.addActionListener(createListener);
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {

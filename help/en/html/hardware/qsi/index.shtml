@@ -15,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -46,9 +47,9 @@
       <p>Note that when using JMRI with the Quantum Programmer, the
       Quantum CV Manager (Windows only) program must <em>not</em>
       be running. If it is, you'll get obscure errors and JMRI
-      won't be able to access the decoder. <a name="hardware" id=
-      "hardware"></a></p>
+      won't be able to access the decoder.</p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Decoders</h3>
@@ -74,13 +75,13 @@
 
       <h4><a id="driverWin" name="driverWin">Windows</a></h4>
 
-      <p><a id="driverWin" name="driverWin">For JMRI to talk to the
+      <p>For JMRI to talk to the
       Quantum Programmer, a driver has to be installed so that the
       Quantum Programmer appears to be a serial port (a Virtual Com
       Port, or VCP). These drivers are compatible with the most
       recent version of the QSI Quantum Programmer software, so you
       can alternate between using JMRI and the Quantum Programmer
-      application (though not at the same time, of course).</a></p>
+      application (though not at the same time, of course).</p>
 
       <p>Max Ettinger has provided <a href=
       "http://jmri.org/install/qsidriver/">detailed
@@ -89,8 +90,7 @@
       <h4><a id="driverMac" name="driverMac">Mac OS X</a></h4>
 
       <ol>
-        <li><a id="driverMac" name="driverMac">Download
-        the</a><a id="driverMac" name="driverMac"></a> <a href=
+        <li>Download the<a href=
         "http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">
         installation file</a> for the Mac OS X driver. This is a
         disk image (.dmg) file that should open as a new Finder
@@ -108,8 +108,7 @@
 
       <h4><a id="driverLinux" name="driverLinux">Linux</a></h4>
 
-      <p><a id="driverLinux" name="driverLinux"><em>This is still
-      being worked on.</em></a></p>
+      <p><em>This is still being worked on.</em></p>
 
       <ol>
         <li>Download the <a href=
@@ -158,6 +157,7 @@
 
       <p>DecoderPro is now configured. Restart it, and you should
       be ready to use the Quantum Programmer.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

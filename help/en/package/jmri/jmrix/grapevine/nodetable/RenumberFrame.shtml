@@ -25,8 +25,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Change Grapevine Board Address</h1>This tool lets you
-      change the address of a Grapevine board.
+      <h1>Change Grapevine Board Address</h1>
+      <p>This tool lets you change the address of a Grapevine board.</p>
+
+      <img src="../images/GrapevineNodeConfigToolPane.png" width=
+              "442" height="189" align="right"
+           alt="Grapevine Node Renumer Tool Interface">
 
       <p>The board remembers the change, even through power off/on
       cycles, until you change it again.</p>
@@ -37,6 +41,11 @@
       <p>You might want to open the <a href=
       "NodeTableFrame.shtml">Node Table</a> and click "Check" to
       see if the renumbering has worked.</p>
+
+      <p>Back to the <a href=
+      "../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
+      page.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

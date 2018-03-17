@@ -12,7 +12,7 @@ import org.junit.Test;
 public class BundleTest  {
 
     @Test public void testGoodKeysMessage() {
-        Assert.assertEquals("Help", Bundle.getMessage("HELP"));
+        Assert.assertEquals("Help", Bundle.getMessage("ButtonHelp"));
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
@@ -26,7 +26,7 @@ public class BundleTest  {
     }
 
     @Test public void testGoodKeysMessageArg() {
-        Assert.assertEquals("Help", Bundle.getMessage("HELP", "foo"));
+        Assert.assertEquals("Help", Bundle.getMessage("ButtonHelp", "foo"));
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", "foo"));
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }

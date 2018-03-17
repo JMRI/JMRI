@@ -121,6 +121,10 @@ confuses JavaHelp.
         <li>Anchors need to use the "name" attribute rather than
         the "id" attribute. See the item above for an example.</li>
 
+        <li>Do not use spaces or <code>%20</code> in anchor names.
+        If you must use a phrase for a name, use the underscore character:
+        "This_Anchor", not "This Anchor.</li>
+
         <li>You can use the <code>&lt;code&gt;</code> element, or
         the <code>&lt;pre&gt;</code> element, but you can't use
         both together. <code>&lt;code&gt;</code> is good for

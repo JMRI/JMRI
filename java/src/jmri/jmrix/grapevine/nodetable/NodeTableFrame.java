@@ -3,19 +3,22 @@ package jmri.jmrix.grapevine.nodetable;
 import java.awt.Container;
 import javax.swing.BoxLayout;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.util.JmriJFrame;
 
 /**
- * Frame for user configuration of serial nodes
+ * Frame for user configuration of serial nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  * @author Dave Duchamp Copyright (C) 2004, 2006
  */
-public class NodeTableFrame extends jmri.util.JmriJFrame {
+public class NodeTableFrame extends JmriJFrame {
 
     private GrapevineSystemConnectionMemo memo = null;
 
     /**
-     * Constructor method
+     * Create a new NodeTableFrame.
+     *
+     * @param _memo the {@link jmri.jmrix.grapevine.GrapevineSystemConnectionMemo} for this table
      */
     public NodeTableFrame(GrapevineSystemConnectionMemo _memo) {
         super();
@@ -25,7 +28,8 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
     NodeTablePane p;
 
     /**
-     * Initialize the window
+     * {@inheritDoc}
+     * Initialize the NodeTableFrame window.
      */
     @Override
     public void initComponents() {
@@ -48,6 +52,9 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         memo.getTrafficController().removeSerialListener(p);

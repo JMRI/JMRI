@@ -924,7 +924,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                     blockSensors.add(sBean.getDisplayName());
                 }
             }
-            LayoutEditor sPanel = pdSrc.getPanel();
+
             for (PointDetails pdDest : src.getDestinationPoints()) {
                 Sensor dBean = pdDest.getSensor();
                 for (LayoutBlock dProtect : pdDest.getProtecting()) {

@@ -1,8 +1,10 @@
 package apps.PanelPro;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,8 +16,8 @@ import org.junit.Test;
 public class PanelProPaneTest {
 
     @Test
-    @Ignore("needs more setup")
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelProPane t = new PanelProPane();
         Assert.assertNotNull("exists",t);
     }
@@ -24,6 +26,7 @@ public class PanelProPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
     }
 
     @After

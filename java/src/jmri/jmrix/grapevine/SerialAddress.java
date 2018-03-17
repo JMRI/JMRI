@@ -11,23 +11,27 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Multiple address formats are supported:
  * <ul>
- * <li>Gtnnnxxx where: G is the (multichar!) system connection prefix,
- * t is the type code: 'T' for turnouts, 'S' for sensors, 'H' for signals
- * and 'L' for lights;
- * nn is the node address (0-127); xxx is a bit number of the input or
+ * <li>Gitnnnxxx where: Gi is the (multichar) system connection prefix,
+ * t is the type code: 'T' for turnouts, 'S' for sensors, 'H' for signal
+ * heads and 'L' for lights;
+ * nnn is the node address (0-127); xxx is a bit number of the input or
  * output bit (001-999)</li>
- * <li>Gtnnxxx = (node address x 1000) + bit number.<br>
- * Examples: GT2 (node address 0, bit 2), GS1003 (node address 1, bit 3),
+ * <li>Gitnnnxxx = (node address x 1000) + bit number.<br>
+ * Examples: GT2 (node address 0, bit 2), G1S1003 (node address 1, bit 3),
  * GL11234 (node address 11, bit234)</li>
- * <li>Gtnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
- * sensors, 'H' for signals and 'L' for lights; nnn is the node address of the
+ * <li>Gitnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
+ * sensors, 'H' for signal heads and 'L' for lights; nnn is the node address of the
  * input or output bit (0-127); xxxx is a bit number of the input or output bit
- * (1-2048); a is a subtype-specific letter: 'B' for a bit number (e.g. GT12B3 is
- * a shorter form of GT12003), 'a' is for advanced serial occupancy sensors, 'm'
- * is for advanced serial motion sensors, 'p' is for parallel sensors, 's' is for
- * serial occupancy sensors.<br>
- * Examples: GT0B2 (node address 0, bit 2), GS1B3 (node address 1, bit 3),
- * GL11B234 (node address 11, bit234)
+ * (1-2048); a is a subtype-specific letter:
+ *  <ul>
+ *  <li>'B' for a bit number (e.g. GT12B3 is a shorter form of GT12003)
+ *  <li>'a' is for advanced serial occupancy sensors (only valid t = S)
+ *  <li>'m' is for advanced serial motion sensors (only valid t = S)
+ *  <li>'p' is for parallel sensors (only valid t = S)
+ *  <li>'s' is for serial occupancy sensors (only valid t = S)
+ *  </ul>
+ * Examples: GT0B2 (node address 0, bit 2), G1S1B3 (node address 1, bit 3),
+ * G22L11B234 (node address 11, bit 234)
  * </li>
  * </ul>
  *
@@ -44,7 +48,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.11.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -69,7 +73,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.11.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -94,7 +98,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.11.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -119,7 +123,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.11.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -144,7 +148,7 @@ public class SerialAddress {
      * <p>
      * Groups:
      * <ul>
-     * <li> - System letter/prefix (excluded in regex since 4.12.3)
+     * <li> - System letter/prefix (excluded in regex since 4.11.3)
      * <li>1 - Type letter
      * <li>2 - suffix, if of nnnAnnn form
      * <li>3 - node number in nnnAnnn form
@@ -198,19 +202,19 @@ public class SerialAddress {
         if (!matcher.matches()) {
             // here if an illegal format 
             log.error("illegal system name format: {}", systemName);
-            return (null);
+            return null;
         }
 
         // start decode
         int ua;
         if (matcher.group(6) != null) {
-            // This is a Gtnnxxx address
+            // This is a Gitnnxxx address
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 ua = num / 1000;
             } else {
                 log.error("invalid value in system name: {}", systemName);
-                return (null);
+                return null;
             }
         } else {
             ua = Integer.valueOf(matcher.group(3)).intValue();
@@ -234,7 +238,7 @@ public class SerialAddress {
         // start decode
         int n = 0;
         if (matcher.group(6) != null) {
-            // name in be Gtnnxxx format
+            // name in be Gitnnxxx format
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 n = num % 1000;
@@ -243,15 +247,18 @@ public class SerialAddress {
                 return (0);
             }
         } else {
-            // This is a Gtnnaxxxx address
+            // This is a Gitnnaxxxx address
             n = Integer.valueOf(matcher.group(5)).intValue();
         }
         return (n);
     }
 
     /**
-     * Public static method to parse a system name and return the node number.
-     * Notes: Nodes are numbered from 1. If an error is found, -1 is returned.
+     * Public static method to parse a system name to fetch the node number.
+     * <p>
+     * Note: Nodes are numbered from 1.
+     *
+     * @return node number. If an error is found, returns -1
      */
     public static int getNodeAddressFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters
@@ -265,7 +272,7 @@ public class SerialAddress {
         // start decode
         int ua;
         if (matcher.group(6) != null) {
-            // This is a Gtnnxxx address
+            // This is a Gitnnxxx address
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 ua = num / 1000;
@@ -275,12 +282,14 @@ public class SerialAddress {
             }
         } else {
             ua = Integer.valueOf(matcher.group(3)).intValue();
+            log.debug("node ua: {}", ua);
         }
         return ua;
     }
 
     /**
      * Public static method to validate system name format.
+     * Logging of handled cases no higher than WARN.
      *
      * @param systemName name to check
      * @param type       expected device type letter
@@ -295,7 +304,7 @@ public class SerialAddress {
             // which happens all the time due to how proxy managers work
             return NameValidity.INVALID;
         }
-        if (matcher.group(1).charAt(0) != type) { // remember we skipped the multichar prefix
+        if (matcher.group(1).charAt(0) != type) { // notice we skipped the multichar prefix
             log.warn("type in {} does not match type {}", systemName, type);
             return NameValidity.INVALID;
         }
@@ -316,8 +325,8 @@ public class SerialAddress {
         // check format
         Matcher m2 = p.matcher(systemName.substring(prefix.length()));
         if (!m2.matches()) {
-            // here if cannot parse specifically
-            log.warn("invalid system name format: {} for type {}", systemName, type);
+            // here if cannot parse specifically (only accepts GxTnnn or GxTnnnB
+            log.debug("invalid system name format: {} for type {}", systemName, type);
             return NameValidity.INVALID;
         }
 
@@ -325,24 +334,24 @@ public class SerialAddress {
         int node = -1;
         int bit = -1;
         if (matcher.group(6) != null) {
-            // name in be Gtnnxxx format
+            // name in be Gitnnxxx format
             int num = Integer.valueOf(matcher.group(6)).intValue();
             if (num > 0) {
                 node = num / 1000;
                 bit = num % 1000;
             } else {
-                log.warn("invalid value in system name: {}", systemName);
+                log.debug("invalid value in system name: {}", systemName);
                 return NameValidity.INVALID;
             }
         } else {
-            // This is a Gtnnaxxxx address, get values
+            // This is a Gitnnaxxxx address, get values
             node = Integer.valueOf(matcher.group(3)).intValue();
             bit = Integer.valueOf(matcher.group(5)).intValue();
         }
 
         // check values
         if ((node < 1) || (node > 127)) {
-            log.warn("invalid node number {} in {}", node, systemName);
+            log.debug("invalid node number {} in {}", node, systemName);
             return NameValidity.INVALID;
         }
 
@@ -352,7 +361,7 @@ public class SerialAddress {
                     || (bit >= 201 && bit <= 224)
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
-                log.warn("invalid bit number {} in {}", bit, systemName);
+                log.debug("invalid bit number {} in {}", bit, systemName);
                 return NameValidity.INVALID;
             }
         } else { 
@@ -361,33 +370,31 @@ public class SerialAddress {
             String subtype = matcher.group(4);
             if (subtype == null) { // no subtype, just look at total
                 if ((bit < 1) || (bit > 224)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 } else {
                     return NameValidity.VALID;
                 }
             }
             subtype = subtype.toUpperCase();
-            if (subtype.equals("A")) {
-                // advanced serial occ
+            if (subtype.equals("A")) { // advanced serial occ
                 if ((bit < 1) || (bit > 24)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
-            } else if (subtype.equals("M")) { 
-                // advanced serial motion 
+            } else if (subtype.equals("M")) { // advanced serial motion
                 if ((bit < 1) || (bit > 24)) {
-                    log.warn("invalid bit number {} in  {}", bit, systemName);
+                    log.debug("invalid bit number {} in  {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
-            } else if (subtype.equals("S")) {// old serial
+            } else if (subtype.equals("S")) { // old serial
                 if ((bit < 1) || (bit > 24)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
             } else if (subtype.equals("P")) { // parallel
                 if ((bit < 1) || (bit > 96)) {
-                    log.warn("invalid bit number {} in {}", bit, systemName);
+                    log.debug("invalid bit number {} in {}", bit, systemName);
                     return NameValidity.INVALID;
                 }
             }
@@ -407,7 +414,7 @@ public class SerialAddress {
         String prefix = tc.getSystemConnectionMemo().getSystemPrefix();
         if (validSystemNameFormat(systemName, type, prefix) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
-            log.warn("invalid system name {}", systemName);
+            log.debug("invalid system name {}", systemName);
             return false;
         }
         SerialNode node = getNodeFromSystemName(systemName, tc);

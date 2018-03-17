@@ -158,6 +158,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void dispose(){
         if(intervalTimer!=null) {
            intervalTimer.cancel();

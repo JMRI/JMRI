@@ -161,6 +161,7 @@ public interface ReporterManager extends Manager<Reporter> {
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
+    @Override
     public String getEntryToolTip();
 
 }

@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -44,7 +45,7 @@
 
       <p>Six signal heads may be placed around the 3-way turnout as
       shown below:</p><a href="./images/DoubleXover8.gif"><img src=
-      "images/3_WayTurnout.jpg" align="center" width="469" height="180"
+      "images/3_WayTurnout.jpg" width="469" height="180"
       hspace="0" vspace="0"></a>
 
       <p>The turnout at the throat, is referred to as <b>Turnout
@@ -347,7 +348,9 @@
       </ul>
 
       <p><b>Please remember to save your panel after using this
-      tool.</b></p><!--#include virtual="/Footer" -->
+      tool.</b></p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
