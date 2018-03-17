@@ -161,7 +161,7 @@
     
 <h2>Debugging</h2>
 
-<a id="dump">
+<a id="dump"></a>
 <h3>Getting a thread-dump</h3>
 
 When debugging threading issues, it can be helpful to get a "thread dump".
