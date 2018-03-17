@@ -188,6 +188,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * command station switches
      */
     private int numSlots = 128;
+    private final int SLOTS_DCS240 = 433;
     private boolean extendedSlots = false;
 
     /**
@@ -905,7 +906,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
         if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
-            numSlots = 432;  // base 128 then 400 extended
+            numSlots = SLOTS_DCS240;  // base 128 then 400 extended
             extendedSlots = true;
         }
         loadSlots();

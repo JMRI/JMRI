@@ -41,6 +41,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
     javax.swing.JButton add10Throttles = new javax.swing.JButton("Add 10 Throttles");
+    javax.swing.JButton del10Throttles = new javax.swing.JButton("Del 10 Throttles");
+    javax.swing.JTextField throttleIdField = new javax.swing.JTextField(4);
+   
 
     public LocoGenPanel() {
         super();
@@ -95,13 +98,21 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
+            pane1.add(throttleIdField);
             pane1.add(add10Throttles);
+            pane1.add(del10Throttles);
             pane1.add(Box.createVerticalGlue());
 
             add10Throttles.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     add10ThrottlesActionPerformed(e);
+                }
+            });
+            del10Throttles.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    del10ThrottlesActionPerformed(e);
                 }
             });
 
@@ -160,31 +171,61 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     private ArrayList<DccThrottle> throttles = new ArrayList<>();
+    private Thread abrty;
     private int throttleAddr = 300;
+    private int ac = 0;
     public void add10ThrottlesActionPerformed(java.awt.event.ActionEvent e) {
         int count=0;
-        while (count < 10) {
-        log.debug("requesting throttle address={}",  throttleAddr);
-        boolean ok;
-        ok = InstanceManager.throttleManagerInstance().requestThrottle(throttleAddr, this);
-        if (!ok) {
-            log.warn("Throttle for locomotive address {} could not be setup.", throttleAddr);
+        try {
+            throttleAddr = Integer.parseInt(throttleIdField.getText());
+        } 
+        catch (Exception e3) {
+            log.error("Bother leaving it at[{}]",throttleAddr);
         }
-        throttleAddr+=1;
-        try{Thread.sleep(10);} catch (Exception e2) {log.info("Ahh");}
-        count++;
+        while (count < 10) {
+            log.debug("requesting throttle address={}",  throttleAddr);
+            boolean ok;
+            ok = InstanceManager.throttleManagerInstance().requestThrottle(throttleAddr, this);
+            if (!ok) {
+                log.warn("Throttle for locomotive address {} could not be setup.", throttleAddr);
+            }
+            throttleAddr+=1;
+            try{Thread.sleep(20);} catch (Exception e2) {log.info("Ahh");}
+            count++;
+        }
+        try{Thread.sleep(2000);} catch (Exception e2) {log.info("Ahh2");}
+        log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
+    }
+
+    public void del10ThrottlesActionPerformed(java.awt.event.ActionEvent e) {
+        for( DccThrottle item : throttles) {
+            if (item != null ) {
+                item.setSpeedSetting(0.0f);
+                InstanceManager.throttleManagerInstance().releaseThrottle(item, null);
+            }
         }
     }
 
     // Throttle feedback method - Initiates running AutoEngineer with the new throttle
     @Override
     public void notifyThrottleFound(DccThrottle t) {
-        throttles.add(t);
-        throttles.get(throttles.size()-1).setSpeedSetting(0.5f);
         if (t == null) {
             log.error("Null Throttle returned");
             return;
         }
+        for( DccThrottle item : throttles) {
+            if (item == null ) {
+                item=t;
+                return;
+            }
+        }
+        ac = 0;
+        for( DccThrottle item : throttles) {
+            if (item != null ) {
+                ac++;
+            }
+        }
+        throttles.add(t);
     }
 
     @Override

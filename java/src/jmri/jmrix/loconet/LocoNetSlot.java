@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Stephen Williams Copyright (C) 2008
  * @author B. Milhaupt, Copyright (C) 2018
+ * @author S. Gigiel, Copyright (C) 2018
  */
 public class LocoNetSlot {
 

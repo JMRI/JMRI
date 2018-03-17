@@ -296,7 +296,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             contentPane.add(p11);
             JPanel p12 = new JPanel();
             p12.setLayout(new FlowLayout());
-            activeTrainsTableModel = new ActiveTrainsTableModel();
+            p12.setLayout(new BorderLayout());
+             activeTrainsTableModel = new ActiveTrainsTableModel();
             JTable activeTrainsTable = new JTable(activeTrainsTableModel);
             activeTrainsTable.setRowSelectionAllowed(false);
             activeTrainsTable.setPreferredScrollableViewportSize(new java.awt.Dimension(950, 160));
@@ -339,6 +340,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             JButton sampleButton = new JButton(Bundle.getMessage("AllocateButtonName"));
             activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
             allocateButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+            
+            TableColumn releaseButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TERMINATEBUTTON_COLUMN);
+            releaseButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
+            releaseButtonColumn.setMinWidth(110);
+            releaseButtonColumn.setMaxWidth(190);
+            releaseButtonColumn.setResizable(false);
+            buttonRenderer = new ButtonRenderer();
+            activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
+            sampleButton = new JButton("Terminate");
+            activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
+            releaseButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
             JScrollPane activeTrainsTableScrollPane = new JScrollPane(activeTrainsTable);
             p12.add(activeTrainsTableScrollPane, BorderLayout.CENTER);
             contentPane.add(p12);
@@ -2436,7 +2448,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int ALLOCATED_COLUMN = 5;
         public static final int NEXTSECTION_COLUMN = 6;
         public static final int ALLOCATEBUTTON_COLUMN = 7;
-
+        public static final int TERMINATEBUTTON_COLUMN = 8;
+        public static final int MAX_ACTIVE_TRAIN_COLUMN = 8;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -2450,7 +2463,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == ALLOCATEBUTTON_COLUMN) {
+            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN) {
                 return JButton.class;
             }
             return String.class;
@@ -2458,7 +2471,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public int getColumnCount() {
-            return ALLOCATEBUTTON_COLUMN + 1;
+            return MAX_ACTIVE_TRAIN_COLUMN + 1;
         }
 
         @Override
@@ -2468,7 +2481,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c == ALLOCATEBUTTON_COLUMN) {
+            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN) {
                 return (true);
             }
             return (false);
@@ -2492,6 +2505,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case NEXTSECTION_COLUMN:
                     return Bundle.getMessage("NextSectionColumnTitle");
                 case ALLOCATEBUTTON_COLUMN:
+                case TERMINATEBUTTON_COLUMN:
                     return (" "); // button columns have no names
                 default:
                     return "";
@@ -2517,6 +2531,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case NEXTSECTION_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
                 case ALLOCATEBUTTON_COLUMN:
+                case TERMINATEBUTTON_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 default:
                     // fall through
@@ -2548,6 +2563,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case NEXTSECTION_COLUMN:
                     return (at.getNextSectionToAllocateName());
                 case ALLOCATEBUTTON_COLUMN:
+                case TERMINATEBUTTON_COLUMN:
                     return Bundle.getMessage("AllocateButtonName");
                 default:
                     return (" ");
@@ -2559,6 +2575,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (col == ALLOCATEBUTTON_COLUMN) {
                 // open an allocate window
                 allocateNextRequested(row);
+            }
+            if (col == TERMINATEBUTTON_COLUMN) {
+                if (activeTrainsList.get(row) != null) {
+                    terminateActiveTrain(activeTrainsList.get(row));
+                }
             }
         }
     }
