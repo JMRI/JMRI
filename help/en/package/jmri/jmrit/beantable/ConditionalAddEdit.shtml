@@ -400,32 +400,32 @@
           <h2><a name="action" id="action">Available Actions</a></h2>
 
           <p>Actions that are currently available for use in
-          Conditionals are listed below along with information on
+          Conditionals are listed below, along with information on
           each:</p>
 
           <ul>
             <li>Sensor<ul>
               <li><strong>Set Sensor</strong>: Sets the specified sensor to the
-              chosen state. Specify the sensor to set by entering its
+              chosen state. Specify the sensor to set by entering/selecting its
               name. Specify the state to set by choosing Active or
               Inactive in the popup menu.</li>
 
               <li><strong>Delayed Set Sensor</strong>: Sets the specified
               sensor to the chosen state after waiting for a
               specified number of seconds. Specify the sensor to set
-              by entering its name. Specify the state to set by
+              by entering/selecting its name. Specify the state to set by
               choosing Active or Inactive in the popup menu. Specify
               the number of seconds to delay before setting the
               sensor by entering a number in the right-most field. If
               this Conditional is already waiting to set this sensor,
               this action is ignored, and the previous action
               continues as originally scheduled.(see also <strong>Reset
-              Delayed Set Sensor</strong> below.)</li>
+              Delayed Set Sensor</strong> - the next item.)</li>
 
               <li><strong>Reset Delayed Set Sensor</strong>: Sets the specified
               sensor to the chosen state after waiting for a
               specified number of seconds. Specify the sensor to set
-              by entering its name. Specify the state to set by
+              by entering/selecting its name. Specify the state to set by
               choosing Active or Inactive in the popup menu. Specify
               the number of seconds to delay before setting the
               sensor by entering a number in the right-most field.
@@ -447,8 +447,8 @@
             <li>Turnout<ul>
               <li><strong>Set Turnout</strong>: Sets the specified turnout to
               the chosen state. Specify the turnout to set by
-              entering its name. Specify the state to set by choosing
-              Closed or Thrown in the popup menu.</li>
+              entering/selecting its name. Specify the state to set by
+              choosing Closed or Thrown in the popup menu.</li>
 
               <li><strong>Delayed Set Turnout</strong>: Sets the specified
               turnout to the chosen state after waiting for a
@@ -460,21 +460,7 @@
               If this Conditional is already waiting to set this
               turnout, this action is ignored, and the previous
               action continues as originally scheduled.(see also
-              <strong>Reset Delayed Set Turnout</strong> below.)</li>
-
-              <li><strong>Turnout Lock</strong>: Locks or unlocks a turnout.
-              Enter the name for the turnout, and choose the
-              operation from the popup menu. <strong>Note:</strong> To control the
-              type of turnout lock go to the <a href=
-              "TurnoutTable.shtml">Turnout Table</a> and select the
-              Lock Mode.</li>
-
-              <li><strong>Cancel Timers for Turnout</strong>: Cancels all timers
-              waiting to set the specified turnouts in all
-              Conditionals in all Logixs. Specify the turnout by
-              entering its name. The turnout is not set; all active
-              delayed actions for setting the specified turnout are
-              cancelled without setting the turnout.</li>
+              <strong>Reset Delayed Set Turnout</strong> - the next item.)</li>
 
               <li><strong>Reset Delayed Set Turnout</strong>: Sets the
               specified turnout to the chosen state after waiting for
@@ -489,17 +475,31 @@
               cancelled, and a new wait period is started. In effect,
               the wait time is restarted. The turnout is not set
               until the most recent wait period expires.</li>
+
+              <li><strong>Turnout Lock</strong>: Locks or unlocks a turnout.
+              Enter/select the name for the turnout, and choose the
+              operation from the popup menu. <strong>Note:</strong> To control the
+              type of turnout lock go to the <a href=
+              "TurnoutTable.shtml">Turnout Table</a> and select the
+              Lock Mode.</li>
+
+              <li><strong>Cancel Timers for Turnout</strong>: Cancels all timers
+              waiting to set the specified turnouts in all
+              Conditionals in all Logixs. Specify the turnout by
+              entering/selecting its name. The turnout is not set; all active
+              delayed actions for setting the specified turnout are
+              cancelled without setting the turnout.</li>
             </ul></li>
 
             <li>Light<ul>
               <li><strong>Set Light</strong>: Sets the specified light to the
-              chosen state. Specify the light to set by entering its
-              name. Specify the state to set by choosing On or Off in
+              chosen state. Specify the light to set by entering/selecting
+              its name. Specify the state to set by choosing On or Off in
               the popup menu.</li>
 
               <li><strong>Set Light Intensity</strong>: Sets the intensity of a
               specified variable intensity light to the entered
-              intensity value. Specify the light to set by entering
+              intensity value. Specify the light to set by entering/selecting
               its name. Specify the intensity by entering the percent
               intensity as an integer in the range 0 to 100. If the
               specified light is not a variable light, or if the
@@ -509,7 +509,7 @@
               <li><strong>Set Light Transition Time</strong>: Sets the
               transition time of a specified variable intensity light
               to the entered time. Specify the light to set by
-              entering its name. Specify the transition time by
+              entering/selecting its name. Specify the transition time by
               entering the number of fast clock minutes needed to
               move from 0% intensity to 100% intensity. If the
               specified light is not a variable light, or if a
@@ -520,58 +520,58 @@
             <li>Signal Head<ul>
               <li><strong>Set Signal Appearance</strong>: Sets the specified
               signal head to the chosen appearance. Specify the
-              signal head to set by entering its name. Specify the
-              appearance to set by choosing from the popup menu.</li>
+              signal head to set by entering/selecting its name. Specify the
+              Appearance to set by choosing from the popup menu.</li>
 
               <li><strong>Set Signal Held</strong>: Sets the specified signal
               head to hold. Specify the signal head to hold by
-              entering its name.</li>
+              entering/selecting its name.</li>
 
               <li><strong>Clear Signal Held</strong>: Clears the hold on the
               specified signal head. Specify the signal head by
-              entering its name.</li>
+              entering/selecting its name.</li>
 
               <li><strong>Set Signal Dark</strong>: Sets the specified signal
-              head to not lit. Specify the signal head by entering
+              head to not lit. Specify the signal head by entering/selecting
               its name.</li>
 
               <li><strong>Set Signal Lit</strong>: Sets the specified signal
-              head to lit. Specify the signal head by entering its
+              head to lit. Specify the signal head by entering/selecting its
               name.</li>
             </ul></li>
 
             <li>Signal Mast<ul>
               <li><strong>Set Signal Mast Aspect</strong>: Sets the specified
               signal mast to the chosen aspect. Specify the
-              signal mast to set by entering its name. Select the
-              aspect from the Signal Mast Aspect list.</li>
+              signal mast to set by entering/selecting its name. Select the
+              Aspect from the Signal Mast Aspect list.</li>
 
               <li><strong>Set Signal Mast Held</strong>: Sets the specified signal
               mast to hold. Specify the signal mast to hold by
-              entering its name.</li>
+              entering/selecting its name.</li>
 
               <li><strong>Clear Signal Mast Held</strong>: Clears the hold on the
               specified signal mast. Specify the signal mast by
-              entering its name.</li>
+              entering/selecting its name.</li>
 
               <li><strong>Set Signal Mast Dark</strong>: Sets the specified signal
-              mast to not lit. Specify the signal mast by entering
+              mast to not lit. Specify the signal mast by entering/selecting
               its name.</li>
 
               <li><strong>Clear Signal Mast Dark</strong>: Sets the specified signal
-              mast to lit. Specify the signal mast by entering its
+              mast to lit. Specify the signal mast by entering/selecting its
               name.</li>
             </ul></li>
 
             <li>Memory<ul>
               <li><strong>Set Memory</strong>: Sets the specified memory to the
-              entered value. Specify the memory to set by entering
+              entered value. Specify the memory to set by entering/selecting
               its name. Specify the value to set in the memory by
               entering it in the right-most field.</li>
 
               <li><strong>Copy Memory To Memory</strong>: Copies the value of a
               memory variable to another memory variable. Specify the
-              memory to be copied from by entering its name in the
+              memory to be copied from by entering/selecting its name in the
               leftmost field. Specify the memory to receive the
               copied value by entering its name in the rightmost
               field.</li>
@@ -579,46 +579,46 @@
 
             <li>Logix<ul>
               <li><strong>Enable Logix</strong>: Enables the specified logix.
-              Specify the logix to enable by entering its name.</li>
+              Specify the logix to enable by entering/selecting its name.</li>
 
               <li><strong>Disable Logix</strong>: Disables the specified logix.
-              Specify the logix to disable by entering its name.</li>
+              Specify the logix to disable by entering/selecting its name.</li>
             </ul></li>
 
             <li>Warrant<ul>
               <li><strong>Allocate Warrant Route</strong>: Allocates (reserves) the
               OBlocks comprising the route of the warrant for use by the
-              warrant. Specify the warrant by entering its System Name or
+              warrant. Specify the warrant by entering/selecting its System Name or
               User Name.</li>
 
               <li><strong>Deallocate Warrant</strong>: Deallocates the OBlocks
               comprising the route of the warrant so they may be
-              allocated to other warrants. Specify the warrant by
-              entering its System Name or User Name.</li>
+              allocated to other warrants. Specify the Warrant by
+              entering/selecting its System Name or User Name.</li>
 
               <li><strong>Set Route Turnouts</strong>: Sets all the
-              turnouts comprising the route of the warrant. Specify the
-              warrant by entering its System Name or User Name.</li>
+              turnouts comprising the route of the Warrant. Specify the
+              warrant by entering/selecting its System Name or User Name.</li>
 
               <li><strong>Auto Run Train</strong>: Starts playback of the recorded
-              script for the train specified in the warrant. Specify the
-              warrant by entering its System Name or User Name.</li>
+              script for the train specified in the Warrant. Specify the
+              warrant by entering/selecting its System Name or User Name.</li>
 
               <li><strong>Manually Run Train</strong>: Serves a "clearance" to an
               operator that a humanly run train has running rights for
-              the extent of the warrant's route. Specify the warrant by
-              entering its System Name or User Name.</li>
+              the extent of the Warrant's route. Specify the Warrant by
+              entering/selecting its System Name or User Name.</li>
 
               <li><strong>Control Auto Train</strong>: Issues the specified
-              command to an auto run train. Specify the warrant of the
-              train by entering its System Name or User Name.
+              command to an auto run train. Specify the Warrant of the
+              train by entering/selecting its System Name or User Name.
               The Commands are:<ul>
                 <li>Halt</li>
                 <li>Resume</li>
                 <li>Abort</li>
                </ul></li>
 
-              <li><strong>Set Train ID</strong>: Set the train ID from the roster or
+              <li><strong>Set Train ID</strong>: Set the train ID from the Roster or
               the DCC address.  When a DCC address is used, also specify
               Long or Short.  Example: 1234(L) or 10(S).</li>
 
@@ -627,7 +627,7 @@
 
               <li><strong>Set Throttle Factor</strong>: Increases or decreases the
               throttle settings of an auto run train by the specified
-              factor. Specify the warrant of the train by entering its
+              factor. Specify the Warrant of the train by entering/selecting its
               System Name or User Name.</li>
             </ul></li>
 
@@ -674,7 +674,7 @@
             <li>Audio<ul>
               <li><strong>Play Sound File</strong>: Plays the specified sound
               file. Specify the sound file to play by entering its
-              name in the field provided. Click <strong>Set</strong> to bring
+              name in the field provided. Click <strong>...</strong> to bring
               up a file selection dialog to aid in finding the file.
               Navigate to your sound file, then click your sound
               file's name in the dialog to copy it (including its
@@ -686,7 +686,7 @@
             <li>Script<ul>
               <li><strong>Script: Run Script</strong>: Starts the specified script.
               Specify the script to start by entering its name in the
-              field provided. Click <strong>Set</strong> to bring up a file
+              field provided. Click <strong>...</strong> to bring up a file
               selection dialog for finding the file. Navigate to your
               script file, then click your script file's name in the
               dialog to copy it (including its path) to the
@@ -703,6 +703,7 @@
           </ul>
         </dd>
       </dl>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

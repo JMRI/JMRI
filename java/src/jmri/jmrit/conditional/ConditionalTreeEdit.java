@@ -1224,7 +1224,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (msgs != null) {
                     // Unable to delete due to existing conditional references
                     JOptionPane.showMessageDialog(_editLogixFrame,
-                            Bundle.getMessage("Error11", msgs), // NOI18N
+                            Bundle.getMessage("Error11", (Object[]) msgs), // NOI18N
                             Bundle.getMessage("ErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);  // NOI18N
                     return;
