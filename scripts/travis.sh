@@ -21,6 +21,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         # run Javadoc
         mvn javadoc:javadoc -U --batch-mode
         # scan HTML
+        head -20 help/en/html/apps//DecoderPro/FileUpdate.shtml
         mvn antrun:run -Danttarget=scanhelp
     else
         # run headless tests
