@@ -20,9 +20,6 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         mvn clean test -U -P travis-spotbugs --batch-mode
         # run Javadoc
         mvn javadoc:javadoc -U --batch-mode
-        # scan HTML
-        head -20 help/en/html/apps//DecoderPro/FileUpdate.shtml
-        ant scanhelp || exit 1
     else
         # run headless tests
         mvn test -U -P travis-headless --batch-mode \
