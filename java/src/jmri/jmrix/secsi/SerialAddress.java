@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *      <li>t is the type code: 'T' for turnouts, 'S' for sensors,
  *      and 'L' for lights
  *      <li>nnn is the node address of the input or output bit (0-127)
- *      <li>xxxx is a bit number of the input or output bit (1-2048).
+ *      <li>xxxx is a bit number of the input or output bit (1-999).
  *      </ul>
  *      Examples: VT0B2 (node address 0, bit 2), VS1B3 (node address 1, bit 3),
  *      VL11B234 (node address 11, bit234)

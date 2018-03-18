@@ -144,7 +144,7 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Public method to return node type.
-     * Current types are: SMINI, USIC_SUSIC
+     * Current types are: DAUGHTER, CABDRIVER
      */
     public int getNodeType() {
         return (nodeType);
@@ -203,7 +203,7 @@ public class SerialNode extends AbstractNode {
 
         // Create a Serial message
         // For now, always write entire node
-        SerialMessage m = new SerialMessage(1 + outputBits[getNodeType()] / 4); // byte size is usually 9
+        SerialMessage m = new SerialMessage(1 + outputBits[getNodeType()] / 4); // m.size is usually 9 on Secsi
         log.debug("message m byte length = {}/4 = {}", (1 + outputBits[getNodeType()]), m.getNumDataElements());
         m.setElement(0, getNodeAddress()); // node address
 
@@ -244,6 +244,7 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Use the contents of the poll reply to mark changes.
+     * TODO For Secsi Simulator, needs more work to create correct reply.
      *
      * @param l Reply to a poll operation
      */
@@ -320,11 +321,15 @@ public class SerialNode extends AbstractNode {
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
-        if (m.getElement(1) != 0x50) {
-            return false;
+        try {
+            if (m.getElement(1) != 0x50) {
+                return false;
+            }
+        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+            log.debug("message does not contain element 1", e);
         }
         // see how many polls missed
-        log.warn("Timeout to poll for addr={}: consecutive timeouts: {}", getNodeAddress(), timeout);
+        log.warn("Timeout to poll for addr {}: consecutive timeouts: {}", getNodeAddress(), timeout);
 
         if (timeout > 5) { // enough, reinit
             // reset timeout count to zero to give polls another try

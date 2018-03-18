@@ -37,20 +37,20 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Return the Secsi system letter.
+     * Return the Secsi system prefix.
      */
     @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
-    // to free resources when no longer used
+    // Free resources when no longer used
     @Override
     public void dispose() {
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
+     * Create a new sensor if all checks are passed. System name is normalized to
      * ensure uniqueness.
      */
     @Override
@@ -120,11 +120,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Process a reply to a poll of Sensors of one node
+     * Process a reply to a poll of Sensors of one node.
      */
     @Override
     public void reply(SerialReply r) {
         // determine which node
+        log.debug("received node poll reply '{}'", r.toString());
         SerialNode node = (SerialNode) memo.getTrafficController().getNodeFromAddress(r.getAddr());
         if (node != null) {
             node.markChanges(r);
@@ -135,6 +136,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Register any orphan Sensors when a new Serial Node is created.
      */
     public void registerSensorsForNode(SerialNode node) {
+        log.debug("registering node {}", node.getNodeAddress());
         // get list containing all Sensors
         java.util.Iterator<String> iter
                 = getSystemNameList().iterator();
@@ -151,6 +153,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                     tNode = SerialAddress.getNodeFromSystemName(sName, memo.getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
+                        log.debug("register sensor on node {}", node.getNodeAddress());
                         node.registerSensor(getBySystemName(sName),
                                 (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
                     }
@@ -171,8 +174,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Static function returning the SerialSensorManager instance to use.
      *
-     * @return The registered SerialSensorManager instance for general use, if
-     *         need be creating one.
+     * @return The registered SerialSensorManager instance for general use.
      * @deprecated since 4.9.7
      */
     @Deprecated

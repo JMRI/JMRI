@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Currently, the Secsi SimulatorAdapter reacts to the following commands sent from the user
  * interface with an appropriate reply {@link #generateReply(SerialMessage)}:
  * <ul>
- *     <li>Poll
+ *     <li>Poll (length = 1)
  * </ul>
  *
  * Based on jmri.jmrix.grapevine.simulator.SimulatorAdapter 2018
@@ -234,7 +234,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     private SerialMessage readMessage() {
         SerialMessage msg = null;
-        // log.debug("Simulator reading message");
+        // log.debug("Simulator reading message"); // lots of traffic in loop
         try {
             if (inpipe != null && inpipe.available() > 0) {
                 msg = loadChars();
@@ -250,7 +250,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
      * See {@link jmri.jmrix.secsi.SerialNode#markChanges(SerialReply)} and
-     * the secsi <a href="../package-summary.html">Binary Message Format Summary</a>.
+     * the (draft) secsi <a href="../package-summary.html">Binary Message Format Summary</a>.
      *
      * @param msg the message received in the simulated node
      * @return a single Secsi message to confirm the requested operation, or a series
@@ -264,8 +264,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         if (msg.getElement(1) == 0) { // only Polls expect a reply from the node, but we're not recognizing our Poll requests
           log.debug("Poll message detected");
           reply.setElement(0, nodeaddr); // node addres from msg element(0)
-            for (int j = 1; j < 5; j++) {
-                reply.setElement(j, 0x50); // poll reply
+            for (int j = 1; j < 2; j++) {
+                reply.setElement(j, 0xf0); // poll reply has only 2 elements
             }
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
@@ -299,9 +299,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     protected int currentAddr = -1; // at startup, can't match
-    protected int incomingLength = 0;
     /**
-     * Get characters from the input source. No opcode, so read per byte
+     * Get characters from the input source. No opcode, so must read per byte.
      * <p>
      * Only used in the Receive thread.
      *
@@ -310,19 +309,35 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     private SerialMessage loadChars() throws java.io.IOException {
         // get 1st byte, see if ending too soon
-        byte char1 = readByteProtected(inpipe);
-
-        SerialMessage msg = new SerialMessage(5);
-        msg.setElement(0, char1 & 0xFF); // address
-        //log.debug("new message received");
-
-        if (incomingLength <= 1) {
-            return msg;
+        byte char0 = readByteProtected(inpipe);
+        byte chari;
+        int[] chars = new int[9]; // temporary store of bytes
+        int i;
+        int replyByte = ;
+        log.debug("new message received in simulator");
+        for (i = 1; i < 9; i++) { // reading next max 9 bytes
+            try {
+                chari = readByteProtected(inpipe);
+                chars[i] = (chari & 0xFF);
+            } catch (java.io.IOException e) {
+                break;
+            }
         }
-        for (int i = 1; i < incomingLength; i++) { // reading next four bytes
-            char1 = readByteProtected(inpipe);
-            msg.setElement(i, char1 & 0xFF);
+        // copy bytes to Message
+        switch (i) {
+            case: 1
+                i = 2; // replyLength for Poll
+                break;
+            case 9:
+            default:
+                i = 5;
         }
+        SerialMessage msg = new SerialMessage(i);
+        msg.setElement(0, char0 & 0xFF); // address
+        for (int k = 1; k < i; k++) { // copy bytes
+            msg.setElement(0, chars[k] & 0xFF); // bytes read
+        }
+        log.debug("new reply sent by simulator, length={}", i);
         return msg;
     }
 
