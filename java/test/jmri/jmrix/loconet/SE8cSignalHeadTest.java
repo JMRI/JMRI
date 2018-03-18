@@ -23,7 +23,7 @@ public class SE8cSignalHeadTest {
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        SlotManager slotmanager = new SlotManager(lnis);
+        new SlotManager(lnis);  // not clear if this is done for sideeffects, or can be omitted
         //new LocoNetSystemConnectionMemo(lnis,slotmanager);
         jmri.InstanceManager.setDefault(LnTrafficController.class,lnis);
     }
