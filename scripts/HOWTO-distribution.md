@@ -423,7 +423,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.5". Add the next release milestone (created above) to it. Typical text:
 ```
- This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
+ This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
 ====================================================================================
