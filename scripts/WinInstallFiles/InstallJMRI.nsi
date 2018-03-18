@@ -469,6 +469,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
+    ; -- Recursively delete classes folder, which historically contained 
+    ; -- individual .properties and .classes patch files
+    ; -- that might not be consistent with this new version
+    RMDir /R "$OUTDIR\classes"
+
     ; -- Delete insecure jackson jar files as of JMRI 4.11.3
     Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
     Delete "$OUTDIR\lib\jackson-core-2.8.5.jar"
