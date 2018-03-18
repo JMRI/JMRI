@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head><!--#include virtual="/Header" -->
 
 <body>
@@ -40,7 +41,7 @@
       release every three years.  
       (For background, see 
       <a href="https://mreinhold.org/blog/forward-faster#Proposal">here</a>,
-      <a href="http://openjdk.java.net/jeps/322?elq_mid=102312&sh=251225172624122582213150247717&cmid=WWMK170418P00047">here</a>, 
+      <a href="http://openjdk.java.net/jeps/322?elq_mid=102312&amp;sh=251225172624122582213150247717&amp;cmid=WWMK170418P00047">here</a>,
       <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>).
       It's not yet clear what this will mean for JMRI's 
       development and migration path. Much discussion is necessary.
@@ -194,19 +195,19 @@
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Win Web Server 2008 (32-bit)</td>
+          <td bgcolor="#FFD0D0">Win Web Server 2008 (32-bit)</td>
 
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Win 2000 (32-bit)</td>
+          <td bgcolor="#FFD0D0">Win 2000 (32-bit)</td>
 
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Win Server 2003 (32-bit)</td>
+          <td bgcolor="#FFD0D0">Win Server 2003 (32-bit)</td>
 
           <td>1.6</td>
         </tr>
@@ -242,13 +243,13 @@
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Win Server 2008 (64-bit)</td>
+          <td bgcolor="#FFD0D0">Win Server 2008 (64-bit)</td>
 
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Win Web Server 2008 R2 (64-bit)</td>
+          <td bgcolor="#FFD0D0">Win Web Server 2008 R2 (64-bit)</td>
 
           <td>1.6</td>
         </tr>
@@ -269,7 +270,7 @@
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Win 2003 (64-bit)</td>
+          <td bgcolor="#FFD0D0">Win 2003 (64-bit)</td>
 
           <td>1.6</td>
         </tr>
@@ -284,19 +285,19 @@
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Windows 98 (2nd Ed)</td>
+          <td bgcolor="#FFD0D0">Windows 98 (2nd Ed)</td>
 
           <td>1.5-11</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Windows 98</td>
+          <td bgcolor="#FFD0D0">Windows 98</td>
 
           <td>1.4.2_14</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Windows 95</td>
+          <td bgcolor="#FFD0D0">Windows 95</td>
 
           <td>1.3.1_20</td>
         </tr>
@@ -308,37 +309,37 @@
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Mac OS X 10.7.3 and later on Intel</td>
+          <td bgcolor="#FFD0D0">Mac OS X 10.7.3 and later on Intel</td>
 
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Mac OS X 10.5.8 and later on Intel</td>
+          <td bgcolor="#FFD0D0">Mac OS X 10.5.8 and later on Intel</td>
 
           <td>1.6 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Mac OS X 10.5.7 and earlier on Intel</td>
+          <td bgcolor="#FFD0D0">Mac OS X 10.5.7 and earlier on Intel</td>
 
           <td>1.5 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">Mac OS X 10.3 and later on PowerPC</td>
+          <td bgcolor="#FFD0D0">Mac OS X 10.3 and later on PowerPC</td>
 
           <td>1.5 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">MacOS "Classic"</td>
+          <td bgcolor="#FFD0D0">MacOS "Classic"</td>
 
           <td>1.1.8</td>
         </tr>
 
         <tr>
-          <td bgcolor="FFD0D0">OS/2</td>
+          <td bgcolor="#FFD0D0">OS/2</td>
 
           <td>1.3</td>
         </tr>
@@ -351,7 +352,7 @@
       "https://www.java.com/en/download/help/sysreq.xml">Java
       versions and hardware requirements</a>.</p>
 
-      <h2 id="sysreq">System Requirements</h2>
+      <a name="sysreq" id="sysreq"></a><h2>System Requirements</h2>
 
       <p>The following combination of JMRI - Java - Platform/OS
       versions was based on Oracle and OS developers sources. It's
@@ -512,7 +513,6 @@
         </tbody>
       </table>
 
-      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <title>DecoderPro&reg; Main Window</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -85,21 +87,17 @@
       <p align="left"><span style="font-weight: bold;">Filter
       Bytes: <input size="40" name="c"></span></p>
 
-      <div class="nomenu" id="mBody">
-        <div id="mainContent">
-          <dl>
-            <dd>You can filter unwanted messages from the window by
-            entering each message's first hex value into the
-            "Filter Bytes" field. This can be especially helpful
-            when there is a lot of routine comm traffic. Separate
-            multiple values by spaces. e.g. "B0 D0 CC". This
-            example will suppress any messages whose raw data
-            starts with "B0", "D0" or "CC" You can determine the
-            available hex values by turning on "Show raw
-            data."</dd>
-          </dl>
-        </div>
-      </div>
+      <dl>
+        <dd>You can filter unwanted messages from the window by
+        entering each message's first hex value into the
+        "Filter Bytes" field. This can be especially helpful
+        when there is a lot of routine comm traffic. Separate
+        multiple values by spaces. e.g. "B0 D0 CC". This
+        example will suppress any messages whose raw data
+        starts with "B0", "D0" or "CC" You can determine the
+        available hex values by turning on "Show raw
+        data."</dd>
+      </dl>
 
       <p align="left"><span style="font-weight: bold;">Choose log
       file</span> button -- Log monitor data to a file for recovery
@@ -154,7 +152,9 @@
       <hr>
       <a href="dp3_menubar.shtml">Back to Index</a>
 
-      <div align="right"></div><!--#include virtual="/Footer" -->
+      <div align="right"></div>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

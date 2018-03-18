@@ -25,10 +25,12 @@ import purejavacomm.SerialPortEventListener;
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
  * <p>
- * Updated January 2010 for gnu io (RXTX) - Andrew Berridge.
- * Removed Runnable implementation and methods for it.
- *
+ * Rewritten during 4.11.x series. Create a high priority thread for the TC to
+ * move everything off the swing thread. Use a blocking queue to handle
+ * asynchronous messages from multiple sources.
+ * 
  * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Andrew Crosland Copyright (C) 2018
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener,
         Runnable {
@@ -41,6 +43,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private Thread tcThread;
     private final Object lock = new Object();
     private boolean replyAvailable = false;
+    // MAke this public so it can be overridden by a script for debug
+    public static int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
     
     /**
      * Create a new SprogTrafficController instance.
@@ -53,6 +57,12 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         tcThread.setName("TC thread");
         tcThread.setPriority(Thread.MAX_PRIORITY-1);
         tcThread.start();
+        // Set the timeout for communcation with hardware
+        if (memo.getSprogMode() == SprogConstants.SprogMode.OPS) {
+            timeout = SprogConstants.TC_OPS_REPLY_TIMEOUT;
+        } else {
+            timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
+        }
     }
 
     // Methods to implement the Sprog Interface
@@ -215,7 +225,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * @param m The message to be forwarded
      */
     public void sendSprogMessage(SprogMessage m) {
-        log.debug("sendSprogMessage message: [{}] id: {}", m.toString(isSIIBootMode()), m.getId());
+        log.debug("Add message to queue: [{}] id: {}", m.toString(isSIIBootMode()), m.getId());
         try {
             sendQueue.add(new MessageTuple(m, null));
         } catch (Exception e) {
@@ -231,7 +241,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      */
     @Override
     public synchronized void sendSprogMessage(SprogMessage m, SprogListener replyTo) {
-        log.debug("sendSprogMessage message: [{}] id: {}", m.toString(isSIIBootMode()), m.getId());
+        log.debug("Add message to queue: [{}] id: {}", m.toString(isSIIBootMode()), m.getId());
         try {
             sendQueue.add(new MessageTuple(m, replyTo));
         } catch (Exception e) {
@@ -253,7 +263,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             try {
                 messageToSend = new MessageTuple(sendQueue.take());
             } catch (InterruptedException e) {
-                log.error("Exception when dequeuing message to send {}", e);
+                log.debug("Thread interrupted while dequeuing message to send");
                 return;
             }
             log.debug("Message dequeued id: {}", messageToSend.message.getId());
@@ -265,30 +275,21 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             if (messageToSend.listener != null) {
                 notifyMessage(messageToSend.message, messageToSend.listener);
             }
+            replyAvailable = false;
             sendToInterface(messageToSend.message);
             log.debug("Waiting for a reply");
             try {
                 synchronized (lock) {
-                    lock.wait(SprogConstants.TC_REPLY_TIMEOUT); // Wait for notify
+                    lock.wait(timeout); // Wait for notify
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
             }
             if (!replyAvailable) {
-                log.error("Timeout waiting for reply from hardware");
-                PowerManager pm = InstanceManager.getNullableDefault(jmri.PowerManager.class);
-                try {
-                    pm.setPower(PowerManager.OFF);
-                } catch (JmriException ex) {
-                    log.error("Exception when turning power off {}", ex);
-                }
-                if (!GraphicsEnvironment.isHeadless()) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("CSErrorFrameDialogString"),
-                        Bundle.getMessage("SprogCSTitle"), JOptionPane.ERROR_MESSAGE);
-                }
+                // Timed out
+                log.warn("Timeout waiting for reply from hardware");
             } else {
-                replyAvailable = false;
-                log.debug("Notified");
+                log.debug("Notified of reply");
             }
         }
     }
@@ -466,6 +467,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
         //Create a new reply, ready to be filled
         reply = new SprogReply();
+    }
+
+    public void dispose(){
+       tcThread.interrupt();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class);

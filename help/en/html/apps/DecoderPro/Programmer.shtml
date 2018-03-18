@@ -217,21 +217,18 @@
 
         <dd><a id="grid" name="grid"></a></dd>
 
-        <dt class="left"><a id="grid" name="grid">Formatting with
-        the Grid Layout</a></dt>
+        <dt class="left">Formatting with the Grid Layout</dt>
 
         <dd>
-          <a id="grid" name="grid"></a>
-
-          <p>The "row" and "column" elements allow you to align
+          The "row" and "column" elements allow you to align
           elements in rows or columns, but if you have multiple
           columns within a row element (or vice versa) it is not
           possible to ensure that rows in adjacent columns (or vice
-          versa) stay aligned.</p>
-
-          <p>The Grid Layout allows you to align elements in rows
+          versa) stay aligned.
+          <br>
+          The Grid Layout allows you to align elements in rows
           and columns, maintaining alignment even if a particular
-          element is absent. There are two elements:</p>
+          element is absent. There are two elements:
 
           <ul>
             <li><dfn>grid</dfn> - Create a grid layout (within a
@@ -317,7 +314,7 @@
             <li>It is possible in some circumstances to omit either
             or both of "gridx" and "gridy" from a "griditem" and
             specify a default value in "grid". See <a href=
-            "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4fnOutPane.xml"
+            "https://github.com/JMRI/JMRI/blob/master/jmri/xml/decoders/esu/v4fnOutPane.xml"
             target="_blank">xml/decoders/esu/v4fnOutPane.xml</a>
             for an example of this usage to generate a simple
             single-column right-aligned grid. (However if you are
@@ -333,7 +330,7 @@
 
           <p>For an example of Grid Layout use (with some
           explanations of attributes used), see <a href=
-          "http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4soundPane.xml"
+          "https://github.com/JMRI/JMRI/blob/master/jmri/xml/decoders/esu/v4soundPane.xml"
           target="_blank">xml/decoders/esu/v4soundPane.xml</a>. The
           LokSound Select (and V4) definitions use this file.</p>
         </dd>

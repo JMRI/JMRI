@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -310,7 +311,8 @@
       menu on the Logix Table will open a window with a list showing
       the details for each conditional. It is an effective way to
       review the entire contents of a Logix. Click on the close button
-      to close the window.<span class="since">since 4.7.3</span><p>
+      to close the window.<span class="since">since 4.7.3</span>
+
       <div style="margin-left: 2em">
       <a href="../../package/jmri/jmrit/beantable/images/ConditionalBrowser.png">
       <img src="../../package/jmri/jmrit/beantable/images/ConditionalBrowser.png"
@@ -952,7 +954,9 @@
           editing, offering a possible way to break into a logic
           loop without restarting the program.</p>
         </li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

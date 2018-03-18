@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI OperationsPro - Add Interchange</title><!-- Style -->
+  <title>JMRI OperationsPro - Add Interchange</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -148,7 +150,7 @@
       "90%">
         <tbody>
           <tr>
-            <td v="" align="left" valign="top" width="48%">
+            <td align="left" valign="top" width="48%">
               <p><img src="images/Ops_AddInterchangeTrack04.png"
               alt="interchange Track" height="878" width="750"></p>
             </td>
@@ -284,8 +286,8 @@
               <p><img src="images/Ops_AddInterchangeTrack04-08.png"
               height="123" width="442"><br></p>
 
-              <p>We will use the default <input name="radio6" id=
-              "radio6" value="radio6" checked="checked" type=
+              <p>We will use the default <input name="radio22" id=
+              "radio22" value="radio6" checked="checked" type=
               "radio"> <strong>Any</strong> to setup Trains or
               Routes. The Trains and Routes must be created prior
               to selecting.</p>
@@ -361,7 +363,7 @@
       OperationsPro database.</p>
 
       <p>You may edit any one of them by clicking on <input name=
-      "button16" id="button16" value="Edit" type="submit">, which
+      "button17" id="button17" value="Edit" type="submit">, which
       opens the <strong>Edit Location</strong> window, which is the
       same as the <a href="Ops_Locations.shtml"><strong>Add
       Location</strong></a> window except it already contains the
@@ -379,7 +381,9 @@
         "Ops_AddLocations.shtml"><strong>Back</strong></a><strong><a href="#"></a></strong></p>
 
         <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
