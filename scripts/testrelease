@@ -12,13 +12,13 @@
 DEST="test"
 
 # Download a test release from Jenkins and unpack
-curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/$1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"
+curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/$1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"
 rm release/JMRI*
 unzip release.zip
 cd release
 
-# Move files to SF.net FRS
-scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/${DEST}\ files/"
+# Move files to SF.net FRS - no longer done as of 3/2018
+# scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/${DEST}\ files/"
 
 # Decide command to create checksums
 if [ -x /usr/bin/hdiutil ]
