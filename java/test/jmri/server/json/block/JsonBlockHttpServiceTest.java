@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonHttpServiceTest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -65,8 +67,9 @@ public class JsonBlockHttpServiceTest {
         JsonBlockHttpService instance = new JsonBlockHttpService(new ObjectMapper());
         JsonNode result = instance.doGetList(JsonBlock.BLOCK, Locale.ITALY);
         Assert.assertEquals(1, result.size());
-        // JsonHttpServiceTest.testValidJmriJsonMessage(result);
-        // JsonHttpServiceTest.testSchemaValidJson(result.get(0).path(JSON.DATA), instance.doSchema(JsonBlock.BLOCK, true, Locale.ITALY));
+        JsonHttpServiceTest.testValidJmriJsonMessage(result);
+        JsonHttpServiceTest.testSchemaValidJson(result.get(0).path(JSON.DATA),
+                instance.doSchema(JsonBlock.BLOCK, true, Locale.ENGLISH).path(JSON.DATA).path(JSON.SCHEMA));
     }
 
     /**

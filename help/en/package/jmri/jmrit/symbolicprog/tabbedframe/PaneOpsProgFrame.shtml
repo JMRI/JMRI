@@ -51,7 +51,7 @@
       installation of Decoder Pro has programmed. It includes the
       information seen in the screen below:</p>
 
-      <img src="RosterTab.png">
+      <img src="RosterTab.png" alt="DecoderPro Roster Tab">
 
       <p>The first field "ID" becomes the file name in the Roster
       for the locomotive you are programming.</p>
@@ -86,7 +86,7 @@
       <a name="Basic" id="Basic"></a>
       <h3>Basic Tab</h3>
 
-      <img src="BasicTab.png">
+      <img src="BasicTab.png" alt="DecoderPro Basic Tab">
 
       <p>The Basic pane is where you set the Decoder address, you
       can set the short and the long address and then select which
@@ -112,15 +112,15 @@
       in the decoder by the Manufacture. JMRI uses these to
       identify the decoder.</p>
 
-      <a name="Other Tabs" id="Other Tabs"></a>
+      <a name="Other_Tabs" id="Other_Tabs"></a>
       <h3>Other tabs</h3>The other tabs are dependent on what the
       manufacture installed in the decoder, if the options were not
       installed the panes are either gray or not enabled.
 
-      <a name="Speed Table" id="Speed Table"></a>
+      <a name="Speed_Table" id="Speed_Table"></a>
       <h3>Speed Table Tab</h3>
 
-      <p><img src="SpeedTab.png"></p>
+      <p><img src="SpeedTab.png" alt="DecoderPro Speed Tab"></p>
 
       <p>This panel may look different depending on how the decoder
       xml was built. To use the Speed Table CV's usually the basic

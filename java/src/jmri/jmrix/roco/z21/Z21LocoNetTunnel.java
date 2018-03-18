@@ -235,6 +235,9 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
        if(lsc != null){
           lsc.dispose();
        }
+       if(_memo != null){
+          _memo.dispose();
+       }
        sourceThread.stop();
        try {
           sourceThread.join();
