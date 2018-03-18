@@ -102,6 +102,7 @@ public class JsonHttpServiceTest {
      * @param schema the schema to test with
      */
     public static void testSchemaValidJson(JsonNode node, JsonNode schema) {
+        Assert.assertFalse(node.isMissingNode());
         Set<ValidationMessage> errors = JsonSchemaFactory.getInstance().getSchema(schema).validate(node);
         if (!errors.isEmpty()) {
             log.warn("Errors validating {}", node);
