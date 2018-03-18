@@ -111,4 +111,8 @@ public class JsonHttpServiceTest {
         }
         Assert.assertTrue("No errors expected", errors.isEmpty());
     }
+
+    public static JsonNode schemaFromMessage(JsonNode message) {
+        return message.path(JSON.DATA).path(JSON.SCHEMA);
+    }
 }
