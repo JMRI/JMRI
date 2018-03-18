@@ -143,6 +143,18 @@ confuses JavaHelp.
         web browser.</li>
       </ul><a name="web" id="web"></a>
 
+      <a id="check"></a>
+      <h3>Checking Your Changes</h3>
+      
+      The 
+      <a href="ContinuousIntegration.shtml">Continuous Integration</a>
+      process checks all changes to JMRI Help files to make
+      sure they're OK.  If you'd like to run that same check
+      while you're working, do:
+<pre style="font-family: monospace;">   
+    ant scanhelp   
+</pre>
+
       <h2>Web access to help</h2>
       It's inconvenient to have to
       maintain two separate web pages for the main web site and the
