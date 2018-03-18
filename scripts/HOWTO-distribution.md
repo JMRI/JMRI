@@ -439,6 +439,22 @@ git push github
 - Commit site, push, etc.
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
+====================================================================================
+## Create zipped .properties (experimental)
+
+ant realclean compile
+cd target
+rm properties.4.11.4.zip
+
+# the following will take several minutes
+foreach x ( `find classes -name \*.properties` )
+printf '%s\n' 0a '# from tag v4.11.4' . x | ex $x
+end
+
+find classes -name \*.properties | zip -@ properties.4.11.4.zip
+
+Then decide what to do with it. Attach to release?
+
 
 ====================================================================================
 ## Announcement and Post-release Steps
