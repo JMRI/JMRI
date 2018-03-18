@@ -22,10 +22,10 @@ public class Dcc4PcBoardManagerTest {
           }
         };
         Dcc4PcSystemConnectionMemo memo = new Dcc4PcSystemConnectionMemo(tc);
-
         tm = new Dcc4PcSensorManager(tc,memo);
         Dcc4PcBoardManager t = new Dcc4PcBoardManager(tc,tm);
         Assert.assertNotNull("exists",t);
+        tm.dispose();
     }
 
     // The minimal setup for log4J
