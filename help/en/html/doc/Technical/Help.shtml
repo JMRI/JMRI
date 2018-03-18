@@ -147,7 +147,7 @@ confuses JavaHelp.
       <h3>Checking Your Changes</h3>
       
       The 
-      <a href="">Continuous Integration</a>
+      <a href="ContinuousIntegration.shtml">Continuous Integration</a>
       process checks all changes to JMRI Help files to make
       sure they're OK.  If you'd like to run that same check
       while you're working, do:
