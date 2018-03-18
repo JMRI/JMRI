@@ -8,18 +8,15 @@ else
     WHERE=$@
 fi
 
-# debug
-head -20 help/en/html/apps//DecoderPro/FileUpdate.shtml
-pwd
-
 # first, scan for whether there's an issue
 find ${WHERE} -name \*html -exec echo Filename: {} \;  ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning 1>&2
 
+# swap return code from grep
 if [ $? -eq 0 ]; then
     exit 1
 fi
 if [ $? -eq 1 ]; then
     exit 0
 fi
-# leave error codes as-is
+# leave other error codes as-is
 
