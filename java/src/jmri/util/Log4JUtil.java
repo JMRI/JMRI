@@ -5,8 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Enumeration;
-import java.util.Properties;
+import java.util.*;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
@@ -43,6 +42,27 @@ public class Log4JUtil {
     private static final String jmriLog = "****** JMRI log *******";
     private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class);
 
+    /**
+     * Emit a particular WARNING-level message just once.
+     * @return true if the log was emitted this time
+     */
+    // Goal is to be lightweight and fast; this will only be used in a few places,
+    // and only those should appear in data structure.
+    static public boolean warnOnce(Logger log, String msg, Object... args) {
+        // the  Map<String, Boolean> is just being checked for existence; it's never False
+        Map<String, Boolean> loggerMap = warnedOnce.get(log);
+        if (loggerMap == null) {
+            loggerMap = new HashMap<>();
+            warnedOnce.put(log, loggerMap);
+        } else {
+            if (loggerMap.get(msg) == Boolean.TRUE) return false;
+        }
+        loggerMap.put(msg, Boolean.TRUE);
+        log.warn(msg, args);
+        return true;
+    }
+    static private Map<Logger, Map<String, Boolean>> warnedOnce = new HashMap<>();
+    
     /**
      * Initialize logging from a default control file.
      * <p>
