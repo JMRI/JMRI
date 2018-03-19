@@ -27,6 +27,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * It does include, with AbstractNamedBean, the implementation of the normalized
  * user name.
+ * <p>
+ * See source file for extensive implementation notes.
  *
  * @param <E> the class this manager supports
  * @see jmri.NamedBean#normalizeUserName
@@ -35,6 +37,18 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractManager<E extends NamedBean> implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
 
+    // The data model consists of several components:
+    // * The primary reference is _beans, a SortedSet of NamedBeans, sorted automatically on system name.
+    //      Currently that's implemented as a TreeSet; further performance work might change that
+    //      Live access is available as a unmodifiableSortedSet via getNamedBeanSet()
+    // * The manager also maintains synchronized maps from SystemName -> NamedBean (_tsys) and UserName -> NamedBean (_tuser)
+    //      These are not made available: get access through the manager calls
+    //      These use regular HashMaps instead of some sorted form for efficiency
+    // * An unmodifiable ArrayList<String> in the original add order, _originalOrderList, remains available 
+    //      for the deprecated getSystemNameAddedOrderList
+    //      This is present so that ConfigureXML can still store in the original order
+    // * Caches for the String[] getSystemNameArray(), List<String> getSystemNameList() and List<E> getNamedBeanList() calls
+            
     public AbstractManager() {
         registerSelf();
     }
@@ -78,7 +92,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
-
+    // Storage for getSystemNameOriginalList
+    protected ArrayList<String> _originalOrderList = new ArrayList<>();
+    // caches
+    private String[] cachedSystemNameArray = null;
+    private ArrayList<String> cachedSystemNameList = null;
+    private ArrayList<E> cachedNamedBeanList = null;
+    
     /**
      * Locate an instance based on a system name. Returns null if no instance
      * already exists. This is intended to be used by concrete classes to
@@ -154,12 +174,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         String systemName = s.getSystemName();
 
         // clear caches
+        cachedSystemNameArray = null;
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
         
         // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
+        _originalOrderList.add(systemName);
         registerUserName(s);
 
         // notifications
@@ -224,6 +246,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         int position = getPosition(s);
 
         // clear caches
+        cachedSystemNameArray = null;
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
 
@@ -294,11 +317,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     public String[] getSystemNameArray() {
-        return this.getSystemNameList().toArray(new String[_beans.size()]);
+        if (cachedSystemNameArray == null) {
+            cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
+        }
+        return cachedSystemNameArray;
     }
 
-    // Cached result for getSystemNameList()
-    private ArrayList<String> cachedSystemNameList = null;
     
     /** {@inheritDoc} */
     @Override
@@ -312,8 +336,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return Collections.unmodifiableList(cachedSystemNameList);
     }
 
-    // Cached result for getNamedBeanList()
-    private ArrayList<E> cachedNamedBeanList = null;
+
+    /** {@inheritDoc} */
+    @Override
+    public List<String> getSystemNameAddedOrderList() {
+        return _originalOrderList;
+    }
+
 
     /** {@inheritDoc} */
     @Override

@@ -110,49 +110,73 @@ public interface Manager<E extends NamedBean> {
     public void dispose();
 
     /**
+     * This provides an array of system names.
+     * <p>
      * Note: this is ordered by the underlying NamedBeans, not
      *       on the Strings themselves.
      * <p>
      * Note: this is not a live array; the contents don't stay up to date
      * @return (slow) copy of system names in array form
-     * @deprecated 4.11.4 - use direct access via 
-     *                  {@link getNamedBeanSet} or if need be
-     *                  {@link getNamedBeanList} instead
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
      */
-    @Deprecated // 4.11.4
+    @Deprecated // 4.11.5
     @CheckReturnValue
     @Nonnull
     public String[] getSystemNameArray();
 
     /**
      * This provides an 
-     * {@linkplain java.util.Collections#unmodifiableList unmodifiable}
-     * List of system names.
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
+     * of system names.
      * <p>
      * Note: this is ordered by the underlying NamedBeans, not
      *       on the Strings themselves.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} or if need be
-     *                  {@link getNamedBeanList} is faster.
+     * Note: Access via {@link getNamedBeanSet} is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a list of system names
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
      */
+    @Deprecated // 4.11.5
     @CheckReturnValue
     @Nonnull
     public List<String> getSystemNameList();
 
     /**
+     * This provides an 
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
+     * of system names.
+     * <p>
+     * Note: this is ordered by the original add order, used for ConfigureXML
+     * <p>
+     * Note: Access via {@link getNamedBeanSet} is faster.
+     * <p>
+     * Note: This is not a live list; the contents don't stay up to date
+     * @return Unmodifiable access to a list of system names
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
+     */
+    @Deprecated // 4.11.5
+    @CheckReturnValue
+    @Nonnull
+    public default List<String> getSystemNameAddedOrderList() { return getSystemNameList(); }
+
+    /**
      * This provides an
-     * {@linkplain java.util.Collections#unmodifiableList unmodifiable}
-     * List of NamedBeans in 
-     * NamedBean order.
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
+     * of NamedBeans in system-name order.
      * <p>
      * Note: Access via {@link getNamedBeanSet} is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a List of NamedBeans
-     */   
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
+     */
+    @Deprecated // 4.11.5
     @CheckReturnValue
     @Nonnull
     public List<E> getNamedBeanList();
@@ -160,10 +184,9 @@ public interface Manager<E extends NamedBean> {
     /**
      * This provides an
      * {@linkplain java.util.Collections#unmodifiableSet unmodifiable}
-     * SortedSet of NamedBeans in 
-     * NamedBean order.
+     * SortedSet of NamedBeans in system-name order.
      * <p>
-     * Note: AThis is the fastest of the accessors.
+     * Note: This is the fastest of the accessors, and is the only long-term form.
      * <p>
      * Note: This is a live set; the contents are kept up to date
      * @return Unmodifiable access to a SortedSet of NamedBeans
