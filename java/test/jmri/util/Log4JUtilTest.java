@@ -20,9 +20,31 @@ public class Log4JUtilTest extends TestCase {
 
         log.debug("DEBUG message"); // should be suppressed see tests.lcf
 
-        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());        
     }
 
+    public void testWarnOnceCounts() {
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message")); // string has to be same until further notice
+        Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message"));
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        
+        Logger log2 = LoggerFactory.getLogger("Log4JUtilTest-extra-logger");
+        Assert.assertTrue(Log4JUtil.warnOnce(log2, "WARN message"));
+        Assert.assertFalse(Log4JUtil.warnOnce(log2, "WARN message"));
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message 2")); // different string
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message 2");        
+    }
+
+    public void testWarnOnceArguments() {
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "Test {} {}", "A", "B"));
+        jmri.util.JUnitAppender.assertWarnMessage("Test A B");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+    }
+    
     public void testSendJavaUtilLogInfoMessage() {
         // test that java.util.logging is getting to Log4J
         java.util.logging.Logger logger =

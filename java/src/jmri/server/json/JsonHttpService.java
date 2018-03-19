@@ -97,7 +97,6 @@ public abstract class JsonHttpService {
      * @param locale the requesting client's Locale
      * @throws JsonException if this method is not allowed or other error occurs
      */
-    @Nonnull
     public void doDelete(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
     }
@@ -141,7 +140,10 @@ public abstract class JsonHttpService {
      *               if the schema is for a message from the client
      * @param locale the requesting client's Locale
      * @return a JSON Schema valid for the type
-     * @throws JsonException if an error occurs preparing schema
+     * @throws JsonException if an error occurs preparing schema; if type is is
+     *                       not a type handled by this service, this must be
+     *                       thrown with an error code of 500 and the localized
+     *                       message "ErrorUnknownType"
      */
     @Nonnull
     public abstract JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException;

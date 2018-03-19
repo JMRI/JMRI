@@ -28,6 +28,7 @@ public class UhlenbrockSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
     @Override
     @After
     public void tearDown() {
+        ((UhlenbrockSystemConnectionMemo)scm).dispose();
         JUnitUtil.tearDown();
     }
 

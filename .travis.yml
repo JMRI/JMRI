@@ -6,6 +6,7 @@ addons:
     - graphviz
     - libalut0
     - dbus-x11
+    - tidy
   firefox: latest
   chrome: stable
 

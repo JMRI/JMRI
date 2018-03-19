@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -46,7 +47,7 @@
         <li><a href="#transits">Using Transits and Sections in
         Dispatching Active Trains</a></li>
 
-        <li><a href="#window">The Dispatcher Window</a></li>
+        <li><a href="#window">The Dispatcher Window</a>
         <ul>
           <li><a href="#atrains">The Active Trains Table</a></li>
 
@@ -56,6 +57,7 @@
           <li><a href="#allocated">The Allocated Sections
           Table</a></li>
         </ul>
+        </li>
 
         <li><a href="#automatic">Running Trains
         Automatically</a></li>
@@ -92,7 +94,7 @@
       <img src="images/DispatcherPanelClinic.png" width="806" height="323"
       alt="Dispatcher Panel Example">
 
-      <br>Note that in this document "<i>Dispatcher</i>" refers to
+      <p>Note that in this document "<i>Dispatcher</i>" refers to
       the JMRI Dispatcher software, and "<i>the dispatcher</i>"
       refers to the person running the Dispatcher software.<br>
       Many of the terms in this introduction to Dispatcher may

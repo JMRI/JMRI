@@ -129,6 +129,28 @@ public class AnymaDMX_TrafficController {
         return result;
     }
 
+    /**
+     * Clean up threads and local storage.
+     */
+    public void dispose(){
+       // modified from the javadoc for ExecutorService 
+       execService.shutdown(); // Disable new tasks from being submitted
+       try {
+          // Wait a while for existing tasks to terminate
+          if (!execService.awaitTermination(60, TimeUnit.SECONDS)) {
+             execService.shutdownNow(); // Cancel currently executing tasks
+             // Wait a while for tasks to respond to being cancelled
+             if (!execService.awaitTermination(60, TimeUnit.SECONDS))
+                 log.error("Pool did not terminate");
+          }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            execService.shutdownNow();
+            // Preserve interrupt status
+            Thread.currentThread().interrupt();
+        }
+    }
+
     private final static Logger log
             = LoggerFactory.getLogger(AnymaDMX_TrafficController.class);
 
