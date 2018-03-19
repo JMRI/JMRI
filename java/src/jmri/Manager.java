@@ -154,7 +154,7 @@ public interface Manager<E extends NamedBean> {
      * <p>
      * Note: Access via {@link getNamedBeanSet} is faster.
      * <p>
-     * Note: This is not a live list; the contents don't stay up to date
+     * Note: This is a live list, it will be updated as beans are added and removed.
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
      *                  {@link getNamedBeanSet} 
@@ -193,7 +193,7 @@ public interface Manager<E extends NamedBean> {
      */   
     @CheckReturnValue
     @Nonnull
-    public default SortedSet<E> getNamedBeanSet() { return new TreeSet<E>(); }
+    public SortedSet<E> getNamedBeanSet();
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
