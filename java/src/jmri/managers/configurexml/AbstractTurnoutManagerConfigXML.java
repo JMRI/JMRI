@@ -49,7 +49,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             Element opElem = tomx.store(TurnoutOperationManager.getInstance());
             turnouts.addContent(opElem);
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not turnouts to include
             if (!iter.hasNext()) {

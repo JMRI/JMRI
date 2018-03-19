@@ -48,12 +48,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             sensors.addContent(elem);
         }
 
-        java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
-        //TODO: dead code strip this
-        //List<String> snl = tm.getSystemNameList();
-        //AlphanumComparator ac = new AlphanumComparator();
-        //Collections.sort(snl, (String s1, String s2) -> ac.compare(s1, s2));
-        //java.util.Iterator<String> iter = snl.iterator();
+        java.util.Iterator<String> iter = tm.getSystemNameAddedOrderList().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {

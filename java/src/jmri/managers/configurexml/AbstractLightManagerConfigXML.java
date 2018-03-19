@@ -41,7 +41,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         LightManager tm = (LightManager) o;
         if (tm != null) {
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not lights to include
             if (!iter.hasNext()) {

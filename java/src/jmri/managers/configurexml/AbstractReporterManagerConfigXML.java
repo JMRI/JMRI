@@ -38,7 +38,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         ReporterManager tm = (ReporterManager) o;
         if (tm != null) {
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not reporters to include
             if (!iter.hasNext()) {
