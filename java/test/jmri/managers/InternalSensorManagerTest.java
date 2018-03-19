@@ -105,8 +105,22 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("type", Manager.ManagerDataEvent.INTERVAL_REMOVED, lastType);
         Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
         Assert.assertEquals("index", 1, lastEvent0);
-        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));
+        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));       
+    }
+
+    @Test
+    public void testOrderVsSorted() {
+        Sensor s2 = l.provideSensor("IS2");
+        Sensor s1 = l.provideSensor("IS1");
         
+        Assert.assertEquals("ordered list 1st", "IS2", l.getSystemNameAddedOrderList().get(0));
+        Assert.assertEquals("ordered list 2nd", "IS1", l.getSystemNameAddedOrderList().get(1));
+
+        Assert.assertEquals("sorted list 1st", "IS1", l.getSystemNameList().get(0));
+        Assert.assertEquals("sorted list 2nd", "IS2", l.getSystemNameList().get(1));
+
+        Assert.assertEquals("sorted array 1st", "IS1", l.getSystemNameArray()[0]);
+        Assert.assertEquals("sorted array 2nd", "IS2", l.getSystemNameArray()[1]);
     }
 
     @Test
@@ -128,6 +142,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         } catch (UnsupportedOperationException e) { /* this is OK */}
 
     }
+
+    // from here down is testing infrastructure
 
     // a listen & audit methods
     int events;
@@ -161,7 +177,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Changed";
     }
 
-    // from here down is testing infrastructure
     // The minimal setup for log4J
     @Override
     @Before
