@@ -100,12 +100,6 @@ public class IconItemPanel extends ItemPanel {
         blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify")));
         blurb.add(new JLabel(Bundle.getMessage("ToChangeName")));
         blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", Bundle.getMessage("deleteIcon"))));
-        if (!isBackGround) {
-            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", Bundle.getMessage("Icon"))));
-            blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
-            blurb.add(new JLabel(Bundle.getMessage("enterURL")));
-        }
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
