@@ -17,11 +17,7 @@ import org.junit.Assert;
   */
 public class ProxySensorManagerTest extends TestCase {
 
-    public String getSystemName(int i) {
-        return "JS" + i;
-    }
-
-    protected SensorManager l = null;	// holds objects under test
+    protected ProxySensorManager l = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -37,26 +33,46 @@ public class ProxySensorManagerTest extends TestCase {
         l.dispose();  // all we're really doing here is making sure the method exists
     }
 
-    public void testPutGet() {
+    public void testPutGetJ() {
         // create
-        Sensor t = l.newSensor(getSystemName(getNumToTest1()), "mine");
+        Sensor tj = l.newSensor("JS1", "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue("real object returned ", tj != null);
+        Assert.assertTrue("user name correct ", tj == l.getByUserName("mine"));
+        Assert.assertTrue("system name correct ", tj == l.getBySystemName("JS1"));
     }
+
+    public void testPutGetI() {
+        // create
+        Sensor ti = l.newSensor("IS1", "mine");
+        // check
+        Assert.assertTrue("real object returned ", ti != null);
+        Assert.assertTrue("user name correct ", ti == l.getByUserName("mine"));
+        Assert.assertTrue("system name correct ", ti == l.getBySystemName("IS1"));
+    }
+
+    public void testPutGetK() {
+        // create
+        Sensor tk = l.newSensor("KS1", "mine");
+        // check
+        Assert.assertTrue("real object returned ", tk != null);
+        Assert.assertTrue("user name correct ", tk == l.getByUserName("mine"));
+        Assert.assertTrue("system name correct ", tk == l.getBySystemName("KS1"));
+    }
+
 
     public void testDefaultSystemName() {
         // create
-        Sensor t = l.provideSensor("" + getNumToTest1());
+        Sensor t = l.provideSensor("9");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue("real object returned", t != null);
+        Assert.assertEquals("system name correct", "JS9", t.getSystemName());
+        Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
 
     public void testNormalizeName() {
         // create
-        String name = l.provideSensor("" + getNumToTest1()).getSystemName();
+        String name = l.provideSensor("1").getSystemName();
         // check
         Assert.assertEquals(name, l.normalizeSystemName(name));
     }
@@ -74,12 +90,12 @@ public class ProxySensorManagerTest extends TestCase {
     }
     public void testSingleObject() {
         // test that you always get the same representation
-        Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
+        Sensor t1 = l.newSensor("JS1", "mine");
         Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
+        Assert.assertEquals("same by system ", t1, l.getBySystemName("JS1"));
 
-        Sensor t2 = l.newSensor(getSystemName(getNumToTest1()), "mine");
+        Sensor t2 = l.newSensor("JS1", "mine");
         Assert.assertTrue("t2 real object returned ", t2 != null);
         // check
         Assert.assertTrue("same new ", t1 == t2);
@@ -92,14 +108,14 @@ public class ProxySensorManagerTest extends TestCase {
     }
 
     public void testUpperLower() {
-        Sensor t = l.provideSensor("" + getNumToTest2());
+        Sensor t = l.provideSensor("2");
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
     public void testRename() {
         // get
-        Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "before");
+        Sensor t1 = l.newSensor("JS1", "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
         Sensor t2 = l.getByUserName("after");
@@ -163,18 +179,6 @@ public class ProxySensorManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"));
     }
 
-    /**
-     * Number of unit to test. Made a separate method so it can be overridden in
-     * subclasses that do or don't support various numbers
-     */
-    protected int getNumToTest1() {
-        return 9;
-    }
-
-    protected int getNumToTest2() {
-        return 7;
-    }
-
     // from here down is testing infrastructure
     public ProxySensorManagerTest(String s) {
         super(s);
@@ -197,12 +201,12 @@ public class ProxySensorManagerTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
-        l = new InternalSensorManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new ProxySensorManager();
+        // initially has three systems: IS, JS, KS
+        l.addManager(new InternalSensorManager() { {prefix = "J";} });
+        l.addManager(new InternalSensorManager() { {prefix = "I";} }); // not in alpha order to make it exciting
+        l.addManager(new InternalSensorManager() { {prefix = "K";} });
+
         jmri.InstanceManager.setSensorManager(l);
     }
 
