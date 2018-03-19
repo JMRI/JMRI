@@ -420,12 +420,23 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Manag
     @Nonnull
     public List<E> getNamedBeanList() {
         TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
-        mgrs.stream().forEach((m) -> {
-            ts.addAll(m.getNamedBeanList());
-        });
+        for (Manager<E> m : mgrs) {
+            ts.addAll(m.getNamedBeanSet());
+        }
         return new ArrayList<>(ts);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public SortedSet<E> getNamedBeanSet() {
+        TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator());
+        for (Manager<E> m : mgrs) {
+            ts.addAll(m.getNamedBeanSet());
+        }
+        return ts;
+    }
+    
     /** {@inheritDoc} */
     public void addDataListener(ManagerDataListener e) {
         if (e != null) listeners.add(e);

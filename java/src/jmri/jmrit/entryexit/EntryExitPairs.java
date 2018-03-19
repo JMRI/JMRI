@@ -6,12 +6,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -320,6 +315,23 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
+        for (Source e : nxpair.values()) {
+            List<String> uidList = e.getDestinationUniqueId();
+            for (String uid : uidList) {
+                beanList.add(e.getByUniqueId(uid));
+            }
+        }
+        return beanList;
+    }
+
+    /**
+     * Implemented to support the Conditional combo box name list
+     * @since 4.9.3
+     * @return a list of Destination Point beans
+     */
+    @Override
+    public SortedSet<DestinationPoints> getNamedBeanSet() {
+        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator());
         for (Source e : nxpair.values()) {
             List<String> uidList = e.getDestinationUniqueId();
             for (String uid : uidList) {

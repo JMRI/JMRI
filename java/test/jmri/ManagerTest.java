@@ -10,7 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the static methods of the interface
+ * Tests the static methods of the interface.
+ * 
+ * Detailed tests are in jmri.managers.AbstractManagerTestBase with even more
+ * detailed tests (which require beans, etc) in jmri.managers.InternalSensorManagerTest
  * 
  * @author Bob Jacobsen Copyright (C) 2017	
  */

@@ -59,6 +59,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public java.util.SortedSet<Turnout> getNamedBeanSet() {
+        return null;
+    }
+
+    @Override
     public String[] getSystemNameArray() {
         return null;
     }

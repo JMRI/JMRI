@@ -2,10 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.ConfigureManager;
@@ -318,6 +316,12 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SortedSet<SignalMastLogic> getNamedBeanSet(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -340,7 +340,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameAddedOrderList() {
-        return _originalOrderList;
+        return Collections.unmodifiableList(_originalOrderList);
     }
 
 
@@ -351,6 +351,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             cachedNamedBeanList = new ArrayList<>(_beans);
         }
         return Collections.unmodifiableList(cachedNamedBeanList);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SortedSet<E> getNamedBeanSet() {
+        return Collections.unmodifiableSortedSet(_beans);
     }
 
     /** {@inheritDoc} */

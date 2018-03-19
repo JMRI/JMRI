@@ -110,17 +110,103 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
     @Test
     public void testOrderVsSorted() {
+        Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
-        Sensor s1 = l.provideSensor("IS1");
         
-        Assert.assertEquals("ordered list 1st", "IS2", l.getSystemNameAddedOrderList().get(0));
-        Assert.assertEquals("ordered list 2nd", "IS1", l.getSystemNameAddedOrderList().get(1));
+        List<String> orderedList = l.getSystemNameAddedOrderList();
+        List<String> sortedList = l.getSystemNameList();
+        List<Sensor> beanList = l.getNamedBeanList();
+        SortedSet<Sensor> beanSet = l.getNamedBeanSet();
+        String[] sortedArray = l.getSystemNameArray();
+        
+        Assert.assertEquals("ordered list length", 2, orderedList.size());
+        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
+        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
 
-        Assert.assertEquals("sorted list 1st", "IS1", l.getSystemNameList().get(0));
-        Assert.assertEquals("sorted list 2nd", "IS2", l.getSystemNameList().get(1));
+        Assert.assertEquals("sorted list length", 2, sortedList.size());
+        Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
+        Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
 
-        Assert.assertEquals("sorted array 1st", "IS1", l.getSystemNameArray()[0]);
-        Assert.assertEquals("sorted array 2nd", "IS2", l.getSystemNameArray()[1]);
+        Assert.assertEquals("bean list length", 2, beanList.size());
+        Assert.assertEquals("bean list 1st", s2, beanList.get(0));
+        Assert.assertEquals("bean list 2nd", s4, beanList.get(1));
+
+        Assert.assertEquals("bean set length", 2, beanSet.size());
+        Iterator<Sensor> iter = beanSet.iterator();
+        Assert.assertEquals("bean set 1st", s2, iter.next());
+        Assert.assertEquals("bean set 2nd", s4, iter.next());
+
+        Assert.assertEquals("sorted array length", 2, sortedArray.length);
+        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
+        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
+        
+        // add and test (non) liveness
+        Sensor s3 = l.provideSensor("IS3");
+        Sensor s1 = l.provideSensor("IS1");
+
+        Assert.assertEquals("ordered list length", 4, orderedList.size());
+        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
+        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
+        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
+        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
+
+        Assert.assertEquals("sorted list length", 2, sortedList.size());
+        Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
+        Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
+
+        Assert.assertEquals("bean list length", 2, beanList.size());
+        Assert.assertEquals("bean list 1st", s2, beanList.get(0));
+        Assert.assertEquals("bean list 2nd", s4, beanList.get(1));
+
+        Assert.assertEquals("bean set length", 4, beanSet.size());
+        iter = beanSet.iterator();
+        Assert.assertEquals("bean set 1st", s1, iter.next());
+        Assert.assertEquals("bean set 2nd", s2, iter.next());
+        Assert.assertEquals("bean set 3rd", s3, iter.next());
+        Assert.assertEquals("bean set 4th", s4, iter.next());
+
+        Assert.assertEquals("sorted array length", 2, sortedArray.length);
+        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
+        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
+        
+        // update and test update
+        orderedList = l.getSystemNameAddedOrderList();
+        sortedList = l.getSystemNameList();
+        beanList = l.getNamedBeanList();
+        beanSet = l.getNamedBeanSet();
+        sortedArray = l.getSystemNameArray();
+        
+        Assert.assertEquals("ordered list length", 4, orderedList.size());
+        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
+        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
+        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
+        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
+
+        Assert.assertEquals("sorted list length", 4, sortedList.size());
+        Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
+        Assert.assertEquals("sorted list 2nd", "IS2", sortedList.get(1));
+        Assert.assertEquals("sorted list 3rd", "IS3", sortedList.get(2));
+        Assert.assertEquals("sorted list 4th", "IS4", sortedList.get(3));
+
+        Assert.assertEquals("bean list length", 4, beanList.size());
+        Assert.assertEquals("bean list 1st", s1, beanList.get(0));
+        Assert.assertEquals("bean list 2nd", s2, beanList.get(1));
+        Assert.assertEquals("bean list 3rd", s3, beanList.get(2));
+        Assert.assertEquals("bean list 4th", s4, beanList.get(3));
+
+        Assert.assertEquals("bean set length", 4, beanSet.size());
+        iter = beanSet.iterator();
+        Assert.assertEquals("bean set 1st", s1, iter.next());
+        Assert.assertEquals("bean set 2nd", s2, iter.next());
+        Assert.assertEquals("bean set 3rd", s3, iter.next());
+        Assert.assertEquals("bean set 4th", s4, iter.next());
+
+        Assert.assertEquals("sorted array length", 4, sortedArray.length);
+        Assert.assertEquals("sorted array 1st", "IS1", sortedArray[0]);
+        Assert.assertEquals("sorted array 2nd", "IS2", sortedArray[1]);
+        Assert.assertEquals("sorted array 3rd", "IS3", sortedArray[2]);
+        Assert.assertEquals("sorted array 4th", "IS4", sortedArray[3]);
+
     }
 
     @Test
