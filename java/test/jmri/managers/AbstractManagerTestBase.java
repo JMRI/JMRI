@@ -12,6 +12,9 @@ import org.junit.Test;
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
  * common tests.
+ * <p>
+ * Quite a bit of AbstractManager testing is done in InternalSensorManagerTest
+ * to give it a concrete platform
  *
  * @author Bob Jacobsen Copyright (C) 2017	
  */
