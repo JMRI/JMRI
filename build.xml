@@ -1900,6 +1900,16 @@
              includes="xml/decoders/*.xml"/>
     </target>
 
+    <target name="scanhelp"
+            description="scan English-language help for HTML errors">
+        <exec executable="./scripts/tidy-check.sh"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="help/en/*/*/"/>
+        </exec>
+            
+    </target>
+    
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">

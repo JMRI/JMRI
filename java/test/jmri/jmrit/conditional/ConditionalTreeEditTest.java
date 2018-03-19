@@ -129,7 +129,10 @@ public class ConditionalTreeEditTest {
         new JComboBoxOperator(editFrame, 2).selectItem("Sensor 4");  // NOI18N
 
         // Cancel and end the edit
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        JButtonOperator jbo = new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel"));  // NOI18N
+        if (jbo.isEnabled()) {
+            jbo.push();
+        }
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
 
@@ -145,4 +148,6 @@ public class ConditionalTreeEditTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalTreeEditTest.class);
 }

@@ -47,21 +47,45 @@
       
       <h2>Merging a PR</h2>
       
-      Should we write a few words about things to do before/during 
-      merging a PR?  E.g.
-      when to set the milestone, whether to set the submitter as an assignee.
-      What to record when restarting after a CI error?
-      When to (unilaterally) set WIP?
-      How to handle reviews?  Etc.
+      Except in exceptional circumstances (which should probably be discussed in the PR itself),
+      PRs should only be merged when:
+      <ul>
+        <li>They have passed all the CI tests
+        <li>They have no outstanding reviews
+        <li>If in a new area, large or from a new contributor, 
+            they have been in-cue for at least a day or so to allow people to take a look at them
+        <li>Don't appear to have any un-resolved controversies in the comments
+      </ul>
+      
+      If you want a bit more time before somebody merges a PR, either start a review saying that
+      or set "WIP" in the title while explaining why in a comment.
 
+      <p>
+      When restarting CI after a failure, please copy at least a few lines around the
+      relevant part of the log to a comment. It can be very useful to attach the entire 
+      raw log if the failure is obscure, novel or otherwise needs investigation.
+      
+      <p>
+      When merging a PR, please do the following:
+      <ul>
+        <li>Assign it to the original submitter, at least.
+            Developers and maintainers can be assigned to any PR, but 
+            other people who create PRs can only be assigned to their own.
+            By assigning the PR, we make it easy to find what non-developers 
+            have contributed.
+        <li>Set the current milestone on the PR.  
+      </ul>
+      
       <h2>How we use "Teams"</h2>
       
-      What each team does
+      <p>What each team does
       
-      Terms for adding people to developer status
-        Have to have a real name on their GitHub account?
-        Have to subscribe (and stay subscribed) to jmri-developers?
-        Have to have worked on something other than their own projects?
+      <p>Terms for adding people to developer status
+        <ul>
+        <li>Have to have a real name on their GitHub account?
+        <li>Have to subscribe (and stay subscribed) to jmri-developers?
+        <li>Have to have worked on something other than their own projects?
+      </ul>
       
       <h2>Branches</h2>
       
