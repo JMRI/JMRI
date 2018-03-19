@@ -448,10 +448,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // instruction text fields
             JPanel p1 = new JPanel();
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+//            p1.setLayout(new BorderLayout());
+            
             JPanel p11 = new JPanel();
             p11.setLayout(new FlowLayout());
             p11.add(new JLabel(rbx.getString("SectionTableMessage")));
-            p1.add(p11);
+            p1.add(p11,BorderLayout.CENTER);
             JPanel p12 = new JPanel();
             // initialize table of sections
             sectionTableModel = new SectionTableModel();
@@ -461,12 +463,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             TableColumnModel sectionColumnModel = sectionTable.getColumnModel();
             TableColumn sequenceColumn = sectionColumnModel.getColumn(SectionTableModel.SEQUENCE_COLUMN);
             sequenceColumn.setResizable(true);
-            sequenceColumn.setMinWidth(50);
-            sequenceColumn.setMaxWidth(70);
+            //sequenceColumn.setMinWidth(50);
+            //sequenceColumn.setMaxWidth(70);
             TableColumn sectionColumn = sectionColumnModel.getColumn(SectionTableModel.SECTIONNAME_COLUMN);
             sectionColumn.setResizable(true);
-            sectionColumn.setMinWidth(150);
-            sectionColumn.setMaxWidth(210);
+            //sectionColumn.setMinWidth(150);
+            //sectionColumn.setMaxWidth(210);
             TableColumn actionColumn = sectionColumnModel.getColumn(SectionTableModel.ACTION_COLUMN);
             // install button renderer and editor
             ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -479,8 +481,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             actionColumn.setMinWidth(testButton.getPreferredSize().width);
             TableColumn alternateColumn = sectionColumnModel.getColumn(SectionTableModel.ALTERNATE_COLUMN);
             alternateColumn.setResizable(true);
-            alternateColumn.setMinWidth(140);
-            alternateColumn.setMaxWidth(170);
+            //alternateColumn.setMinWidth(140);
+            //alternateColumn.setMaxWidth(170);
             JScrollPane sectionTableScrollPane = new JScrollPane(sectionTable);
             p12.add(sectionTableScrollPane, BorderLayout.CENTER);
             p1.add(p12);
