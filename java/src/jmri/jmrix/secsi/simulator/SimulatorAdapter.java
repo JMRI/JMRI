@@ -301,6 +301,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     protected int currentAddr = -1; // at startup, can't match
     /**
      * Get characters from the input source. No opcode, so must read per byte.
+     * Length will be either 1, 5 or 9 bytes.
      * <p>
      * Only used in the Receive thread.
      *
@@ -313,9 +314,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         byte chari;
         int[] chars = new int[9]; // temporary store of bytes
         int i;
-        int replyByte = ;
-        log.debug("new message received in simulator");
-        for (i = 1; i < 9; i++) { // reading next max 9 bytes
+        log.debug("reading new message in simulator");
+        for (i = 1; i < 9; i++) { // reading next max 9 bytes (but inpipe never gets empty)
             try {
                 chari = readByteProtected(inpipe);
                 chars[i] = (chari & 0xFF);
@@ -324,20 +324,12 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
             }
         }
         // copy bytes to Message
-        switch (i) {
-            case: 1
-                i = 2; // replyLength for Poll
-                break;
-            case 9:
-            default:
-                i = 5;
-        }
         SerialMessage msg = new SerialMessage(i);
         msg.setElement(0, char0 & 0xFF); // address
         for (int k = 1; k < i; k++) { // copy bytes
             msg.setElement(0, chars[k] & 0xFF); // bytes read
         }
-        log.debug("new reply sent by simulator, length={}", i);
+        log.debug("new message received by simulator, length={}", i);
         return msg;
     }
 
