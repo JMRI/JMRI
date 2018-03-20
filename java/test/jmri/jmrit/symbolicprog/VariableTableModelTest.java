@@ -636,14 +636,14 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
-
     // Check can read simple file
     public void testVarTableLoadFileSimple() throws Exception {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
         // create a JDOM tree from file
-        XmlFile file = new XmlFile(){};
+        XmlFile file = new XmlFile() {
+        };
         Element root = file.rootFromName("xml/decoders/0NMRA.xml");
 
         // add the contents
@@ -662,7 +662,8 @@ public class VariableTableModelTest extends TestCase {
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
 
         // create a JDOM tree from file
-        XmlFile file = new XmlFile(){};
+        XmlFile file = new XmlFile() {
+        };
         Element root = file.rootFromName("xml/decoders//QSI_ver9.xml");
 
         // add the contents
