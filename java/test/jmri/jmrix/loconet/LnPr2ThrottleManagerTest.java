@@ -12,6 +12,8 @@ import org.junit.Test;
  */
 public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
+    private LocoNetSystemConnectionMemo memo;
+
     @Test
     public void testSetAndGettActiveAddress() { 
         ((LnPr2ThrottleManager)tm).requestThrottleSetup(new jmri.DccLocoAddress(3,false));
@@ -23,11 +25,13 @@ public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleMana
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tm = new LnPr2ThrottleManager(new LocoNetSystemConnectionMemo());
+        memo = new LocoNetSystemConnectionMemo();
+        tm = new LnPr2ThrottleManager(memo);
     }
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

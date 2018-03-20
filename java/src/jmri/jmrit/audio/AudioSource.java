@@ -736,7 +736,7 @@ public interface AudioSource extends Audio {
      * @param dopplerFactor factor to apply in doppler calculations
      */
     @Deprecated
-    public void setDopplerFactor(float dopplerFactor);
+    default public void setDopplerFactor(float dopplerFactor) {}
 
     /**
      * Retrieve the doppler factor of this source
@@ -753,7 +753,7 @@ public interface AudioSource extends Audio {
      * @return factor to apply in doppler calculations
      */
     @Deprecated
-    public float getDopplerFactor();
+    default public float getDopplerFactor() { return 1.0f; }
 
     /**
      * Method to start playing this AudioSource Object

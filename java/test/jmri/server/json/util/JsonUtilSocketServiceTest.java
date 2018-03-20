@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
@@ -99,7 +100,7 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         instance.onList(JSON.METADATA, empty, locale);
         Assert.assertEquals(helper.getMetadata(locale), connection.getMessage());
         instance.onList(JSON.NETWORK_SERVICES, empty, locale);

@@ -25,12 +25,6 @@ import org.junit.Test;
 public class JsonReporterSocketServiceTest {
 
     @Test
-    public void testCtorSuccess() {
-        JsonReporterSocketService service = new JsonReporterSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
-    }
-
-    @Test
     public void testReporterChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);

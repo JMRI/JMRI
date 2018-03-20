@@ -24,8 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.oaktree.Bundle {
 
     @Nullable
-    private static final String name = "jmri.jmrix.oaktree.nodeconfig.NodeConfigBundle"; // NOI18N
-    // uses on key from NodeConfigBundle props
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

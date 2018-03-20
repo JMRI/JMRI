@@ -46,6 +46,10 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         setManufacturer(jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL);
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -125,6 +129,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     // Base class methods for the SerialPortController simulated interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -134,6 +141,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
@@ -143,6 +153,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -215,7 +228,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     private SerialMessage readMessage() {
         SerialMessage msg = null;
-//        log.debug("Simulator reading message");
+        // log.debug("Simulator reading message");
         try {
             if (inpipe != null && inpipe.available() > 0) {
                 msg = loadChars();
@@ -278,7 +291,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message, only when the message is complete.
+     * @return filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
     private SerialMessage loadChars() throws java.io.IOException {

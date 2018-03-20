@@ -39,8 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.assignment.ListBundle");
-
     // configured node information
     protected int numConfigNodes = 0;
     protected SerialNode[] configNodes = new SerialNode[128];
@@ -54,26 +52,26 @@ public class ListFrame extends jmri.util.JmriJFrame {
     public int numOutputBits = 48; // number of output bits for selected node
 
     // node select pane items
-    JLabel nodeLabel = new JLabel(rb.getString("NodeBoxLabel") + " ");
+    JLabel nodeLabel = new JLabel(Bundle.getMessage("NodeBoxLabel") + " ");
     JComboBox<String> nodeSelBox = new JComboBox<String>();
     ButtonGroup bitTypeGroup = new ButtonGroup();
-    JRadioButton inputBits = new JRadioButton(rb.getString("ShowInputButton") + "   ", false);
-    JRadioButton outputBits = new JRadioButton(rb.getString("ShowOutputButton"), true);
+    JRadioButton inputBits = new JRadioButton(Bundle.getMessage("ShowInputButton") + "   ", false);
+    JRadioButton outputBits = new JRadioButton(Bundle.getMessage("ShowOutputButton"), true);
     JLabel nodeInfoText = new JLabel("Node Information Text");
 
     // assignment pane items
     protected JPanel assignmentPanel = null;
     protected Border inputBorder = BorderFactory.createEtchedBorder();
     protected Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-            rb.getString("AssignmentPanelInputName"));
+            Bundle.getMessage("AssignmentPanelInputName"));
     protected Border outputBorder = BorderFactory.createEtchedBorder();
     protected Border outputBorderTitled = BorderFactory.createTitledBorder(outputBorder,
-            rb.getString("AssignmentPanelOutputName"));
+            Bundle.getMessage("AssignmentPanelOutputName"));
     protected JTable assignmentTable = null;
     protected TableModel assignmentListModel = null;
 
     // button pane items
-    JButton printButton = new JButton(rb.getString("PrintButtonText"));
+    JButton printButton = new JButton(Bundle.getMessage("PrintButtonText"));
 
     ListFrame curFrame;
 
@@ -92,7 +90,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     public void initComponents() {
 
         // set the frame's initial state
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
         setSize(500, 400);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -126,11 +124,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 }
             });
         } else {
-            nodeInfoText.setText(rb.getString("NoNodesError"));
+            nodeInfoText.setText(Bundle.getMessage("NoNodesError"));
         }
-        nodeSelBox.setToolTipText(rb.getString("NodeBoxTip"));
-        inputBits.setToolTipText(rb.getString("ShowInputTip"));
-        outputBits.setToolTipText(rb.getString("ShowOutputTip"));
+        nodeSelBox.setToolTipText(Bundle.getMessage("NodeBoxTip"));
+        inputBits.setToolTipText(Bundle.getMessage("ShowInputTip"));
+        outputBits.setToolTipText(Bundle.getMessage("ShowOutputTip"));
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
@@ -147,7 +145,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         panel1.add(panel12);
         Border panel1Border = BorderFactory.createEtchedBorder();
         Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,
-                rb.getString("NodePanelName"));
+                Bundle.getMessage("NodePanelName"));
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 
@@ -190,7 +188,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new FlowLayout());
         printButton.setVisible(true);
-        printButton.setToolTipText(rb.getString("PrintButtonTip"));
+        printButton.setToolTipText(Bundle.getMessage("PrintButtonTip"));
         if (numConfigNodes > 0) {
             printButton.addActionListener(new java.awt.event.ActionListener() {
                 @Override
@@ -210,7 +208,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         addHelpMenu("package.jmri.jmrix.maple.assignment.ListFrame", true);
 
         // pack for display
-        pack();
+        this.pack();
     }
 
     /**
@@ -245,7 +243,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle selection of a Node for info display
+     * Handle selection of a Node for info display.
      */
     public void displayNodeInfo(String nodeID) {
         if (!nodeID.equals(selNodeID)) {
@@ -269,8 +267,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
             // prepare the information line
             numInputBits = InputBits.getNumInputBits();
             numOutputBits = OutputBits.getNumOutputBits();
-            nodeInfoText.setText(" - " + numInputBits + " " + rb.getString("InputBitsAnd") + " "
-                    + numOutputBits + " " + rb.getString("OutputBits"));
+            nodeInfoText.setText(" - " + numInputBits + " " + Bundle.getMessage("InputBitsAnd") + " "
+                    + numOutputBits + " " + Bundle.getMessage("OutputBits"));
         }
         // initialize for input or output assignments
         if (inputSelected) {
@@ -284,7 +282,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle print button in List Frame
+     * Handle print button in List Frame.
      */
     public void printButtonActionPerformed(java.awt.event.ActionEvent e) {
         int[] colWidth = new int[4];
@@ -297,11 +295,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head;
         if (inputSelected) {
-            head = rb.getString("AssignmentPanelInputName") + " - "
-                    + rb.getString("NodeBoxLabel") + " " + selNodeID;
+            head = Bundle.getMessage("AssignmentPanelInputName") + " - "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID;
         } else {
-            head = rb.getString("AssignmentPanelOutputName") + " - "
-                    + rb.getString("NodeBoxLabel") + " " + selNodeID;
+            head = Bundle.getMessage("AssignmentPanelOutputName") + " - "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID;
         }
         // initialize a printer writer
         HardcopyWriter writer = null;
@@ -317,11 +315,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set up table for displaying bit assignments
+     * Set up table for displaying bit assignments.
      */
     public class AssignmentTableModel extends AbstractTableModel {
 
-        private String free = rb.getString("AssignmentFree");
+        private String free = Bundle.getMessage("AssignmentFree");
         private int curRow = -1;
         private String curRowSysName = "";
 
@@ -429,11 +427,13 @@ public class ListFrame extends jmri.util.JmriJFrame {
         public static final int USERNAME_COLUMN = 3;
 
         /**
-         * Method to print or print preview the assignment table. Printed in
+         * Print or print preview the assignment table. Printed in
          * proportionately sized columns across the page with headings and
          * vertical lines between each column. Data is word wrapped within a
-         * column. Can only handle 4 columns of data as strings. Adapted from
-         * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+         * column. Can only handle 4 columns of data as strings.
+         * <p>
+         * Adapted from routines in BeanTableDataModel.java by
+         * Bob Jacobsen and Dennis Miller
          */
         public void printTable(HardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
@@ -560,10 +560,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
             }
         }
     }
-    private final String[] assignmentTableColumnNames = {rb.getString("HeadingBit"),
-        rb.getString("HeadingAddress"),
-        rb.getString("HeadingSystemName"),
-        rb.getString("HeadingUserName")};
+
+    private final String[] assignmentTableColumnNames = {Bundle.getMessage("HeadingBit"),
+            Bundle.getMessage("HeadingAddress"),
+            Bundle.getMessage("HeadingSystemName"),
+            Bundle.getMessage("HeadingUserName")};
 
     private final static Logger log = LoggerFactory.getLogger(ListFrame.class);
 

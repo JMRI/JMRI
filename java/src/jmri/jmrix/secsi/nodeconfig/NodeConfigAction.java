@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
- * Swing action to create and register a NodeConfigFrame object
+ * Swing action to create and register a NodeConfigFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
  */
@@ -21,7 +21,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     public NodeConfigAction(SecsiSystemConnectionMemo _memo) {
-        this("Configure SECSI Nodes",_memo);
+        this(Bundle.getMessage("ConfigNodesTitle"), _memo);
     }
 
     @Override
@@ -35,5 +35,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class);
+
 }

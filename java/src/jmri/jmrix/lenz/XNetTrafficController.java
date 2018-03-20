@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for implementations of XNetInterface.
- * <P>
- * This provides just the basic interface, plus the "" static method for
- * locating the local implementation.
+ * <p>
+ * This provides just the basic interface.
+ * @see jmri.jmrix.AbstractMRTrafficController
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2004-2010
@@ -23,31 +23,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     protected HashMap<XNetListener, Integer> mListenerMasks;
 
     /**
-     * Static function returning the TrafficController instance to use.
-     *
-     * @return The registered TrafficController instance for general use, if
-     *         need be creating one.
-     */
-    @Deprecated
-    static public XNetTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * Static function setting this object as the TrafficController instance to
-     * use.
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        if (self == null) {
-            self = this;
-        }
-    }
-
-    static XNetTrafficController self = null;
-
-    /**
+     * Create a new XNetTrafficController.
      * Must provide a LenzCommandStation reference at creation time.
      *
      * @param pCommandStation reference to associated command station object,
@@ -60,6 +36,31 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         highPriorityQueue = new LinkedBlockingQueue<>();
         highPriorityListeners = new LinkedBlockingQueue<>();
     }
+
+    /**
+     * Get the TrafficController instance to use.
+     *
+     * @return The registered TrafficController instance for general use, if
+     *         need be creating one.
+     * @deprecated - does not work with multi-system support, needs to have other classes migrated and then be removed
+     */
+    @Deprecated
+    static public XNetTrafficController instance() {
+        return self;
+    }
+
+    /**
+     * Set this object as the TrafficController instance to use.
+     */
+    @Override
+    @Deprecated
+    protected void setInstance() {
+        if (self == null) {
+            self = this;
+        }
+    }
+
+    static XNetTrafficController self = null;
 
     // Abstract methods for the XNetInterface
 
@@ -85,7 +86,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
      * Forward a preformatted XNetMessage to a specific listener interface.
      *
-     * @param m Message to send;
+     * @param m Message to send
      */
     @Override
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
@@ -221,7 +222,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     /**
      * This method has to be available, even though it doesn't do anything on
-     * lenz.
+     * Lenz.
      */
     @Override
     protected AbstractMRMessage enterProgMode() {

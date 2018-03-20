@@ -26,7 +26,7 @@ public class SerialMonFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SerialMonFrame t = new SerialMonFrame(memo);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @Test
@@ -68,8 +68,8 @@ public class SerialMonFrameTest {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
         memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
     }
 
@@ -77,4 +77,5 @@ public class SerialMonFrameTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
+
 }

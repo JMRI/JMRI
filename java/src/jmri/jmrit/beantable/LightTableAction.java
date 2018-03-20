@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a LightTable GUI.
- * <P>
+ * <p>
  * Based on SignalHeadTableAction.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -69,7 +69,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -616,6 +616,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {

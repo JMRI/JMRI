@@ -18,7 +18,8 @@ import org.slf4j.LoggerFactory;
    MemoryIconXmlTest.class,
    PositionablePointXmlTest.class,
    TrackSegmentXmlTest.class,
-   BundleTest.class
+   BundleTest.class,
+   LayoutTrackDrawingOptionsXmlTest.class,
 })
 /**
  * Tests for the jmri.jmrit.display.layoutEditor.configurexml package.

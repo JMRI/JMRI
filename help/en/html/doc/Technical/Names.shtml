@@ -78,6 +78,8 @@
         <li>signal masts (F, for some reason)</li>
 
         <li>Lights (a type of output)</li>
+        
+        <li>eNtry/exit destination points</li>
 
         <li>Memories</li>
 
@@ -324,6 +326,8 @@
         <li>L Light - another form of output, used to e.g. control
         lights on a layout</li>
 
+        <li>N eNtry/exit destination points</li>
+
         <li>P Power manager i.e. layout, district, subdistrict; not
         all systems distinguish between these, so the device type
         letter doesn't either. The system-specific part of the name
@@ -341,7 +345,7 @@
         commonly used for block occupancy detectors.</li>
 
         <li>Y Sections - holds a map of trackwork.
-        Section</b> system names are all upper case, have no trailing whitespace and start with IY.</li>
+        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
         
         <li>SignalGroups - hold a set of signal heads or masts.
             SignalGroup system names are all upper case and have no trailing whitespace.

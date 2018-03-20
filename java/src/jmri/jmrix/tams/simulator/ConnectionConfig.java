@@ -14,15 +14,18 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     public final static String NAME = "Simulator";
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Create a connection configuration without a preexisting adapter.
      */
     public ConnectionConfig() {
         super();

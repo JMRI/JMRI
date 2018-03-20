@@ -139,7 +139,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
         } catch(LocoNetException lne) {
-          Assert.fail("failed to add addresses to slot durring setup");
+          Assert.fail("failed to add addresses to slot during set-up");
         }
         c = new LocoNetConsist(3,memo);
         ReturnSlotInfo();
@@ -151,6 +151,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     public void tearDown() {
         ltm.dispose();
         c = null;
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

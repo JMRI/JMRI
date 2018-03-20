@@ -20,7 +20,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     static private int _nRetries = 5;
 
     /* According to the specification, XpressNet has a maximum timing
-     interval of 500 milliseconds durring normal communications */
+     interval of 500 milliseconds during normal communications */
     static protected final int XNetProgrammingTimeout = 10000;
     static private int XNetMessageTimeout = 5000;
 
@@ -291,7 +291,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     }
 
     /* 
-     * Next, we have some messages related to sending programing commands.
+     * Next, we have some messages related to sending programming commands.
      */
 
     public static XNetMessage getServiceModeResultsMsg() {

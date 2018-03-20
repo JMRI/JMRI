@@ -15,7 +15,6 @@ import org.junit.Test;
 public class TreePanelTest {
 
     @Test
-    @Ignore("travis and appveyor have trouble loading the proper library for this test")
     public void testCtor() {
         TreePanel action = new TreePanel();
         Assert.assertNotNull("exists", action);

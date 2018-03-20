@@ -51,7 +51,7 @@ public class HexFileServer {
         port.getSystemConnectionMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         if (port.getSystemConnectionMemo().getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(port.getSystemConnectionMemo().getProgrammerManager());
+            jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (port.getSystemConnectionMemo().getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), GlobalProgrammerManager.class);
@@ -64,7 +64,7 @@ public class HexFileServer {
 
         // start operation of packetizer
         packets.startThreads();
-        sourceThread = new Thread(port);
+        sourceThread = new Thread(port, "LocoNet HexFileServer");
         sourceThread.start();
     }
 

@@ -227,7 +227,11 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             }
         }
         if (sorter != null && this.sortKeys.get(table.getName()) != null) {
-            sorter.setSortKeys(this.sortKeys.get(table.getName()));
+            try {
+                sorter.setSortKeys(this.sortKeys.get(table.getName()));
+            } catch (IllegalArgumentException ex) {
+                log.debug("Ignoring IllegalArgumentException \"{}\" as column does not exist.", ex.getMessage());
+            }
         }
         if (persisting) {
             this.persist(table);
@@ -654,7 +658,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
         protected void cancelDelay() {
             if (this.delay != null) {
-                this.delay.cancel();
+                this.delay.cancel(); // cancel complete before dropping reference
                 this.delay = null;
             }
         }
@@ -669,7 +673,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
          */
         private void saveState() {
             cancelDelay();
-            delay = new Timer();
+            delay = new Timer("JmriJTablePersistenceManager save delay");
             delay.schedule(new TimerTask() {
                 @Override
                 public void run() {

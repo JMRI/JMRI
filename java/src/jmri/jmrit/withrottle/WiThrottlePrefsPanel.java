@@ -2,6 +2,9 @@ package jmri.jmrit.withrottle;
 
 import apps.PerformActionModel;
 import apps.StartupActionsManager;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -42,6 +45,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JCheckBox routeCB;
     JCheckBox consistCB;
     JCheckBox startupCB;
+    JCheckBox fastClockDisplayCB;
     ItemListener startupItemListener;
     int startupActionPosition = -1;
     JRadioButton wifiRB;
@@ -80,6 +84,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         powerCB.setSelected(localPrefs.isAllowTrackPower());
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
+        fastClockDisplayCB.setSelected(localPrefs.isDisplayFastClock());
         consistCB.setSelected(localPrefs.isAllowConsist());
         InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
             startupCB.setSelected(isStartUpAction());
@@ -120,6 +125,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setAllowTrackPower(powerCB.isSelected());
         localPrefs.setAllowTurnout(turnoutCB.isSelected());
         localPrefs.setAllowRoute(routeCB.isSelected());
+        localPrefs.setDisplayFastClock(fastClockDisplayCB.isSelected());
         localPrefs.setAllowConsist(consistCB.isSelected());
         localPrefs.setUseWiFiConsist(wifiRB.isSelected());
 
@@ -189,22 +195,19 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         powerCB = new JCheckBox(Bundle.getMessage("LabelTrackPower"));
         powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
-        panel.add(powerCB);
 
         turnoutCB = new JCheckBox(Bundle.getMessage("Turnouts"));
         turnoutCB.setToolTipText(Bundle.getMessage("ToolTipTurnout"));
-        panel.add(turnoutCB);
 
         routeCB = new JCheckBox(Bundle.getMessage("LabelRoute"));
         routeCB.setToolTipText(Bundle.getMessage("ToolTipRoute"));
-        panel.add(routeCB);
+
+        fastClockDisplayCB = new JCheckBox(Bundle.getMessage("LabelFastClockDisplayed"));
+        fastClockDisplayCB.setToolTipText(Bundle.getMessage("ToolTipFastClockDisplayed"));
 
         consistCB = new JCheckBox(Bundle.getMessage("LabelConsist"));
         consistCB.setToolTipText(Bundle.getMessage("ToolTipConsist"));
-        panel.add(consistCB);
-
-        JPanel conPanel = new JPanel();
-        conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));
+        
         wifiRB = new JRadioButton(Bundle.getMessage("LabelWiFiConsist"));
         wifiRB.setToolTipText(Bundle.getMessage("ToolTipWiFiConsist"));
         dccRB = new JRadioButton(Bundle.getMessage("LabelDCCConsist"));
@@ -213,8 +216,24 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         ButtonGroup group = new ButtonGroup();
         group.add(wifiRB);
         group.add(dccRB);
+        
+        JPanel gridPanel = new JPanel(new GridLayout(0, 2));
+        JPanel conPanel = new JPanel();
+        
+        gridPanel.add(powerCB);
+        gridPanel.add(fastClockDisplayCB);
+        gridPanel.add(turnoutCB);
+        gridPanel.add(routeCB);
+        
+        conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));
+        wifiRB.setMargin(new Insets(0, 20, 0, 0));
+        dccRB.setMargin(new Insets(0, 20, 0, 0));
+        conPanel.add(consistCB);
         conPanel.add(wifiRB);
         conPanel.add(dccRB);
+        
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
+        panel.add(gridPanel);
         panel.add(conPanel);
 
         return panel;
@@ -234,7 +253,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return null;
+        return getPreferencesItemText();
     }
 
     @Override
@@ -282,11 +301,5 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private boolean isStartUpAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
                 .anyMatch((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName())));
-//        for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
-//            if (WiThrottleCreationAction.class.getName().equals(model.getClassName()))) {
-//                return true;
-//            }
-//        }
-//        return false;
     }
 }

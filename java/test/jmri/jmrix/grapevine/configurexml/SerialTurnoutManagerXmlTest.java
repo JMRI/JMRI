@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SerialTurnoutManagerXmlTest.java
- *
- * Description: tests for the SerialTurnoutManagerXml class
+ * Tests for the SerialTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -17,7 +15,7 @@ public class SerialTurnoutManagerXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("SerialTurnoutManagerXml constructor",new SerialTurnoutManagerXml());
+      Assert.assertNotNull("SerialTurnoutManagerXml constructor", new SerialTurnoutManagerXml());
     }
 
     // The minimal setup for log4J

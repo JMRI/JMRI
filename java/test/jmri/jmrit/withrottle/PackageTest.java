@@ -10,6 +10,7 @@ import org.junit.runners.Suite;
         ConsistFunctionControllerTest.class,
         DeviceServerTest.class,
         FacelessServerTest.class,
+        FastClockControllerTest.class,
         MultiThrottleControllerTest.class,
         MultiThrottleTest.class,
         RouteControllerTest.class,

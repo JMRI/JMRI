@@ -657,17 +657,17 @@ public class AutoActiveTrain implements ThrottleListener {
                 sm.addPropertyChangeListener(_conSignalMastListener = (PropertyChangeEvent e) -> {
                     if (e.getPropertyName().equals("Aspect")) {
                         // controlling signal has changed appearance
+                        setSpeedBySignal();
                         if (_stoppingForStopSignal && (_targetSpeed > 0.0)) {
                             cancelStopInCurrentSection();
                             _stoppingForStopSignal = false;
                         }
-                        setSpeedBySignal();
                     } else if (e.getPropertyName().equals("Held")) {
+                        setSpeedBySignal();
                         if (!((Boolean) e.getNewValue())) {
                             cancelStopInCurrentSection();
                             _stoppingForStopSignal = false;
                         }
-                        setSpeedBySignal();
                     }
                 });
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),
@@ -781,7 +781,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             log.debug("{}: Signal {} speed from map for {} is {}",
                                     _activeTrain.getTrainName(), _controllingSignal.getDisplayName(), blockSpeedName,
                                     blockSpeed);
-                        } catch (Exception ex) {
+                        } catch (Throwable ex) { // if _anything_ goes wrong, contain it
                             //Considered Normal if the speed does not appear in the map
                             log.warn("{}: Block {} Speed {} not found in SignalSpeedMap",
                                     _activeTrain.getTrainName(), _conSignalProtectedBlock.getUserName(), blockSpeed);
@@ -796,8 +796,10 @@ public class AutoActiveTrain implements ThrottleListener {
                     signalSpeedName =
                             jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(displayedAspect);
                     signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(signalSpeedName);
-                } catch (Exception ex) {
+                } catch (Throwable ex) { // if _anything_ goes wrong, contain it
                     signalSpeed = -1.0f;
+                    log.warn("{}: Block {} AppearanceSpeed {} not found in SignalSpeedMap",
+                            _activeTrain.getTrainName(), _conSignalProtectedBlock.getUserName(), displayedAspect);
                 }
                 float useSpeed = 1.0f;
                 if (blockSpeed < signalSpeed) {

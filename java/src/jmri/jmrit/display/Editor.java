@@ -2944,7 +2944,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(_pos.getEditor(), this);
+            _decorator = new DecoratorPanel(_pos.getEditor(), null);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
@@ -2967,7 +2967,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     } else {
                         setSelectionsAttributes(util, _pos);
                     }
-                    dispose();
+                   dispose();
                 }
             });
             panel0.add(doneButton);

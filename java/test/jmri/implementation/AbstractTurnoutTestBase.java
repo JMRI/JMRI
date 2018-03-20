@@ -113,8 +113,8 @@ public abstract class AbstractTurnoutTestBase {
     class TestSensor extends AbstractSensor {
             public boolean request = false;
 
-            public TestSensor(String sysName,String userName){
-                super(sysName,userName);
+            public TestSensor(String sysName, String userName){
+                super(sysName, userName);
             }
 
             @Override
@@ -187,7 +187,6 @@ public abstract class AbstractTurnoutTestBase {
         checkClosedMsgSent();
     }
 
-
     @Test
     public void testProvideFirstFeedbackSensor() throws jmri.JmriException {
         t.provideFirstFeedbackSensor("IS1");
@@ -241,4 +240,5 @@ public abstract class AbstractTurnoutTestBase {
         s2.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Active)", Turnout.INCONSISTENT, t.getKnownState());
     }
+
 }

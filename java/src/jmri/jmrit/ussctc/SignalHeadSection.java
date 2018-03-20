@@ -141,7 +141,9 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     public boolean isRunningTime() { return timeRunning; }
     
     Station station;
+    @Override
     public Station getStation() { return station;}
+    @Override
     public String getName() { return "SH for "+hStopIndicator.getBean().getDisplayName(); }
 
     List<Lock> rightwardLocks;
@@ -247,6 +249,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     /**
      * Code arrives in field. Sets the signals on the layout.
      */
+    @Override
     public void codeValueDelivered(CodeGroupThreeBits value) {
         log.debug("codeValueDelivered sets value {}", value);
         // @TODO add lock checking here; this is part of vital logic implementation
@@ -297,6 +300,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         }
     }
     
+    @Override
     public String toString() {
         StringBuffer retVal = new StringBuffer("SignalHeadSection [");
         boolean first;
@@ -320,6 +324,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     /**
      * Provide state that's returned from field to machine via indication.
      */
+    @Override
     public CodeGroupThreeBits indicationStart() {
         CodeGroupThreeBits retval = getCurrentIndication();
         log.debug("indicationStart with {}; last indication was {}", retval, lastIndication);
@@ -402,6 +407,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
     /**
      * Process values received from the field unit.
      */
+    @Override
     public void indicationComplete(CodeGroupThreeBits value) {
         log.debug("indicationComplete sets from {} in state {}", value, machine);
         if (timeRunning) {

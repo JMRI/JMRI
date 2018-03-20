@@ -7,10 +7,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.Timeout;
+import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *

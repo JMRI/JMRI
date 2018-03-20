@@ -1278,11 +1278,10 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         // curNode can never be null at this point. Was this intended to catch
         // an exception?
         if (curNode != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error1") + Integer.toString(nodeAddress)
-                    + Bundle.getMessage("Error2"), "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error1", Integer.toString(nodeAddress)),
+                    "", JOptionPane.ERROR_MESSAGE);
 
-            statusText1.setText(Bundle.getMessage("Error1") + Integer.toString(nodeAddress)
-                    + Bundle.getMessage("Error2"));
+            statusText1.setText(Bundle.getMessage("Error1", Integer.toString(nodeAddress)));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();

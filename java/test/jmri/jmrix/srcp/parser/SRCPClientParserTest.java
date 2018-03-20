@@ -811,6 +811,13 @@ public class SRCPClientParserTest {
 
     // handshake mode responses (Defined in section 4.3 of the SRCP protocol)
     @Test
+    public void testHandshakeResponseServiceVersion() throws ParseException {
+        String code = "12345678910 SRCP 0.8.3\n\r";
+        SRCPClientParser p = new SRCPClientParser(new StringReader(code));
+        p.handshakeresponse();
+    }
+
+    @Test
     public void testHandshakeResponse200() {
         boolean exceptionOccured = false;
         String code = "12345678910 200 OK 12345678\n\r";

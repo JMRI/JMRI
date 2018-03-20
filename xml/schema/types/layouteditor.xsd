@@ -38,7 +38,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded" >
-
+        <xs:element name="layoutTrackDrawingOptions" type="EditorLayoutTrackDrawingOptionsType" minOccurs="0" maxOccurs="1" />
         <xs:element name="positionablelabel"  type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint"  type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="trainicon"          type="EditorTrainIconType"         minOccurs="0" maxOccurs="unbounded" />
@@ -60,8 +60,8 @@
         <xs:element name="locoicon"           type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="LightIcon"          type="EditorLightIconType"         minOccurs="0" maxOccurs="unbounded" />
-
       </xs:sequence>
+
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="name" type="xs:string"/>
       <xs:attribute name="x" type="xs:integer" use="required" />

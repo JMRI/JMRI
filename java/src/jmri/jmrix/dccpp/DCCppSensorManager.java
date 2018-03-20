@@ -7,22 +7,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the DCC++ specific Sensor implementation.
- *
- * System names are "DCCppSnnn", where nnn is the sensor number without padding.
+ * Implement Sensor Manager for DCC++ systems.
+ * <p>
+ * System names are "DxppSnnn", where Dx is the system prefix and nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
  */
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
+    protected DCCppTrafficController tc = null;
+    protected String prefix = null;
+
+    /**
+     * Create an new DCC++ SensorManager.
+     * Has to register for DCC++ events.
+     *
+     * @param controller the TrafficController to connect the SensorManager to
+     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     */
+    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
+        tc = controller;
+        tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        this.prefix = prefix;
+        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
+        // then Send the version request to the controller
+        tc.sendDCCppMessage(msg, this);
+    }
+
     @Override
     public String getSystemPrefix() {
         return prefix;
     }
-    protected String prefix = null;
-
-    protected DCCppTrafficController tc = null;
 
     @Deprecated
     static public DCCppSensorManager instance() {
@@ -38,19 +54,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     // DCCpp specific methods
-
-    /**
-     * Ctor
-     * Has to register for DCC++ events.
-     */
-    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
-        tc = controller;
-        tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
-        this.prefix = prefix;
-        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
-        // Then Send the version request to the controller
-        tc.sendDCCppMessage(msg, this);
-    }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
@@ -225,7 +228,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return VALID if system name has a valid format, else returns INVALID
      */

@@ -386,6 +386,9 @@
         <variable item="GPIO{$index +1} Sensitivity" CV="{$CV3}" mask="XXXVVVVV" default="8">
             <xi:include href="http://jmri.org/xml/decoders/tvd/DetSensitivity.xml"/>
         </variable>
+        <variable item="GPIO{$index +1} Range" CV="{$CV3}" mask="XXVXXXXX" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/tvd/DetRange.xml"/>
+        </variable>
     </variables>
     <variable item="Non-TVD Det GPIO{$index +1} Qual" CV="1" mask="XXXXXXXX">
         <enumVal>
@@ -653,6 +656,10 @@
             <tooltip>CT Detector or IR Detector</tooltip>
             <label>Detector</label>
         </display>
+        <display item="GPIO{$io} Range">
+            <tooltip>Low or High current range</tooltip>
+            <label>Range</label>
+        </display>
         <display item="GPIO{$io} Sensitivity">
             <tooltip>0-least sensitive, 31-most sensitive</tooltip>
             <label>Sensitivity</label>
@@ -680,20 +687,6 @@
             <tooltip>Swaps LED drive so panel matches turnout</tooltip>
             <label>LED Drive</label>
         </display>
-        <label label=" ">
-            <qualifier>
-                <variableref>GPIO<xsl:value-of select="$io"/> Type</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-            </qualifier>
-        </label>
-        <label label=" ">
-            <qualifier>
-                <variableref>GPIO<xsl:value-of select="$io"/> Type</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-            </qualifier>
-        </label>
         <label label=" "/>	
         <xsl:if test="4 = $numGroup">
             <display item="One Choice Enum" format="onradiobutton" layout="right">
@@ -1233,7 +1226,7 @@
  <!--install panes -->
  <xsl:template match="label[text='Decoder Transform File Version: x.xx']">
     <label>
-        <text>Decoder Transform File Version: 1.01</text>
+        <text>Decoder Transform File Version: 1.02</text>
     </label>
  </xsl:template>
 

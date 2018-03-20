@@ -185,7 +185,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      * @return definitive operation
      */
     public TurnoutOperation getDefinitive() {
-        String[] myClass = jmri.util.StringUtil.split(this.getClass().getName(), ".");
+        String[] myClass = this.getClass().getName().split("\\.");
         String finalClass = myClass[myClass.length - 1];
         String mySubclass = finalClass.substring(0, finalClass.indexOf("TurnoutOperation"));
         return TurnoutOperationManager.getInstance().getOperation(mySubclass);
@@ -198,7 +198,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      *         prefix of the class
      */
     public boolean isDefinitive() {
-        String[] classNames = jmri.util.StringUtil.split(this.getClass().getName(), ".");
+        String[] classNames = this.getClass().getName().split("\\.");
         String className = classNames[classNames.length - 1];
         String opName = getName() + "TurnoutOperation";
         return (className.equalsIgnoreCase(opName));

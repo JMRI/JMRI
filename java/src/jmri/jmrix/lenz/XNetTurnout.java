@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * </UL>
  * <P>
  * NOTE: Some XpressNet Command stations take no action when the message
- * generated durring the third step is received.
+ * generated during the third step is received.
  * <P>
  * Valid response messages are command station dependent, but there are 4
  * possibilities:

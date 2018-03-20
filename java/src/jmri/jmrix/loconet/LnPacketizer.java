@@ -470,7 +470,7 @@ public class LnPacketizer extends LnTrafficController {
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
-
+        log.info("lnPacketizer Started");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);

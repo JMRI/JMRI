@@ -20,6 +20,7 @@ public class PhysicalBell implements Bell {
 
     public static int STROKE_DELAY = 250;
     
+    @Override
     public void ring() {
         hOutput.getBean().setCommandedState(Turnout.THROWN);
         jmri.util.ThreadingUtil.runOnLayoutDelayed(

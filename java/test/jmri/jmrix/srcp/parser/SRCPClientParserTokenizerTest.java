@@ -238,18 +238,12 @@ public class SRCPClientParserTokenizerTest{
     }
 
     // error condition.
-    @Test 
-    public void testTokenizeFailure() {
-        boolean errorThrown = false;
+    @Test(expected=TokenMgrError.class) 
+    public void testTokenizeFailure() throws TokenMgrError {
         String cmd = "this should fail";
         SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
         SRCPClientParserTokenManager stm = new SRCPClientParserTokenManager(cs);
-        try {
-            stm.getNextToken();
-        } catch (TokenMgrError tme) {
-            errorThrown = true;
-        }
-        Assert.assertTrue(errorThrown);
+        stm.getNextToken();
     }
 
     // The minimal setup for log4J

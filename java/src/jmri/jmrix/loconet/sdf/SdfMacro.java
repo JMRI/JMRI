@@ -218,6 +218,6 @@ public abstract class SdfMacro implements SdfConstants {
         return val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
+    // private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
 
 }

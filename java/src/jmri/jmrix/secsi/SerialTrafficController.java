@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
+    /**
+     * Create a new SerialTrafficController instance.
+     */
     public SerialTrafficController() {
         super();
 

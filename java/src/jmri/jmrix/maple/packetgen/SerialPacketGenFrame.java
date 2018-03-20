@@ -26,7 +26,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
+    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll"); // TODO I18N using jmrix.Bundle, cf secsi
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
     public SerialPacketGenFrame(MapleSystemConnectionMemo _memo) {

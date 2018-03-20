@@ -121,6 +121,10 @@ confuses JavaHelp.
         <li>Anchors need to use the "name" attribute rather than
         the "id" attribute. See the item above for an example.</li>
 
+        <li>Do not use spaces or <code>%20</code> in anchor names.
+        If you must use a phrase for a name, use the underscore character:
+        "This_Anchor", not "This Anchor.</li>
+
         <li>You can use the <code>&lt;code&gt;</code> element, or
         the <code>&lt;pre&gt;</code> element, but you can't use
         both together. <code>&lt;code&gt;</code> is good for
@@ -138,6 +142,18 @@ confuses JavaHelp.
         most cases they'll be automatically opened in an outside
         web browser.</li>
       </ul><a name="web" id="web"></a>
+
+      <a id="check"></a>
+      <h3>Checking Your Changes</h3>
+      
+      The 
+      <a href="ContinuousIntegration.shtml">Continuous Integration</a>
+      process checks all changes to JMRI Help files to make
+      sure they're OK.  If you'd like to run that same check
+      while you're working, do:
+<pre style="font-family: monospace;">   
+    ant scanhelp   
+</pre>
 
       <h2>Web access to help</h2>
       It's inconvenient to have to
