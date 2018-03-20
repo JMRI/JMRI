@@ -1507,7 +1507,7 @@ Function RemoveOldJMRI
   Rename "$PROFILE\JMRI_backup" "$PROFILE\JMRI_backup_old"
   CreateDirectory "$PROFILE\JMRI_backup"
   CopyFiles "$PROFILE\JMRI\*.*" "$PROFILE\JMRI_backup"
-  CopyFiles "$OUTDIR\classes\" "$PROFILE\JMRI_backup"
+  CopyFiles "$INSTDIR\classes\" "$PROFILE\JMRI_backup"
 
   ; -- Check if uninstall required
   StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done
