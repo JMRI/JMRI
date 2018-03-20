@@ -12,7 +12,7 @@ import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
- * Panel for configuring a NCE booster
+ * Panel for configuring an NCE booster
  *
  * @author ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
  * @author Bob Jacobsen Copyright (C) 2004

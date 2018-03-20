@@ -20,7 +20,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print" />
   <link rel="icon" href="/images/jmri.ico" type="image/png" />
-  <link rel="home" title="Home" href="/" /><!-- /Style -->
+  <link rel="home" title="Home" href="/" />
+  <!-- /Style -->
 </head>
 
 <body>
@@ -99,8 +100,7 @@
       <h3>Export current throttles customization to roster</h3>Push
       current Throttle window customizations to the Roster, in
       particular Function Buttons customizations. See <a href=
-      "RostersMediaPane.shtml" name="EditMenu" id="EditMenu">Roster
-      Functions Labels Pane.</a>
+      "RostersMediaPane.shtml">Roster Functions Labels Pane.</a>
 
       <h2><a name="ViewMenu" id="ViewMenu">View
       menu</a></h2><img src="images/ThrottlesMenu2.png" alt=
@@ -133,6 +133,7 @@
 
       <p>Make sure that all inner windows of the current Throttle
       are inside the Throttle Window bounds.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.11.3ish+jake+20180212T0636Z+R3fb8160a3d on Sun Feb 11 22:37:00 PST 2018-->
-  <decoderIndex version="884">
+  <!--Written by JMRI version 4.11.4ish+jake+20180316T0456Z+R76e3ad8db2 on Thu Mar 15 21:56:28 PDT 2018-->
+  <decoderIndex version="892">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -172,7 +172,7 @@
       </family>
       <family name="Raw CVs 1-1024" mfg="NMRA" file="0NMRA_test_1024.xml">
         <model model="Raw CVs 1-1024" />
-      </family>      
+      </family>
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
           <output name="1" label="White" connection="wire" />
@@ -8323,6 +8323,45 @@
           </output>
         </model>
       </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="27" file="LDH_2F-6Fv27.xml">
+        <model model="LDH 4F1.5 v27" numOuts="6" numFns="6">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+          <output name="5" label="E - Blanco" />
+          <output name="6" label="F - Amarillo" />
+        </model>
+      </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="26" file="LDH_2F-7Fv26.xml">
+        <model model="LDH 2F-7F v26" numOuts="7" numFns="7">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+          <output name="5" label="E - Blanco" />
+          <output name="6" label="F - Amarillo" />
+          <output name="7" label="G - Verde" />
+        </model>
+      </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="55" file="LDH_4F1-5v55.xml">
+        <model model="LDH 4F1.5 v55" numOuts="6" numFns="6">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+          <output name="5" label="E - Blanco" />
+          <output name="6" label="F - Amarillo" />
+        </model>
+      </family>
+      <family name="LDH decoders" mfg="LDH" lowVersionID="55" file="LDH_SyM-v55.xml">
+        <model model="LDH 4F1.5 v55 Motor y Sonido" numOuts="4" numFns="11">
+          <output name="1" label="A - Blanco" />
+          <output name="2" label="B - Amarillo" />
+          <output name="3" label="C - Verde" />
+          <output name="4" label="D - Marron" />
+        </model>
+      </family>
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="04" file="LaisDcc.xml">
         <model model="860010/LaisDcc-Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860010" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
           <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
@@ -12971,6 +13010,7 @@
         <model model="FX-SD U30B (Atlas)" numFns="14" numOuts="0" productID="1130" />
         <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104" />
         <model model="FX-U 50 Class (Eureka)" numFns="14" numOuts="0" productID="3109" />
+        <model model="FX-U 40 Class (Eureka)" numFns="14" numOuts="0" productID="1173" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -15911,7 +15951,7 @@
           </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
-        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="263" comment="Model 885018">
+        <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="293" comment="Model 885018">
           <versionCV lowVersionID="71" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -26435,22 +26475,15 @@
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
-        <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" />
-        <model model="ATL2054" lowVersionID="19" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" />
-      </family>
-      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2064.xml">
-        <model model="ATL2064" lowVersionID="12" highVersionID="12" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="8">
-          <output name="3" label="Pad C" />
-          <output name="4" label="Pad D" />
-          <output name="5" label="Whistle" />
-          <output name="6" label="Sound" />
-          <output name="7" label="Signal" />
-          <output name="8" label="Main Sw" />
-          <output name="9" label="Vmid" />
+        <model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ModelA">
+          <size length="25" width="13.5" height="5.5" units="mm" />
+        </model>
+        <model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ModelB">
+          <size length="25" width="12.5" height="5" units="mm" />
         </model>
       </family>
-      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2066.xml">
-        <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="13">
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2064.xml">
+        <model model="ATL2064" lowVersionID="10" highVersionID="11" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelA1">
           <output name="1" label="Pad A">
             <label xml:lang="de">Ausgang A</label>
             <label xml:lang="nl">Uitgang A</label>
@@ -26481,36 +26514,200 @@
           </output>
           <output name="8" label="Main Sw">
             <label xml:lang="de">Hauptschalter</label>
-            <label xml:lang="nl">Hoofdschak.</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+            <label xml:lang="nl">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4.5" units="mm" />
+        </model>
+        <model model="ATL2064-12" lowVersionID="12" highVersionID="12" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="ModelB1">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">E/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+            <label xml:lang="nl">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2066.xml">
+        <model model="ATL2066" lowVersionID="21" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="Wires/NEM652" numOuts="9" numFns="13" productID="NEM652">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4" units="mm" />
+        </model>
+        <model model="ATL2066 (21MTC)" lowVersionID="25" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0" connector="21MTC" numOuts="9" numFns="13" productID="21MTC">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
           </output>
           <output name="9" label="Vmid">
             <label xml:lang="de">Vmid</label>
           </output>
         </model>
-        <model model="ATL2066p" lowVersionID="21" highVersionID="40" maxInputVolts="12V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" numOuts="9" numFns="13">
+        <model model="ATL2066p" lowVersionID="21" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" connector="Wires/NEM652" numOuts="9" numFns="13" productID="NEM652">
           <output name="1" label="Pad A">
             <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
           </output>
           <output name="2" label="Pad B">
             <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
           </output>
           <output name="3" label="Pad C">
             <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
           </output>
           <output name="4" label="Pad D">
             <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
           </output>
           <output name="5" label="E/Whistle">
             <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
           </output>
           <output name="6" label="F/Sound">
             <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
           </output>
           <output name="7" label="Signal">
             <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
           </output>
           <output name="8" label="Main Sw">
             <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
+          </output>
+          <output name="9" label="Vmid">
+            <label xml:lang="de">Vmid</label>
+          </output>
+          <size length="24" width="10" height="4" units="mm" />
+        </model>
+        <model model="ATL2066p (21MTC)" lowVersionID="25" highVersionID="40" maxInputVolts="21V" maxMotorCurrent="3A" maxTotalCurrent="3A" formFactor="HO" connector="21MTC" numOuts="9" numFns="13" productID="21MTC">
+          <output name="1" label="Pad A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Pad B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Pad C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Pad D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <output name="5" label="E/Whistle">
+            <label xml:lang="de">E/Pfeife</label>
+            <label xml:lang="nl">E/Fluit</label>
+          </output>
+          <output name="6" label="F/Sound">
+            <label xml:lang="de">F/Sound</label>
+            <label xml:lang="nl">F/Geluid</label>
+          </output>
+          <output name="7" label="Signal">
+            <label xml:lang="de">Signal</label>
+            <label xml:lang="nl">Signaal</label>
+          </output>
+          <output name="8" label="Main Sw">
+            <label xml:lang="de">Hauptschalter</label>
+            <label xml:lang="nl">Hoofdschakelaar</label>
           </output>
           <output name="9" label="Vmid">
             <label xml:lang="de">Vmid</label>

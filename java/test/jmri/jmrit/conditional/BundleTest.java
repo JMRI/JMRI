@@ -26,7 +26,7 @@ public class BundleTest  {
 
     @Test public void testGoodKeyMessageArg() {
         Assert.assertEquals("Row", Bundle.getMessage("ColumnLabelRow", new Object[]{}));  // NOI18N
-        Assert.assertEquals("Copy of Test", Bundle.getMessage("CopyOf", "Test"));  // NOI18N
+        Assert.assertEquals("Test \"test\" state is \"2\"", Bundle.getMessage("VarStateDescrpt", "Test", "test", "2"));  // NOI18N
     }
 
     @Test public void testBadKeyMessageArg() {
@@ -44,8 +44,7 @@ public class BundleTest  {
 
     @Test public void testLocaleMessageArg() {
         Assert.assertEquals("Zeile", Bundle.getMessage(Locale.GERMANY, "ColumnLabelRow", new Object[]{}));  // NOI18N
-        Assert.assertEquals("Kopie von Test", Bundle.getMessage(Locale.GERMANY, "CopyOf", "Test"));  // NOI18N
+        Assert.assertEquals("Prüfung \"prüfung\" Zustand ist 2", Bundle.getMessage(Locale.GERMANY, "VarStateDescrpt", "Prüfung", "prüfung", "2"));  // NOI18N
     }
-
 
 }

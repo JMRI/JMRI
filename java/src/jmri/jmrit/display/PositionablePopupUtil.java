@@ -43,7 +43,7 @@ public class PositionablePopupUtil {
     protected PositionablePopupUtil _self;
     protected PositionablePropertiesUtil _propertiesUtil;
 
-    private Color defaultBorderColor;
+    private final Color defaultBorderColor;
 
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
@@ -74,7 +74,7 @@ public class PositionablePopupUtil {
         util.setMargin(getMargin());
         util.setBorderSize(getBorderSize());
         util.setBorderColor(getBorderColor());
-        util.setFont(util.getFont().deriveFont(getFontStyle()));
+        util.setFont(getFont().deriveFont(getFontStyle()));
         util.setFontSize(getFontSize());
         util.setOrientation(getOrientation());
         util.setBackgroundColor(getBackground());
@@ -336,6 +336,9 @@ public class PositionablePopupUtil {
 
     public Color getBackground() {
         Color c = _textComponent.getBackground();
+        if (c==null) {
+            c = Color.WHITE;
+        }
         if (!_hasBackground) {
             // make sure the alpha value is set to 0
             c = jmri.util.ColorUtil.setAlpha(c,0);

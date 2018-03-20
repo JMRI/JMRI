@@ -93,7 +93,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         footer.add(_MasterBox);
         footer.add(new JLabel(Bundle.getMessage("Slave") + " : "));
         footer.add(_SlaveBox);
-        _addRepeater = new JButton(Bundle.getMessage("ButtonAdd"));
+        _addRepeater = new JButton(Bundle.getMessage("AddButtonText"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
             @Override

@@ -15,7 +15,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -25,7 +26,6 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <a name="Top" id="Top"></a>
 
       <h1>Using JMRI&reg; to Operate Trains</h1>
 
@@ -116,10 +116,11 @@
 
           <p align="right"><a href=
           "Ops_Cars_Menu.shtml"><strong>Back</strong></a></p>
-          <hr>
-          <!--#include virtual="/Footer" -->
         </li>
       </ul>
+      <hr>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

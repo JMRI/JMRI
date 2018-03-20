@@ -45,12 +45,12 @@ public class JsonSchemaServiceCacheTest {
                 try {
                     service.doSchema(type, true, Locale.ENGLISH);
                 } catch (JsonException ex) {
-                    if (ex.getCode() != 400) {
-                        Assert.fail("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage() + "\n" + ex.getCause().toString());
-                    }
-                    Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
+                    Throwable cause = ex.getCause();
+                    Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
+                            + (cause != null ? "\n" + cause.toString() : ""),
                             400,
-                            ex.getCode());
+                            ex.getCode()
+                    );
                     Assert.assertEquals("Only no server exception expected for type " + type + " from service " + service,
                             "No messages from servers of type \"" + type + "\" are allowed.",
                             ex.getMessage());
@@ -58,14 +58,27 @@ public class JsonSchemaServiceCacheTest {
                 try {
                     service.doSchema(type, false, Locale.ENGLISH);
                 } catch (JsonException ex) {
-                    if (ex.getCode() != 400) {
-                        Assert.fail("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage() + "\n" + ex.getCause().toString());
-                    }
-                    Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
+                    Throwable cause = ex.getCause();
+                    Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
+                            + (cause != null ? "\n" + cause.toString() : ""),
                             400,
                             ex.getCode());
                     Assert.assertEquals("Only no client exception expected for type " + type + " from service " + service,
                             "No messages from clients of type \"" + type + "\" are allowed.",
+                            ex.getMessage());
+                }
+                // test that every service throws an expected exception
+                try {
+                    service.doSchema("invalid-type", true, Locale.ENGLISH);
+                    Assert.fail("Expected exception for type \"invalid-type\" not thrown by " + service);
+                } catch (JsonException ex) {
+                    Throwable cause = ex.getCause();
+                    Assert.assertEquals("Unexpected exception for type invalid-type from service " + service + "\n" + ex.getMessage()
+                            + (cause != null ? "\n" + cause.toString() : ""),
+                            500,
+                            ex.getCode());
+                    Assert.assertEquals("Only unknown type exception expected for type invalid-type from service " + service,
+                            "Unknown object type invalid-type was requested.",
                             ex.getMessage());
                 }
             });

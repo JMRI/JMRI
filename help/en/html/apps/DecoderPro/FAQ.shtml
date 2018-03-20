@@ -38,9 +38,7 @@
         can I get a new decoder type defined?</a></dt>
 
         <dd class="first">
-          <a name="newdecoder" id="newdecoder"></a>
-
-          <p>A completely new decoder needs a new or updated
+                    <p>A completely new decoder needs a new or updated
           configuration file. You can <a href=
           "CreateDecoder.shtml">create your own</a> or ask on the
           <a href=
