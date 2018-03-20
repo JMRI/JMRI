@@ -35,7 +35,6 @@ public class NetworkTreePaneTest {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false, false);
-        ((jmri.jmrix.openlcb.OlcbSystemConnectionMemo)memo).getInterface().dispose(); 
         JUnitUtil.tearDown();
     }
 }
