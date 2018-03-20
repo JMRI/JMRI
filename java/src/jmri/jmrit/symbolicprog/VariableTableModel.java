@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.AddressedProgrammer;
+import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Content;
@@ -40,6 +41,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     private Vector<JButton> _writeButtons = new Vector<JButton>();
     private Vector<JButton> _readButtons = new Vector<JButton>();
     private JLabel _status = null;
+    private transient volatile DecoderFile _df = null;
 
     /**
      * Define the columns; values understood are: "Name", "Value", "Range",
@@ -215,7 +217,23 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param e   Element of type "variable"
      */
     public void setRow(int row, Element e) {
+        this.setRow(row, e, null);
+    }
+
+    /**
+     * Load one row in the VariableTableModel, by reading in the Element
+     * containing its definition.
+     * <p>
+     * Invoked from {@link DecoderFile}
+     *
+     * @param row number of row to fill
+     * @param e   Element of type "variable"
+     * @param df  the source {@link DecoderFile} instance (needed for
+     *            include/exclude processing at the sub-variable level)
+     */
+    public void setRow(int row, Element e, DecoderFile df) {
         // get the values for the VariableValue ctor
+        _df = df;
         String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) {
             log.debug("Starting to setRow \"" + name + "\"");
@@ -445,6 +463,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         List<Element> local = e.getChildren();
         for (int k = 0; k < local.size(); k++) {
             Element el = local.get(k);
+            log.debug("processing element='{}' name='{}' choice='{}' value='{}'", el.getName(), LocaleSelector.getAttribute(el, "name"), LocaleSelector.getAttribute(el, "choice"), el.getAttribute("value"));
+            if (_df != null && !DecoderFile.isIncluded(el, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
+                log.debug("element excluded by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
+                continue;
+            }
             if (el.getName().equals("enumChoice")) {
                 Attribute valAttr = el.getAttribute("value");
                 if (valAttr == null) {
@@ -458,6 +481,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 handleENumValChildren(el, var);
                 var.endGroup();
             }
+            log.debug("element processed");
 
         }
     }
