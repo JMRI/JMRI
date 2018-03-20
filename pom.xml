@@ -987,6 +987,11 @@
             <version>0.1.16</version>
             <scope>test</scope>
         </dependency>
+	<dependency>
+	    <groupId>org.eclipse.paho</groupId>
+	    <artifactId>mqtt-client</artifactId>
+	    <version>0.4.0</version>
+	</dependency>
     </dependencies>
 
     <repositories>
