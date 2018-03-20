@@ -60,7 +60,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _pathArray = new TreePath[n];
         _valueArray = new int[n];
         _nstored = 0;
-    }
+        log.debug("enumeration arrays size={}", n);
+   }
 
     /**
      * Create a new item in the enumeration, with an associated value one more
@@ -87,6 +88,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         treeNodes.getLast().add(node);
         _pathArray[_nstored] = new TreePath(node.getPath());
         _itemArray[_nstored++] = s;
+        log.debug("_itemArray.length={},_nstored={},s='{}',value={}",_itemArray.length,_nstored,s,value);
     }
 
     public void startGroup(String name) {
@@ -100,7 +102,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
 
     public void lastItem() {
-        _value = new JComboBox<String>(_itemArray);
+        _value = new JComboBox<String>(java.util.Arrays.copyOf(_itemArray, _nstored));
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
@@ -168,16 +170,18 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 log.debug(label() + " action event was from alternate rep");
             }
             // match and select in tree
-            for (int i = 0; i < _valueArray.length; i++) {
-                if (e.getActionCommand().equals(_itemArray[i])) {
-                    // now select in the tree
-                    TreePath path = _pathArray[i];
-                    for (JTree tree : trees) {
-                        tree.setSelectionPath(path);
-                        // ensure selection is in visible portion of JScrollPane
-                        tree.scrollPathToVisible(path);
+        if (_nstored > 0) {
+                for (int i = 0; i < _nstored; i++) {
+                    if (e.getActionCommand().equals(_itemArray[i])) {
+                        // now select in the tree
+                        TreePath path = _pathArray[i];
+                        for (JTree tree : trees) {
+                            tree.setSelectionPath(path);
+                            // ensure selection is in visible portion of JScrollPane
+                            tree.scrollPathToVisible(path);
+                        }
+                        break; // first one is enough
                     }
-                    break; // first one is enough
                 }
             }
         }
@@ -240,19 +244,21 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      *
      */
     protected void selectValue(int value) {
-        for (int i = 0; i < _valueArray.length; i++) {
-            if (_valueArray[i] == value) {
-                //found it, select it
-                _value.setSelectedIndex(i);
+        if (_nstored > 0) {
+            for (int i = 0; i < _nstored; i++) {
+                if (_valueArray[i] == value) {
+                    //found it, select it
+                    _value.setSelectedIndex(i);
 
-                // now select in the tree
-                TreePath path = _pathArray[i];
-                for (JTree tree : trees) {
-                    tree.setSelectionPath(path);
-                    // ensure selection is in visible portion of JScrollPane
-                    tree.scrollPathToVisible(path);
+                    // now select in the tree
+                    TreePath path = _pathArray[i];
+                    for (JTree tree : trees) {
+                        tree.setSelectionPath(path);
+                        // ensure selection is in visible portion of JScrollPane
+                        tree.scrollPathToVisible(path);
+                    }
+                    return;
                 }
-                return;
             }
         }
 
@@ -262,25 +268,23 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 + " in " + label());
         // lengthen arrays
         _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
-        _valueArray[_valueArray.length - 1] = value;
 
         _itemArray = java.util.Arrays.copyOf(_itemArray, _itemArray.length + 1);
-        _itemArray[_itemArray.length - 1] = "Reserved value " + value;
 
         _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
-        TreeLeafNode node = new TreeLeafNode(_itemArray[_itemArray.length - 1], _itemArray.length - 1);
-        treeNodes.getLast().add(node);
-        _pathArray[_itemArray.length - 1] = new TreePath(node.getPath());
 
-        _value.addItem(_itemArray[_itemArray.length - 1]);
-        _value.setSelectedItem(_itemArray[_itemArray.length - 1]);
+        addItem("Reserved value " + value, value);
+        
+        // update the JComboBox
+        _value.addItem(_itemArray[_nstored - 1]);
+        _value.setSelectedItem(_itemArray[_nstored - 1]);
 
         // tell trees to redisplay & select
         for (JTree tree : trees) {
             ((DefaultTreeModel) tree.getModel()).reload();
-            tree.setSelectionPath(_pathArray[_itemArray.length - 1]);
+            tree.setSelectionPath(_pathArray[_nstored - 1]);
             // ensure selection is in visible portion of JScrollPane
-            tree.scrollPathToVisible(_pathArray[_itemArray.length - 1]);
+            tree.scrollPathToVisible(_pathArray[_nstored - 1]);
         }
     }
 
@@ -290,6 +294,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             log.error("trying to get value " + _value.getSelectedIndex() + " too large"
                     + " for array length " + _valueArray.length + " in var " + label());
         }
+        log.debug("SelectedIndex={}", _value.getSelectedIndex());
         return _valueArray[_value.getSelectedIndex()];
     }
 
@@ -505,7 +510,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author   Bob Jacobsen   Copyright (C) 2001
-         */
+     */
     public static class VarComboBox extends JComboBox<String> {
 
         VarComboBox(ComboBoxModel<String> m, EnumVariableValue var) {
