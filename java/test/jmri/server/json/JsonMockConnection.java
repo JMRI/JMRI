@@ -26,6 +26,14 @@ public class JsonMockConnection extends JsonConnection {
 
     @Override
     public void sendMessage(JsonNode message) {
+        if (this.preferences.getValidateServerMessages()) {
+            try {
+                this.schemas.validateMessage(message, true, this.getLocale());
+            } catch (JsonException ex) {
+                this.message = ex.getJsonMessage();
+                return;
+            }
+        }
         this.message = message;
     }
 

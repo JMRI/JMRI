@@ -28,9 +28,13 @@ public class JsonServerPreferences extends Bean {
     static final String XML_PREFS_ELEMENT = "JSONServerPreferences"; // NOI18N
     static final String HEARTBEAT_INTERVAL = "heartbeatInterval"; // NOI18N
     static final String PORT = "port"; // NOI18N
+    static final String VALIDATE_CLIENT = "validateClientMessages"; // NOI18N
+    static final String VALIDATE_SERVER = "validateServerMessages"; // NOI18N
     // initial defaults if prefs not found
     private int heartbeatInterval = 15000;
     private int port = DEFAULT_PORT;
+    private boolean validateClientMessages = false;
+    private boolean validateServerMessages = false;
     // as loaded prefences
     private int asLoadedHeartbeatInterval = 15000;
     private int asLoadedPort = DEFAULT_PORT;
@@ -89,6 +93,8 @@ public class JsonServerPreferences extends Bean {
     private void readPreferences(Preferences sharedPreferences) {
         this.setHeartbeatInterval(sharedPreferences.getInt(HEARTBEAT_INTERVAL, this.getHeartbeatInterval()));
         this.setPort(sharedPreferences.getInt(PORT, this.getPort()));
+        this.validateClientMessages = sharedPreferences.getBoolean(VALIDATE_CLIENT, this.validateClientMessages);
+        this.validateServerMessages = sharedPreferences.getBoolean(VALIDATE_SERVER, this.validateServerMessages);
         this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
         this.asLoadedPort = this.getPort();
     }
@@ -151,6 +157,8 @@ public class JsonServerPreferences extends Bean {
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         sharedPreferences.putInt(HEARTBEAT_INTERVAL, this.heartbeatInterval);
         sharedPreferences.putInt(PORT, this.port);
+        sharedPreferences.putBoolean(VALIDATE_CLIENT, this.validateClientMessages);
+        sharedPreferences.putBoolean(VALIDATE_SERVER, this.validateServerMessages);
     }
 
     public boolean isDirty() {
@@ -179,6 +187,24 @@ public class JsonServerPreferences extends Bean {
 
     public void setPort(int value) {
         this.port = value;
+    }
+
+    /**
+     * Validate that messages from clients are schema valid.
+     *
+     * @return true if client messages should be validated; false otherwise
+     */
+    public boolean getValidateClientMessages() {
+        return this.validateClientMessages;
+    }
+
+    /**
+     * Validate that messages from the server are schema valid.
+     *
+     * @return true if server messages should be validated; false otherwise
+     */
+    public boolean getValidateServerMessages() {
+        return this.validateServerMessages;
     }
 
     private static class JsonServerPreferencesXml extends XmlFile {
