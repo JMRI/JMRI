@@ -246,6 +246,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return (msg);
     }
 
+    // operational instance variable (should not be preserved between runs)
+    protected boolean[] nodesSet = new boolean[127]; // node init received and replied?
+
     /**
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
@@ -261,12 +264,15 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         int nodeaddr = msg.getAddr();
         log.debug("Generate Reply to message to node {} (string = {}; {})", nodeaddr, msg.toString(), msg.getElement(1));
         SerialReply reply = new SerialReply();  // reply length is determined by highest byte added
-        if (msg.getElement(1) == 0) { // only Polls expect a reply from the node, but we're not recognizing our Poll requests
-          log.debug("Poll message detected");
-          reply.setElement(0, nodeaddr); // node addres from msg element(0)
-            for (int j = 1; j < 2; j++) {
-                reply.setElement(j, 0xf0); // poll reply has only 2 elements
-            }
+        if (nodesSet[nodeaddr] == false) { // only Polls expect a reply from the node
+            log.debug("Poll message detected");
+            reply.setElement(0, nodeaddr); // node addres from msg element(0)
+            reply.setElement(1, 47); // poll reply has only 2 elements
+            nodesSet[nodeaddr] = true; // mark node as inited
+//            for (int j = 1; j < 2; j++) {
+//                reply.setElement(j, 47);
+//            }
+            return reply;
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
         return null; //reply;
@@ -309,27 +315,32 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @throws IOException when presented by the input source.
      */
     private SerialMessage loadChars() throws java.io.IOException {
+        int[] chars = new int[1];
+        int i = 0;
         // get 1st byte, see if ending too soon
         byte char0 = readByteProtected(inpipe);
-        byte chari;
-        int[] chars = new int[9]; // temporary store of bytes
-        int i;
-        log.debug("reading new message in simulator");
-        for (i = 1; i < 9; i++) { // reading next max 9 bytes (but inpipe never gets empty)
-            try {
-                chari = readByteProtected(inpipe);
-                chars[i] = (chari & 0xFF);
-            } catch (java.io.IOException e) {
-                break;
+        if (nodesSet[char0 & 0xFF] == true) { // after 1 byte node poll message, expect longer messages to node
+            byte chari;
+            chars = new int[5]; // temporary store of bytes
+            for (i = 1; i < 5; i++) { // reading next max 9 bytes (but inpipe never gets empty)
+                log.debug("reading rest of message in simulator");
+                try {
+                    chari = readByteProtected(inpipe);
+                    chars[i] = (chari & 0xFF);
+                } catch (java.io.IOException e) {
+                    break;
+                }
             }
+        } else {
+            nodesSet[char0 & 0xFF] = false;
         }
         // copy bytes to Message
         SerialMessage msg = new SerialMessage(i);
         msg.setElement(0, char0 & 0xFF); // address
         for (int k = 1; k < i; k++) { // copy bytes
-            msg.setElement(0, chars[k] & 0xFF); // bytes read
+            msg.setElement(k, chars[k] & 0xFF); // bytes read
         }
-        log.debug("new message received by simulator, length={}", i);
+        log.debug("message received by simulator, length={}", i);
         return msg;
     }
 
