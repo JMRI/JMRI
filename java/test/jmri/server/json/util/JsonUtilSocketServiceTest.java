@@ -14,7 +14,6 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
-import jmri.server.json.JsonHttpServiceTest;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -67,15 +66,15 @@ public class JsonUtilSocketServiceTest {
     @Test
     public void testOnMessage() throws Exception {
         Locale locale = Locale.ENGLISH;
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
         instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale);
-        assertNull(connection.getMessage());
+        assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
         instance.onMessage(JSON.PING, empty, JSON.POST, locale);
-        JsonHttpServiceTest.testValidJmriJsonMessage(connection.getMessage());
         JsonNode result = connection.getMessage().path(JSON.TYPE);
         assertNotNull(result);
         assertTrue(JsonNode.class.isInstance(result));
@@ -83,7 +82,6 @@ public class JsonUtilSocketServiceTest {
         assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
         // JSON.GOODBYE
         instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
-        JsonHttpServiceTest.testValidJmriJsonMessage(connection.getMessage());
         result = connection.getMessage().path(JSON.TYPE);
         assertNotNull(result);
         assertTrue(JsonNode.class.isInstance(result));

@@ -93,8 +93,8 @@ public class JsonServerPreferences extends Bean {
     private void readPreferences(Preferences sharedPreferences) {
         this.setHeartbeatInterval(sharedPreferences.getInt(HEARTBEAT_INTERVAL, this.getHeartbeatInterval()));
         this.setPort(sharedPreferences.getInt(PORT, this.getPort()));
-        this.validateClientMessages = sharedPreferences.getBoolean(VALIDATE_CLIENT, this.validateClientMessages);
-        this.validateServerMessages = sharedPreferences.getBoolean(VALIDATE_SERVER, this.validateServerMessages);
+        this.setValidateClientMessages(sharedPreferences.getBoolean(VALIDATE_CLIENT, this.getValidateClientMessages()));
+        this.setValidateServerMessages(sharedPreferences.getBoolean(VALIDATE_SERVER, this.getValidateServerMessages()));
         this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
         this.asLoadedPort = this.getPort();
     }
@@ -198,6 +198,10 @@ public class JsonServerPreferences extends Bean {
         return this.validateClientMessages;
     }
 
+    public void setValidateClientMessages(boolean validate) {
+        this.validateClientMessages = validate;
+    }
+
     /**
      * Validate that messages from the server are schema valid.
      *
@@ -205,6 +209,10 @@ public class JsonServerPreferences extends Bean {
      */
     public boolean getValidateServerMessages() {
         return this.validateServerMessages;
+    }
+
+    public void setValidateServerMessages(boolean validate) {
+        this.validateServerMessages = validate;
     }
 
     private static class JsonServerPreferencesXml extends XmlFile {

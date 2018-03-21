@@ -3,6 +3,7 @@ package jmri.server.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import javax.annotation.Nullable;
 import org.eclipse.jetty.websocket.api.Session;
 
 /**
@@ -24,9 +25,14 @@ public class JsonMockConnection extends JsonConnection {
         super(output);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation accepts a null message.
+     */
     @Override
-    public void sendMessage(JsonNode message) {
-        if (this.preferences.getValidateServerMessages()) {
+    public void sendMessage(@Nullable JsonNode message) {
+        if (message != null && this.preferences.getValidateServerMessages()) {
             try {
                 this.schemas.validateMessage(message, true, this.getLocale());
             } catch (JsonException ex) {

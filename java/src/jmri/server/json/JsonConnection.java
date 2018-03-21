@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.json.JsonServerPreferences;
@@ -33,6 +34,7 @@ public class JsonConnection extends JmriConnection {
      *
      * @return the ObjectMapper
      */
+    @Nonnull
     public ObjectMapper getObjectMapper() {
         return this.objectMapper;
     }
@@ -53,7 +55,7 @@ public class JsonConnection extends JmriConnection {
      * @param message the object or array to send as a message
      * @throws IOException if unable to send the message
      */
-    public void sendMessage(JsonNode message) throws IOException {
+    public void sendMessage(@Nonnull JsonNode message) throws IOException {
         if (this.preferences.getValidateServerMessages()) {
             try {
                 this.schemas.validateMessage(message, true, this.getLocale());
