@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -30,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
  *
  */
-public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
+public class EnumVariableValue extends VariableValue implements ActionListener {
 
     public EnumVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -61,7 +60,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _valueArray = new int[n];
         _nstored = 0;
         log.debug("enumeration arrays size={}", n);
-   }
+    }
 
     /**
      * Create a new item in the enumeration, with an associated value one more
@@ -88,7 +87,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         treeNodes.getLast().add(node);
         _pathArray[_nstored] = new TreePath(node.getPath());
         _itemArray[_nstored++] = s;
-        log.debug("_itemArray.length={},_nstored={},s='{}',value={}",_itemArray.length,_nstored,s,value);
+        log.debug("_itemArray.length={},_nstored={},s='{}',value={}", _itemArray.length, _nstored, s, value);
     }
 
     public void startGroup(String name) {
@@ -102,7 +101,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
 
     public void lastItem() {
-        _value = new JComboBox<String>(java.util.Arrays.copyOf(_itemArray, _nstored));
+        _value = new JComboBox<>(java.util.Arrays.copyOf(_itemArray, _nstored));
         // finish initialization
         _value.setActionCommand("");
         _defaultColor = _value.getBackground();
@@ -130,7 +129,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     private int[] _valueArray = null;
     private int _nstored;
 
-    Deque<DefaultMutableTreeNode> treeNodes = new ArrayDeque<DefaultMutableTreeNode>();
+    Deque<DefaultMutableTreeNode> treeNodes = new ArrayDeque<>();
 
     int _maxVal;
     int _minVal;
@@ -170,7 +169,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
                 log.debug(label() + " action event was from alternate rep");
             }
             // match and select in tree
-        if (_nstored > 0) {
+            if (_nstored > 0) {
                 for (int i = 0; i < _nstored; i++) {
                     if (e.getActionCommand().equals(_itemArray[i])) {
                         // now select in the tree
@@ -201,7 +200,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             if (log.isDebugEnabled()) {
                 log.debug(label() + " about to firePropertyChange");
             }
-            prop.firePropertyChange("Value", null, Integer.valueOf(oldVal));
+            prop.firePropertyChange("Value", null, oldVal);
             if (log.isDebugEnabled()) {
                 log.debug(label() + " returned to from firePropertyChange");
             }
@@ -230,7 +229,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     @Override
     public Object getValueObject() {
-        return Integer.valueOf(_value.getSelectedIndex());
+        return _value.getSelectedIndex();
     }
 
     /**
@@ -241,7 +240,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * value.
      * <P>
      * If the value is larger than any defined, a new one is created.
-     *
      */
     protected void selectValue(int value) {
         if (_nstored > 0) {
@@ -274,7 +272,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _pathArray = java.util.Arrays.copyOf(_pathArray, _pathArray.length + 1);
 
         addItem("Reserved value " + value, value);
-        
+
         // update the JComboBox
         _value.addItem(_itemArray[_nstored - 1]);
         _value.setSelectedItem(_itemArray[_nstored - 1]);
@@ -308,104 +306,109 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         selectValue(value);
 
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
-            prop.firePropertyChange("Value", null, Integer.valueOf(value));
+            prop.firePropertyChange("Value", null, value);
         }
     }
 
     @Override
     public Component getNewRep(String format) {
         // sort on format type
-        if (format.equals("checkbox")) {
-            // this only makes sense if there are exactly two options
-            ComboCheckBox b = new ComboCheckBox(_value, this);
-            comboCBs.add(b);
-            if (getReadOnly() || getInfoOnly()) {
-                b.setEnabled(false);
-            }
-            updateRepresentation(b);
-            return b;
-        } else if (format.equals("radiobuttons")) {
-            ComboRadioButtons b = new ComboRadioButtons(_value, this);
-            comboRBs.add(b);
-            if (getReadOnly() || getInfoOnly()) {
-                b.setEnabled(false);
-            }
-            updateRepresentation(b);
-            return b;
-        } else if (format.equals("onradiobutton")) {
-            ComboRadioButtons b = new ComboOnRadioButton(_value, this);
-            comboRBs.add(b);
-            if (getReadOnly() || getInfoOnly()) {
-                b.setEnabled(false);
-            }
-            updateRepresentation(b);
-            return b;
-        } else if (format.equals("offradiobutton")) {
-            ComboRadioButtons b = new ComboOffRadioButton(_value, this);
-            comboRBs.add(b);
-            if (getReadOnly() || getInfoOnly()) {
-                b.setEnabled(false);
-            }
-            updateRepresentation(b);
-            return b;
-        } else if (format.equals("tree")) {
-            DefaultTreeModel dModel = new DefaultTreeModel(treeNodes.getFirst());
-            JTree dTree = new JTree(dModel);
-            trees.add(dTree);
-            JScrollPane dScroll = new JScrollPane(dTree);
-            dTree.setRootVisible(false);
-            dTree.setShowsRootHandles(true);
-            dTree.setScrollsOnExpand(true);
-            dTree.setExpandsSelectedPaths(true);
-            dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
-            // arrange for only leaf nodes can be selected
-            dTree.addTreeSelectionListener(new TreeSelectionListener() {
-                @Override
-                public void valueChanged(TreeSelectionEvent e) {
-                    TreePath[] paths = e.getPaths();
-                    for (int i = 0; i < paths.length; i++) {
-                        DefaultMutableTreeNode o
-                                = (DefaultMutableTreeNode) paths[i].getLastPathComponent();
-                        if (o.getChildCount() > 0) {
-                            ((JTree) e.getSource()).removeSelectionPath(paths[i]);
-                        }
-                    }
-                    // now record selection
-                    if (paths.length >= 1) {
-                        if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
-                            // update value of Variable
-                            setValue(_valueArray[((TreeLeafNode) paths[0].getLastPathComponent()).index]);
-                        }
-                    }
+        switch (format) {
+            case "checkbox": {
+                // this only makes sense if there are exactly two options
+                ComboCheckBox b = new ComboCheckBox(_value, this);
+                comboCBs.add(b);
+                if (getReadOnly() || getInfoOnly()) {
+                    b.setEnabled(false);
                 }
-            });
-            // select initial value
-            TreePath path = _pathArray[_value.getSelectedIndex()];
-            dTree.setSelectionPath(path);
-            // ensure selection is in visible portion of JScrollPane
-            dTree.scrollPathToVisible(path);
+                updateRepresentation(b);
+                return b;
+            }
+            case "radiobuttons": {
+                ComboRadioButtons b = new ComboRadioButtons(_value, this);
+                comboRBs.add(b);
+                if (getReadOnly() || getInfoOnly()) {
+                    b.setEnabled(false);
+                }
+                updateRepresentation(b);
+                return b;
+            }
+            case "onradiobutton": {
+                ComboRadioButtons b = new ComboOnRadioButton(_value, this);
+                comboRBs.add(b);
+                if (getReadOnly() || getInfoOnly()) {
+                    b.setEnabled(false);
+                }
+                updateRepresentation(b);
+                return b;
+            }
+            case "offradiobutton": {
+                ComboRadioButtons b = new ComboOffRadioButton(_value, this);
+                comboRBs.add(b);
+                if (getReadOnly() || getInfoOnly()) {
+                    b.setEnabled(false);
+                }
+                updateRepresentation(b);
+                return b;
+            }
+            case "tree":
+                DefaultTreeModel dModel = new DefaultTreeModel(treeNodes.getFirst());
+                JTree dTree = new JTree(dModel);
+                trees.add(dTree);
+                JScrollPane dScroll = new JScrollPane(dTree);
+                dTree.setRootVisible(false);
+                dTree.setShowsRootHandles(true);
+                dTree.setScrollsOnExpand(true);
+                dTree.setExpandsSelectedPaths(true);
+                dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
+                // arrange for only leaf nodes can be selected
+                dTree.addTreeSelectionListener(new TreeSelectionListener() {
+                    @Override
+                    public void valueChanged(TreeSelectionEvent e) {
+                        TreePath[] paths = e.getPaths();
+                        for (TreePath path : paths) {
+                            DefaultMutableTreeNode o = (DefaultMutableTreeNode) path.getLastPathComponent();
+                            if (o.getChildCount() > 0) {
+                                ((JTree) e.getSource()).removeSelectionPath(path);
+                            }
+                        }
+                        // now record selection
+                        if (paths.length >= 1) {
+                            if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
+                                // update value of Variable
+                                setValue(_valueArray[((TreeLeafNode) paths[0].getLastPathComponent()).index]);
+                            }
+                        }
+                    }
+                });
+                // select initial value
+                TreePath path = _pathArray[_value.getSelectedIndex()];
+                dTree.setSelectionPath(path);
+                // ensure selection is in visible portion of JScrollPane
+                dTree.scrollPathToVisible(path);
 
-            if (getReadOnly() || getInfoOnly()) {
-                log.error("read only variables cannot use tree format: {}", item());
+                if (getReadOnly() || getInfoOnly()) {
+                    log.error("read only variables cannot use tree format: {}", item());
+                }
+                updateRepresentation(dScroll);
+                return dScroll;
+            default: {
+                // return a new JComboBox representing the same model
+                VarComboBox b = new VarComboBox(_value.getModel(), this);
+                comboVars.add(b);
+                if (getReadOnly() || getInfoOnly()) {
+                    b.setEnabled(false);
+                }
+                updateRepresentation(b);
+                return b;
             }
-            updateRepresentation(dScroll);
-            return dScroll;
-        } else {
-            // return a new JComboBox representing the same model
-            VarComboBox b = new VarComboBox(_value.getModel(), this);
-            comboVars.add(b);
-            if (getReadOnly() || getInfoOnly()) {
-                b.setEnabled(false);
-            }
-            updateRepresentation(b);
-            return b;
         }
     }
 
-    private List<ComboCheckBox> comboCBs = new ArrayList<ComboCheckBox>();
-    private List<VarComboBox> comboVars = new ArrayList<VarComboBox>();
-    private List<ComboRadioButtons> comboRBs = new ArrayList<ComboRadioButtons>();
-    private List<JTree> trees = new ArrayList<JTree>();
+    private final List<ComboCheckBox> comboCBs = new ArrayList<>();
+    private final List<VarComboBox> comboVars = new ArrayList<>();
+    private final List<ComboRadioButtons> comboRBs = new ArrayList<>();
+    private final List<JTree> trees = new ArrayList<>();
 
     // implement an abstract member to set colors
     @Override
@@ -420,7 +423,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     /**
      * Notify the connected CVs of a state change from above
-     *
      */
     @Override
     public void setCvState(int state) {
@@ -474,31 +476,38 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy")) {
-            if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
-                setToRead(false);
-                setToWrite(false);  // some programming operation just finished
-                setBusy(false);
+        switch (e.getPropertyName()) {
+            case "Busy":
+                if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+                    setToRead(false);
+                    setToWrite(false);  // some programming operation just finished
+                    setBusy(false);
+                }
+                break;
+            case "State": {
+                CvValue cv = _cvMap.get(getCvNum());
+                if (cv.getState() == STORED) {
+                    setToWrite(false);
+                }
+                if (cv.getState() == READ) {
+                    setToRead(false);
+                }
+                setState(cv.getState());
+                for (JTree tree : trees) {
+                    tree.setBackground(_value.getBackground());
+                    //tree.setOpaque(true);
+                }
+                break;
             }
-        } else if (e.getPropertyName().equals("State")) {
-            CvValue cv = _cvMap.get(getCvNum());
-            if (cv.getState() == STORED) {
-                setToWrite(false);
+            case "Value": {
+                // update value of Variable
+                CvValue cv = _cvMap.get(getCvNum());
+                int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
+                setValue(newVal);  // check for duplicate done inside setVal
+                break;
             }
-            if (cv.getState() == READ) {
-                setToRead(false);
-            }
-            setState(cv.getState());
-            for (JTree tree : trees) {
-                tree.setBackground(_value.getBackground());
-                //tree.setOpaque(true);
-            }
-
-        } else if (e.getPropertyName().equals("Value")) {
-            // update value of Variable
-            CvValue cv = _cvMap.get(getCvNum());
-            int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
-            setValue(newVal);  // check for duplicate done inside setVal
+            default:
+                break;
         }
     }
 
