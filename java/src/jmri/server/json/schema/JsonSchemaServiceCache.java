@@ -7,6 +7,7 @@ import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.ValidationMessage;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -109,10 +110,17 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale) throws JsonException {
         HashMap<String, JsonSchema> map = server ? this.serverSchemas : this.clientSchemas;
         this.validateJsonNode(message, JSON.JSON, server, locale, map);
-        String type = message.path(JSON.TYPE).asText();
-        JsonNode data = message.path(JSON.DATA);
-        if (!data.isMissingNode()) {
-            this.validateJsonNode(data, type, server, locale, map);
+        if (message.isArray()) {
+            Iterator<JsonNode> elements = message.elements();
+            while (elements.hasNext()) {
+                this.validateMessage(elements.next(), server, locale);
+            }
+        } else {
+            String type = message.path(JSON.TYPE).asText();
+            JsonNode data = message.path(JSON.DATA);
+            if (!data.isMissingNode()) {
+                this.validateJsonNode(data, type, server, locale, map);
+            }
         }
     }
 
