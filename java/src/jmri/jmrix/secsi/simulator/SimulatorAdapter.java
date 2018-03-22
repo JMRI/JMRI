@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Currently, the Secsi SimulatorAdapter reacts to the following commands sent from the user
  * interface with an appropriate reply {@link #generateReply(SerialMessage)}:
  * <ul>
- *     <li>Poll (length = 1)
+ *     <li>Poll (length = 1, reply length = 2)
  * </ul>
  *
  * Based on jmri.jmrix.grapevine.simulator.SimulatorAdapter 2018
@@ -246,8 +246,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return (msg);
     }
 
-    // operational instance variable (should not be preserved between runs)
-    protected boolean[] nodesSet = new boolean[127]; // node init received and replied?
+    // operational instance variable (not preserved between runs)
+    protected boolean[] nodesSet = new boolean[128]; // node init received and replied?
+    protected int currentAddr = -1; // at startup, can't match
 
     /**
      * This is the heart of the simulation. It translates an
@@ -262,20 +263,21 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         int nodeaddr = msg.getAddr();
-        log.debug("Generate Reply to message to node {} (string = {}; {})", nodeaddr, msg.toString(), msg.getElement(1));
+        log.debug("Generate Reply to message to node {} (string = {})", nodeaddr, msg.toString());
         SerialReply reply = new SerialReply();  // reply length is determined by highest byte added
         if (nodesSet[nodeaddr] == false) { // only Polls expect a reply from the node
             log.debug("Poll message detected");
             reply.setElement(0, nodeaddr); // node addres from msg element(0)
-            reply.setElement(1, 47); // poll reply has only 2 elements
+            reply.setElement(1, 15); // poll reply has only 2 elements
             nodesSet[nodeaddr] = true; // mark node as inited
 //            for (int j = 1; j < 2; j++) {
-//                reply.setElement(j, 47);
+//                reply.setElement(j, 0b0101); // dummy sensor status report
 //            }
+            log.debug("Reply generated {}", reply.toString());
             return reply;
         }
-        log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
-        return null; //reply;
+        log.debug("Message ignored");
+        return null;
         // Poll will give an error:
         // jmrix.AbstractMRTrafficController ERROR - Transmit thread terminated prematurely by:
         // java.lang.ArrayIndexOutOfBoundsException: 1 [secsi.SerialTrafficController Transmit thread]
@@ -304,7 +306,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         }
     }
 
-    protected int currentAddr = -1; // at startup, can't match
     /**
      * Get characters from the input source. No opcode, so must read per byte.
      * Length will be either 1, 5 or 9 bytes.
@@ -316,23 +317,25 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     private SerialMessage loadChars() throws java.io.IOException {
         int[] chars = new int[1];
-        int i = 0;
+        int i = 1;
         // get 1st byte, see if ending too soon
         byte char0 = readByteProtected(inpipe);
         if (nodesSet[char0 & 0xFF] == true) { // after 1 byte node poll message, expect longer messages to node
-            byte chari;
-            chars = new int[5]; // temporary store of bytes
-            for (i = 1; i < 5; i++) { // reading next max 9 bytes (but inpipe never gets empty)
+            byte charI;
+            chars = new int[9]; // temporary store of bytes
+            for (i = 1; i < 8; i++) { // reading next max 8 bytes (but inpipe never gets empty)
                 log.debug("reading rest of message in simulator");
                 try {
-                    chari = readByteProtected(inpipe);
-                    chars[i] = (chari & 0xFF);
+                    charI = readByteProtected(inpipe);
+                    chars[i] = (charI & 0xFF);
                 } catch (java.io.IOException e) {
+                    log.debug("loadChars ready after {} chars", i + 1);
                     break;
                 }
             }
         } else {
             nodesSet[char0 & 0xFF] = false;
+            currentAddr = char0 & 0xFF;
         }
         // copy bytes to Message
         SerialMessage msg = new SerialMessage(i);

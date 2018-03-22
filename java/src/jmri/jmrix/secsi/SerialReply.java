@@ -32,7 +32,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * @see SerialSensorManager#reply(SerialReply)
      */
     public int getAddr() {
-        log.error("getAddr should not be called", new Exception());
+        //log.error("getAddr should not be called", new Exception()); // will happen replying to Secsi Simulator
         return getElement(0);
     }
 

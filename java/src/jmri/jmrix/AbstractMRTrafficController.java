@@ -970,7 +970,7 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Handle each reply when complete.
-     * <P>
+     * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
      */
@@ -991,9 +991,7 @@ abstract public class AbstractMRTrafficController {
         
         // message is complete, dispatch it !!
         replyInDispatch = true;
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length {} contains \"{}\", state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
-        }
+        log.debug("dispatch reply of length {} contains \"{}\", state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
 
         // forward the message to the registered recipients,
         // which includes the communications monitor
@@ -1072,9 +1070,7 @@ abstract public class AbstractMRTrafficController {
                 default: {
                     replyInDispatch = false;
                     if (allowUnexpectedReply == true) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
-                        }
+                        log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
                         synchronized (xmtRunnable) {
                             // The transmit thread sometimes gets stuck
                             // when unexpected replies are received.  Notify
@@ -1090,9 +1086,7 @@ abstract public class AbstractMRTrafficController {
             }
             // Unsolicited message
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Unsolicited Message Received {}", msg.toString());
-            }
+            log.debug("Unsolicited Message Received {}", msg.toString());
 
             replyInDispatch = false;
         }
@@ -1206,7 +1200,7 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Terminate the receive and transmit threads.
-     *<p>
+     * <p>
      * This is intended to be used only by testing subclasses.
      */
     public void terminateThreads() {
@@ -1239,7 +1233,7 @@ abstract public class AbstractMRTrafficController {
     protected volatile boolean threadStopRequest = false;
     
     /**
-     * Internal class to handle traffic controller cleanup. the primary task of
+     * Internal class to handle traffic controller cleanup. The primary task of
      * this thread is to make sure the DCC system has exited service mode when
      * the program exits.
      */
@@ -1255,7 +1249,7 @@ abstract public class AbstractMRTrafficController {
         public void run() {
             mTC.terminate();
         }
-    } // end cleanUpHook
+    }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class);
 
