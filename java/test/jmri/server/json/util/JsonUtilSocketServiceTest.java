@@ -14,6 +14,7 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
+import jmri.server.json.JsonHttpServiceTest;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -74,16 +75,20 @@ public class JsonUtilSocketServiceTest {
         assertNull(connection.getMessage());
         // JSON.PING
         instance.onMessage(JSON.PING, empty, JSON.POST, locale);
+        JsonHttpServiceTest.testValidJmriJsonMessage(connection.getMessage());
         JsonNode result = connection.getMessage().path(JSON.TYPE);
         assertNotNull(result);
         assertTrue(JsonNode.class.isInstance(result));
         assertEquals(JSON.PONG, result.asText());
+        assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
         // JSON.GOODBYE
         instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
+        JsonHttpServiceTest.testValidJmriJsonMessage(connection.getMessage());
         result = connection.getMessage().path(JSON.TYPE);
         assertNotNull(result);
         assertTrue(JsonNode.class.isInstance(result));
         assertEquals(JSON.GOODBYE, result.asText());
+        assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
     }
 
     /**
