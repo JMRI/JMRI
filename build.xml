@@ -2181,7 +2181,7 @@
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
-        <copy todir="${dist.macosx}/JMRI/">
+        <copy todir="${dist.linux}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
