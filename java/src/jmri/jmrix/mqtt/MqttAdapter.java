@@ -34,7 +34,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void configure() {
-        LOG.debug("Doing configure...");
+        log.debug("Doing configure...");
         mqttEventListeners = new HashMap();
         getSystemConnectionMemo().setMqttAdapter(this);
         getSystemConnectionMemo().configureManagers();
@@ -43,7 +43,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void connect() throws IOException {
-        LOG.debug("Doing connect...");
+        log.debug("Doing connect...");
         try {
             String clientID = CLID +"-"+ this.getUserName();
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
@@ -59,6 +59,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
     
     public void subscribe(String topic, MqttEventListener mel) {
+        if (mqttEventListeners == null || mqttClient == null) {
+            jmri.util.Log4JUtil.warnOnce(log, "Trying to subscribe before connect/configure is done");
+            return;
+        }
         try {
             topic = BASETOPIC + topic;
             if (mqttEventListeners.containsKey(topic)) {
@@ -72,7 +76,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             mqttEventListeners.put(topic, mels);
             mqttClient.subscribe(topic);
         } catch (MqttException ex) {
-            LOG.error("Can't subscribe : ", ex);
+            log.error("Can't subscribe : ", ex);
         }
     }
     
@@ -84,7 +88,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 mqttClient.unsubscribe(topic);
                 mqttEventListeners.remove(topic);
             } catch (MqttException ex) {
-                 LOG.error("Can't unsubscribe : ", ex);
+                 log.error("Can't unsubscribe : ", ex);
             }
         }                
     }
@@ -100,7 +104,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             topic = BASETOPIC + topic;
             mqttClient.publish(topic, payload, 2, true);
         } catch (MqttException ex) {
-            LOG.error("Can't publish : ", ex);
+            log.error("Can't publish : ", ex);
         }
     }
     
@@ -110,27 +114,27 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void connectionLost(Throwable thrwbl) {
-        LOG.warn("Lost MQTT broker connection...");
+        log.warn("Lost MQTT broker connection...");
         if (this.allowConnectionRecovery) {
-            LOG.info("...trying to reconnect");
+            log.info("...trying to reconnect");
             try {
                 mqttClient.connect();
                 mqttClient.setCallback(this);
                 for (String t : mqttEventListeners.keySet()) {
                     mqttClient.subscribe(t);
                 }            } catch (MqttException ex) {
-                LOG.error("Unable to reconnect", ex);
+                log.error("Unable to reconnect", ex);
             }
             return;
         }
-        LOG.error("Won't reconnect");
+        log.error("Won't reconnect");
     }
 
     @Override
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        LOG.debug("Message reveiced, topic : "+topic);
+        log.debug("Message reveiced, topic : "+topic);
         if (! mqttEventListeners.containsKey(topic)) {
-            LOG.error("No one subscribed to "+topic);
+            log.error("No one subscribed to "+topic);
             throw new Exception("No subscriber for MQTT topic "+topic);
         }
         mqttEventListeners.get(topic).forEach((mel) -> {
@@ -140,8 +144,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken imdt) {
-       LOG.debug("Message delivered");
+       log.debug("Message delivered");
     }
     
-    private final static Logger LOG = LoggerFactory.getLogger(MqttAdapter.class);    
+    private final static Logger log = LoggerFactory.getLogger(MqttAdapter.class);    
 }
