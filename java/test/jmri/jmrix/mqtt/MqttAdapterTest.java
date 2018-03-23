@@ -16,7 +16,8 @@ public class MqttAdapterTest {
 
     @Test
     public void ConstructorTest() {
-        Assert.assertNotNull("constructor", new MqttAdapter());
+        MqttAdapter a = new MqttAdapter();
+        Assert.assertNotNull("constructor", a);
     }
 
     @Before
