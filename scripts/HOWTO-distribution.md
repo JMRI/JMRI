@@ -62,7 +62,9 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
   ./scripts/update-HOWTO.sh 4.11.4 4.11.5 4.11.6
 ```
-(and then manually update that line above to be last version released, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments are *.3 *.4 *.5) To check it ran OK, the following should be the release you're doing now: 4.11.4
+(and then manually update that line above to be last version released, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments after you edit it here are *.4 *.5 *.6) 
+
+- To check the script ran OK, the following should be the release you're doing now: 4.11.4
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
