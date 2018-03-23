@@ -346,6 +346,7 @@ public class FileDrop {
                     jc.setBorder(normalBorder);
                     log.debug("FileDrop: normal border restored.");
                 }
+
             }
 
             @Override
