@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -30,12 +30,13 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
 import org.slf4j.Logger;
@@ -74,7 +75,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     // Server iVars
     int port;
     boolean isListen;
-    private ArrayList<DeviceServer> deviceList = new ArrayList<>();
+    private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
     UserInterface() {
         super(false, false);
@@ -84,15 +85,23 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         });
 
         port = facelessServer.getPort();
-        if (log.isDebugEnabled()) {
-            log.debug("WiThrottle listening on TCP port: " + port);
-        }
+        log.debug("WiThrottle listening on TCP port: {}", port);
 
         try {
-           facelessServer.getZeroConfService().addEventListener(this);
+            facelessServer.getZeroConfService().addEventListener(this);
         } catch( java.lang.NullPointerException npe) {
-            //ZeroConfService may not exist yet
-            log.debug("Unable to register for ZeroConf events");
+            //ZeroConfService does not exist (yet?)
+            log.warn("Unable to register for ZeroConf events");
+            //so go ahead and set the address on the UI
+            List<InetAddress> has = ZeroConfService.hostAddresses(); //get list of local, non-loopback addresses
+            String as = ""; //build multiline string of IPv4 addresses
+            for (InetAddress ha : has) {
+                if (ha instanceof Inet4Address) { //ignore IPv6 addresses
+                    this.portLabel.setText(ha.getHostName());
+                    as += ha.getHostAddress() + ":" + port + "<br />";
+                    this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
+                }
+            }
         }
 
         // add ourselves as device listeners for any existing devices
@@ -331,6 +340,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     public void serviceQueued(ZeroConfServiceEvent se) {
         this.portLabel.setText(Bundle.getMessage("LabelPending"));
         this.manualPortLabel.setText(null);
+        log.debug("ZeroConf serviceQueued for '{}'", se.getService().key()); // NOI18N
     }
 
     @Override
@@ -362,6 +372,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     public void serviceUnpublished(ZeroConfServiceEvent se) {
         this.portLabel.setText(Bundle.getMessage("LabelNone"));
         this.manualPortLabel.setText(null);
+        log.debug("ZeroConf serviceUnpublished for '{}'", se.getService().key()); // NOI18N
+
     }
 
 }

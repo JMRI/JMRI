@@ -76,6 +76,7 @@ public class JmriConnection {
      * @throws IOException if problem sending message
      */
     public void sendMessage(String message) throws IOException {
+        log.trace("Sending \"{}\"", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.session != null) {

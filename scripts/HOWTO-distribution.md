@@ -152,7 +152,9 @@ We roll some general code maintenance items into the release process.  They can 
 
 - This is a good place to make sure CATS still builds, see the (doc page)[http://jmri.org/help/en/html/doc/Technical/CATS.shtml] - note that CATS has not been updated to compile cleanly with JMRI 4.*
         
-- If you fixed anything, commit it back. Also commit the current copy of these notes. Push directly back to master on GitHub.
+- If you fixed anything, commit it back. 
+
+- Commit the current copy of these notes. Push directly back to master on GitHub.
 
 ```
 git commit -m"for 4.11.4" scripts/HOWTO-distribution.md
