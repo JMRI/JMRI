@@ -193,6 +193,12 @@ https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+
 ````
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
+- (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the current release:
+```
+    <version>4.11.4-SNAPSHOT</version>
+```
+Commit, and push back directly to master (this should be the only change, and has to be before the next step)
+
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 
 ```
