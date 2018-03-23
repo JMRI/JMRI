@@ -233,13 +233,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (isListen) { // Stop server, remove addresses from UI
-                    isListen = false;
                     disableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStart"));
                     portLabel.setText(Bundle.getMessage("LabelNone"));
                     manualPortLabel.setText(null);
                 } else { // Restart server
-                    isListen = true;
                     enableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStop"));
                     addIPAddressesToUI();
