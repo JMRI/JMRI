@@ -808,7 +808,7 @@
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.1</version>
         </dependency>
         <!--
         <dependency>
@@ -1027,4 +1027,13 @@
         </repository>
     </repositories>
 
+    <dependencyManagement>
+    	<dependencies>
+    		<dependency>
+    			<groupId>org.jmdns</groupId>
+    			<artifactId>jmdns</artifactId>
+    			<version>3.5.1</version>
+    		</dependency>
+    	</dependencies>
+    </dependencyManagement>
 </project>
