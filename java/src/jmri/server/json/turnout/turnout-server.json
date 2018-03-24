@@ -9,11 +9,11 @@
             "description": "System name of the turnout"
         },
         "userName": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "User name of the turnout"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the turnout"
         },
         "properties": {
@@ -33,6 +33,10 @@
                 }
             }
         },
+        "inverted": {
+            "type": "boolean",
+            "description": "true if turnout is inverted; false otherwise"
+        },
         "state": {
             "type": "integer",
             "description": "The state of the turnout",
@@ -40,5 +44,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["name", "userName", "comment", "inverted", "state"]
 }
