@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
@@ -91,6 +92,7 @@ public class JsonPowerSocketServiceTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDebugPowerManager();
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
     }
 
     @After
