@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import javax.annotation.Nullable;
+import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
 import org.junit.Assert;
 
@@ -19,10 +21,12 @@ public class JsonMockConnection extends JsonConnection {
 
     public JsonMockConnection(Session connection) {
         super(connection);
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
     }
 
     public JsonMockConnection(DataOutputStream output) {
         super(output);
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
     }
 
     /**

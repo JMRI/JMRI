@@ -115,18 +115,18 @@ public class JsonSignalMastSocketServiceTest {
     }
 
     // from here down is testing infrastructure
-
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initSignalMastLogicManager();
     }
 
     @After
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
+    }
 
 }
