@@ -57,9 +57,9 @@ public class JsonClientHandlerTest {
         Assert.assertTrue("Response is an array", connection.getMessage().isArray());
         Assert.assertEquals("Response array contains two elements", 2, connection.getMessage().size());
         Assert.assertTrue("Response array element 0 is an object", connection.getMessage().get(0).isObject());
-        Assert.assertEquals("Response array element 0 is empty", 0, connection.getMessage().get(0).size());
+        Assert.assertEquals("Response array element 0 is a JSON message", 2, connection.getMessage().get(0).size());
         Assert.assertTrue("Response array element 1 is an object", connection.getMessage().get(1).isObject());
-        Assert.assertEquals("Response array element 1 is empty", 0, connection.getMessage().get(1).size());
+        Assert.assertEquals("Response array element 1 is a JSON message", 2, connection.getMessage().get(1).size());
         instance.onMessage("not a JSON object");
         Assert.assertNotNull("Expected warning not shown", JUnitAppender.checkForMessageStartingWith("Exception processing \"not a JSON object\""));
         Assert.assertTrue("Error response is an object", connection.getMessage().isObject());
@@ -85,9 +85,9 @@ public class JsonClientHandlerTest {
         Assert.assertTrue("Response is an array", connection.getMessage().isArray());
         Assert.assertEquals("Response array contains two elements", 2, connection.getMessage().size());
         Assert.assertTrue("Response array element 0 is an object", connection.getMessage().get(0).isObject());
-        Assert.assertEquals("Response array element 0 is empty", 0, connection.getMessage().get(0).size());
+        Assert.assertEquals("Response array element 0 is a JSON message", 2, connection.getMessage().get(0).size());
         Assert.assertTrue("Response array element 1 is an object", connection.getMessage().get(1).isObject());
-        Assert.assertEquals("Response array element 1 is empty", 0, connection.getMessage().get(1).size());
+        Assert.assertEquals("Response array element 1 is a JSON message", 2, connection.getMessage().get(1).size());
     }
 
     /**
