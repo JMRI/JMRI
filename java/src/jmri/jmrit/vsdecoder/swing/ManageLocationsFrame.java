@@ -335,7 +335,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         data = opsModel.getDataMap();
-        LocationManager lmgr = LocationManager.instance();
+        LocationManager lmgr = jmri.InstanceManager.getDefault(LocationManager.class);
         for (String s : data.keySet()) {
             log.debug("OpsLocation: " + s + " Location: " + data.get(s));
             Location l = lmgr.getLocationByName(s);

@@ -104,7 +104,7 @@ public class ManageLocationsAction extends AbstractAction {
             }
 
             // Handle Ops Locations
-            LocationManager lmgr = LocationManager.instance();
+            LocationManager lmgr = jmri.InstanceManager.getDefault(LocationManager.class);
             List<Location> locations = lmgr.getLocationsByIdList();
             opsMap = new HashMap<String, PhysicalLocation>();
             log.debug("TableSize : " + locations.size());
