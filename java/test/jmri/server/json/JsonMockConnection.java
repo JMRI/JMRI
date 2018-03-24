@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import javax.annotation.Nullable;
 import org.eclipse.jetty.websocket.api.Session;
+import org.junit.Assert;
 
 /**
  * JsonConnection that retains sent messages for unit testing.
@@ -13,7 +14,6 @@ import org.eclipse.jetty.websocket.api.Session;
  */
 public class JsonMockConnection extends JsonConnection {
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonMockConnection.class);
     private JsonNode message = null;
     private boolean open = true;
 
@@ -37,7 +37,7 @@ public class JsonMockConnection extends JsonConnection {
                 this.schemas.validateMessage(message, true, this.getLocale());
             } catch (JsonException ex) {
                 this.message = ex.getJsonMessage();
-                return;
+                Assert.fail(ex.getMessage());
             }
         }
         this.message = message;
