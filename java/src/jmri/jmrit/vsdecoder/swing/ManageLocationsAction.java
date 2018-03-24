@@ -114,15 +114,13 @@ public class ManageLocationsAction extends AbstractAction {
                 if (log.isDebugEnabled()) {
                     log.debug("i = " + i + "MLA " + l.getId() + " Name: " + l.getName() + " table " + java.util.Arrays.toString(opsTable[i]));
                 }
-                PhysicalLocation p = l.getPhysicalLocation();
-                Boolean use = false;
-                if (p == PhysicalLocation.Origin) {
-                    use = false;
-                } else {
-                    use = true;
-                }
                 opsTable[i][0] = l.getName();
-                opsTable[i][1] = use;
+                PhysicalLocation p = l.getPhysicalLocation();
+                if (p == PhysicalLocation.Origin) {
+                    opsTable[i][1] = false;
+                } else {
+                    opsTable[i][1] = true;
+                }
                 opsTable[i][2] = p.getX();
                 opsTable[i][3] = p.getY();
                 opsTable[i][4] = p.getZ();
