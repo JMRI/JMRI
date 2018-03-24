@@ -421,6 +421,12 @@ public class JsonUtilHttpService extends JsonHttpService {
                             server,
                             "jmri/server/json/util/networkService-server.json",
                             "jmri/server/json/util/networkService-client.json");
+                case JSON.SYSTEM_CONNECTION:
+                case JSON.SYSTEM_CONNECTIONS:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/systemConnection-server.json",
+                            "jmri/server/json/util/systemConnection-client.json");
                 case JsonException.ERROR:
                 case JSON.PONG:
                     if (server) {
@@ -443,7 +449,6 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.NODE:
                 case JSON.PANELS:
                 case JSON.RAILROAD:
-                case JSON.SYSTEM_CONNECTIONS:
                 case JSON.CONFIG_PROFILES:
                     return doSchema(type,
                             server,
