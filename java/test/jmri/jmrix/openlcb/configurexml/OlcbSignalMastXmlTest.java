@@ -12,7 +12,6 @@ import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -35,6 +34,8 @@ import org.junit.Test;
  * @author   Bob Jacobsen Copyright (C) 2018
  */
 public class OlcbSignalMastXmlTest {
+        
+    private OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCtor(){
@@ -76,11 +77,11 @@ public class OlcbSignalMastXmlTest {
         };
 
         OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
-        //memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 
     @After
     public void tearDown() {
+        memo.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 

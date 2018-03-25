@@ -42,6 +42,9 @@ public class OlcbConfigurationManagerTest {
 
     @After
     public void tearDown() {
+        if(scm.getInterface()!=null) {
+           scm.getInterface().dispose();
+        }
         JUnitUtil.tearDown();
     }
 
