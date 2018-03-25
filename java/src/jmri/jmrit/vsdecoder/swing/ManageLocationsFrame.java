@@ -34,8 +34,6 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
-import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
