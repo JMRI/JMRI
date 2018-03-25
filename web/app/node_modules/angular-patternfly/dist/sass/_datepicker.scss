@@ -1,0 +1,120 @@
+.uib-datepicker-popup {
+  padding: 4px;
+
+  *:focus {
+    outline: none;
+  }
+
+  button {
+    background: $color-pf-white;
+    border: none;
+    box-shadow: none;
+  }
+
+  th {
+    height: 30px;
+  }
+
+  .uib-title {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px;
+
+    strong {
+      font-weight: normal;
+    }
+  }
+
+  .uib-left {
+    height: 30px;
+
+    .glyphicon {
+      display: none;
+    }
+
+    &::before {
+      content: "\00AB";
+    }
+  }
+
+  .uib-right {
+    height: 30px;
+
+    .glyphicon {
+      display: none;
+    }
+
+    &::before {
+      content: "\00BB";
+    }
+  }
+
+  .uib-day {
+
+    button.btn.btn-default {
+      height: 30px;
+      width: 30px;
+
+      &:hover {
+        background: $color-pf-blue-50;
+      }
+
+      &.active {
+        background: $color-pf-blue-400;
+        border-color: $color-pf-blue-600;
+        color: $color-pf-white;
+        box-shadow: none;
+        padding: 0;
+
+        .text-info { // this is today's date
+          color: $color-pf-white;
+        }
+      }
+
+      &:not(.active){
+        .text-info { // this is today's date
+          color: $color-pf-black-800;
+          background: $color-pf-gold-200;
+          height: 30px;
+          width: 30px;
+          padding: 7px;
+          display: inline-block;
+          margin: -1px -7px -2px -7px;
+
+          &:hover {
+            background: $color-pf-blue-50;
+          }
+        }
+      }
+    }
+
+  }
+
+  .uib-button-bar {
+    padding: 0;
+
+    .btn-group {
+      width: 100%;
+
+      .uib-clear {
+        display: none;
+      }
+
+      .uib-datepicker-current {
+        color: $color-pf-black;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        height: 30px;
+
+        &:hover {
+          background: $color-pf-blue-50;
+        }
+      }
+    }
+
+    .uib-close {
+      display: none;
+    }
+  }
+}

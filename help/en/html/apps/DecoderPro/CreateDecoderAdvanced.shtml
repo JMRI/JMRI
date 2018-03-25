@@ -829,7 +829,8 @@ selects the different algorithm needed here.
       <h4>Include/Exclude During Variable Expansion</h4>Whether a
       variable element is expanded and used can be made conditional
       on the decoder type using "include" and "exclude" attributes
-      on &lt;variables&gt; and &lt;variable&gt; elements.
+      on &lt;variables&gt;, &lt;variable&gt;,
+      &lt;enumChoice&gt; and &lt;enumChoiceGroup&gt; elements.
 
       <p>A variable definition will not be expanded and used:</p>
 
