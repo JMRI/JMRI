@@ -43,6 +43,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
         options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));
+        options.put("TranspondingPresent", new Option("Transponding present:", new String[]{"No", "Yes"})); // TODO I18N
     }
     
     /**
@@ -173,6 +174,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+        setTranspondingAvailable(getOptionState("TranspondingPresent"));
         // connect to a packetizing traffic controller
         LnPacketizer packets = getPacketizer(getOptionState(option4Name));
         packets.connectPort(this);
@@ -182,7 +184,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // do the common manager config
 
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

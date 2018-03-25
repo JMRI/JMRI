@@ -20,7 +20,7 @@ public class UhlenbrockSystemConnectionMemoTest extends jmri.jmrix.SystemConnect
        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
        UhlenbrockSystemConnectionMemo memo = new UhlenbrockSystemConnectionMemo();
        memo.setLnTrafficController(lnis);
-       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,false,false);
+       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,false,false,false);
        memo.configureManagers();
        scm = memo;
     }
