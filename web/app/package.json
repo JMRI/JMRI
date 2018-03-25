@@ -9,16 +9,16 @@
   "author": "JMRI Community",
   "license": "GPL-2.0",
   "dependencies": {
-    "angular": "1.6.6",
-    "angular-patternfly": "^4.11.1",
-    "angular-resource": "1.6.6",
-    "angular-route": "1.6.6",
-    "angular-translate": "2.15.2",
-    "angular-translate-handler-log": "2.15.2",
-    "angular-translate-loader-partial": "2.15.2",
+    "angular": "1.6.9",
+    "angular-patternfly": "^4.15.1",
+    "angular-resource": "1.6.9",
+    "angular-route": "1.6.9",
+    "angular-translate": "2.17.0",
+    "angular-translate-handler-log": "2.17.0",
+    "angular-translate-loader-partial": "2.17.0",
     "angular-websocket": "2.0.1",
     "angularjs-datatables": "^0.5.9",
-    "lodash": "4.17.4",
-    "moment": "2.18.1"
+    "lodash": "4.17.5",
+    "moment": "2.21.0"
   }
 }
