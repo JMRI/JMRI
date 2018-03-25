@@ -33,10 +33,20 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("OpsByteMode", ProgrammingMode.OPSBYTEMODE, intRet);
     }
 
-    public void testGetCanRead() {
+    public void testGetCanReadDefault() {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
-        Assert.assertEquals("ops mode always can read", true,
+        Assert.assertEquals("ops mode by default can;t read", false,
+                lnopsmodeprogrammer.getCanRead());
+    }
+
+    public void testGetCanReadWithTransponding() {
+        // allow transponding
+        sm.setTranspondingAvailable(true);
+        
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+
+        Assert.assertEquals("ops mode can read with transponding", true,
                 lnopsmodeprogrammer.getCanRead());
     }
 
