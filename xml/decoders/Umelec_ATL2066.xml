@@ -743,7 +743,7 @@
 				<label xml:lang="nl">Speciale modus</label>
 			</variable>
 			<variable CV="49" mask="XXXXXXVX" item="ATL1-B">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-Offon.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Shuttle Operation</label>
 				<label xml:lang="de">Pendelbetrieb</label>
 				<label xml:lang="nl">Pendeldienst</label>
