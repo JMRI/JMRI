@@ -334,7 +334,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (clockControl == null) {
-            clockControl = new LnClockControl(getSlotManager(), getLnTrafficController());
+            clockControl = new LnClockControl(this);
         }
         return clockControl;
     }
