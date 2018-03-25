@@ -69,7 +69,7 @@ public class JsonBlockHttpServiceTest {
         Assert.assertEquals(1, result.size());
         JsonHttpServiceTest.testValidJmriJsonMessage(result);
         JsonHttpServiceTest.testSchemaValidJson(result.get(0).path(JSON.DATA),
-                instance.doSchema(JsonBlock.BLOCK, true, Locale.ENGLISH).path(JSON.DATA).path(JSON.SCHEMA));
+                JsonHttpServiceTest.schemaFromMessage(instance.doSchema(JsonBlock.BLOCK, true, Locale.ENGLISH)));
     }
 
     /**

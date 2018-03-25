@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.15
+; - Backup and remove classes folder
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.14
 ; - Remove insecure Jackson libraries to address CVE-2017-17485
 ; -------------------------------------------------------------------------
@@ -295,7 +298,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.11"                   ; Installer version
+!define INST_VER  "0.1.22.15"                   ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -468,6 +471,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
+
+    ; -- Recursively delete classes folder, which historically contained 
+    ; -- individual .properties and .classes patch files
+    ; -- that might not be consistent with this new version
+    RMDir /R "$OUTDIR\classes"
 
     ; -- Delete insecure jackson jar files as of JMRI 4.11.3
     Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
@@ -1499,6 +1507,7 @@ Function RemoveOldJMRI
   Rename "$PROFILE\JMRI_backup" "$PROFILE\JMRI_backup_old"
   CreateDirectory "$PROFILE\JMRI_backup"
   CopyFiles "$PROFILE\JMRI\*.*" "$PROFILE\JMRI_backup"
+  CopyFiles "$INSTDIR\classes" "$PROFILE\JMRI_backup"
 
   ; -- Check if uninstall required
   StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done

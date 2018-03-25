@@ -241,8 +241,24 @@
         </tr>
 
         <tr align="center">
-          <td>Digitrax DCS100/DB150/DCS50/DCS51 (as command
-          station)</td>
+
+            <td>Digitrax command stations
+
+                <ul>
+
+                    <li>DB150</li>
+
+                    <li>DCS100/DCS200</li>
+
+                    <li>DCS50/DCS51</li>
+
+                    <li>DCS240</li>
+
+                    <li>DCS210</li>
+
+                </ul>
+
+          </td>
 
           <td>Provides</td>
 
@@ -254,7 +270,25 @@
         </tr>
 
         <tr align="center">
-          <td>Digitrax DCS100/DB150/DCS50/DCS51 (as booster)</td>
+
+          <td>Digitrax boosters
+
+              <ul>
+
+                  <li>DB150</li>
+
+                  <li>DCS100/DCS200</li>
+
+                  <li>DCS240</li>
+
+                  <li>DCS210</li>
+
+                  <li>DCS50/DCS51</li>
+
+                  <li>DB210/DB210Opto/DB220</li>
+
+              </ul>
+          </td>
 
           <td></td>
 
@@ -266,6 +300,7 @@
         </tr>
 
         <tr align="center">
+
           <td>Uhlenbrock Intellibox</td>
 
           <td>Provides</td>
@@ -332,7 +367,19 @@
         </tr>
 
         <tr align="center">
-          <td>RR-CirKits LocoBuffer-USB Rev n</td>
+          <td>Digitrax PR4 (in MS100 mode)</td>
+
+          <td>Optional</td>
+
+          <td>?</td>
+
+          <td>Required, can provide</td>
+
+          <td></td>
+        </tr>
+
+        <tr align="center">
+          <td>RR-CirKits LocoBuffer-USB Rev N, LocoBuffer-USB Rev O</td>
 
           <td>Optional</td>
 
@@ -384,7 +431,7 @@
         </tr>
 
         <tr align="center">
-          <td>Digitrax DT100x/DT200x/DT300x/DT400x/DT402x
+          <td>Digitrax DT100x/DT200x/DT300x/DT400x/DT402x/DT500x
           throttle</td>
 
           <td>Required</td>
@@ -474,7 +521,7 @@
         </tr>
 
         <tr align="center">
-          <td>UR90/UR91/UR92/UR92CE</td>
+          <td>Digitrax UR90/UR91/UR92/UR92CE</td>
 
           <td>Required</td>
 
@@ -483,6 +530,27 @@
           <td>Required</td>
 
           <td></td>
+        </tr>
+        <tr align="center">
+            <td>Digitrax BXP88</td>
+            <td></td>
+            <td>Requires DCC signal</td>
+            <td>Required</td>
+            <td></td>
+        </tr>
+        <tr align="center">
+            <td>Digitrax BXPA1</td>
+            <td></td>
+            <td>Requires DCC signal</td>
+            <td>Required</td>
+            <td></td>
+        </tr>
+        <tr align="Center">
+            <td>Digitrax LNWI</td>
+            <td>Required</td>
+            <td></td>
+            <td>Required</td>
+            <td></td>
         </tr>
 
         <tr align="center">
@@ -498,7 +566,7 @@
         </tr>
 
         <tr align="center">
-          <td>Team Digital SIC24/SIC24AD/SRC8/SRC16</td>
+          <td>Team Digital SIC24/SIC24AD/SRC8/SRC16/SC8/CSC/BLOCD8</td>
 
           <td></td>
 
@@ -510,7 +578,7 @@
         </tr>
 
         <tr align="center">
-          <td>RR-CirKits TC-64</td>
+          <td>RR-CirKits TC-64, TC-MkII</td>
 
           <td></td>
 
@@ -531,6 +599,13 @@
           <td>Required</td>
 
           <td></td>
+        </tr>
+        <tr align="center">
+            <td>RR-CirKits Motorman, MotorMan-II, SignalMan, TowerMan, Watchman</td>
+            <td></td>
+            <td></td>
+            <td>Required</td>
+            <td></td>
         </tr>
 
         <tr align="center">
@@ -558,6 +633,38 @@
         </tr>
 
         <tr align="center">
+            <td>CML Electronics DAC10, DAC20</td>
+            <td></td>
+            <td></td>
+            <td>Required</td>
+            <td></td>
+        </tr>
+
+        <tr align="Center">
+            <td>CML Electronics SIGM10</td>
+            <td></td>
+            <td>?</td>
+            <td>Required</td>
+            <td></td>
+        </tr>
+
+        <tr align="Center">
+            <td>CML Electronics SIGM20, DTM30, TXC1</td>
+            <td></td>
+            <td>Requires DCC Signal</td>
+            <td>Required</td>
+            <td></td>
+        </tr>
+
+        <tr align="center">
+            <td>CML Electronics LocoShuttle</td>
+            <td>Provides Slot Management</td>
+            <td>Generates RailSync</td>
+            <td>Required</td>
+            <td></td>
+        </tr>
+
+        <tr align="center">
           <td>Logic Rail Technologies LocoNet Fast Clock</td>
 
           <td></td>
@@ -567,6 +674,14 @@
           <td>Required</td>
 
           <td>Required, can provide</td>
+        </tr>
+
+        <tr align="center">
+            <td>Tam Valley Depot Quad-LN, Quad-LN-S</td>
+            <td></td>
+            <td></td>
+            <td>Required</td>
+            <td></td>
         </tr>
 
         <tr align="center">
@@ -755,8 +870,7 @@
         </li>
 
         <li>
-          <strong>LocoBuffer-II, LocoBuffer-USB (except
-          LocoBuffer-USB Rev-n)</strong>
+          <strong>LocoBuffer-II, LocoBuffer-USB (revisions before Rev N)</strong>
 
           <p>See the instructions for the appropriate hardware for
           the required switch and/or jumper settings. These devices
@@ -1339,10 +1453,8 @@
       significant input to the content of this page. Thank
       you!</p><a name="tools" id="tools"></a>
 
-      <h2>JMRI Standalone LocoNet Tools</h2>N/A <a name=
-      "references" id="references"></a>
+      <h2><a name="references" id="references">Documentation</a></h2>
 
-      <h2>Documentation</h2>
 
       <h3>Third Party info</h3>
 
@@ -1351,7 +1463,7 @@
       website</a>.</p>
 
       <p>Information and support for the LocoBuffer-II, the
-      LocoBuffer-USB, the LocoBuffer-USB Rev-n, the
+      LocoBuffer-USB, the LocoBuffer-USB Rev-N and Rev-O, the
       LocoNet-Terminator, the SSB-Gateway, and other products by
       RR-CirKits may be found at <a href=
       "http://www.rr-cirkits.com/">the RR-CirKits website</a>.</p>
@@ -1365,6 +1477,14 @@
       "http://www.logicrailtech.com">the Logic Rail Technologies
       website</a>.</p>
 
+      <p>Information and support for products by CML Electronics
+      is now provided by Sig-naTrak&reg; by GFB Designs at
+      <a href="https://www.signatrak.co.uk/">the Sig-naTrak&reg;
+      web site</a>.</p>
+
+      <p>Information and support for products by Tam Valley Depot
+      may be found at <a href="http://www.tamvalleydepot.com/">the
+      TAM Valley Depot website</a>.</p>
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
       <!--#include virtual="/Footer" -->
