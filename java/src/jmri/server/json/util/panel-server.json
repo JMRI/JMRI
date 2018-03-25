@@ -19,7 +19,7 @@
         "type": {
             "type": "string",
             "description": "Type of panel being requested",
-            "enum": ["Switchboard", "Panel", "ControlPanel", "LayoutPanel"]
+            "enum": ["Switchboard", "Panel", "Control Panel", "Layout"]
         }
     },
     "additionalProperties": false,
