@@ -415,12 +415,24 @@ public class JsonUtilHttpService extends JsonHttpService {
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         try {
             switch (type) {
+                case JSON.CONFIG_PROFILE:
+                case JSON.CONFIG_PROFILES:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/configProfile-server.json",
+                            "jmri/server/json/util/configProfile-client.json");
                 case JSON.NETWORK_SERVICE:
                 case JSON.NETWORK_SERVICES:
                     return doSchema(type,
                             server,
                             "jmri/server/json/util/networkService-server.json",
                             "jmri/server/json/util/networkService-client.json");
+                case JSON.PANEL:
+                case JSON.PANELS:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/panel-server.json",
+                            "jmri/server/json/util/panel-client.json");
                 case JSON.SYSTEM_CONNECTION:
                 case JSON.SYSTEM_CONNECTIONS:
                     return doSchema(type,
@@ -447,9 +459,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.HELLO:
                 case JSON.METADATA:
                 case JSON.NODE:
-                case JSON.PANELS:
                 case JSON.RAILROAD:
-                case JSON.CONFIG_PROFILES:
                     return doSchema(type,
                             server,
                             "jmri/server/json/util/" + type + "-server.json",
