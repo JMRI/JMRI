@@ -261,7 +261,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
-        menuList = new ArrayList<JMenu>(3);
+        menuList = new ArrayList<>();
 
         menuList.add(fileMenu);
         menuList.add(editMenu);
