@@ -53,31 +53,16 @@ public class DestinationPointsTest {
     @Test
     public void testSetRoute() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // Set clear down option
-        eep.setClearDownOption(EntryExitPairs.AUTOCLEAR);
+        // Create a route
+        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AW-Side"),  // NOI18N
+                sm.getSensor("NX-Alpha-EB"), panels.get("Alpha"), eep);  // NOI18N
+        dp.activeBean(false, false);
+        dp.setRoute(true);
+        JUnitUtil.waitFor(()->{return dp.getState() == 2;}, "Route active");  // NOI18N
 
-        // Create the route
-        Sensor srcSensor = sm.getSensor("NX-AW-Side");  // NOI18N
-        Sensor destSensor = sm.getSensor("NX-Alpha-EB");  // NOI18N
-
-        JUnitUtil.setBeanStateAndWait(srcSensor, Sensor.INACTIVE);
-        JUnitUtil.setBeanStateAndWait(destSensor, Sensor.INACTIVE);
-
-        JUnitUtil.setBeanStateAndWait(srcSensor, Sensor.ACTIVE);
-        JUnitUtil.setBeanStateAndWait(destSensor, Sensor.ACTIVE);
-
-        // Check the results
-        JUnitUtil.waitFor(()->{return tm.getTurnout("T-AW").getKnownState() == Turnout.THROWN;}, "Turnout thrown");  // NOI18N
-
-        // Simulate route movement using clear down.
-        JUnitUtil.setBeanState(srcSensor, Sensor.INACTIVE);
-        JUnitUtil.setBeanStateAndWait(srcSensor, Sensor.ACTIVE);
-        new EventTool().waitNoEvent(500);
-        JUnitUtil.setBeanState(destSensor, Sensor.INACTIVE);
-        JUnitUtil.setBeanStateAndWait(destSensor, Sensor.ACTIVE);
-
-        // Check the results
-        JUnitUtil.waitFor(()->{return lbm.getLayoutBlock("B-Alpha-West").getOccupancy() == jmri.Block.OCCUPIED;}, "Block occupied");  // NOI18N
+        // Cancel the route
+        dp.cancelClearInterlock(EntryExitPairs.CANCELROUTE);
+        JUnitUtil.waitFor(()->{return dp.getState() == 4;}, "Route inactive");  // NOI18N
     }
 
     @Test
