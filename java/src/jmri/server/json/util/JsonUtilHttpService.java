@@ -5,6 +5,7 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANEL;
+import static jmri.server.json.JSON.PANEL_PANEL;
 import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.URL;
@@ -252,7 +253,7 @@ public class JsonUtilHttpService extends JsonHttpService {
             if (container instanceof JmriJFrame) {
                 String title = ((Frame) container).getTitle();
                 if (!title.isEmpty() && !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames()).contains(title)) {
-                    String type = PANEL;
+                    String type = PANEL_PANEL;
                     String name = "Panel";
                     if (editor instanceof ControlPanelEditor) {
                         type = CONTROL_PANEL;
