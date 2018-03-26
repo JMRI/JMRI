@@ -67,7 +67,6 @@ public class DestinationPointsTest {
         JUnitUtil.setBeanStateAndWait(destSensor, Sensor.ACTIVE);
 
         // Check the results
-        JUnitUtil.waitFor(()->{return lbm.getLayoutBlock("B-AW").getUseExtraColor();}, "Route active");  // NOI18N
         JUnitUtil.waitFor(()->{return tm.getTurnout("T-AW").getKnownState() == Turnout.THROWN;}, "Turnout thrown");  // NOI18N
 
         // Simulate route movement using clear down.
@@ -78,10 +77,7 @@ public class DestinationPointsTest {
         JUnitUtil.setBeanStateAndWait(destSensor, Sensor.ACTIVE);
 
         // Check the results
-        boolean chkExtra = lbm.getLayoutBlock("B-Alpha-West").getUseExtraColor();  // NOI18N
-        Assert.assertFalse("check use extra", chkExtra);  // NOI18N
-        int chkOccupied = lbm.getLayoutBlock("B-Alpha-West").getOccupancy();  // NOI18N
-        Assert.assertEquals("check occupied", jmri.Block.OCCUPIED, chkOccupied);  // NOI18N
+        JUnitUtil.waitFor(()->{return lbm.getLayoutBlock("B-Alpha-West").getOccupancy() == jmri.Block.OCCUPIED;}, "Block occupied");  // NOI18N
     }
 
     @Test
