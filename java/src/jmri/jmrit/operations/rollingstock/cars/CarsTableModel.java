@@ -427,6 +427,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        
+        // turn on defaults
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
 
     @Override
