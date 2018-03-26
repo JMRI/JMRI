@@ -1,10 +1,5 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +11,7 @@ import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
+import jmri.web.server.WebServerPreferences;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -72,21 +68,33 @@ public class JsonUtilSocketServiceTest {
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
         instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale);
-        assertNull(connection.getMessage()); // assert no reply
+        Assert.assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
         instance.onMessage(JSON.PING, empty, JSON.POST, locale);
         JsonNode result = connection.getMessage().path(JSON.TYPE);
-        assertNotNull(result);
-        assertTrue(JsonNode.class.isInstance(result));
-        assertEquals(JSON.PONG, result.asText());
-        assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(JsonNode.class.isInstance(result));
+        Assert.assertEquals(JSON.PONG, result.asText());
+        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        // JSON.RAILROAD
+        WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
+        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale);
+        result = connection.getMessage().path(JSON.DATA);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
+        wsp.setRailroadName("test railroad");
+        result = connection.getMessage().path(JSON.DATA);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
         // JSON.GOODBYE
         instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
         result = connection.getMessage().path(JSON.TYPE);
-        assertNotNull(result);
-        assertTrue(JsonNode.class.isInstance(result));
-        assertEquals(JSON.GOODBYE, result.asText());
-        assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(JsonNode.class.isInstance(result));
+        Assert.assertEquals(JSON.GOODBYE, result.asText());
+        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
     }
 
     /**
