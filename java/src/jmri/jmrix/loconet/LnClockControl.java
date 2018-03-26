@@ -350,7 +350,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             } else {
                 jmri.util.Log4JUtil.warnOnce(log, "Can't access power manager for fast clock");
             }
-            System.out.println(" see "+pm.getPower()+" "+power+" "+s.getTrackStatus());
             s.setTrackStatus(s.getTrackStatus() &  (~LnConstants.GTRK_POWER) );
             if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);
             
