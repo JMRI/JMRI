@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.9.6-SNAPSHOT</version>
+    <version>4.11.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -987,6 +987,11 @@
             <version>0.1.16</version>
             <scope>test</scope>
         </dependency>
+	<dependency>
+	    <groupId>org.eclipse.paho</groupId>
+	    <artifactId>mqtt-client</artifactId>
+	    <version>0.4.0</version>
+	</dependency>
     </dependencies>
 
     <repositories>
