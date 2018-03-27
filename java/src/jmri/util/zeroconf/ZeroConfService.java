@@ -155,7 +155,7 @@ public class ZeroConfService {
         } else {
             properties.put("version", jmri.Version.name());
             // use the major.minor.test version string for jmri since we have potentially
-            // tight space constraints in terms of the number of bytes that properties 
+            // tight space constraints in terms of the number of bytes that properties
             // can use, and there are some unconstrained properties that we would like to use.
             properties.put("jmri", jmri.Version.getCanonicalVersion());
             properties.put("node", NodeIdentity.identity());
@@ -475,7 +475,7 @@ public class ZeroConfService {
                         }
                     }
                 } catch (SocketException ex) {
-                    log.error("Unable to read network interface {}.", IFC.toString(), ex);
+                    log.error("Unable to read network interface {}.", IFC, ex);
                 }
             }
         }
@@ -533,7 +533,7 @@ public class ZeroConfService {
 
         @Override
         public void inetAddressRemoved(NetworkTopologyEvent nte) {
-            log.debug("Removing address {}", nte.getInetAddress().toString());
+            log.debug("Removing address {}", nte.getInetAddress());
             ZeroConfService.netServices.remove(nte.getInetAddress());
             nte.getDNS().unregisterAllServices();
             ZeroConfService.allServices().stream().map((service) -> {
