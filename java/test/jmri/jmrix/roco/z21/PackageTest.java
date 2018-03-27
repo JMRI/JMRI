@@ -35,7 +35,9 @@ import org.junit.runners.Suite;
     Z21XNetConnectionConfigTest.class,
     Z21XNetMessageTest.class,
     Z21XNetReplyTest.class,
-    Z21MultiMeterTest.class
+    Z21MultiMeterTest.class,
+    Z21XNetProgrammerManagerTest.class,
+    Z21XNetOpsModeProgrammerTest.class,
 })
 public class PackageTest {
 
