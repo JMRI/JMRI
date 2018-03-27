@@ -110,7 +110,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Set an output bit.
+     * Set an output bit on this node.
      *
      * @param bitNumber the bit on node to set (numbered from 1; not 0)
      * @param state 'true' for 0, 'false' for 1.
@@ -192,14 +192,12 @@ public class SerialNode extends AbstractNode {
      */
     @Override
     public AbstractMRMessage createOutPacket() {
-        if (log.isDebugEnabled()) {
-            log.debug("createOutPacket for nodeType "
-                    + nodeType + " with "
-                    + outputBitChanged[0] + " " + outputArray[0] + ";"
-                    + outputBitChanged[1] + " " + outputArray[1] + ";"
-                    + outputBitChanged[2] + " " + outputArray[2] + ";"
-                    + outputBitChanged[3] + " " + outputArray[3] + ";");
-        }
+        log.debug("createOutPacket for nodeType {} with {} {};{} {};{} {};{} {}.",
+                nodeType,
+                outputBitChanged[0], outputArray[0],
+                outputBitChanged[1], outputArray[1],
+                outputBitChanged[2], outputArray[2],
+                outputBitChanged[3], outputArray[3]);
 
         // Create a Serial message
         // For now, always write entire node
@@ -209,7 +207,7 @@ public class SerialNode extends AbstractNode {
 
         // Add output bytes
         int j = 0;
-        // note bits are numbered from 1
+        // Note: bits are numbered from 1
         for (int i = 1; i < outputBits[nodeType]; i += 4) {
             int payload = 0;
             if (outputArray[i + 0]) {
@@ -225,7 +223,7 @@ public class SerialNode extends AbstractNode {
                 payload |= 8;
             }
 
-            payload |= j << 4;
+            payload |= j << 4; // add Array num as bit 1
             m.setElement(j + 1, payload);
             j++;
         }
