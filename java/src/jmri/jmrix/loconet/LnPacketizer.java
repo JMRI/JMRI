@@ -376,10 +376,8 @@ public class LnPacketizer extends LnTrafficController {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (!controller.okToSend()) {
-                                log.debug("LocoNet port not ready to receive"); // NOI18N
-                            }
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
+                            if (log.isDebugEnabled()) { // avoid work if not needed
+                                if (isXmtBusy()) log.debug("LocoNet port not ready to receive"); // NOI18N
                                 log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             }
                             ostream.write(msg);
@@ -393,7 +391,7 @@ public class LnPacketizer extends LnTrafficController {
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString()); // NOI18N
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input

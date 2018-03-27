@@ -1,73 +1,113 @@
 package jmri.jmrit.entryexit;
 
 import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
-import java.util.List;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import java.util.HashMap;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.SensorIcon;
-import jmri.jmrit.display.SignalMastIcon;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.netbeans.jemmy.EventTool;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Dave Sand Copyright (C) 2018
  */
 public class DestinationPointsTest {
- 
-    private LayoutEditor editor = null;
-    private SensorIcon si = null; 
-    private jmri.Sensor s = null; 
-    private jmri.SignalMast sm = null;
-    private SignalMastIcon to = null;
+
+    static EntryExitTestTools tools;
+    static HashMap<String, LayoutEditor> panels = new HashMap<>();
+
+    static EntryExitPairs eep;
+    static LayoutBlockManager lbm;
+    static SensorManager sm;
+    static TurnoutManager tm;
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutBlock f = new LayoutBlock("test1","Facing Block");
-        LayoutBlock p1 = new LayoutBlock("test2","Protecting Block 1");
-        LayoutBlock p2 = new LayoutBlock("test3","Protecting Block 2");
-        List<LayoutBlock> blockList = new ArrayList<>();
-        blockList.add(p1);
-        blockList.add(p2);
+        PointDetails pdSrc = tools.getPoint(sm.getSensor("NX-From-Beta"), panels.get("Alpha") ,eep);  // NOI18N
+        Assert.assertNotNull("testCTor - source point", pdSrc);  // NOI18N
+        Source src = new Source(pdSrc);
+        Assert.assertNotNull("testCTor - source", src);  // NOI18N
 
-        PointDetails ptd = new PointDetails(f,blockList);
-        ptd.setPanel(editor);
-        ptd.setSensor(s); 
-        ptd.setSignalMast(sm);
-        Source so = new Source(ptd);
-        DestinationPoints t = new DestinationPoints(ptd,"test",so);
-        Assert.assertNotNull("exists",t);
+        PointDetails pdDest = tools.getPoint(sm.getSensor("NX-AE"), panels.get("Alpha") ,eep);  // NOI18N
+        Assert.assertNotNull("testCTor - destination point", pdDest);  // NOI18N
+
+        DestinationPoints dp = new DestinationPoints(pdDest, null, src);
+        Assert.assertNotNull("testCTor", dp);  // NOI18N
+        String uuid = dp.getUniqueId();
+        Assert.assertTrue("check uuid", uuid.startsWith("IN:"));  // NOI18N
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @Test
+    public void testSetRoute() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // Create a route
+        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AW-Side"),  // NOI18N
+                sm.getSensor("NX-Alpha-EB"), panels.get("Alpha"), eep);  // NOI18N
+        dp.activeBean(false, false);
+        dp.setRoute(true);
+        JUnitUtil.waitFor(()->{return dp.getState() == 2;}, "Route active");  // NOI18N
+
+        // Cancel the route
+        dp.cancelClearInterlock(EntryExitPairs.CANCELROUTE);
+        JUnitUtil.waitFor(()->{return dp.getState() == 4;}, "Route inactive");  // NOI18N
+    }
+
+    @Test
+    public void testEnabled() {
+        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
+                sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
+        Assert.assertNotNull("test enabled", dp);  // NOI18N
+        boolean chkEnabled = dp.isEnabled();
+        Assert.assertTrue("test enabled true", chkEnabled);  // NOI18N
+        dp.setEnabled(false);
+        chkEnabled = dp.isEnabled();
+        Assert.assertFalse("test enabled false", chkEnabled);  // NOI18N
+    }
+
+    @Test
+    public void testState() {
+        DestinationPoints dp = tools.getDestinationPoint(sm.getSensor("NX-AE"),  // NOI18N
+                sm.getSensor("NX-AW-Side"), panels.get("Alpha"), eep);  // NOI18N
+        Assert.assertNotNull("test state", dp);
+        int state = dp.getState();
+        Assert.assertEquals("test state inactive", 4, state);  // NOI18N
+        dp.setActiveEntryExit(true);
+        state = dp.getState();
+        Assert.assertEquals("test state active", 2, state);  // NOI18N
+    }
+
+    @BeforeClass
+    public static void setUp() throws Exception {
         JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new LayoutEditor("Test Entry/Exit Source Panel");
-            to = new SignalMastIcon(editor);
-            to.setShowAutoText(true);
-            sm = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
-            to.setSignalMast(new jmri.NamedBeanHandle<>(sm.getSystemName(), sm));
-        
-            si = new SensorIcon(editor);
-            s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-            si.setSensor(new jmri.NamedBeanHandle<>("IS1", s));
-            editor.setAllEditable(false);
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        tools = new EntryExitTestTools();
+        panels = tools.getPanels();
+        Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
+        eep = InstanceManager.getDefault(EntryExitPairs.class);
+        lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        sm = InstanceManager.getDefault(SensorManager.class);
+        tm = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    public static void tearDown() {
+        panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DestinationPointsTest.class);
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPointsTest.class);
 
 }

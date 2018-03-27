@@ -127,7 +127,7 @@
       <reference>Page 64</reference>
       <speed>Slow</speed>
       <speed2>Normal</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>5</dccAspect>
     </aspect>
 
@@ -138,7 +138,7 @@
       <reference>Page 65</reference>
       <speed>Slow</speed>
       <speed2>Slow</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>4</dccAspect>
     </aspect>
 
