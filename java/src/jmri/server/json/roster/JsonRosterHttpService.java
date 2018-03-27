@@ -176,7 +176,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         data.put(DECODER_FAMILY, entry.getDecoderFamily());
         data.put(MODEL, entry.getModel());
         data.put(COMMENT, entry.getComment());
-        data.put(MAX_SPD_PCT, Integer.toString(entry.getMaxSpeedPCT()));
+        data.put(MAX_SPD_PCT, entry.getMaxSpeedPCT());
         data.put(IMAGE, (entry.getImagePath() != null)
                 ? entryPath + IMAGE
                 : null);
