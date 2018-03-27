@@ -1,10 +1,10 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-metadata-server-message",
+    "title": "jmri-json-hello-server-message",
     "type": "object",
-    "description": "Data portion of message from JMRI to client for type \"metadata\"",
+    "description": "Data portion of message from JMRI to client for type \"hello\"",
     "properties": {
-        "jmri": {
+        "JMRI": {
             "type": "string",
             "description": "JMRI version"
         },
@@ -30,5 +30,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["jmri", "json", "heartbeat", "railroad", "node", "activeProfile"]
+    "required": ["JMRI", "json", "heartbeat", "railroad", "node", "activeProfile"]
 }

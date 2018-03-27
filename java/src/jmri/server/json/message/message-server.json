@@ -1,44 +1,27 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-reporter-server-message",
+    "title": "jmri-json-message-server-message",
     "type": "object",
-    "description": "Data portion of message from JMRI to client for type \"reporter\"",
+    "description": "Data portion of message from JMRI to client for type \"message\"",
     "properties": {
-        "name": {
+        "message": {
             "type": "string",
-            "description": "System name of the reporter"
+            "description": "Unsolicited message"
         },
-        "userName": {
+        "context": {
+            "type": ["object", "null"],
+            "description": "Context for message"
+        },
+        "type": {
             "type": "string",
-            "description": "User name of the reporter"
+            "description": "Type of message",
+            "enum": ["error", "info", "success", "warning"]
         },
-        "comment": {
+        "locale": {
             "type": "string",
-            "description": "Comment for the reporter"
-        },
-        "properties": {
-            "type": "array",
-            "description": "NamedBean properties of the reporter",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key by which property is accessed"
-                    },
-                    "value": {
-                        "type": ["string", "null"],
-                        "description": "String value of property or null"
-                    }
-                }
-            }
-        },
-        "state": {
-            "type": "integer",
-            "description": "The state of the reporter",
-            "enum": [0, 2, 4, 8]
+            "description": "Locale for message display"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["message", "context", "type", "locale"]
 }
