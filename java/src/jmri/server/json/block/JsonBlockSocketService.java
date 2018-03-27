@@ -25,7 +25,7 @@ import jmri.server.json.JsonSocketService;
  */
 public class JsonBlockSocketService extends JsonSocketService<JsonBlockHttpService> {
 
-    private final HashMap<String, BlockListener> blocks = new HashMap<>();
+    protected final HashMap<String, BlockListener> blocks = new HashMap<>();
 
     public JsonBlockSocketService(JsonConnection connection) {
         super(connection, new JsonBlockHttpService(connection.getObjectMapper()));
@@ -74,7 +74,7 @@ public class JsonBlockSocketService extends JsonSocketService<JsonBlockHttpServi
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("value")) {
+            if (!e.getPropertyName().equals("allocated")) {
                 try {
                     try {
                         connection.sendMessage(service.doGet(BLOCK, this.block.getSystemName(), getLocale()));

@@ -7,6 +7,15 @@ import moment from '../moment';
 function translate(number, withoutSuffix, key) {
     var result = number + ' ';
     switch (key) {
+        case 'ss':
+            if (number === 1) {
+                result += 'sekunda';
+            } else if (number === 2 || number === 3 || number === 4) {
+                result += 'sekunde';
+            } else {
+                result += 'sekundi';
+            }
+            return result;
         case 'm':
             return withoutSuffix ? 'jedna minuta' : 'jedne minute';
         case 'mm':
@@ -71,7 +80,7 @@ export default moment.defineLocale('hr', {
     longDateFormat : {
         LT : 'H:mm',
         LTS : 'H:mm:ss',
-        L : 'DD. MM. YYYY',
+        L : 'DD.MM.YYYY',
         LL : 'D. MMMM YYYY',
         LLL : 'D. MMMM YYYY H:mm',
         LLLL : 'dddd, D. MMMM YYYY H:mm'
@@ -115,6 +124,7 @@ export default moment.defineLocale('hr', {
         future : 'za %s',
         past   : 'prije %s',
         s      : 'par sekundi',
+        ss     : translate,
         m      : translate,
         mm     : translate,
         h      : translate,
@@ -126,11 +136,10 @@ export default moment.defineLocale('hr', {
         y      : 'godinu',
         yy     : translate
     },
-    ordinalParse: /\d{1,2}\./,
+    dayOfMonthOrdinalParse: /\d{1,2}\./,
     ordinal : '%d.',
     week : {
         dow : 1, // Monday is the first day of the week.
         doy : 7  // The week that contains Jan 1st is the first week of the year.
     }
 });
-

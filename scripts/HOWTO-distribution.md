@@ -62,7 +62,9 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
   ./scripts/update-HOWTO.sh 4.11.4 4.11.5 4.11.6
 ```
-(and then manually update that line above to be last version released, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments are *.3 *.4 *.5) To check it ran OK, the following should be the release you're doing now: 4.11.4
+(and then manually update that line above to be last version released, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments after you edit it here are *.4 *.5 *.6) 
+
+- To check the script ran OK, the following should be the release you're doing now: 4.11.4
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
@@ -152,7 +154,9 @@ We roll some general code maintenance items into the release process.  They can 
 
 - This is a good place to make sure CATS still builds, see the (doc page)[http://jmri.org/help/en/html/doc/Technical/CATS.shtml] - note that CATS has not been updated to compile cleanly with JMRI 4.*
         
-- If you fixed anything, commit it back. Also commit the current copy of these notes. Push directly back to master on GitHub.
+- If you fixed anything, commit it back. 
+
+- Commit the current copy of these notes. Push directly back to master on GitHub.
 
 ```
 git commit -m"for 4.11.4" scripts/HOWTO-distribution.md
@@ -190,6 +194,12 @@ git push github
 https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+no%3Amilestone
 ````
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
+
+- (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the current release:
+```
+    <version>4.11.4-SNAPSHOT</version>
+```
+Commit, and push back directly to master (this should be the only change, and has to be before the next step)
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 

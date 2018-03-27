@@ -381,13 +381,31 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setElement(3, 0x00);
                 reply.setParity();
                 break;
+            case XNetConstants.OPS_MODE_PROG_REQ:
+                    int operation = m.getElement(4) & 0xFC;
+                    switch(operation) {
+                         case 0xEC:
+                           log.debug("Write CV in Ops Mode Request Received");
+                           reply = okReply();
+                           break;
+                         case 0xE4:
+                           log.debug("Verify CV in Ops Mode Request Received");
+                           reply = okReply();
+                           break;
+                         case 0xE8:
+                           log.debug("Ops Mode Bit Request Received");
+                           reply = okReply();
+                           break;
+                         default:
+                           reply=notSupportedReply();
+                    }
+                break;
             case XNetConstants.LI101_REQUEST:
             case XNetConstants.CS_SET_POWERMODE:
             //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST
             //and CS_SET_POWERMODE
             //have the same value
             case XNetConstants.PROG_WRITE_REQUEST:
-            case XNetConstants.OPS_MODE_PROG_REQ:
             case XNetConstants.LOCO_DOUBLEHEAD:
             default:
                 reply = notSupportedReply();

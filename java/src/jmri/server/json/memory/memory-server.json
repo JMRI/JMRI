@@ -9,11 +9,11 @@
             "description": "System name of the memory"
         },
         "userName": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "User name of the memory"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the memory"
         },
         "properties": {
@@ -30,14 +30,16 @@
                         "type": ["string", "null"],
                         "description": "String value of property or null"
                     }
-                }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
             }
         },
         "value": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "The value of the memory"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "value"]
+    "required": ["name", "userName", "comment", "value"]
 }
