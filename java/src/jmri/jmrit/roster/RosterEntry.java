@@ -1400,8 +1400,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
             int colWidth = 15;
             int startNext = colWidth;
-            if (_fileName != null) {
-                thisText = String.format("%-" + colWidth + "s", _fileName.substring(0, Math.min(_fileName.length(), colWidth))); // %- = left align
+            // roster entry ID (not the filname)
+            if (_id != null) {
+                thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
                 log.debug("thisText = |{}|, length = {}, startNext = {}", thisText, thisText.length(), startNext);
             } else {
                 thisText = String.format("%-" + colWidth + "s", "<null>");
@@ -1442,11 +1443,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             colWidth = 10;
             startNext += colWidth;
             // dateModified (type)
-            if (dateModified != null && dateModified instanceof Date) {
-                DateFormat.getDateTimeInstance().format((Date) dateModified);
+            if (dateModified != null) {
+                if (dateModified instanceof Date) {
+                    DateFormat.getDateTimeInstance().format((Date) dateModified);
+                }
+                thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
+                thisLine += thisText;
             }
-            thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
-            thisLine += thisText;
             // don't include comment and decoder family
 
             w.write(thisLine);
