@@ -119,7 +119,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
+        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelListening"), new Object[]{DeviceServer.getWiTVersion()}));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;
