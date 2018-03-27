@@ -99,16 +99,16 @@ public class JsonSignalHeadSocketServiceTest {
 
     }
 
-
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
         JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
+    }
 
 }

@@ -47,10 +47,10 @@ public class JsonPowerHttpService extends JsonHttpService {
                 for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
                     if (pm.getUserName().equals(name)) {
                         manager = pm;
-                        data.put(NAME, name);
                     }
                 }
             }
+            data.put(NAME, manager.getUserName());
             switch (manager.getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
