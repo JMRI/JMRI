@@ -119,7 +119,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      */
-    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
+    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, 
+                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -135,6 +136,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
             sm.setCommandStationType(type);
             sm.setSystemConnectionMemo(this);
+            sm.setTranspondingAvailable(mTranspondingAvailable);
 
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
@@ -334,7 +336,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (clockControl == null) {
-            clockControl = new LnClockControl(getSlotManager(), getLnTrafficController());
+            clockControl = new LnClockControl(this);
         }
         return clockControl;
     }

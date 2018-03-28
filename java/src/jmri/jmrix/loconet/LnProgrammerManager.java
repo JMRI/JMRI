@@ -44,6 +44,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 
+    static final ProgrammingMode LOCONETOPSBOARD    = new ProgrammingMode("LOCONETOPSBOARD", Bundle.getMessage("LOCONETOPSBOARD"));
     static final ProgrammingMode LOCONETSV1MODE    = new ProgrammingMode("LOCONETSV1MODE", Bundle.getMessage("LOCONETSV1MODE"));
     static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
     static final ProgrammingMode LOCONETBDOPSWMODE = new ProgrammingMode("LOCONETBDOPSWMODE", Bundle.getMessage("LOCONETBDOPSWMODE"));
@@ -56,6 +57,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public List<ProgrammingMode> getDefaultModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
         ret.add(LOCONETSV1MODE); // the show in interface in order listed here
         return ret;

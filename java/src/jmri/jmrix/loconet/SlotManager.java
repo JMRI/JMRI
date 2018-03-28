@@ -1532,6 +1532,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return adaptermemo.getSystemPrefix();
     }
 
+    boolean transpondingAvailable = false;
+    public void setTranspondingAvailable(boolean val) { transpondingAvailable = val; }
+    public boolean getTranspondingAvailable() { return transpondingAvailable; }
+    
     /**
      * Returns the memo
      * <p>
