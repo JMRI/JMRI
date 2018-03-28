@@ -11,12 +11,14 @@ import org.junit.Before;
  */
 public class SprogPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
+    private SprogTrafficControlScaffold stcs;
+
     @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
        SprogSystemConnectionMemo memo = new SprogSystemConnectionMemo();
-       new SprogTrafficControlScaffold(memo);
+       stcs = new SprogTrafficControlScaffold(memo);
        apc = new SprogPortController(memo){
             @Override
             public boolean status(){
@@ -57,6 +59,7 @@ public class SprogPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
     @Override
     @After
     public void tearDown(){
+       stcs.dispose();
        JUnitUtil.tearDown();
     }
 

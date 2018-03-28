@@ -516,6 +516,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 // done after setting facades in case new possibilities appear
                 if (programming != null) {
                     pickProgrammerMode(programming);
+                    // reset the read buttons if the mode changes
+                    enableReadButtons();
                 } else {
                     log.debug("Skipping programmer setup because found no programmer element");
                 }

@@ -32,7 +32,10 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
         // retain ERROR on behalf of JsonException for schema handling
         // retain PONG on behalf of JSON servers for schema handling
         return new String[]{JsonException.ERROR,
-            JSON.PONG};
+            JSON.NETWORK_SERVICE,
+            JSON.PANEL,
+            JSON.PONG,
+            JSON.SYSTEM_CONNECTION};
     }
 
     @Override

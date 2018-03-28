@@ -133,10 +133,11 @@
       As
 
       <p>The line:</p>
-      <pre>
+<pre style="font-family: monospace;">
  log4j.rootCategory= INFO, A1, T, R
-</pre>controls where logging output goes. Later in the file, there
-are "appenders" A1, T and R defined that write log messages to:
+</pre>
+    controls where logging output goes. Later in the file, there
+    are "appenders" A1, T and R defined that write log messages to:
 
       <ul>
         <li>A1 - the console on the local computer, really
@@ -158,18 +159,15 @@ are "appenders" A1, T and R defined that write log messages to:
 
       <p>The "default.lcf" file also determines the format of the
       output by setting the "layout" parameter(s).</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
-</code>
 </pre>
 
       <p>An example of the default format:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
 2015-10-28 20:31:52,307 jmri.jmrit.powerpanel.PowerPane  WARN - No power manager instance found, panel not active [AWT-EventQueue-0]
-</code>
-</pre>The columns are:
+</pre>
+    The columns are:
 
       <ul>
         <li><code>2015-10-28 20:31:52,307</code> - local time the
@@ -190,24 +188,18 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
 
       <h3>Coding</h3>To log messages from a class named MyClass,
       add this to the bottom of the class's .java file:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         private static final Logger log = LoggerFactory.getLogger(MyClass.class);
-</code>
 </pre>
 
       <p>and add imports for org.slf4j.Logger and
       org.slf4j.LoggerFactory in your imports section:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         import org.slf4j.Logger;<br>
         import org.slf4j.LoggerFactory;
-</code>
 </pre>It's also OK to combine those into the fully-qualified form:
-      <pre>
-<code>
+<pre style="font-family: monospace;">
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyClass.class);
-</code>
 </pre>
 
       <p>(If logging is removed (e.g. commented out), it's OK to
@@ -215,18 +207,14 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
       back later on.)</p>
 
       <p>Then for each message to log insert a line like:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         log.debug("message");
-</code>
 </pre>
 
       <p>Messages that are not just an explicit string should use
       this form instead for variables:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         log.debug("Found {}", numberEntries);
-</code>
 </pre>
       <p>The string operations to build the actual error message (in
         this case, combining "Found" and the numberEntries argument) are
@@ -242,21 +230,25 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
       does not waste time calculating parameters (in this case,
       calling numberEntries() to get a value to pass to the
       function call):</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         if (log.isDebugEnabled()) {
             log.debug("Found {}", numberEntries());
         }
-</code>
 </pre>
-
+      <p>If you want to emit a warning only the first time
+        it happens, there's a service method that will
+        handle that for you:
+<pre style="font-family: monospace;">
+        Log4JUtil.warnOnce(log, "The warning with arguments {} {}", "A", "B");
+</pre>
+        
       <p>Exceptions should be logged as:</p>
-      <pre>
-<code>
+<pre style="font-family: monospace;">
         log.error("my local text"+exception.getLocalizedMessage(), exception);
-</code>
-</pre>to include the user readable description from the exception
-itself, plus all its traceback information.
+
+</pre>
+    to include the user readable description from the exception
+    itself, plus all its traceback information.
 <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
