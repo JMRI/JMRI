@@ -5,6 +5,7 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PANEL;
+import static jmri.server.json.JSON.PANEL_PANEL;
 import static jmri.server.json.JSON.SWITCHBOARD_PANEL;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.URL;
@@ -252,7 +253,7 @@ public class JsonUtilHttpService extends JsonHttpService {
             if (container instanceof JmriJFrame) {
                 String title = ((Frame) container).getTitle();
                 if (!title.isEmpty() && !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames()).contains(title)) {
-                    String type = PANEL;
+                    String type = PANEL_PANEL;
                     String name = "Panel";
                     if (editor instanceof ControlPanelEditor) {
                         type = CONTROL_PANEL;
@@ -415,12 +416,30 @@ public class JsonUtilHttpService extends JsonHttpService {
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         try {
             switch (type) {
+                case JSON.CONFIG_PROFILE:
+                case JSON.CONFIG_PROFILES:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/configProfile-server.json",
+                            "jmri/server/json/util/configProfile-client.json");
                 case JSON.NETWORK_SERVICE:
                 case JSON.NETWORK_SERVICES:
                     return doSchema(type,
                             server,
                             "jmri/server/json/util/networkService-server.json",
                             "jmri/server/json/util/networkService-client.json");
+                case JSON.PANEL:
+                case JSON.PANELS:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/panel-server.json",
+                            "jmri/server/json/util/panel-client.json");
+                case JSON.SYSTEM_CONNECTION:
+                case JSON.SYSTEM_CONNECTIONS:
+                    return doSchema(type,
+                            server,
+                            "jmri/server/json/util/systemConnection-server.json",
+                            "jmri/server/json/util/systemConnection-client.json");
                 case JsonException.ERROR:
                 case JSON.PONG:
                     if (server) {
@@ -441,10 +460,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 case JSON.HELLO:
                 case JSON.METADATA:
                 case JSON.NODE:
-                case JSON.PANELS:
                 case JSON.RAILROAD:
-                case JSON.SYSTEM_CONNECTIONS:
-                case JSON.CONFIG_PROFILES:
                     return doSchema(type,
                             server,
                             "jmri/server/json/util/" + type + "-server.json",

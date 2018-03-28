@@ -1,9 +1,9 @@
 package jmri.jmrit.entryexit.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -19,13 +19,13 @@ public class EntryExitPairsXmlTest {
     }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @BeforeClass
+    static public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    static public void tearDown() {
         JUnitUtil.tearDown();
     }
 
