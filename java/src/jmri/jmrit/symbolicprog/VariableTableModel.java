@@ -286,22 +286,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         boolean opsOnly = e.getAttribute("opsOnly") != null
                 ? e.getAttribute("opsOnly").getValue().equals("yes") : false;
 
-        // Ops mode doesn't allow reads, therefore we must disable read buttons
+        // Handle special case of opsOnly mode & specific programmer type
         if (_cvModel.getProgrammer() != null) {
             if (opsOnly && !AddressedProgrammer.class.isAssignableFrom(_cvModel.getProgrammer().getClass())) {
                 // opsOnly but not Ops mode, so adjust
                 readOnly = false;
                 writeOnly = false;
                 infoOnly = true;
-            } else if (!_cvModel.getProgrammer().getCanRead()) {
-                // can't read, so adjust
-                if (readOnly) {
-                    readOnly = false;
-                    infoOnly = true;
-                }
-                if (!infoOnly) {
-                    writeOnly = true;
-                }
             }
         }
 
@@ -630,6 +621,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 br.setActionCommand("R" + row);
                 br.addActionListener(this);
             }
+        }
+    }
+
+    public void setButtonModeFromProgrammer() {
+        if (!_cvModel.getProgrammer().getCanRead()) {
+            for (JButton b : _readButtons) b.setEnabled(false);
         }
     }
 

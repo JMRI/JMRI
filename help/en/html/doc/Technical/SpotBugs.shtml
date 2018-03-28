@@ -113,8 +113,17 @@ scanning through the code.
         to set @Nonnull for an entire class.
         Note that SpotBugs won't let you compare an @Nonnull value to
         null; that's an error that SpotBugs wants to find via static analysis.
-        If you want to double-check at runtime, use 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Objects.html#requireNonNull-T-">Objects.requireNonNull(..)</a></li>
+        If your annotating a part of the external API, and you want to double-check at runtime, use 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Objects.html#requireNonNull-T-">Objects.requireNonNull(..)</a>,
+        for example:
+<pre style="font-family: monospace;">
+        public Car(@Nonnull Engine engine, @Nonnull Transmission transmission) {
+            this.engine = Objects.requireNonNull(engine, "Engine cannot be null");
+            this.transmission = Objects.requireNonNull(transmission, "Transmission cannot be null");
+        }
+</pre>
+   
+        </li>
 
         <li><a href=
         "http://static.javadoc.io/com.google.code.findbugs/jsr305/3.0.1/javax/annotation/CheckForNull.html">
