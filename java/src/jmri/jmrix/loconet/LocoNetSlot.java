@@ -572,6 +572,15 @@ public class LocoNetSlot {
     }
 
     /**
+     * Get the track status byte (location 7)
+     */
+    public int getTrackStatus() { return trk; }
+    /**
+     * Set the track status byte (location 7)
+     */
+    public void setTrackStatus(int status) { trk = status; }
+    
+    /**
      * Only valid for fast-clock slot.
      *
      * @return "Days" value currently in fast-clock slot.
