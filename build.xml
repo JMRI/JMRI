@@ -166,7 +166,7 @@
         <pathelement location="${libdir}/jdom.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
-        <pathelement location="${libdir}/jmdns-3.5.3.jar"/>
+        <pathelement location="${libdir}/jmdns-3.5.1.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
@@ -221,6 +221,8 @@
         <pathelement location="${libdir}/usb4java-1.2.0.jar"/>
         <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
+        <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -268,7 +270,6 @@
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
         <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
@@ -1873,6 +1874,16 @@
              includes="xml/decoders/*.xml"/>
     </target>
 
+    <target name="scanhelp"
+            description="scan English-language help for HTML errors">
+        <exec executable="./scripts/tidy-check.sh"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="help/en/*/*/"/>
+        </exec>
+            
+    </target>
+    
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
@@ -2171,7 +2182,7 @@
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
-        <copy todir="${dist.macosx}/JMRI/">
+        <copy todir="${dist.linux}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>

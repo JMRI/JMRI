@@ -1330,7 +1330,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         floatingEditContentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         // Force the help panel width to the same as the tabs section
-        int tabSectionWidth = floatEditTabsPanel.getWidth();
+        int tabSectionWidth = (int) floatEditTabsPanel.getPreferredSize().getWidth();
 
         //Change the textarea settings
         for (Component c : helpBar.getComponents()) {
@@ -10586,7 +10586,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     // The following have been moved to the LayoutTurnout class
     // These remain to ease migration
-    
+
     // defined constants - turnout types
     @Deprecated // 4.11.3
     public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;

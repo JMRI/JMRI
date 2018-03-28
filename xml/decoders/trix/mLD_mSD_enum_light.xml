@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Light effects for Märklin mLD and mSD decoders                         -->
+
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Output disabled">
+    <choice xml:lang="de">Ausgang aus</choice>
+  </enumChoice>
+  <enumChoice choice="Dimmable">
+    <choice xml:lang="de">Dimmbar</choice>
+  </enumChoice>
+  <enumChoice choice="Flash 1">
+    <choice xml:lang="de">Blinklicht 1</choice>
+  </enumChoice>
+  <enumChoice choice="Flash 2">
+    <choice xml:lang="de">Blinklicht 2</choice>
+  </enumChoice>
+  <enumChoice choice="Single Strobe">
+    <choice xml:lang="de">Blinklicht einzeln</choice>
+  </enumChoice>
+  <enumChoice choice="Double Strobe">
+    <choice xml:lang="de">Blinklicht doppelt</choice>
+  </enumChoice>
+  <enumChoice choice="Random / Firebox">
+    <choice xml:lang="de">Blinklicht zufällig</choice>
+  </enumChoice>
+  <enumChoice choice="Smoke Generator">
+    <choice xml:lang="de">Rauchgenerator</choice>
+  </enumChoice>
+  <enumChoice choice="Fade In/Out">
+    <choice xml:lang="de">Auf/Abblendend</choice>
+  </enumChoice>
+  <enumChoice choice="Mars Light">
+    <choice xml:lang="de">Mars Licht</choice>
+  </enumChoice>
+  <enumChoice choice="Gyra Light">
+    <choice xml:lang="de">Gyra Licht</choice>
+  </enumChoice>
+  <enumChoice choice="Ditch light A">
+    <choice xml:lang="de">"Ditch" Licht vorwärts</choice>
+  </enumChoice>
+  <enumChoice choice="Ditch light B">
+    <choice xml:lang="de">"Ditch" Licht rückwärts</choice>
+  </enumChoice>
+  <enumChoice choice="Neon Tube">
+    <choice xml:lang="de">Neonröhre</choice>
+  </enumChoice>
+  <enumChoice choice="Energie Save">
+    <choice xml:lang="de">Energiesparlampe</choice>
+  </enumChoice>
+  <enumChoice choice="Soft Telex Coupling">
+    <choice xml:lang="de">Telex Kupplung neu</choice>
+  </enumChoice>
+</enumVal>
