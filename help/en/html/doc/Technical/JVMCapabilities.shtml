@@ -126,27 +126,35 @@
         <tr>
           <td>Java Platform Module System</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
         <tr>
           <td>JUTF-8 Properties files (simplifies I18N)</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
+        
         <tr>
           <td>J<A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
                 More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
                 worse code) of JMRI indepdendent.</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
 
+        <tr>
+          <td>Even better support for immutable collections</td>
+
+          <td>?</td>
+
+          <td>10</td>
+        </tr>
 
 
       </table>(* indicates that a compatibility library is used in
