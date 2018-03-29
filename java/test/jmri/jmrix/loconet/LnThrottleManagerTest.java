@@ -1041,7 +1041,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
-        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false);
+        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
         memo.configureManagers();
         tm = new LnThrottleManager(memo);
         log.debug("new throttle manager is {}", tm.toString());

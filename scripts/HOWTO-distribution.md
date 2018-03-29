@@ -323,7 +323,7 @@ This has the nice property that if multiple things arise, they can definitely be
 
 Run a script to download the created files, create checksums and create text for release notes, etc
 ```
-./releasesummary 4.11.4
+./scripts/releasesummary 4.11.4
 ```
 
 ====================================================================================
@@ -433,7 +433,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.5". Add the next release milestone (created above) to it. Typical text:
 ```
- This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
+ This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
 ====================================================================================
@@ -443,12 +443,28 @@ git push github
 
 - Update the web site front page and downloads page:
 ```
-     index.html download/Sidebar download/index.shtml releaselist
+     index.shtml download/Sidebar download/index.shtml releaselist
 ```
 
 - Commit site, push, etc.
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
+====================================================================================
+## Create zipped .properties (experimental)
+
+ant realclean compile
+cd target
+rm properties.4.11.4.zip
+
+# the following will take several minutes
+foreach x ( `find classes -name \*.properties` )
+printf '%s\n' 0a '# from tag v4.11.4' . x | ex $x
+end
+
+find classes -name \*.properties | zip -@ properties.4.11.4.zip
+
+Then decide what to do with it. Attach to release?
+
 
 ====================================================================================
 ## Announcement and Post-release Steps

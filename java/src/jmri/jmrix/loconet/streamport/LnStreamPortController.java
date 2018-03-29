@@ -49,7 +49,7 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, false); // never transponding
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides an Ops mode proxy programming interface for a RailCom Reader. This
  * forwards the read request to the command station to forward on and handles
- * sending back the CV reading results from the Rail Com message
+ * sending back the CV reading results from the RailCom message
  *
  * @see jmri.Programmer
  * @author Kevin Dickerson Copyright (C) 2012

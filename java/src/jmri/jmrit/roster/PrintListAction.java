@@ -9,32 +9,34 @@ import javax.swing.JLabel;
 import jmri.beans.Beans;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.FileUtil;
+import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to print a summary of the Roster contents.
+ * Action to print a very compact summary listing of the Roster contents.
  * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
+ * @author Egbert Broerse Copyright (C) 2018
  */
-public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
+public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
 
-    public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
+    public PrintListAction(String s, jmri.util.swing.WindowInterface wi) {
         super(s, wi);
         isPreview = true;
     }
 
-    public PrintRosterAction(String s, javax.swing.Icon i, jmri.util.swing.WindowInterface wi) {
+    public PrintListAction(String s, javax.swing.Icon i, jmri.util.swing.WindowInterface wi) {
         super(s, i, wi);
         isPreview = true;
     }
 
-    public PrintRosterAction(String actionName, Frame frame, boolean preview) {
+    public PrintListAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
@@ -45,12 +47,12 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     /**
-     * Frame hosting the printing
+     * Frame hosting the printing.
      */
     Frame mFrame = new Frame();
 
     /**
-     * Variable to set whether this is to be printed or previewed
+     * Variable to set whether this is to be printed or previewed.
      */
     boolean isPreview;
 
@@ -83,7 +85,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         writer.write(icon.getImage(), new JLabel(icon));
-        //Add a number of blank lines, so that the roster entry starts below the decoderpro logo
+        // add a number of blank lines, so that the roster entry starts below the decoderpro logo
         int height = icon.getImage().getHeight(null);
         int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
 
@@ -96,17 +98,49 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
             log.warn("error during printing: " + ex);
         }
 
-        // Loop through the Roster, printing as needed
+        // Loop through the Roster, printing a 1 line list entry as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
         log.debug("Roster list size: " + l.size());
+        // print table column headers, match column order + widths with RosterEntry#PrintEntryLine
+        // fields copied from RosterTableModel#getColumnName(int)
+        String headerText = "";
+        // IDCOL (= Filename)
+        headerText += StringUtil.padString(Bundle.getMessage("FieldID"), 15);
+        // ADDRESSCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldDCCAddress"), 6);
+        // ROADNAMECOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldRoadName"), 6);
+        // ROADNUMBERCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldRoadNumber"), 6);
+        // MFGCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldManufacturer"), 6);
+        // MODELCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldModel"), 10);
+        // DECODERCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldDecoderModel"), 10);
+        // PROTOCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldProtocol"), 12);
+        // OWNERCOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldOwner"), 6);
+        // DATEUPDATECOL:
+        headerText += StringUtil.padString(Bundle.getMessage("FieldDateUpdated"), 10);
+
+        try {
+        // start a new line
+        writer.write("\n", 0, 1);
+        writer.write(headerText);
+        } catch (IOException ex) {
+            log.warn("error during printing: " + ex);
+        }
+
         for (RosterEntry re : l) {
             if (rosterGroup != null) {
                 if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
                         && re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
-                    re.printEntry(writer);
+                    re.printEntryLine(writer);
                 }
             } else {
-                re.printEntry(writer);
+                re.printEntryLine(writer);
             }
         }
 
@@ -133,6 +167,6 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterAction.class);
+    private final static Logger log = LoggerFactory.getLogger(PrintListAction.class);
 
 }

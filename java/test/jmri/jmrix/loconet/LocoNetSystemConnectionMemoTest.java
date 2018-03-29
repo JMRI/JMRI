@@ -21,7 +21,7 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
        memo = new LocoNetSystemConnectionMemo();
        memo.setLnTrafficController(lnis);
-       memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false);
+       memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
        memo.configureManagers();
        scm = memo;
     }
