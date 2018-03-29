@@ -248,7 +248,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     // operational instance variable (not preserved between runs)
     protected boolean[] nodesSet = new boolean[128]; // node init received and replied?
-//    protected int currentAddr = -1; // at startup, can't match
 
     /**
      * This is the heart of the simulation. It translates an
@@ -263,12 +262,12 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         int nodeaddr = msg.getAddr();
-        log.debug("Generate Reply to message to node {} (string = {})", nodeaddr, msg.toString());
+        log.debug("Generate Reply to message for node {} (string = {})", nodeaddr, msg.toString());
         SerialReply reply = new SerialReply();  // reply length is determined by highest byte added
 //        if (nodesSet[nodeaddr] != true) { // only Polls expect a reply from the node
          switch (msg.getNumDataElements()) {
              case 1: // poll message
-                 log.debug("Poll message detected");
+                 log.debug("Poll message detected by simultor");
                  reply.setElement(0, nodeaddr); // node address from msg element(0)
                  reply.setElement(1, 48); // poll reply contains just 2 elements, second is 48 (see SerialMessage#isPoll())
                  nodesSet[nodeaddr] = true; // mark node as inited
@@ -317,7 +316,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         }
     }
 
-    private byte lastChar;
+    private int[] lastChars = new int[9]; // temporary store of bytes received, excluding node address
+    private int nextNodeAddress;
     private boolean lastCharLoaded = false;
 
     /**
@@ -330,62 +330,80 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @throws IOException when presented by the input source.
      */
     private SerialMessage loadChars() throws java.io.IOException {
-        int[] chars = new int[1];
         int i = 1;
-        byte char0;
+        int char0;
+        byte nextByte;
+
         // get 1st byte, see if ending too soon
-        if ((lastCharLoaded) && ((lastChar & 0xF) < 128)) { // use char already read fom pipe as next node address
-            char0 = lastChar;
-            lastChar = -1;
+        if (lastCharLoaded && (nextNodeAddress < 0x2F)) { // use char previously read fom pipe as element 0 (node address)
+            char0 = nextNodeAddress;
+            lastCharLoaded = false;
         } else {
-            char0 = readByteProtected(inpipe);
+            try {
+                byte byte0 = readByteProtected(inpipe);
+                char0 = (byte0 & 0xFF);
+                log.debug("loadChars read {}", char0);
+            } catch (java.io.IOException e) {
+                lastCharLoaded = false; // we lost track
+                log.debug("loadChars aborted while reading char 0");
+                return null;
+            }
         }
-        if ((char0 & 0xFF) > 127) {
+        if (char0 > 0x2F) {
             // skip as not a node address
             log.debug("bit not valid as node address");
         }
 
-        byte charI;
-        chars = new int[9]; // temporary store of bytes
-        // try if what is received looks like a series of outpackets
-        for (i = 1; i < 8; i++) { // reading next max 8 bytes (inpipe never gets empty)
-            log.debug("reading rest of message in simulator");
+        // try if what is received is a series of outpackets
+        for (i = 1; i < 9; i++) { // reading next max 8 bytes
+            log.debug("reading rest of message in simulator, element {}", i);
             try {
-                charI = readByteProtected(inpipe);
-                // check if it is one of the 8 byte 0x .. 7x series, keep last item if it isn't as next nodeaddress
+                nextByte = readByteProtected(inpipe);
             } catch (java.io.IOException e) {
-                log.debug("loadChars ready after {} chars", i + 1);
+                log.debug("loadChars aborted after {} chars", i);
+                lastCharLoaded = false; // we lost track
+                //i = i - 1; // current message complete at previous char
+                log.debug("overshot reading Secsi message at element {}. Ready", i);
                 break;
             }
-            if (charI == char0 && (char0 & 0xFF) > 127) { // node address again, so the preceding was a simple node poll message
-                // not true, as on node 00 will follow a outputpacket of 00 10 etc
-                lastChar = charI;
+            log.debug("loadChars read {} (item {})", (nextByte & 0xFF), i);
+            // check if it is one of the 8 byte 0x .. 7x Outpackets series
+            if ((nextByte & 0xFF) >> 4 == i - 1) { // pattern for next element in range of increasing 0x .. 7x Outpackets
+                lastChars[i] = (nextByte & 0xFF);
+                log.debug("matched item {} in series: {}", i, (nextByte & 0xFF) >> 4);
+            } else if ((nextByte & 0xFF) < 0x2F) { // if it's not, store last item read as first element of next message
+                // nextChar could be node address again, in that case the preceding was perhaps a single node poll message
+                // but on node 00 could follow the first of the outputpacket series 00 10 etc.
+                nextNodeAddress = (nextByte & 0xFF); // store value in array
                 lastCharLoaded = true;
-                if (((lastChar & 0xFF) >= 0) && ((lastChar & 0xFF) < 128)) { // valid as node address
-//                    currentAddr = char0 & 0xFF;
-                }
+                i = i - 1; // current message complete at previous char
+                log.debug("overshot reading Secsi message at element {}. Next node = {}", i, nextNodeAddress);
                 break;
-            } else {
-                if ((lastChar & 0xFF) >> 1 == i - 1) { // next expected element in range of increasing 0x .. 7x Outpackets
-                    chars[i] = (charI & 0xFF); // store value in array
-                    log.debug("found item {} in series", i);
-                    lastCharLoaded = false;
-                } else { // it's not, so store last item read as first element of next message
-                    lastChar = charI;
-                    lastCharLoaded = true;
+            } else { // we lost the series, but previous item could perhaps have been the next new node address
+                if ((lastChars[i - 1] >= 0) && (lastChars[i - 1] < 0x2F)) { // valid as node address
+                    nextNodeAddress = lastChars[i - 1];
+                    lastCharLoaded = true; // store last byte read as possible next node address
+                    i = i - 1; // current message complete before previous char
+                    log.debug("overshot Secsi message at element {}. Next node = {}", i, nextNodeAddress);
+                    break;
+                } else { // unhandled message type
+                    lastCharLoaded = false; // discard last byte read as not making sense
+                    i = i - 1; // current message complete at previous char
+                    log.debug("unhandled Secsi message from element {}", i);
                     break;
                 }
             }
         }
+
         // copy bytes to Message
         SerialMessage msg = new SerialMessage(i);
-        msg.setElement(0, char0 & 0xFF); // address
-        for (int k = 1; k < i; k++) { // copy bytes
-            msg.setElement(k, chars[k] & 0xFF); // bytes read
+        msg.setElement(0, char0); // address
+        for (int k = 1; k < i; k++) { // copy remaining bytes if i > 1
+            msg.setElement(k, lastChars[k]);
         }
-        log.debug("message received by simulator, length={}", i);
+        log.debug("Secsi message received by simulator, length = {}", i);
         if (msg.getNumDataElements() == 1) {
-            nodesSet[char0 & 0xFF] = false; // first node poll
+            nodesSet[char0] = false; // reset first node poll
         }
         return msg;
     }
@@ -398,7 +416,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
      * <p>
-     * Copied from DCCppSimulatorAdapter
+     * Copied from DCCppSimulatorAdapter, byte[] from XNetSimAdapter
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         byte[] rcvBuffer = new byte[1];
