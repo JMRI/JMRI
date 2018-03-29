@@ -388,8 +388,15 @@
 
             <li>The <a href="#TurnoutCmdHandling">"Command Station
             Turnout Command Rejection and JMRI Turnout Command
-            Handling"</a> setting is described <a href=
+            Handling"</a> settings are described <a href=
             "#TurnoutCmdHandling">below</a>.</li>
+
+            <li>The "Transponding Present" allows you indicate whether
+                certain special hardware is present and configured.
+                If you have LocoNet-attached boards that configure 
+                in "ops mode", or if you have Digitrax Transponding
+                installed, set this to "Yes". Otherwise, set it to 
+                "No". </li>
 
             <li>The "Connection Uses" selection determines how
             "flow control" is implemented in software. This
