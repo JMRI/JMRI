@@ -6,10 +6,10 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
+import jmri.ThrottleListener;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.ThrottleListener;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
@@ -120,12 +120,22 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // listen for changes
         slot.addSlotListener(this);
 
-        // perform the null slot move
-        LocoNetMessage msg = new LocoNetMessage(4);
-        msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-        msg.setElement(1, slot.getSlot());
-        msg.setElement(2, slot.getSlot());
-        network.sendLocoNetMessage(msg);
+        // perform the null slot move for low numbered slots
+        if ( slot.getSlot() < 128 ) {
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+            msg.setElement(1, slot.getSlot());
+            msg.setElement(2, slot.getSlot());
+            network.sendLocoNetMessage(msg);
+        } else {
+            LocoNetMessage msg = new LocoNetMessage(6);
+            msg.setOpCode(0xd4);
+            msg.setElement(1, (slot.getSlot() / 128) | 0b00111000 );
+            msg.setElement(2, slot.getSlot() & 0b01111111);
+            msg.setElement(3, (slot.getSlot() / 128) & 0b00000111 );
+            msg.setElement(4, slot.getSlot() & 0b01111111);
+            network.sendLocoNetMessage(msg);
+        }
 
         // start periodically sending the speed, to keep this
         // attached
@@ -198,18 +208,426 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         return speed;
     }
 
+    // functions - note that we use the naming for DCC, though that's not the implication;
+    // see also DccThrottle interface
+    @Override
+    public void setF0(boolean f0) {
+        boolean old = this.f0;
+        this.f0 = f0;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup1();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f0) {
+            notifyPropertyChangeListener(Throttle.F0, old, this.f0);
+        }
+    }
+
+    @Override
+    public void setF1(boolean f1) {
+        boolean old = this.f1;
+        this.f1 = f1;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup1();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f1) {
+            notifyPropertyChangeListener(Throttle.F1, old, this.f1);
+        }
+    }
+
+    @Override
+    public void setF2(boolean f2) {
+        boolean old = this.f2;
+        this.f2 = f2;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup1();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f2) {
+            notifyPropertyChangeListener(Throttle.F2, old, this.f2);
+        }
+    }
+
+    @Override
+    public void setF3(boolean f3) {
+        boolean old = this.f3;
+        this.f3 = f3;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup1();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f3) {
+            notifyPropertyChangeListener(Throttle.F3, old, this.f3);
+        }
+    }
+
+    @Override
+    public void setF4(boolean f4) {
+        boolean old = this.f4;
+        this.f4 = f4;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup1();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f4) {
+            notifyPropertyChangeListener(Throttle.F4, old, this.f4);
+        }
+    }
+
+    @Override
+    public void setF5(boolean f5) {
+        boolean old = this.f5;
+        this.f5 = f5;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup2();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f5) {
+            notifyPropertyChangeListener(Throttle.F5, old, this.f5);
+        }
+    }
+
+    @Override
+    public void setF6(boolean f6) {
+        boolean old = this.f6;
+        this.f6 = f6;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup2();
+        } else {
+            sendExpFunctionGroup1();
+        }
+        if (old != this.f6) {
+            notifyPropertyChangeListener(Throttle.F6, old, this.f6);
+        }
+    }
+
+    @Override
+    public void setF7(boolean f7) {
+        boolean old = this.f7;
+        this.f7 = f7;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup2();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f7) {
+            notifyPropertyChangeListener(Throttle.F7, old, this.f7);
+        }
+    }
+
+    @Override
+    public void setF8(boolean f8) {
+        boolean old = this.f8;
+        this.f8 = f8;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup2();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f8) {
+            notifyPropertyChangeListener(Throttle.F8, old, this.f8);
+        }
+    }
+
+    @Override
+    public void setF9(boolean f9) {
+        boolean old = this.f9;
+        this.f9 = f9;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup3();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f9) {
+            notifyPropertyChangeListener(Throttle.F9, old, this.f9);
+        }
+    }
+
+    @Override
+    public void setF10(boolean f10) {
+        boolean old = this.f10;
+        this.f10 = f10;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup3();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f10) {
+            notifyPropertyChangeListener(Throttle.F10, old, this.f10);
+        }
+    }
+
+    @Override
+    public void setF11(boolean f11) {
+        boolean old = this.f11;
+        this.f11 = f11;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup3();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f11) {
+            notifyPropertyChangeListener(Throttle.F11, old, this.f11);
+        }
+    }
+
+    @Override
+    public void setF12(boolean f12) {
+        boolean old = this.f12;
+        this.f12 = f12;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup3();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f12) {
+            notifyPropertyChangeListener(Throttle.F12, old, this.f12);
+        }
+    }
+
+    @Override
+    public void setF13(boolean f13) {
+        boolean old = this.f13;
+        this.f13 = f13;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup2();
+        }
+        if (old != this.f13) {
+            notifyPropertyChangeListener(Throttle.F13, old, this.f13);
+        }
+    }
+
+    @Override
+    public void setF14(boolean f14) {
+        boolean old = this.f14;
+        this.f14 = f14;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f14) {
+            notifyPropertyChangeListener(Throttle.F14, old, this.f14);
+        }
+    }
+
+    @Override
+    public void setF15(boolean f15) {
+        boolean old = this.f15;
+        this.f15 = f15;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f15) {
+            notifyPropertyChangeListener(Throttle.F15, old, this.f15);
+        }
+    }
+
+    @Override
+    public void setF16(boolean f16) {
+        boolean old = this.f16;
+        this.f16 = f16;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f16) {
+            notifyPropertyChangeListener(Throttle.F16, old, this.f16);
+        }
+    }
+
+    @Override
+    public void setF17(boolean f17) {
+        boolean old = this.f17;
+        this.f17 = f17;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f17) {
+            notifyPropertyChangeListener(Throttle.F17, old, this.f17);
+        }
+    }
+
+    @Override
+    public void setF18(boolean f18) {
+        boolean old = this.f18;
+        this.f18 = f18;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f18) {
+            notifyPropertyChangeListener(Throttle.F18, old, this.f18);
+        }
+    }
+
+    @Override
+    public void setF19(boolean f19) {
+        boolean old = this.f19;
+        this.f19 = f19;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f19) {
+            notifyPropertyChangeListener(Throttle.F19, old, this.f19);
+        }
+    }
+
+    @Override
+    public void setF20(boolean f20) {
+        boolean old = this.f20;
+        this.f20 = f20;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup4();
+        } else {
+            sendExpFunctionGroup3();
+        }
+        if (old != this.f20) {
+            notifyPropertyChangeListener(Throttle.F20, old, this.f20);
+        }
+    }
+
+    @Override
+    public void setF21(boolean f21) {
+        boolean old = this.f21;
+        this.f21 = f21;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f21) {
+            notifyPropertyChangeListener(Throttle.F21, old, this.f21);
+        }
+    }
+
+    @Override
+    public void setF22(boolean f22) {
+        boolean old = this.f22;
+        this.f22 = f22;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f22) {
+            notifyPropertyChangeListener(Throttle.F22, old, this.f22);
+        }
+    }
+
+    @Override
+    public void setF23(boolean f23) {
+        boolean old = this.f23;
+        this.f23 = f23;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f23) {
+            notifyPropertyChangeListener(Throttle.F23, old, this.f23);
+        }
+    }
+
+    @Override
+    public void setF24(boolean f24) {
+        boolean old = this.f24;
+        this.f24 = f24;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f24) {
+            notifyPropertyChangeListener(Throttle.F24, old, this.f24);
+        }
+    }
+
+    @Override
+    public void setF25(boolean f25) {
+        boolean old = this.f25;
+        this.f25 = f25;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f25) {
+            notifyPropertyChangeListener(Throttle.F25, old, this.f25);
+        }
+    }
+
+    @Override
+    public void setF26(boolean f26) {
+        boolean old = this.f26;
+        this.f26 = f26;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f26) {
+            notifyPropertyChangeListener(Throttle.F26, old, this.f26);
+        }
+    }
+
+    @Override
+    public void setF27(boolean f27) {
+        boolean old = this.f27;
+        this.f27 = f27;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f27) {
+            notifyPropertyChangeListener(Throttle.F27, old, this.f27);
+        }
+    }
+
+    @Override
+    public void setF28(boolean f28) {
+        boolean old = this.f28;
+        this.f28 = f28;
+        if (slot.getSlot() < 128 ) {
+            sendFunctionGroup5();
+        } else {
+            sendExpFunctionGroup4();
+        }
+        if (old != this.f28) {
+            notifyPropertyChangeListener(Throttle.F28, old, this.f28);
+        }
+    }
+
     /**
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
      */
     @Override
     protected void sendFunctionGroup1() {
-        int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR)
-                | (getF0() ? LnConstants.DIRF_F0 : 0)
-                | (getF1() ? LnConstants.DIRF_F1 : 0)
-                | (getF2() ? LnConstants.DIRF_F2 : 0)
-                | (getF3() ? LnConstants.DIRF_F3 : 0)
-                | (getF4() ? LnConstants.DIRF_F4 : 0));
+        int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR) |
+                (getF0() ? LnConstants.DIRF_F0 : 0) |
+                (getF1() ? LnConstants.DIRF_F1 : 0) |
+                (getF2() ? LnConstants.DIRF_F2 : 0) |
+                (getF3() ? LnConstants.DIRF_F3 : 0) |
+                (getF4() ? LnConstants.DIRF_F4 : 0));
         log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
@@ -223,10 +641,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_snd = ((getF8() ? LnConstants.SND_F8 : 0)
-                | (getF7() ? LnConstants.SND_F7 : 0)
-                | (getF6() ? LnConstants.SND_F6 : 0)
-                | (getF5() ? LnConstants.SND_F5 : 0));
+        int new_snd = ((getF8() ? LnConstants.SND_F8 : 0) |
+                (getF7() ? LnConstants.SND_F7 : 0) |
+                (getF6() ? LnConstants.SND_F6 : 0) |
+                (getF5() ? LnConstants.SND_F5 : 0));
         log.debug("sendFunctionGroup2 sending {} to LocoNet slot {}", new_snd, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SND);
@@ -277,6 +695,89 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         log.debug("sendFunctionGroup5 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
+    }
+
+    /**
+     * Send the Expanded LocoNet message to set the state of locomotive direction and
+     * functions F0, F1, F2, F3, F4, F5, F6
+     */
+    protected void sendExpFunctionGroup1() {
+            int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0) 
+                | (getF0() ? LnConstants.DIRF_F0 : 0)
+                | (getF1() ? LnConstants.DIRF_F1 : 0)
+                | (getF2() ? LnConstants.DIRF_F2 : 0)
+                | (getF3() ? LnConstants.DIRF_F3 : 0)
+                | (getF4() ? LnConstants.DIRF_F4 : 0));
+            LocoNetMessage msg = new LocoNetMessage(6);
+            msg.setOpCode(0xd5);
+            msg.setElement(1, (slot.getSlot() / 128) | 0b00010000 );
+            msg.setElement(2,slot.getSlot() & 0b01111111);
+            msg.setElement(3,slot.id() & 0x7F);
+            msg.setElement(4, new_F0F6);
+            network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Send the Expanded LocoNet message to set the state of functions F7, F8, F8, F9, F10, F11, F12, F13
+     */
+    protected void sendExpFunctionGroup2() {
+            int new_F7F13 = ((getF7() ? 0b00000001 : 0) | (getF8() ? 0b00000010 : 0) 
+                    | (getF9()  ? 0b00000100 : 0)
+                    | (getF10() ? 0b00001000 : 0)
+                    | (getF11() ? 0b00010000 : 0)
+                    | (getF12() ? 0b00100000 : 0)
+                    | (getF13() ? 0b01000000 : 0));
+                LocoNetMessage msg = new LocoNetMessage(6);
+                msg.setOpCode(0xd5);
+                msg.setElement(1, (slot.getSlot() / 128) | 0b00011000 );
+                msg.setElement(2,slot.getSlot() & 0b01111111);
+                msg.setElement(3,slot.id() & 0x7F);
+                msg.setElement(4, new_F7F13);
+                network.sendLocoNetMessage(msg);
+    }
+
+    /**
+     * Sends expanded loconet message F14 thru F20
+     * Message.
+     */
+    protected void sendExpFunctionGroup3() {
+        int new_F14F20 = ((getF14() ? 0b00000001 : 0) | (getF15() ? 0b00000010 : 0) 
+                | (getF16()  ? 0b00000100 : 0)
+                | (getF17() ? 0b00001000 : 0)
+                | (getF18() ? 0b00010000 : 0)
+                | (getF19() ? 0b00100000 : 0)
+                | (getF20() ? 0b01000000 : 0));
+            LocoNetMessage msg = new LocoNetMessage(6);
+            msg.setOpCode(0xd5);
+            msg.setElement(1, (slot.getSlot() / 128) | 0b00100000 );
+            msg.setElement(2,slot.getSlot() & 0b01111111);
+            msg.setElement(3,slot.id() & 0x7F);
+            msg.setElement(4, new_F14F20);
+            network.sendLocoNetMessage(msg);
+    }        
+
+    /**
+     * Sends Expanded loconet message F21 thru F28 Message.
+     */
+    protected void sendExpFunctionGroup4() {
+        int new_F14F20 = ((getF21() ? 0b00000001 : 0) |
+                (getF22() ? 0b00000010 : 0) |
+                (getF23() ? 0b00000100 : 0) |
+                (getF24() ? 0b00001000 : 0) |
+                (getF25() ? 0b00010000 : 0) |
+                (getF26() ? 0b00100000 : 0) |
+                (getF27() ? 0b01000000 : 0));
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(0xd5);
+        if (!getF28()) {
+            msg.setElement(1, (slot.getSlot() / 128) | 0b00101000);
+        } else {
+            msg.setElement(1, (slot.getSlot() / 128) | 0b00110000);
+        }
+        msg.setElement(2, slot.getSlot() & 0b01111111);
+        msg.setElement(3, slot.id() & 0x7F);
+        msg.setElement(4, new_F14F20);
+        network.sendLocoNetMessage(msg);
     }
 
     /**
@@ -349,12 +850,22 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         if (sendLoconetMessage) {
             log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_LOCO_SPD);
-            msg.setElement(1, slot.getSlot());
-            log.debug("setSpeedSetting: float speed: " + speed + " LocoNet speed: " + new_spd);
-            msg.setElement(2, new_spd);
-            network.sendLocoNetMessage(msg);
+            if (slot.getSlot() < 128) {
+                LocoNetMessage msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                msg.setElement(1, slot.getSlot());
+                log.debug("setSpeedSetting: float speed: " + speed + " LocoNet speed: " + new_spd);
+                msg.setElement(2, new_spd);
+                network.sendLocoNetMessage(msg);
+            } else {
+                LocoNetMessage msg = new LocoNetMessage(6);
+                msg.setOpCode(0xd5);
+                msg.setElement(1, ((slot.getSlot() / 128) & 0x07) | (isForward ? 0x00 : 0x08));
+                msg.setElement(2, slot.getSlot() & 0x7f);
+                msg.setElement(3, (slot.id() & 0x7f));
+                msg.setElement(4, new_spd);
+                network.sendLocoNetMessage(msg);
+            }
         } else {
             log.debug("setSpeedSetting: not sending LocoNet message to slot {}, new speed == old speed", slot.getSlot());
         }
@@ -512,7 +1023,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         if(!isInitialized && slot.slotStatus() == LnConstants.LOCO_IN_USE){
            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleManager.getThrottleID());
-           network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
+           //if (slot.getSlot() < 128) {
+               network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
+           //}
            isInitialized = true;
         }
 
@@ -806,7 +1319,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                         tSlot,
                         LnConstants.LOCO_COMMON);
                 network.sendLocoNetMessage(
-                        tSlot.writeStatus(LnConstants.LOCO_COMMON));
+                        tSlot.releaseSlot());
             }
 
             jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {

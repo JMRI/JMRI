@@ -204,15 +204,15 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             log.warn("slot {} address {} is already in-use.",
                     s.getSlot(), s.locoAddr());
             // is the throttle ID the same as for this JMRI instance?  If not, do not accept the slot.
-            if ((s.id() != 0) && s.id() != throttleID) {
+            //if ((s.id() != 0) && s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
                 // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
                 //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
                 //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
-                slotForAddress.put(s.locoAddr(),s);
-                notifyStealRequest(s.locoAddr());
-                return;
-            }
+           //     slotForAddress.put(s.locoAddr(),s);
+           //     notifyStealRequest(s.locoAddr());
+           //     return;
+           // }
         }
         commitToAcquireThrottle(s);
     }

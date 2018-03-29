@@ -1631,7 +1631,8 @@ public class AutoActiveTrain implements ThrottleListener {
                             }
                         }
                         // test if need to change speed
-                        if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.001) {
+                        _currentSpeed = _throttle.getSpeedSetting(); //use latest value
+			if (java.lang.Math.abs(_currentSpeed - _targetSpeed) > 0.001) {
                             if (_currentRampRate == RAMP_NONE) {
                                 // set speed immediately
                                 _currentSpeed = _targetSpeed;
