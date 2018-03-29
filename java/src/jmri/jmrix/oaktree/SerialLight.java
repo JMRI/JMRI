@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light Object
- * <P>
+ * <p>
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -18,7 +18,7 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      */
     public SerialLight(String systemName, OakTreeSystemConnectionMemo memo) {
@@ -30,7 +30,7 @@ public class SerialLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      */
     public SerialLight(String systemName, String userName, OakTreeSystemConnectionMemo memo) {

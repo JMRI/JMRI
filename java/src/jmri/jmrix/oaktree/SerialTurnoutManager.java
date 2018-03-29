@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Oak Tree systems
- * <P>
+ * <p>
  * System names are "OTnnn", where nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006

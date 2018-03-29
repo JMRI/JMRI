@@ -44,7 +44,7 @@ public class SerialNode extends AbstractNode {
     public static final int IO48 = 1;
     public static final int O48 = 2;
 
-    private static final String[] boardNames = new String[]{"IO24", "IO48", "O48"};
+    private static final String[] boardNames = new String[]{"IO24", "IO48", "O48"}; // NOI18N
 
     public static String[] getBoardNames() {
         return boardNames.clone();
@@ -188,7 +188,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Check for valid node address
+     * Check for valid node address.
      */
     @Override
     protected boolean checkNodeAddress(int address) {
@@ -211,12 +211,12 @@ public class SerialNode extends AbstractNode {
     @Override
     public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) {
-            log.debug("createOutPacket for nodeType "
-                    + nodeType + " with "
-                    + outputByteChanged[0] + " " + outputArray[0] + ";"
-                    + outputByteChanged[1] + " " + outputArray[1] + ";"
-                    + outputByteChanged[2] + " " + outputArray[2] + ";"
-                    + outputByteChanged[3] + " " + outputArray[3] + ";");
+            log.debug("createOutPacket for nodeType {} with {} {};{} {};{} {};{} {}.",
+                    nodeType,
+                    outputByteChanged[0], outputArray[0],
+                    outputByteChanged[1], outputArray[1],
+                    outputByteChanged[2], outputArray[2],
+                    outputByteChanged[3], outputArray[3]);
         }
 
         // create a Serial message and add initial bytes

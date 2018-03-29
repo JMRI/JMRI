@@ -6,14 +6,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the system-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "OSnnnn", where nnnn is the sensor number without padding.
- * <P>
+ * <p>
  * Sensors are numbered from 1.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dave Duchamp, multi node extensions, 2004
-  */
+ */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
@@ -32,13 +32,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Number of sensors per address in the naming scheme.
-     * <P>
+     * <p>
      * The first node address uses sensors from 1 to SENSORSPERNODE-1, the
      * second from SENSORSPERNODE+1 to SENSORSPERNODE+(SENSORSPERNODE-1), etc.
-     * <P>
+     * <p>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
-     *
      */
     static final int SENSORSPERNODE = 1000;
 

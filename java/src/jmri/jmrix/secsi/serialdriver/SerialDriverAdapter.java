@@ -75,13 +75,14 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
+                log.info("{} port opened at {} baud with DTR:{} RTS:{} DSR:{} CTS:{} CD:{}",
+                        portName,
+                        activeSerialPort.getBaudRate(),
+                        activeSerialPort.isDTR(),
+                        activeSerialPort.isRTS(),
+                        activeSerialPort.isDSR(),
+                        activeSerialPort.isCTS(),
+                        activeSerialPort.isCD()
                 );
             }
             if (log.isDebugEnabled()) {

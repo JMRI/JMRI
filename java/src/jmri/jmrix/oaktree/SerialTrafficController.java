@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from Oak Tree serial messages.
+ * Convert Stream-based I/O to/from Oak Tree serial messages.
  * <p>
  * The "SerialInterface" side sends/receives message objects.
  * <p>
@@ -58,7 +58,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node
+     * Set up for initialization of a Serial node
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -188,7 +188,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * static function returning the SerialTrafficController instance to use.
+     * Return the SerialTrafficController instance to use.
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
@@ -300,7 +300,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Determine how much many bytes the entire message will take, including
-     * space for header and trailer
+     * space for header and trailer.
      *
      * @param m The message to be sent
      * @return Number of bytes

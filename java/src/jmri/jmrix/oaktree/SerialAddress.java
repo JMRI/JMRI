@@ -45,7 +45,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the Serial Node.
+     * Static method to parse a system name and return the Serial Node.
      *
      * @return 'NULL' if illegal systemName format or if the node is not found
      */
@@ -105,7 +105,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to parse a system name and return the bit number.
+     * Static method to parse a system name and return the bit number.
      * Note: Bits are numbered from 1.
      *
      * @return 0 if an error is found
@@ -154,7 +154,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name format.
+     * Static method to validate system name format.
      *
      * @param type Letter indicating device type expected
      * @return 'true' if system name has a valid format, else returns 'false'
@@ -227,7 +227,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to validate system name for configuration.
+     * Static method to validate system name for configuration.
      *
      * @return 'true' if system name has a valid meaning in current configuration, else
      * return 'false'
@@ -266,7 +266,7 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to convert one format system name for the alternate
+     * Static method to convert one format system name for the alternate
      * format.
      *
      * @return an empty string if the supplied system name does not have a valid
@@ -311,8 +311,8 @@ public class SerialAddress {
     }
 
     /**
-     * Public static method to normalize a system name.
-     * <P>
+     * Static method to normalize a system name.
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
      *
