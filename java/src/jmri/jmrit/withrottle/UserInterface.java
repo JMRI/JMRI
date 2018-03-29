@@ -83,6 +83,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         port = facelessServer.getPort();
 
+        //update the server with the currently selected roster group
+        facelessServer.setSelectedRosterGroup(rosterGroupSelector.getSelectedItem());
+
+        //show all IPv4 addresses in window, for use by manual connections
         addIPAddressesToUI();
 
         // add ourselves as device listeners for any existing devices
@@ -119,7 +123,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
+        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelListening"), new Object[]{DeviceServer.getWiTVersion()}));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;

@@ -5,12 +5,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    DestinationPointsTest.class,    // Keep first
     BundleTest.class,
     AddEntryExitPairFrameTest.class,
     AddEntryExitPairActionTest.class,
     AddEntryExitPairPanelTest.class,
     EntryExitPairsTest.class,
-    DestinationPointsTest.class,
     ManuallySetRouteTest.class,
     PointDetailsTest.class,
     SourceTest.class,
