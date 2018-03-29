@@ -266,12 +266,12 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         SerialReply reply = new SerialReply();  // reply length is determined by highest byte added
 //        if (nodesSet[nodeaddr] != true) { // only Polls expect a reply from the node
          switch (msg.getNumDataElements()) {
-             case 1: // poll message
-                 log.debug("Poll message detected by simultor");
+             case 1: // poll message, but reading msg received often fails (see case 9)
+                 log.debug("Poll message detected by simulator");
                  reply.setElement(0, nodeaddr); // node address from msg element(0)
-                 reply.setElement(1, 48); // poll reply contains just 2 elements, second is 48 (see SerialMessage#isPoll())
+                 reply.setElement(1, 0x30); // poll reply contains just 2 elements, second is 0x48 (see SerialMessage#isPoll())
                  nodesSet[nodeaddr] = true; // mark node as inited
-                 log.debug("Poll Reply generated {}", reply.toString());
+                 log.debug("Poll reply generated {}", reply.toString());
                  return reply;
              case 5: // standard secsi sensor state request message
                  if (((SecsiSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr).getSensorsActive()) { // input (sensors) status reply
@@ -282,10 +282,15 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                      }
                      log.debug("Status Reply generated {}", reply.toString());
                  }
-                 return null; //reply;
+                 return reply;
              case 9:
+                 // use this message to confirm node poll?
+                 //reply.setElement(0, nodeaddr); // node address from msg element(0)
+                 //reply.setElement(1, 48); // poll reply contains just 2 elements, second is 0x48 (see SerialMessage#isPoll())
+                 log.debug("Outpacket received"); // Poll Reply generated: {}", reply.toString());
+                 return null; // reply;
              default:
-                 log.debug("Message ignored");
+                 log.debug("Message (other) ignored");
                  return null;
          }
         // Poll will give an error:
@@ -366,7 +371,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 log.debug("overshot reading Secsi message at element {}. Ready", i);
                 break;
             }
-            log.debug("loadChars read {} (item {})", (nextByte & 0xFF), i);
+            log.debug("loadChars read {} (item {})", Integer.toHexString(nextByte & 0xFF), i);
             // check if it is one of the 8 byte 0x .. 7x Outpackets series
             if ((nextByte & 0xFF) >> 4 == i - 1) { // pattern for next element in range of increasing 0x .. 7x Outpackets
                 lastChars[i] = (nextByte & 0xFF);
@@ -376,19 +381,19 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // but on node 00 could follow the first of the outputpacket series 00 10 etc.
                 nextNodeAddress = (nextByte & 0xFF); // store value in array
                 lastCharLoaded = true;
-                i = i - 1; // current message complete at previous char
+                i = Math.max(1, i - 1); // current message complete at previous char
                 log.debug("overshot reading Secsi message at element {}. Next node = {}", i, nextNodeAddress);
                 break;
-            } else { // we lost the series, but previous item could perhaps have been the next new node address
+            } else { // we lost this series, but previous item could have been the next new node address
                 if ((lastChars[i - 1] >= 0) && (lastChars[i - 1] < 0x2F)) { // valid as node address
                     nextNodeAddress = lastChars[i - 1];
                     lastCharLoaded = true; // store last byte read as possible next node address
-                    i = i - 1; // current message complete before previous char
+                    i = Math.max(1, i - 1); // current message complete before previous char
                     log.debug("overshot Secsi message at element {}. Next node = {}", i, nextNodeAddress);
                     break;
                 } else { // unhandled message type
                     lastCharLoaded = false; // discard last byte read as not making sense
-                    i = i - 1; // current message complete at previous char
+                    i = Math.max(1, i - 1); // current message complete at previous char
                     log.debug("unhandled Secsi message from element {}", i);
                     break;
                 }
@@ -418,7 +423,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * <p>
      * Copied from DCCppSimulatorAdapter, byte[] from XNetSimAdapter
      */
-    protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
+    private byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         byte[] rcvBuffer = new byte[1];
         while (true) { // loop will repeat until character found
             int nchars;
