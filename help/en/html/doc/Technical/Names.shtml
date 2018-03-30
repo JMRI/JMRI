@@ -66,35 +66,21 @@
 
       <ul>
         <li>Aspects for signals</li>
-
         <li>Blocks (track segments)</li>
-
         <li>Conditionals (for logiX, although these are not entirely named beans)</li>
-
         <li>signal mast Groups</li>
-        
         <li>signal Heads</li>
-        
         <li>signal masts (F, for some reason)</li>
-
         <li>Lights (a type of output)</li>
-        
-        <li>eNtry/exit destination points</li>
-
+        <li>eNtry/exit destiNation points</li>
         <li>Memories</li>
-
         <li>Outputs</li>
-
         <li>Power districts and subdistricts</li>
-
-        <li>Routes</li>
-
+        <li>Reporters</li>
+        <li>Routes (shared for historical reasons with Reporters)</li>
         <li>input Sensors</li>
-
         <li>Turnouts</li>
-
         <li>logiX</li>
-        
         <li>Sections (Y, for some reason)</li>
         
       </ul>Some of these are associated with a specific hardware
@@ -339,6 +325,9 @@
         complicated information from the layout, e.g. locomotive
         identification from some transponding hardware, RFID tag
         numbers, etc.</li>
+
+        <li>R Routes - a tool for setting multiple Turnout states at once.
+        The "R" letter is shared with Reporters for historical reasons.</li>
 
         <li>S Sensors - general purpose input sensors that can
         generally be either ACTIVE or INACTIVE. This is most
