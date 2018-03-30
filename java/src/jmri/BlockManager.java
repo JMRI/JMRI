@@ -101,16 +101,16 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
                 return null;
             }
         }
-        r = getBySystemName(systemName);
+        String sName = systemName.toUpperCase();
+        r = getBySystemName(sName);
         if (r != null) {
             return null;
         }
         // Block does not exist, create a new Block
-        String sName = systemName.toUpperCase();
         r = new Block(sName, userName);
         // save in the maps
         register(r);
-        /*The following keeps trace of the last created auto system name.
+        /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IB:AUTO:")) {
@@ -228,13 +228,15 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      * {@inheritDoc}
      *
      * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     * The IB prefix is added if necessary.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        if (inputName.length() < 3 || !inputName.startsWith("IB")) {
+            inputName = "IB" + inputName;
+        }
         return inputName.toUpperCase().trim();
     }
 
