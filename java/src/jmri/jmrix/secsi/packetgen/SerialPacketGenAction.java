@@ -13,20 +13,20 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
   */
 public class SerialPacketGenAction extends AbstractAction {
 
-    private SecsiSystemConnectionMemo memo = null;
+    private SecsiSystemConnectionMemo _memo = null;
 
-    public SerialPacketGenAction(String s, SecsiSystemConnectionMemo _memo) {
+    public SerialPacketGenAction(String s, SecsiSystemConnectionMemo memo) {
         super(s);
-        memo = _memo;
+        _memo = memo;
     }
 
-    public SerialPacketGenAction(SecsiSystemConnectionMemo _memo) {
-        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuSystem")), _memo);
+    public SerialPacketGenAction(SecsiSystemConnectionMemo memo) {
+        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuSystem")), memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SerialPacketGenFrame f = new SerialPacketGenFrame(memo);
+        SerialPacketGenFrame f = new SerialPacketGenFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

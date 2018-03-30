@@ -196,13 +196,14 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Deprecated
     static public SerialTrafficController instance() {
-        return self;
+        log.warn("deprecated instance() call for OakTree SerialTrafficController");
+        return null;
     }
 
     static volatile protected SerialTrafficController self = null;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
+            justification = "temporary until multi-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
@@ -230,7 +231,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m associated systemConnectionMemo object
      */
     public void setSystemConnectionMemo(OakTreeSystemConnectionMemo m) {
-        log.debug("Secsi SerialTrafficController set memo from {} to {}", memo.getUserName(), m.getUserName());
+        log.debug("OakTree SerialTrafficController set memo to {}", m.getUserName());
         memo = m;
     }
 

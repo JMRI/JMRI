@@ -99,7 +99,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
+            log.error("Unexpected exception while opening port {}: ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -116,12 +116,14 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
         // connect to the traffic controller
+        log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
         ((OakTreeSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().connectPort(this);
+        // do the common manager config
         ((OakTreeSystemConnectionMemo) getSystemConnectionMemo()).configureManagers();
 
     }

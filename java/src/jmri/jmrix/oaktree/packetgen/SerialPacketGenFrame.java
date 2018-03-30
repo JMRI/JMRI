@@ -12,7 +12,7 @@ import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
- * Frame for user input of serial messages
+ * Frame for user input of serial messages.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
@@ -23,7 +23,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
+    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll"); // TODO I18N
     javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
     private OakTreeSystemConnectionMemo _memo = null;
@@ -130,4 +130,5 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     @Override
     public void reply(SerialReply r) {
     }
+
 }
