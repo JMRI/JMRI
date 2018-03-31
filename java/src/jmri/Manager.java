@@ -110,6 +110,12 @@ public interface Manager<E extends NamedBean> {
     public void dispose();
 
     /**
+     * Get the count of managed objects
+     */
+    @CheckReturnValue
+    public int getObjectCount();
+    
+    /**
      * This provides an array of system names.
      * <p>
      * Note: this is ordered by the underlying NamedBeans, not
