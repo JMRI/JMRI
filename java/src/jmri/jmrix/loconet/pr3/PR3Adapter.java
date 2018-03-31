@@ -98,8 +98,9 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         } else {
             // MS100 modes - connecting to a separate command station
+            // get transponding option
+            setTranspondingAvailable(getOptionState("TranspondingPresent"));
             // connect to a packetizing traffic controller
-
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
 
