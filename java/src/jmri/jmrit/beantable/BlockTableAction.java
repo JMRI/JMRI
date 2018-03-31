@@ -981,13 +981,15 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 return;
             }
         }
-        String user = userName.getText().trim();
-        if (user.equals("")) {
+        String user = userName.getText();
+        user = NamedBean.normalizeUserName(user);
+        if (user == null || user.length() == 0) {
             user = null;
         }
-        String sName = sysName.getText().trim();
+        String sName = sysName.getText();
+        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
-        if (sName.length() < 1 && !_autoSystemName.isSelected()) {
+        if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch an plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
             sysName.setBackground(Color.red);
@@ -1003,13 +1005,13 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         for (int x = 0; x < NumberOfBlocks; x++) {
             if (x != 0) {
                 if (user != null) {
-                    b = new StringBuilder(userName.getText().trim());
+                    b = new StringBuilder(user);
                     b.append(":");
                     b.append(Integer.toString(x));
                     user = b.toString();
                 }
                 if (!_autoSystemName.isSelected()) {
-                    b = new StringBuilder(sysName.getText().trim());
+                    b = new StringBuilder(sName);
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
@@ -1025,8 +1027,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         throw new java.lang.IllegalArgumentException();
                     }
                 } else {
-                    // Create a valid name.  createNewBlock will check for system name duplicates.
-                    sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
                     blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
                     if (blk == null) {
                         xName = sName;

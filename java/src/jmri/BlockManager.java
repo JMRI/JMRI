@@ -101,13 +101,12 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
                 return null;
             }
         }
-        String sName = systemName.toUpperCase();
-        r = getBySystemName(sName);
+        r = getBySystemName(systemName);
         if (r != null) {
             return null;
         }
         // Block does not exist, create a new Block
-        r = new Block(sName, userName);
+        r = new Block(systemName, userName);
         // save in the maps
         register(r);
         /*The following keeps track of the last created auto system name.
