@@ -1,9 +1,5 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPacketizerStrict extends LnPacketizer {
 
-    // Defined this way to reduce new object creation
-    private byte[] rcvBuffer = new byte[1];
     // waiting for this echo
     private LocoNetMessage waitForMsg;
     // waiting on LACK
@@ -238,7 +232,6 @@ public class LnPacketizerStrict extends LnPacketizer {
          */
         @Override
         public void run() {
-            int immCount = 0;
             int waitCount;
             while (true) { // loop permanently
                 // any input?
@@ -366,6 +359,7 @@ public class LnPacketizerStrict extends LnPacketizer {
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
