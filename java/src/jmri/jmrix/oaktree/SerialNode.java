@@ -149,7 +149,7 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Public to reset state of needSend flag. Can only reset if there are no
+     * Reset state of needSend flag. Can only reset if there are no
      * bytes that need to be sent
      */
     @Override
@@ -263,8 +263,8 @@ public class SerialNode extends AbstractNode {
                 }
                 int loc = i / 8;
                 int bit = i % 8;
-                boolean value = (((l.getElement(loc + 2) >> bit) & 0x01) == 1) ^ sensorArray[i].getInverted();  // byte 2 is first of data
-                log.debug("markChanges loc={} bit={} is []", loc, bit, value);
+                boolean value = (((l.getElement(loc + 2) >> bit) & 0x01) == 1) ^ sensorArray[i].getInverted(); // byte 2 is first of data
+                log.debug("markChanges loc={} bit={} is {}", loc, bit, value);
                 if (value) {
                     // bit set, considered ACTIVE
                     if (((sensorTempSetting[i] == Sensor.ACTIVE)
@@ -332,9 +332,7 @@ public class SerialNode extends AbstractNode {
         }
 
         // see how many polls missed
-        if (log.isDebugEnabled()) {
-            log.warn("Timeout to poll for addr={}: consecutive timeouts: {}", getNodeAddress(), timeout);
-        }
+        log.warn("Timeout to poll for addr={}: consecutive timeouts: {}", getNodeAddress(), timeout);
 
         if (timeout > 5) { // enough, reinit
             // reset timeout count to zero to give polls another try

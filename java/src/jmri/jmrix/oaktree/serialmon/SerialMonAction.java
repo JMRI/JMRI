@@ -27,7 +27,6 @@ public class SerialMonAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
-        log.debug("serialMonAction {}", (_memo == null ? "null memo" : " OK"));
         SerialMonFrame f = new SerialMonFrame(_memo);
         try {
             f.initComponents();

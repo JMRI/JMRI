@@ -246,9 +246,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return (msg);
     }
 
-    // operational instance variable (not preserved between runs)
-    protected boolean[] nodesSet = new boolean[128]; // node init received and replied?
-
     /**
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
@@ -264,33 +261,20 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         int nodeaddr = msg.getAddr();
         log.debug("Generate Reply to message for node {} (string = {})", nodeaddr, msg.toString());
         SerialReply reply = new SerialReply();  // reply length is determined by highest byte added
-//        if (nodesSet[nodeaddr] != true) { // only Polls expect a reply from the node
-         switch (msg.getNumDataElements()) {
-             case 1: // poll message, but reading msg received often fails (see case 9)
-                 log.debug("Poll message detected by simulator");
-                 reply.setElement(0, nodeaddr); // node address from msg element(0)
-                 reply.setElement(1, 0x30); // poll reply contains just 2 elements, second is 0x48 (see SerialMessage#isPoll())
-                 nodesSet[nodeaddr] = true; // mark node as inited
-                 log.debug("Poll reply generated {}", reply.toString());
-                 return reply;
-             case 5: // standard OakTree sensor state request message
+         switch (msg.getElement(1)) {
+             case 48: // OakTree poll message
+                 reply.setElement(0, nodeaddr);
                  if (((OakTreeSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr).getSensorsActive()) { // input (sensors) status reply
-                     int payload = 0b0101; // dummy stand in for sensor status report; should we fetch known state from jmri node?
+                     int payload = 0b0001; // dummy stand in for sensor status report; should we fetch known state from jmri node?
                      for (int j = 0; j < 3; j++) {
                          payload |= j << 4;
-                         reply.setElement(j + 1, payload);
+                         reply.setElement(j + 1, payload); // there could be > 5 elements TODO see SerialNode#markChanges
                      }
-                     log.debug("Status Reply generated {}", reply.toString());
                  }
+                 log.debug("Status Reply generated {}", reply.toString());
                  return reply;
-             case 9:
-                 // use this message to confirm node poll?
-                 //reply.setElement(0, nodeaddr); // node address from msg element(0)
-                 //reply.setElement(1, 48); // poll reply contains just 2 elements, second is 0x48 (see SerialMessage#isPoll())
-                 log.debug("Outpacket received"); // Poll Reply generated: {}", reply.toString());
-                 return null; // reply;
              default:
-                 log.debug("Message (other) ignored");
+                 log.debug("Message ignored");
                  return null;
          }
     }
@@ -318,11 +302,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         }
     }
 
-    private int[] lastChars = new int[9]; // temporary store of bytes received, excluding node address
-
     /**
-     * Get characters from the input source. No opcode, so must read per byte.
-     * Length will be either 1, 5 or 9 bytes.
+     * Get characters from the input source.
+     * Length is always 5 bytes.
      * <p>
      * Only used in the Receive thread.
      *
@@ -333,46 +315,37 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         int i = 1;
         int char0;
         byte nextByte;
+        SerialMessage msg = new SerialMessage(5);
 
-        // get 1st byte, see if ending too soon
+        // get 1st byte
         try {
             byte byte0 = readByteProtected(inpipe);
             char0 = (byte0 & 0xFF);
             log.debug("loadChars read {}", char0);
+            msg.setElement(0, char0); // address
         } catch (java.io.IOException e) {
             log.debug("loadChars aborted while reading char 0");
             return null;
         }
-        if (char0 > 0x2F) {
+        if (char0 > 0xFF) {
             // skip as not a node address
             log.debug("bit not valid as node address");
         }
 
         // read in remaining packets
-        for (i = 1; i < 4; i++) { // reading next max 8 bytes
+        for (i = 1; i < 4; i++) { // read next 4 bytes
             log.debug("reading rest of message in simulator, element {}", i);
             try {
                 nextByte = readByteProtected(inpipe);
+                msg.setElement(i, nextByte);
             } catch (java.io.IOException e) {
                 log.debug("loadChars aborted after {} chars", i);
-                log.debug("overshot reading OakTree message at element {}. Ready", i);
                 break;
             }
             log.debug("loadChars read {} (item {})", Integer.toHexString(nextByte & 0xFF), i);
-            // check contents?
-            log.debug("unhandled OakTree message from element {}", i);
         }
 
-        // copy bytes to Message
-        SerialMessage msg = new SerialMessage(i);
-        msg.setElement(0, char0); // address
-        for (int k = 1; k < i; k++) { // copy remaining bytes if i > 1
-            msg.setElement(k, lastChars[k]);
-        }
-        log.debug("OakTree message received by simulator, length = {}", i);
-        if (msg.getNumDataElements() == 1) {
-            nodesSet[char0] = false; // reset first node poll
-        }
+        log.debug("OakTree message received by simulator");
         return msg;
     }
 

@@ -127,7 +127,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
             if (m != null) { // Oak Tree boards don't need this yet
-                log.debug("send init message: " + m);
+                log.debug("send init message: {}", m.toString());
                 m.setTimeout(2000);  // wait for init to finish (milliseconds)
                 return m;
             }   // else fall through to continue
