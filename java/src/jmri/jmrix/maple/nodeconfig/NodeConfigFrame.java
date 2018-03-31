@@ -14,7 +14,7 @@ import jmri.jmrix.maple.SerialNode;
 
 /**
  * Frame for user configuration of Maple panel nodes.
- *
+ * <p>
  * Note: Currently anything to do with pulse width for pulsing a turnout is
  * commented out. This code from the C/MRI version was not deleted in case it is
  * needed in the future.
@@ -53,7 +53,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected int nodeAddress = 0;          // Node address
     protected int pollTimeoutTime = 2000;   // reply timeout time
     protected int sendDelay = 200;   // delay time after send commands
-// protected int pulseWidth = 500;   // pulse width for turnout control (milliseconds)
+    // protected int pulseWidth = 500;   // pulse width for turnout control (milliseconds)
     protected int inputBits = 40;   // maximum number of input bits - all nodes
     protected int outputBits = 40;   // maximum number of output bits - all nodes
 
@@ -248,7 +248,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle add button
+     * Handle Add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -295,7 +295,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle edit button
+     * Handle Edit button
      */
     public void editButtonActionPerformed() {
         // Find Serial Node address
@@ -316,7 +316,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
         nodeAddrField.setVisible(false);
         nodeAddrStatic.setVisible(true);
-//  // set up pulse width
+        // set up pulse width
 //        pulseWidth = curNode.getPulseWidth();
 //        pulseWidthField.setText(Integer.toString(pulseWidth));
         // set up number of input and output bits
@@ -344,7 +344,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle delete button
+     * Handle Delete button
      */
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
@@ -382,7 +382,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle done button
+     * Handle Done button
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
@@ -411,7 +411,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle update button
+     * Handle Update button
      */
     public void updateButtonActionPerformed() {
         // get node information from window
@@ -421,7 +421,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (!readSendDelay()) {
             return;
         }
-//  if ( !readPulseWidth() ) return;
+        //  if ( !readPulseWidth() ) return;
         if (!readNumInputBits()) {
             return;
         }
@@ -454,7 +454,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle cancel button
+     * Handle Cancel button
      */
     public void cancelButtonActionPerformed() {
         // Reset 
@@ -477,7 +477,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to close the window when the close box is clicked
+     * Close the window when the close box is clicked.
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -486,7 +486,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to set node parameters The node must exist, and be in 'curNode'
+     * Set node parameters. The node must exist, and be in 'curNode'
      * Also, the node type must be set and in 'nodeType'
      */
     void setNodeParameters() {
@@ -499,7 +499,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to reset the notes error after error display
+     * Reset the notes error text after error display.
      */
     private void resetNotes() {
         if (errorInStatus1) {
@@ -514,7 +514,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Reset the second line of Notes area
+     * Reset the second line of Notes area.
      */
     private void resetNotes2() {
         if (errorInStatus2) {
@@ -528,8 +528,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address and check for legal range If successful, a node address
-     * in the range 1-99 is returned. If not successful, -1 is returned and an
+     * Read node address and check for legal range.
+     *
+     * @return a node address in the range 1-99 if successful. If not, -1 is returned and an
      * appropriate error message is placed in statusText1.
      */
     private int readNodeAddress() {
@@ -554,9 +555,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read receive poll reply timeout time from window Returns 'true' if
-     * successful, 'false' if an error was detected. If an error is detected, a
-     * suitable error message is placed in the Notes area
+     * Read receive poll reply timeout time from window.
+     * If an error is detected, a suitable error message is placed
+     * in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected.
      */
     protected boolean readPollTimeout() {
         // get the timeout time
@@ -591,9 +594,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read send delay time from window Returns 'true' if successful, 'false' if
-     * an error was detected. If an error is detected, a suitable error message
-     * is placed in the Notes area
+     * Read send delay time from window.
+     * If an error is detected, a suitable error message
+     * is placed in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected.
      */
     protected boolean readSendDelay() {
         // get the timeout time
@@ -628,9 +633,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read number of input bits from window Returns 'true' if successful,
-     * 'false' if an error was detected. If an error is detected, a suitable
-     * error message is placed in the Notes area
+     * Read number of input bits from window.
+     * If an error is detected, a suitable error message is
+     * placed in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected.
      */
     protected boolean readNumInputBits() {
         // get the input bits
@@ -665,9 +672,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read number of output bits from window Returns 'true' if successful,
-     * 'false' if an error was detected. If an error is detected, a suitable
-     * error message is placed in the Notes area
+     * Read number of output bits from window.
+     * If an error is detected, a suitable error message is placed
+     * in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected.
      */
     protected boolean readNumOutputBits() {
         // get the output bits
@@ -702,10 +711,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
 //    /**
-//     * Read pulse width from window
-//     *    Returns 'true' if successful, 'false' if an error was detected.
-//     *    If an error is detected, a suitable error message is placed in the
-//     *        Notes area
+//     * Read pulse width from window.
+//     * If an error is detected, a suitable error message is placed in the
+//     * Notes area.
+//     *
+//     * @return 'true' if successful, 'false' if an error was detected.
 //     */
 //    protected boolean readPulseWidth() {
 //        // get the pulse width
@@ -743,6 +753,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //        // successful
 //        return true;
 //    }
+
     // private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

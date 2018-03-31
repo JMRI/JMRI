@@ -211,7 +211,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.12.3 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @deprecated JMRI Since 4.11.3 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     static public SerialDriverAdapter instance() {
         return null;
