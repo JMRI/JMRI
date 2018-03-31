@@ -53,11 +53,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     public SimulatorAdapter() {
         super(new MapleSystemConnectionMemo("M", Bundle.getMessage("MapleSimulatorName"))); // pass customized user name
-        option1Name = "InitPreference"; // NOI18N
-        // init pref setting, the default is No init
-        options.put(option1Name, new Option(Bundle.getMessage("AutoInitLabel"),
-                new String[]{Bundle.getMessage("ButtonNoInit"),
-                Bundle.getMessage("ButtonAll"), Bundle.getMessage("Button4Each")}));
         setManufacturer(jmri.jmrix.maple.SerialConnectionTypeList.MAPLE);
     }
 
@@ -117,20 +112,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     @Override
     public void configure() {
-        // connect to the traffic controller
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        SerialTrafficController control = new SerialTrafficController(getSystemConnectionMemo());
-        //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
-        control.connectPort(this);
-        getSystemConnectionMemo().setTrafficController(control);
+        // connect to the traffic controller
+        ((MapleSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().connectPort(this);
         // do the common manager config
-        getSystemConnectionMemo().configureManagers();
-
-        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
-            autoInit = 1; // auto-init all bits
-        } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
-            autoInit = 2; // first 4 items
-        }   // default = none, also after locale change just to be safe
+        ((MapleSystemConnectionMemo) getSystemConnectionMemo()).configureManagers();
 
         // start the simulator
         sourceThread = new Thread(this);
@@ -274,10 +260,10 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
-        log.debug("Generate Reply to message from node {} (string = {})", msg.getAddr(), msg.toString());
+        log.debug("Generate Reply to message from node {} (string = {})", msg.getAddress(), msg.toString());
 
         SerialReply reply = new SerialReply(); // reply length is determined by highest byte added
-        int nodeaddr = msg.getAddr();          // node addres from element(0)
+        int nodeaddr = msg.getAddress();       // node addres from element(0)
         int b1 = msg.getElement(0);            // raw hex value from element(0)
         int b2 = msg.getElement(1);            // bit + state
         int b3 = msg.getElement(2);            // element(2), must repeat node address

@@ -43,8 +43,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             Element n = new Element("node");
             n.setAttribute("name", "" + node.getNodeAddress());
             e.addContent(n);
-            // add parameters to the node as needed
-            n.addContent(makeParameter("nodetype", "" + node.getNodeType()));
 
             // look for the next node
             node = (SerialNode) ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(index);
