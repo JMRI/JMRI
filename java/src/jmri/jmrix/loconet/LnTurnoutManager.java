@@ -69,7 +69,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         super.dispose();
     }
 
-    protected boolean _binaryOutput = false;
+    protected boolean _binaryOutput = true;
     protected boolean _useOffSwReqAsConfirmation = false;
 
     public void setUhlenbrockMonitoring() {
