@@ -18,15 +18,14 @@ public class OakTreeMenu extends JMenu {
     }
 
     public OakTreeMenu(OakTreeSystemConnectionMemo memo) {
-
         super();
+        _memo = memo;
 
         setText(Bundle.getMessage("MenuOakTree"));
 
         add(new jmri.jmrix.oaktree.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"), _memo));
         add(new jmri.jmrix.oaktree.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), _memo));
         add(new jmri.jmrix.oaktree.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), _memo));
-
     }
 
 }

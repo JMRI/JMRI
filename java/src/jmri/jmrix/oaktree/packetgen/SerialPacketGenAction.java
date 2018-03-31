@@ -16,12 +16,13 @@ public class SerialPacketGenAction extends AbstractAction {
 
     private OakTreeSystemConnectionMemo _memo = null;
 
-    public SerialPacketGenAction(String s,OakTreeSystemConnectionMemo memo) {
+    public SerialPacketGenAction(String s, OakTreeSystemConnectionMemo memo) {
         super(s);
+        memo = _memo;
     }
 
     public SerialPacketGenAction(OakTreeSystemConnectionMemo memo) {
-        this("Send Oak Tree message",memo);
+        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuOakTree")), memo);
     }
 
     @Override
@@ -30,10 +31,11 @@ public class SerialPacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
-}
 
+    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+
+}

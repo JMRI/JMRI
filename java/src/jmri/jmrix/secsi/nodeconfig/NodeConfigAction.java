@@ -13,20 +13,20 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
  */
 public class NodeConfigAction extends AbstractAction {
 
-    private SecsiSystemConnectionMemo memo;
+    private SecsiSystemConnectionMemo _memo;
 
-    public NodeConfigAction(String s, SecsiSystemConnectionMemo _memo) {
+    public NodeConfigAction(String s, SecsiSystemConnectionMemo memo) {
         super(s);
-        memo = _memo;
+        _memo = memo;
     }
 
-    public NodeConfigAction(SecsiSystemConnectionMemo _memo) {
-        this(Bundle.getMessage("ConfigNodesTitle"), _memo);
+    public NodeConfigAction(SecsiSystemConnectionMemo memo) {
+        this(Bundle.getMessage("ConfigNodesTitle"), memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame(memo);
+        NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

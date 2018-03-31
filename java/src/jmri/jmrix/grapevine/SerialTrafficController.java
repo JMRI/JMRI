@@ -271,7 +271,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m associated systemConnectionMemo object
      */
     public void setSystemConnectionMemo(GrapevineSystemConnectionMemo m) {
-        log.debug("GrapevineTrafficController set memo from {} to {}", mMemo.getUserName(), m.getUserName());
+        log.debug("GrapevineTrafficController set memo to {}", m.getUserName());
         mMemo = m;
     }
 

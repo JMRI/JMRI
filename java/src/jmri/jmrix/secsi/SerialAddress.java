@@ -60,7 +60,7 @@ public class SerialAddress {
         }
         String s = "";
         boolean noB = true;
-        for (int i = 2; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
                 s = systemName.substring(prefix.length() + 1, i);
                 noB = false;

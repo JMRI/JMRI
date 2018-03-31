@@ -33,7 +33,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the String as the exact sequence to send,
+     * Interpret the String as the exact sequence to send,
      * byte-for-byte.
      */
     public SerialMessage(String m, int l) {
@@ -43,7 +43,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the byte array as a sequence of characters to send.
+     * Interpret the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
      */
