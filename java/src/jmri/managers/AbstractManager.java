@@ -187,7 +187,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // notifications
         firePropertyChange("length", null, _beans.size());
         int position = getPosition(s);
-        fireDataListenersAdded(position, position);
+        fireDataListenersAdded(position, position, s);
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
     }
@@ -264,7 +264,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         
         // notifications
         firePropertyChange("length", null, _beans.size());
-        fireDataListenersRemoved(position, position);
+        fireDataListenersRemoved(position, position, s);
     }
 
     /**
@@ -525,7 +525,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
-            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount());
+            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount(), null);
             for (ManagerDataListener listener : listeners) {
                 listener.contentsChanged(e);
             }          
@@ -533,14 +533,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         this.muted = m;
     }
 
-    protected void fireDataListenersAdded(int start, int end) {
-        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end);
+    protected void fireDataListenersAdded(int start, int end, E changedBean) {
+        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
         for (ManagerDataListener m : listeners) {
             m.intervalAdded(e);
         }
     }
-    protected void fireDataListenersRemoved(int start, int end) {
-        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end);
+    protected void fireDataListenersRemoved(int start, int end, E changedBean) {
+        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
         for (ManagerDataListener m : listeners) {
             m.intervalRemoved(e);
         }

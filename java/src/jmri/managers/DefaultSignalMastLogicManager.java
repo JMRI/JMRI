@@ -649,13 +649,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     final List<ManagerDataListener> listeners = new ArrayList<>();
-    
-    protected void fireDataListenersAdded() {
-        ManagerDataEvent<SignalMastLogic> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, 0, 0);
-        for (ManagerDataListener m : listeners) {
-            m.intervalAdded(e);
-        }
-    }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

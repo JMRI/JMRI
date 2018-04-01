@@ -1388,13 +1388,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     final List<ManagerDataListener> listeners = new ArrayList<>();
     
-    protected void fireDataListenersAdded() {
-        ManagerDataEvent<DestinationPoints> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, 0, 0);
-        for (ManagerDataListener m : listeners) {
-            m.intervalAdded(e);
-        }
-    }
-
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
 }

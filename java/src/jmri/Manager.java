@@ -520,22 +520,22 @@ public interface Manager<E extends NamedBean> {
      * without introducing a Swing dependency into core JMRI
      * @since JMRI 4.11.4
      */
-    interface ManagerDataListener {
+    interface ManagerDataListener<E extends NamedBean> {
         /**
          * Sent when the contents of the list has changed in a way that's too complex to characterize with the previous methods.
          * @param e encapsulates event information
          */
-        void contentsChanged(ManagerDataEvent e);
+        void contentsChanged(ManagerDataEvent<E> e);
         /**
          * Sent after the indices in the index0,index1 interval have been inserted in the data model.
          * @param e encapsulates the event information
          */
-        void intervalAdded(ManagerDataEvent e);
+        void intervalAdded(ManagerDataEvent<E> e);
         /**
          * Sent after the indices in the index0,index1 interval have been removed from the data model.
          * @param e encapsulates the event information
          */
-        void intervalRemoved(ManagerDataEvent e);
+        void intervalRemoved(ManagerDataEvent<E> e);
     }
     
     /**
@@ -563,6 +563,7 @@ public interface Manager<E extends NamedBean> {
         final private int type;
         final private int index0;
         final private int index1;
+        final private E changedBean; // used when just one bean is added or removed as an efficiency measure
         final private Manager<E> source;
         /**
          * Creates a <code>ListDataEvent</code> object.
@@ -575,13 +576,15 @@ public interface Manager<E extends NamedBean> {
          *     elements.
          * @param index1  the index for the other end of the modified range of list 
          *     elements.
+         * @param changedBean used when just one bean is added or removed, otherwise null
          */
-        public ManagerDataEvent(@Nonnull Manager<E> source, int type, int index0, int index1) {
+        public ManagerDataEvent(@Nonnull Manager<E> source, int type, int index0, int index1, E changedBean) {
             super(source);
             this.source = source;
             this.type = type;
             this.index0 = Math.min(index0, index1);  // from javax.swing.event.ListDataEvent implementation
             this.index1 = Math.max(index0, index1);  // from javax.swing.event.ListDataEvent implementation
+            this.changedBean = changedBean;
         }
 
         /**
@@ -604,6 +607,13 @@ public interface Manager<E extends NamedBean> {
          * @return The index of the last item in the range of modified list items.
          */
         public int getIndex1() { return index1; }
+
+        /**
+         * Returns the changed bean or null
+         * 
+         * @return null if more than one bean was changed
+         */
+        public E getChangedBean() { return changedBean; }
 
         /**
          * Returns a code representing the type of this event, which is usually one

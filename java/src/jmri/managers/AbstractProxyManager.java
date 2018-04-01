@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
-abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener {
+abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener<E> {
 
     /**
      * Number of managers available through getManager(i) and getManagerList(),
@@ -513,7 +513,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      * managers.
      */
     @Override
-    public void intervalAdded(Manager.ManagerDataEvent e) {
+    public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
         updateOrderList();
         updateNamedBeanSet();
 
@@ -523,7 +523,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             offset += m.getObjectCount();
         }
 
-        ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_ADDED, e.getIndex0()+offset, e.getIndex1()+offset);
+        ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_ADDED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
         for (ManagerDataListener m : listeners) {
             m.intervalAdded(e);
@@ -536,7 +536,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      * managers.
      */
     @Override
-    public void intervalRemoved(Manager.ManagerDataEvent e) {
+    public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
         updateOrderList();
         updateNamedBeanSet();
 
@@ -546,7 +546,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             offset += m.getObjectCount();
         }
 
-        ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_REMOVED, e.getIndex0()+offset, e.getIndex1()+offset);
+        ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_REMOVED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
         for (ManagerDataListener m : listeners) {
             m.intervalRemoved(eOut);
