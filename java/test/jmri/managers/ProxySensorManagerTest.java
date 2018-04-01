@@ -190,7 +190,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertEquals("content at index 2", s3, l.getNamedBeanList().get(lastEvent0));
     }
 
-    public void testRenoveTracking() {
+    public void testRemoveTrackingI() {
         
         Sensor s1 = l.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -211,20 +211,40 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));       
     }
 
+    public void testRemoveTrackingJ() {
+        
+        l.provideSensor("IS10");
+        l.provideSensor("IS11");
+        
+        Sensor s1 = l.provideSensor("JS1");
+        s1.setUserName("Sensor 1");
+        Sensor s2 = l.provideSensor("JS2");
+        Sensor s3 = l.provideSensor("JS3");
+        
+        l.addDataListener(this);
+        List<Sensor> tlist = l.getNamedBeanList();
+
+        l.deregister(s2);
+    
+        // listener should have been immediately invoked
+        Assert.assertEquals("events", 1, events);
+        Assert.assertEquals("last call", "Removed", lastCall);
+        Assert.assertEquals("type", Manager.ManagerDataEvent.INTERVAL_REMOVED, lastType);
+        Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
+        Assert.assertEquals("index", 3, lastEvent0);
+        Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));       
+    }
+
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
         
-        List<String> orderedList = l.getSystemNameAddedOrderList();
         List<String> sortedList = l.getSystemNameList();
         List<Sensor> beanList = l.getNamedBeanList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
         String[] sortedArray = l.getSystemNameArray();
+        List<String> orderedList = l.getSystemNameAddedOrderList();
         
-        Assert.assertEquals("ordered list length", 2, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
         Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
@@ -242,6 +262,10 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
         Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
         
+        Assert.assertEquals("ordered list length", 2, orderedList.size());
+        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
+        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
+
         // add and test (non) liveness
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
@@ -317,15 +341,21 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         
         List<String> nameList = l.getSystemNameList();
         List<Sensor> beanList = l.getNamedBeanList();
+        SortedSet<Sensor> beanSet = l.getNamedBeanSet();
 
         try {
             nameList.add("Foo");
-            Assert.fail("Should have thrown");
+            Assert.fail("nameList should have thrown");
         } catch (UnsupportedOperationException e) { /* this is OK */}
 
         try {
             beanList.add(s1);
-            Assert.fail("Should have thrown");
+            Assert.fail("beanList should have thrown");
+        } catch (UnsupportedOperationException e) { /* this is OK */}
+
+        try {
+            beanSet.add(s1);
+            Assert.fail("beanSet should have thrown");
         } catch (UnsupportedOperationException e) { /* this is OK */}
 
     }
