@@ -132,6 +132,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             log.debug("Found " + lightList.size() + " lights");
         }
         LightManager tm = InstanceManager.lightManagerInstance();
+        tm.setDataListenerMute(true);
 
         for (int i = 0; i < lightList.size(); i++) {
 
@@ -319,6 +320,8 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             // done, start it working
             lgt.activateLight();
         }
+
+        tm.setDataListenerMute(false);
         return result;
     }
 
