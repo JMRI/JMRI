@@ -519,6 +519,20 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     final List<ManagerDataListener> listeners = new ArrayList<>();
     
+    private boolean muted = false;
+    
+    /** {@inheritDoc} */
+    public void setDataListenerMute(boolean m) {
+        if (muted && !m) {
+            // send a total update, as we haven't kept track of specifics
+            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount());
+            for (ManagerDataListener listener : listeners) {
+                listener.contentsChanged(e);
+            }          
+        }
+        this.muted = m;
+    }
+
     protected void fireDataListenersAdded(int start, int end) {
         ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end);
         for (ManagerDataListener m : listeners) {

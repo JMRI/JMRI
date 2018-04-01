@@ -504,6 +504,18 @@ public interface Manager<E extends NamedBean> {
     public void removeDataListener(ManagerDataListener e);
 
     /**
+     * Temporarily suppress DataListener notifications.
+     * This avoids O(N^2) behavior when doing bulk updates, 
+     * i.e. when loading lots of Beans.
+     * Note that this is (1) optional, in the sense that the
+     * manager is not required to mute and (2) if present, 
+     * its' temporary, in the sense that the manager must do
+     * a cumulative notification when done.
+     */
+    public default void setDataListenerMute(boolean muted) {}
+
+
+    /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
      * without introducing a Swing dependency into core JMRI
      * @since JMRI 4.11.4
