@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -21,8 +22,18 @@ import jmri.jmrix.cmri.serial.SerialReply;
  * Frame for running CMRI diagnostics
  *
  * @author Dave Duchamp Copyright (C) 2004
+ * @author Chuck Catania Copyright (C) 2018
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
+    protected int numTestNodes = 0;
+    protected SerialNode[] testNodes = new SerialNode[128];  // Node control blocks
+    protected int[] testNodeAddresses = new int[128];        // UA of loaded nodes
+    protected SerialNode selNode = null;                     // current node under test
+    public int selNodeNum = 0;                               // Address (ua) of selected Node
+    protected String selNodeID = "x";                        // text address of selected Node
+    protected int selNodeType = 0;
+    JComboBox<String> nodeSelBox = new JComboBox<>();
+    JLabel nodeInfoText = new JLabel("xxx");
 
     // member declarations
     protected boolean outTest = true;
@@ -36,7 +47,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected int ua = 0;               // node address
     protected SerialNode node;
     protected int outCardNum = 0;
-    protected int obsDelay = 2000;
+    protected int obsDelay = 1000;
     protected int inCardNum = 2;
     protected int filterDelay = 0;
     // Test running variables
@@ -82,6 +93,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     javax.swing.JButton stopButton = new javax.swing.JButton(Bundle.getMessage("ButtonStop"));
     javax.swing.JButton continueButton = new javax.swing.JButton(Bundle.getMessage("ButtonContinue"));
 
+    javax.swing.JLabel nodeText1 = new javax.swing.JLabel();
     javax.swing.JLabel statusText1 = new javax.swing.JLabel();
     javax.swing.JLabel statusText2 = new javax.swing.JLabel();
 
@@ -101,24 +113,59 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     @Override
     public void initComponents() {
 
+        initializeNodes();
+        nodeSelBox.setEditable(false);
+        if (numTestNodes > 0) {
+            nodeSelBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    displayNodeInfo((String) nodeSelBox.getSelectedItem());
+                }
+            });
+        }
         // set the frame's initial state
-        setTitle(Bundle.getMessage("DiagnosticTitle"));
+        setTitle(Bundle.getMessage("DiagnosticTitle") + " - Connection "+_memo.getUserName());
         setSize(500, 200);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
+        // Test node information
+        //----------------------
+        JPanel panelNode = new JPanel();
+        panelNode.setLayout(new BoxLayout(panelNode, BoxLayout.Y_AXIS));
+        JPanel panelNode1 = new JPanel();
+        panelNode1.setLayout(new FlowLayout());        
+        panelNode1.add(new JLabel(Bundle.getMessage("LabelNodeAddress")));
+        panelNode1.add(nodeSelBox);
+        uaAddrField.setToolTipText(Bundle.getMessage("EnterNodeAddressToolTip"));
+        uaAddrField.setText("0");
+        panelNode.add(panelNode1);
+        
+        JPanel panelNode2 = new JPanel();
+        panelNode2.setLayout(new FlowLayout());        
+        nodeText1.setText("SMINI  In Cards xxx Out Cards xxx");
+        panelNode2.add(nodeText1);
+        panelNode.add(panelNode2);
+
+        Border panelNodeBorder = BorderFactory.createEtchedBorder();
+        Border panelNodeTitled = BorderFactory.createTitledBorder(panelNodeBorder,"Connection: "+_memo.getUserName());
+        panelNode.setBorder(panelNodeTitled);
+        contentPane.add(panelNode);
+                
         // Set up the test type panel
+        //---------------------------
         JPanel panel1 = new JPanel();
         testGroup.add(outputButton);
         testGroup.add(wrapButton);
         panel1.add(outputButton);
         panel1.add(wrapButton);
         Border panel1Border = BorderFactory.createEtchedBorder();
-        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border, Bundle.getMessage("TestTypeTitle"));
+        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,Bundle.getMessage("TestTypeTitle"));
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 
         // Set up the test setup panel
+        //----------------------------
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
         JPanel panel21 = new JPanel();
@@ -136,7 +183,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         panel22.add(new JLabel(Bundle.getMessage("ObservationDelayLabel")));
         panel22.add(obsDelayField);
         obsDelayField.setToolTipText(Bundle.getMessage("ObservationDelayToolTip"));
-        obsDelayField.setText("2000");
+        obsDelayField.setText(Integer.toString(obsDelay));
         JPanel panel23 = new JPanel();
         panel23.setLayout(new FlowLayout());
         panel23.add(new JLabel(Bundle.getMessage("InCardToolLabel")));
@@ -163,14 +210,14 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         statusText1.setText(Bundle.getMessage("StatusLine1"));
         statusText1.setVisible(true);
         statusText1.setMaximumSize(new Dimension(statusText1.getMaximumSize().width,
-                statusText1.getPreferredSize().height));
+        statusText1.getPreferredSize().height));
         panel31.add(statusText1);
         JPanel panel32 = new JPanel();
         panel32.setLayout(new FlowLayout());
         statusText2.setText(Bundle.getMessage("StatusLine2", Bundle.getMessage("ButtonRun")));
         statusText2.setVisible(true);
         statusText2.setMaximumSize(new Dimension(statusText2.getMaximumSize().width,
-                statusText2.getPreferredSize().height));
+        statusText2.getPreferredSize().height));
         panel32.add(statusText2);
         panel3.add(panel31);
         panel3.add(panel32);
@@ -213,13 +260,125 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             }
         });
         contentPane.add(panel4);
+        
+        if (numTestNodes > 0) {
+            // initialize for the first time
+            displayNodeInfo((String) nodeSelBox.getSelectedItem());
+        }
 
         addHelpMenu("package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame", true);
 
         // pack for display
         pack();
     }
-
+    /**
+     * Initialize configured nodes and set up the node select combo box.
+     */
+    public void initializeNodes() {
+        String str = "";
+        // clear the arrays
+        for (int i = 0; i < 128; i++) {
+            testNodeAddresses[i] = -1;
+            testNodes[i] = null;
+        }
+        // get all configured nodes
+        SerialNode node = (SerialNode) _memo.getTrafficController().getNode(0);
+        int index = 1;
+        while (node != null) {
+            testNodes[numTestNodes] = node;
+            testNodeAddresses[numTestNodes] = node.getNodeAddress();
+            str = Integer.toString(testNodeAddresses[numTestNodes]);
+            nodeSelBox.addItem(str);
+            if (index == 1) {
+                selNode = node;
+                selNodeNum = testNodeAddresses[numTestNodes];
+                selNodeID = "y";  // to force first time initialization
+            }
+            numTestNodes++;
+            // go to next node
+            node = (SerialNode) _memo.getTrafficController().getNode(index);
+            index++;
+        }
+    }
+    /**
+     * Method to handle selection of a Node for info display
+     */
+    public void displayNodeInfo(String nodeID) {
+        if (!nodeID.equals(selNodeID)) {
+            // The selected node is changing - initialize it
+            int aTestNum = Integer.parseInt(nodeID);
+            SerialNode s = null;
+            for (int k = 0; k < numTestNodes; k++) {
+                if (aTestNum == testNodeAddresses[k]) {
+                    s = testNodes[k];
+                }
+            }
+            if (s == null) {
+                // serious trouble, log error and ignore
+                log.error("Cannot find Node " + nodeID + " in list of configured Nodes.");
+                return;
+            }
+            // have node, initialize for new node
+            selNodeID = nodeID;
+            selNode = s;
+            selNodeNum = aTestNum;
+            // prepare the information line
+            int bitsPerCard = selNode.getNumBitsPerCard();
+            int numInputCards = selNode.numInputCards();
+            int numOutputCards = selNode.numOutputCards();
+            
+            selNodeType = selNode.getNodeType();
+            switch (selNodeType)
+             {        
+                case SerialNode.SMINI:
+                
+//                nodeText1.setText("SMINI - 24 " + "In"+ " 48 "
+//                        + "Out");
+                nodeText1.setText("SMINI - 24 " + Bundle.getMessage("InputBitsAnd") + " 48 "
+                        + Bundle.getMessage("OutputBits"));
+//               numInputBits = 24;
+//               numOutputBits = 48;
+                break;
+                case SerialNode.USIC_SUSIC:
+                    bitsPerCard = selNode.getNumBitsPerCard();
+                    numInputCards = selNode.numInputCards();
+                    numOutputCards = selNode.numOutputCards();
+//                numInputBits = bitsPerCard * numInputCards;
+//                numOutputBits = bitsPerCard * numOutputCards;
+//                nodeText1.setText("USIC_SUSIC - " + bitsPerCard + "Bits"
+//                        + ", " + numInputCards + " " + "Bits" + " "
+//                        + numOutputCards + " " + "Output");
+                nodeText1.setText("USIC_SUSIC - " + bitsPerCard + Bundle.getMessage("BitsPerCard")
+                       + ", " + numInputCards + " " + Bundle.getMessage("InputBitsAnd") + " "
+                        + numOutputCards + " " + Bundle.getMessage("OutputBits"));
+                break;
+                case SerialNode.CPNODE:
+//                numInputBits = bitsPerCard * numInputCards;
+//                numOutputBits = bitsPerCard * numOutputCards;
+                nodeText1.setText("CPNODE - " + bitsPerCard + " " + "bits"
+                        + ", " + numInputCards + " " + "input" + " "
+                        + numOutputCards + " " + "output");
+//                nodeInfoText.setText("CPNODE - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard")
+//                        + ", " + numInputCards + " " + Bundle.getMessage("InputBitsAnd") + " "
+//                        + numOutputCards + " " + Bundle.getMessage("OutputBits"));
+                break;
+                case SerialNode.CPMEGA:
+//                numInputBits = bitsPerCard * numInputCards;
+//                numOutputBits = bitsPerCard * numOutputCards;
+                nodeText1.setText("CPMEGA - " + bitsPerCard + " " + "bits"
+                        + ", " + numInputCards + " " + "Input"+ " "
+                        + numOutputCards + " " + "output");
+//                nodeInfoText.setText("CPMEGA - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard")
+//                        + ", " + numInputCards + " " + Bundle.getMessage("InputBitsAnd") + " "
+//                        + numOutputCards + " " + Bundle.getMessage("OutputBits"));
+                break;
+                default:
+                    nodeText1.setText("Unknown Node Type "+selNodeType);
+                break;            
+            }
+// here insert code for new types of C/MRI nodes
+        }
+    }
     /**
      * Handle run button in Diagnostic Frame.
      */
@@ -410,8 +569,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
      * If errors are found, the errors are noted in the status panel of the Diagnostic Frame.
      *
      * @return 'true' if successfully initialized, 'false' if errors are found
+     * Added synchronized
      */
-    protected boolean initializeOutputTest() {
+    synchronized protected boolean initializeOutputTest() {
         // clear all output bytes for this node
         for (int i = 0; i < nOutBytes; i++) {
             outBytes[i] = 0;
@@ -465,9 +625,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         st.append("  ");
                         for (int j = 0; j < 8; j++) {
                             if ((i == curOutByte) && (j == curOutBit)) {
-                                st.append("X ");
+                                st.append("1 ");
                             } else {
-                                st.append("O ");
+                                st.append("0 ");
                             }
                         }
                     }
