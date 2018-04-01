@@ -447,7 +447,6 @@
         to do<br>
 <pre style="font-family: monospace;">
     log.warn("Provoked message");
-
 </pre>
     the invoking test case should follow that with the line:<br>
 
@@ -485,9 +484,11 @@
 <pre style="font-family: monospace;">
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
     jmri.util.JUnitUtil.setUp();
+    jmri.util.JUnitUtil.resetInstanceManager();
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
+    jmri.util.JUnitUtil.initReporterManager();
 </pre>
     (You can omit the initialization managers you don't need) See
     the jmri.util.JUnitUtil class for the full list of available ones,
@@ -868,10 +869,10 @@
       "-noloading" option in the <code>main</code> of whichever
       test class you're having trouble with:</p>
 <pre style="font-family: monospace;">
-    static public void main(String[] args) {<br>
-            String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>
-            junit.swingui.TestRunner.main(testCaseName);<br>
-    }<br>
+    static public void main(String[] args) {
+            String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};
+            junit.swingui.TestRunner.main(testCaseName);
+    }
 </pre>
 
       <p>Please don't leave "-noloading" in place, as it prevents
