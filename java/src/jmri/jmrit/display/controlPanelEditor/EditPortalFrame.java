@@ -513,9 +513,8 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private OBlock findAdjacentBlock(PortalIcon icon) {
         ArrayList<OBlock> neighbors = new ArrayList<OBlock>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (int j = 0; j < sysNames.length; j++) {
-            OBlock block = manager.getBySystemName(sysNames[j]);
+        SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+        for (OBlock block : oblocks) {
             if (block.equals(_homeBlock)) {
                 continue;
             }
