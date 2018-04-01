@@ -36,6 +36,29 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
     }
 
     /**
+     * Create a new object, that is a copy of an existing message.
+     *
+     * @param message an existing Z21XpressNet message
+     */
+    public Z21XNetMessage(Z21XNetMessage message) {
+        super(message);
+    }
+
+    /**
+     * Create an Z21XNetMessage from an Z21XNetReply.
+     */
+    public Z21XNetMessage(Z21XNetReply message) {
+        super(message);
+    }
+
+    /**
+     * Create an XNetMessage from a String containing bytes.
+     */
+    public Z21XNetMessage(String s) {
+        super(s);
+    }
+
+    /**
      * Create messages of a particular form
      */
     public static XNetMessage getZ21ReadDirectCVMsg(int cv) {

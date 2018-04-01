@@ -11,7 +11,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpServiceTest;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,27 +31,23 @@ public class JsonLightHttpServiceTest {
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         Light light1 = manager.provideLight("IL1");
         JsonNode result;
-        JsonNode schema;
+        JsonSchemaServiceCache schemaCache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
         try {
-            schema = service.doSchema(JsonLight.LIGHT, true, Locale.ENGLISH).path(JSON.DATA).path(JSON.SCHEMA);
             result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertEquals(JsonLight.LIGHT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IL1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.ON);
             result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.OFF);
             result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -64,31 +60,28 @@ public class JsonLightHttpServiceTest {
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         Light light1 = manager.provideLight("IL1");
+        JsonSchemaServiceCache schemaCache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
         try {
-            JsonNode schema = service.doSchema(JsonLight.LIGHT, true, Locale.ENGLISH).path(JSON.DATA).path(JSON.SCHEMA);
             // set off
             JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
             JsonNode result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
             Assert.assertEquals(Light.OFF, light1.getState());
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set on
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
             result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
             Assert.assertEquals(Light.ON, light1.getState());
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set unknown - remains on
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
             result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
             Assert.assertEquals(Light.ON, light1.getState());
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set invalid state
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // Invalid value
@@ -111,15 +104,14 @@ public class JsonLightHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
+        JsonSchemaServiceCache schemaCache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
         try {
-            JsonNode schema = service.doSchema(JsonLight.LIGHT, true, Locale.ENGLISH).path(JSON.DATA).path(JSON.SCHEMA);
             // add a light
             Assert.assertNull(manager.getLight("IL1"));
             JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, Light.OFF);
             JsonNode result = service.doPut(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
             Assert.assertNotNull(result);
-            JsonHttpServiceTest.testValidJmriJsonMessage(result);
-            JsonHttpServiceTest.testSchemaValidJson(result.path(JSON.DATA), schema);
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
             Assert.assertNotNull(manager.getLight("IL1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -133,7 +125,7 @@ public class JsonLightHttpServiceTest {
             JsonLightHttpService service = new JsonLightHttpService(mapper);
             LightManager manager = InstanceManager.getDefault(LightManager.class);
             JsonNode result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
-            JsonNode schema = service.doSchema(JsonLight.LIGHT, true, Locale.ENGLISH).path(JSON.DATA).path(JSON.SCHEMA);
+            JsonSchemaServiceCache schemaCache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideLight("IL1");
@@ -141,6 +133,7 @@ public class JsonLightHttpServiceTest {
             result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
+            schemaCache.validateMessage(result, true, Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
