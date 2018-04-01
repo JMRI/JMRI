@@ -517,15 +517,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener> listeners = new ArrayList<>();
-    
+    final List<ManagerDataListener> listeners = new ArrayList<>();    
+
     private boolean muted = false;
     
     /** {@inheritDoc} */
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
-            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount(), null);
+            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
             for (ManagerDataListener listener : listeners) {
                 listener.contentsChanged(e);
             }          
@@ -534,12 +534,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
+        if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
         for (ManagerDataListener m : listeners) {
             m.intervalAdded(e);
         }
     }
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
+        if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
         for (ManagerDataListener m : listeners) {
             m.intervalRemoved(e);

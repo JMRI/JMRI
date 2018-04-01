@@ -544,6 +544,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         updateOrderList();
         updateNamedBeanSet();
 
+        if (muted) return;
+
         int offset = 0;
         for (Manager<E> m : mgrs) {
             if (m == e.getSource()) break;
@@ -567,6 +569,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         updateOrderList();
         updateNamedBeanSet();
 
+        if (muted) return;
+
         int offset = 0;
         for (Manager<E> m : mgrs) {
             if (m == e.getSource()) break;
@@ -580,6 +584,18 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         }
     }
 
+    private boolean muted = false;
+    /** {@inheritDoc} */
+    public void setDataListenerMute(boolean m) {
+        if (muted && !m) {
+            // send a total update, as we haven't kept track of specifics
+            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
+            for (ManagerDataListener listener : listeners) {
+                listener.contentsChanged(e);
+            }          
+        }
+        this.muted = m;
+    }
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class);

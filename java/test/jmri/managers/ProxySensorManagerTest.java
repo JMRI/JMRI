@@ -235,6 +235,55 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertEquals("content at index", s2, tlist.get(lastEvent0));       
     }
 
+    public void testGetObjectCount() {
+        Assert.assertEquals(0, l.getObjectCount());
+
+        l.provideSensor("IS10");
+        Assert.assertEquals(1, l.getObjectCount());
+
+        l.provideSensor("JS1");
+        Assert.assertEquals(2, l.getObjectCount());
+        
+        l.provideSensor("IS11");
+        Assert.assertEquals(3, l.getObjectCount());
+
+        Sensor s2 = l.provideSensor("JS2");
+        l.provideSensor("JS3");
+        Assert.assertEquals(5, l.getObjectCount());
+        
+        l.deregister(s2);
+        Assert.assertEquals(4, l.getObjectCount());
+    }
+
+    public void testRemoveTrackingJMute() {
+        
+        l.setDataListenerMute(true);
+        
+        l.provideSensor("IS10");
+        l.provideSensor("IS11");
+        
+        Sensor s1 = l.provideSensor("JS1");
+        s1.setUserName("Sensor 1");
+        Sensor s2 = l.provideSensor("JS2");
+        Sensor s3 = l.provideSensor("JS3");
+        
+        l.addDataListener(this);
+        List<Sensor> tlist = l.getNamedBeanList();
+
+        l.deregister(s2);
+    
+        // listener should have not been invoked
+        Assert.assertEquals("events", 0, events);
+
+        // unmute and get notification
+        l.setDataListenerMute(false);
+        Assert.assertEquals("events", 1, events);
+        Assert.assertEquals("last call", "Changed", lastCall);
+        Assert.assertEquals("type", Manager.ManagerDataEvent.CONTENTS_CHANGED, lastType);
+        Assert.assertEquals("index0", 0, lastEvent0);
+        Assert.assertEquals("index1", 3, lastEvent1); // originally five items, deleted 1, so 4, and last index is then 3
+    }
+
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
