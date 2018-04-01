@@ -64,8 +64,35 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
-
         return new ArrayList<>(mgrs);
+    }
+
+    /**
+     * Returns a list of all managers, with the default
+     * at the start and internal default at the end.
+     *
+     * @return the list of managers
+     */
+    public List<Manager<E>> getDisplayOrderManagerList() {
+        // make sure internal present
+        initInternal();
+        ArrayList<Manager<E>> retval = new ArrayList<>();
+        if (getDefaultManager() != null) { retval.add(getDefaultManager()); }
+        for (Manager<E> manager : mgrs) {
+            if (manager != getDefaultManager() && manager != getInternalManager()) {
+                retval.add(manager);
+            }
+        }
+        if (getInternalManager() != null) { retval.add(getInternalManager()); }
+        return retval;
+    }
+
+    public Manager<E> getInternalManager() {
+        return internalManager;
+    }
+
+    public Manager<E> getDefaultManager() {
+        return defaultManager;
     }
 
     public void addManager(Manager<E> m) {
