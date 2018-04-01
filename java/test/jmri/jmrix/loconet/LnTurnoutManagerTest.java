@@ -35,6 +35,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     @Before
     public void setUp(){
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         lnis = new LocoNetInterfaceScaffold();
         // create and register the manager object
@@ -82,14 +83,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     @Test
     public void testAsAbstractFactory() {
-        // create and register the manager object
-        LnTurnoutManager l = new LnTurnoutManager(lnis, lnis, "L", false);
-        jmri.InstanceManager.setTurnoutManager(l);
-
         // ask for a Turnout, and check type
-        TurnoutManager t = jmri.InstanceManager.turnoutManagerInstance();
-
-        Turnout o = t.newTurnout("LT21", "my name");
+        Turnout o = l.newTurnout("LT21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
@@ -98,14 +93,14 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("LT21"));
+            log.debug("by system name: " + l.getBySystemName("LT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != t.getBySystemName("LT21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("LT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
