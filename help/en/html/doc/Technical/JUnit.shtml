@@ -423,7 +423,6 @@
 
 <pre style="font-family: monospace;">
     // The minimal setup for log4J
-<<<<<<< Updated upstream
     protected void setUp() throws Exception { 
         super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
         jmri.util.JUnitUtil.setUp(); 
@@ -431,15 +430,6 @@
     protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
         super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a>
-=======
-    protected void setUp() throws Exception {
-    super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
-    jmri.util.JUnitUtil.setUp();
-    }
-    protected void tearDown() throws Exception {
-    jmri.util.JUnitUtil.tearDown();
-    super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a>
->>>>>>> Stashed changes
     }
 </pre>
         </li>
