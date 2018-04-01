@@ -316,6 +316,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
+    public int getObjectCount() { return _beans.size();}    
+
+    /** {@inheritDoc} */
+    @Override
     public String[] getSystemNameArray() {
         if (cachedSystemNameArray == null) {
             cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
