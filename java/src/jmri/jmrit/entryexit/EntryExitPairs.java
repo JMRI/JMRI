@@ -283,6 +283,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return inputName;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @CheckReturnValue
+    public int getObjectCount() { 
+        return getNamedBeanList().size(); // not efficient
+    }
+
     /**
      * Implemented to support the Conditional combo box name list
      * @since 4.9.3

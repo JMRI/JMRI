@@ -49,6 +49,10 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public int getObjectCount() { return -1;}    
+
+
+    @Override
     public java.util.List<String> getSystemNameList() {
         return null;
     }

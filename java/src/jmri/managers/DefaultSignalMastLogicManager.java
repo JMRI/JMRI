@@ -309,6 +309,13 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
+    public int getObjectCount() { 
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
