@@ -411,7 +411,8 @@ public class IconEditorWindowTest {
         if (_editor != null) {
             _editor.dispose(true);
         }
-
+        _editor = null;
+        
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
         JUnitUtil.tearDown();
     }
