@@ -35,6 +35,12 @@
         <authorinitials>ALM</authorinitials>
         <revremark>Creation</revremark>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>2018-04-02</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>French translation</revremark>
+      </revision>
     </revhistory>
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
     <variable CV="2" default="5" item="Vstart">
@@ -44,8 +50,11 @@
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Minimalgeschwindigkeit</label>
         <label xml:lang="ca">Voltatge mínim</label>
+        <label xml:lang="cs">Rozjezdové napětí</label>
+        <label xml:lang="nl">Startsnelheid</label>
         <tooltip>Value must be lower than Vhigh, CV 5.</tooltip>
         <tooltip xml:lang="de">Wert muss kleiner sein als Vmax, CV 5.</tooltip>
+        <tooltip xml:lang="fr">Doit être plus petit que Vmax, CV 5.</tooltip>
     </variable>
     <variable CV="3" default="25" item="Accel">
         <decVal/>
@@ -56,6 +65,7 @@
         <label xml:lang="ca">Acceleració (AV)</label>
         <tooltip>Value multiplied by 0.25 = Time from Stop to Full Speed.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit vom Stop bis Maximalgeschwindigkeit.</tooltip>
+        <tooltip xml:lang="fr">Valeur multipliée par 0,25 = Temps entre l'arrêt et la pleine vitesse.</tooltip>
     </variable>
     <variable CV="4" default="16" item="Decel">
         <decVal/>
@@ -66,14 +76,20 @@
         <label xml:lang="ca">Desacceleració (BV)</label>
         <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
+        <tooltip xml:lang="fr">Valeur multipliée par 0,25 = Temps entre la pleine vitesse et l'arrêt.</tooltip>
     </variable>
     <variable CV="5" default="255" item="Vhigh">
         <decVal min="1"/>
         <label>Vhigh</label>
         <label xml:lang="de">Maximalgeschwindigkeit</label>
+        <label xml:lang="fr">Vmax</label>
         <label xml:lang="ca">Voltatge Alt</label>
+        <label xml:lang="it">Velocità Massimi</label>
+        <label xml:lang="nl">Max. snelheid</label>
+        <label xml:lang="cs">Maximální napětí</label>
         <tooltip>Speed at highest speed step. Value must be greater than Vstart, CV 2.</tooltip>
         <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe. Wert muss größer sein als Vmin, CV 2.</tooltip>
+        <tooltip xml:lang="fr">Vitesse au plus grand pas de vitesse. Doit être plus grand que V démarr., CV 2.</tooltip>
     </variable>
     <variable CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
@@ -107,136 +123,144 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Brake on DC, polarity against direction</label>
         <label xml:lang="de">DC Bremse, Polarität entgegen der Fahrtrichtung</label>
+        <label xml:lang="fr">Freinage DC, polarité sens opposé à marche</label>
         <label xml:lang="ca">Para en CC, quan polaritat oposada</label>
     </variable>
     <variable CV="27" mask="XXXVXXXX" item="Advanced Brake Sections Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Brake on DC, polarity same direction</label>
         <label xml:lang="de">DC Bremse, Polarität mit der Fahrtrichtung</label>
+        <label xml:lang="fr">Freinage DC, polarité sens de marche</label>
         <label xml:lang="ca">Para en CC, mateix sentit de polaritat</label>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
 
-    <!--
-    <variable CV="31" default="16" item="Index register H">
-        <decVal/>
-        <label>Index register H</label>
-        <label xml:lang="ca">CV indexades bloc H</label>
-        <label xml:lang="de">Auswahl Speicherseite für CV257-512</label>
-    </variable>
-    <variable CV="32" default="0" item="Index register L">
-        <decVal/>
-        <label>Index register L</label>
-        <label xml:lang="de">Auswahl Speicherseite für CV257-512</label>
-        <label xml:lang="ca">Adreces indexades CV257-512</label>
-    </variable>
--->
-
     <variable CV="50" mask="XXXXXXXV" item="Analog (AC) Mode" default="1" >
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-noYes.xml"/>
         <label>AC Analog Mode</label>
         <label xml:lang="de">Analog Modus AC</label>
+        <label xml:lang="fr">Mode Analogique AC</label>
         <label xml:lang="ca">Mode analògic AC</label>
     </variable>
     <variable CV="50" mask="XXXXXXVX" item="Analog (DC) Mode" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-noYes.xml"/>
         <label>DC Analog Mode</label>
         <label xml:lang="de">Analog Modus DC</label>
+        <label xml:lang="fr">Mode Analogique DC</label>
         <label xml:lang="ca">Mode analògic CC</label>
     </variable>
     <variable CV="50" mask="XXXXXVXX" item="Advanced Protocols Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>fx (Motorola®) Protocol</label>
         <label xml:lang="de">fx (Motorola®) Protokoll</label>
+        <label xml:lang="fr">Protocole fx (Motorola®)</label>
         <label xml:lang="ca">Protocol fx (Motorola®)</label>
     </variable>
     <variable CV="50" mask="XXXXVXXX" item="Advanced Protocols Option 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>mfx Protocol</label>
         <label xml:lang="de">mfx Protokoll</label>
+        <label xml:lang="fr">Protocole mfx</label>
         <label xml:lang="ca">Protocol mfx</label>
     </variable>
 
-    <variable CV="52" mask="XXXXVVVV" item="Motor Option 1" default="3">
+    <variable CV="52" mask="XXXXVVVV" item="Motor Type" default="3">
         <enumVal>
           <enumChoice value="0">
             <choice>Aux - function outputs 5 &amp; 6</choice>
             <choice xml:lang="de">Aux - Funktionsausgänge 5 &amp; 6</choice>
+            <choice xml:lang="fr">Aux - Sorties Fonctions 5 &amp; 6</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – Softdrive Sine</choice>
             <choice xml:lang="de">Motor - Softdrive Sinus</choice>
+            <choice xml:lang="fr">Moteur - Softdrive Sinus</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – without feedback control</choice>
             <choice xml:lang="de">Motor - ungeregelt</choice>
+            <choice xml:lang="fr">Moteur - non régulé</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – High efficiency propulsion C90</choice>
             <choice xml:lang="de">Motor - Hochleistungsantrieb C90</choice>
+            <choice xml:lang="fr">Moteur - Propulsion haut rendement C90</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – Bell armature</choice>
             <choice xml:lang="de">Motor - Glockenanker</choice>
+            <choice xml:lang="fr">Moteur - Induit en cloche</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – direct current DC soft</choice>
             <choice xml:lang="de">Motor - Gleichstrom DC weich</choice>
+            <choice xml:lang="fr">Moteur - Courant Continu doux</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – direct current DC hard</choice>
             <choice xml:lang="de">Motor - Gleichstrom DC hart</choice>
+            <choice xml:lang="fr">Moteur - Courant Continu dur</choice>
           </enumChoice>
           <enumChoice>
             <choice>Motor – direct current DC 1 Gauge</choice>
             <choice xml:lang="de">Motor - Gleichstrom DC Spur 1</choice>
+            <choice xml:lang="fr">Moteur - Courant Continu échelle 1</choice>
           </enumChoice>
-        </enumVal>
+        </enumVal>          
         <label>Motor type</label>
         <label xml:lang="de">Motortyp</label>
+        <label xml:lang="fr">Type de Moteur</label>
         <label xml:lang="ca">Tipus de motor</label>
     </variable>
     <variable CV="52" mask="XXVXXXXX" item="Trix Power Conversion">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Analog w. feedback control</label>
         <label xml:lang="de">Analog geregelt</label>
+        <label xml:lang="fr">Analogique avec régulation</label>
         <label xml:lang="ca">Analògic regulat</label>
         <tooltip>Analog with feedback control</tooltip>
         <tooltip xml:lang="de">Analog geregelt</tooltip>
+        <tooltip xml:lang="fr">Analogique avec régulation</tooltip>
     </variable>
     <variable CV="53" item="EMF Control Reference" default="150">
         <decVal/>
         <label>BEMF Reference Voltage</label>
         <label xml:lang="de">Regelungsreferenz Spannung</label>
+        <label xml:lang="fr">Tension de Référence FCEM</label>
         <label xml:lang="ca">Voltatge de referència de la BEMF</label>
     </variable>
-    <variable CV="54" item="EMF Option 1" default="64">
+    <variable CV="54" item="EMF Static Config" default="64">
         <decVal/>
         <label>BEMF Parameter 'K'</label>
-        <label xml:lang="de">Lastregelung Param. „K“</label>
+        <label xml:lang="de">Lastregelung Param. 'K'</label>
+        <label xml:lang="fr">Régul. Paramètre 'K'</label>
         <label xml:lang="ca">Paràmetre K de la BEMF</label>
     </variable>
-    <variable CV="55" item="EMF Option 2" default="64">
+    <variable CV="55" item="EMF Dynamic Config" default="64">
         <decVal/>
         <label>BEMF Parameter 'I'</label>
-        <label xml:lang="de">Lastregelung Param. „I“</label>
+        <label xml:lang="de">Lastregelung Param. 'I'</label>
+        <label xml:lang="fr">Régul. Paramètre 'I'</label>
         <label xml:lang="ca">Paràmetre I de la BEMF</label>
     </variable>
     <variable CV="56" item="EMF Feedback Cutout" default="24">
         <decVal/>
         <label>BEMF Control Range</label>
         <label xml:lang="de">Regelungseinfluss</label>
+        <label xml:lang="fr">Influence Régulation</label>
         <label xml:lang="ca">Rang de control de la BEMF</label>
         <tooltip>0 = PWM without feedback control for Sine</tooltip>
         <tooltip xml:lang="de">0 = ungeregelte PWM für Sinus</tooltip>
+        <tooltip xml:lang="fr">0 = MLI non régulée pour Sinus</tooltip>
     </variable>
 
     <variable CV="66" default="128" item="Forward Trim" comment="Range 0-255">
         <decVal/>
         <label>Forward Trim</label>
         <label xml:lang="de">Vorwärts Trimm</label>
+        <label xml:lang="fr">Limitation vitesse avant</label>
         <label xml:lang="ca">Retall enrere</label>
     </variable>
     <variable CV="67" item="Speed Table">
@@ -244,12 +268,14 @@
         <label>Speed Table</label>
         <label xml:lang="it">Tabella Velocità</label>
         <label xml:lang="de">Geschwindigkeitstabelle</label>
+        <label xml:lang="fr">Table des Vitesses</label>
         <label xml:lang="ca">Taula de velocitats</label>
     </variable>
     <variable CV="95" default="128" item="Reverse Trim" comment="Range 0-255">
         <decVal/>
         <label>Reverse Trim</label>
         <label xml:lang="de">Rückwärts Trimm</label>
+        <label xml:lang="fr">Limitation vitesse arrière</label>
         <label xml:lang="ca">Reteall enrere</label>
     </variable>
 
@@ -259,59 +285,74 @@
         <decVal max="128"/>
         <label>Switching Range</label>
         <label xml:lang="de">Rangiergang</label>
+        <label xml:lang="fr">Rapport de Manœuvre</label>
         <tooltip>128 = 50% of speed level, 64 = 25% of speed level</tooltip>
         <tooltip xml:lang="de">128 = 50% Fahrstufe, 64 = 25% Fahrstufe</tooltip>
+        <tooltip xml:lang="fr">128 = Niveau vitesse à 50% 64 = Niveau vitesse à 25%</tooltip>
     </variable>
 
     <variable CV="173" mask="XXXXXXXV" item="Advanced Save Setting Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Function States</label>
         <label xml:lang="de">Funktionszustände speichern</label>
+        <label xml:lang="fr">Enregistrement état fonctions</label>
     </variable>
     <variable CV="173" mask="XXXXXXVX" item="Advanced Save Setting Option 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Speed</label>
         <label xml:lang="de">Geschwindigkeit speichern</label>
+        <label xml:lang="fr">Enregistrement vitesse</label>
     </variable>
     <variable CV="173" mask="XXXXXVXX" item="Advanced Save Setting Option 3" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Start up with ABV</label>
         <label xml:lang="de">Mit ABV anfahren speichern</label>
+        <label xml:lang="fr">Enregistrement démarrage avec ABV</label>
         <tooltip>After a reset starting up with/without ABV</tooltip>
         <tooltip xml:lang="de">Nach Reset mit/ohne ABV anfahren</tooltip>
+        <tooltip xml:lang="fr">Après Reset, démarrage avec ou sans ABV</tooltip>
     </variable>
     <variable CV="174" mask="XXXXXXXV" item="Advanced Save Setting Option 4" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Storing Direction of Travel</label>
         <label xml:lang="de">Fahrtrichtung speichern</label>
+        <label xml:lang="fr">Enregistrement sens de marche</label>
     </variable>
 
     <variable CV="176" item="Analog Vstart" default="100">
         <decVal/>
         <label>Vmin Analog DC</label>
         <label xml:lang="de">Vmin Analog DC</label>
+        <label xml:lang="fr">V démarr. analogique DC</label>
         <tooltip>Must be smaller than CV 177</tooltip>
         <tooltip xml:lang="de">muss kleiner CV 177 sein</tooltip>
+        <tooltip xml:lang="fr">doit être plus petit que CV 177</tooltip>
     </variable>
     <variable CV="177" item="Analog Vhigh" default="255">
         <decVal/>
         <label>Vmax Analog DC</label>
         <label xml:lang="de">Vmax Analog DC</label>
+        <label xml:lang="fr">Vmax analogique DC</label>
         <tooltip>Must be larger than CV 176</tooltip>
         <tooltip xml:lang="de">muss größer CV 176 sein</tooltip>
+        <tooltip xml:lang="fr">doit être plus grand que CV 176</tooltip>
     </variable>
     <variable CV="178" item="Analog (AC) Vstart" default="100">
         <decVal/>
         <label>Vmin Analog AC</label>
         <label xml:lang="de">Vmin Analog AC</label>
+        <label xml:lang="fr">V démarr. analogique AC</label>
         <tooltip>Must be smaller than CV 179</tooltip>
         <tooltip xml:lang="de">muss kleiner CV 179 sein</tooltip>
+        <tooltip xml:lang="fr">doit être plus petit que CV 179</tooltip>
     </variable>
     <variable CV="179" item="Analog (AC) Vhigh" default="255">
         <decVal/>
         <label>Vmax Analog AC</label>
         <label xml:lang="de">Vmax Analog AC</label>
+        <label xml:lang="fr">Vmax analogique AC</label>
         <tooltip>Must be larger than CV 178</tooltip>
         <tooltip xml:lang="de">muss größer CV 178 sein</tooltip>
+        <tooltip xml:lang="fr">doit être plus grand que CV 178</tooltip>
     </variable>
 </variables>
