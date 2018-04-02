@@ -555,7 +555,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_ADDED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
         for (ManagerDataListener m : listeners) {
-            m.intervalAdded(e);
+            m.intervalAdded(eOut);
         }
     }
 
