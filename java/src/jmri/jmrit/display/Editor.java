@@ -1059,7 +1059,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         break;
                     case 1:
                         if (deletePanel()) { // disposes everything
-                            dispose(true);
+                            dispose();
                         }
                         break;
                     case 2:
