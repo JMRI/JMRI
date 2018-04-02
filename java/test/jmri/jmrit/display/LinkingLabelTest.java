@@ -7,10 +7,7 @@ import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.catalog.NamedIcon;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * LinkingLabelTest.java
@@ -71,6 +68,14 @@ public class LinkingLabelTest extends PositionableTestBase {
            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
            to.setIcon(icon);
         }
+    }
+    
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+        to = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
