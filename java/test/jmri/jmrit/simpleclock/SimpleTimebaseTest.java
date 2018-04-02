@@ -25,6 +25,7 @@ public class SimpleTimebaseTest extends TestCase {
     public void testCreate() {
         SimpleTimebase p = new SimpleTimebase();
         Assert.assertNotNull("exists", p);
+        p.dispose();
     }
 
     // test quick access (should be quite close to zero)
@@ -36,6 +37,7 @@ public class SimpleTimebaseTest extends TestCase {
         long delta = then.getTime() - now.getTime();
         Assert.assertTrue("delta ge zero", delta >= 0);
         Assert.assertTrue("delta lt 100 msec (nominal value)", delta < 100);
+        p.dispose();
     }
 
     public void testSetStartTime() {
@@ -57,6 +59,7 @@ public class SimpleTimebaseTest extends TestCase {
         p.setStartSetTime(false, then);
 
         Assert.assertEquals("setTime then", then, p.getStartTime());
+        p.dispose();
     }
 
     // set the time based on a date.
@@ -68,6 +71,7 @@ public class SimpleTimebaseTest extends TestCase {
 
         p.setTime(now);
         Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
+        p.dispose();
     }
 
     // set the time based on an instant.
@@ -77,6 +81,7 @@ public class SimpleTimebaseTest extends TestCase {
         
         p.setTime(now);
         Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
+        p.dispose();
     }
 
     /* 	public void testShortDelay() { */
