@@ -19,28 +19,28 @@ import java.util.*;
 /**
  * This class provides a skeletal implementation of the <tt>Map</tt>
  * interface, to minimize the effort required to implement this interface.
- * <p/>
+ * 
  * <p>To implement an unmodifiable map, the programmer needs only to extend this
  * class and provide an implementation for the <tt>entrySet</tt> method, which
  * returns a set-view of the map's mappings.  Typically, the returned set
  * will, in turn, be implemented atop <tt>AbstractSet</tt>.  This set should
  * not support the <tt>add</tt> or <tt>remove</tt> methods, and its iterator
  * should not support the <tt>remove</tt> method.
- * <p/>
+ * 
  * <p>To implement a modifiable map, the programmer must additionally override
  * this class's <tt>put</tt> method (which otherwise throws an
  * <tt>UnsupportedOperationException</tt>), and the iterator returned by
  * <tt>entrySet().iterator()</tt> must additionally implement its
  * <tt>remove</tt> method.
- * <p/>
+ * 
  * <p>The programmer should generally provide a void (no argument) and map
  * constructor, as per the recommendation in the <tt>Map</tt> interface
  * specification.
- * <p/>
+ * 
  * <p>The documentation for each non-abstract method in this class describes its
  * implementation in detail.  Each of these methods may be overridden if the
  * map being implemented admits a more efficient implementation.
- * <p/>
+ * 
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
@@ -67,7 +67,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation returns <tt>entrySet().size()</tt>.
      */
     public int size() {
@@ -76,7 +76,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation returns <tt>size() == 0</tt>.
      */
     public boolean isEmpty() {
@@ -85,7 +85,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation iterates over <tt>entrySet()</tt> searching
      * for an entry with the specified value.  If such an entry is found,
      * <tt>true</tt> is returned.  If the iteration terminates without
@@ -115,7 +115,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation iterates over <tt>entrySet()</tt> searching
      * for an entry with the specified key.  If such an entry is found,
      * <tt>true</tt> is returned.  If the iteration terminates without
@@ -146,7 +146,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation iterates over <tt>entrySet()</tt> searching
      * for an entry with the specified key.  If such an entry is found,
      * the entry's value is returned.  If the iteration terminates without
@@ -180,7 +180,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation always throws an
      * <tt>UnsupportedOperationException</tt>.
      *
@@ -195,7 +195,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation iterates over <tt>entrySet()</tt> searching for an
      * entry with the specified key.  If such an entry is found, its value is
      * obtained with its <tt>getValue</tt> operation, the entry is removed
@@ -204,7 +204,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
      * iteration terminates without finding such an entry, <tt>null</tt> is
      * returned.  Note that this implementation requires linear time in the
      * size of the map; many implementations will override this method.
-     * <p/>
+     * 
      * <p>Note that this implementation throws an
      * <tt>UnsupportedOperationException</tt> if the <tt>entrySet</tt>
      * iterator does not support the <tt>remove</tt> method and this map
@@ -244,11 +244,11 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation iterates over the specified map's
      * <tt>entrySet()</tt> collection, and calls this map's <tt>put</tt>
      * operation once for each entry returned by the iteration.
-     * <p/>
+     * 
      * <p>Note that this implementation throws an
      * <tt>UnsupportedOperationException</tt> if this map does not support
      * the <tt>put</tt> operation and the specified map is nonempty.
@@ -265,9 +265,9 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation calls <tt>entrySet().clear()</tt>.
-     * <p/>
+     * 
      * <p>Note that this implementation throws an
      * <tt>UnsupportedOperationException</tt> if the <tt>entrySet</tt>
      * does not support the <tt>clear</tt> operation.
@@ -291,14 +291,14 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation returns a set that subclasses {@link java.util.AbstractSet}.
      * The subclass's iterator method returns a "wrapper object" over this
      * map's <tt>entrySet()</tt> iterator.  The <tt>size</tt> method
      * delegates to this map's <tt>size</tt> method and the
      * <tt>contains</tt> method delegates to this map's
      * <tt>containsKey</tt> method.
-     * <p/>
+     * 
      * <p>The set is created the first time this method is called,
      * and returned in response to all subsequent calls.  No synchronization
      * is performed, so there is a slight chance that multiple calls to this
@@ -339,14 +339,14 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * 
      * <p>This implementation returns a collection that subclasses {@link
      * AbstractCollection}.  The subclass's iterator method returns a
      * "wrapper object" over this map's <tt>entrySet()</tt> iterator.
      * The <tt>size</tt> method delegates to this map's <tt>size</tt>
      * method and the <tt>contains</tt> method delegates to this map's
      * <tt>containsValue</tt> method.
-     * <p/>
+     * 
      * <p>The collection is created the first time this method is called, and
      * returned in response to all subsequent calls.  No synchronization is
      * performed, so there is a slight chance that multiple calls to this
@@ -398,7 +398,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
      * <tt>m1.entrySet().equals(m2.entrySet())</tt>.  This ensures that the
      * <tt>equals</tt> method works properly across different implementations
      * of the <tt>Map</tt> interface.
-     * <p/>
+     * 
      * <p>This implementation first checks if the specified object is this map;
      * if so it returns <tt>true</tt>.  Then, it checks if the specified
      * object is a map whose size is identical to the size of this map; if
@@ -451,7 +451,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
      * implies that <tt>m1.hashCode()==m2.hashCode()</tt> for any two maps
      * <tt>m1</tt> and <tt>m2</tt>, as required by the general contract of
      * {@link Object#hashCode}.
-     * <p/>
+     * 
      * <p>This implementation iterates over <tt>entrySet()</tt>, calling
      * {@link Map.Entry#hashCode hashCode()} on each element (entry) in the
      * set, and adding up the results.

@@ -21,12 +21,12 @@ import java.util.*;
  * The map is sorted according to the {@linkplain Comparable natural
  * ordering} of its keys, or by a {@link java.util.Comparator} provided at map
  * creation time, depending on which constructor is used.
- * <p/>
+ * 
  * <p>This implementation provides guaranteed log(n) time cost for the
  * <tt>containsKey</tt>, <tt>get</tt>, <tt>put</tt> and <tt>remove</tt>
  * operations.  Algorithms are adaptations of those in Cormen, Leiserson, and
  * Rivest's <I>Introduction to Algorithms</I>.
- * <p/>
+ * 
  * <p>Note that the ordering maintained by a sorted map (whether or not an
  * explicit comparator is provided) must be <i>consistent with equals</i> if
  * this sorted map is to correctly implement the <tt>Map</tt> interface.  (See
@@ -38,7 +38,7 @@ import java.util.*;
  * standpoint of the sorted map, equal.  The behavior of a sorted map
  * <i>is</i> well-defined even if its ordering is inconsistent with equals; it
  * just fails to obey the general contract of the <tt>Map</tt> interface.
- * <p/>
+ * 
  * <p><strong>Note that this implementation is not synchronized.</strong>
  * If multiple threads access a map concurrently, and at least one of the
  * threads modifies the map structurally, it <i>must</i> be synchronized
@@ -52,7 +52,7 @@ import java.util.*;
  * method.  This is best done at creation time, to prevent accidental
  * unsynchronized access to the map: <pre>
  *   SortedMap m = Collections.synchronizedSortedMap(new IndexedTreeMap(...));</pre>
- * <p/>
+ * 
  * <p>The iterators returned by the <tt>iterator</tt> method of the collections
  * returned by all of this class's "collection view methods" are
  * <i>fail-fast</i>: if the map is structurally modified at any time after the
@@ -61,7 +61,7 @@ import java.util.*;
  * java.util.ConcurrentModificationException}.  Thus, in the face of concurrent
  * modification, the iterator fails quickly and cleanly, rather than risking
  * arbitrary, non-deterministic behavior at an undetermined time in the future.
- * <p/>
+ * 
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
  * as it is, generally speaking, impossible to make any hard guarantees in the
  * presence of unsynchronized concurrent modification.  Fail-fast iterators
@@ -69,13 +69,13 @@ import java.util.*;
  * Therefore, it would be wrong to write a program that depended on this
  * exception for its correctness:   <i>the fail-fast behavior of iterators
  * should be used only to detect bugs.</i>
- * <p/>
+ * 
  * <p>All <tt>Map.Entry</tt> pairs returned by methods in this class
  * and its views represent snapshots of mappings at the time they were
  * produced. They do <em>not</em> support the <tt>Entry.setValue</tt>
  * method. (Note however that it is possible to change mappings in the
  * associated map using <tt>put</tt>.)
- * <p/>
+ * 
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
@@ -239,13 +239,13 @@ public class IndexedTreeMap<K, V>
     /**
      * Returns the value to which the specified key is mapped,
      * or {@code null} if this map contains no mapping for the key.
-     * <p/>
+     * 
      * <p>More formally, if this map contains a mapping from a key
      * {@code k} to a value {@code v} such that {@code key} compares
      * equal to {@code k} according to the map's ordering, then this
      * method returns {@code v}; otherwise it returns {@code null}.
      * (There can be at most one such mapping.)
-     * <p/>
+     * 
      * <p>A return value of {@code null} does not <i>necessarily</i>
      * indicate that the map contains no mapping for the key; it's also
      * possible that the map explicitly maps the key to {@code null}.
@@ -2263,7 +2263,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * Balancing operations.
-     * <p/>
+     * 
      * Implementations of rebalancings during insertion and deletion are
      * slightly different than the CLR version.  Rather than using dummy
      * nilnodes, we use a set of accessors that deal properly with null.  They
@@ -2626,13 +2626,13 @@ public class IndexedTreeMap<K, V>
      * and/or values from iterator or stream. This leads to too many
      * parameters, but seems better than alternatives.  The four formats
      * that this method accepts are:
-     * <p/>
+     * 
      * 1) An iterator of Map.Entries.  (it != null, defaultVal == null).
      * 2) An iterator of keys.         (it != null, defaultVal != null).
      * 3) A stream of alternating serialized keys and values.
      * (it == null, defaultVal == null).
      * 4) A stream of serialized keys. (it == null, defaultVal != null).
-     * <p/>
+     * 
      * It is assumed that the comparator of the IndexedTreeMap is already set prior
      * to calling this method.
      *

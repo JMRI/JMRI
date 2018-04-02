@@ -23,18 +23,18 @@ import java.util.Set;
  * This class provides a skeletal implementation of the <tt>Set</tt>
  * interface to minimize the effort required to implement this
  * interface. <p>
- * <p/>
+ * 
  * The process of implementing a set by extending this class is identical
  * to that of implementing a Collection by extending AbstractCollection,
  * except that all of the methods and constructors in subclasses of this
  * class must obey the additional constraints imposed by the <tt>Set</tt>
  * interface (for instance, the add method must not permit addition of
  * multiple instances of an object to a set).<p>
- * <p/>
+ * 
  * Note that this class does not override any of the implementations from
  * the <tt>AbstractCollection</tt> class.  It merely adds implementations
  * for <tt>equals</tt> and <tt>hashCode</tt>.<p>
- * <p/>
+ * 
  * This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
@@ -66,7 +66,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * this set.  This ensures that the <tt>equals</tt> method works
      * properly across different implementations of the <tt>Set</tt>
      * interface.<p>
-     * <p/>
+     * 
      * This implementation first checks if the specified object is this
      * set; if so it returns <tt>true</tt>.  Then, it checks if the
      * specified object is a set whose size is identical to the size of
@@ -102,7 +102,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * <tt>s1.hashCode()==s2.hashCode()</tt> for any two sets <tt>s1</tt>
      * and <tt>s2</tt>, as required by the general contract of
      * {@link Object#hashCode}.
-     * <p/>
+     * 
      * <p>This implementation iterates over the set, calling the
      * <tt>hashCode</tt> method on each element in the set, and adding up
      * the results.
@@ -128,7 +128,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * collection is also a set, this operation effectively modifies this
      * set so that its value is the <i>asymmetric set difference</i> of
      * the two sets.
-     * <p/>
+     * 
      * <p>This implementation determines which is the smaller of this set
      * and the specified collection, by invoking the <tt>size</tt>
      * method on each.  If this set has fewer elements, then the
@@ -140,7 +140,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * implementation iterates over the specified collection, removing
      * from this set each element returned by the iterator, using this
      * set's <tt>remove</tt> method.
-     * <p/>
+     * 
      * <p>Note that this implementation will throw an
      * <tt>UnsupportedOperationException</tt> if the iterator returned by the
      * <tt>iterator</tt> method does not implement the <tt>remove</tt> method.
