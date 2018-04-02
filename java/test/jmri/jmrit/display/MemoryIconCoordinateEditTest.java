@@ -43,7 +43,9 @@ public class MemoryIconCoordinateEditTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 
 }

@@ -32,7 +32,9 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 
 }
