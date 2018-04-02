@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.prefs.Preferences;
 import javax.jmdns.JmDNS;
 import javax.jmdns.JmmDNS;
 import javax.jmdns.NetworkTopologyEvent;
@@ -87,14 +88,9 @@ public class ZeroConfService {
     public static final String IPv4 = "IPv4";
     public static final String IPv6 = "IPv6";
 
-    private static final boolean useIPv4 = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
+    private static final Preferences zeroConfPrefs = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
             ZeroConfService.class,
-            false)
-            .getBoolean(ZeroConfService.IPv4, true);
-    private static final boolean useIPv6 = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-            ZeroConfService.class,
-            false)
-            .getBoolean(ZeroConfService.IPv6, true);
+            false);
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
@@ -251,6 +247,9 @@ public class ZeroConfService {
      */
     public void publish() {
         if (!isPublished()) {
+            //get current preference values
+            boolean useIPv4 = zeroConfPrefs.getBoolean(IPv4, true);
+            boolean useIPv6 = zeroConfPrefs.getBoolean(IPv6, true);
             ZeroConfService.services.put(this.key(), this);
             this.listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(this, null));
@@ -453,6 +452,10 @@ public class ZeroConfService {
     public static List<InetAddress> hostAddresses() {
         List<InetAddress> addrList = new ArrayList<>();
         Enumeration<NetworkInterface> IFCs = null;
+        //get current preference values
+        boolean useIPv4 = zeroConfPrefs.getBoolean(IPv4, true);
+        boolean useIPv6 = zeroConfPrefs.getBoolean(IPv6, true);
+        
         try {
             IFCs = NetworkInterface.getNetworkInterfaces();
         } catch (SocketException ex) {
@@ -494,19 +497,16 @@ public class ZeroConfService {
 
         @Override
         public void inetAddressAdded(NetworkTopologyEvent nte) {
+            //get current preference values
+            boolean useIPv4 = zeroConfPrefs.getBoolean(IPv4, true);
+            boolean useIPv6 = zeroConfPrefs.getBoolean(IPv6, true);
             if (nte.getInetAddress() instanceof Inet6Address
-                    && !ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-                            ZeroConfService.class,
-                            false)
-                    .getBoolean(ZeroConfService.IPv6, true)) {
+                    && !useIPv6 ) {
                 log.debug("Ignoring IPv6 address {}", nte.getInetAddress().getHostAddress());
                 return;
             }
             if (nte.getInetAddress() instanceof Inet4Address
-                    && !ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-                            ZeroConfService.class,
-                            false)
-                    .getBoolean(ZeroConfService.IPv4, true)) {
+                    && !useIPv4) {
                 log.debug("Ignoring IPv4 address {}", nte.getInetAddress().getHostAddress());
                 return;
             }
