@@ -1090,7 +1090,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setName(getName());
             ed.init(getName());
 
-            ed._contents = _contents;
+            ed._contents = (ArrayList<Positionable>) _contents.clone();
             for (Positionable p : _contents) {
                 p.setEditor(ed);
                 ed.addToTarget(p);
@@ -1114,7 +1114,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //            ed.pack();
             ed.setVisible(true);
             InstanceManager.getDefault(PanelMenu.class).addEditorPanel(ed);
-            dispose(false);
+            dispose(true);
             return ed;
         } catch (ClassNotFoundException cnfe) {
             log.error("changeView exception {}", cnfe.toString());
@@ -2636,9 +2636,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *
      * @param clear true to discard Positionables; false to retain Positionables
      *              for future use
+     * @deprecated since 4.11.5. use {@link #dispose()} instead.
      */
+    @Deprecated
     public void dispose(boolean clear) {
         log.debug("Editor delete and dispose done. clear= {}", clear);
+        dispose();
+    }
+
+    /**
+     * Dispose of the editor.
+     */
+    @Override
+    public void dispose() {
         Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
             JFrameItem frame = iter.next();
@@ -2653,11 +2663,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         InstanceManager.getDefault(PanelMenu.class).deletePanel(this);
         Editor.editors.remove(this);
         setVisible(false);
-        if (clear) {
-            _contents.clear();
-        }
+        _contents.clear();
         removeAll();
-        this.dispose();
+        super.dispose();
     }
 
     /*

@@ -26,6 +26,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
 
+    protected boolean mTranspondingAvailable = false;
+
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
@@ -53,6 +55,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     * @param name the name of the command station
      */
     public void setCommandStationType(String name) {
         try {
@@ -65,7 +68,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     /**
-     * Set config info from the command station type enum.
+     * Set configcommand station type
+     * @param value command station type enum
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {
@@ -89,6 +93,16 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         }
         log.debug("turnout no retry: " + mTurnoutNoRetry);
         log.debug("turnout extra space: " + mTurnoutExtraSpace);
+    }
+
+    /**
+     * sets whether transponding is available
+     * @param value either yes or no
+     */
+    public void setTranspondingAvailable(String value) {
+        // default (most common state) is off, so just check for Yes
+        mTranspondingAvailable = value.equals("Yes");
+        log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
 
     /**
