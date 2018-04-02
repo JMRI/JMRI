@@ -35,10 +35,10 @@ export function configFromArray (config) {
     }
 
     //if the day of the year is set, figure out what it is
-    if (config._dayOfYear) {
+    if (config._dayOfYear != null) {
         yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
 
-        if (config._dayOfYear > daysInYear(yearToUse)) {
+        if (config._dayOfYear > daysInYear(yearToUse) || config._dayOfYear === 0) {
             getParsingFlags(config)._overflowDayOfYear = true;
         }
 
@@ -80,6 +80,11 @@ export function configFromArray (config) {
     if (config._nextDay) {
         config._a[HOUR] = 24;
     }
+
+    // check for mismatching day of week
+    if (config._w && typeof config._w.d !== 'undefined' && config._w.d !== config._d.getDay()) {
+        getParsingFlags(config).weekdayMismatch = true;
+    }
 }
 
 function dayOfYearFromWeekInfo(config) {
@@ -104,8 +109,12 @@ function dayOfYearFromWeekInfo(config) {
         dow = config._locale._week.dow;
         doy = config._locale._week.doy;
 
-        weekYear = defaults(w.gg, config._a[YEAR], weekOfYear(createLocal(), dow, doy).year);
-        week = defaults(w.w, 1);
+        var curWeek = weekOfYear(createLocal(), dow, doy);
+
+        weekYear = defaults(w.gg, config._a[YEAR], curWeek.year);
+
+        // Default to current week.
+        week = defaults(w.w, curWeek.week);
 
         if (w.d != null) {
             // weekday -- low day numbers are considered next week

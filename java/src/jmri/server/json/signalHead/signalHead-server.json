@@ -13,7 +13,7 @@
             "description": "User name of the signalHead"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the signalHead"
         },
         "properties": {
@@ -30,7 +30,9 @@
                         "type": ["string", "null"],
                         "description": "String value of property or null"
                     }
-                }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
             }
         },
         "aspect": {
@@ -46,10 +48,18 @@
             "description": "\"true\" if held; \"false\" otherwise"
         },
         "state": {
+            "type": "integer",
+            "description": "The current appearance or 100 if held == \"true\""
+        },
+        "appearance": {
+            "type": "integer",
+            "description": "The current appearance"
+        },
+        "appearanceName": {
             "type": "string",
-            "description": "The current aspect or \"dark\" if not lit or \"held\" if held"
+            "description": "The name of the current appearance"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "aspect", "lit", "held", "state"]
+    "required": ["name", "userName", "comment", "lit", "held", "state", "appearance", "appearanceName"]
 }
