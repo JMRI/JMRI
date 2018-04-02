@@ -408,7 +408,7 @@ If there are any changes in other files, do both of:
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.5". Add the next release milestone (created above) to it. Typical text:
 ```
- This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
+ This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
 - Confirm that the tag for the current release (release-4.11.4) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
@@ -449,6 +449,7 @@ git push github
 - Commit site, push, etc.
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
+
 ====================================================================================
 ## Create zipped .properties (experimental)
 

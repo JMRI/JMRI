@@ -1,5 +1,7 @@
 # YetAnotherAutoTrain.py -- Data driven automatic train
 # Use a list of actions to automatically run a train.
+# v1.3 -- add line numbers to the compiler error messages.
+# v1.4 -- add a master controller that can be used to terminate all of the threads.
 # Author:  Dave Sand copyright (c) 2018
 
 # Action Phrase Descriptions:
@@ -48,10 +50,11 @@
 # Usage
 #   Copy the script from the JMRI install location to your user files location.  See "Help >> Locations".
 #   Change the log level from 0 to 1 through 4 if log output is desired.  4 provides maximun detail.
-#   Enter a valid sensor name in the statusSensor variable.  This is used to provide feedback to JMRI.
+#   Optionally enter a valid sensor name in the statusSensor variable.  This is used to provide feedback to JMRI.
+#   Optionally enter a valid sensor name in the masterSensor variable.  This is used to stop all threads.
 #   Define the actions for a train.  The actions can be embedded in the script or placed in an external file.
 #      External file:  Create a text file with one action per line.  Blank lines and lines starting with a comment character, #, are ok.
-#                      Add the train name and file name to the "fileList".  The file name can be the complete
+#                      Add the train name and file name to the "trainList".  The file name can be the complete
 #                      path or the file name can include a keyword for the location, such as "preference:"
 #                      which is replaced by the path to the user files location at run time.
 #      Embedded: The actions are added to a Python list.  Each action is enclosed in single or double quotes
@@ -63,8 +66,9 @@ import jmri
 import re
 from javax.swing import JOptionPane
 
-logLevel = 4    # 0 for no output, 4 for the most detail.
-statusSensor = 'Run Script'
+logLevel = 1    # 0 for no output, 4 for the most detail.
+statusSensor = 'Run Script'   # Optional sensor to notify JMRI if any threads are active
+masterSensor = 'YAAT Master'   # If the optional sensor becomes active, all of the threads will be stopped
 
 trainList = {}
 trainList['Train 12'] = 'preference:Train 12.txt'
@@ -158,12 +162,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def setup(self, actionList):
         self.actionTokens = []
         self.compileMessages = []
+        self.lineNumber = 0
         self.compile(actionList)
         if len(self.compileMessages) > 1:
             self.displayMessage("\n".join(self.compileMessages))
             YetAnotherAutoTrain.threadCount -= 1
             if YetAnotherAutoTrain.threadCount < 1:
-                sensors.getSensor(statusSensor).setKnownState(INACTIVE)
+                statSensor = sensors.getSensor(statusSensor)
+                if statSensor is not None:
+                    statSensor.setKnownState(INACTIVE)
             return False
         return True
 
@@ -224,7 +231,9 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                     runShuttle = False
                     YetAnotherAutoTrain.threadCount -= 1
                     if YetAnotherAutoTrain.threadCount == 0:
-                        sensors.getSensor(statusSensor).setKnownState(INACTIVE)
+                        statSensor = sensors.getSensor(statusSensor)
+                        if statSensor is not None:
+                            statSensor.setKnownState(INACTIVE)
                     break;
             elif actionKey == 'WaitBlock':
                 self.doWaitBlock(action)
@@ -481,6 +490,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def compile(self, actionList):
         self.compileMessages.append('---- Compiler Errors ----')
         for line in actionList:
+            self.lineNumber += 1
             words = line.split()
             if len(words) == 0:
                 continue
@@ -519,7 +529,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             elif words[0] == 'Wait' and words[1] == 'for' and (words[3] == 'seconds' or words[3] == 'second'):
                 self.compileWaitTime(words[2])
             else:
-                self.compileMessages.append('Syntax error: line = {}'.format(line))
+                self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
 
     def compileAssign(self, line):
         # Assign <long | short> address <dccaddr> [[ as <train name>] in <blockname>]
@@ -537,14 +547,14 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != flds:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         grps = result[0]
         addrSize = grps[0]
         try:
             num = int(grps[1])
         except ValueError:
-            self.compileMessages.append('Assign error: the DCC address, {}, is not a number'.format(grps[1]))
+            self.compileMessages.append('Assign error at line {}: the DCC address, {}, is not a number'.format(self.lineNumber, grps[1]))
             return
         addrNum = num
         trainName = '' if flds < 3 else grps[2]
@@ -552,7 +562,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if blockName != '':
             layoutBlock = layoutblocks.getLayoutBlock(blockName)
             if layoutBlock is None:
-                self.compileMessages.append('Assign error: start block "{}" does not exist'.format(blockName))
+                self.compileMessages.append('Assign error at line {}: start block "{}" does not exist'.format(self.lineNumber, blockName))
                 return
         self.actionTokens.append(['Assign', addrNum, addrSize, trainName, blockName])
 
@@ -563,15 +573,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         blockName, blockState = result[0]
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
         if layoutBlock is None:
-            self.compileMessages.append('Block error: block {} not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: block {} not found'.format(self.lineNumber, blockName))
             return
         if layoutBlock.getOccupancySensor() is None:
-            self.compileMessages.append('Block error: occupancy sensor for block {} not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: occupancy sensor for block {} not found'.format(self.lineNumber, blockName))
             return
         self.actionTokens.append(['IfBlock', blockName, blockState])
 
@@ -582,11 +592,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('If sensor error: sensor {} not found'.format(sensorName))
+            self.compileMessages.append('If sensor error at line {}: sensor {} not found'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['IfSensor', sensorName, sensorState])
 
@@ -597,15 +607,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         blockName, blockState = result[0]
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
         if layoutBlock is None:
-            self.compileMessages.append('Block error: block "{}" not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: block "{}" not found'.format(self.lineNumber, blockName))
             return
         if layoutBlock.getOccupancySensor() is None:
-            self.compileMessages.append('Block error: occupancy sensor for block {} not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: occupancy sensor for block {} not found'.format(self.lineNumber, blockName))
             return
         self.actionTokens.append(['SetBlock', blockName, blockState])
 
@@ -616,7 +626,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) != 1:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         self.actionTokens.append(['SetDirection', result[0]])
 
@@ -633,17 +643,17 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != flds:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         grps = result[0]
         try:
             keyNum = int(grps[0])
         except ValueError:
-            self.compileMessages.append('Function key error: the key value, {}, is not an integer'.format(grps[0]))
+            self.compileMessages.append('Function key error at line {}: the key value, {}, is not an integer'.format(self.lineNumber, grps[0]))
             return
         else:
             if keyNum < 0 or keyNum > 28:
-                self.compileMessages.append('Function key error: the key value, {}, is not in the range 0-28'.format(grps[0]))
+                self.compileMessages.append('Function key error at line {}: the key value, {}, is not in the range 0-28'.format(self.lineNumber, grps[0]))
                 return
         keyState = grps[1]
         if flds ==2:
@@ -652,7 +662,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             try:
                 keyWait = float(grps[2])
             except ValueError:
-                self.compileMessages.append('Function key error: the wait time, {}, is not a number'.format(grps[2]))
+                self.compileMessages.append('Function key error at line {}: the wait time, {}, is not a number'.format(self.lineNumber, grps[2]))
                 return
         self.actionTokens.append(['SetFKey', keyNum, keyState, int(keyWait * 1000)])
 
@@ -663,11 +673,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Sensor error: sensor "{}" not found'.format(sensorName))
+            self.compileMessages.append('Sensor error at line {}: sensor "{}" not found'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['SetSensor', sensorName, sensorState])
 
@@ -678,12 +688,12 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) != 1:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         try:
             num = float(result[0])
         except ValueError:
-            self.compileMessages.append('Train speed error: the speed, {}, is not a number'.format(result[0]))
+            self.compileMessages.append('Train speed error at line {}: the speed, {}, is not a number'.format(self.lineNumber, result[0]))
         else:
             if num < 0.0:
                 num = 0.0
@@ -704,19 +714,19 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != flds:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         grps = result[0]
         turnoutName = grps[0]
         turnoutState = grps[1]
         turnoutWait = 0 if flds < 3 else grps[2]
         if turnouts.getTurnout(turnoutName) is None:
-            self.compileMessages.append('Turnout error: turnout {} not found'.format(grps[0]))
+            self.compileMessages.append('Turnout error at line {}: turnout {} not found'.format(self.lineNumber, grps[0]))
             return
         try:
             num = float(turnoutWait)
         except ValueError:
-            self.compileMessages.append('Turnout error: the wait time, {}, is not a number'.format(turnoutWait))
+            self.compileMessages.append('Turnout error at line {}: the wait time, {}, is not a number'.format(self.lineNumber, turnoutWait))
         else:
             self.actionTokens.append(['SetTurnout', turnoutName, turnoutState, int(num * 1000)])
 
@@ -727,11 +737,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Start error: sensor {} does not exist'.format(sensorName))
+            self.compileMessages.append('Start error at line {}: sensor {} does not exist'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['Start', sensorName, sensorState])
 
@@ -742,11 +752,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Stop error: sensor {} does not exist'.format(sensorName))
+            self.compileMessages.append('Stop error at line {}: sensor {} does not exist'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['Stop', sensorName, sensorState])
 
@@ -757,15 +767,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         blockName, blockState = result[0]
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
         if layoutBlock is None:
-            self.compileMessages.append('Wait block error: block {} not found'.format(blockName))
+            self.compileMessages.append('Wait block error at line {}: block {} not found'.format(self.lineNumber, blockName))
             return
         if layoutBlock.getOccupancySensor() is None:
-            self.compileMessages.append('Wait block error: occupancy sensor for block {} not found'.format(blockName))
+            self.compileMessages.append('Wait block error at line {}: occupancy sensor for block {} not found'.format(self.lineNumber, blockName))
             return
         self.actionTokens.append(['WaitBlock', blockName, blockState])
         return
@@ -777,11 +787,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Wait sensor error: sensor {} not found'.format(sensorName))
+            self.compileMessages.append('Wait sensor error at line {}: sensor {} not found'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['WaitSensor', sensorName, sensorState])
 
@@ -791,13 +801,32 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         try:
             num = float(timeValue)
         except ValueError:
-            self.compileMessages.append('Wait time error: the wait time, {}, is not a number'.format(timeValue))
+            self.compileMessages.append('Wait time error at line {}: the wait time, {}, is not a number'.format(self.lineNumber, timeValue))
         else:
             self.actionTokens.append(['WaitTime', int(num * 1000)])
 
 # End of class YetAnotherAutoTrain
 
-print 'YAAT v1.2'
+class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
+    def init(self):
+        if logLevel > 0: print 'Create Master Thread'
+        self.mSensor = sensors.getSensor(masterSensor)
+        if self.mSensor is None:
+            return False
+        self.mSensor.setKnownState(INACTIVE)
+
+    def handle(self):
+        self.waitSensorActive(self.mSensor)
+        for thread in instanceList:
+            if thread is not None:
+                if thread.isRunning():
+                    if logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
+                    thread.stop()
+        return False;
+
+# End of class YAATMaster
+
+print 'YAAT v1.4'
 
 # Process text file train definitions.
 instanceList = []   # List of file based instances
@@ -815,7 +844,14 @@ for trainName, fileName in trainList.iteritems():
         instanceList[idx].start()               # Compile was successful
 
 # Process embedded train definitions
-yaat1 = YetAnotherAutoTrain()
-yaat1.setName('Back and Forth')
-if yaat1.setup(BackAndForth):
-    yaat1.start()
+# Repeat for each embedded definition
+idx = len(instanceList)
+instanceList.append(YetAnotherAutoTrain())  # Add a new instance
+instanceList[idx].setName('Back and Forth') # <<<< this is the name of the Python list
+if instanceList[idx].setup(BackAndForth):   # <<<< Compile the train actions using the embedded list
+    instanceList[idx].start()               # Compile was successful
+
+# Keep last -- create the master thread
+master = YAATMaster()
+master.setName('YAAT Master')
+master.start()
