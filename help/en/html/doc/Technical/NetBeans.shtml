@@ -494,20 +494,68 @@
                     SpotBugs web site</a></li>
           </ul>
 
+        <h2><a id="fetch" name="fetch"></a>Loading a Specific Branch from GitHub</h2>
+        
+        The process for building from a branch (i.e. the one where someone has put a change) 
+        is a bit different from the standard instructions.  
+        (The following is NetBeans 8.2, but it doesn't vary with versions much)
+        <ul>
+        <li>Under "Team" -> "Remote" select "Fetch" (not Fetch from Upstream)
+        <br><a href="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png">
+            <img src="images/38030695-285ba828-324e-11e8-8e73-7ff0f6c32125.png" height="212" width="236"></a>
+
+        <li>Fill out the form to specify the correct user's repository 
+        (After the 1st time you do this, you'll be able to select by name in the top choice)
+        <br><a href="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png">
+            <img src="images/38030828-932040d8-324e-11e8-933f-cee0bf6f45e2.png" height="147" width="247"></a>
+
+        <li>On the next screen to select a branch, you can either select all of them (there's a button) 
+        or find and select just the name of the branch that holds the desired change:
+
+        <br><a href="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png">
+            <img src="images/38030974-fa9a7b52-324e-11e8-86f2-23c0c8735c9c.png" height="101" width="339"></a>
+
+        <li>Click "Finish"
+        </ul>
+
+        At this point, you've pulled my changes onto your local machine, but you're not using them yet.  
+        To have those files appear locally for NetBeans to build:
+
+        <ul>
+        <li>Back on the main menu, select "Team" -> "Checkout" -> "Checkout Revision...". 
+        On the window you get, click "Select":
+        <br><a href="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png">
+            <img src="images/38031217-94948748-324f-11e8-8d61-8451af389d2e.png" height="208" width="268"></a>
+
+        <li>In the upper left, find the imported branch you want, which in the example is "bobjacobsen/ast-clock-power-bit". 
+        Either click to highlight (show) and then click "Select", or just double click on it.  
+        (Don't worry about the upper right or the lower box, they'll be automatically set right)
+        <br><a href="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png">
+            <img src="images/38031418-024b9f92-3250-11e8-9d52-aca1db8d4435.png" height="259" width="321"></a>
+
+        <li>Back on the "Checkout Revision ..." window, make sure the "Checkout as New Branch" 
+            is <u>not</u> checked, and then click "Checkout"
+        </ul>
+        
+    Now you've got a copy of my changes as your checked-out source.  
+    You should do a "Clean and Build Project" to make sure that you get a consistent compilation, 
+    and then you should be able to run it.
+    <p>
+    <em>Important note:</em>  When you want to get back to the <u>standard</u> JMRI version, 
+        from the main repository, you need to check out the "master" branch.  
+        The process is similar, and simpler. 
+         Go to "Team" -> "Checkout" -> "Checkout Revision...", type just "master" (no quotes) 
+         in the "Checkout Selected Revision" box, and click "Checkout"
+
           <h2><a id="patch" name="patch">Making a Patch
           File</a></h2>
 
-          <p>A "diff patch file" was an easy way with SVN to gather
-          up all your changes, even if they span multiple files,
-          into one file. This can be used to store a set of local
-          changes in a separate file to try them on a new
-          branch or to send the patch to someone else.
-          Now that we're using Git and GitHub, we ask you
+          <p>Now that we're using Git and GitHub, we ask you
           to only contribute your code changes as a <a href=
-          "gitdeveloper.shtml">GitHub Pull Requests</a>.</p>
-
-          <p>To create the "diff patch file"
-          <strong>[deprecated]</strong>:</p>
+          "gitdeveloper.shtml">GitHub Pull Requests</a>
+          intead of using patch files.</p>
+          <p>
+          If you need a patch file for some other purpose:
 
           <ul>
             <li>From the [Team] menu, select "Export Diff Patch
@@ -521,6 +569,7 @@
             you selected will contain the patches, along with an
             information header.</li>
           </ul>
+
 
         <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

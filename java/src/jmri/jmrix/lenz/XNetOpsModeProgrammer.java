@@ -19,12 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener, AddressedProgrammer {
 
-    int mAddressHigh;
-    int mAddressLow;
-    int mAddress;
-    int progState = 0;
-    int value;
-    jmri.ProgListener progListener = null;
+    protected int mAddressHigh;
+    protected int mAddressLow;
+    protected int mAddress;
+    protected int progState = NOTPROGRAMMING;
+    protected int value;
+    protected jmri.ProgListener progListener = null;
+  
+    // possible states.
+    static protected final int NOTPROGRAMMING = 0; // is notProgramming
+    static protected final int REQUESTSENT = 1; // read/write command sent, waiting reply
 
     protected XNetTrafficController tc = null;
 
@@ -55,7 +59,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
          something from the command station */
         progListener = p;
         value = val;
-        progState = XNetProgrammer.REQUESTSENT;
+        progState = REQUESTSENT;
         restartTimer(msg.getTimeout());
     }
 
@@ -115,17 +119,17 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     @Override
     synchronized public void message(XNetReply l) {
-        if (progState == XNetProgrammer.NOTPROGRAMMING) {
+        if (progState == NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
             return;
-        } else if (progState == XNetProgrammer.REQUESTSENT) {
+        } else if (progState == REQUESTSENT) {
             if (l.isOkMessage()) {
                 // Before we set the programmer state to not programming, 
                 // delay for a short time to give the decoder a chance to 
                 // process the request.
                 new jmri.util.WaitHandler(this,250);
-                progState = XNetProgrammer.NOTPROGRAMMING;
+                progState = NOTPROGRAMMING;
                 stopTimer();
                 progListener.programmingOpReply(value, jmri.ProgListener.OK);
             } else {
@@ -135,12 +139,12 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                     // the message.
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
-                    progState = XNetProgrammer.NOTPROGRAMMING;
+                    progState = NOTPROGRAMMING;
                     stopTimer();
                     progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
                 } else {
                     /* this is an unknown error */
-                    progState = XNetProgrammer.NOTPROGRAMMING;
+                    progState = NOTPROGRAMMING;
                     stopTimer();
                     progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
                 }
@@ -180,7 +184,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     @Override
     synchronized protected void timeout() {
-        progState = XNetProgrammer.NOTPROGRAMMING;
+        progState = NOTPROGRAMMING;
         stopTimer();
         progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
     }
