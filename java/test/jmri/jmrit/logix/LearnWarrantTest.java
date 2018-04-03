@@ -153,7 +153,7 @@ public class LearnWarrantTest {
         JFrameOperator jfo2 = new JFrameOperator(tableFrame);
         jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
-        panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
     private void pressButton(WindowOperator frame, String text) {
