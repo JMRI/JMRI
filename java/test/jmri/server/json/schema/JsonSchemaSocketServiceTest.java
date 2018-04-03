@@ -10,6 +10,7 @@ import jmri.JmriException;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -56,7 +57,6 @@ public class JsonSchemaSocketServiceTest {
             Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
         }
         // GET without NAME returns JSON schema
-        // This will emit a warning (see networknt/json-schema-validator#79)
         instance.onMessage(type, data, JSON.GET, locale);
         Assert.assertTrue("Returned array", connection.getMessage().isArray());
         Assert.assertEquals("Returned array has 2 elements", 2, connection.getMessage().size());
@@ -64,6 +64,8 @@ public class JsonSchemaSocketServiceTest {
         Assert.assertTrue("Returned schema is for server", connection.getMessage().get(0).path(JSON.DATA).path(JSON.SERVER).asBoolean());
         Assert.assertEquals("Returned schema is \"json\"", "json", connection.getMessage().get(1).path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertFalse("Returned schema is for client", connection.getMessage().get(1).path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        // Suppress a warning message (see networknt/json-schema-validator#79)
+        JUnitAppender.checkForMessageStartingWith("Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
         // GET with NAME returns the desired schema
         instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, locale);
         Assert.assertTrue("Returned array", connection.getMessage().isArray());
