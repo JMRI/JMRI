@@ -35,7 +35,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
         // if server == null, returns both schemas in an array
         // if server != null, returns single schema for client or server as appropriate
         Boolean server = null;
-        if (data.path(JSON.SERVER).isValueNode()) {
+        if (data.path(JSON.SERVER).isBoolean()) {
             server = data.path(JSON.SERVER).asBoolean();
         }
         switch (type) {
@@ -82,6 +82,10 @@ public class JsonSchemaHttpService extends JsonHttpService {
                                     }
                                 }
                             }
+                            // return single object if only one, otherwise return complete array
+                            if (schemas.size() == 1) {
+                                return schemas.get(0);
+                            }
                             return schemas;
                         } catch (NullPointerException ex) {
                             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", name), ex);
@@ -97,7 +101,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
                 });
                 return root;
             default:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "GetNotAllowed", type));
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 

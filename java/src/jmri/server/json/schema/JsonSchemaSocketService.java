@@ -31,7 +31,7 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
             case JSON.PUT:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed"));
             case JSON.GET:
-                this.connection.sendMessage(this.service.doGet(type, data.path(JSON.NAME).asText(JSON.JSON), locale));
+                this.connection.sendMessage(this.service.doPost(type, data.path(JSON.NAME).asText(JSON.JSON), data, locale));
                 break;
             default:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "MethodNotImplemented"));

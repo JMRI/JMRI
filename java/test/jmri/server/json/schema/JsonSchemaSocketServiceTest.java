@@ -34,9 +34,78 @@ public class JsonSchemaSocketServiceTest {
         JUnitUtil.tearDown();
     }
 
+    /**
+     * Test that schema are gettable, but not modifiable.
+     *
+     * @throws IOException   on unexpected exception
+     * @throws JmriException on unexpected exception
+     * @throws JsonException on unexpected exception
+     */
     @Test
-    public void testOnList() {
-        String type = JSON.HELLO;
+    public void testOnMessage() throws IOException, JmriException, JsonException {
+        String type = JSON.SCHEMA;
+        ObjectNode data = mapper.createObjectNode();
+        Locale locale = Locale.ENGLISH;
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
+        // DELETE should fail
+        try {
+            instance.onMessage(type, data, JSON.DELETE, locale);
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
+        }
+        // GET without NAME returns JSON schema
+        // This will emit a warning (see networknt/json-schema-validator#79)
+        instance.onMessage(type, data, JSON.GET, locale);
+        Assert.assertTrue("Returned array", connection.getMessage().isArray());
+        Assert.assertEquals("Returned array has 2 elements", 2, connection.getMessage().size());
+        Assert.assertEquals("Returned schema is \"json\"", "json", connection.getMessage().get(0).path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertTrue("Returned schema is for server", connection.getMessage().get(0).path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        Assert.assertEquals("Returned schema is \"json\"", "json", connection.getMessage().get(1).path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertFalse("Returned schema is for client", connection.getMessage().get(1).path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        // GET with NAME returns the desired schema
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\"}"), JSON.GET, locale);
+        Assert.assertTrue("Returned array", connection.getMessage().isArray());
+        Assert.assertEquals("Returned array has 2 elements", 2, connection.getMessage().size());
+        Assert.assertEquals("Returned schema is \"json\"", "schema", connection.getMessage().get(0).path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertTrue("Returned schema is for server", connection.getMessage().get(0).path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        Assert.assertEquals("Returned schema is \"json\"", "schema", connection.getMessage().get(1).path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertFalse("Returned schema is for client", connection.getMessage().get(1).path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        // GET with NAME and SERVER==true returns a single schema
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":true}"), JSON.GET, locale);
+        Assert.assertTrue("Returned single object", connection.getMessage().isObject());
+        Assert.assertEquals("Returned schema is \"json\"", "schema", connection.getMessage().path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertTrue("Returned schema is for server", connection.getMessage().path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        instance.onMessage(type, mapper.readTree("{\"name\":\"schema\", \"server\":false}"), JSON.GET, locale);
+        Assert.assertTrue("Returned single object", connection.getMessage().isObject());
+        Assert.assertEquals("Returned schema is \"json\"", "schema", connection.getMessage().path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertFalse("Returned schema is for client", connection.getMessage().path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        // POST should fail
+        try {
+            instance.onMessage(type, data, JSON.POST, locale);
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
+        }
+        // PUT should fail
+        try {
+            instance.onMessage(type, data, JSON.PUT, locale);
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Error is HTTP 405", 405, ex.getCode());
+        }
+    }
+
+    /**
+     * Test that schema are not listed.
+     *
+     * @throws IOException   on unexpected exception
+     * @throws JmriException on unexpected exception
+     */
+    @Test
+    public void testOnList() throws IOException, JmriException {
+        String type = JSON.SCHEMA;
         ObjectNode data = mapper.createObjectNode();
         Locale locale = Locale.ENGLISH;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -44,8 +113,6 @@ public class JsonSchemaSocketServiceTest {
         try {
             instance.onList(type, data, locale);
             Assert.fail("Expected exception not thrown.");
-        } catch (IOException | JmriException ex) {
-            Assert.fail("Unexpected exception thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
         }
