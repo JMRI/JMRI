@@ -138,14 +138,14 @@
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
 
     <variable CV="50" mask="XXXXXXXV" item="Analog (AC) Mode" default="1" >
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-noYes.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>AC Analog Mode</label>
         <label xml:lang="de">Analog Modus AC</label>
         <label xml:lang="fr">Mode Analogique AC</label>
         <label xml:lang="ca">Mode analògic AC</label>
     </variable>
     <variable CV="50" mask="XXXXXXVX" item="Analog (DC) Mode" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-noYes.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>DC Analog Mode</label>
         <label xml:lang="de">Analog Modus DC</label>
         <label xml:lang="fr">Mode Analogique DC</label>
