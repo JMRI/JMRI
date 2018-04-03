@@ -83,6 +83,13 @@ public class JsonSchemaSocketServiceTest {
         Assert.assertTrue("Returned single object", connection.getMessage().isObject());
         Assert.assertEquals("Returned schema is \"json\"", "schema", connection.getMessage().path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertFalse("Returned schema is for client", connection.getMessage().path(JSON.DATA).path(JSON.SERVER).asBoolean());
+        // GET with unknown NAME should fail
+        try {
+            instance.onMessage("invalid-type", data, JSON.GET, locale);
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Error is HTTP 400", 400, ex.getCode());
+        }
         // POST should fail
         try {
             instance.onMessage(type, data, JSON.POST, locale);
