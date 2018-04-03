@@ -531,7 +531,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Read node address and check for legal range.
      *
      * @return a node address in the range 1-99 if successful. If not, -1 is returned and an
-     * appropriate error message is placed in statusText1.
+     * appropriate error message is placed in statusText1
      */
     private int readNodeAddress() {
         int addr = -1;
@@ -559,7 +559,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * If an error is detected, a suitable error message is placed
      * in the Notes area.
      *
-     * @return 'true' if successful, 'false' if an error was detected.
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readPollTimeout() {
         // get the timeout time
@@ -598,7 +598,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * If an error is detected, a suitable error message
      * is placed in the Notes area.
      *
-     * @return 'true' if successful, 'false' if an error was detected.
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readSendDelay() {
         // get the timeout time
@@ -637,7 +637,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * If an error is detected, a suitable error message is
      * placed in the Notes area.
      *
-     * @return 'true' if successful, 'false' if an error was detected.
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readNumInputBits() {
         // get the input bits
@@ -676,7 +676,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * If an error is detected, a suitable error message is placed
      * in the Notes area.
      *
-     * @return 'true' if successful, 'false' if an error was detected.
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readNumOutputBits() {
         // get the output bits
@@ -715,7 +715,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //     * If an error is detected, a suitable error message is placed in the
 //     * Notes area.
 //     *
-//     * @return 'true' if successful, 'false' if an error was detected.
+//     * @return 'true' if successful, 'false' if an error was detected
 //     */
 //    protected boolean readPulseWidth() {
 //        // get the pulse width

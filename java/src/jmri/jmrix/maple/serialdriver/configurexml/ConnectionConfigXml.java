@@ -32,7 +32,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     /**
-     * Write out the SerialNode objects too
+     * Write out the SerialNode objects too.
      *
      * @param e Element being extended
      */

@@ -2,11 +2,13 @@ package jmri.jmrix.maple.simulator.configurexml;
 
 import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.maple.InputBits;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
+import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.simulator.ConnectionConfig;
 import jmri.jmrix.maple.simulator.SimulatorAdapter;
-import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import org.jdom2.Element;
 
 /**
@@ -43,6 +45,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             Element n = new Element("node");
             n.setAttribute("name", "" + node.getNodeAddress());
             e.addContent(n);
+            // add parameters to the node as needed
+            n.addContent(makeParameter("transmissiondelay", "" + InputBits.getTimeoutTime()));
+            n.addContent(makeParameter("inputbits", "" + InputBits.getNumInputBits()));
+            n.addContent(makeParameter("senddelay", "" + OutputBits.getSendDelay()));
+            n.addContent(makeParameter("outputbits", "" + OutputBits.getNumOutputBits()));
 
             // look for the next node
             node = (SerialNode) ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(index);
@@ -75,12 +82,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
-            int type = Integer.parseInt(findParmValue(n, "nodetype"));
+            int delay = Integer.parseInt(findParmValue(n, "transmissiondelay"));
+            int senddelay = Integer.parseInt(findParmValue(n, "senddelay"));
+            int numinput = Integer.parseInt(findParmValue(n, "inputbits"));
+            int numoutput = Integer.parseInt(findParmValue(n, "outputbits"));
 
             SerialTrafficController tc = ((MapleSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
-
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type, tc);
+            SerialNode node = new SerialNode(addr, 0, tc);
+            InputBits.setTimeoutTime(delay);
+            InputBits.setNumInputBits(numinput);
+            OutputBits.setSendDelay(senddelay);
+            OutputBits.setNumOutputBits(numoutput);
 
             // Trigger initialization of this Node to reflect these parameters
             tc.initializeSerialNode(node);

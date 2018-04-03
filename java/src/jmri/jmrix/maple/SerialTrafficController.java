@@ -277,7 +277,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     @Override
-    protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
+    public void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         boolean first = true;
         for (i = 0; i < msg.maxSize() - 1; i++) {
@@ -287,7 +287,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
                 first = false;
                 log.debug("start message with {}", char1);
             }
-            if (char1 == 0x03) {  // normal message
+            if (char1 == 0x03) { // normal message
                 // get checksum bytes and end
                 log.debug("ETX ends message");
                 char1 = readByteProtected(istream);
