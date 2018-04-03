@@ -404,12 +404,12 @@ public class IconEditorWindowTest {
     @After
     public void tearDown() throws Exception {
 
-        // Delete the editor by calling dispose(true) defined in PanelEditor
+        // Delete the editor by calling dispose() defined in PanelEditor
         // directly instead of closing the window through a WindowClosing()
         // event - this is the method called to delete a panel if a user
         // selects that in the Hide/Delete dialog triggered by WindowClosing().
         if (_editor != null) {
-            _editor.dispose(true);
+            _editor.dispose();
         }
         _editor = null;
         

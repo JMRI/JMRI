@@ -575,7 +575,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
-                dispose(true);
+                dispose();
             }
         });
         setJMenuBar(menuBar);
