@@ -8,9 +8,7 @@ import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test the SignalMastIcon.
@@ -114,6 +112,14 @@ public class SignalMastIconTest extends PositionableIconTest {
 
             to.setSignalMast(new jmri.NamedBeanHandle<>(s.getSystemName(), s));
         }
+    }
+
+    @After
+    public void tearDown() {
+        super.tearDown();
+        s = null;
+        to = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignalMastIconTest.class);
