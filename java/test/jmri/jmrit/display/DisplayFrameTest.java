@@ -38,6 +38,7 @@ public class DisplayFrameTest {
     }
 
     @After
-    public void tearDown() { JUnitUtil.tearDown(); }
-
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

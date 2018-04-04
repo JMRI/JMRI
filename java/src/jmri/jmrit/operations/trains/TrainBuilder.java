@@ -3819,8 +3819,8 @@ public class TrainBuilder extends TrainCommon {
         }
         // does the departure track allow this load?
         if (!car.getTrack().shipsLoad(si.getReceiveLoadName(), car.getTypeName())) {
-            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackNotNewLoad"), new Object[]{
-                    car.getTrackName(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName()}));
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackNotLoadSchedule"), new Object[]{
+                    car.getTrackName(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName(), si.getId()}));
             return null;
         }
         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&

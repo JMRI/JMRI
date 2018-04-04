@@ -667,7 +667,7 @@ public class SwitchboardEditor extends Editor {
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
-                dispose(true);
+                dispose();
             }
         });
         _fileMenu.addSeparator();
