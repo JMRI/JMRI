@@ -39,6 +39,7 @@ public class DetectionPanelTest {
 
     @After
     public void tearDown() {
+        ip = null;
         JUnitUtil.tearDown();
     }
 
