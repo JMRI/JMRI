@@ -1017,6 +1017,7 @@ public class ActiveTrain {
 
     protected AllocatedSection reverseAllAllocatedSections() {
         AllocatedSection aSec = null;
+        log.debug("All Allocated Sections");
         for (int i = 0; i < mAllocatedSections.size(); i++) {
             aSec = mAllocatedSections.get(i);
             int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
@@ -1035,6 +1036,7 @@ public class ActiveTrain {
     // of concurrent updates.
     protected  AllocatedSection reverseOneAllocatedSections(String sectionToReverse) {
         AllocatedSection aSec = null;
+        log.debug("All One Allocated Section Sections");
         int resetCount = 0;
         boolean resetDone = false;
         while (!resetDone && resetCount < 10) {

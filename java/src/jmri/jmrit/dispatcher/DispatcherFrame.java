@@ -1497,12 +1497,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // Programming
             // Note: if ns is not null, the program will not check for end Block, but will use ns.
             // Calling code must do all validity checks on a non-null ns.
+            log.debug("A");
             if (ns != null) {
                 nextSection = ns;
+                log.debug("B");
             } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
                     && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
                     && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
                 // not at either end - determine the next section
+                log.debug("C");
                 int seqNum = ar.getSectionSeqNumber();
                 if (at.isAllocationReversed()) {
                     seqNum -= 1;
@@ -1524,6 +1527,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             } else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s == at.getEndBlockSection())
                     && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())) {
                 // need to reverse Transit direction when train is in the last Section, set next section.
+                log.debug("D");
                 nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
                 at.setAllocationReversed(true);
                 List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
@@ -1541,13 +1545,24 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     || (at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1))) {
                 // request to allocate the last block in the Transit, or the Transit is reversed and
                 //      has reached the beginning of the Transit--check for automatic restart
+                log.debug("F");
                 if (at.getResetWhenDone()) {
+                    log.debug("G");
                     if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
                         at.holdAllocation(true);
+                        log.debug("H");
                     }
                     nextSection = at.getSecondAllocatedSection();
                     nextSectionSeqNo = 2;
                     at.setAllocationReversed(false);
+//                } else if ((at.isAllocationReversed() && ar.getSectionSeqNumber() == 1)) {
+                    //nextSection = at.getSecondAllocatedSection();
+                    //nextSectionSeqNo = 2;
+//                    nextSection = ar.getSection();
+//                    nextSectionSeqNo = 1;
+//                    log.debug("I");
+                    //at.holdAllocation(true);
+                    //at.setAllocationReversed(false);
                 }
             }
 
