@@ -39,7 +39,6 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
     @Override
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
-        ROW_HEIGHT = _table.getRowHeight();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
@@ -87,7 +86,6 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
     }
 
-    @Override
     protected void addIconsToPanel(HashMap<String, NamedIcon> allIconsMap) {
         HashMap<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap == null) {
@@ -97,7 +95,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
         } else {
-            super.addIconsToPanel(iconMap);
+            super.addIconsToPanel(iconMap, _iconPanel, false);
         }
     }
 
@@ -145,7 +143,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
             if (states.length == 0) {
                 return allIconsMap;
             }
-            HashMap<String, NamedIcon> iconMap = new HashMap<String, NamedIcon>();
+            HashMap<String, NamedIcon> iconMap = new HashMap<>();
             Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();

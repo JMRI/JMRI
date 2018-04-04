@@ -31,7 +31,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Editor.TargetPane;
 import jmri.jmrit.display.IndicatorTrack;
@@ -42,6 +41,7 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -114,7 +114,6 @@ public class CircuitBuilder {
      * ***************************************************************
      */
     public CircuitBuilder() {
-        // _menuBar = new JMenuBar();
         log.error("CircuitBuilder ctor requires an Editor class");
     }
 
@@ -1058,8 +1057,8 @@ public class CircuitBuilder {
     IndicatorItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
-    DisplayFrame _convertFrame;     // must be modal dialog to halt convertIcons loop
-    JDialog _convertDialog;     // must be modal dialog to halt convertIcons loop
+    ItemPalette _convertFrame;     // must be modal dialog to halt convetIcons loop
+    JDialog _convertDialog;     // must be modal dialog to halt convetIcons loop
 
     /**
      * Check if the block being edited has all its icons converted to indicator
@@ -1177,12 +1176,12 @@ public class CircuitBuilder {
     /*
      * gimmick to get JDialog to re-layout contents and repaint
      */
-    static class ConvertFrame extends DisplayFrame {
+    class ConvertFrame extends ItemPalette {
 
         JDialog _dialog;
 
         ConvertFrame(JDialog dialog) {
-            super(false, false);
+            super(null, _editor);
             _dialog = dialog;
         }
 

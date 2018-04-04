@@ -51,6 +51,7 @@ import javax.swing.SwingWorker;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
+import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.CoordinateEdit;
@@ -410,7 +411,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> {
-            InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
+            InstanceManager.getDefault(DefaultCatalogTreeManager.class).storeImageIndex();
         });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
@@ -1639,7 +1640,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popup.addSeparator();
                 popupSet = false;
             }
-            popupSet = p.setEditItemMenu(popup);
+//            popupSet = p.setEditIconMenu(popup);
             if (popupSet) {
                 popup.addSeparator();
                 popupSet = false;
@@ -1658,7 +1659,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         popupSet |= setTextAttributes(p, popup);
                     }
                 } else {
-                    popupSet = p.setTextEditMenu(popup);
+                    popupSet = p.setEditItemMenu(popup);
                 }
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);

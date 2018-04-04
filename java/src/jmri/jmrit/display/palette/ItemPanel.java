@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -49,7 +50,8 @@ public abstract class ItemPanel extends JPanel {
     protected Editor _editor;
     protected boolean _initialized = false; // has init() been run
     protected boolean _update = false;      // editing existing icon, do not allow icon dragging. Set in init()
-    JTextField _linkName = new JTextField(30);
+    protected boolean _suppressDragging;
+    protected JTextField _linkName = new JTextField(30);
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
     static protected Color[] colorChoice = new Color[]{Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
@@ -71,8 +73,7 @@ public abstract class ItemPanel extends JPanel {
     public ItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         _paletteFrame = parentFrame;
         _itemType = type;
-        _editor = editor;
-        updateBackgrounds();
+        updateBackgrounds(editor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
@@ -83,15 +84,16 @@ public abstract class ItemPanel extends JPanel {
      * Called by enclosing TabbedPanel on change of displayed tab Pane.
      */
     public void init() {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        Thread.yield();
-        add(Box.createVerticalGlue());
-        _initialized = true;
+        if (!_initialized) {
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
+            Thread.yield();
+            add(Box.createVerticalGlue());
+            _initialized = true;
+        }
     }
 
     protected void setEditor(Editor ed) {
-        _editor = ed;
-        updateBackgrounds();    // editor change may change panel background
+        updateBackgrounds(ed);    // editor change may change panel background
         if (_bgColorBox != null) {
             _bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
         }
@@ -126,11 +128,9 @@ public abstract class ItemPanel extends JPanel {
      * @see DecoratorPanel
      * @param preview1 preview pane1 to set background image on
      * @param preview2 (optional) second preview pane1 to set background image on
-     * @param imgArray the image array to choose from
-     * @param parent the ItemPalette
      * @return JPanel with label and drop down with actions
      */
-    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, DisplayFrame parent) {
+    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2) {
         if (_bgColorBox == null) {
             _bgColorBox = new JComboBox<>();
             _bgColorBox.addItem(Bundle.getMessage("PanelBgColor")); // PanelColor key is specific for CPE, but too long for combo
@@ -138,20 +138,20 @@ public abstract class ItemPanel extends JPanel {
             _bgColorBox.addItem(Bundle.getMessage("LightGray"));
             _bgColorBox.addItem(Bundle.getMessage("DarkGray"));
             _bgColorBox.addItem(Bundle.getMessage("Checkers"));
-            _bgColorBox.setSelectedIndex(parent.getPreviewBg()); // Global field, starts as 0 = panel bg color
+            _bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg()); // Global field, starts as 0 = panel bg color
             _bgColorBox.addActionListener((ActionEvent e) -> {
-                if (imgArray != null) {
+                if (_backgrounds != null) {
                     int previewBgSet = _bgColorBox.getSelectedIndex();
-                    parent.setPreviewBg(previewBgSet); // store user choice in field on parent
+                    _paletteFrame.setPreviewBg(previewBgSet); // store user choice in field on parent
                     setPreviewBg(previewBgSet);
                     // load background image
                     log.debug("ItemPalette setImage called {}", previewBgSet);
                     if (preview1 != null) {
-                        preview1.setImage(imgArray[previewBgSet]);
+                        preview1.setImage(_backgrounds[previewBgSet]);
                         preview1.revalidate(); // force redraw
                     }
                     if (preview2 != null) {
-                        preview2.setImage(imgArray[previewBgSet]);
+                        preview2.setImage(_backgrounds[previewBgSet]);
                         preview2.revalidate(); // force redraw
                     }
                 } else {
@@ -162,15 +162,16 @@ public abstract class ItemPanel extends JPanel {
         JPanel backgroundPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         backgroundPanel.add(new JLabel(Bundle.getMessage("setBackground")));
         backgroundPanel.add(_bgColorBox);
-        backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
         return backgroundPanel;
     }
 
     /**
      * Create array of backgrounds for preview pane.
+     * @param ed Panel editor
      */
-    protected void updateBackgrounds() {
-        Color currentBackground = _editor.getTargetPanel().getBackground(); // start using Panel background color
+    protected void updateBackgrounds(Editor ed) {
+        _editor = ed;
+        Color currentBackground = ed.getTargetPanel().getBackground(); // start using Panel background color
         _backgrounds = makeBackgrounds(_backgrounds, currentBackground);
     }
 
@@ -193,12 +194,13 @@ public abstract class ItemPanel extends JPanel {
         previewPanel.setLayout(new BoxLayout(previewPanel, BoxLayout.Y_AXIS));
         previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
-        makeBgButtonPanel(panel1, panel2, _backgrounds, _paletteFrame);
+        makeBgButtonPanel(panel1, panel2);
         if (_bgColorBox != null) {
             JPanel bkgdBoxPanel = new JPanel();
             bkgdBoxPanel.add(new JLabel(Bundle.getMessage("setBackground"), SwingConstants.RIGHT));
             bkgdBoxPanel.add(_bgColorBox);
             previewPanel.add(bkgdBoxPanel);            
+            _bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
         }
         if (panel1 != null) {
             previewPanel.add(panel1);            
@@ -302,6 +304,20 @@ public abstract class ItemPanel extends JPanel {
 
     protected DisplayFrame getParentFrame() {
         return _paletteFrame;
+    }
+
+    protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension totalDim) {
+        Dimension newDim = getPreferredSize();
+        Dimension deltaDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
+        if (log.isDebugEnabled()) 
+            log.debug("resize by {} Dim= ({}, {}) \"{}\" OldDim= ({}, {}) NewDim= ({}, {})",
+                    (isPalette?"TabPane":"JFrame"), totalDim.width, totalDim.height,
+                    this._itemType, oldDim.width, oldDim.height, newDim.width, newDim.height);
+        if (_update) {
+            _paletteFrame.reSize(_paletteFrame, deltaDim, newDim);                            
+        } else if (isPalette && _initialized) {
+            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim);            
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPanel.class);

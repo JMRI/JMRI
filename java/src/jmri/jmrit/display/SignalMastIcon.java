@@ -91,7 +91,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private void getIcons() {
-        _iconMap = new java.util.HashMap<String, NamedIcon>();
+        _iconMap = new java.util.HashMap<>();
         java.util.Enumeration<String> e = getSignalMast().getAppearanceMap().getAspects();
         boolean error = false;
         while (e.hasMoreElements()) {
@@ -426,9 +426,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
         _itemPanel.init(updateAction, _iconMap);
         _itemPanel.setSelection(getSignalMast());
-        _paletteFrame.add(_itemPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_itemPanel);
     }
 
     void updateItem() {

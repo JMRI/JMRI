@@ -101,7 +101,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         } else {
             log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
-        addIconsToPanel(_currentIconMap);
+        addIconsToPanel(_currentIconMap, _iconPanel, false);
 
         if (initialize) {
             JPanel panel = new JPanel();
@@ -168,7 +168,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             addUpdateButtonToBottom(doneAction);
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
-        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame));
+        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel));
         add(_bottom1Panel);
     }
 
@@ -253,9 +253,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             makeDndIconPanel(_currentIconMap, ""); // empty key OK, this uses getDragIcon()
         }
         if (_currentIconMap != null) {
-            addIconsToPanel(_currentIconMap);
+            addIconsToPanel(_currentIconMap, _iconPanel, false);
         }
-        _iconFamilyPanel.revalidate(); // force redraw
     }
 
 

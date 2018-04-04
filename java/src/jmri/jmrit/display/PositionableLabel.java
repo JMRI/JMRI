@@ -19,7 +19,10 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.IconItemPanel;
+import jmri.jmrit.display.palette.ItemPanel;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import org.slf4j.Logger;
@@ -524,11 +527,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    @Override
-    public boolean setEditItemMenu(JPopupMenu popup) {
-        return setEditIconMenu(popup);
-    }
-
     /**
      * ********** Methods for Item Popups in Panel editor ************************
      */
@@ -603,7 +601,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-    public jmri.jmrit.display.DisplayFrame _paletteFrame; // extended JmriJFrame allowing for Listener and field
+    public jmri.jmrit.display.DisplayFrame _paletteFrame;
 
     //
     // ********** Methods for Item Popups in Control Panel editor *******************
@@ -624,6 +622,54 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
+    }
+
+    protected void initPaletteFrame(ItemPanel itemPanel) {
+        Dimension dim = itemPanel.getPreferredSize();
+        JScrollPane sp = new JScrollPane(itemPanel);
+        dim = new Dimension(dim.width +10, dim.height + 10);
+        sp.setPreferredSize(dim);
+        _paletteFrame.add(sp);
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    @Override
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Icon"));
+        popup.add(new AbstractAction(txt) {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editIconItem();
+            }
+        });
+        return true;
+    }
+
+    IconItemPanel _iconItemPanel;
+
+    protected void editIconItem() {
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
+        _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon", _editor); // NOI18N
+        ActionListener updateAction = (ActionEvent a) -> {
+                updateIconItem();
+         };
+        _iconItemPanel.init(updateAction);
+        initPaletteFrame(_iconItemPanel);
+    }
+
+    private void updateIconItem() {
+        NamedIcon icon = _iconItemPanel.getIcon();
+        if (icon != null) {
+            String url = icon.getURL();
+            setIcon(NamedIcon.getIconByName(url));
+            updateSize();
+        }
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _iconItemPanel = null;
+        invalidate();
     }
 
     /**

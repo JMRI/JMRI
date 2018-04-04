@@ -136,7 +136,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _samplePanel.setOpaque(false);
     }
 
-    static class AJComboBox extends JComboBox {
+    static class AJComboBox extends JComboBox/*<Class<?>> - can't get this to work*/ {
         int _which;
 
         AJComboBox(Font[] items, int which) {

@@ -257,9 +257,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             _itemPanel.setSelection(entries.get(i).namedSensor.getBean());
         }
         _itemPanel.setUpDown(getUpDown());
-        _paletteFrame.add(_itemPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_itemPanel);
     }
 
     void updateItem() {

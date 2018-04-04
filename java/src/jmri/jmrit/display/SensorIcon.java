@@ -467,9 +467,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSensor());
-        _paletteFrame.add(_itemPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_itemPanel);
     }
 
     void updateItem() {

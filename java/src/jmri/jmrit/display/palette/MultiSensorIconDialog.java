@@ -7,8 +7,8 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MultiSensorIconDialog extends IconDialog {
 
-    /**
+    /*
      * Constructor for existing family to change icons, add/delete icons, or to
      * delete the family.
      */
@@ -45,11 +45,11 @@ public class MultiSensorIconDialog extends IconDialog {
             @Override
             public void actionPerformed(ActionEvent a) {
                 if (addNewIcon(getIconName())) {
-                    InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+                    InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel); // OK to replace on a Dialog
-                    _iconPanel = makeIconPanel(_iconMap);
-                    p.add(_iconPanel, 1);
+                    p.remove(_iconEditPanel); // OK to replace on a Dialog
+                    _iconEditPanel = makeIconPanel(_iconMap);
+                    p.add(_iconEditPanel, 1);
                     pack();
                 }
             }
@@ -62,11 +62,11 @@ public class MultiSensorIconDialog extends IconDialog {
             @Override
             public void actionPerformed(ActionEvent a) {
                 if (deleteIcon()) {
-                    InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+                    InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
                     JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel); // OK to replace on a Dialog
-                    _iconPanel = makeIconPanel(_iconMap);
-                    p.add(_iconPanel, 1);
+                    p.remove(_iconEditPanel); // OK to replace on a Dialog
+                    _iconEditPanel = makeIconPanel(_iconMap);
+                    p.add(_iconEditPanel, 1);
                     pack();
                 }
             }

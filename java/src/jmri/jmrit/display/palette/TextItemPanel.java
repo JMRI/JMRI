@@ -17,6 +17,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
@@ -39,7 +40,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
      * @param type        identifier of the ItemPanel type, should be "Text"
      * @param editor      Editor that called this ItemPalette
      */
-    public TextItemPanel(ItemPalette parentFrame, String type, Editor editor) {
+    public TextItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragText"));
     }
@@ -172,7 +173,6 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());
-            System.out.println("TextItemPanel.getTransferData(): PositionableLabel font= "+l.getFont().getFamily());
             return l;
         }
     }

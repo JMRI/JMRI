@@ -14,7 +14,6 @@ import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
-import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,13 +91,13 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         }
         namedTurnout = to;
         if (namedTurnout != null) {
-            _iconStateMap = new HashMap<Integer, NamedIcon>();
-            _name2stateMap = new HashMap<String, Integer>();
+            _iconStateMap = new HashMap<>();
+            _name2stateMap = new HashMap<>();
             _name2stateMap.put("BeanStateUnknown", Integer.valueOf(Turnout.UNKNOWN));
             _name2stateMap.put("BeanStateInconsistent", Integer.valueOf(Turnout.INCONSISTENT));
             _name2stateMap.put("TurnoutStateClosed", Integer.valueOf(Turnout.CLOSED));
             _name2stateMap.put("TurnoutStateThrown", Integer.valueOf(Turnout.THROWN));
-            _state2nameMap = new HashMap<Integer, String>();
+            _state2nameMap = new HashMap<>();
             _state2nameMap.put(Integer.valueOf(Turnout.UNKNOWN), "BeanStateUnknown");
             _state2nameMap.put(Integer.valueOf(Turnout.INCONSISTENT), "BeanStateInconsistent");
             _state2nameMap.put(Integer.valueOf(Turnout.CLOSED), "TurnoutStateClosed");
@@ -393,7 +392,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             }
         };
         // duplicate icon map with state names rather than int states and unscaled and unrotated
-        HashMap<String, NamedIcon> strMap = new HashMap<String, NamedIcon>();
+        HashMap<String, NamedIcon> strMap = new HashMap<>();
         Iterator<Entry<Integer, NamedIcon>> it = _iconStateMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<Integer, NamedIcon> entry = it.next();
@@ -406,9 +405,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         }
         _itemPanel.init(updateAction, strMap);
         _itemPanel.setSelection(getTurnout());
-        _paletteFrame.add(_itemPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_itemPanel);
     }
 
     void updateItem() {
@@ -565,7 +562,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
 
     protected HashMap<Integer, NamedIcon> cloneMap(HashMap<Integer, NamedIcon> map,
             TurnoutIcon pos) {
-        HashMap<Integer, NamedIcon> clone = new HashMap<Integer, NamedIcon>();
+        HashMap<Integer, NamedIcon> clone = new HashMap<>();
         if (map != null) {
             Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
