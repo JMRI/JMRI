@@ -16,19 +16,9 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
   */
-public class ProxySensorManagerTest extends TestCase implements Manager.ManagerDataListener {
+public class ProxySensorManagerTest extends TestCase implements Manager.ManagerDataListener, PropertyChangeListener {
 
     protected ProxySensorManager l = null;	// holds objects under test
-
-    static protected boolean listenerResult = false;
-
-    protected class Listen implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            listenerResult = true;
-        }
-    }
 
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
@@ -165,11 +155,21 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         s1.setUserName("Sensor 1");
         
         l.addDataListener(this);
-
+        l.addPropertyChangeListener(this);
+        
         // add an item
         Sensor s2 = l.provideSensor("IS2");
 
-        // listener should have been immediately invoked
+        // property listener should have been immediately invoked
+        Assert.assertEquals("propertyListenerCount", 1, propertyListenerCount);
+        Assert.assertEquals("last call", "length", propertyListenerLast);
+
+        s2.setUserName("Sensor 2");
+
+        Assert.assertEquals("propertyListenerCount", 2, propertyListenerCount);
+        Assert.assertEquals("last call", "DisplayListName", propertyListenerLast);
+
+        // data listener should have been immediately invoked
         Assert.assertEquals("events", 1, events);
         Assert.assertEquals("last call 1", "Added", lastCall);
         Assert.assertEquals("type 1", Manager.ManagerDataEvent.INTERVAL_ADDED, lastType);
@@ -178,8 +178,11 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertEquals("content at index 1", s2, l.getNamedBeanList().get(lastEvent0));
 
         // add an item
-        Sensor s3 = l.provideSensor("IS3");
-        s3.setUserName("Sensor 3");
+        Sensor s3 = l.newSensor("IS3", "Sensor 3");
+
+        // property listener should have been immediately invoked
+        Assert.assertEquals("propertyListenerCount", 3, propertyListenerCount);
+        Assert.assertEquals("last call", "length", propertyListenerLast);
 
         // listener should have been immediately invoked
         Assert.assertEquals("events", 2, events);
@@ -188,6 +191,24 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
         Assert.assertEquals("index 2", 2, lastEvent0);
         Assert.assertEquals("content at index 2", s3, l.getNamedBeanList().get(lastEvent0));
+
+        // can add a manager and still get notifications
+        l.addManager(new InternalSensorManager() { {prefix = "Z";} });
+        Sensor s4 = l.provideSensor("ZS2");
+
+        // property listener should have been immediately invoked
+        Assert.assertEquals("propertyListenerCount", 4, propertyListenerCount);
+        Assert.assertEquals("last call", "length", propertyListenerLast);
+
+        // listener should have been immediately invoked
+        Assert.assertEquals("events", 3, events);
+        Assert.assertEquals("last call 2", "Added", lastCall);
+        Assert.assertEquals("type 2", Manager.ManagerDataEvent.INTERVAL_ADDED, lastType);
+        Assert.assertEquals("start == end 2", lastEvent0, lastEvent1);
+        Assert.assertEquals("index 3", 3, lastEvent0);
+        Assert.assertEquals("content at added index", s4, l.getNamedBeanList().get(lastEvent0));
+        
+        
     }
 
     public void testRemoveTrackingI() {
@@ -409,7 +430,42 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
 
     }
 
-    // a listen & audit methods
+    // check how proxy is integrated with defaults
+        
+    public void testInstanceManagerIntegration() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
+
+        jmri.util.JUnitUtil.initInternalSensorManager();
+
+        Assert.assertTrue(InstanceManager.getDefault(SensorManager.class) instanceof ProxySensorManager);
+
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
+
+        InternalSensorManager m = new InternalSensorManager() {
+            @Override
+            public String getSystemPrefix() {
+                return "J";
+            }
+        };
+        InstanceManager.setSensorManager(m);
+
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("JS1"));
+        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"));
+    }
+
+    // Property listen & audit methods
+    static protected int propertyListenerCount = 0;
+    static protected String propertyListenerLast = null;
+
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        propertyListenerCount++;
+        propertyListenerLast = e.getPropertyName();
+    }
+
+    // Data listen & audit methods
     int events;
     int lastEvent0;
     int lastEvent1;
@@ -441,30 +497,6 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         lastCall = "Changed";
     }
 
-    // check how proxy is integrated with defaults
-        
-    public void testInstanceManagerIntegration() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
-
-        jmri.util.JUnitUtil.initInternalSensorManager();
-
-        Assert.assertTrue(InstanceManager.getDefault(SensorManager.class) instanceof ProxySensorManager);
-
-        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
-
-        InternalSensorManager m = new InternalSensorManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
-        InstanceManager.setSensorManager(m);
-
-        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("JS1"));
-        Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"));
-    }
 
     // from here down is testing infrastructure
     public ProxySensorManagerTest(String s) {
@@ -495,6 +527,16 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         l.addManager(new InternalSensorManager() { {prefix = "K";} });
 
         jmri.InstanceManager.setSensorManager(l);
+        
+        propertyListenerCount = 0;
+        propertyListenerLast = null;
+
+        events = 0;
+        lastEvent0 = -1;
+        lastEvent1 = -1;
+        lastType = -1;
+        lastCall = null;
+
     }
 
     @Override

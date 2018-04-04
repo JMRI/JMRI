@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2016
  */
-public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener {
+public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener, PropertyChangeListener {
 
     /** {@inheritDoc} */
     @Override
@@ -61,11 +62,21 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         s1.setUserName("Sensor 1");
         
         l.addDataListener(this);
+        l.addPropertyChangeListener(this);
 
         // add an item
         Sensor s2 = l.provideSensor("IS2");
 
-        // listener should have been immediately invoked
+        // property listener should have been immediately invoked
+        Assert.assertEquals("propertyListenerCount", 1, propertyListenerCount);
+        Assert.assertEquals("last call", "length", propertyListenerLast);
+
+        s2.setUserName("Sensor 2");
+
+        Assert.assertEquals("propertyListenerCount", 2, propertyListenerCount);
+        Assert.assertEquals("last call", "DisplayListName", propertyListenerLast);
+
+        // data listener should have been immediately invoked
         Assert.assertEquals("events", 1, events);
         Assert.assertEquals("last call 1", "Added", lastCall);
         Assert.assertEquals("type 1", Manager.ManagerDataEvent.INTERVAL_ADDED, lastType);
@@ -74,8 +85,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("content at index 1", s2, l.getNamedBeanList().get(lastEvent0));
 
         // add an item
-        Sensor s3 = l.provideSensor("IS3");
-        s3.setUserName("Sensor 3");
+        Sensor s3 = l.newSensor("IS3", "Sensor 3");
+
+        // property listener should have been immediately invoked
+        Assert.assertEquals("propertyListenerCount", 3, propertyListenerCount);
+        Assert.assertEquals("last call", "length", propertyListenerLast);
 
         // listener should have been immediately invoked
         Assert.assertEquals("events", 2, events);
@@ -231,7 +245,17 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
     // from here down is testing infrastructure
 
-    // a listen & audit methods
+    // Property listen & audit methods
+    static protected int propertyListenerCount = 0;
+    static protected String propertyListenerLast = null;
+
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        propertyListenerCount++;
+        propertyListenerLast = e.getPropertyName();
+    }
+
+    // Data listen & audit methods
     int events;
     int lastEvent0;
     int lastEvent1;
@@ -272,6 +296,15 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         jmri.util.JUnitUtil.resetInstanceManager();
         
         l = new InternalSensorManager();
+
+        propertyListenerCount = 0;
+        propertyListenerLast = null;
+
+        events = 0;
+        lastEvent0 = -1;
+        lastEvent1 = -1;
+        lastType = -1;
+        lastCall = null;
     }
 
     @After
