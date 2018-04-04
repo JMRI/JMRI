@@ -387,7 +387,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _compareButtons.removeAllElements();
         _compareButtons = null;
 
+        _cvAllMap.clear();
+        _cvAllMap = null;
+        
         _status = null;
+        
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);

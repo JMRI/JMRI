@@ -70,8 +70,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- template to create the table for a specific mfg -->
-<!-- needs two improvements:  dont put out a line if the versionCV is present and -->
-<!--   handle versions specified at several levels -->
+<!-- needs two improvements:  don't put out a line if the versionCV is present and -->
+<!-- handle versions specified at several levels -->
 <xsl:template name="familyTable">
         <xsl:param name="mfgname"/>
 		<!-- define table and fill -->

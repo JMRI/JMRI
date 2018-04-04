@@ -10,6 +10,7 @@ import jmri.jmrit.roster.ExportRosterItemAction;
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.ImportRosterItemAction;
+import jmri.jmrit.roster.PrintListAction;
 import jmri.jmrit.roster.PrintRosterAction;
 import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
 import org.slf4j.Logger;
@@ -17,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Dennis Miller Copyright (C) 2005
@@ -107,8 +107,12 @@ public class RosterMenu extends JMenu {
         Frame newFrame = new Frame();
         AbstractAction printAction = new PrintRosterAction(Bundle.getMessage("MenuItemPrint"), newFrame, false);
         printAction.setEnabled(false);
+        AbstractAction listAction = new PrintListAction(Bundle.getMessage("MenuItemPrintList"), newFrame, false);
+        listAction.setEnabled(false);
         AbstractAction previewAction = new PrintRosterAction(Bundle.getMessage("MenuItemPreview"), newFrame, true);
-        printAction.setEnabled(false);
+        previewAction.setEnabled(false);
+        AbstractAction previewListAction = new PrintListAction(Bundle.getMessage("MenuItemPreviewList"), newFrame, true);
+        previewListAction.setEnabled(false);
 
         JMenu groupMenu = new JMenu(Bundle.getMessage("MenuRosterGroups"));
         groupMenu.add(createGroupAction);
@@ -126,7 +130,9 @@ public class RosterMenu extends JMenu {
         add(exportAction);
         add(deleteAction);
         add(printAction);
+        add(listAction);
         add(previewAction);
+        add(previewListAction);
         addSeparator();
         add(groupMenu);
         addSeparator();
@@ -134,7 +140,7 @@ public class RosterMenu extends JMenu {
         add(rosterImportAction);
         add(speedProfileAction);
 
-        // activate the right items
+        // activate the correct items
         switch (pMenuType) {
             case MAINMENU:
                 createAction.setEnabled(true);
@@ -148,7 +154,9 @@ public class RosterMenu extends JMenu {
                 rosterEntryToGroupAction.setEnabled(true);
                 removeRosterEntryToGroupAction.setEnabled(true);
                 printAction.setEnabled(true);
+                listAction.setEnabled(true);
                 previewAction.setEnabled(true);
+                previewListAction.setEnabled(true);
                 rosterGroupTableAction.setEnabled(true);
                 rosterExportAction.setEnabled(true);
                 rosterImportAction.setEnabled(true);

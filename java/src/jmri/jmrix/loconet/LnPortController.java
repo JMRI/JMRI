@@ -50,6 +50,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
 
+    protected boolean mTranspondingAvailable = false;
+
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
@@ -89,7 +91,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         if (value == null) {
             return;  // can happen while switching protocols
         }
-        log.debug("setCommandStationType: " + value); // NOI18N
+        log.debug("setCommandStationType: {}", value); // NOI18N
         commandStationType = value;
     }
 
@@ -100,10 +102,16 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         if (value.equals("Spread") || value.equals("Both")) { // NOI18N
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry); // NOI18N
-        log.debug("turnout extra space: " + mTurnoutExtraSpace); // NOI18N
+        log.debug("turnout no retry: {}", mTurnoutNoRetry); // NOI18N
+        log.debug("turnout extra space: {}", mTurnoutExtraSpace); // NOI18N
     }
 
+    public void setTranspondingAvailable(String value) {
+        // default (most common state) is off, so just check for Yes
+        mTranspondingAvailable = value.equals("Yes");
+        log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
+    }
+    
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
