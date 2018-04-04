@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
- * Swing action to create and register a SerialMonFrame object
+ * Swing action to create and register a SerialMonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
@@ -15,13 +15,13 @@ public class SerialMonAction extends AbstractAction {
 
     private OakTreeSystemConnectionMemo _memo = null;
 
-    public SerialMonAction(String s,OakTreeSystemConnectionMemo memo) {
+    public SerialMonAction(String s, OakTreeSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public SerialMonAction(OakTreeSystemConnectionMemo memo) {
-        this("Oak Tree monitor",memo);
+        this("Oak Tree monitor", memo);
     }
 
     @Override

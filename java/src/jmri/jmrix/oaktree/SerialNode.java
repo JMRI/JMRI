@@ -75,7 +75,7 @@ public class SerialNode extends AbstractNode {
      * setNodeAddress, and actual node type using 'setNodeType'
      */
     public SerialNode(OakTreeSystemConnectionMemo memo) {
-        this(0, IO24,memo);
+        this(0, IO24, memo);
     }
 
     /**

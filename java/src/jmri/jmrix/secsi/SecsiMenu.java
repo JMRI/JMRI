@@ -4,23 +4,20 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri SECSI-specific tools
+ * Create a "Systems" menu containing the JMRI SECSI-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright 2003, 2006, 2007
  */
 public class SecsiMenu extends JMenu {
 
-    private SecsiSystemConnectionMemo memo = null;
-
-    public SecsiMenu(String name,SecsiSystemConnectionMemo _memo) {
-        this(_memo);
+    public SecsiMenu(String name, SecsiSystemConnectionMemo memo) {
+        this(memo);
         setText(name);
     }
 
-    public SecsiMenu(SecsiSystemConnectionMemo _memo) {
+    public SecsiMenu(SecsiSystemConnectionMemo memo) {
 
         super();
-        memo = _memo;
 
         if (memo != null) {
             setText(memo.getUserName());

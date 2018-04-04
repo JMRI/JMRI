@@ -8,7 +8,7 @@ import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialPacketGenFrame
- * object
+ * object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -16,12 +16,13 @@ public class SerialPacketGenAction extends AbstractAction {
 
     private OakTreeSystemConnectionMemo _memo = null;
 
-    public SerialPacketGenAction(String s,OakTreeSystemConnectionMemo memo) {
+    public SerialPacketGenAction(String s, OakTreeSystemConnectionMemo memo) {
         super(s);
+        _memo = memo;
     }
 
     public SerialPacketGenAction(OakTreeSystemConnectionMemo memo) {
-        this("Send Oak Tree message",memo);
+        this("Send Oak Tree message", memo);
     }
 
     @Override
@@ -34,6 +35,7 @@ public class SerialPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
-}
 
+    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+
+}

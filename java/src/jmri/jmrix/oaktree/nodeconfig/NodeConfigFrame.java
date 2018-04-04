@@ -69,7 +69,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Initialize the config window
+     * Initialize the config window.
      */
     @Override
     public void initComponents() {

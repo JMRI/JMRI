@@ -16,7 +16,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public SerialMonFrame(OakTreeSystemConnectionMemo memo) {
         super();
-        _memo=memo;
+        _memo = memo;
     }
 
     @Override
