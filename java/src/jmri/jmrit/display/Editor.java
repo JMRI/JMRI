@@ -1059,7 +1059,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         break;
                     case 1:
                         if (deletePanel()) { // disposes everything
-                            dispose(true);
+                            dispose();
                         }
                         break;
                     case 2:
@@ -1114,7 +1114,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //            ed.pack();
             ed.setVisible(true);
             InstanceManager.getDefault(PanelMenu.class).addEditorPanel(ed);
-            dispose(true);
+            dispose();
             return ed;
         } catch (ClassNotFoundException cnfe) {
             log.error("changeView exception {}", cnfe.toString());
