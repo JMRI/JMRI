@@ -161,11 +161,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use, if
-     *         need be creating one.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Static function returning the SerialSensorManager instance to use.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialSensorManager instance() {
         return null;
     }

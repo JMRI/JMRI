@@ -191,17 +191,18 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      *
      * @return the registered SerialTrafficController instance for general use,
      *         if need be creating one
+     * @deprecated since 4.9.7
      */
     @Deprecated
     static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for Grapevine SerialTrafficController");
+        log.warn("deprecated instance() call for Secsi SerialTrafficController");
         return null;
     }
 
     static volatile protected SerialTrafficController self = null;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
+            justification = "temporary until multi-system; only set at startup")
     @Override
     protected void setInstance() {
         self = this;
@@ -228,7 +229,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m associated systemConnectionMemo object
      */
     public void setSystemConnectionMemo(SecsiSystemConnectionMemo m) {
-        log.debug("Secsi SerialTrafficController set memo from {} to {}", memo.getUserName(), m.getUserName());
+        log.debug("Secsi SerialTrafficController set memo to {}", m.getUserName());
         memo = m;
     }
 

@@ -13,21 +13,21 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
   */
 public class SerialMonAction extends AbstractAction {
 
-    private SecsiSystemConnectionMemo memo = null;
+    private SecsiSystemConnectionMemo _memo = null;
 
-    public SerialMonAction(String s, SecsiSystemConnectionMemo _memo) {
+    public SerialMonAction(String s, SecsiSystemConnectionMemo memo) {
         super(s);
-        memo = _memo;
+        _memo = memo;
     }
 
-    public SerialMonAction(SecsiSystemConnectionMemo _memo) {
-        this(Bundle.getMessage("MonitorXTitle", "SECSI"), _memo);
+    public SerialMonAction(SecsiSystemConnectionMemo memo) {
+        this(Bundle.getMessage("MonitorXTitle", "SECSI"), memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
-        SerialMonFrame f = new SerialMonFrame(memo);
+        SerialMonFrame f = new SerialMonFrame(_memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

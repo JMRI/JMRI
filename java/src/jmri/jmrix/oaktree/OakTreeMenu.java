@@ -16,7 +16,6 @@ public class OakTreeMenu extends JMenu {
     }
 
     public OakTreeMenu(OakTreeSystemConnectionMemo memo) {
-
         super();
 
         setText(Bundle.getMessage("MenuOakTree"));

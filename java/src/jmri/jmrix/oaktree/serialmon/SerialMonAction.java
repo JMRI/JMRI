@@ -2,9 +2,9 @@ package jmri.jmrix.oaktree.serialmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialMonFrame object.
@@ -21,7 +21,7 @@ public class SerialMonAction extends AbstractAction {
     }
 
     public SerialMonAction(OakTreeSystemConnectionMemo memo) {
-        this("Oak Tree monitor", memo);
+        this(Bundle.getMessage("MonitorXTitle", "OakTree"), memo);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SerialMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

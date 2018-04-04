@@ -88,7 +88,6 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                 pollButtonActionPerformed(e);
             }
         });
-        pollButton.setToolTipText(Bundle.getMessage("PollToolTip"));
 
         // pack for display
         pack();
