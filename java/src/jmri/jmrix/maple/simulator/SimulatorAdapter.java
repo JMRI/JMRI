@@ -20,10 +20,8 @@ import org.slf4j.LoggerFactory;
  * Currently, the Maple SimulatorAdapter reacts to the following commands sent from the user
  * interface with an appropriate reply {@link #generateReply(SerialMessage)}:
  * <ul>
- *     <li>Software version (poll)
- *     <li>Renumber (displays dialog: not supported)
- *     <li>Node Init (2 replies + user configurable node-bank-bit status)
- *     <li>Set signal/sensor/turnout (echoes message)
+ *     <li>RC Read Coils (poll), all coil bits 0
+ *     <li>WC Write Coils (ACK)
  * </ul>
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / GrapevineSimulatorAdapter 2017
@@ -273,29 +271,39 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 getStartAddress(msg), getNumberOfCoils(msg));
 
         switch ("" + cmd1 + cmd2) {
-            case "RC": // broadcast Read Coils (poll) message received
-                log.debug("poll message detected");
+            case "RC": // Read Coils message
+                log.debug("Read Coils (poll) message detected");
                 int i = 1;
                 int lastNode = 1;
                 if (nodeAddress == 0) { // broadcast poll, reply from all existing nodes
                     lastNode = 99;
                 }
                 // init reply
-                log.debug("start init of node {}", nodeAddress);
-                reply.setElement(0, 0x02);
+                log.debug("RC Reply from node {}", nodeAddress);
+                reply.setElement(0, 0x02); // <STX>
                 reply.setElement(1, msg.getElement(1));
                 reply.setElement(2, msg.getElement(2));
                 reply.setElement(3, 'R');
                 reply.setElement(4, 'C');
                 for (i = 1; i < getNumberOfCoils(msg); i++) {
-                    reply.setElement(i + 4, 0x01); // report state of each requested coil as INactive = 0
+                    reply.setElement(i + 4, 0x00); // report state of each requested coil as Inactive = 0
                     // TODO: echo commanded state from JMRI node-bit using: getCommandedState(nodeAddress * 1000 + getStartAddress(msg) + 1)
                 }
                 reply.setElement(i + 5, 0x03);
                 reply = setChecksum(reply, i + 6);
                 break;
+            case "WC": // Write Coils message
+                log.debug("Write Coils message detected");
+                // init reply
+                log.debug("WC Reply from node {}", nodeAddress);
+                reply.setElement(0, 0x06); // <ACK>
+                reply.setElement(1, msg.getElement(1));
+                reply.setElement(2, msg.getElement(2));
+                reply.setElement(3, 'W');
+                reply.setElement(4, 'C');
+                break;
             default:
-                // TODO other message replies
+                // TODO "WC" message replies
                 log.debug("command ignored");
                 reply = null; // ignore all other messages
         }
