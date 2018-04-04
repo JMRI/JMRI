@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file for TCS diesel version 4 sound set -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoice choice="ACS64 Air Compressor" value="0"/>
+	<enumChoice choice="Electric E-Bell" value="1"/>
+	<enumChoiceGroup>
+		<name>Brake Release</name>
+		<enumChoice choice="ACS64 Brake Release" value="2"/>
+		<enumChoice choice="Brake Release 2" value="3"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Brake Squeal Function" value="4"/>
+	<enumChoiceGroup>
+		<name>Cooling Fan</name>
+    <enumChoice choice="Cooling Fan/Power Inverter" value="42"/>
+    <enumChoice choice="ACS64 power converter blower" value="43"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Coupler Clank</name>
+		<enumChoice choice="Coupling" value="44"/>
+		<enumChoice choice="Uncoupling" value="45"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Crew Alert" value="46"/>
+	<enumChoiceGroup>
+		<name>Horn Forward</name>
+		<enumChoice choice="Leslie RS5T Forward" value="47"/>
+		<enumChoice choice="Leslie RS5T Forward" value="48"/>
+		<enumChoice choice="Nathan K5HL Forward" value="49"/>
+		<enumChoice choice="Nathan K5LA ACS64 Forward" value="50"/>
+		<enumChoice choice="Nathan K5LA Forward" value="51"/>
+		<enumChoice choice="Strasburg 8618 SW8 Nathan K5LA Forward" value="52"/>
+		<enumChoice choice="Nathan K5LLA Forward" value="53"/>
+		<enumChoice choice="Nathan M5 Forward" value="54"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) Forward" value="55"/>
+		<enumChoice choice="Nathan P5A Forward" value="56"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Long</name>
+		<enumChoice choice="Leslie RS5T Long" value="57"/>
+		<enumChoice choice="Nathan K5H Long" value="58"/>
+		<enumChoice choice="Nathan K5HL Long" value="59"/>
+		<enumChoice choice="Nathan K5LA ACS64 Long" value="60"/>
+		<enumChoice choice="Nathan K5LA Long" value="61"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA Long" value="62"/>
+		<enumChoice choice="Nathan K5LLA Long" value="63"/>
+		<enumChoice choice="Nathan M5 Long" value="64"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) Long" value="65"/>
+		<enumChoice choice="Nathan P5A Long" value="66"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Quill</name>
+		<enumChoice choice="Leslie RS5T Grade Crossing" value="67"/>
+		<enumChoice choice="Leslie RS5T Grade Crossing Medium" value="68"/>
+		<enumChoice choice="Leslie RS5T Grade Crossing Long" value="69"/>
+		<enumChoice choice="Nathan K5H Grade Crossing" value="70"/>
+		<enumChoice choice="Nathan K5H Grade Crossing Medium" value="71"/>
+		<enumChoice choice="Nathan K5H Grade Crossing Long" value="72"/>
+		<enumChoice choice="Nathan K5HL Grade Crossing" value="73"/>
+		<enumChoice choice="Nathan K5HL Grade Crossing Medium" value="74"/>
+		<enumChoice choice="Nathan K5HL Grade Crossing Long" value="75"/>
+		<enumChoice choice="Nathan K5LA ACS64" value="76"/>
+		<enumChoice choice="Nathan K5LA ACS64 Medium" value="77"/>
+		<enumChoice choice="Nathan K5LA ACS64 Long" value="78"/>
+		<enumChoice choice="Nathan K5LA Grade Crossing" value="79"/>
+		<enumChoice choice="Nathan K5LA Grade Crossing Medium" value="80"/>
+		<enumChoice choice="Nathan K5LA Grade Crossing Long" value="81"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA 3" value="82"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA 3" value="83"/>
+		<enumChoice choice="Strasburg #8618 SW8 Nathan K5LA 3" value="84"/>
+		<enumChoice choice="Nathan K5LLA Grade Crosing" value="85"/>
+		<enumChoice choice="Nathan K5LLA Grade Crosing Medium" value="86"/>
+		<enumChoice choice="Nathan K5LLA Grade Crosing Long" value="87"/>
+		<enumChoice choice="Nathan M5 Grade Crossing" value="88"/>
+		<enumChoice choice="Nathan M5 Grade Crossing Medium" value="89"/>
+		<enumChoice choice="Nathan M5 Grade Crossing Long" value="90"/>
+		<enumChoice choice="Nathan P5 Chime (Australia)" value="91"/>
+		<enumChoice choice="Nathan P5 Chime Medium (Australia)" value="92"/>
+		<enumChoice choice="Nathan P5 Chime Long (Australia)" value="93"/>
+		<enumChoice choice="Nathan P5A Grade Crossing" value="94"/>
+		<enumChoice choice="Nathan P5A Grade Crossing Medium" value="95"/>
+		<enumChoice choice="Nathan P5A Grade Crossing Long" value="96"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Reverse</name>
+		<enumChoice choice="Leslie RS5T Reverse" value="111"/>
+		<enumChoice choice="Nathan K5H Reverse" value="112"/>
+		<enumChoice choice="Nathan K5HL Reverse" value="113"/>
+		<enumChoice choice="Nathan K5LA ACS64 Reverse" value="114"/>
+		<enumChoice choice="Nathan K5LA Reverse" value="115"/>
+		<enumChoice choice="Strasburg 8618 SW8 Nathan K5LA Reverse" value="116"/>
+		<enumChoice choice="Nathan K5LLA Reverse" value="117"/>
+		<enumChoice choice="Nathan M5 Reverse" value="118"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) Reverse" value="119"/>
+		<enumChoice choice="Nathan P5A Reverse" value="120"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Short</name>
+		<enumChoice choice="Leslie RS5T Short" value="97"/>
+		<enumChoice choice="Nathan K5H Short" value="98"/>
+		<enumChoice choice="Nathan K5HL Short" value="99"/>
+		<enumChoice choice="Nathan K5LA ACS64 Short" value="100"/>
+		<enumChoice choice="Nathan K5LA Short" value="101"/>
+		<enumChoice choice="Strasburg 8618 SW8 Nathan K5LA Short" value="102"/>
+		<enumChoice choice="Nathan K5LLA Short" value="103"/>
+		<enumChoice choice="Nathan M5 Short" value="104"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) Short" value="105"/>
+		<enumChoice choice="Nathan P5A Short" value="106"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn Stop</name>
+		<enumChoice choice="Leslie RS5T Stop" value="143"/>
+		<enumChoice choice="Nathan K5H Stop" value="144"/>
+		<enumChoice choice="Nathan K5HL Stop" value="145"/>
+		<enumChoice choice="Nathan K5LA ACS64 Stop" value="146"/>
+		<enumChoice choice="Nathan K5LA Stop" value="147"/>
+		<enumChoice choice="Strasburg 8618 SW8 Nathan K5LA Stop" value="148"/>
+		<enumChoice choice="Nathan K5LLA Stop" value="149"/>
+		<enumChoice choice="Nathan M5 Stop" value="150"/>
+		<enumChoice choice="Nathan P5 Chime (Australia) Stop" value="151"/>
+		<enumChoice choice="Nathan P5A Stop" value="152"/>
+	</enumChoiceGroup>
+	<enumChoice choice="ACS64 Idling" value="107"/>
+	<enumChoice choice="Switching/Mainline Momentum Function" value="108"/>
+	<enumChoice choice="Mute Function" value="110"/>
+	<enumChoice choice="ACS64 Pantograph" value="34"/>
+	<enumChoice choice="Rotate Horn/Bell Function" value="121"/>
+	<enumChoiceGroup>
+		<name>Station Announcements</name>
+		<enumChoice choice="ACS64 arriving station announcement" value="131"/>
+		<enumChoice choice="ACS64 departing station announcement" value="137"/>
+	</enumChoiceGroup>
+	<enumChoice choice="ACS64 Trackside Whoosh" value="155"/>
+	<enumChoice choice="ACS64 Traction Motor Blower" value="154"/>
+	<enumChoice choice="Windshield Wiper" value="165"/>
+	<enumChoice choice="None" value="350"/>
+	<enumChoice choice="None " value="65535"/>
+</enumVal>
