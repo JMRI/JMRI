@@ -62,7 +62,7 @@ public class LinkingLabelTest extends PositionableTestBase {
     public void testGetAndSetURL(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LinkingLabel l = (LinkingLabel) p;
-        Assert.assertNull("URL before set",l.getURL());
+        Assert.assertEquals("URL before set","http://jmri.org",l.getURL());
         l.setULRL("bar");
         Assert.assertEquals("URL after set","bar",l.getURL());
     }

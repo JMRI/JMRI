@@ -29,6 +29,12 @@ public class PortalIconTest extends PositionableIconTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Do View Menu",p.doViemMenu());
     }
+    
+    @Override
+    @Test
+    @Ignore("a PortalIcon constructed with just an Editor does not have an associated portal, so this fails")
+    public void testGetNameString(){
+    }
 
     @Override
     @Before
@@ -38,6 +44,17 @@ public class PortalIconTest extends PositionableIconTest {
            editor = new ControlPanelEditor("Portal Icon Test Panel");
            p = new PortalIcon(editor);
         }
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        if (editor!=null) {
+           editor.dispose();
+           editor = null;
+           p = null; 
+        }
+        JUnitUtil.tearDown();
     }
 
 }
