@@ -263,39 +263,58 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         log.debug("Generate Reply to message from node {} (string = {})", msg.getAddress(), msg.toString());
 
         SerialReply reply = new SerialReply(); // reply length is determined by highest byte added
-        int nodeaddr = msg.getUA();        // node addres from element 1 + 2
-        int cmd1 = msg.getElement(3);      // command char 1
-        int cmd2 = msg.getElement(4);      // command char 2
-        int n1 = msg.getElement(9) - '0';  // N char 1
-        int n2 = msg.getElement(10) - '0'; // N char 2
-        log.debug("Message nodeaddress={} cmd1={} cmd2={} n1={} n2={} isPoll {}", nodeaddr, cmd1, cmd2, n1, n2, msg.isPoll());
+        int nodeAddress = msg.getUA();         // node addres from element 1 + 2
+        //convert hex to character
+        char cmd1 = (char) msg.getElement(3);  // command char 1
+        char cmd2 = (char) msg.getElement(4);  // command char 2
 
-        if (msg.isPoll()) {
-            int i = 1;
-            log.debug("general poll message detected");
-            // init reply
-            log.debug("start init of node {}", nodeaddr);
-            reply.setElement(0, 0x02);
-            reply.setElement(1, msg.getElement(1));
-            reply.setElement(2, msg.getElement(2));
-            reply.setElement(3, 'R');
-            reply.setElement(4, 'C');
-            //for (i = 1; i < (10 * n1 + n2); i++) { // combine n1, n2
-                reply.setElement(i + 4, 0x00); // report state of each requested coil
-            //}
-            reply.setElement(i + 5, 0x03);
-            reply = setChecksum(reply, i + 6);
-        } else {
-            // TODO more message replies
+        log.debug("Message nodeaddress={} cmd={}{}, Start={}, Num={}",
+                nodeAddress, cmd1, cmd2,
+                getStartAddress(msg), getNumberOfCoils(msg));
 
-            log.debug("command ignored");
-            reply = null; // ignore all other messages
-            // alternatively, send a 12 byte general reply:
-            // reply.setElement(0, (nodeaddr));
-            // reply = setChecksum(reply, 12);
+        switch ("" + cmd1 + cmd2) {
+            case "RC": // broadcast Read Coils (poll) message received
+                log.debug("poll message detected");
+                int i = 1;
+                int lastNode = 1;
+                if (nodeAddress == 0) { // broadcast poll, reply from all existing nodes
+                    lastNode = 99;
+                }
+                // init reply
+                log.debug("start init of node {}", nodeAddress);
+                reply.setElement(0, 0x02);
+                reply.setElement(1, msg.getElement(1));
+                reply.setElement(2, msg.getElement(2));
+                reply.setElement(3, 'R');
+                reply.setElement(4, 'C');
+                for (i = 1; i < getNumberOfCoils(msg); i++) {
+                    reply.setElement(i + 4, 0x01); // report state of each requested coil as INactive = 0
+                    // TODO: echo commanded state from JMRI node-bit using: getCommandedState(nodeAddress * 1000 + getStartAddress(msg) + 1)
+                }
+                reply.setElement(i + 5, 0x03);
+                reply = setChecksum(reply, i + 6);
+                break;
+            default:
+                // TODO other message replies
+                log.debug("command ignored");
+                reply = null; // ignore all other messages
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
         return (reply);
+    }
+
+    private int getStartAddress(SerialMessage msg) {
+        int a1 = msg.getElement(5) - '0';  // StartAt char 1
+        int a2 = msg.getElement(6) - '0';  // StartAt char 2
+        int a3 = msg.getElement(7) - '0';  // StartAt char 3
+        int a4 = msg.getElement(8) - '0';  // StartAt char 4
+        return 1000 * a1 + 100 * a2 + 10 * a3 + a4; // combine a1..a4
+    }
+
+    private int getNumberOfCoils(SerialMessage msg) {
+        int n1 = msg.getElement(9) - '0';  // N char 1
+        int n2 = msg.getElement(10) - '0'; // N char 2
+        return 10 * n1 + n2; // combine n1, n2
     }
 
     /**
