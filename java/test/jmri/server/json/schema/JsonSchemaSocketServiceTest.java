@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -111,20 +112,23 @@ public class JsonSchemaSocketServiceTest {
      *
      * @throws IOException   on unexpected exception
      * @throws JmriException on unexpected exception
+     * @throws JsonException on unexpected exception
      */
     @Test
-    public void testOnList() throws IOException, JmriException {
-        String type = JSON.SCHEMA;
+    public void testOnList() throws IOException, JmriException, JsonException {
         ObjectNode data = mapper.createObjectNode();
         Locale locale = Locale.ENGLISH;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSchemaSocketService instance = new JsonSchemaSocketService(connection);
         try {
-            instance.onList(type, data, locale);
+            instance.onList(JSON.SCHEMA, data, locale);
             Assert.fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
         }
+        instance.onList(JSON.TYPE, data, locale);
+        Assert.assertTrue("Result is array", connection.getMessage().isArray());
+        Assert.assertEquals("Result contains all types", InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().size(), connection.getMessage().size());
     }
 
 }
