@@ -370,6 +370,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        if (!propertyListenerList.contains(l)) {
+            propertyListenerList.add(l);
+        }
         for (Manager<E> m : mgrs) {
             m.addPropertyChangeListener(l);
         }
@@ -378,6 +381,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        if (propertyListenerList.contains(l)) {
+            propertyListenerList.remove(l);
+        }
         for (Manager<E> m : mgrs) {
             m.removePropertyChangeListener(l);
         }
