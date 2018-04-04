@@ -311,6 +311,12 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return (reply);
     }
 
+    /**
+     * Extract start coils from RC/WC message.
+     *
+     * @param msg te SerialMessage received from Simulator inpipe
+     * @return decimal coil ID
+     */
     private int getStartAddress(SerialMessage msg) {
         int a1 = msg.getElement(5) - '0';  // StartAt char 1
         int a2 = msg.getElement(6) - '0';  // StartAt char 2
@@ -319,6 +325,13 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return 1000 * a1 + 100 * a2 + 10 * a3 + a4; // combine a1..a4
     }
 
+    /**
+     * Extract the number of coils to precess from RC/WC message.
+     *
+     * @param msg te SerialMessage received from Simulator inpipe
+     * @return the number of consecutive coils to read/write (decimal)
+     * after starting Coil
+     */
     private int getNumberOfCoils(SerialMessage msg) {
         int n1 = msg.getElement(9) - '0';  // N char 1
         int n2 = msg.getElement(10) - '0'; // N char 2
