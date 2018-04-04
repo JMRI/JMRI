@@ -113,8 +113,9 @@
         run, or you can select it from the "Edit" menu.</li>
 
         <li>Select "SPROG DCC" from the list as the System
-        Manufacturer.</li>
+        Manufacturer.
         <img src="images/SprogConnectOptions.png" width="272" height="157" align="right">
+        </li>
 
         <li>Next, select one of the available System Connection options;<br>
         SPROG can either function as a stand-alone Decoder Programmer

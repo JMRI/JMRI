@@ -350,6 +350,8 @@ public class TrainBuilder extends TrainCommon {
      * show train build options in detailed mode
      */
     private void showTrainBuildOptions() {
+        ResourceBundle rb = ResourceBundle
+                .getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
         addLine(_buildReport, FIVE, Bundle.getMessage("MenuItemBuildOptions") + ":");
         if (Setup.isBuildAggressive()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));
@@ -361,11 +363,22 @@ public class TrainBuilder extends TrainCommon {
         } else {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeNormal"));
         }
+        // show switcher options
+        if (_train.isLocalSwitcher()) {
+            addLine(_buildReport, FIVE, BLANK_LINE);
+            addLine(_buildReport, FIVE, rb.getString("BorderLayoutSwitcherService") + ":");
+            if (Setup.isLocalInterchangeMovesEnabled()) {
+                addLine(_buildReport, FIVE, rb.getString("AllowLocalInterchange"));
+            }
+            if (Setup.isLocalSpurMovesEnabled()) {
+                addLine(_buildReport, FIVE, rb.getString("AllowLocalSpur"));
+            }
+            if (Setup.isLocalYardMovesEnabled()) {
+                addLine(_buildReport, FIVE, rb.getString("AllowLocalYard"));
+            }
+        }
         // show staging options
         if (_departLocation.isStaging() || _terminateLocation.isStaging()) {
-            ResourceBundle rb = ResourceBundle
-                    .getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-
             addLine(_buildReport, FIVE, BLANK_LINE);
             addLine(_buildReport, FIVE, Bundle.getMessage("buildStagingOptions"));
 
@@ -2557,7 +2570,7 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             }
         }
-        if (!foundCar) {
+        if (!foundCar && !isSecondPass) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoCarsAtLocation"),
                     new Object[]{rl.getName()}));
             addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
@@ -3806,8 +3819,8 @@ public class TrainBuilder extends TrainCommon {
         }
         // does the departure track allow this load?
         if (!car.getTrack().shipsLoad(si.getReceiveLoadName(), car.getTypeName())) {
-            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackNotNewLoad"), new Object[]{
-                    car.getTrackName(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName()}));
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackNotLoadSchedule"), new Object[]{
+                    car.getTrackName(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName(), si.getId()}));
             return null;
         }
         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&

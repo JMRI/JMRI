@@ -21,6 +21,9 @@ public class JsonTestSocketService extends JsonSocketService<JsonTestHttpService
 
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+        if (data.path("throws").asText("").equals("JmriException")) {
+            throw new JmriException(); // thrown for testing purposes
+        }
         switch (method) {
             case JSON.GET:
                 connection.sendMessage(service.doGet(type, data.path(JSON.NAME).asText(), locale));

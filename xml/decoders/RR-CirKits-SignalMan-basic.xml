@@ -22,7 +22,9 @@
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode">
       <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <!--		<variable label="Address" CV="9" item="Extended Address"  -->
       <variable item="Primary Address" CV="1" comment="Short address">

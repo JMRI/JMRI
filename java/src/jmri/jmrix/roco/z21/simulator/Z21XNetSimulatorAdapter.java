@@ -210,16 +210,16 @@ public class Z21XNetSimulatorAdapter {
                         // XpressNet set Function Momentary Group 1.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group2:
-                        // XpressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 2.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group3:
-                        // XpressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 3.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group4:
-                        // XpressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 4.
                         // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group5:
-                        // XpressNet set Function Momentary Group 1.
+                        // XpressNet set Function Momentary Group 5.
                         // We need to find out what a Z21 actually sends in response.
                           reply = okReply();
                           break;
@@ -324,13 +324,42 @@ public class Z21XNetSimulatorAdapter {
                 reply=lanXTurnoutInfoReply(m.getElement(1),m.getElement(2),
                                 (0x01 & m.getElement(3))==0x01);
                 break;
+            case XNetConstants.OPS_MODE_PROG_REQ:
+                if(m.getElement(1) == XNetConstants.OPS_MODE_PROG_WRITE_REQ){
+                    int operation = m.getElement(4) & 0xFC;
+                    switch(operation) {
+                         case 0xEC:
+                           log.debug("Write CV in Ops Mode Request Received");
+                           reply = okReply();
+                           break;
+                         case 0xE4:
+                           log.debug("Verify CV in Ops Mode Request Received");
+                           reply = new XNetReply();
+                           reply.setOpCode(Z21Constants.LAN_X_CV_RESULT_XHEADER);
+                           reply.setElement(1,Z21Constants.LAN_X_CV_RESULT_DB0);
+                           reply.setElement(2,(m.getElement(4)&0x03));
+                           reply.setElement(3,m.getElement(5));
+                           reply.setElement(4,m.getElement(6));
+                           reply.setElement(5,0x00);
+                           reply.setParity();
+                           break;
+                         case 0xE8:
+                           log.debug("Ops Mode Bit Request Received");
+                           reply = okReply();
+                           break;
+                         default:
+                           reply=notSupportedReply();
+                    }
+                } else {
+                    reply=notSupportedReply();
+                }
+                break;
             case XNetConstants.LI101_REQUEST:
             case XNetConstants.CS_SET_POWERMODE:
             //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST 
             //and CS_SET_POWERMODE 
             //have the same value
             case XNetConstants.PROG_WRITE_REQUEST:
-            case XNetConstants.OPS_MODE_PROG_REQ:
             case XNetConstants.LOCO_DOUBLEHEAD:
             default:
                 log.debug("Unsupported requested received: {}", m.toString());

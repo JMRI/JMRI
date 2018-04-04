@@ -94,11 +94,12 @@ public class JsonReporterSocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
         JUnitUtil.initReporterManager();
     }
 
     @After
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
+    }
 
 }

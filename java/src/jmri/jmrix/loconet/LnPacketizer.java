@@ -218,11 +218,13 @@ public class LnPacketizer extends LnTrafficController {
             while (true) {   // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
-                    while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) {
-                        log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
+                    while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
+                        if (log.isTraceEnabled()) { // avoid building string 
+                            log.trace("Skipping: {}", Integer.toHexString(opCode)); // NOI18N
+                        }
                     }
                     // here opCode is OK. Create output message
-                    if (log.isTraceEnabled()) {
+                    if (log.isTraceEnabled()) { // avoid building string 
                         log.trace(" (RcvHandler) Start message with opcode: {}", Integer.toHexString(opCode)); // NOI18N
                     }
                     LocoNetMessage msg = null;
@@ -230,7 +232,7 @@ public class LnPacketizer extends LnTrafficController {
                         try {
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream) & 0xFF;
-                            if (log.isTraceEnabled()) {
+                            if (log.isTraceEnabled()) { // avoid building string 
                                 log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
                             }                            // Decide length
                             int len = 2;
@@ -297,14 +299,12 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: " + msg.toString());
+                        log.warn("Ignore Loconet packet with bad checksum: {}", msg);
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
                     {
-                        if (log.isDebugEnabled()) { // avoid String building if not needed
-                            log.debug("queue message for notification: {}", msg.toString());
-                        }
+                        log.debug("queue message for notification: {}", msg);
 
                         jmri.util.ThreadingUtil.runOnLayoutEventually(new RcvMemo(msg, trafficController));
                     }
@@ -312,7 +312,7 @@ public class LnPacketizer extends LnTrafficController {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: " + e); // NOI18N
+                    log.warn("run: unexpected LocoNetMessageException: {}", e); // NOI18N
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.trace("EOFException, is LocoNet serial I/O using timeouts?"); // NOI18N
@@ -323,9 +323,9 @@ public class LnPacketizer extends LnTrafficController {
                     disconnectPort(controller);
                     return;
                 } // normally, we don't catch RuntimeException, but in this
-                // permanently running loop it seems wise.
+                  // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception: " + e); // NOI18N
+                    log.warn("run: unexpected Exception: {}", e); // NOI18N
                 }
             } // end of permanent loop
         }
@@ -376,10 +376,8 @@ public class LnPacketizer extends LnTrafficController {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            if (!controller.okToSend()) {
-                                log.debug("LocoNet port not ready to receive"); // NOI18N
-                            }
-                            if (log.isDebugEnabled()) { // avoid String building if not needed
+                            if (log.isDebugEnabled()) { // avoid work if not needed
+                                if (isXmtBusy()) log.debug("LocoNet port not ready to receive"); // NOI18N
                                 log.debug("start write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             }
                             ostream.write(msg);
@@ -393,7 +391,7 @@ public class LnPacketizer extends LnTrafficController {
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString()); // NOI18N
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input

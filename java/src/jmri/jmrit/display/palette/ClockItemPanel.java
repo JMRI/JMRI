@@ -31,7 +31,8 @@ public class ClockItemPanel extends IconItemPanel {
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
 
-    protected JPanel instructions() {
+    @Override
+    protected JPanel instructions(boolean isBackGround) {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));

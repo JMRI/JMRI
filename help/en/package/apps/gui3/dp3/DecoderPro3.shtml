@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -169,16 +170,18 @@
         <li>------------------</li>
         <li>Close Window</li>
         <li>------------------</li>
-        <li>Print Roster -&gt;</li>
+        <li>Print Roster -&gt;
           <ul>
             <li>Selected entry</li>
             <li>Summary</li>
           </ul>
-        <li>Print Preview Roster -&gt;</li>
+        </li>
+        <li>Print Preview Roster -&gt;
           <ul>
             <li>Selected entry</li>
             <li>Summary</li>
           </ul>
+        </li>
         <li>-------------------</li>
         <li>Quit (on Windows and Linux; on macOS it's in the DecoderPro menu)</li>
       </ul>
@@ -206,12 +209,13 @@
         <li>Hide/Show Roster Image</li>
         <li>Hide/Show Roster Groups</li>
         <li>--------------</li>
-        <li>Programming -&gt;</li>
+        <li>Programming -&gt;
           <ul>
             <li>Programming Track</li>
             <li>Programming On Main</li>
             <li>Edit Only</li>
           </ul>
+        </li>
         <li>--------------</li>
         <li>Create Roster Group</li>
         <li>Rename Roster Group</li>
@@ -296,7 +300,6 @@
       can be done using the "Roster Group Table Associations"
       pane, accessible from the "Settings" menu.</p>
 
-      <p>Location /package/apps/gui3/dp3/DecoderPro3.shtml</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

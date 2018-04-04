@@ -69,7 +69,7 @@ It is recommended that you configure your CTI Acela network in three steps: Esta
 </h3>
 With the CTI Acela system powered on and connected to your computer, start JMRI  (DecoderPro or PanelPro).
 <p>
-From the main menu select <Edit> and then select <Preferences> -&gt; Connections tab.
+From the main menu select <b>Edit</b> and then select <b>Preferences</b> -&gt; Connections tab.
 <p>
 On the Connections tab select CTI Electronics as the System Manufacturer and Acela as the System Connection.
 Usually, Acela will be one of your auxiliary connections since it cannot actually run the trains.
@@ -404,7 +404,7 @@ Remember to save your new configuration by using the Save button in the Preferen
 	</ul>
 </ul>
 
-        <p>Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.</p>
+    <p>Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
