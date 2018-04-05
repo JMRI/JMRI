@@ -30,6 +30,8 @@ import org.junit.Test;
  * updated to JUnit4 2016
  */
 public class OlcbSignalMastTest {
+        
+    private OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCtor1() {
@@ -326,6 +328,7 @@ public class OlcbSignalMastTest {
 
     @After
     public void tearDown() throws Exception {
+        memo.getInterface().dispose();
         JUnitUtil.tearDown();
     }
 }
