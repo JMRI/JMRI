@@ -19,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @since 3.3.1
+ * @since 4.3.6
  */
 public class Bundle extends jmri.jmrix.secsi.Bundle {
 
