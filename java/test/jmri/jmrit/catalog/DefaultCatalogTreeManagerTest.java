@@ -16,6 +16,7 @@ public class DefaultCatalogTreeManagerTest {
     public void testCTor() {
         DefaultCatalogTreeManager t = new DefaultCatalogTreeManager();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-abstract public class PositionableTestBase{
+abstract public class PositionableTestBase {
 
     protected Editor editor = null;   // derived classes should set editor in setup;
     protected Positionable p = null;  //derived classes should set p in setUp
@@ -23,6 +23,7 @@ abstract public class PositionableTestBase{
     abstract public void setUp();
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper 
     public void tearDown() {
         // now close panel window, if it exists
         if (editor != null) {
@@ -177,6 +178,12 @@ abstract public class PositionableTestBase{
     public void testDoViemMenu(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Do Viem Menu",p.doViemMenu());
+    }
+
+    @Test
+    public void testGetNameString(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("Name String",p.getNameString());
     }
 
 }

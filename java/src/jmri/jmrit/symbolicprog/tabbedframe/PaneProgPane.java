@@ -2188,6 +2188,7 @@ public class PaneProgPane extends javax.swing.JPanel
         for (int j = 0; j < _cvModel.getRowCount(); j++) {
             cvList.add(j);
         }
+        _varModel.setButtonModeFromProgrammer();
     }
 
     /**

@@ -38,7 +38,7 @@ public class Bundle extends apps.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Bundle extends apps.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
 
     /**
@@ -73,7 +73,7 @@ public class Bundle extends apps.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
 
     private final static Bundle b = new Bundle();
@@ -84,8 +84,7 @@ public class Bundle extends apps.Bundle {
         return name;
     }
 
-    @Override
-    protected jmri.Bundle getBundle() {
+    protected static jmri.Bundle getBundle() {
         return b;
     }
 
