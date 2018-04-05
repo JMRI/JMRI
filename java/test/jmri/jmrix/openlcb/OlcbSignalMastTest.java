@@ -19,8 +19,10 @@ import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.IdentifyEventsMessage;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -314,7 +316,7 @@ public class OlcbSignalMastTest {
             }
         };
 
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             public Connection getOutputConnection() {
