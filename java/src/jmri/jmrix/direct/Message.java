@@ -6,8 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message for direct DCC
- * <P>
+ * Encodes a message for Direct DCC.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */

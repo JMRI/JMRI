@@ -28,5 +28,5 @@ public class DirectComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new DirectMenu(memo);
     }
-}
 
+}

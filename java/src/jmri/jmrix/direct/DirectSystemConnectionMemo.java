@@ -50,7 +50,7 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
      */
     public TrafficController getTrafficController(){
         if (tc == null) {
-            setTrafficController(new TrafficController());
+            setTrafficController(new TrafficController(this));
             log.debug("Auto create of TrafficController for initial configuration");
         }
         return tc;
@@ -69,16 +69,15 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Get the throttle manager instance associated with this connection memo.
+     * Get the ThrottleManager instance associated with this connection memo.
      */
     public ThrottleManager getThrottleManager(){
         if (tm == null) {
-            setThrottleManager(new ThrottleManager(getTrafficController()));
+            setThrottleManager(new ThrottleManager(this));
             log.debug("Auto create of ThrottleManager for initial configuration");
         }
         return tm;
     }
-
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
@@ -86,6 +85,8 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public void configureManagers(){
+        tm = new jmri.jmrix.direct.ThrottleManager(this);
+        jmri.InstanceManager.setThrottleManager(tm);
     }
 
     @Override
