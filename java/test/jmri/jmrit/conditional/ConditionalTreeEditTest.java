@@ -139,9 +139,10 @@ public class ConditionalTreeEditTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        CreateTestObjects.createTestObjects();
     }
 
     @After
