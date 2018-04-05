@@ -615,11 +615,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
         _paletteFrame = new jmri.jmrit.display.DisplayFrame(title, false, false);
-        if (_paletteFrame == null) {
-            log.warn("null paletteFrame");
-        } else {
-            log.debug("new _paletteFrame created OK");
-        }
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
     }
