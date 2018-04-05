@@ -12,13 +12,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <!-- version 1: creation -->
-    <!-- version 2: custom motor pane + French labels -->
-    <version author="Alain Le Marchand" version="1" lastUpdated="20180225"/>
-    <version author="Alain Le Marchand" version="2" lastUpdated="20180318"/>
+    <!-- version 1: creation from Trix_mLD.xml v1 -->
+    <version author="Alain Le Marchand" version="1" lastUpdated="20180317"/>
     <decoder>
-        <family name="Märklin mLD" mfg="Trix Modelleisenbahn" lowVersionID="1" highVersionID="2" comment="Märklin HO Locomotive Decoders - no sound">
-            <model model="60942" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60942" connector="21MTC" comment="Non sound decoder for Märklin HO locomotives, with MTC21 plug">
+        <family name="Märklin mLD/3" mfg="Trix Modelleisenbahn" lowVersionID="3" highVersionID="3" comment="Märklin HO Locomotive Decoders - no sound">
+            <model model="60972" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60972" connector="21MTC" comment="Non sound decoder for Märklin HO locomotives, with MTC21 plug">
                 <output name="1" label="LV|Gray" connection="solder">
                   <label xml:lang="de">LV|Grau</label>
                   <label xml:lang="fr">LV|Gris</label>
@@ -65,7 +63,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="60962" numOuts="4" numFns="36" maxMotorCurrent="1.1A" productID="60962" connector="Wires/NEM652" comment="Non sound decoder for Märklin HO locomotives, with NEM652 8-pin plug">
+            <model model="60982" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60982" connector="Wires/NEM652" comment="Non sound decoder for Märklin HO locomotives, with NEM652 8-pin plug">
                 <output name="1" label="LV|White" connection="wire">
                   <label xml:lang="de">LV|Weiß</label>
                   <label xml:lang="fr">LV|Blanc</label>
@@ -81,6 +79,14 @@
                 <output name="4" label="Aux 2|Violet" connection="wire">
                   <label xml:lang="de">Aux 2|Violett</label>
                   <label xml:lang="fr">Aux 2|Violet</label>
+                </output>
+                <output name="5" label="Aux 3|Violet/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Violett/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Violet/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Violet/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Violett/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Violet/Blanc</label>
                 </output>
                 <output name="7" label="Aux 5|Green Mot.1" connection="solder">
                   <label xml:lang="de">Aux 5|Grün Mot.1</label>
@@ -123,19 +129,31 @@
             </functionlabels>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
-            <!--
             <capability>
                 <name>Indexed CV access</name>
                 <parameter name="PI">31</parameter>
                 <parameter name="SI">32</parameter>
                 <parameter name="cvFirst">false</parameter>
             </capability>
-            -->
         </programming>
         <variables>
-            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_standardCVs.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightCVs.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_functionmap.xml"/>
+          <variable CV="31" default="16" item="Index register H">
+              <decVal/>
+              <label>Index register H</label>
+              <label xml:lang="de">Themen (Auswahl für die CV 257 bis 512)</label>
+              <label xml:lang="fr">Catégorie (Sélection des CV 257 à 512)</label>
+              <label xml:lang="ca">CV indexades bloc H</label>
+          </variable>
+          <variable CV="32" default="0" item="Index register L">
+              <decVal/>
+              <label>Index register L</label>
+              <label xml:lang="de">Seite (Auswahl für die CV 257 bis 512)</label>
+              <label xml:lang="fr">Page (Sélection des CV 257 à 512)</label>
+              <label xml:lang="ca">Adreces indexades CV257-512</label>
+          </variable>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_standardCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_lightCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_functionMap.xml"/>
         </variables>
         <resets>
             <factReset label="Reset All CVs" CV="8" default="8">
@@ -143,9 +161,15 @@
                 <label xml:lang="de">Decoder-Reset (Werkreset)</label>
                 <label xml:lang="fr">Reset de tous les CVs aux valeurs usine</label>
             </factReset>
+            <factReset label="Automatic calibration" CV="7" default="77">
+                <label xml:lang="de">Einmessfahrt</label>
+                <label xml:lang="fr">Calibrage automatique</label>
+            </factReset>
         </resets>
     </decoder>
     <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_motorPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_paneFunctionMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_infoPane.xml"/>
 </decoder-config>
