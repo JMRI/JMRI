@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
 
     private HashMap<String, Set<JsonHttpService>> services = null;
+    private final Set<String> clientTypes = new HashSet<>();
+    private final Set<String> serverTypes = new HashSet<>();
     private final HashMap<String, JsonSchema> clientSchemas = new HashMap<>();
     private final HashMap<String, JsonSchema> serverSchemas = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
@@ -40,10 +42,40 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         return services.getOrDefault(type, new HashSet<>());
     }
 
+    /**
+     * Get all types of JSON messages.
+     *
+     * @return the union of the results from {@link #getClientTypes()} and
+     *         {@link #getServerTypes()}
+     */
     @Nonnull
     public synchronized Set<String> getTypes() {
         this.cacheServices();
-        return services.keySet();
+        Set<String> set = this.getClientTypes();
+        set.addAll(this.getServerTypes());
+        return set;
+    }
+
+    /**
+     * Get the types of JSON messages expected from clients.
+     *
+     * @return the message types
+     */
+    @Nonnull
+    public synchronized Set<String> getClientTypes() {
+        this.cacheServices();
+        return new HashSet<>(this.clientTypes);
+    }
+
+    /**
+     * Get the types of JSON messages this application sends.
+     *
+     * @return the message types
+     */
+    @Nonnull
+    public synchronized Set<String> getServerTypes() {
+        this.cacheServices();
+        return new HashSet<>(this.serverTypes);
     }
 
     /**
@@ -151,6 +183,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
                         this.services.put(type, new HashSet<>());
                         set = this.services.get(type);
                     }
+                    this.clientTypes.add(type);
+                    this.serverTypes.add(type);
                     set.add(service);
                 }
                 for (String type : factory.getSentTypes()) {
@@ -159,6 +193,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
                         this.services.put(type, new HashSet<>());
                         set = this.services.get(type);
                     }
+                    this.serverTypes.add(type);
                     set.add(service);
                 }
                 for (String type : factory.getReceivedTypes()) {
@@ -167,6 +202,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
                         this.services.put(type, new HashSet<>());
                         set = this.services.get(type);
                     }
+                    this.clientTypes.add(type);
                     set.add(service);
                 }
             }
