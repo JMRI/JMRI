@@ -388,7 +388,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * Code copied from {@link SerialMessage#setChecksum(int)}
      *
      * @param r the SerialReply to complete
-     * @param start bit index to start
+     * @param index element index to place 2 checksum bytes
      * @return SerialReply with parity set
      */
     public SerialReply setChecksum(SerialReply r, int index) {
