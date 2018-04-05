@@ -180,4 +180,10 @@ abstract public class PositionableTestBase {
         Assert.assertTrue("Do Viem Menu",p.doViemMenu());
     }
 
+    @Test
+    public void testGetNameString(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("Name String",p.getNameString());
+    }
+
 }
