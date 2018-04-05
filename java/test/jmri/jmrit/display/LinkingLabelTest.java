@@ -58,6 +58,15 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     }
 
+    @Test
+    public void testGetAndSetURL(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LinkingLabel l = (LinkingLabel) p;
+        Assert.assertEquals("URL before set","http://jmri.org",l.getURL());
+        l.setULRL("bar");
+        Assert.assertEquals("URL after set","bar",l.getURL());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
