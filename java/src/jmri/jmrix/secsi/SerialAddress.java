@@ -160,7 +160,7 @@ public class SerialAddress {
         String s = "";
         int k = 0;
         boolean noB = true;
-        for (int i = i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
                 s = systemName.substring(prefix.length() + 1, i);
                 k = i + 1;
@@ -177,7 +177,7 @@ public class SerialAddress {
                 return NameValidity.INVALID;
             }
             if ((num < 1) || (num >= 128000)) {
-                log.warn("number field out of range in system name: {}", systemName);
+                log.debug("number field out of range in system name: {}", systemName);
                 return NameValidity.INVALID;
             }
             if ((num - ((num / 1000) * 1000)) == 0) {
@@ -277,7 +277,7 @@ public class SerialAddress {
         String s = "";
         int k = 0;
         boolean noB = true;
-        for (int i = i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
+        for (int i = prefix.length() + 1; (i < systemName.length()) && noB; i++) {
             if (systemName.charAt(i) == 'B') {
                 s = systemName.substring(prefix.length() + 1, i);
                 k = i + 1;
