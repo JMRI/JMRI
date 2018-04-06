@@ -196,7 +196,7 @@ public class PanelEditor extends Editor implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (deletePanel()) {
-                    dispose(true);
+                    dispose();
                 }
             }
         });
@@ -556,7 +556,7 @@ public class PanelEditor extends Editor implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (deletePanel()) {
-                    dispose(true);
+                    dispose();
                 }
             }
         });
