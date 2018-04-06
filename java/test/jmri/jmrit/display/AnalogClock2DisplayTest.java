@@ -15,7 +15,6 @@ import org.junit.Test;
  */
 public class AnalogClock2DisplayTest extends PositionableJComponentTest {
 
-    private Editor ef = null;
     private AnalogClock2Display a = null;
 
     @Test
@@ -27,7 +26,7 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     @Test
     public void testUrlCtor(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AnalogClock2Display a1 = new AnalogClock2Display(ef,"foo");
+        AnalogClock2Display a1 = new AnalogClock2Display(editor,"foo");
         Assert.assertNotNull("AnalogClock2Display url Constructor",a1);
         a1.dispose();
     }
@@ -57,16 +56,16 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor ef = new EditorScaffold();
-           p = a = new AnalogClock2Display(ef);
+           editor = new EditorScaffold();
+           p = a = new AnalogClock2Display(editor);
         }
     }
 
     @After
     public void tearDown() {
-        if(ef != null){
-           ef.dispose();
-           ef = null;
+        if(editor != null){
+           editor.dispose();
+           editor = null;
            a.dispose();
            a = null;
            p = null;

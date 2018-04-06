@@ -121,7 +121,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     //constants
     public static final int OCCUPIED = Block.OCCUPIED;
     public static final int EMPTY = Block.UNOCCUPIED;
-    public static final int UNKNOWN = Sensor.UNKNOWN;  //must be a different bit
     //operational instance variables (not saved to disk)
     private int useCount = 0;
     private NamedBeanHandle<Sensor> occupancyNamedSensor = null;

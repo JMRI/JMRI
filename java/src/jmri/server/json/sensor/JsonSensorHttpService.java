@@ -62,14 +62,9 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
         if (sensor == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SENSOR, name));
         }
-        if (data.path(JSON.USERNAME).isTextual()) {
-            sensor.setUserName(data.path(JSON.USERNAME).asText());
-        }
+        this.postNamedBean(sensor, data, name, type, locale);
         if (data.path(JSON.INVERTED).isBoolean()) {
             sensor.setInverted(data.path(JSON.INVERTED).asBoolean());
-        }
-        if (data.path(JSON.COMMENT).isTextual()) {
-            sensor.setComment(data.path(JSON.COMMENT).asText());
         }
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         try {

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting output to Maple HMI's
- * <P>
+ * <p>
  * All of the Maple HMI panels receive the same output bits. This keeps them
  * synchronized. Output is sent in "broadcast" mode to Station Address 0. All
  * HMI's receive the output. Output is sent at the end of each polling cycle,
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * the same output bits. Coil bits within Maple Systems HMI's are divided into
  * input (1-1000) and output (1001-9000), so input bits are read starting from
  * HMI address 1, and output bits are written starting at HMI address 1001.
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2009
  */
 public class OutputBits {

@@ -35,8 +35,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     public void setUp() {
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
         _memo = new OakTreeSystemConnectionMemo("O", "Oaktree");
+        tcis = new SerialTrafficControlScaffold(_memo);
         _memo.setTrafficController(tcis);
         new SerialNode(1, SerialNode.IO48,_memo);
         t = new SerialTurnout("OT0104", "t4", _memo);

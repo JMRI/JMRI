@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SensorManager extends Manager<Sensor> {
+public interface SensorManager extends ProvidingManager<Sensor> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -39,6 +39,10 @@ public interface SensorManager extends Manager<Sensor> {
      */
     @Nonnull
     public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
+
+    @Override
+    /** {@inheritDoc} */
+    default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
      * Locate via user name, then system name if needed. Does not create a new

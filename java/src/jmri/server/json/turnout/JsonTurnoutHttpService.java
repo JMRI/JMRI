@@ -1,13 +1,11 @@
 package jmri.server.json.turnout;
 
 import static jmri.server.json.JSON.CLOSED;
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.INVERTED;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.THROWN;
 import static jmri.server.json.JSON.UNKNOWN;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
 
@@ -67,14 +65,9 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
         if (turnout == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            turnout.setUserName(data.path(USERNAME).asText());
-        }
+        this.postNamedBean(turnout, data, name, type, locale);
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            turnout.setComment(data.path(COMMENT).asText());
         }
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
