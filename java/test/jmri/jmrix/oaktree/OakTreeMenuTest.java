@@ -34,7 +34,7 @@ public class OakTreeMenuTest {
         m = new OakTreeSystemConnectionMemo();
         tc = new SerialTrafficControlScaffold(m);
         m.setSystemPrefix("ABC");
-        m.setTrafficController(tc);
+        m.setTrafficController(tc); // important for successful getTrafficController()
     }
 
     @After

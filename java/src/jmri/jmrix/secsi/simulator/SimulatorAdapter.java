@@ -40,10 +40,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    /**
-     * Simulator auto-init setting for number of banks to auto-reply on poll
-     */
-    private int autoInit = 0;
 
     /**
      * Create a new SimulatorAdapter.
