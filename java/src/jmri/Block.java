@@ -129,8 +129,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int SEVERE = 0x04;
 
     // this should only be used for debugging...
-    @Override
-    public String toString() {
+    public String toDebugString() {
         String result = getFullyFormattedDisplayName() + " ";
         switch (getState()) {
             case UNDETECTED: {

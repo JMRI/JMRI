@@ -17,7 +17,7 @@ public class SerialLightTest {
 
     @Test
     public void testCTor() {
-        SerialLight t = new SerialLight("VL1",memo);
+        SerialLight t = new SerialLight("VL1", memo);
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,8 +25,9 @@ public class SerialLightTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tcis = new SerialTrafficControlScaffold();
+
         memo = new SecsiSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
     }
 

@@ -144,7 +144,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
     JPanel _antecedentPanel;
     int _logicType = Conditional.ALL_AND;
     String _antecedent = null;
-    String _antecedentLocalized;
     boolean _newItem = false; // marks a new Action or Variable object was added
 
     // ------------ Components of Edit Variable panes ------------
@@ -709,7 +708,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
             _logicType = _curConditional.getLogicType();
             _antecedentField = new JTextField(65);
             _antecedentField.setFont(new Font("SansSerif", Font.BOLD, 14));  // NOI18N
-            // _antecedentField.setText(_antecedentLocalized); // is empty at first TODO force refresh of _antecedentLocalized EBR
             _antecedentPanel = makeEditPanel(_antecedentField, "LabelAntecedent", "LabelAntecedentHint");  // NOI18N
 
             JButton helpButton = new JButton(Bundle.getMessage("MenuHelp"));  // NOI18N
@@ -1023,8 +1021,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _editConditionalFrame.setVisible(true);
         _inEditConditionalMode = true;
         checkVariablePressed(null); // update variables to their current states
-        // force refresh of _antecedentLocalized  and display in field
-        makeAntecedent();
+        _antecedentField.setText(translateAntecedent(_antecedent, false));
 
     }
 
@@ -1061,7 +1058,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         size--;
         _variableTableModel.fireTableRowsInserted(size, size);
         makeEditVariableWindow(size);
-        appendToAntecedent(variable);
+        appendToAntecedent();
     }
 
     /**
@@ -1296,9 +1293,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // complete update
+        _antecedent = translateAntecedent(_antecedentField.getText(), true);
         _curConditional.setStateVariables(_variableList);
         _curConditional.setAction(_actionList);
-        _curConditional.setLogicType(_logicType, _antecedent); // non-localized string to store Conditional Antecedent
+        _curConditional.setLogicType(_logicType, _antecedent);
         _curConditional.setTriggerOnChange(_triggerOnChangeButton.isSelected());
         TreeSet<String> newTargetNames = new TreeSet<String>();
         loadReferenceNames(_variableList, newTargetNames);
@@ -1443,76 +1441,19 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * Build the antecedent statement.
      */
     void makeAntecedent() {
-        String stri18n = "";
-        String strUni = "";
-        if (_variableList.size() != 0) {
-            String not = Bundle.getMessage("LogicNOT").toLowerCase();  // NOI18N
-            String notI18N = "not"; // NOI18N
-            String row = "R";       //NOI18N
-            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " "; // NOI18N
-            String andI18N = " and ";                                             // NOI18N
-            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
-            String orI18N = " or ";                                               // NOI18N
-            if (_variableList.get(0).isNegated()) {
-                stri18n = not + " ";
-                strUni = notI18N + " ";
-            }
-            stri18n = stri18n + row + "1";
-            strUni = strUni + row + "1";
-            for (int i = 1; i < _variableList.size(); i++) {
-                ConditionalVariable variable = _variableList.get(i);
-                switch (variable.getOpern()) {
-                    case Conditional.OPERATOR_AND:
-                        stri18n = stri18n + and;
-                        strUni = strUni + andI18N;
-                        break;
-                    case Conditional.OPERATOR_OR:
-                        stri18n = stri18n + or;
-                        strUni = strUni + orI18N;
-                        break;
-                    default:
-                        break;
-                }
-                if (variable.isNegated()) {
-                    stri18n = stri18n + not + " ";
-                    strUni = strUni + notI18N + " ";
-                }
-                stri18n = stri18n + row + (i + 1);
-                strUni = strUni + row + (i + 1);
-                if (i > 0 && i + 1 < _variableList.size()) {
-                    stri18n = "(" + stri18n + ")";
-                    strUni = "(" + strUni + ")";
-                }
-            }
-        }
-        _antecedentLocalized = stri18n;
-        _antecedent = strUni;
-        _antecedentField.setText(_antecedentLocalized);
+        _antecedent = makeAntecedent(_variableList);
+        _antecedentField.setText(translateAntecedent(_antecedent, false));
         _showReminder = true;
     }
 
     /**
-     * Add a part to the antecedent statement.
-     *
-     * @param variable the current Conditional Variable, ignored in method
+     * Add a R# to the antecedent statement.
      */
-    void appendToAntecedent(ConditionalVariable variable) {
-        if (_variableList.size() > 1) {
-            if (_logicType == Conditional.OPERATOR_OR) {
-                _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
-                _antecedent = _antecedent + " or ";   // NOI18N
-            } else {
-                _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
-                _antecedent = _antecedent + " and ";  // NOI18N
-            }
-        }
-        _antecedentLocalized = _antecedentLocalized + "R" + _variableList.size(); // localized, NOI18N
-        _antecedent = _antecedent + "R" + _variableList.size(); // NOI18N
-
-        // Update antecedent field text
-        _antecedentField.setText(_antecedentLocalized);
+    void appendToAntecedent() {
+        _antecedent = appendToAntecedent(_logicType, _variableList.size(), _antecedent);
+        _antecedentField.setText(translateAntecedent(_antecedent, false));
         // store in conditional
-        _curConditional.setLogicType(_logicType, _antecedent); // store Conditional Antecedent as non-localized string
+        _curConditional.setLogicType(_logicType, _antecedent);
     }
 
     /**
@@ -1521,25 +1462,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @return false if antecedent can't be validated
      */
     boolean validateAntecedent() {
-        if (_logicType != Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
-            return true;
-        }
-        // _antecedent = _antecedentField.getText();
-        if (_antecedent == null || _antecedent.trim().length() == 0 || _antecedentLocalized == null || _antecedentLocalized.length() == 0) {
-            // Create a default antecedent (non-localized value and localized display string)
-            makeAntecedent();
-        }
-        if (_antecedent.length() > 0) {
-            String message = _curConditional.validateAntecedent(_antecedent, _variableList);
-            if (message != null) {
-                JOptionPane.showMessageDialog(_editConditionalFrame,
-                        message + Bundle.getMessage("ParseError8"), // NOI18N
-                        Bundle.getMessage("ErrorTitle"),            // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        }
-        return true;
+        return validateAntecedent(_logicType, _antecedentField.getText(), _variableList, _curConditional);
     }
 
     // ============ Shared Variable and Action Methods ============
@@ -1870,6 +1793,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (newVariableItem != _curVariableItem) {
                     if (_curVariableRowNumber >= 0) {
                         _curVariable = new ConditionalVariable();
+                        if (_curVariableRowNumber > 0) {
+                            if (_logicType == Conditional.ALL_OR) {
+                                _curVariable.setOpern(Conditional.OPERATOR_OR);
+                            } else {
+                                _curVariable.setOpern(Conditional.OPERATOR_AND);
+                            }
+                        }
                         _variableList.set(_curVariableRowNumber, _curVariable);
                     }
                     _curVariableItem = newVariableItem;

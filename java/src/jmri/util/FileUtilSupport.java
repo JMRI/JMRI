@@ -1520,7 +1520,6 @@ public class FileUtilSupport extends Bean {
      * @return Canonical path to use, or null if one cannot be found.
      * @since 2.7.2
      */
-    @SuppressWarnings("deprecation")
     private String pathFromPortablePath(@Nonnull String path) {
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
