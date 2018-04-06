@@ -7,7 +7,7 @@ import org.junit.Before;
  * Tests for the jmri.jmrix.secsi.SerialTurnout class
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
