@@ -200,10 +200,10 @@ public class OlcbSignalMastTest {
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
         Assert.assertEquals("four sent", 4, messages.size());
         // check by string comparison as a short cut
-        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(0).toString());
-        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(1).toString());
-        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(2).toString());
-        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(3).toString());
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
 
         messages = new java.util.ArrayList<>();
 
@@ -268,10 +268,10 @@ public class OlcbSignalMastTest {
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
         Assert.assertEquals("four sent", 4, messages.size());
         // check by string comparison as a short cut
-        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(0).toString());
-        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(1).toString());
-        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(2).toString());
-        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(3).toString());
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
 
         messages = new java.util.ArrayList<>();
 

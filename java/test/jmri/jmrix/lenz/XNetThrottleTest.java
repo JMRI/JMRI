@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
+import jmri.util.junit.rules.RetryRule;
+import org.junit.rules.Timeout;
 
 /**
  * XNetThrottleTest.java
@@ -15,10 +18,16 @@ import org.junit.Test;
  */
 public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(1); // 1 second timeout for methods in this test class.
+
     protected XNetInterfaceScaffold tc = null;
     protected XNetSystemConnectionMemo memo = null;
 
-    @Test(timeout=1000)
+    @Test
     public void testCtor() {
         XNetThrottle t = new XNetThrottle(memo, tc);
         Assert.assertNotNull(t);
@@ -26,7 +35,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     // Test the constructor with an address specified.
-    @Test(timeout=1000)
+    @Test
     public void testCtorWithArg() throws Exception {
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
@@ -34,7 +43,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     // Test the initilization sequence.
-    @Test(timeout=1000)
+    @Test
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -113,7 +122,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void initSequenceNormalUnitSpeedStep14() throws Exception {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
@@ -205,7 +214,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void initSequenceMUAddress28SpeedStep() throws Exception {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
@@ -281,7 +290,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void initSequenceMuedUnitSpeedStep128() throws Exception {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
@@ -374,7 +383,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void initSequenceDHUnitSpeedStep27() throws Exception {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
@@ -468,7 +477,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testSendStatusInformationRequest() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -499,7 +508,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testSendFunctionStatusInformationRequest() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -530,7 +539,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testSendFunctionHighStatusInformationRequest() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -562,7 +571,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -594,7 +603,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendFunctionGroup1() {
         int n = tc.outbound.size();
@@ -624,7 +633,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendFunctionGroup2() {
         int n = tc.outbound.size();
@@ -655,7 +664,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendFunctionGroup3() {
         int n = tc.outbound.size();
@@ -686,7 +695,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendFunctionGroup4() {
         int n = tc.outbound.size();
@@ -717,7 +726,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testSendFunctionGroup4v35() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -738,7 +747,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendFunctionGroup5(){
         int n = tc.outbound.size();
@@ -768,7 +777,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testSendFunctionGroup5v35() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -790,7 +799,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendMomentaryFunctionGroup1() {
         int n = tc.outbound.size();
@@ -821,7 +830,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendMomentaryFunctionGroup2() {
         int n = tc.outbound.size();
@@ -852,7 +861,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendMomentaryFunctionGroup3() {
         int n = tc.outbound.size();
@@ -883,7 +892,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendMomentaryFunctionGroup4() {
         int n = tc.outbound.size();
@@ -914,7 +923,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     @Override
     public void testSendMomentaryFunctionGroup5() {
         int n = tc.outbound.size();
@@ -945,32 +954,32 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testGetDccAddress(){
         XNetThrottle t = (XNetThrottle)instance;
         Assert.assertEquals("XNetThrottle getDccAddress()",3,t.getDccAddress());
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testGetDccAddressLow(){
         XNetThrottle t = (XNetThrottle)instance;
         Assert.assertEquals("XNetThrottle getDccAddressLow()",3,t.getDccAddressLow());
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testGetDccAddressHigh(){
         XNetThrottle t = (XNetThrottle)instance;
         Assert.assertEquals("XNetThrottle getDccAddressHigh()",0,t.getDccAddressHigh());
     }
 
-    @Test(timeout=1000)
+    @Test
     public void testGetLocoAddress(){
         XNetThrottle t = (XNetThrottle)instance;
         Assert.assertEquals("XNetThrottle getLocoAddress()",
                      new jmri.DccLocoAddress(3,false),t.getLocoAddress());
     }
 
-    @Test(timeout=1000)
+    @Test
     public void setReverse() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -1003,7 +1012,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void setForward() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -1036,7 +1045,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void sendEmergencyStop() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -1066,7 +1075,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void setSpeedStep128() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -1101,7 +1110,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void setSpeedStep28() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -1136,7 +1145,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void setSpeedStep27() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;
@@ -1171,7 +1180,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.throttleDispose();
     }
 
-    @Test(timeout=1000)
+    @Test
     public void setSpeedStep14() throws Exception {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle)instance;

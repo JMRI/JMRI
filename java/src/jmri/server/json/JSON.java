@@ -768,17 +768,17 @@ public final class JSON {
      */
     public static final String SCHEMA = "schema"; // NOI18N
     /**
-     * {@value #TYPES}
-     *
-     * @since 4.1
-     */
-    public static final String TYPES = "types"; // NOI18N
-    /**
      * {@value #SERVER}
      *
      * @since 4.1
      */
     public static final String SERVER = "server"; // NOI18N
+    /**
+     * {@value #CLIENT}
+     *
+     * @since 4.1
+     */
+    public static final String CLIENT = "client"; // NOI18N
 
     /* ZeroConf support */
     /**

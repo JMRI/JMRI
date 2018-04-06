@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
+
 import jmri.Sensor;
 import jmri.SensorManager;
 import org.slf4j.Logger;
@@ -43,6 +45,10 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     public Sensor provideSensor(String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
+
+    @Override
+    /** {@inheritDoc} */
+    public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
      * Locate an instance based on a system name. Returns null if no instance

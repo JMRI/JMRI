@@ -15,7 +15,7 @@ import jmri.util.StringUtil;
  * Frame for user input of serial messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
-  */
+ */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.secsi.SerialListener {
 
     private SecsiSystemConnectionMemo memo;
@@ -88,7 +88,6 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                 pollButtonActionPerformed(e);
             }
         });
-        pollButton.setToolTipText(Bundle.getMessage("PollToolTip"));
 
         // pack for display
         pack();

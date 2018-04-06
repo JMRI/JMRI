@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Turnout via Marklin communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Marklin communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
- *
+ * <p>
  * Based on work by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2012
@@ -92,7 +92,7 @@ public class MarklinTurnout extends AbstractTurnout
      * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
-     * <P>
+     *
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
