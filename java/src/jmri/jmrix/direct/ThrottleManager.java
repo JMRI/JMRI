@@ -24,7 +24,7 @@ public class ThrottleManager extends AbstractThrottleManager {
 
     private CommandStation tc = null;
     /**
-     * Constructor for a ThrottleManager.
+     * Constructor for a Direct ThrottleManager.
      */
     public ThrottleManager(DirectSystemConnectionMemo memo) {
         super(memo);

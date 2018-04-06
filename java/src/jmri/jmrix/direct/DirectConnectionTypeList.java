@@ -17,7 +17,8 @@ public class DirectConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.direct.serial.ConnectionConfig"
+            "jmri.jmrix.direct.serial.ConnectionConfig",
+            "jmri.jmrix.direct.simulator.ConnectionConfig"
         };
     }
 
