@@ -20,6 +20,7 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     private LinkingLabel to = null;
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
