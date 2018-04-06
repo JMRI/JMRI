@@ -162,7 +162,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     int _curActionItem = 0;
     String _curConditionalName = "";
     String _antecedent;
-    String _antecedentLocalized;
     int _logicType;
     boolean _triggerMode;
     boolean _newActionItem = false;
@@ -759,7 +758,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _curVariable.setOpern(Conditional.OPERATOR_AND);
             }
         }
-        appendToAntecedent(_curVariable);
+        appendToAntecedent();
         size--;
 
         // Update tree structure
@@ -835,8 +834,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 _labelPanel.add(_antecedentLabel);
                 _helpButtonPanel.setVisible(true);
-                // validateAntecedent ?
-                _editAntecedent.setText(_curConditional.getAntecedentExpression()); // load (possibly deprecated localized) string, TODO EBR translate to a localized display string
+                _editAntecedent.setText(translateAntecedent(_curConditional.getAntecedentExpression(), false));
                 makeDetailGrid("Antecedent");  // NOI18N
                 break;
 
@@ -885,7 +883,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case "Antecedent":      // NOI18N
-                antecedentChanged(_antecedent); //_editAntecedent.getText().trim()); // non-localized + localized forms
+                antecedentChanged(_editAntecedent.getText().trim());
                 break;
 
             case "LogicType":       // NOI18N
@@ -1028,88 +1026,31 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     /**
      * Update the antecedent.
      *
-     * @param newAntecedent the new, non-localized antecedent
+     * @param antecedentText the new antecedent
      */
-    void antecedentChanged(String newAntecedent) {
-        _antecedent = newAntecedent;
-        // build localized display string from _antecedent EBR TODO
-        //_antecedentLocalized = newAntecedentLocalized;
-        if (validateAntecedent()) {
-            _curConditional.setLogicType(_logicType, _antecedent); // non-localized string to store Conditional Antecedent
-            _curNode.setText(buildNodeText("Antecedent", _curConditional, 0));  // TODO translate to non-localized? EBR
+    void antecedentChanged(String antecedentText) {
+        if (validateAntecedent(antecedentText)) {
+            _antecedent = translateAntecedent(antecedentText, true);
+            _curConditional.setLogicType(_logicType, _antecedent);
+            _curNode.setText(buildNodeText("Antecedent", _curConditional, 0));
             _cdlModel.nodeChanged(_curNode);
         }
     }
 
     /**
-     * Build the localized and universal antecedent statement.
+     * Build the antecedent statement.
      */
     void makeAntecedent() {
-        String stri18n = "";
-        String strUni = "";
-        if (_variableList.size() > 0) {
-            String not = Bundle.getMessage("LogicNOT").toLowerCase();   // NOI18N
-            String notI18N = "not"; // NOI18N
-            String row = "R";       // NOI18N
-            String and = " " + Bundle.getMessage("LogicAND").toLowerCase() + " "; // NOI18N
-            String andI18N = " and ";                                             // NOI18N
-            String or = " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
-            String orI18N = " or ";                                               // NOI18N
-            if (_variableList.get(0).isNegated()) {
-                stri18n = not + " ";
-                strUni = notI18N + " ";
-            }
-            stri18n = stri18n + row + "1";
-            strUni = strUni + row + "1";
-            for (int i = 1; i < _variableList.size(); i++) {
-                ConditionalVariable variable = _variableList.get(i);
-                switch (variable.getOpern()) {
-                    case Conditional.OPERATOR_AND:
-                        stri18n = stri18n + and;
-                        strUni = strUni + andI18N;
-                        break;
-                    case Conditional.OPERATOR_OR:
-                        stri18n = stri18n + or;
-                        strUni = strUni + orI18N;
-                        break;
-                    default:
-                        break;
-                }
-                if (variable.isNegated()) {
-                    stri18n = stri18n + not + " ";
-                    strUni = strUni + notI18N + " ";
-                }
-                stri18n = stri18n + row + (i + 1);
-                strUni = strUni + row + (i + 1);
-                if (i > 0 && i + 1 < _variableList.size()) {
-                    stri18n = "(" + stri18n + ")";
-                    strUni = "(" + strUni + ")";
-                }
-            }
-        }
-        _antecedentLocalized = stri18n;
-        _antecedent = strUni;
+        _antecedent = makeAntecedent(_variableList);
     }
 
     /**
-     * Add a part to the antecedent statement.
-     *
-     * @param variable the current Conditional Variable, ignored in method
+     * Add a R# to the antecedent statement.
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
-    void appendToAntecedent(ConditionalVariable variable) {
-        if (_variableList.size() > 1) {
-            if (_logicType == Conditional.OPERATOR_OR) {
-                _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicOR").toLowerCase() + " ";   // NOI18N
-                _antecedent = _antecedent + " or ";   // NOI18N
-            } else {
-                _antecedentLocalized = _antecedentLocalized + " " + Bundle.getMessage("LogicAND").toLowerCase() + " ";  // NOI18N
-                _antecedent = _antecedent + " and ";  // NOI18N
-            }
-        }
-        _antecedentLocalized = _antecedentLocalized + "R" + _variableList.size(); // localized, NOI18N
-        _antecedent = _antecedent + "R" + _variableList.size(); // NOI18N
-        _curConditional.setLogicType(_logicType, _antecedent); // store Conditional Antecedent as non-localized string
+    void appendToAntecedent() {
+        _antecedent = appendToAntecedent(_logicType, _variableList.size(), _antecedent);
+        _curConditional.setLogicType(_logicType, _antecedent);
 
         // Update antecedent node text
         ConditionalTreeNode antNode;
@@ -1129,27 +1070,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     /**
      * Check the antecedent and logic type.
-     *
+     * <p>
+     * @param antecedentText The user supplied antecedent text
      * @return false if antecedent can't be validated
      */
-    boolean validateAntecedent() {
-        if (_logicType != Conditional.MIXED || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
-            return false;
-        }
-        if (_antecedent == null || _antecedent.length() == 0 || _antecedentLocalized == null || _antecedentLocalized.length() == 0) {
-            // Create a default antecedent (non-localized value and localized display string)
-            makeAntecedent();
-        }
-        if (_antecedent.length() > 0) {
-            String message = _curConditional.validateAntecedent(_antecedent, _variableList);
-            if (message != null) {
-                JOptionPane.showMessageDialog(_editLogixFrame,
-                        message + Bundle.getMessage("ParseError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
-        }
-        return true;
+    boolean validateAntecedent(String antecedentText) {
+        return validateAntecedent(_logicType, antecedentText, _variableList, _curConditional);
     }
 
     /**
@@ -1849,8 +1775,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
             case "Antecedent":  // NOI18N
                 cdl = (Conditional) component;
-                //String antecedent = cdl.getAntecedentExpression(); // non-localized logical expression
-                String antecedent = _antecedentLocalized; // localized logical expression
+                String antecedent = translateAntecedent(cdl.getAntecedentExpression(), false);
                 if (cdl.getLogicType() != Conditional.MIXED) {
                     antecedent = "- - - - - - - - -";
                 }

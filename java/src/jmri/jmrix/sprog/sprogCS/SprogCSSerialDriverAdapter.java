@@ -3,11 +3,11 @@ package jmri.jmrix.sprog.sprogCS;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 /**
- * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * Implement SerialPortAdapter for the Sprog system.
+ * <p>
  * This connects an Sprog command station via a serial com port. Also used for
  * the USB SPROG, which appears to the computer as a serial port.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *

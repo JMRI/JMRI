@@ -1,10 +1,10 @@
 package jmri.jmrix.oaktree;
 
 /**
- * Interface to send/receive serial information
+ * Interface to send/receive serial information.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
-  */
+ */
 public interface SerialInterface {
 
     public void addSerialListener(SerialListener l);
@@ -15,6 +15,3 @@ public interface SerialInterface {
 
     void sendSerialMessage(SerialMessage m, SerialListener l);  // 2nd arg gets the reply
 }
-
-
-

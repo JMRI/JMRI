@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a NodeConfigFrame object
+ * Swing action to create and register a NodeConfigFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
@@ -30,7 +30,7 @@ public class NodeConfigAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setLocation(100, 30);
         f.setVisible(true);

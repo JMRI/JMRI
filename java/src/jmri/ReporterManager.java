@@ -37,7 +37,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
-public interface ReporterManager extends Manager<Reporter> {
+public interface ReporterManager extends ProvidingManager<Reporter> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -55,6 +55,10 @@ public interface ReporterManager extends Manager<Reporter> {
      */
     @Nonnull public
     Reporter provideReporter(@Nonnull String name);
+
+    @Override
+    /** {@inheritDoc} */
+    default public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
