@@ -13,21 +13,21 @@ import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
  */
 public class NodeConfigAction extends AbstractAction {
 
-    private GrapevineSystemConnectionMemo _memo = null;
+    private GrapevineSystemConnectionMemo memo = null;
 
-    public NodeConfigAction(String s, GrapevineSystemConnectionMemo memo) {
+    public NodeConfigAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
-        _memo = memo;
+        memo = _memo;
     }
 
-    public NodeConfigAction(GrapevineSystemConnectionMemo memo) {
-        this(Bundle.getMessage("WindowTitle"), memo);
+    public NodeConfigAction(GrapevineSystemConnectionMemo _memo) {
+        this(Bundle.getMessage("WindowTitle"), _memo);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame(_memo);
+        NodeConfigFrame f = new NodeConfigFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {

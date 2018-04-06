@@ -135,8 +135,8 @@
         </light>
     </lights>
     <reporters class="jmri.managers.configurexml.InternalReporterManagerXml">
-        <reporter systemName="LR1" userName="Reporter">
-            <systemName>LR1</systemName>
+        <reporter systemName="IR1" userName="Reporter">
+            <systemName>IR1</systemName>
             <userName>Reporter</userName>
         </reporter>
     </reporters>
