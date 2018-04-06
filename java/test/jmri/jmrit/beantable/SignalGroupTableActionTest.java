@@ -72,8 +72,8 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         // create a new signal group
         _sGroupTable._userName.setText("TestGroup");
         Assert.assertEquals("user name", "TestGroup", _sGroupTable._userName.getText());
-        _sGroupTable._systemName.setText("R1");
-        Assert.assertEquals("system name", "R1", _sGroupTable._systemName.getText());
+        _sGroupTable._systemName.setText("IF1");
+        Assert.assertEquals("system name", "IF1", _sGroupTable._systemName.getText());
         _sGroupTable.mainSignalComboBox.setSelectedBeanByName("VM1");
         SignalGroup g = _sGroupTable.checkNamesOK();
         _sGroupTable.setValidSignalMastAspects();

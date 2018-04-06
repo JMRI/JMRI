@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for SECSI systems
+ * Implement turnout manager for SECSI systems.
  * <p>
- * System names are "VTnnn", where nnn is the turnout number without padding.
+ * System names are "ViTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
  */
@@ -28,7 +28,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -39,18 +39,18 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = SerialAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         t = getBySystemName(altName);
         if (t != null) {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName,memo);
+        t = new SerialTurnout(sName, userName, memo);
 
         // does system name correspond to configured hardware
         if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
@@ -61,7 +61,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     @Deprecated

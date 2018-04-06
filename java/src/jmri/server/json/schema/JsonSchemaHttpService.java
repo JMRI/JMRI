@@ -35,8 +35,15 @@ public class JsonSchemaHttpService extends JsonHttpService {
         // if server == null, returns both schemas in an array
         // if server != null, returns single schema for client or server as appropriate
         Boolean server = null;
-        if (data.path(JSON.SERVER).isValueNode()) {
+        if (data.path(JSON.SERVER).isBoolean()) {
             server = data.path(JSON.SERVER).asBoolean();
+        }
+        if (data.path(JSON.CLIENT).isBoolean()) {
+            if (server == null) {
+                server = !data.path(JSON.CLIENT).asBoolean();
+            } else if (server == true) {
+                server = null; // server
+            }
         }
         switch (type) {
             case JSON.SCHEMA:
@@ -82,28 +89,45 @@ public class JsonSchemaHttpService extends JsonHttpService {
                                     }
                                 }
                             }
+                            // return single object if only one, otherwise return complete array
+                            if (schemas.size() == 1) {
+                                return schemas.get(0);
+                            }
                             return schemas;
                         } catch (NullPointerException ex) {
                             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", name), ex);
                         }
                 }
-            case JSON.TYPES:
-                ObjectNode root = this.mapper.createObjectNode();
-                root.put(JSON.TYPE, JSON.TYPES);
-                ObjectNode payload = root.putObject(JSON.DATA);
-                ArrayNode types = payload.putArray(JSON.TYPES);
-                InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().forEach((t) -> {
-                    types.add(t);
-                });
-                return root;
+            case JSON.TYPE:
+                if (InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().contains(name)) {
+                    ObjectNode root = this.mapper.createObjectNode();
+                    root.put(JSON.TYPE, JSON.TYPE);
+                    ObjectNode payload = root.putObject(JSON.DATA);
+                    payload.put(JSON.NAME, name);
+                    payload.put(JSON.SERVER, InstanceManager.getDefault(JsonSchemaServiceCache.class).getServerTypes().contains(name));
+                    payload.put(JSON.CLIENT, InstanceManager.getDefault(JsonSchemaServiceCache.class).getClientTypes().contains(name));
+                    return root;
+                } else {
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", type, name));
+                }
             default:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "GetNotAllowed", type));
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        throw new JsonException(400, Bundle.getMessage(locale, "UnlistableService"));
+        switch (type) {
+            case JSON.TYPE:
+                ArrayNode root = this.mapper.createArrayNode();
+                JsonNode data = this.mapper.createObjectNode();
+                for (String name : InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes()) {
+                    root.add(this.doPost(type, name, data, locale));
+                }
+                return root;
+            default:
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
+        }
     }
 
     @Override
@@ -111,7 +135,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
         switch (type) {
             case JSON.JSON:
             case JSON.SCHEMA:
-            case JSON.TYPES:
+            case JSON.TYPE:
                 return doSchema(type,
                         server,
                         "jmri/server/json/schema/" + type + "-server.json",

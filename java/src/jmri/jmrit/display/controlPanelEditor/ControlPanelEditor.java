@@ -441,7 +441,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
-                dispose(true);
+                dispose();
             }
         });
         _fileMenu.addSeparator();

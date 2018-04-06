@@ -25,11 +25,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         super();
     }
 
-    /**
-     * Get XML order.
-     *
-     * @return the XML order
-     */
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.LIGHTS;

@@ -46,6 +46,8 @@ public class LayoutEditorToolsTest {
         if(!GraphicsEnvironment.isHeadless()) {
            JUnitUtil.dispose(le);
         }
+        le = null;
+        let = null;
         JUnitUtil.tearDown();
     }
 }
