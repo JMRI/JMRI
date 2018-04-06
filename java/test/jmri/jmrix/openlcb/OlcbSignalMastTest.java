@@ -19,10 +19,8 @@ import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.IdentifyEventsMessage;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -330,7 +328,10 @@ public class OlcbSignalMastTest {
 
     @After
     public void tearDown() throws Exception {
-        memo.getInterface().dispose();
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
         JUnitUtil.tearDown();
     }
 }

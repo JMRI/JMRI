@@ -60,7 +60,9 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        m.getInterface().dispose();
+        if(m != null && m.getInterface() !=null ) {
+           m.getInterface().dispose();
+        }
         JUnitUtil.tearDown();
     }
 
