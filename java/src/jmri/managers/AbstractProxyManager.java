@@ -134,8 +134,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
+        @Override
         public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
-        public boolean equals(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().equals(e2.getSystemPrefix()); }
     });
     private Manager<E> internalManager = null;
     private Manager<E> defaultManager = null;
