@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the SPROG
  * command station object.
- * <P>
+ * <p>
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer

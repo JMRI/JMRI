@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.WindowListener;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -184,6 +186,34 @@ abstract public class PositionableTestBase {
     public void testGetNameString(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("Name String",p.getNameString());
+    }
+
+    @Test
+    public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JFrame jf = new jmri.util.JmriJFrame("Positionable Target Panel");
+        JPanel panel = new JPanel();
+        jf.getContentPane().add(panel);
+        jf.pack();
+        jf.setVisible(true);
+
+        editor.putItem(p);
+        p.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
+
+        Assert.assertEquals("Display Level ", p.getDisplayLevel(), jmri.jmrit.display.Editor.LABELS);
+
+        editor.setLocation(150, 150);
+
+        editor.setTitle();
+
+        editor.pack();
+        editor.setVisible(true);
+
+        // close the frame.
+        EditorFrameOperator jfo = new EditorFrameOperator(jf);
+        jfo.requestClose();
+        jfo.waitClosed();
     }
 
 }

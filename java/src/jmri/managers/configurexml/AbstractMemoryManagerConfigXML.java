@@ -40,7 +40,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         MemoryManager tm = (MemoryManager) o;
         if (tm != null) {
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not memories to include
             if (!iter.hasNext()) {
