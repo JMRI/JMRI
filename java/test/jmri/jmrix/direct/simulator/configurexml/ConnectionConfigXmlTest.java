@@ -1,4 +1,4 @@
-package jmri.jmrix.direct;
+package jmri.jmrix.direct.simulator.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,15 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Tests for the ConnectionConfigXml class
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2016
  */
-public class MessageTest {
+public class ConnectionConfigXmlTest {
 
     @Test
-    public void testCTor() {
-        Message t = new Message(5);
-        Assert.assertNotNull("exists", t);
+    public void testCtor(){
+      Assert.assertNotNull("ConnectionConfigXml constructor", new ConnectionConfigXml());
     }
 
     // The minimal setup for log4J
@@ -28,7 +28,5 @@ public class MessageTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(MessageTest.class);
 
 }

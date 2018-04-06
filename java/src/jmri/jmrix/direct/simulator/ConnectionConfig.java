@@ -1,6 +1,5 @@
 package jmri.jmrix.direct.simulator;
 
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.direct.DirectSystemConnectionMemo;
@@ -38,7 +37,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public String name() {
-        return "Direct Simulator";
+        return Bundle.getMessage("DirectSimulatorName");
     }
 
     String manufacturerName = jmri.jmrix.direct.DirectConnectionTypeList.DIRECT;

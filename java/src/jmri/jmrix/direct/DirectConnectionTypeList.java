@@ -12,7 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = ConnectionTypeList.class)
 public class DirectConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
-    public static final String DIRECT = "Others";
+    public static final String DIRECT = "Others"; // NOI18N
 
     @Override
     public String[] getAvailableProtocolClasses() {

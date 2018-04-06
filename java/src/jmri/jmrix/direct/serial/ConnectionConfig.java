@@ -29,10 +29,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public String name() {
         if (SystemType.isMacOSX()
                 || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) {
-            return "(Direct Drive (Serial) not available)";
+            return Bundle.getMessage("DirectSerialNameNot");
         }
 
-        return "Direct Drive (Serial)";
+        return Bundle.getMessage("DirectSerialName");
     }
 
     @Override

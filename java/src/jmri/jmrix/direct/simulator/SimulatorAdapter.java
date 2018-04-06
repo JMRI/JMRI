@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import javax.swing.JOptionPane;
 import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import jmri.jmrix.direct.Message;
 import jmri.jmrix.direct.PortController; // no special xSimulatorController
@@ -66,7 +65,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return
@@ -92,7 +91,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
      */
     public boolean okToSend() {
         if (checkBuffer) {
-            log.debug("Buffer Empty: " + outputBufferEmpty);
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
             log.debug("No Flow Control or Buffer Check");
@@ -118,7 +117,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
 
         // start the simulator
         sourceThread = new Thread(this);
-        sourceThread.setName("Direct Simulator");
+        sourceThread.setName("Direct Simulator"); // NOI18N
         sourceThread.setPriority(Thread.MIN_PRIORITY);
         sourceThread.start();
     }
@@ -314,7 +313,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
         byte[] rcvBuffer = new byte[32];
 
         nchars = inpipe.read(rcvBuffer, 0, 32);
-        //log.debug("new message received");
+        log.debug("new message received");
         Message msg = new Message(nchars);
 
         for (int i = 0; i < nchars; i++) {
