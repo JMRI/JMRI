@@ -152,7 +152,7 @@ public class OlcbTestInterface {
 
     public void dispose(){
       // terminate the OlcbInterface (and terminate thread)
-      iface.dispose();
+      new Thread(() -> { iface.dispose();},"OLCB Interface dispose thread").start();
     }
 
 
