@@ -22,8 +22,10 @@ import org.openlcb.IdentifyEventsMessage;
 import org.jdom2.Element;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,7 +37,7 @@ import org.junit.Test;
  */
 public class OlcbSignalMastXmlTest {
         
-    private OlcbSystemConnectionMemo memo;
+    static OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCtor(){
@@ -68,20 +70,24 @@ public class OlcbSignalMastXmlTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        Connection connection = new AbstractConnection() {
-            @Override
-            public void put(Message msg, Connection sender) {
-            }
-        };
-
-        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
     }
 
     @After
     public void tearDown() {
-        memo.getInterface().dispose();
+    }
+
+    @BeforeClass
+    public static void preClassInit() {
+        JUnitUtil.setUp();
+        memo = OlcbTestInterface.createForLegacyTests();
+    }
+
+    @AfterClass
+    public static void postClassTearDown() {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
         JUnitUtil.tearDown();
     }
 

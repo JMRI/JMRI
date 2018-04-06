@@ -314,7 +314,7 @@ public class OlcbSignalMastTest {
             }
         };
 
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             public Connection getOutputConnection() {
@@ -328,7 +328,10 @@ public class OlcbSignalMastTest {
 
     @After
     public void tearDown() throws Exception {
-        memo.getInterface().dispose();
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
         JUnitUtil.tearDown();
     }
 }

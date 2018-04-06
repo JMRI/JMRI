@@ -82,7 +82,9 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
-        m.getInterface().dispose();
+        if(m != null && m.getInterface() !=null ) {
+           m.getInterface().dispose();
+        }
         JUnitUtil.tearDown();
     }
 
