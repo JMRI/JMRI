@@ -18,6 +18,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
 
     private RpsPositionIcon rpsIcon = null;
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

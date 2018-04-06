@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface LightManager extends Manager<Light> {
+public interface LightManager extends ProvidingManager<Light> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -39,6 +39,10 @@ public interface LightManager extends Manager<Light> {
      */
     @Nonnull
     public Light provideLight(@Nonnull String name);
+
+    @Override
+    /** {@inheritDoc} */
+    default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     // to free resources when no longer used
     @Override

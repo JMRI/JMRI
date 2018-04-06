@@ -110,6 +110,24 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+
+        // prepare an interface, register
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        // create and register the manager object
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.TurnoutManager l = new jmri.jmrix.loconet.LnTurnoutManager(lnis, lnis, "L", false);
+        jmri.InstanceManager.setTurnoutManager(l);
+
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.SensorManager s = new jmri.jmrix.loconet.LnSensorManager(lnis, "L");
+        jmri.InstanceManager.setSensorManager(s);
+
+        jmri.util.JUnitUtil.initReporterManager();
+        jmri.ReporterManager r = new jmri.jmrix.loconet.LnReporterManager(lnis, "L");
+        jmri.InstanceManager.setReporterManager(r);
+
         // pane for AbstractMonFrameTestBase, panel for JmriPanelTest
         panel = pane = new LocoMonPane();
         helpTarget = "package.jmri.jmrix.loconet.locomon.LocoMonFrame";

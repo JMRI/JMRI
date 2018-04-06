@@ -666,7 +666,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     // ------------ variable definitions ------------
-    
+
     // Multi use variables
     ConditionalManager _conditionalManager = null;  // set when LogixAction is created
     LogixManager _logixManager = null;  // set when LogixAction is created
@@ -740,7 +740,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     private HashMap<String, ArrayList<String>> _saveTargetList = new HashMap<>();
 
     // ------------ Methods for Add Logix Window ------------
-    
+
     /**
      * Respond to the Add button in Logix table Creates and/or initialize the
      * Add Logix pane.
@@ -1223,7 +1223,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     // ------------ Methods for Edit Logix Pane ------------
-    
+
     /**
      * Respond to the Edit button pressed in Logix table.
      *
@@ -1826,7 +1826,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             condText.append("\n  " + showSystemName + "  " + showCondName + "   \n");
             if (curConditional.getLogicType() == Conditional.MIXED) {
                 _antecedent = curConditional.getAntecedentExpression();
-                condText.append("   " + Bundle.getMessage("LogixAntecedent") + " " + _antecedent + "  \n");   // NOI18N
+                String antecedent = ConditionalEditBase.translateAntecedent(_antecedent, false);
+                condText.append("   " + Bundle.getMessage("LogixAntecedent") + " " + antecedent + "  \n");   // NOI18N
             }
 
             for (int i = 0; i < variableList.size(); i++) {

@@ -5,17 +5,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the SerialTrafficController class
+ * Stands in for the SerialTrafficController class.
  *
- * @author	Bob Jacobsen Copyright 2004, 2007, 2008
-  */
+ * @author Bob Jacobsen Copyright 2004, 2007, 2008
+ */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
-    public SerialTrafficControlScaffold() {
+    public SerialTrafficControlScaffold(SecsiSystemConnectionMemo adaptermemo) {
+        super(adaptermemo);
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
         self = this;
+        memo = adaptermemo;
     }
 
     // override some SerialTrafficController methods for test purposes
@@ -25,7 +27,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     /**
-     * record messages sent, provide access for making sure they are OK
+     * Record messages sent, provide access for making sure they are OK.
      */
     public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 

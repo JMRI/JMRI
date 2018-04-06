@@ -72,12 +72,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
         if (block == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
         }
-        if (data.path(JSON.USERNAME).isTextual()) {
-            block.setUserName(data.path(JSON.USERNAME).asText());
-        }
-        if (data.path(JSON.COMMENT).isTextual()) {
-            block.setComment(data.path(JSON.COMMENT).asText());
-        }
+        this.postNamedBean(block, data, name, type, locale);
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 block.setValue(null);

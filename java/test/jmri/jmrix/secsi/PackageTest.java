@@ -26,6 +26,7 @@ import org.junit.runners.Suite;
         SerialSensorTest.class,
         SerialLightTest.class,
         jmri.jmrix.secsi.swing.PackageTest.class,
+        jmri.jmrix.secsi.simulator.PackageTest.class,
         BundleTest.class,
 })
 

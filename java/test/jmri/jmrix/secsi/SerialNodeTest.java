@@ -76,10 +76,10 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testMarkChanges() {
-        SerialSensor s1 = new SerialSensor("VS1", "a",memo);
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("VS1"));
-        SerialSensor s2 = new SerialSensor("VS2", "ab",memo);
-        SerialSensor s3 = new SerialSensor("VS3", "abc",memo);
+        SerialSensor s1 = new SerialSensor("VS1", "a", memo);
+        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("VS1", "V"));
+        SerialSensor s2 = new SerialSensor("VS2", "ab", memo);
+        SerialSensor s3 = new SerialSensor("VS3", "abc", memo);
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);
@@ -114,8 +114,9 @@ public class SerialNodeTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
-        tcis = new SerialTrafficControlScaffold();
+
         memo = new SecsiSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
         b = new SerialNode(tcis);
     }
