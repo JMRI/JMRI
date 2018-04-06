@@ -28,6 +28,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
         Assert.assertNotNull("exists",p);
     }
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

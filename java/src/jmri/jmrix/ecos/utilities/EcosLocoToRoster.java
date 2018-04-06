@@ -65,7 +65,6 @@ public class EcosLocoToRoster implements EcosListener {
     RosterEntry re;
     String filename = null;
     DecoderFile pDecoderFile = null;
-    DecoderIndexFile decoderind = InstanceManager.getDefault(DecoderIndexFile.class);
     String _ecosObject;
     int _ecosObjectInt;
     Label _statusLabel = null;
@@ -251,7 +250,7 @@ public class EcosLocoToRoster implements EcosListener {
         }
         re = new RosterEntry();
         re.setId(rosterId);
-        List<DecoderFile> decoder = decoderind.matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
+        List<DecoderFile> decoder = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, ecosLoco.getCVAsString(8), ecosLoco.getCVAsString(7), null, null);
         if (decoder.size() == 1) {
             pDecoderFile = decoder.get(0);
             selectedDecoder(pDecoderFile);

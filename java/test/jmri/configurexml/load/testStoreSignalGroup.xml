@@ -29,8 +29,8 @@
     </virtualsignalmast>
   </signalmasts>
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml">
-    <signalgroup systemName="R12" userName="mygroup" signalMast="virtmast1">
-      <systemName>R12</systemName>
+    <signalgroup systemName="IF12" userName="mygroup" signalMast="virtmast1">
+      <systemName>IF12</systemName>
       <aspect valid="Clear" />
       <aspect valid="Approach" />
     </signalgroup>

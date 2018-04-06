@@ -20,6 +20,7 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     private LinkingLabel to = null;
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -56,6 +57,15 @@ public class LinkingLabelTest extends PositionableTestBase {
         jfo.requestClose();
         jfo.waitClosed();
 
+    }
+
+    @Test
+    public void testGetAndSetURL(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LinkingLabel l = (LinkingLabel) p;
+        Assert.assertEquals("URL before set","http://jmri.org",l.getURL());
+        l.setULRL("bar");
+        Assert.assertEquals("URL after set","bar",l.getURL());
     }
 
     // The minimal setup for log4J

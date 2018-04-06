@@ -8,10 +8,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -133,9 +130,8 @@ public class CircuitBuilder {
             _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
             _circuitMap = new HashMap<>();
             OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            String[] sysNames = manager.getSystemNameArray();
-            for (int i = 0; i < sysNames.length; i++) {
-                OBlock block = manager.getBySystemName(sysNames[i]);
+            SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+            for (OBlock block : oblocks) {
                 _circuitMap.put(block, new ArrayList<>());
             }
         }
@@ -281,9 +277,9 @@ public class CircuitBuilder {
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
+            SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+            for (OBlock block : oblocks) {
+            WarrantTableAction.checkPathPortals(block);
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
             JOptionPane.showMessageDialog(_editCircuitFrame,
@@ -872,11 +868,9 @@ public class CircuitBuilder {
         _convertBlock.clear();
         _badPortalIcon.clear();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        hasOBlocks = (sysNames.length > 0);
-        for (int i = 0; i < sysNames.length; i++) {
-            OBlock block = manager.getBySystemName(sysNames[i]);
-
+        SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
+        hasOBlocks = (oblocks.size() > 0);
+        for (OBlock block : oblocks) {
             java.util.List<Portal> list = block.getPortals();
             if (list != null) {
                 Iterator<Portal> iter = list.iterator();

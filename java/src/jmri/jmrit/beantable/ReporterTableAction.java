@@ -270,9 +270,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             };
             if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
                 jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
-                List<Manager<Reporter>> managerList = proxy.getManagerList();
-                for (int x = 0; x < managerList.size(); x++) {
-                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
+                List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
+                for (Manager<Reporter> reporter : managerList) {
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(reporter.getSystemPrefix());
                     Boolean addToPrefix = true;
                     // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -446,11 +446,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
         if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
             jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
-            List<Manager<Reporter>> managerList = proxy.getManagerList();
+            List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (int x = 0; x < managerList.size(); x++) {
-                jmri.ReporterManager mgr = (jmri.ReporterManager) managerList.get(x);
-                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)) {
+            for (Manager<Reporter> mgr : managerList) {
+                if (mgr.getSystemPrefix().equals(systemPrefix) && ((ReporterManager)mgr).allowMultipleAdditions(systemPrefix)) {
                     range.setEnabled(true);
                     // get tooltip from ProxyReporterManager
                     addEntryToolTip = mgr.getEntryToolTip();
