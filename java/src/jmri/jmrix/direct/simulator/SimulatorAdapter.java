@@ -115,7 +115,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
         // do the common manager config
         ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
 
-        // start the simulator
+        // start the simulator: Notice that normally, transmission is not a threaded operation!
         sourceThread = new Thread(this);
         sourceThread.setName("Direct Simulator"); // NOI18N
         sourceThread.setPriority(Thread.MIN_PRIORITY);

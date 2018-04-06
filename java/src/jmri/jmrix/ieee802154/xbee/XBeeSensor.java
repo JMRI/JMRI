@@ -137,7 +137,7 @@ public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListen
     @Override
     public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved io sample {} from {}",ioSample,remoteDevice);
+            log.debug("received io sample {} from {}", ioSample, remoteDevice);
         }
 
         XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);

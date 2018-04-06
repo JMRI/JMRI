@@ -126,11 +126,13 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      */
     @Override
     public void configure() {
+        // connect to the traffic controller
         TrafficController tc = new TrafficController((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo());
         ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
         // connect to the traffic controller
         tc.connectPort(this);
 
+        // do the common manager config
         ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 

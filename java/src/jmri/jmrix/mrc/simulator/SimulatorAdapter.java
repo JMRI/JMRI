@@ -149,9 +149,9 @@ public class SimulatorAdapter extends MrcPortController implements
             if (m != null && m.getNumDataElements() > 4) {
                 //Send a default good reply message
                 MrcMessage r = new MrcMessage(4);
-                r.setElement(0, MrcPackets.GOODCMDRECIEVEDCODE);
+                r.setElement(0, MrcPackets.GOODCMDRECEIVEDCODE);
                 r.setElement(1, 0x0);
-                r.setElement(2, MrcPackets.GOODCMDRECIEVEDCODE);
+                r.setElement(2, MrcPackets.GOODCMDRECEIVEDCODE);
                 r.setElement(3, 0x0);
                 writeReply(r);
                 if (m.isReplyExpected()) {
@@ -216,17 +216,17 @@ public class SimulatorAdapter extends MrcPortController implements
     private MrcMessage generateReply(MrcMessage m) {
         MrcMessage reply = new MrcMessage(4);
         if (m.getNumDataElements() < 4) {
-            reply.setElement(0, MrcPackets.BADCMDRECIEVEDCODE);
+            reply.setElement(0, MrcPackets.BADCMDRECEIVEDCODE);
             reply.setElement(1, 0x0);
-            reply.setElement(2, MrcPackets.BADCMDRECIEVEDCODE);
+            reply.setElement(2, MrcPackets.BADCMDRECEIVEDCODE);
             reply.setElement(3, 0x0);
             return reply;
         }
         int command = m.getElement(0);
         if (command != m.getElement(2) && m.getElement(1) != 1) {
-            reply.setElement(0, MrcPackets.BADCMDRECIEVEDCODE);
+            reply.setElement(0, MrcPackets.BADCMDRECEIVEDCODE);
             reply.setElement(1, 0x0);
-            reply.setElement(2, MrcPackets.BADCMDRECIEVEDCODE);
+            reply.setElement(2, MrcPackets.BADCMDRECEIVEDCODE);
             reply.setElement(3, 0x0);
             return reply;
         }
@@ -263,9 +263,9 @@ public class SimulatorAdapter extends MrcPortController implements
                 break;
             default:
                 // we don't know what it is but presume ok
-                reply.setElement(0, MrcPackets.GOODCMDRECIEVEDCODE);
+                reply.setElement(0, MrcPackets.GOODCMDRECEIVEDCODE);
                 reply.setElement(1, 0x0);
-                reply.setElement(2, MrcPackets.GOODCMDRECIEVEDCODE);
+                reply.setElement(2, MrcPackets.GOODCMDRECEIVEDCODE);
                 reply.setElement(3, 0x0);
                 break;
         }
