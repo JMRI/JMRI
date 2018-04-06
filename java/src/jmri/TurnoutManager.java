@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface TurnoutManager extends Manager<Turnout> {
+public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -61,6 +61,10 @@ public interface TurnoutManager extends Manager<Turnout> {
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
+    @Override
+    /** {@inheritDoc} */
+    default public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
+    
     /**
      * Locate via user name, then system name if needed. If that fails, return
      * null

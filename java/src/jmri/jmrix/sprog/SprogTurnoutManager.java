@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Sprog systems.
- * <P>
+ * <p>
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001

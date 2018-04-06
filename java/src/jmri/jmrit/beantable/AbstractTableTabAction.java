@@ -40,14 +40,18 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         dataTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
         if (getManager() instanceof jmri.managers.AbstractProxyManager) {
+            // build the list, with default at start and internal at end (if present)
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager();
-            List<jmri.Manager> managerList = proxy.getManagerList();
+
             tabbedTableArray.add(new TabbedTableItem(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
-            for (int x = 0; x < managerList.size(); x++) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName)); // connection name to display in Tab
+
+            List<jmri.Manager> managerList = proxy.getDisplayOrderManagerList();
+            for (Manager manager : managerList) {
+                String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
+                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
+            
         } else {
             String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
             tabbedTableArray.add(new TabbedTableItem(manuName, true, getManager(), getNewTableAction(manuName)));

@@ -62,7 +62,9 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
   ./scripts/update-HOWTO.sh 4.11.4 4.11.5 4.11.6
 ```
-(and then manually update that line above to be last version released, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments are *.3 *.4 *.5) To check it ran OK, the following should be the release you're doing now: 4.11.4
+(and then manually update that line above to be last version released, this version being made today, next version to be made later; i.e. when starting to do *.4, the arguments after you edit it here are *.4 *.5 *.6) 
+
+- To check the script ran OK, the following should be the release you're doing now: 4.11.4
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
@@ -152,7 +154,9 @@ We roll some general code maintenance items into the release process.  They can 
 
 - This is a good place to make sure CATS still builds, see the (doc page)[http://jmri.org/help/en/html/doc/Technical/CATS.shtml] - note that CATS has not been updated to compile cleanly with JMRI 4.*
         
-- If you fixed anything, commit it back. Also commit the current copy of these notes. Push directly back to master on GitHub.
+- If you fixed anything, commit it back. 
+
+- Commit the current copy of these notes. Push directly back to master on GitHub.
 
 ```
 git commit -m"for 4.11.4" scripts/HOWTO-distribution.md
@@ -190,6 +194,12 @@ git push github
 https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+no%3Amilestone
 ````
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
+
+- (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the current release:
+```
+    <version>4.11.4-SNAPSHOT</version>
+```
+Commit, and push back directly to master (this should be the only change, and has to be before the next step)
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 
@@ -313,7 +323,7 @@ This has the nice property that if multiple things arise, they can definitely be
 
 Run a script to download the created files, create checksums and create text for release notes, etc
 ```
-./releasesummary 4.11.4
+./scripts/releasesummary 4.11.4
 ```
 
 ====================================================================================
@@ -398,7 +408,7 @@ If there are any changes in other files, do both of:
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.5". Add the next release milestone (created above) to it. Typical text:
 ```
- This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
+ This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
 - Confirm that the tag for the current release (release-4.11.4) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
@@ -423,7 +433,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.5". Add the next release milestone (created above) to it. Typical text:
 ```
- This is the third release of the 4.10 cycle. It's intended to be released around Novemebr 18 from HEAD of master.
+ This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
 ====================================================================================
@@ -433,12 +443,29 @@ git push github
 
 - Update the web site front page and downloads page:
 ```
-     index.html download/Sidebar download/index.shtml releaselist
+     index.shtml download/Sidebar download/index.shtml releaselist
 ```
 
 - Commit site, push, etc.
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
+
+====================================================================================
+## Create zipped .properties (experimental)
+
+ant realclean compile
+cd target
+rm properties.4.11.4.zip
+
+# the following will take several minutes
+foreach x ( `find classes -name \*.properties` )
+printf '%s\n' 0a '# from tag v4.11.4' . x | ex $x
+end
+
+find classes -name \*.properties | zip -@ properties.4.11.4.zip
+
+Then decide what to do with it. Attach to release?
+
 
 ====================================================================================
 ## Announcement and Post-release Steps

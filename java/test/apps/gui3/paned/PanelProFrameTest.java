@@ -30,14 +30,14 @@ public class PanelProFrameTest {
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
         jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
         memo.configureManagers();
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis2 = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
         jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo2 = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         memo2.setLnTrafficController(lnis2);
-        memo2.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false);
+        memo2.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
         memo2.configureManagers();
         jmri.InstanceManager.store(memo2,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
     }

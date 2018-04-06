@@ -25,14 +25,8 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     @Test
     public void testAsAbstractFactory() {
-        // create and register the manager object
-        InternalLightManager alm = new InternalLightManager();
-        jmri.InstanceManager.setLightManager(alm);
 
-        // ask for a Light, and check type
-        LightManager lm = jmri.InstanceManager.lightManagerInstance();
-
-        Light tl = lm.newLight("IL21", "my name");
+        Light tl = l.newLight("IL21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received light value " + tl);
@@ -41,27 +35,21 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + lm.getBySystemName("IL21"));
+            log.debug("by system name: " + l.getBySystemName("IL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + lm.getByUserName("my name"));
+            log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != lm.getBySystemName("IL21"));
-        Assert.assertTrue(null != lm.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("IL21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
     @Test
     public void testIsVariableLight() {
-        // create and register the manager object
-        InternalLightManager alm = new InternalLightManager();
-        jmri.InstanceManager.setLightManager(alm);
 
-        // ask for a Light, and check type
-        LightManager lm = jmri.InstanceManager.lightManagerInstance();
-
-        Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
+        Assert.assertTrue(l.newLight("IL21", "my name").isIntensityVariable());
 
     }
 
@@ -70,9 +58,9 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        // create and register the manager object
+
+        jmri.util.JUnitUtil.resetInstanceManager();
         l = new InternalLightManager();
-        jmri.InstanceManager.setLightManager(l);
     }
 
     @After

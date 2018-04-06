@@ -1,6 +1,8 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -57,8 +59,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
         r = new DefaultRoute(systemName, userName);
         // save in the maps
         register(r);
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps track of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IR:AUTO:")) {
             try {
@@ -85,6 +87,22 @@ public class DefaultRouteManager extends AbstractManager<Route>
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     int lastAutoRouteRef = 0;
+
+    /**
+     * {@inheritDoc}
+     *
+     * Forces upper case and trims leading and trailing whitespace.
+     * The IR prefix is added if necessary.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        if (inputName.length() < 3 || !inputName.startsWith("IR")) {
+            inputName = "IR" + inputName;
+        }
+        return inputName.toUpperCase().trim();
+    }
 
     /**
      * Remove an existing route. Route must have been deactivated before

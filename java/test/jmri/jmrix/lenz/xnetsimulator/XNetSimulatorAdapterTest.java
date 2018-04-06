@@ -186,6 +186,114 @@ public class XNetSimulatorAdapterTest {
         }
     }
 
+    @Test
+    public void testGenerateOpsModeWriteCvReply(){
+        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method generateReplyMethod = null;
+        try {
+            generateReplyMethod = a.getClass().getDeclaredMethod("generateReply", XNetMessage.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method generateReply in XNetSimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(generateReplyMethod);
+        generateReplyMethod.setAccessible(true);
+
+        try {
+           XNetReply r = (XNetReply) generateReplyMethod.invoke(a,new XNetMessage("E6 30 00 42 EC 03 05 7D"));
+
+        Assert.assertEquals("Ops Mode Write CV Reply",new XNetReply("01 04 05"),r);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method generateReply in XNetSimulatoradapter class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+        }
+    }
+
+    @Test
+    public void testGenerateOpsModeVerifyCvReply(){
+        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method generateReplyMethod = null;
+        try {
+            generateReplyMethod = a.getClass().getDeclaredMethod("generateReply", XNetMessage.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method generateReply in XNetSimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(generateReplyMethod);
+        generateReplyMethod.setAccessible(true);
+
+        try {
+           XNetReply r = (XNetReply) generateReplyMethod.invoke(a,new XNetMessage("E6 30 00 42 E4 03 05 7A"));
+
+        Assert.assertEquals("Ops Mode Verify CV Reply",new XNetReply("01 04 05"),r);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method generateReply in XNetSimulatoradapter class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+        }
+    }
+
+    @Test
+    public void testGenerateOpsModeWriteBitReply(){
+        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method generateReplyMethod = null;
+        try {
+            generateReplyMethod = a.getClass().getDeclaredMethod("generateReply", XNetMessage.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method generateReply in XNetSimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(generateReplyMethod);
+        generateReplyMethod.setAccessible(true);
+
+        try {
+           XNetReply r = (XNetReply) generateReplyMethod.invoke(a,new XNetMessage("E6 30 00 32 E8 02 E9 E7"));
+
+        Assert.assertEquals("Ops Mode Write Bit Reply",new XNetReply("01 04 05"),r);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method generateReply in XNetSimulatoradapter class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+        }
+    }
+
+    @Test
+    public void testGenerateOpsModeVerifyBitReply(){
+        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method generateReplyMethod = null;
+        try {
+            generateReplyMethod = a.getClass().getDeclaredMethod("generateReply", XNetMessage.class);
+        } catch (java.lang.NoSuchMethodException nsm) {
+            Assert.fail("Could not find method generateReply in XNetSimulatorAdapter class: ");
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(generateReplyMethod);
+        generateReplyMethod.setAccessible(true);
+
+        try {
+           XNetReply r = (XNetReply) generateReplyMethod.invoke(a,new XNetMessage("E6 30 00 32 E8 02 F9 F7"));
+
+        Assert.assertEquals("Ops Mode Verify Bit Reply",new XNetReply("01 04 05"),r);
+        } catch(java.lang.IllegalAccessException ite){
+             Assert.fail("could not access method generateReply in XNetSimulatoradapter class");
+        } catch(java.lang.reflect.InvocationTargetException ite){
+             Throwable cause = ite.getCause();
+             Assert.fail("generateReply execution failed reason: " + cause.getMessage());
+        }
+    }
+
 
     // The minimal setup for log4J
     @Before

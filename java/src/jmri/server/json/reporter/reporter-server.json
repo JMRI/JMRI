@@ -9,11 +9,11 @@
             "description": "System name of the reporter"
         },
         "userName": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "User name of the reporter"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the reporter"
         },
         "properties": {
@@ -37,8 +37,16 @@
             "type": "integer",
             "description": "The state of the reporter",
             "enum": [0, 2, 4, 8]
+        },
+        "report": {
+            "type": ["string", "null"],
+            "description": "The current reported value as a string"
+        },
+        "lastReport": {
+            "type": ["string", "null"],
+            "description": "The last reported value as a string"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["name", "userName", "comment", "state", "report", "lastReport"]
 }

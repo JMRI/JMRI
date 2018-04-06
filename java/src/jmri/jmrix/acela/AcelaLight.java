@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * AcelaLight.java
  * <p>
  * Implementation of the Light Object for Acela
- * <P>
+ * <p>
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -22,7 +22,7 @@ public class AcelaLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in AcelaLightManager
      *
      * @param systemName the system name for this Light
@@ -36,7 +36,7 @@ public class AcelaLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in AcelaLightManager
      *
      * @param systemName the system name for this Light

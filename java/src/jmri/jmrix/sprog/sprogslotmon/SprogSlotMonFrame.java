@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a command station slot manager.
- * <P>
+ * <p>
  * May-17 Modified to a SprogListener to handle status replies.
- * 
+ * <p>
  * Jan-18 Moved status request generation here, based on a timer.
  *
  * @author	Bob Jacobsen Copyright (C) 2001 
