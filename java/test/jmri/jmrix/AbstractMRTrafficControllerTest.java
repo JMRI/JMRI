@@ -83,8 +83,8 @@ public class AbstractMRTrafficControllerTest {
 
     @After
     public void tearDown(){
-       tc = null;
-       JUnitUtil.tearDown();
+        tc = null;
+        JUnitUtil.tearDown(); 
     }
 
 }

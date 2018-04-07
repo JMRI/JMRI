@@ -152,22 +152,41 @@
     
     <p>
     The 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueueTest.html">jmri.util.PropertyChangeEventQueueTest</a>
-    can handle listening to lots of NamedBeans without possibly missing or overlapping some notifications.
+    <a href="http://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueue.html">jmri.util.PropertyChangeEventQueue</a>
+    class can handle listening to lots of NamedBeans without possibly missing or overlapping some notifications.
     The 
-    <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/ThreadingDemoAndTest.java">jmri.jmrit.automat.SigLet</a>
+    <a href="https://github.com/JMRI/JMRI/tree/master/java/src/jmri/jmrit/automat/Siglet.java">jmri.jmrit.automat.Siglet</a>
     class is an example of using this.
     
     
 <h2>Debugging</h2>
 
+<a id="dump"></a>
 <h3>Getting a thread-dump</h3>
 
 When debugging threading issues, it can be helpful to get a "thread dump".
+<p>
+To do this when using an Oracle JVM (most common case), open a separate window
+and on that command line enter the command 'jvisualvm'.  This will open a new
+window with tools for browsing all the Java currently running on your machine.
+Then
+<ol>
+<li>In the upper left, double-click the line that shows your running JMRI instance.
+    (You might have to open the "Local" selector to see it) If should
+    say something about PanelPro or DecoderPro. It'll take a few seconds,
+    but then the right side will open with new information.
+<li>Select the "Threads" tab in the middle-upper on the right side.
+<li>Click the "Thread Dump" button in upper right.
+<li>A new tab will open with the dump. There's no direct way to save that, but 
+    you can copy and paste those contents into an editor to save them or an email to send them.
+</ol>
+
+<p>
+If for some reason you can't use jvisualvm, then:
 <ul>
-<li>To do this on Linux and macOS when running from a command line, type control-backspace
-<li>To do this on Linux and macOS when running detached, e.g. from startup icon, 
-    <ul>
+<li>On Linux and macOS when running from a command line, type control-backspace
+<li>On Linux and macOS when running detached, e.g. from startup icon, 
+    <ul> 
     <li>Get the process ID (PID) from e.g. ps or Activity Monitor (under application name, e.g. PanelPro)<br>
 <code>
 ps | grep java | grep apps | awk '{print $1}'<br>

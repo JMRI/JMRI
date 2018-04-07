@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.WindowListener;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,7 +16,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-abstract public class PositionableTestBase{
+abstract public class PositionableTestBase {
 
     protected Editor editor = null;   // derived classes should set editor in setup;
     protected Positionable p = null;  //derived classes should set p in setUp
@@ -23,6 +25,7 @@ abstract public class PositionableTestBase{
     abstract public void setUp();
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper 
     public void tearDown() {
         // now close panel window, if it exists
         if (editor != null) {
@@ -177,6 +180,40 @@ abstract public class PositionableTestBase{
     public void testDoViemMenu(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Do Viem Menu",p.doViemMenu());
+    }
+
+    @Test
+    public void testGetNameString(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("Name String",p.getNameString());
+    }
+
+    @Test
+    public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JFrame jf = new jmri.util.JmriJFrame("Positionable Target Panel");
+        JPanel panel = new JPanel();
+        jf.getContentPane().add(panel);
+        jf.pack();
+        jf.setVisible(true);
+
+        editor.putItem(p);
+        p.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
+
+        Assert.assertEquals("Display Level ", p.getDisplayLevel(), jmri.jmrit.display.Editor.LABELS);
+
+        editor.setLocation(150, 150);
+
+        editor.setTitle();
+
+        editor.pack();
+        editor.setVisible(true);
+
+        // close the frame.
+        EditorFrameOperator jfo = new EditorFrameOperator(jf);
+        jfo.requestClose();
+        jfo.waitClosed();
     }
 
 }

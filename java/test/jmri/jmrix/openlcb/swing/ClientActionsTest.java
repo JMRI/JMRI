@@ -25,6 +25,10 @@ public class ClientActionsTest {
         OlcbInterface iface = canInterface.getInterface();
         ClientActions t = new ClientActions(iface);
         Assert.assertNotNull("exists",t);
+        // terminate the canInterface (and terminate thread)
+        canInterface.dispose();
+        // terminate the OlcbInterface (and terminate thread)
+        iface.dispose();
     }
 
     // The minimal setup for log4J

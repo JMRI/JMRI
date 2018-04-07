@@ -48,8 +48,9 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        new SerialTrafficControlScaffold();
+
         memo = new SecsiSystemConnectionMemo();
+        new SerialTrafficControlScaffold(memo);
     }
 
     @After

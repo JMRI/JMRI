@@ -48,7 +48,11 @@
       
       <p>As of February 2018, Oracle has scheduled end-of-life for Java 8 in
       January 2019, and intendeds to release the next Long Term Support version 
-      (notionally Java 11) in September of 2018.  
+      (notionally known as both Java 11 and Java 18.9) in September of 2018.  
+      Given that some users will need to move forward for other applications
+      once Java 8 is EOL, at a minimum we'll have to have JMRI running under
+      both Java 8 and 
+      Java 11/18.9 by January 2019.
       
       <h2>Capabilities</h2>
       <p>This section lists new Java
@@ -74,9 +78,9 @@
           using very large fonts as a workaround, but it quickly
           breaks as text overlaps widget boundaries)</td>
 
-          <td>1.8?</td>
+          <td>8?</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
 
         <tr>
@@ -84,18 +88,28 @@
           of the OS X App menu for About, Preferences, and
           (critically) Quit handling on that platform</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
 
         <tr>
           <td>It seems that MacOS X (macOS) users will lose
           Applescript scripting</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
+        </tr>
+
+        <tr>
+          <td>Multi-version JARs can help with migration, see
+          <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
+
+          <td>...</td>
+
+          <td>9</td>
+        </tr>
 
         <tr>
           <td>JMRI uses several com.sun classes that will, at some point.
@@ -112,27 +126,35 @@
         <tr>
           <td>Java Platform Module System</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
         <tr>
           <td>JUTF-8 Properties files (simplifies I18N)</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
+        
         <tr>
           <td>J<A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
                 More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
                 worse code) of JMRI indepdendent.</td>
 
-          <td>1.9</td>
+          <td>9</td>
 
-          <td>1.9</td>
+          <td>9</td>
         </tr>
 
+        <tr>
+          <td>Even better support for immutable collections</td>
+
+          <td>?</td>
+
+          <td>10</td>
+        </tr>
 
 
       </table>(* indicates that a compatibility library is used in

@@ -2,7 +2,6 @@ package jmri.jmrix.marklin;
 
 /**
  * Carries the reply to an MarklinMessage.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Kevin Dickerson Copyright (C) 2007

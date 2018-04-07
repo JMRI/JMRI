@@ -63,7 +63,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IS0");
+        iconEditor._sysNametext.setText("IS1");
         iconEditor.addToTable();
 
         SensorIcon icon = _editor.putSensor();
@@ -113,7 +113,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IT0");
+        iconEditor._sysNametext.setText("IT2");
         iconEditor.addToTable();
 
         TurnoutIcon icon = _editor.addTurnout(iconEditor);
@@ -203,7 +203,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IL0");
+        iconEditor._sysNametext.setText("IL2");
         iconEditor.addToTable();
 
         LightIcon icon = _editor.addLight();
@@ -247,7 +247,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        SignalHead signalHead = new jmri.implementation.VirtualSignalHead("IH0");
+        SignalHead signalHead = new jmri.implementation.VirtualSignalHead("IH2");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHead);
 
         iconEditor.setSelection(signalHead);
@@ -297,7 +297,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IM0");
+        iconEditor._sysNametext.setText("IM2");
         iconEditor.addToTable();
 
         MemoryIcon memIcon = _editor.putMemory();
@@ -360,7 +360,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IR0");
+        iconEditor._sysNametext.setText("IR2");
         iconEditor.addToTable();
 
         ReporterIcon icon = _editor.addReporter();
@@ -404,14 +404,15 @@ public class IconEditorWindowTest {
     @After
     public void tearDown() throws Exception {
 
-        // Delete the editor by calling dispose(true) defined in PanelEditor
+        // Delete the editor by calling dispose() defined in PanelEditor
         // directly instead of closing the window through a WindowClosing()
         // event - this is the method called to delete a panel if a user
         // selects that in the Hide/Delete dialog triggered by WindowClosing().
         if (_editor != null) {
-            _editor.dispose(true);
+            _editor.dispose();
         }
-
+        _editor = null;
+        
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
         JUnitUtil.tearDown();
     }

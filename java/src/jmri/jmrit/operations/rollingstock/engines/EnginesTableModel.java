@@ -240,6 +240,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHEN_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        
+        // turn on default
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
 
     @Override

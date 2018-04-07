@@ -445,6 +445,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.OPSBYTEMODE);
+        ret.add(LnProgrammerManager.LOCONETOPSBOARD);
         ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         ret.add(LnProgrammerManager.LOCONETBDOPSWMODE);
@@ -495,14 +496,15 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     /**
      * Can this ops-mode programmer read back values? Yes, if transponding
-     * hardware is present, but we don't check that here.
+     * hardware is present and regular ops mode, or if in any other mode.
      *
      * @return always true
      */
     @Override
     public boolean getCanRead() {
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return mSlotMgr.getTranspondingAvailable();
         return true;
-    }
+     }
 
     @Override
     public boolean getCanRead(String addr) {

@@ -32,8 +32,8 @@ public class SecsiComponentFactoryTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // tc = new SerialTrafficControlScaffold();
         m = new SecsiSystemConnectionMemo();
+        // tc = new SerialTrafficControlScaffold(memo);
     }
 
     @After

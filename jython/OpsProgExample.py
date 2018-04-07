@@ -16,7 +16,6 @@ import jmri
 
 class OpsProgExample(jmri.jmrit.automat.AbstractAutomaton) :
 
-
     #
     # By default, monitors sensor "32" and controls locomotive 1234(long address).
     #
@@ -30,7 +29,7 @@ class OpsProgExample(jmri.jmrit.automat.AbstractAutomaton) :
         
         # get references to sample layout objects
         self.sensor = sensors.provideSensor(self.sensorName)
-        self.programmer = addressedProgrammers.getAddressedProgrammer(self.longAddress, self.locoNumber)
+        self.programmer = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager).getAddressedProgrammer(self.longAddress, self.locoNumber)
 
         # get initial state and set the CV as needed
         self.now = self.sensor.getKnownState()
