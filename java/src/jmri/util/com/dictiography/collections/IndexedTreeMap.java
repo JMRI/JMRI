@@ -2085,7 +2085,7 @@ public class IndexedTreeMap<K, V>
      *
      * @serial include
      */
-    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+    @SuppressWarnings("unused")
     private class SubMap extends AbstractMap<K, V>
             implements SortedMap<K, V>, java.io.Serializable {
         private static final long serialVersionUID = -6520786458950516097L;
