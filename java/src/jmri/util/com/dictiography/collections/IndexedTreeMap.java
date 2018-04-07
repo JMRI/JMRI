@@ -1145,6 +1145,7 @@ public class IndexedTreeMap<K, V>
             m = map;
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public Iterator<E> iterator() {
             if (m instanceof IndexedTreeMap)
                 return ((IndexedTreeMap<E, Object>) m).keyIterator();
