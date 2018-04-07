@@ -20,7 +20,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-import jmri.server.json.schema.JsonSchemaServiceCache;
+import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
@@ -36,9 +36,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood Copyright 2018
  */
-public class JsonUtilHttpServiceTest {
+public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
 
     private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
@@ -155,8 +155,7 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getHello(locale, heartbeat);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertEquals("Hello type", JSON.HELLO, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertEquals("JMRI Version", Version.name(), data.path(JSON.JMRI).asText());
@@ -182,10 +181,9 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result;
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
         for (String metadata : Metadata.getSystemNameList()) {
             result = instance.getMetadata(locale, metadata);
-            cache.validateMessage(result, true, locale);
+            this.validate(result);
             Assert.assertEquals(JSON.METADATA, result.path(JSON.TYPE).asText());
             Assert.assertEquals(metadata, result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(Metadata.getBySystemName(metadata), result.path(JSON.DATA).path(JSON.VALUE).asText());
@@ -210,8 +208,7 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getMetadata(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertNotNull(result);
         Assert.assertEquals(Metadata.getSystemNameList().size(), result.size());
     }
@@ -228,8 +225,7 @@ public class JsonUtilHttpServiceTest {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         // no services published
         JsonNode result = instance.getNetworkServices(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertEquals(0, result.size());
         // publish a service
         ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
@@ -241,8 +237,7 @@ public class JsonUtilHttpServiceTest {
             return service.isPublished() == true;
         }));
         result = instance.getNetworkServices(locale);
-        cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
         JsonNode data = result.get(0).path(JSON.DATA);
@@ -270,8 +265,7 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getNode(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         // We should have a single node with no history of nodes
         Assert.assertEquals(JSON.NODE, result.path(JSON.TYPE).asText());
         Assert.assertEquals(NodeIdentity.identity(), result.path(JSON.DATA).path(JSON.NODE).asText());
@@ -289,8 +283,7 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getSystemConnections(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         // We should only have one internal connection
         Assert.assertEquals(1, result.size());
         JsonNode connection = result.get(0);
@@ -332,8 +325,7 @@ public class JsonUtilHttpServiceTest {
             return service.isPublished() == true;
         }));
         result = instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertFalse(data.isMissingNode());
@@ -360,8 +352,7 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getRailroad(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertEquals(JSON.RAILROAD, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
@@ -379,8 +370,7 @@ public class JsonUtilHttpServiceTest {
         Editor editor = new SwitchboardEditor("test");
         JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
         ObjectNode result = instance.getPanel(locale, editor, JSON.XML);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         editor.getTargetFrame().dispose();
         editor.dispose();
     }
@@ -397,8 +387,7 @@ public class JsonUtilHttpServiceTest {
         Editor editor = new SwitchboardEditor("test");
         JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
         JsonNode result = instance.getPanels(locale, JSON.XML);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         editor.getTargetFrame().dispose();
         editor.dispose();
     }
@@ -415,8 +404,7 @@ public class JsonUtilHttpServiceTest {
         Editor editor = new SwitchboardEditor("test");
         JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
         JsonNode result = instance.getPanels(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         editor.getTargetFrame().dispose();
         editor.dispose();
     }
@@ -433,8 +421,7 @@ public class JsonUtilHttpServiceTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         ArrayNode result = instance.getConfigProfiles(locale);
-        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
-        cache.validateMessage(result, true, locale);
+        this.validate(result);
         Assert.assertEquals("Result has every profile", ProfileManager.getDefault().getProfiles().length, result.size());
     }
 
