@@ -94,6 +94,8 @@ public class VSDecoderManager implements PropertyChangeListener {
         //VSDListener t = new VSDListener(getNextListenerID());
         VSDListener t = new VSDListener();
         listenerTable.put(t.getSystemName(), t);
+        // Update JMRI "Default Audio Listener"
+        setListenerLocation(t.getSystemName(), vsdecoderPrefs.getListenerPosition());
     }
 
     public static VSDecoderManager instance() {
@@ -270,7 +272,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     public String getDefaultListenerName() {
-        return (VSDListener.ListenerSysNamePrefix + "ListenerID1"); // NOI18N
+        //return (VSDListener.ListenerSysNamePrefix + "ListenerID1"); // NOI18N
+        return VSDListener.ListenerSysName;
     }
 
     public ListeningSpot getDefaultListenerLocation() {
