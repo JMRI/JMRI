@@ -1,6 +1,9 @@
 package jmri.jmrix.openlcb;
 
+import jmri.util.JUnitUtil;
 import jmri.implementation.AbstractTurnoutTestBase;
+import org.junit.Before;
+import org.junit.After;
 
 /**
  * Tests inherited from the abstract turnout test base, specialized for the OlcbTurnout. This is
@@ -14,14 +17,21 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     int baselineListeners;
 
     @Override
+    @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tif = new OlcbTestInterface();
         tif.waitForStartup();
         baselineListeners = tif.iface.numMessageListeners();
         OlcbTurnout ot = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", tif.iface);
         ot.finishLoad();
         t = ot;
+    }
+
+    @After
+    public void tearDown() {
+        tif.dispose();
+        JUnitUtil.tearDown();
     }
 
     @Override

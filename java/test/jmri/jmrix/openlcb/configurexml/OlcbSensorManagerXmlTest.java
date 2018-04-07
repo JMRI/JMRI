@@ -102,6 +102,7 @@ public class OlcbSensorManagerXmlTest {
         expected = new CanMessage(new byte[]{1,2,3,4,5,6,7,8}, 0x194C7C4C);
         expected.setExtended(true);
         Assert.assertEquals(expected, t.tc.rcvMessage);
+        t.dispose();
     }
 
     OlcbTestInterface t;
