@@ -92,14 +92,12 @@
         this page</a> from the Java Tutorial.</li>
 
         <li>If you need to use comma-separated variable (CSV)
-        files, please use the <a href=
-        "http://javacsv.sourceforge.net/">javacsv API</a> if
+        files, please use the <a href="http://javacsv.sourceforge.net/">javacsv API</a> if
         possible. We are already using that in a number of places,
         and will probably use it in more. If that doesn't provide
         enough functionality, we might eventually move to the
-        <a href=
-        "http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">
-        opencsv API</a>, but since we only want to use one, the
+        <a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, 
+        but since we only want to use one, the
         conversion will be a lot of work.</li>
       </ul>
 
