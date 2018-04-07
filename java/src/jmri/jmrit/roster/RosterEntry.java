@@ -1390,8 +1390,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         int linesadded = -1;
 
         try {
-            HardcopyWriter ww = (HardcopyWriter) w;
-            int textSpace = ww.getCharactersPerLine() - 1; // no indent
+            int textSpace = w.getCharactersPerLine() - 1; // no indent
             String thisText ="";
             String thisLine = "";
 
@@ -1445,7 +1444,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // dateModified (type)
             if (dateModified != null) {
                 if (dateModified instanceof Date) {
-                    DateFormat.getDateTimeInstance().format((Date) dateModified);
+                    DateFormat.getDateTimeInstance().format(dateModified);
                 }
                 thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
                 thisLine += thisText;

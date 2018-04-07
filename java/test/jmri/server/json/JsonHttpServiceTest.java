@@ -31,7 +31,7 @@ public class JsonHttpServiceTest {
     @Test
     public void testGetObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        Assert.assertEquals("get object mapper", (Object) mapper, (new JsonTestHttpService(mapper)).getObjectMapper());
+        Assert.assertEquals("get object mapper", mapper, (new JsonTestHttpService(mapper)).getObjectMapper());
     }
 
     /**
