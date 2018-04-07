@@ -360,7 +360,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        //JUnitUtil.initDebugCommandStation();
+        JUnitUtil.initDebugCommandStation();
 
         // prepare an interface
         DirectSystemConnectionMemo m = new DirectSystemConnectionMemo();
