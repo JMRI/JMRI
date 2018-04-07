@@ -1150,7 +1150,7 @@ public class IndexedTreeMap<K, V>
             if (m instanceof IndexedTreeMap)
                 return ((IndexedTreeMap<E, Object>) m).keyIterator();
             else
-                return (Iterator<E>) (((IndexedTreeMap.NavigableSubMap) m).keyIterator());
+                return ((IndexedTreeMap.NavigableSubMap) m).keyIterator();
         }
 
         @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
@@ -1158,7 +1158,7 @@ public class IndexedTreeMap<K, V>
             if (m instanceof IndexedTreeMap)
                 return ((IndexedTreeMap<E, Object>) m).descendingKeyIterator();
             else
-                return (Iterator<E>) (((IndexedTreeMap.NavigableSubMap) m).descendingKeyIterator());
+                return ((IndexedTreeMap.NavigableSubMap) m).descendingKeyIterator();
         }
 
         public int size() {
