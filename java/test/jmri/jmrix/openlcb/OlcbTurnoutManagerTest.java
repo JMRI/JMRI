@@ -3,8 +3,10 @@ package jmri.jmrix.openlcb;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -14,7 +16,7 @@ import org.junit.Test;
  */
 public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    private OlcbSystemConnectionMemo m; 
+    private static OlcbSystemConnectionMemo m; 
 
     @Override
     public String getSystemName(int i) {
@@ -50,20 +52,25 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        m = OlcbTestInterface.createForLegacyTests();
         l = new OlcbTurnoutManager(m);
-
+    }
+ 
+    @BeforeClass
+    public static void preClassInit() {
+        JUnitUtil.setUp();
+        m = OlcbTestInterface.createForLegacyTests();
     }
 
     @After
     public void tearDown() {
         l.dispose();
+    }
+
+    @AfterClass
+    public static void postClassTearDown() {
         if(m != null && m.getInterface() !=null ) {
            m.getInterface().dispose();
         }
         JUnitUtil.tearDown();
-    }
-
+    } 
 }

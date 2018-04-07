@@ -3,8 +3,10 @@ package jmri.jmrix.openlcb;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -14,7 +16,7 @@ import org.junit.Test;
  */
 public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    private OlcbSystemConnectionMemo m;
+    private static OlcbSystemConnectionMemo m;
 
     @Override
     public String getSystemName(int i) {
@@ -72,16 +74,22 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        m = OlcbTestInterface.createForLegacyTests();
-
         l = new OlcbSensorManager(m);
+    }
+
+    @BeforeClass
+    public static void preClassInit(){
+        JUnitUtil.setUp();
+        m = OlcbTestInterface.createForLegacyTests();
     }
 
     @After
     public void tearDown() {
         l.dispose();
+    }
+
+    @AfterClass
+    public static void postClassTearDown(){
         if(m != null && m.getInterface() !=null ) {
            m.getInterface().dispose();
         }
