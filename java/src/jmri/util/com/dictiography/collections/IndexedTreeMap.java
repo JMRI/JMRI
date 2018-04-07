@@ -325,6 +325,7 @@ public class IndexedTreeMap<K, V>
      *                              and this map uses natural ordering, or its comparator
      *                              does not permit null keys
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     final Entry<K, V> getEntry(Object key) {
         // Offload comparator-based version for sake of performance
         if (comparator != null)
@@ -351,6 +352,7 @@ public class IndexedTreeMap<K, V>
      * that are less dependent on comparator performance, but is
      * worthwhile here.)
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     final Entry<K, V> getEntryUsingComparator(Object key) {
         K k = (K) key;
         Comparator<? super K> cpr = comparator;
@@ -539,6 +541,7 @@ public class IndexedTreeMap<K, V>
      *                              and this map uses natural ordering, or its comparator
      *                              does not permit null keys
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public V put(K key, V value) {
         Entry<K, V> t = root;
         if (t == null) {
@@ -637,6 +640,7 @@ public class IndexedTreeMap<K, V>
      *
      * @return a shallow copy of this map
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public Object clone() {
         IndexedTreeMap<K, V> clone = null;
         try {
@@ -812,6 +816,7 @@ public class IndexedTreeMap<K, V>
         return getExactKey(e.right, index - (e.left == null ? 0 : e.left.weight) - 1);
     }
 
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public int keyIndex(K key) {
         if (key == null) {
             throw new NullPointerException();
@@ -903,6 +908,7 @@ public class IndexedTreeMap<K, V>
     /**
      * @since 1.6
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public NavigableSet<K> navigableKeySet() {
         KeySet<K> nks = navigableKeySet;
         return (nks != null) ? nks : (navigableKeySet = new KeySet(this));
@@ -958,6 +964,7 @@ public class IndexedTreeMap<K, V>
     /**
      * @since 1.6
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public NavigableMap<K, V> descendingMap() {
         NavigableMap<K, V> km = descendingMap;
         return (km != null) ? km :
@@ -974,6 +981,7 @@ public class IndexedTreeMap<K, V>
      * @throws IllegalArgumentException {@inheritDoc}
      * @since 1.6
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public NavigableMap<K, V> subMap(K fromKey, boolean fromInclusive,
                                      K toKey, boolean toInclusive) {
         return new AscendingSubMap(this,
@@ -989,6 +997,7 @@ public class IndexedTreeMap<K, V>
      * @throws IllegalArgumentException {@inheritDoc}
      * @since 1.6
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public NavigableMap<K, V> headMap(K toKey, boolean inclusive) {
         return new AscendingSubMap(this,
                 true, null, true,
@@ -1003,6 +1012,7 @@ public class IndexedTreeMap<K, V>
      * @throws IllegalArgumentException {@inheritDoc}
      * @since 1.6
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public NavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
         return new AscendingSubMap(this,
                 false, fromKey, inclusive,
@@ -1078,6 +1088,7 @@ public class IndexedTreeMap<K, V>
             return new EntryIterator(getFirstEntry());
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public boolean contains(Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -1087,6 +1098,7 @@ public class IndexedTreeMap<K, V>
             return p != null && valEquals(p.getValue(), value);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public boolean remove(Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -1128,6 +1140,7 @@ public class IndexedTreeMap<K, V>
     static final class KeySet<E> extends AbstractSet<E> implements NavigableSet<E> {
         private final NavigableMap<E, Object> m;
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         KeySet(NavigableMap<E, Object> map) {
             m = map;
         }
@@ -1139,6 +1152,7 @@ public class IndexedTreeMap<K, V>
                 return (Iterator<E>) (((IndexedTreeMap.NavigableSubMap) m).keyIterator());
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public Iterator<E> descendingIterator() {
             if (m instanceof IndexedTreeMap)
                 return ((IndexedTreeMap<E, Object>) m).descendingKeyIterator();
@@ -1232,6 +1246,7 @@ public class IndexedTreeMap<K, V>
             return tailSet(fromElement, true);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableSet<E> descendingSet() {
             return new IndexedTreeSet(m.descendingMap());
         }
@@ -1336,6 +1351,7 @@ public class IndexedTreeMap<K, V>
     /**
      * Compares two keys using the correct comparison method for this IndexedTreeMap.
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     final int compare(Object k1, Object k2) {
         return comparator == null ? ((Comparable<? super K>) k1).compareTo((K) k2)
                 : comparator.compare((K) k1, (K) k2);
@@ -1645,6 +1661,7 @@ public class IndexedTreeMap<K, V>
         transient EntrySetView entrySetView = null;
         transient KeySet<K> navigableKeySetView = null;
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public final NavigableSet<K> navigableKeySet() {
             KeySet<K> nksv = navigableKeySetView;
             return (nksv != null) ? nksv :
@@ -1696,6 +1713,7 @@ public class IndexedTreeMap<K, V>
                 return n == null || tooHigh(n.key);
             }
 
+            @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
             public boolean contains(Object o) {
                 if (!(o instanceof Map.Entry))
                     return false;
@@ -1708,6 +1726,7 @@ public class IndexedTreeMap<K, V>
                         valEquals(node.getValue(), entry.getValue());
             }
 
+            @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
             public boolean remove(Object o) {
                 if (!(o instanceof Map.Entry))
                     return false;
@@ -1869,6 +1888,7 @@ public class IndexedTreeMap<K, V>
             return m.comparator();
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> subMap(K fromKey, boolean fromInclusive,
                                          K toKey, boolean toInclusive) {
             if (!inRange(fromKey, fromInclusive))
@@ -1880,6 +1900,7 @@ public class IndexedTreeMap<K, V>
                     false, toKey, toInclusive);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> headMap(K toKey, boolean inclusive) {
             if (!inRange(toKey, inclusive))
                 throw new IllegalArgumentException("toKey out of range");
@@ -1888,6 +1909,7 @@ public class IndexedTreeMap<K, V>
                     false, toKey, inclusive);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
             if (!inRange(fromKey, inclusive))
                 throw new IllegalArgumentException("fromKey out of range");
@@ -1896,6 +1918,7 @@ public class IndexedTreeMap<K, V>
                     toEnd, hi, hiInclusive);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> descendingMap() {
             NavigableMap<K, V> mv = descendingMapView;
             return (mv != null) ? mv :
@@ -1968,6 +1991,7 @@ public class IndexedTreeMap<K, V>
             return reverseComparator;
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> subMap(K fromKey, boolean fromInclusive,
                                          K toKey, boolean toInclusive) {
             if (!inRange(fromKey, fromInclusive))
@@ -1979,6 +2003,7 @@ public class IndexedTreeMap<K, V>
                     false, fromKey, fromInclusive);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> headMap(K toKey, boolean inclusive) {
             if (!inRange(toKey, inclusive))
                 throw new IllegalArgumentException("toKey out of range");
@@ -1987,6 +2012,7 @@ public class IndexedTreeMap<K, V>
                     toEnd, hi, hiInclusive);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> tailMap(K fromKey, boolean inclusive) {
             if (!inRange(fromKey, inclusive))
                 throw new IllegalArgumentException("fromKey out of range");
@@ -1995,6 +2021,7 @@ public class IndexedTreeMap<K, V>
                     false, fromKey, inclusive);
         }
 
+        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         public NavigableMap<K, V> descendingMap() {
             NavigableMap<K, V> mv = descendingMapView;
             return (mv != null) ? mv :
@@ -2057,6 +2084,7 @@ public class IndexedTreeMap<K, V>
      *
      * @serial include
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     private class SubMap extends AbstractMap<K, V>
             implements SortedMap<K, V>, java.io.Serializable {
         private static final long serialVersionUID = -6520786458950516097L;
@@ -2674,6 +2702,7 @@ public class IndexedTreeMap<K, V>
      * @param redLevel the level at which nodes should be red.
      *                 Must be equal to computeRedLevel for tree of this size.
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     private final Entry<K, V> buildFromSorted(int level, int lo, int hi,
                                               int redLevel,
                                               Iterator it,
