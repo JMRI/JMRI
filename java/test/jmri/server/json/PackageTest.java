@@ -45,6 +45,7 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonConnectionTest.class,
     JsonExceptionTest.class,
     JsonHttpServiceTest.class,
+    JsonNamedBeanHttpServiceTest.class,
     JsonSocketServiceTest.class,
     JsonWebSocketTest.class
 })

@@ -1,10 +1,11 @@
 package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import jmri.InstanceManager;
-import jmri.server.json.JsonException;
 import jmri.server.json.schema.JsonSchemaServiceCache;
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
 
 /**
@@ -13,6 +14,18 @@ import org.junit.Assert;
  * @author Randall Wood Copyright 2018
  */
 public class JsonHttpServiceTestBase {
+
+    protected ObjectMapper mapper = null;
+
+    public void setUp() {
+        JUnitUtil.setUp();
+        this.mapper = new ObjectMapper();
+    }
+
+    public void tearDown() {
+        this.mapper = null;
+        JUnitUtil.tearDown();
+    }
 
     /**
      * Validate a JsonNode produced by the JMRI JSON server against published
