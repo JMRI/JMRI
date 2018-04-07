@@ -65,7 +65,7 @@
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
         when there's a specific reason for it such as compatibility with an existing API;
         they're slow and memory-intensive compared to e.g. an 
-        a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
         A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
         can be a good default solution to holding data that won't ever contain 'null'.
         Consider using a
@@ -125,7 +125,7 @@
             <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
             when there's a specific reason for it such as compatibility with an existing API;
             they're slow and memory-intensive compared to e.g. an 
-            a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
         <li>
             A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
             can be a good default solution to holding data that won't ever contain 'null'.
