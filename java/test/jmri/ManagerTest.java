@@ -130,7 +130,7 @@ public class ManagerTest {
         NamedBean n3 = new BogusBean("BB3");
         NamedBean n4 = new BogusBean("BB4");
         NamedBean n5 = new BogusBean("BB5");
-        NamedBean n6 = new BogusBean("BB5");
+        new BogusBean("BB5");  // created, but not used directly
         
         TreeSet<NamedBean> set1 = new TreeSet<>();
         

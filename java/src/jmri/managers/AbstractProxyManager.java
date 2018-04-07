@@ -134,8 +134,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
+        @Override
         public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
-        public boolean equals(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().equals(e2.getSystemPrefix()); }
     });
     private Manager<E> internalManager = null;
     private Manager<E> defaultManager = null;
@@ -560,7 +560,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
         ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_ADDED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
-        for (ManagerDataListener m : listeners) {
+        for (ManagerDataListener<E> m : listeners) {
             m.intervalAdded(eOut);
         }
     }
@@ -585,7 +585,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
         ManagerDataEvent<E> eOut = new ManagerDataEvent<E>(this, Manager.ManagerDataEvent.INTERVAL_REMOVED, e.getIndex0()+offset, e.getIndex1()+offset, e.getChangedBean());
 
-        for (ManagerDataListener m : listeners) {
+        for (ManagerDataListener<E> m : listeners) {
             m.intervalRemoved(eOut);
         }
     }
@@ -596,7 +596,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
             ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
-            for (ManagerDataListener listener : listeners) {
+            for (ManagerDataListener<E> listener : listeners) {
                 listener.contentsChanged(e);
             }          
         }
