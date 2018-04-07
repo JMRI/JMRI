@@ -16,7 +16,7 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
   */
-public class ProxySensorManagerTest extends TestCase implements Manager.ManagerDataListener, PropertyChangeListener {
+public class ProxySensorManagerTest extends TestCase implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
     protected ProxySensorManager l = null;	// holds objects under test
 
