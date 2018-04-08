@@ -154,7 +154,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)
                             && !evt.getPropertyName().equals(Roster.ROSTER_GROUP_RENAMED)) {
-                        // catch all events other than SAVED, and group stuff (handled elsewhere)
+                        // catch all events other than SAVED and ROSTER_GROUP_* (handled elsewhere)
                         connection.sendMessage(service.getRoster(connection.getLocale(), root));
                     }
                 } catch (JsonException ex) {

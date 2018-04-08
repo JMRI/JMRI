@@ -1,8 +1,13 @@
 package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
@@ -16,7 +21,7 @@ import org.junit.Assert;
  */
 public class JsonMockConnection extends JsonConnection {
 
-    private JsonNode message = null;
+    private final List<JsonNode> messages = new ArrayList<>();
     private boolean open = true;
     private boolean throwIOException = false;
 
@@ -45,10 +50,10 @@ public class JsonMockConnection extends JsonConnection {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation accepts a null message, and if
-     * {@link #isThrowIOException()} is true throws an {@link IOException}. Note
-     * that after throwing the IOException, {@link #isThrowIOException()} will
-     * return false.
+     * This implementation accepts a null message to reset the list of sent
+     * messages, and if {@link #isThrowIOException()} is true throws an
+     * {@link IOException}. Note that after throwing the IOException,
+     * {@link #isThrowIOException()} will return false.
      */
     @Override
     public void sendMessage(@Nullable JsonNode message) throws IOException {
@@ -56,19 +61,37 @@ public class JsonMockConnection extends JsonConnection {
             this.throwIOException = false;
             throw new IOException();
         }
-        if (message != null && this.preferences.getValidateServerMessages()) {
-            try {
-                this.schemas.validateMessage(message, true, this.getLocale());
-            } catch (JsonException ex) {
-                this.message = ex.getJsonMessage();
-                Assert.fail(ex.getMessage());
+        if (message != null) {
+            if (this.preferences.getValidateServerMessages()) {
+                try {
+                    this.schemas.validateMessage(message, true, this.getLocale());
+                } catch (JsonException ex) {
+                    this.messages.add(ex.getJsonMessage());
+                    Assert.fail(ex.getMessage());
+                }
             }
+            this.messages.add(message);
+        } else {
+            // use a null message as the key to clear the list of messages
+            this.messages.clear();
         }
-        this.message = message;
     }
 
+    @CheckForNull
     public JsonNode getMessage() {
-        return this.message;
+        int i = this.messages.size() - 1;
+        return (i < 0) ? null : this.messages.get(i);
+    }
+
+    /**
+     * Get a copy of the list of all messages retained as a JSON array. This
+     * returns a JSON array to facilitate JSON path inspection.
+     *
+     * @return a list of messages, empty array if no message has been sent
+     */
+    @Nonnull
+    public ArrayNode getMessages() {
+        return this.getObjectMapper().createArrayNode().addAll(this.messages);
     }
 
     @Override
