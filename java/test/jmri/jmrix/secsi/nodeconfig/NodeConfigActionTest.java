@@ -23,7 +23,7 @@ public class NodeConfigActionTest {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigAction action = new NodeConfigAction("secsi test Action",memo);
+        NodeConfigAction action = new NodeConfigAction("secsi test Action", memo);
         Assert.assertNotNull("exists", action);
     }
 
@@ -37,10 +37,11 @@ public class NodeConfigActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        new SerialTrafficControlScaffold();
         memo = new SecsiSystemConnectionMemo();
+        new SerialTrafficControlScaffold(memo);
     }
 
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
+
 }

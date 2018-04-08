@@ -17,16 +17,17 @@ public class SerialLightTest {
 
     @Test
     public void testCTor() {
-        SerialLight t = new SerialLight("VL1",memo);
-        Assert.assertNotNull("exists",t);
+        SerialLight t = new SerialLight("VL1", memo);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tcis = new SerialTrafficControlScaffold();
+
         memo = new SecsiSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
     }
 

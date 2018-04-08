@@ -1414,7 +1414,7 @@ public class ActivateTrainFrame {
         } else {
             info.setUseSpeedProfile(false);
             info.setStopBySpeedProfile(false);
-            info.setStopBySpeedProfileAdjust(100.0f);
+            info.setStopBySpeedProfileAdjust(1.0f);
         }
     }
 

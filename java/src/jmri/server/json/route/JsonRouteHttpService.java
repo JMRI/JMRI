@@ -86,12 +86,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
         if (route == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", ROUTE, name));
         }
-        if (data.path(JSON.USERNAME).isTextual()) {
-            route.setUserName(data.path(JSON.USERNAME).asText());
-        }
-        if (data.path(JSON.COMMENT).isTextual()) {
-            route.setComment(data.path(JSON.COMMENT).asText());
-        }
+        this.postNamedBean(route, data, name, type, locale);
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         switch (state) {
             case JSON.ACTIVE:

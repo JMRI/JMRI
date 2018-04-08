@@ -43,7 +43,6 @@ public class ActiveSystemsMenu extends JMenu {
                 m.add(menu);
             }
         }
-
     }
 
     /**
@@ -61,7 +60,6 @@ public class ActiveSystemsMenu extends JMenu {
                 m.add(menu);
             }
         }
-
     }
 
     static JMenu getMenu(String className) {

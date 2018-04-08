@@ -4,7 +4,7 @@ import jmri.implementation.AbstractSensor;
 
 /**
  * Implement a Sensor via Marklin communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Marklin communications. This is because the
  * sensor manager will handle all the messages as some sensor updates will come
  * bundled together in one message. It also saves having multiple sensor beans
@@ -12,7 +12,6 @@ import jmri.implementation.AbstractSensor;
  * in one location.
  *
  * @author Kevin Dickerson (C) 2009
- * 
  */
 public class MarklinSensor extends AbstractSensor {
 

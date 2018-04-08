@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import java.util.Objects;
+
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -14,16 +16,19 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.REPORTERS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'R';
     }
 
+    /** {@inheritDoc} */
     @Override
     public Reporter provideReporter(String sName) {
         Reporter t = getReporter(sName);
@@ -37,6 +42,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Reporter getReporter(String name) {
         Reporter t = getByUserName(name);
@@ -47,21 +53,25 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Reporter getBySystemName(String name) {
         return _tsys.get(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Reporter getByUserName(String key) {
         return _tuser.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }
 
+    /** {@inheritDoc} */
     @Override
     public Reporter getByDisplayName(String key) {
         // First try to find it in the user list.
@@ -74,13 +84,22 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return (retv);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Reporter newReporter(String systemName, String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new Reporter:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+
+        log.debug("new Reporter: {} {}", systemName, userName);
+
+       // is system name in correct format?
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())
+                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
+            log.error("Invalid system name for reporter: {} needed {}{}",
+                    systemName, getSystemPrefix(), typeLetter());
+            throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
+                    + " needed " + getSystemPrefix() + typeLetter());
         }
+
         // return existing if there is one
         Reporter r;
         if ((userName != null) && ((r = getByUserName(userName)) != null)) {
@@ -116,15 +135,13 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      */
     abstract protected Reporter createNewReporter(String systemName, String userName);
 
-    /**
-     * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg. 10 to 30
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address passed does not already exist then this can
@@ -162,11 +179,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         }
     }
 
-    /**
-     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
-     *
-     * @return the tooltip
-     */
+    /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
         return "Enter a number from 1 to 9999"; // Basic number format help
