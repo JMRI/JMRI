@@ -411,6 +411,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
      * @param o object to be compared for equality with this map
      * @return <tt>true</tt> if the specified object is equal to this map
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics
     public boolean equals(Object o) {
         if (o == this)
             return true;
@@ -507,6 +508,7 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
      *
      * @return a shallow copy of this map
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics
     protected Object clone() throws CloneNotSupportedException {
         AbstractMap<K, V> result = (AbstractMap<K, V>) super.clone();
         result.keySet = null;

@@ -16,7 +16,7 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014
   */
-public class ProxySensorManagerTest extends TestCase implements Manager.ManagerDataListener, PropertyChangeListener {
+public class ProxySensorManagerTest extends TestCase implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
     protected ProxySensorManager l = null;	// holds objects under test
 
@@ -216,7 +216,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Sensor s1 = l.provideSensor("IS1");
         s1.setUserName("Sensor 1");
         Sensor s2 = l.provideSensor("IS2");
-        Sensor s3 = l.provideSensor("IS3");
+        l.provideSensor("IS3");
         
         l.addDataListener(this);
         List<Sensor> tlist = l.getNamedBeanList();
@@ -240,7 +240,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Sensor s1 = l.provideSensor("JS1");
         s1.setUserName("Sensor 1");
         Sensor s2 = l.provideSensor("JS2");
-        Sensor s3 = l.provideSensor("JS3");
+        l.provideSensor("JS3");
         
         l.addDataListener(this);
         List<Sensor> tlist = l.getNamedBeanList();
@@ -286,10 +286,9 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Sensor s1 = l.provideSensor("JS1");
         s1.setUserName("Sensor 1");
         Sensor s2 = l.provideSensor("JS2");
-        Sensor s3 = l.provideSensor("JS3");
+        l.provideSensor("JS3");
         
         l.addDataListener(this);
-        List<Sensor> tlist = l.getNamedBeanList();
 
         l.deregister(s2);
     
@@ -407,7 +406,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
 
     public void testUnmodifiable() {
         Sensor s1 = l.provideSensor("IS1");
-        Sensor s2 = l.provideSensor("IS2");
+        l.provideSensor("IS2");
         
         List<String> nameList = l.getSystemNameList();
         List<Sensor> beanList = l.getNamedBeanList();

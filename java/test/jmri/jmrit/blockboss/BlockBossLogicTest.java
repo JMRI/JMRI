@@ -195,7 +195,7 @@ public class BlockBossLogicTest {
     public void testSimpleBlockNoSignal() throws jmri.JmriException {
 
         try { 
-            BlockBossLogic p1 = new BlockBossLogic(null);
+            new BlockBossLogic(null);
         } catch (java.lang.IllegalArgumentException e) {
             // this is expected
         }

@@ -16,7 +16,7 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
 
     private SprogTrafficControlScaffold stc = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
       stc.sendTestReply(new SprogReply("+"));

@@ -40,8 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilHttpServiceTest {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
-
     public JsonUtilHttpServiceTest() {
     }
 
@@ -462,4 +460,7 @@ public class JsonUtilHttpServiceTest {
         Assert.assertTrue("Address is long", result.isLongAddress());
         Assert.assertEquals("Address is 3", 3, result.getNumber());
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
+
 }

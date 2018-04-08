@@ -191,7 +191,7 @@ public class AlignTablePane extends javax.swing.JPanel {
     JComboBox<String> algorithmBox = Algorithms.algorithmBox();
 
     /**
-     * Set up table for showing individual recievers
+     * Set up table for showing individual receivers
      * <ol>
      * <li>Address
      * <li>Present Y/N

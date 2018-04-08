@@ -34,6 +34,7 @@ public class SerialNode extends AbstractNode {
     private int _address = 0;
 
     // operational instance variables (should not be preserved between runs)
+
     /**
      * Assumes a node address of 1, and a node type of 0. If this constructor is
      * used, actual node address must be set using setNodeAddress.
@@ -43,7 +44,8 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
-     * Creates a new SerialNode and initialize default instance variables
+     * Create a new SerialNode and initialize default instance variables.
+     *
      * @param address Address of node on serial bus (0-99)
      * @param type 0 (ignored)
      */
@@ -68,7 +70,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Check valid node address, must match value configured in the Maple HMI.
      *
-     * @param address allowed values are 1-99
+     * @param address node ID, allowed values are 1-99
      * @return true if in valid range
      */
     @Override
@@ -124,14 +126,14 @@ public class SerialNode extends AbstractNode {
     public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l) {
         // increment timeout count
         timeout++;
-        log.warn("Poll of node " + _address + " timed out. Timeout count = " + timeout);
+        log.warn("Poll of node {} timed out. Timeout count = {}", _address, timeout);
         return false;
     }
 
     @Override
     public void resetTimeout(AbstractMRMessage m) {
         if (timeout > 0) {
-            log.debug("Reset " + timeout + " timeout count");
+            log.debug("Reset {} timeout count", timeout);
         }
         timeout = 0;
     }

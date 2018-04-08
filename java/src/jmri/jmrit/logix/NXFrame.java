@@ -93,7 +93,7 @@ public class NXFrame extends WarrantRoute {
     
     private void init() {
         if (log.isDebugEnabled()) log.debug("newInstance");
-        WarrantPreferences preferences = updatePreferences();
+        updatePreferences();
         makeMenus();
 
         _routePanel = new JPanel();
