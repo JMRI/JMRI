@@ -22,7 +22,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonRosterSocketServiceTest {
 

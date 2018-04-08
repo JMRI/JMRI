@@ -624,6 +624,19 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -986,11 +999,11 @@
             <artifactId>json-schema-validator</artifactId>
             <version>0.1.16</version>
         </dependency>
-	<dependency>
-	    <groupId>org.eclipse.paho</groupId>
-	    <artifactId>mqtt-client</artifactId>
-	    <version>0.4.0</version>
-	</dependency>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -1030,14 +1043,4 @@
             <url>file://${project.basedir}/lib</url>
         </repository>
     </repositories>
-
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>org.jmdns</groupId>
-    			<artifactId>jmdns</artifactId>
-    			<version>3.5.1</version>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
 </project>
