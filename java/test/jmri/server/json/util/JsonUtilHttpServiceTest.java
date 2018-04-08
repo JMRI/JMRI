@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.GraphicsEnvironment;
-import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
@@ -31,8 +30,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -44,16 +41,18 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     }
 
     @Before
-    public void setUp() throws IOException {
-        JUnitUtil.setUp();
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConnectionConfigManager();
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Override
+    public void tearDown() throws Exception {
         ZeroConfService.stopAll();
+        super.tearDown();
     }
 
     /**

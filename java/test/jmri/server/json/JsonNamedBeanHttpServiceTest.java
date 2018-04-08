@@ -21,13 +21,13 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
 
     @Before
     @Override
-    public void setUp() {
+    public void setUp() throws Exception {
         super.setUp();
     }
 
     @After
     @Override
-    public void tearDown() {
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 

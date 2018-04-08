@@ -17,12 +17,20 @@ public class JsonHttpServiceTestBase {
 
     protected ObjectMapper mapper = null;
 
-    public void setUp() {
+    /**
+     *
+     * @throws Exception to allow overriding methods to throw any exception
+     */
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         this.mapper = new ObjectMapper();
     }
 
-    public void tearDown() {
+    /**
+     *
+     * @throws Exception to allow overriding methods to throw any exception
+     */
+    public void tearDown() throws Exception {
         this.mapper = null;
         JUnitUtil.tearDown();
     }

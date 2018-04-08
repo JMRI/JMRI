@@ -55,7 +55,6 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
 
     @Test
     public void testDoPost() throws JmriException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         Light light1 = manager.provideLight("IL1");
@@ -99,7 +98,6 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
 
     @Test
     public void testDoPut() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
         JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         try {
@@ -118,7 +116,6 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testDoGetList() {
         try {
-            ObjectMapper mapper = new ObjectMapper();
             JsonLightHttpService service = new JsonLightHttpService(mapper);
             LightManager manager = InstanceManager.getDefault(LightManager.class);
             JsonNode result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
@@ -147,16 +144,18 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
-        JUnitUtil.setUp();
+        super.setUp();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }
