@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import javax.annotation.*;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -167,19 +168,6 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
                 // no light, create a turnout
                 LnTurnout t = (LnTurnout) provideTurnout(s);
-                
-                // if this is an OPC_SW_REP INPUT message for the AUX input,
-                // then the actual turnout must be in EXACT feedback mode
-                if (l.getOpCode() == LnConstants.OPC_SW_REP) {
-                    if ( (l.getElement(2) & LnConstants.OPC_SW_REP_INPUTS) != 0) {
-                        // INPUT
-                        if ( (l.getElement(2) & LnConstants.OPC_SW_REP_SW) == 0) {
-                            // AUX - set exact feedback
-                            log.debug("setting EXACT based on initial message: {}", l);
-                            t.setFeedbackMode(LnTurnout.EXACT);
-                        } 
-                    }
-                }
                 
                 // process the message to put the turnout in the right state
                 t.message(l);

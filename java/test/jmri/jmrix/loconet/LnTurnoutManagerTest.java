@@ -82,6 +82,16 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     }
 
     @Test
+    public void testCreateFromMessage4 () {
+        // Turnout LT64 () Aux input is Closed (input off).
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3F, 0x50, 0x2F, 0});
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(null != l.getBySystemName("LT64"));
+        Assert.assertEquals("EXACT", l.getBySystemName("LT64").getFeedbackModeName());
+        Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT64").getKnownState());
+    }
+    
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("LT21", "my name");
