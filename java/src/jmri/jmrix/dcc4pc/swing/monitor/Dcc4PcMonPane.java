@@ -128,7 +128,7 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
 
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
-        log.info("timeout recieved to our last message " + m.toString());
+        log.info("timeout received to our last message {}", m.toString());
     }
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class);

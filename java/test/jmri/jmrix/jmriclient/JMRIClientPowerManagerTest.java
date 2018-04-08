@@ -17,7 +17,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
 
     private JMRIClientTrafficControlScaffold stc = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
       stc.sendTestReply(new JMRIClientReply("POWER ON\n\r"));

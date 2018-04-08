@@ -51,7 +51,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
     byte[] csAccMemCopy = new byte[NUM_BLOCK * BLOCK_LEN]; // Copy of NCE CS accessory memory
     byte[] dataBuffer = new byte[NUM_BLOCK * BLOCK_LEN]; // place to store reply messages
 
-    private boolean recData = false;     // when true, valid recieve data
+    private boolean recData = false;     // when true, valid receive data
 
     Thread nceTurnoutMonitorThread;
     boolean turnoutUpdateValid = true;     // keep the thread running
