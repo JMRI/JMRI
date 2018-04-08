@@ -18,7 +18,7 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     private SRCPTrafficControlScaffold stc = null;
   
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
        stc.sendTestReply(new SRCPReply("12345678910 100 INFO 1 POWER ON hello world\n\r"));

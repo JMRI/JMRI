@@ -56,7 +56,7 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
         c.connectPort(p);
 
         // We need three objects to receive messages.
-        // The first one recieves broadcast messages.
+        // The first one receives broadcast messages.
         // The others only receive directed messages.
         XNetListenerScaffold l = new XNetListenerScaffold();
         XNetListenerScaffold l1 = new XNetListenerScaffold();

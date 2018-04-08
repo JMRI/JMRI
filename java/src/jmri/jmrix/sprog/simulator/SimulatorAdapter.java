@@ -322,7 +322,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'S':
                 log.debug("getStatus detected");
-                reply = new SprogReply("S\n");
+                reply = new SprogReply("OK\n");
                 break;
 
             default:

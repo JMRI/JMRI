@@ -49,8 +49,6 @@ import org.slf4j.LoggerFactory;
  */
 public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector {
 
-    private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
-
     JMenuBar menuBar;
     JMenuItem serverOnOff;
     JPanel panel;
@@ -321,4 +319,5 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         return rosterGroupSelector.getSelectedRosterGroup();
     }
 
+    // private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 }
