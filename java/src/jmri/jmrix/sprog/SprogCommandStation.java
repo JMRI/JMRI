@@ -66,7 +66,13 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private SprogTrafficController tc = null;
 
     final Object lock = new Object();
-    private SprogReply reply;
+    
+    // it's not at all clear what the following object does. It's only
+    // set, with a newly created copy of a reply, in notifyReply(SprogReply m);
+    // it's never referenced.
+    @SuppressWarnings("unused") // added april 2018; should be removed?
+    private SprogReply reply;  
+    
     private boolean waitingForReply = false;
     private boolean replyAvailable = false;
     private boolean sendSprogAddress = false;
@@ -388,7 +394,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         });
     }
 
-    private int statusDue = 0;
     @Override
     /**
      * The run() method will only be called (from SprogSystemConnectionMemo
@@ -542,7 +547,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             log.debug("Ignore reply with mismatched id {} looking for {}", m.getId(), lastId);
             return;
         } else {
+            // it's not at all clear what the following line does. The "reply"
+            // variable is only set here, and never referenced.
             reply = new SprogReply(m);
+            
             log.debug("Reply received [{}]", m.toString());
             // Log the reply and wake the slot thread
             synchronized (lock) {
