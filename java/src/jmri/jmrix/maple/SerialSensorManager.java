@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the specific Sensor implementation.
  * <p>
- * System names are "KSnnnn", where nnnn is the sensor number without padding.
+ * System names are "KiSnnnn", where nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  * <p>
@@ -34,7 +34,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     static final int SENSORSPERUA = 1000;
 
     MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "M";
+    protected String prefix = "K";
 
     public SerialSensorManager(MapleSystemConnectionMemo memo) {
         super();

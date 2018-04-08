@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonHttpServiceTest {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonHttpServiceTest.class);
-
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +31,7 @@ public class JsonHttpServiceTest {
     @Test
     public void testGetObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        Assert.assertEquals("get object mapper", (Object) mapper, (new JsonTestHttpService(mapper)).getObjectMapper());
+        Assert.assertEquals("get object mapper", mapper, (new JsonTestHttpService(mapper)).getObjectMapper());
     }
 
     /**
@@ -77,4 +75,6 @@ public class JsonHttpServiceTest {
             Assert.fail("Should not have thrown exception");
         }
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(JsonHttpServiceTest.class);
 }

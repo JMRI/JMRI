@@ -187,6 +187,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
     /**
      * @since 1.6
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public NavigableSet<E> descendingSet() {
         return new IndexedTreeSet(m.descendingMap());
     }
@@ -288,6 +289,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              if any element is null and this set uses natural ordering, or
      *                              its comparator does not permit null elements
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public boolean addAll(Collection<? extends E> c) {
         // Use linear-time version if applicable
         if (m.size() == 0 && c.size() > 0 &&
@@ -462,6 +464,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return a shallow copy of this set
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public Object clone() {
         IndexedTreeSet<E> clone = null;
         try {
@@ -506,6 +509,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * Reconstitute the {@code IndexedTreeSet} instance from a stream (that is,
      * deserialize it).
      */
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     private void readObject(java.io.ObjectInputStream s)
             throws java.io.IOException, ClassNotFoundException {
         // Read in any hidden stuff
@@ -530,15 +534,18 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
 
     private static final long serialVersionUID = -2479143000061671589L;
 
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public E exact(int index) {
         Map.Entry<E, ?> e = ((IndexedNavigableMap) m).exactEntry(index);
         return (e == null) ? null : e.getKey();
     }
 
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public int entryIndex(E e) {
         return ((IndexedNavigableMap) m).keyIndex(e);
     }
 
+    @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public void debug() throws Exception {
         IndexedTreeMap.Entry e = ((IndexedTreeMap) m).getFirstEntry();
         while (e != null) {

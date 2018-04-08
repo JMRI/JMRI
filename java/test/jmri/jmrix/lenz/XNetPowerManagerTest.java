@@ -20,7 +20,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     private int propertyChangeCount;
     private java.beans.PropertyChangeListener listener = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
         sendOnReply();
