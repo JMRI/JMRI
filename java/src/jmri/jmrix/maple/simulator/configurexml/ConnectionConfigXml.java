@@ -1,29 +1,29 @@
-package jmri.jmrix.maple.serialdriver.configurexml;
+package jmri.jmrix.maple.simulator.configurexml;
 
 import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.maple.InputBits;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
-import jmri.jmrix.maple.MapleSystemConnectionMemo;
-import jmri.jmrix.maple.serialdriver.ConnectionConfig;
-import jmri.jmrix.maple.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.maple.SerialTrafficController;
+import jmri.jmrix.maple.simulator.ConnectionConfig;
+import jmri.jmrix.maple.simulator.SimulatorAdapter;
 import org.jdom2.Element;
 
 /**
- * Handle XML persistance of layout connections by persisting the
- * SerialDriverAdapter (and connections). Note this is named as the XML version
- * of a ConnectionConfig object, but it's actually persisting the
- * SerialDriverAdapter.
+ * Handle XML persistence of layout connections by persisting the
+ * SerialDriverAdapter (and connections).
+ * <p>
+ * Note this is named as the XML version of a ConnectionConfig object,
+ * but it's actually persisting the SerialDriverAdapter.
  * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
- * <p>
- * NOTE: Code related to pulsed turnout control has been commented out.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
+ * @author Bob Jacobsen Copyright (c) 2003 copied from NCE/Tams code
+ * @author kcameron Copyright (c) 2014
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -50,7 +50,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             n.addContent(makeParameter("inputbits", "" + InputBits.getNumInputBits()));
             n.addContent(makeParameter("senddelay", "" + OutputBits.getSendDelay()));
             n.addContent(makeParameter("outputbits", "" + OutputBits.getNumOutputBits()));
-//            n.addContent(makeParameter("pulsewidth", ""+node.getPulseWidth()));
 
             // look for the next node
             node = (SerialNode) ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().getNode(index);
@@ -66,9 +65,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
+    }
+
+    @Override
     protected void getInstance() {
-        if (adapter == null ) {
-           adapter = new SerialDriverAdapter();
+        if (adapter == null) {
+            adapter = new SimulatorAdapter();
         }
     }
 
@@ -82,21 +86,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             int senddelay = Integer.parseInt(findParmValue(n, "senddelay"));
             int numinput = Integer.parseInt(findParmValue(n, "inputbits"));
             int numoutput = Integer.parseInt(findParmValue(n, "outputbits"));
-//   int pulseWidth = 500;
-//   if ((findParmValue(n,"pulsewidth")) != null) {
-//    pulseWidth = Integer.parseInt(findParmValue(n,"pulsewidth"));
-//   }
 
+            SerialTrafficController tc = ((MapleSystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, 0, ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController());
+            SerialNode node = new SerialNode(addr, 0, tc);
             InputBits.setTimeoutTime(delay);
             InputBits.setNumInputBits(numinput);
             OutputBits.setSendDelay(senddelay);
             OutputBits.setNumOutputBits(numoutput);
-//   node.setPulseWidth(pulseWidth);
 
             // Trigger initialization of this Node to reflect these parameters
-            ((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController().initializeSerialNode(node);
+            tc.initializeSerialNode(node);
         }
     }
 
@@ -122,11 +122,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
-    }
-
-    @Override
-    protected void getInstance(Object object) {
-        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
 }
