@@ -49,7 +49,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private int fadeInTime = 1000;
     private int fadeOutTime = 1000;
     private float fadeGain = 1.0f;
-    private float dopplerFactor = 1.0f;
     private long timeOfLastFadeCheck = 0;
     private long timeOfLastPositionCheck = 0;
     private int fading = Audio.FADE_NONE;

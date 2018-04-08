@@ -15,7 +15,7 @@ public class MessageTest {
     @Test
     public void testCTor() {
         Message t = new Message(5);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

@@ -208,7 +208,7 @@ public class SerialAddressTest extends TestCase {
     @Override
     protected void setUp() {
         memo = new OakTreeSystemConnectionMemo();
-        memo.setTrafficController(new SerialTrafficControlScaffold(memo));
+        memo.setTrafficController(new SerialTrafficControlScaffold(memo)); // important for successful getTrafficController()
         JUnitUtil.setUp();
     }
 

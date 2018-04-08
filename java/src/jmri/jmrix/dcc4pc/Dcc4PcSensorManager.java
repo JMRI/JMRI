@@ -539,7 +539,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("timeout recieved to our last message " + m.toString());
+            log.debug("timeout received to our last message " + m.toString());
         }
         if (!stopPolling) {
             synchronized (this) {

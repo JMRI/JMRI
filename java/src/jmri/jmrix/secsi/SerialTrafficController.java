@@ -199,13 +199,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return null;
     }
 
-    static volatile protected SerialTrafficController self = null;
-
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until multi-system; only set at startup")
+    @Deprecated
     @Override
     protected void setInstance() {
-        self = this;
     }
 
     /**

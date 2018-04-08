@@ -496,12 +496,12 @@ public interface Manager<E extends NamedBean> {
      * Register a {@link ManagerDataListener} to hear about 
      * adding or removing items from the list of NamedBeans
      */
-    public void addDataListener(ManagerDataListener e);
+    public void addDataListener(ManagerDataListener<E> e);
     
     /**
      * Unregister a previously-added {@link ManagerDataListener}
      */
-    public void removeDataListener(ManagerDataListener e);
+    public void removeDataListener(ManagerDataListener<E> e);
 
     /**
      * Temporarily suppress DataListener notifications.

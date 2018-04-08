@@ -40,7 +40,7 @@ public class JsonServiceFactoryTest {
             Assert.assertEquals("Socket has connection", connection, socket.getConnection());
             Assert.assertTrue("Socket creates same HTTP service class as factory", http.getClass().equals(socket.getHttpService().getClass()));
             // verify HTTP service constructors are populating finals correctly
-            Assert.assertEquals("HTTP object mapper matches connection", (Object) connection.getObjectMapper(), http.getObjectMapper());
+            Assert.assertEquals("HTTP object mapper matches connection", connection.getObjectMapper(), http.getObjectMapper());
         });
     }
 
