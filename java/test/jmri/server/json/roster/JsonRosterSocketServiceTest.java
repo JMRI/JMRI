@@ -123,14 +123,31 @@ public class JsonRosterSocketServiceTest {
         }, "Roster Group was not added");
         this.connection.sendMessage((JsonNode) null); // clear out messages
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup", "yes"); // add new group to roster entry
+        // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
-            return this.connection.getMessages().size() != 0;
-        }, "No messages sent");
+            return this.connection.getMessages().size() == 3;
+        }, "Three messages not sent");
         // Sent updated rosterEntry, rosterGroup, array of rosterGroup
         ArrayNode messages = this.connection.getMessages();
         Assert.assertEquals("3 messages sent", 3, messages.size());
         // Check that 5 top-level types are in the 3 messages
         List<String> values = messages.findValuesAsText("type");
+        values.sort(null); // sort because message order is non-deterministic
+        Assert.assertArrayEquals("Objects are 1 rosterEntry and 4 rosterGroup",
+                new String[]{JsonRoster.ROSTER_ENTRY, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP},
+                values.toArray(new String[5]));
+        // Remove known roster group directly as attribute of RosterEntry
+        this.connection.sendMessage((JsonNode) null); // clear out messages
+        re.deleteAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup"); // remove group from roster entry
+        // wait for all expected messages to be sent before testing messages are as expected
+        JUnitUtil.waitFor(() -> {
+            return this.connection.getMessages().size() == 3;
+        }, "Three messages not sent");
+        // Sent updated rosterEntry, rosterGroup, array of rosterGroup
+        messages = this.connection.getMessages();
+        Assert.assertEquals("3 messages sent", 3, messages.size());
+        // Check that 5 top-level types are in the 3 messages
+        values = messages.findValuesAsText("type");
         values.sort(null); // sort because message order is non-deterministic
         Assert.assertArrayEquals("Objects are 1 rosterEntry and 4 rosterGroup",
                 new String[]{JsonRoster.ROSTER_ENTRY, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP},
@@ -241,10 +258,13 @@ public class JsonRosterSocketServiceTest {
         JsonNode data = this.connection.getObjectMapper().createObjectNode();
         Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
-        instance.onMessage(JsonRoster.ROSTER, data, "Invalid", locale);
-        JsonNode message = this.connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals(Roster.getDefault().numEntries(), message.size());
+        try {
+            instance.onMessage(JsonRoster.ROSTER, data, "Invalid", locale);
+            Assert.fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("Exception is coded for HTTP invalid method", 405, ex.getCode());
+            Assert.assertEquals("Exception message for HTTP invalid method", "Method Invalid is not known and not allowed.", ex.getLocalizedMessage());
+        }
     }
 
     /**
