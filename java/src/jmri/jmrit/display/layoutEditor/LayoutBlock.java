@@ -212,12 +212,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         });
     }
 
-    // this should only be used for debugging...
-    @Override
-    public String toString() {
-        return "LayoutBlock " + getDisplayName();
-    }
-
     /*
      * Accessor methods
      */
