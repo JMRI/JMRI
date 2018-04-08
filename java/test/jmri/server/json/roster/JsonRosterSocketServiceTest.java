@@ -115,7 +115,11 @@ public class JsonRosterSocketServiceTest {
         RosterEntry re = Roster.getDefault().getEntryForId("testEntry1");
         Assert.assertEquals("instance is listening to RosterEntry", 3, re.getPropertyChangeListeners().length);
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "attribute", "yes");
-        Assert.assertEquals("No message sent", 0, this.connection.getMessages().size());
+                JUnitUtil.waitFor(() -> {
+            return this.connection.getMessages().size() == 1;
+        }, "Expected message not sent");
+        Assert.assertEquals("One message sent", 1, this.connection.getMessages().size());
+        Assert.assertEquals("Message contains rosterEntry", JsonRoster.ROSTER_ENTRY, this.connection.getMessage().path(JSON.TYPE).asText());
         // Set known roster group directly as attribute of RosterEntry
         Roster.getDefault().addRosterGroup("NewRosterGroup");
         JUnitUtil.waitFor(() -> {
@@ -126,7 +130,7 @@ public class JsonRosterSocketServiceTest {
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
             return this.connection.getMessages().size() == 3;
-        }, "Three messages not sent");
+        }, "Three expected messages not sent");
         // Sent updated rosterEntry, rosterGroup, array of rosterGroup
         ArrayNode messages = this.connection.getMessages();
         Assert.assertEquals("3 messages sent", 3, messages.size());
@@ -142,7 +146,7 @@ public class JsonRosterSocketServiceTest {
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
             return this.connection.getMessages().size() == 3;
-        }, "Three messages not sent");
+        }, "Three expected messages not sent");
         // Sent updated rosterEntry, rosterGroup, array of rosterGroup
         messages = this.connection.getMessages();
         Assert.assertEquals("3 messages sent", 3, messages.size());

@@ -218,9 +218,7 @@ public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpSer
                             }
                         }
                     }
-
                 }
-
             } catch (IOException ex) {
                 onClose();
             }
