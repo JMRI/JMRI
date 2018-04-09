@@ -197,7 +197,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         TableColumn dataResetCountColumn = netMetricsDataTableModel.getColumn(NetMetricsDataTableModel.DATARESET_COLUMN);                
         dataResetCountColumn.setMinWidth(80);
         dataResetCountColumn.setMaxWidth(80);        
-        dataResetCountColumn.setCellRenderer(buttonRenderer);
+        dataResetCountColumn.setCellRenderer(dataButtonRenderer);
         dataResetCountColumn.setResizable(false);
        
         networkMetricsDataPanel.setBorder(networkMetricsDataBorderTitled);
