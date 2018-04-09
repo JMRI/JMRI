@@ -16,7 +16,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         if (log.isDebugEnabled()) {
             log.debug("setting instance: " + this);
         }
-        self = this;
         memo = adaptermemo;
     }
 
@@ -43,11 +42,12 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
     }
 
     // test control member functions
+
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
-        // forward a test message to NceListeners
+        // forward a test message to SecsiListeners
         if (log.isDebugEnabled()) {
             log.debug("sendTestMessage    [" + m + "]");
         }
