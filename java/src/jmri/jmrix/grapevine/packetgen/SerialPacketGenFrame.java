@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user input of serial messages.
  *
- * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008, 2018
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.grapevine.SerialListener {
 
@@ -34,7 +34,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     javax.swing.JButton parityButton = new javax.swing.JButton(Bundle.getMessage("ButtonSetParity"));
 
     javax.swing.JButton pollButton = new javax.swing.JButton(Bundle.getMessage("ButtonQueryNode"));
-    protected JSpinner nodeAddrSpinner;
+    protected JSpinner nodeAddrSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
 
     public SerialPacketGenFrame(GrapevineSystemConnectionMemo _memo) {
         super();
@@ -93,10 +93,12 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         // add poll message buttons
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
+
         pane3.add(new JLabel(Bundle.getMessage("LabelNodeAddress")));
-        nodeAddrSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
+
         pane3.add(nodeAddrSpinner);
         nodeAddrSpinner.setToolTipText(Bundle.getMessage("TooltipNodeAddress"));
+
         pane3.add(pollButton);
         getContentPane().add(pane3);
 
