@@ -60,6 +60,8 @@ public class AddEntryExitPairPanelTest {
         // Open the Options window
         String[] optionPath = {"Options", "Options"};  // NOI18N
         JMenuBarOperator nxMenu = new JMenuBarOperator(nxFrame);
+        
+        nxMenu.getTimeouts().setTimeout("JMenuOperator.WaitBeforePopupTimeout", 30L);
         nxMenu.pushMenu(optionPath);
 
         // Close the options window
