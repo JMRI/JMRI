@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -75,16 +74,44 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertTrue(null != l.getBySystemName("LT22"));
 
         // check the list
-        List<String> testList = new ArrayList<String>(2);
+        List<String> testList = new ArrayList<>(2);
         testList.add("LT21");
         testList.add("LT22");
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
     }
 
     @Test
+    public void testCreateFromMessage1 () {
+        // Turnout LT61 () Switch input is Closed (input off).
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3C, 0x70, 0x02});
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(null != l.getBySystemName("LT61"));
+        Assert.assertEquals(Turnout.CLOSED, l.getBySystemName("LT61").getKnownState());
+    }
+    
+    @Test
+    public void testCreateFromMessage2 () {
+        // Turnout LT62 () Switch input is Thrown (input on).
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3D, 0x60, 0x13});
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(null != l.getBySystemName("LT62"));
+        Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT62").getKnownState());
+    }
+    
+    @Test
+    public void testCreateFromMessage3 () {
+        // Turnout LT63 () Aux input is Thrown (input ).
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3E, 0x40, 0x30});
+        lnis.sendTestMessage(m);
+        Assert.assertTrue(null != l.getBySystemName("LT63"));
+        Assert.assertEquals("EXACT", l.getBySystemName("LT63").getFeedbackModeName());
+        Assert.assertEquals(Turnout.INCONSISTENT, l.getBySystemName("LT63").getKnownState());
+    }
+    
+    @Test
     public void testCreateFromMessage4 () {
         // Turnout LT64 () Aux input is Closed (input off).
-        LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3F, 0x50, 0x2F, 0});
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3F, 0x50, 0x21});
         lnis.sendTestMessage(m);
         Assert.assertTrue(null != l.getBySystemName("LT64"));
         Assert.assertEquals("EXACT", l.getBySystemName("LT64").getFeedbackModeName());
