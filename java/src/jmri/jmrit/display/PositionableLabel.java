@@ -527,6 +527,11 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
+/*    @Override
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        return setEditIconMenu(popup);
+    }*/
+
     /**
      * ********** Methods for Item Popups in Panel editor ************************
      */
@@ -622,7 +627,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void initPaletteFrame(ItemPanel itemPanel) {
         Dimension dim = itemPanel.getPreferredSize();
         JScrollPane sp = new JScrollPane(itemPanel);
-        dim = new Dimension(dim.width +10, dim.height + 10);
+        dim = new Dimension(dim.width +25, dim.height + 25);
         sp.setPreferredSize(dim);
         _paletteFrame.add(sp);
         _paletteFrame.pack();
@@ -631,6 +636,9 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
+        if (!_icon) {
+            return false;
+        }
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Icon"));
         popup.add(new AbstractAction(txt) {
 
@@ -666,6 +674,39 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconItemPanel = null;
         invalidate();
     }
+/* future use to replace editor.setTextAttributes
+    public boolean setEditTextMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("TextAttributes"), Bundle.getMessage("Text"));
+        popup.add(new AbstractAction(txt) {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editTextItem();
+            }
+        });
+        return true;
+    }
+
+    TextItemPanel _textItemPanel;
+    
+    protected void editTextItem() {
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("TextAttributes"), Bundle.getMessage("BeanNameTurnout")));
+        _textItemPanel = new TextItemPanel(_paletteFrame, "Text", _editor); // NOI18N
+        ActionListener updateAction = (ActionEvent a) -> {
+                updateTextItem();
+         };
+        _textItemPanel.init(updateAction, this);
+        initPaletteFrame(_textItemPanel);
+    }
+
+    private void updateTextItem() {
+        _textItemPanel.updateAttributes(this);
+        updateSize();
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _iconItemPanel = null;
+        invalidate();
+    }*/
 
     /**
      * Rotate degrees return true if popup is set.

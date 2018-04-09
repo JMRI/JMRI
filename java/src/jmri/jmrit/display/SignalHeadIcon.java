@@ -425,6 +425,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         _saveMap = _iconMap;  // setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
@@ -442,7 +445,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             setIcons(map2);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

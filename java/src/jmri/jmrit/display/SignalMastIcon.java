@@ -430,6 +430,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         setSignalMast(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
         _paletteFrame.dispose();

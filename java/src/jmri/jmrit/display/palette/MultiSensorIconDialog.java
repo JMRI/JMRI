@@ -46,10 +46,8 @@ public class MultiSensorIconDialog extends IconDialog {
             public void actionPerformed(ActionEvent a) {
                 if (addNewIcon(getIconName())) {
                     InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                    JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconEditPanel); // OK to replace on a Dialog
-                    _iconEditPanel = makeIconPanel(_iconMap);
-                    p.add(_iconEditPanel, 1);
+                    _iconEditPanel.removeAll();
+                    makeIconPanel(_iconMap, _iconEditPanel);
                     pack();
                 }
             }
@@ -63,10 +61,8 @@ public class MultiSensorIconDialog extends IconDialog {
             public void actionPerformed(ActionEvent a) {
                 if (deleteIcon()) {
                     InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                    JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconEditPanel); // OK to replace on a Dialog
-                    _iconEditPanel = makeIconPanel(_iconMap);
-                    p.add(_iconEditPanel, 1);
+                    _iconEditPanel.removeAll();
+                    makeIconPanel(_iconMap, _iconEditPanel);
                     pack();
                 }
             }
@@ -79,7 +75,8 @@ public class MultiSensorIconDialog extends IconDialog {
     @Override
     protected boolean doDoneAction() {
         MultiSensorItemPanel parent = (MultiSensorItemPanel) _parent;
-        if (_iconMap.size() != parent._currentIconMap.size()) {
+        
+        if (_iconMap.size() != parent.getIconMap().size()) {
             parent.setSelections();
         }
         return super.doDoneAction();
@@ -87,8 +84,10 @@ public class MultiSensorIconDialog extends IconDialog {
 
     /**
      * Action item for makeAddIconButtonPanel.
+     * @param name icon name
+     * @return true if name is OK
      */
-    protected boolean addNewIcon(String name) {
+    private boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) {
             log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
         }
@@ -111,7 +110,7 @@ public class MultiSensorIconDialog extends IconDialog {
     /**
      * Action item for makeAddIconButtonPanel.
      */
-    protected boolean deleteIcon() {
+    private boolean deleteIcon() {
         if (log.isDebugEnabled()) {
             log.debug("deleteSensor Action: iconMap.size()= " + _iconMap.size());
         }

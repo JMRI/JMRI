@@ -409,6 +409,9 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         HashMap<Integer, NamedIcon> oldMap = cloneMap(_iconStateMap, this);
         setTurnout(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
@@ -427,7 +430,6 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

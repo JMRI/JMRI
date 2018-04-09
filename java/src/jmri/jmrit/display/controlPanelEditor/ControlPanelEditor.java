@@ -1640,7 +1640,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popup.addSeparator();
                 popupSet = false;
             }
-//            popupSet = p.setEditIconMenu(popup);
+            popupSet = p.setEditItemMenu(popup);
             if (popupSet) {
                 popup.addSeparator();
                 popupSet = false;
@@ -1652,14 +1652,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }   Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
                     popupSet |= p.setTextEditMenu(popup);
-                    popupSet |= setTextAttributes(pl, popup);
+                    popupSet |= setTextAttributes(p, popup);
+//                    popupSet |= pl.setEditTextMenu(popup);
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                     if (pl.isText()) {
                         popupSet |= setTextAttributes(p, popup);
+//                        popupSet |= pl.setEditTextMenu(popup);
                     }
-                } else {
-                    popupSet = p.setEditItemMenu(popup);
                 }
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);

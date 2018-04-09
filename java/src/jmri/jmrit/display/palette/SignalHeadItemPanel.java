@@ -78,7 +78,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
         } else {
             _iconPanel.removeAll(); // clear old icons
         }
-        addIconsToPanel(_currentIconMap);
+        addIconsToPanel(getIconMap());
         _iconPanel.setVisible(true);
         if (!_update && _dragIconPanel != null) { // prevent NPE
             _dragIconPanel.setVisible(false);
@@ -115,7 +115,7 @@ public class SignalHeadItemPanel extends TableItemPanel { //implements ListSelec
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
             if (_family != null) {
-                _currentIconMap = getFilteredIconMap(ItemPalette.getIconMap(_itemType, _family));
+                setIconMap(getFilteredIconMap(ItemPalette.getIconMap(_itemType, _family)));
             }
         } else {
             _updateButton.setEnabled(false);

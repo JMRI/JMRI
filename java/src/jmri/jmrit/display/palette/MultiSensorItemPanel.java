@@ -74,7 +74,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
         int size = 6;
         if (_family != null) {
             HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-            size = map.size();
+            if (map != null) {
+                size = map.size();
+            }
         }
         _selectionModel.setPositionRange(size - 3);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
@@ -100,8 +102,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
         //     HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         //     size = map.size();
         // }
-        if (_currentIconMap != null) {
-            size = _currentIconMap.size();
+        HashMap<String, NamedIcon> map = getIconMap();
+        if (map != null) {
+            size = map.size();
         }
         _selectionModel.setPositionRange(size - 3);
     }
@@ -329,6 +332,27 @@ public class MultiSensorItemPanel extends TableItemPanel {
         return new IconDragJLabel(flavor, map, icon);
     }
 
+    @Override
+    public boolean oktoUpdate() {
+        ArrayList<NamedBean> selections = _selectionModel.getSelections();
+        if (selections == null) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (selections.size() < _selectionModel.getPositions().length) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (getIconMap() == null) {
+            return false;
+        }
+        return true;
+    }
+
+
     protected class IconDragJLabel extends DragJLabel {
 
         HashMap<String, NamedIcon> iconMap;
@@ -340,19 +364,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         @Override
         protected boolean okToDrag() {
-            ArrayList<NamedBean> selections = _selectionModel.getSelections();
-            if (selections == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return false;
-            }
-            if (selections.size() < _selectionModel.getPositions().length) {
-                JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return false;
-            }
-            return true;
+            return oktoUpdate();
         }
 
         @Override

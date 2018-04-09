@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
 
     SignalMast _mast;
+    private HashMap<String, NamedIcon> _iconMastMap;
 
     public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -87,7 +88,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         if (_table != null) {
             int row = _table.getSelectedRow();
-            getIconMap(row); // sets _currentIconMap + _mast, if they exist.
+            getIconMap(row); // sets _iconMastMap + _mast, if they exist.
         }
         makeDragIconPanel(1);
         makeDndIconPanel(null, null);
@@ -101,7 +102,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         } else {
             log.debug("SignalMastItemPanel - no value for previewBgSet");
         }
-        addIconsToPanel(_currentIconMap, _iconPanel, false);
+        addIconsToPanel(_iconMastMap, _iconPanel, false);
 
         if (initialize) {
             JPanel panel = new JPanel();
@@ -174,7 +175,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     private void getIconMap(int row) {
         if (row < 0) {
-            _currentIconMap = null;
+            _iconMastMap = null;
             _family = null;
             return;
         }
@@ -183,7 +184,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         if (bean == null) {
             log.debug("getIconMap: NamedBean is null at row {}", row);
             _mast = null;
-            _currentIconMap = null;
+            _iconMastMap = null;
             _family = null;
             return;
         }
@@ -192,11 +193,11 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(bean.getDisplayName());
         } catch (IllegalArgumentException ex) {
             log.error("getIconMap: No SignalMast called {}", bean.getDisplayName());
-            _currentIconMap = null;
+            _iconMastMap = null;
             return;
         }
         _family = _mast.getSignalSystem().getSystemName();
-        _currentIconMap = new HashMap<>();
+        _iconMastMap = new HashMap<>();
         SignalAppearanceMap appMap = _mast.getAppearanceMap();
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
@@ -207,22 +208,22 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                     s = s.substring(s.indexOf("resources"));
                 }
                 NamedIcon n = new NamedIcon(s, s);
-                _currentIconMap.put(aspect, n);
+                _iconMastMap.put(aspect, n);
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("getIconMap for {}  size= {}", _family, _currentIconMap.size());
+            log.debug("getIconMap for {}  size= {}", _family, _iconMastMap.size());
         }
     }
 
     private NamedIcon getDragIcon() {
-        if (_currentIconMap != null) {
-            if (_currentIconMap.keySet().contains("Stop")) {
-                return _currentIconMap.get("Stop");
+        if (_iconMastMap != null) {
+            if (_iconMastMap.keySet().contains("Stop")) {
+                return _iconMastMap.get("Stop");
             }
-            Iterator<String> e = _currentIconMap.keySet().iterator();
+            Iterator<String> e = _iconMastMap.keySet().iterator();
             if (e.hasNext()) {
-                return _currentIconMap.get(e.next());
+                return _iconMastMap.get(e.next());
             }
         }
         String fileName = "resources/icons/misc/X-red.gif";
@@ -234,7 +235,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         super.setEditor(ed);
         if (_initialized) {
             makeDragIconPanel(0);
-            makeDndIconPanel(_currentIconMap, ""); // empty key OK, this uses getDragIcon()
+            makeDndIconPanel(_iconMastMap, ""); // empty key OK, this uses getDragIcon()
         }
     }*/
 
@@ -244,16 +245,16 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _iconPanel.removeAll(); // just clear contents
         HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         if (map != null) {
-            _currentIconMap = map;
+            _iconMastMap = map;
         } else {
             log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);                
         }
         if (!_suppressDragging) {
             makeDragIconPanel(0);
-            makeDndIconPanel(_currentIconMap, ""); // empty key OK, this uses getDragIcon()
+            makeDndIconPanel(_iconMastMap, ""); // empty key OK, this uses getDragIcon()
         }
-        if (_currentIconMap != null) {
-            addIconsToPanel(_currentIconMap, _iconPanel, false);
+        if (_iconMastMap != null) {
+            addIconsToPanel(_iconMastMap, _iconPanel, false);
         }
     }
 

@@ -105,6 +105,10 @@ public abstract class ItemPanel extends JPanel {
     protected void setPreviewBg(int index) {
     }
 
+    public boolean oktoUpdate() {
+        return true;
+    }
+
     protected void initLinkPanel() {
 //        Font font = new Font("SansSerif", Font.BOLD, 12);
         JPanel blurb = new JPanel();

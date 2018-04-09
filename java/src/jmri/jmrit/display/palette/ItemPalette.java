@@ -654,10 +654,10 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         super.windowClosing(e);
     }
 
-    /**
+    /*
      * Look for duplicate name of family in the iterated set.
      */
-    private static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
+    protected static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
             JOptionPane.showMessageDialog(frame,
                     Bundle.getMessage("EnterFamilyName"),
@@ -665,7 +665,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             return false;
         }
         while (it.hasNext()) {
-            if (family.equals(it.next())) {
+            String f = it.next();
+            log.debug("familyNameOK compare {} {} to {}", type, family, f);
+            if (family.equals(f)) {
                 JOptionPane.showMessageDialog(frame,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
                                 new Object[]{family, type}),

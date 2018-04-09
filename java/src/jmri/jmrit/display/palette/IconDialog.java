@@ -36,6 +36,7 @@ public class IconDialog extends ItemDialog {
     protected HashMap<String, NamedIcon> _iconMap;
     protected ImagePanel _iconEditPanel;
     protected CatalogPanel _catalog;
+    private final JLabel _nameLabel;
 
     /**
      * Constructor for an existing family to change icons, add/delete icons, or to
@@ -56,12 +57,13 @@ public class IconDialog extends ItemDialog {
         panel.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
 
         JPanel p = new JPanel();
-        p.add(new JLabel(Bundle.getMessage("FamilyName", family)));
+        _nameLabel = new JLabel(Bundle.getMessage("FamilyName", family));
+        p.add(_nameLabel);
         panel.add(p);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         if (iconMap != null) {
-            _iconMap = clone(iconMap);
+            _iconMap = IconDialog.clone(iconMap);
             makeDoneButtonPanel(buttonPanel, "ButtonDone");
         } else {
             _iconMap = ItemPanel.makeNewIconMap(type);
@@ -73,7 +75,8 @@ public class IconDialog extends ItemDialog {
         if (!(type.equals("IndicatorTO") || type.equals("MultiSensor"))) {
             ItemPanel.checkIconMap(type, _iconMap);
         }
-        _iconEditPanel = makeIconPanel(_iconMap);
+        _iconEditPanel = new ImagePanel();
+        makeIconPanel(_iconMap, _iconEditPanel);
         panel.add(_iconEditPanel); // put icons above buttons
         panel.add(buttonPanel);
 
@@ -84,7 +87,7 @@ public class IconDialog extends ItemDialog {
         p.add(_catalog);
 
         JScrollPane sp = new JScrollPane(p);
-        sp.setPreferredSize(parent.getPreferredSize());
+//        sp.setPreferredSize(parent.getPreferredSize());
         setContentPane(sp);
         setLocationRelativeTo(_parent);
         setVisible(true);
@@ -123,14 +126,20 @@ public class IconDialog extends ItemDialog {
      */
     protected boolean doDoneAction() {
         _parent.reset();
-//        checkIconSizes();
-        _parent._currentIconMap = _iconMap;
+        _parent.setIconMap(_iconMap);
         if (log.isDebugEnabled()) {
             log.debug("doDoneAction: iconMap size= {} for {} \"{}\"", _iconMap.size(), _type, _family);            
         }
         if (!_parent.isUpdate()) {  // don't touch palette's maps. just modify individual device icons
             ItemPalette.removeIconMap(_type, _family);
             return _parent.addFamily(_type, _family, _iconMap);
+        } else if (!_parent.isUnstoredMap()) {
+            JOptionPane.showMessageDialog(_parent._paletteFrame,
+                    Bundle.getMessage("DuplicateFamilyName", _family, _type),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        } else {
+            _parent.updateFamiliesPanel();
         }
         return true;
     }
@@ -141,11 +150,25 @@ public class IconDialog extends ItemDialog {
     protected void renameFamily() {
         String family = JOptionPane.showInputDialog(_parent, Bundle.getMessage("EnterFamilyName"),
                 Bundle.getMessage("renameFamily"), JOptionPane.QUESTION_MESSAGE);
-        if (family != null && family.trim().length() > 0) {
-            ItemPalette.removeIconMap(_type, _family);
-            _family = family;
-            _parent.addFamily(_type, _family, _iconMap);
+        family = _parent.getValidFamilyName(family);
+        if (!_parent.isUpdate()) {
+            if (family != null && family.trim().length() > 0) {
+                ItemPalette.removeIconMap(_type, _family);
+                _family = family;
+                _parent.addFamily(_type, _family, _iconMap);
+            }
+        } else {
+            if (family == null || family.trim().length() == 0) {
+                _family = Bundle.getMessage("unNamed");
+            } else {
+                _family = family;
+            }
+            _parent.setFamily(_family);
+            _parent.updateFamiliesPanel();
         }
+        _nameLabel.setText(Bundle.getMessage("FamilyName", _family));
+        invalidate();
+        repaint();
     }
 
     protected void makeDoneButtonPanel(JPanel buttonPanel, String text) {
@@ -182,8 +205,7 @@ public class IconDialog extends ItemDialog {
         buttonPanel.add(panel);
     }
 
-    protected ImagePanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {
-        ImagePanel iconPanel = new ImagePanel();
+    protected void makeIconPanel(HashMap<String, NamedIcon> iconMap, ImagePanel iconPanel) {
         iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
                 Bundle.getMessage("PreviewBorderTitle")));
         if (!_parent.isUpdate()) {
@@ -192,10 +214,9 @@ public class IconDialog extends ItemDialog {
             iconPanel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
         }
         _parent.addIconsToPanel(iconMap, iconPanel, true);
-        return iconPanel;
     }
 
-    protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
+    static protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = null;
         if (map != null) {
             clone = new HashMap<>();

@@ -53,11 +53,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
     JButton _showIconsButton;
     JButton _editIconsButton;
     JButton _updateButton;
-    protected HashMap<String, NamedIcon> _currentIconMap;
+    private HashMap<String, NamedIcon> _currentIconMap;
+    private HashMap<String, NamedIcon> _unstoredMap;
     IconDialog _dialog;
     ButtonGroup _familyButtonGroup;
 
-    boolean _suppressNamePrompts;
+    protected static boolean _suppressNamePrompts = false;
+    protected boolean _isUnstoredMap;
 
     /**
      * Constructor types with multiple families and multiple icon families.
@@ -70,7 +72,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     public FamilyItemPanel( DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, editor);
         _family = family;
-        _suppressNamePrompts = false;
     }
 
     /**
@@ -102,7 +103,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
         _suppressDragging = true; // no dragging when updating
-        _currentIconMap = iconMap;
         if (iconMap != null) {
             checkCurrentMap(iconMap); // is map in families?, does user want to add it? etc.
         }
@@ -223,12 +223,14 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * Check whether map is one of the families.
      * If so, return. If not, does user want to add it to families?
      * If so, add. If not, save for return when updated.
+     * update ctor has entered a name for _family.
      *
      * @param iconMap existing map of the icon
      */
     private void checkCurrentMap(HashMap<String, NamedIcon> iconMap) {
         log.debug("checkCurrentMap: for type \"{}\", family \"{}\"", _itemType, _family);
-        String family = findFamilyOfMap(iconMap, ItemPalette.getFamilyMaps(_itemType));
+        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        String family = findFamilyOfMap(iconMap, families);
         if (family != null) {  // icons same as a known family, maybe with another name
             if (family.equals(_family)) {
                 return;
@@ -236,41 +238,63 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("Icon's family \"{}\" found but is called \"{}\".  Change to Catalog name.", _family, family);
             _family = family;
             return;
-        } else { // no match with Palette families
-            if (ItemPalette.getIconMap(_itemType, _family) != null) {
-                log.info("{}'s family name \"{}\" keys a different icon set. Set name to null", _itemType, _family);
-                // make sure name does not duplicate a known name
-                _family = null;
-            } else {
-                log.debug("Icon's family \"{}\" not found in Catalog.", _family);                
-            }
-        }
-        if (!_suppressNamePrompts) {
-            if (_family == null || _family.trim().length() == 0) {
-                _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
+        } else {    // icon set not in catalog
+            _unstoredMap = iconMap;
+            if (_family == null || _family.trim().length() == 0) { 
+                if (_suppressNamePrompts) {
+                   _family = null;  // user doesn't want to be bothered
+                   return;
+               }
+               _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
                         Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
-                if (_family == null || _family.trim().length() == 0) {
-                    // bail out
-                    _family = null;
-                    // _suppressNamePrompts = true;
-                    return;
-                }
             }
-            int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                    Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
-                if (!ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap)) {
-                    JOptionPane.showMessageDialog(_paletteFrame,
-                            Bundle.getMessage("badName", _family, _itemType),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            if (_family != null && _family.trim().length() > 0) {
+                // make sure name does not duplicate a known name
+                Iterator<String> it = families.keySet().iterator();
+                while (!ItemPalette.familyNameOK(_paletteFrame, _itemType, _family, it)) {
+                    _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+                            Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
+                    if (_family == null) {
+                        return;  // user cancelled
+                    }
                 }
-            } else if (result == JOptionPane.NO_OPTION) {
-                _suppressNamePrompts = true;
-            }
+                log.debug("family name \"{}\"", _family);
+                // name OK
+                if (_suppressNamePrompts) {
+                    return;     // user not interested in updating catalog
+                }
+                int result = JOptionPane.showConfirmDialog(_paletteFrame,
+                        Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    if (!ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap)) {
+                        JOptionPane.showMessageDialog(_paletteFrame,
+                                Bundle.getMessage("badName", _family, _itemType),
+                                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    } else {    // icon set added to catalog with name _family
+//                        _unstoredMap = null;
+                    }
+                } else if (result == JOptionPane.NO_OPTION) {
+                    _suppressNamePrompts = true;
+                }
+           }
         }
     }
     
+    protected String getValidFamilyName(String family) {
+        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        Iterator<String> it = families.keySet().iterator();
+        while (!ItemPalette.familyNameOK(_paletteFrame, _itemType, family, it)) {
+            family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+                    Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
+            if (family == null) {
+                return null;  // user cancelled
+            }
+        }
+        log.debug("getValidFamilyName = \"{}\"", family);
+        return family;
+    }
+
     protected boolean addFamily(String type, String family, HashMap<String, NamedIcon> iconMap) {
         if (!ItemPalette.addFamily(_paletteFrame, type, family, iconMap)) {
             JOptionPane.showMessageDialog(_paletteFrame,
@@ -278,7 +302,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else {
-            updateFamiliesPanel();
+            setIconMap(iconMap);
             setFamily(family);
             return true;
         }
@@ -297,7 +321,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 log.debug("FamilyKey = {}", entry.getKey());
             }
             if (mapsAreEqual(entry.getValue(), iconMap)) {
-                return entry.getKey();
+                String family = entry.getKey();
+                log.debug("Icon map found with different name \"{}\"", family);
+                return family;
             }
         }
         return null;
@@ -344,6 +370,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _familyButtonPanel = makeFamilyButtons(families.keySet());
             if (_currentIconMap == null) {
                 _currentIconMap = families.get(_family);
+                if (_currentIconMap == null) {
+                    _isUnstoredMap = true;
+                    _currentIconMap = _unstoredMap;
+                }
             }
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(_familyButtonPanel);
@@ -386,7 +416,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected JPanel makeFamilyButtons(java.util.Set<String> keySet) {
         Iterator<String> iter = keySet.iterator();
-        log.debug("makeFamilyButtons for {}", _itemType);
+        log.debug("makeFamilyButtons for {} family= {}", _itemType, _family);
         String thisType = null;
         JPanel familyPanel = new JPanel(); // this is only a local object
         familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
@@ -431,49 +461,71 @@ public abstract class FamilyItemPanel extends ItemPanel {
         c.weighty = 1.0;
         c.gridwidth = 1;
         c.gridheight = 1;
-        c.gridx = -1;
+        c.gridx = 0;
         c.gridy = 0;
         String family = "";
         JRadioButton button = null;
         while (iter.hasNext()) {
             family = iter.next();
             button = new JRadioButton(ItemPalette.convertText(family));
-            button.addActionListener(new ActionListener() {
-                String fam;
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setFamily(fam);
-                }
-
-                ActionListener init(String f) {
-                    fam = f;
-                    log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, fam, c.gridx, c.gridy);
-                    return this;
-                }
-            }.init(family));
+            addFamilyButtonListener(button, family);
+            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family, c.gridx, c.gridy);
             if (family.equals(_family)) {
                 button.setSelected(true);
             }
+            gridbag.setConstraints(button, c);
+            buttonPanel.add(button);
             c.gridx++;
             if (c.gridx >= numCol) { //start next row
                 c.gridy++;
                 c.gridx = 0;
             }
+        }
+        if (_currentIconMap == null) {
+            if (_unstoredMap !=null) {
+                if (_family == null) {
+                    _family = Bundle.getMessage("unNamed");
+                }
+                _isUnstoredMap = true;
+                _currentIconMap = _unstoredMap;
+            } else if(_family == null || _family.trim().length()==0) {
+                _family = family; // let last family be the selected one
+                if (button != null) {
+                    button.setSelected(true);
+                }
+            }
+        }
+        if (!keySet.contains(_family)) {
+            button = new JRadioButton(_family);
+            addFamilyButtonListener(button, _family);
+            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, _family, c.gridx, c.gridy);
             gridbag.setConstraints(button, c);
             buttonPanel.add(button);
-            _familyButtonGroup.add(button);
-        }
-        if (_currentIconMap == null && !family.equals(_family)) {
-            _family = family; // let last family be the selected one
-            if (button != null) {
-                button.setSelected(true);
+            button.setSelected(true);
+            if (_unstoredMap == null) {
+                _unstoredMap = _currentIconMap;
+                _isUnstoredMap = true;
             }
-        } else {
-            
         }
         familyPanel.add(buttonPanel);
         return familyPanel;
+    }
+    
+    private void addFamilyButtonListener (JRadioButton button, String family) {
+        button.addActionListener(new ActionListener() {
+            String fam;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setFamily(fam);
+            }
+
+            ActionListener init(String f) {
+                fam = f;
+                return this;
+            }
+        }.init(family));        
+        _familyButtonGroup.add(button);
     }
 
     /**
@@ -515,7 +567,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _bottom2Panel.setVisible(false);
         }
         _iconPanel.setVisible(false);
-        log.debug("addFamilyPanels update={}", _update);
+        log.debug("addFamilyPanels for {} update={}", _family, _update);
     }
 
     /**
@@ -884,6 +936,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconPanel.removeAll(); // just clear contents
         }
         HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        if (map == null) {
+            map = _unstoredMap;
+            _isUnstoredMap = true;
+        } else {
+            _isUnstoredMap = false;
+        }
         if (map != null) {
             _currentIconMap = map;
             if (log.isDebugEnabled())
@@ -899,6 +957,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _iconFamilyPanel.invalidate(); // force redraw
         hideIcons();
         setFamilyButton();
+    }
+    
+    protected boolean isUnstoredMap() {
+        return _isUnstoredMap;
     }
     
     protected void setFamilyButton() {
@@ -930,19 +992,31 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
     }
 
+    protected void setIconMap(HashMap<String, NamedIcon> map) {
+        _currentIconMap = map;
+        if (_isUnstoredMap) {
+            _unstoredMap = map;
+        } if (_update) {
+            
+        }
+        log.debug("setIconMap: for {} \"{}\" _isUnstoredMap={}", _itemType, _family, _isUnstoredMap);
+        updateFamiliesPanel();
+    }
     /**
      * Create icon set to panel icon display class.
      *
      * @return updated icon map
      */
     public HashMap<String, NamedIcon> getIconMap() {
-        if (_currentIconMap == null) {
-            _currentIconMap = ItemPalette.getIconMap(_itemType, _family);
+        HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        if (map == null) {
+            map = _unstoredMap;
         }
-        if (_currentIconMap == null) {
-            log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);                
+        if (map == null) {
+            log.warn("Family \"{}\" for type \"{}\" not found.", _family, _itemType);                
+            map = ItemPanel.makeNewIconMap(_itemType);
         }
-        return _currentIconMap;
+        return map;
     }
 
     public String getFamilyName() {

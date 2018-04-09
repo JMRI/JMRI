@@ -12,14 +12,18 @@ import java.awt.dnd.DragSourceDragEvent;
 import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import org.slf4j.Logger;
@@ -73,6 +77,29 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         }
     }
 
+    public void init(ActionListener doneAction, Positionable pos) {
+        _decorator = new DecoratorPanel(_editor, _paletteFrame);
+        _decorator.initDecoratorPanel(pos);
+    }
+
+    protected JPanel makeDoneButtonPanel(ActionListener doneAction) {
+        JPanel panel = new JPanel();
+        JButton updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
+        updateButton.addActionListener(doneAction);
+        updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
+        panel.add(updateButton);
+
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                closeDialogs();
+            }
+        });
+        panel.add(cancelButton);
+        return panel;
+    }
+
     @Override
     protected void setEditor(Editor ed) {
         super.setEditor(ed);
@@ -81,6 +108,16 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             // set Panel background color
             _decorator.setBackgrounds(makeBackgrounds(_decorator.getBackgrounds(), panelBackground));
             _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
+        }
+    }
+    
+    public void updateAttributes(PositionableLabel l) {
+        _decorator.setAttributes(l);
+        PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
+        l.setPopupUtility(util.clone(l, l.getTextComponent()));
+        l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+        if (util.hasBackground()) { // unrotated
+            l.setOpaque(true);
         }
     }
 
@@ -165,13 +202,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             } else {
                 l = new LinkingLabel(getText(), _editor, link);
             }
-            _decorator.setAttributes(l);
-            PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-            l.setPopupUtility(util.clone(l, l.getTextComponent()));
-            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
-            if (util.hasBackground()) { // unrotated
-                l.setOpaque(true);
-            }
+            updateAttributes(l);
             l.setLevel(this.getDisplayLevel());
             return l;
         }

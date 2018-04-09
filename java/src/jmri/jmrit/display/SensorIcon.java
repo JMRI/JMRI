@@ -471,6 +471,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
@@ -489,7 +492,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

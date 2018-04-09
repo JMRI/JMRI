@@ -386,7 +386,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
-            _currentIconMap = null;
+            setIconMap(null);
             _family = (String)ItemPalette.getLevel4FamilyMaps(_itemType).keySet().toArray()[0];
             _tablePanel.setVisible(true);
             initIconFamiliesPanel();
@@ -468,8 +468,9 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             log.debug("openStatusEditDialog for family \"{}\" and \"{}\"", _family, key);
         }
         closeDialogs();
-        _currentIconMap = _iconGroupsMap.get(key);
-        _dialog = new IndicatorTOIconDialog(_itemType, _family, this, key, _currentIconMap);
+        HashMap<String, NamedIcon> map = _iconGroupsMap.get(key);
+        setIconMap(map);
+        _dialog = new IndicatorTOIconDialog(_itemType, _family, this, key, map);
     }
 
     /*

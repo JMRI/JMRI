@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -261,22 +260,14 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         HashMap<String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
-        int[] positions = _itemPanel.getPositions();
-        if (selections == null || selections.size() < positions.length) {
-            JOptionPane.showMessageDialog(_paletteFrame,
-                    Bundle.getMessage("NeedPosition", positions.length),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (iconMap != null) {
-            setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-            setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-            setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
-        } else {
-            return;
-        }
+        setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
+        setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
+        setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
         entries = new ArrayList<>(selections.size());
         for (int i = 0; i < selections.size(); i++) {
             addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.getPositionName(i))));

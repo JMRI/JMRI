@@ -76,6 +76,7 @@ public class PositionablePopupUtil {
         util.setBorderColor(getBorderColor());
         util.setFont(getFont().deriveFont(getFontStyle()));
         util.setFontSize(getFontSize());
+        util.setFontStyle(getFontStyle());
         util.setOrientation(getOrientation());
         util.setBackgroundColor(getBackground());
         util.setForeground(getForeground());
