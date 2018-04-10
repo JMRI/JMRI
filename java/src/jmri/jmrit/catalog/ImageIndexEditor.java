@@ -139,6 +139,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 makeCatalogPanel(), makeIndexPanel());
         splitPane.setContinuousLayout(true);
+        splitPane.setOneTouchExpandable(true);
         catalogsPanel.add(splitPane);
         mainPanel.add(catalogsPanel);
         getContentPane().add(mainPanel);

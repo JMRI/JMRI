@@ -87,9 +87,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
             add(_iconFamilyPanel);
             makeBottomPanel(null);
             super.init();
-            log.debug("init done for {}, family= {}", _itemType, _family);
+            if (log.isDebugEnabled()) {
+                log.debug("init done for {}, family= {}", _itemType, _family);
+            }
         }
-        log.debug("{} preferred size  {}", _itemType, getPreferredSize().toString() );
     }
 
     /**
@@ -360,7 +361,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * Overridden for SignalMastItemPanel.
      */
     protected void initIconFamiliesPanel() {
-        log.debug("initIconFamiliesPanel for= {}, {}", _itemType, _family);
+        if (log.isDebugEnabled()) {
+            log.debug("initIconFamiliesPanel for= {}, {}", _itemType, _family);
+        }
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
             if (_iconFamilyPanel == null) {
@@ -386,11 +389,15 @@ public abstract class FamilyItemPanel extends ItemPanel {
         } else {
             familiesMissing();
         }
-        log.debug("initIconFamiliesPanel update={}, family={}", _update, _family);
+        if (log.isDebugEnabled()) {
+            log.debug("initIconFamiliesPanel update={}, family={}", _update, _family);
+        }
     }
 
     protected void updateFamiliesPanel() {
-        log.debug("updateFamiliesPanel for {}", _itemType);
+        if (log.isDebugEnabled()) {
+            log.debug("updateFamiliesPanel for {}", _itemType);
+        }
         if (_iconFamilyPanel != null) {
             if (_iconPanel != null) {
                 _iconPanel.removeAll();
@@ -416,7 +423,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected JPanel makeFamilyButtons(java.util.Set<String> keySet) {
         Iterator<String> iter = keySet.iterator();
-        log.debug("makeFamilyButtons for {} family= {}", _itemType, _family);
+        if (log.isDebugEnabled()) {
+            log.debug("makeFamilyButtons for {} family= {}", _itemType, _family);
+        }
         String thisType = null;
         JPanel familyPanel = new JPanel(); // this is only a local object
         familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
@@ -469,7 +478,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             family = iter.next();
             button = new JRadioButton(ItemPalette.convertText(family));
             addFamilyButtonListener(button, family);
-            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family, c.gridx, c.gridy);
+            if (log.isDebugEnabled()) {
+                log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family, c.gridx, c.gridy);
+            }
             if (family.equals(_family)) {
                 button.setSelected(true);
             }
@@ -498,7 +509,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!keySet.contains(_family)) {
             button = new JRadioButton(_family);
             addFamilyButtonListener(button, _family);
-            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, _family, c.gridx, c.gridy);
+            if (log.isDebugEnabled()) {
+                log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, _family, c.gridx, c.gridy);
+            }
             gridbag.setConstraints(button, c);
             buttonPanel.add(button);
             button.setSelected(true);
@@ -533,14 +546,15 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * @param familyPanel panel of family buttons
      */
     protected void addFamilyPanels(JPanel familyPanel) {
-        log.debug("addFamilyPanels for {}", _itemType);
+        if (log.isDebugEnabled()) {
+            log.debug("addFamilyPanels for {}", _itemType);
+        }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         boolean makeBgBoxPanel = false;
         if (_iconPanel == null) { // don't overwrite existing _iconPanel
             _iconPanel = new ImagePanel();
             _iconPanel.setLayout(new FlowLayout());
             _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            log.debug("_iconPanel created");
             makeBgBoxPanel = true;
         }
 
@@ -550,11 +564,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (makeBgBoxPanel) {
             if (!_update) {
                 _previewPanel = makePreviewPanel(_iconPanel, _dragIconPanel);
-                _iconFamilyPanel.add(_previewPanel);
             } else {
                 _previewPanel = makePreviewPanel(_iconPanel, null);
-                _iconFamilyPanel.add(_previewPanel);
             }
+            _iconFamilyPanel.add(_previewPanel);
         } else {
             _iconPanel.setImage(_backgrounds[0]);
             _iconFamilyPanel.add(_iconPanel);
@@ -567,7 +580,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _bottom2Panel.setVisible(false);
         }
         _iconPanel.setVisible(false);
-        log.debug("addFamilyPanels for {} update={}", _family, _update);
+        if (log.isDebugEnabled()) {
+            log.debug("addFamilyPanels for {} update={}", _family, _update);
+        }
     }
 
     /**
@@ -587,13 +602,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         if (_backgrounds != null) {
             int previewBgSet = _paletteFrame.getPreviewBg();
-            log.debug("set backgrounds to {}", previewBgSet);
             _dragIconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
             if (_iconPanel != null) {
                 _iconPanel.setImage(_backgrounds[previewBgSet]); // pick up shared setting
             }
         } else {
-            log.debug("FamilyItemPanel - no value for previewBgSet");
+            log.error("FamilyItemPanel - no value for previewBgSet");
         }
         _dragIconPanel.setVisible(true);
 
@@ -685,9 +699,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             panel.add(sPanel);
             int width = getFontMetrics(getFont()).stringWidth(borderName) + 10;
             width = Math.max(fm.stringWidth(scaleText), Math.max(width, CatalogPanel.ICON_WIDTH));
-//            int height = 2*fm.getHeight() + CatalogPanel.ICON_HEIGHT;
             int height = panel.getPreferredSize().height;
-            log.debug("{} PreferredSize ({}, {}", borderName, width, height);
             panel.setPreferredSize(new Dimension(width, height));
             c.gridx += 1;
             if (c.gridx >= numCol) { //start next row
@@ -708,7 +720,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             gridbag.setConstraints(panel, c);
             iconPanel.add(panel);
         }
-        log.debug("addIconsToPanel for type {} family \"{}\"", _itemType, _family);
+        if (log.isDebugEnabled()) {
+            log.debug("addIconsToPanel for type {} family \"{}\"", _itemType, _family);
+        }
     }
 
     protected String getIconBorderName(String key) {
@@ -767,7 +781,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return;
         }
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        log.debug("hideIcons for= {}, {}", _itemType, _family);
+        if (log.isDebugEnabled()) {
+            log.debug("hideIcons for= {}, {}", _itemType, _family);
+        }
         boolean isPalette = (_paletteFrame instanceof ItemPalette); 
         Dimension totalDim;
         if (isPalette) {
@@ -796,7 +812,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
     
     protected void showIcons() {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        log.debug("showIcons for= {}, {}", _itemType, _family);
+        if (log.isDebugEnabled()) {
+            log.debug("showIcons for= {}, {}", _itemType, _family);
+        }
         boolean isPalette = (_paletteFrame instanceof ItemPalette); 
         Dimension totalDim;
         if (isPalette) {
@@ -908,7 +926,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     @Override
-    protected void closeDialogs() {
+    public void closeDialogs() {
         if (_dialog != null) {
             _dialog.closeDialogs();
             _dialog.dispose();
@@ -927,7 +945,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected void setFamily(String family) {
         _family = family;
-        log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
+        if (log.isDebugEnabled()) {
+            log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
+        }
         if (_iconPanel == null) {
             _iconPanel = new ImagePanel();
             _iconFamilyPanel.add(_iconPanel, 0);
@@ -996,10 +1016,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _currentIconMap = map;
         if (_isUnstoredMap) {
             _unstoredMap = map;
-        } if (_update) {
-            
         }
-        log.debug("setIconMap: for {} \"{}\" _isUnstoredMap={}", _itemType, _family, _isUnstoredMap);
+        if (log.isDebugEnabled()) {
+            log.debug("setIconMap: for {} \"{}\" _isUnstoredMap={}", _itemType, _family, _isUnstoredMap);
+        }
         updateFamiliesPanel();
     }
     /**

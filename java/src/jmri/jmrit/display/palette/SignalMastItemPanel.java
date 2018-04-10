@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -43,6 +44,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     SignalMast _mast;
     private HashMap<String, NamedIcon> _iconMastMap;
+    JLabel _promptLabel;
+    JPanel _blurb;
 
     public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
@@ -55,20 +58,23 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _table.getSelectionModel().addListSelectionListener(this);
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
-//            initIconFamiliesPanel();
             add(_iconFamilyPanel, 1);
-            hideIcons();
         }
+    }
+
+    @Override
+    public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
+        super.init(doneAction, iconMap);
+        _table.getSelectionModel().addListSelectionListener(this);
+        _previewPanel.setVisible(false);
     }
 
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("ToolTipPickRowToShowIcon")));
+        blurb.add(new JLabel(Bundle.getMessage("PickRowMast")));
+        blurb.add(new JLabel(Bundle.getMessage("DragReporter")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -77,43 +83,51 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     @Override
     protected void initIconFamiliesPanel() {
-        boolean initialize = false;
-        if (_iconFamilyPanel == null) {
-            log.debug("new _iconFamilyPanel created");
-            initialize = true;
-            _iconFamilyPanel = new JPanel();
-            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-            _iconFamilyPanel.setOpaque(true);
-            _iconFamilyPanel.add(instructions());
+        if (log.isDebugEnabled()) {
+            log.debug("initIconFamiliesPanel for= {}, {}", _itemType, _family);
         }
         if (_table != null) {
             int row = _table.getSelectedRow();
             getIconMap(row); // sets _iconMastMap + _mast, if they exist.
         }
-        makeDragIconPanel(1);
-        makeDndIconPanel(null, null);
+        if (_iconFamilyPanel == null) {
+            log.debug("new _iconFamilyPanel created");
+            _iconFamilyPanel = new JPanel();
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+            _iconFamilyPanel.setOpaque(true);
+            if (!_update) {
+                _blurb = instructions();
+                _iconFamilyPanel.add(_blurb);
+            }
+        }
+        if (!_update) {
+            makeDragIconPanel(1);
+            makeDndIconPanel(null, null);
+        }
+
         if (_iconPanel == null) { // keep an existing panel
             _iconPanel = new ImagePanel();
-            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                    Bundle.getMessage("PreviewBorderTitle")));
+            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+            _promptLabel = new JLabel();
+            JPanel panel = new JPanel();
+            panel.add(_promptLabel);
+            _iconFamilyPanel.add(panel);
+            if (!_update) {
+                _previewPanel = makePreviewPanel(_iconPanel, _dragIconPanel);
+            } else {
+                _previewPanel = makePreviewPanel(_iconPanel, null);
+            }
+            _iconFamilyPanel.add(_previewPanel);
         }
-        if (_backgrounds != null) {
-            _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
-        } else {
-            log.debug("SignalMastItemPanel - no value for previewBgSet");
-        }
+
         addIconsToPanel(_iconMastMap, _iconPanel, false);
 
-        if (initialize) {
-            JPanel panel = new JPanel();
-            if (_mast != null) {
-                panel.add(new JLabel(Bundle.getMessage("IconSetName", _mast.getSignalSystem().getSystemName())));
-            } else {
-                panel.add(new JLabel(Bundle.getMessage("PickRowMast")));
-            }
-            _iconFamilyPanel.add(panel);
-            _iconFamilyPanel.add(_iconPanel);
+        if (_mast != null) {
+            _promptLabel.setText(Bundle.getMessage("IconSetName", _mast.getSignalSystem().getSystemName()));
+        } else {
+            _promptLabel.setText(Bundle.getMessage("PickRowMast"));
         }
+
         _iconPanel.setVisible(false);
     }
 
@@ -145,6 +159,9 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         _dragIconPanel.add(panel);
+        if (log.isDebugEnabled()) {
+            log.debug("makeDndIconPanel for= {}, {} visible {}", _itemType, _family, _dragIconPanel.isVisible());
+        }
     }
 
     @Override
@@ -169,7 +186,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             addUpdateButtonToBottom(doneAction);
         }
         initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
-        _bottom1Panel.add(makeBgButtonPanel(_dragIconPanel, _iconPanel));
         add(_bottom1Panel);
     }
 
@@ -230,15 +246,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         return new NamedIcon(fileName, fileName);
     }
 
-/*    @Override
-    protected void setEditor(Editor ed) {
-        super.setEditor(ed);
-        if (_initialized) {
-            makeDragIconPanel(0);
-            makeDndIconPanel(_iconMastMap, ""); // empty key OK, this uses getDragIcon()
-        }
-    }*/
-
     @Override
     protected void setFamily(String family) {
         _family = family;
@@ -258,6 +265,65 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
     }
 
+    @Override
+    protected void showIcons() {
+        if (log.isDebugEnabled()) {
+            log.debug("showIcons for= {}, {}", _itemType, _family);
+        }
+        boolean isPalette = (_paletteFrame instanceof ItemPalette); 
+        Dimension totalDim;
+        if (isPalette) {
+            totalDim = ItemPalette._tabPane.getSize();
+        } else {
+            totalDim = _paletteFrame.getSize();            
+        }
+        Dimension oldDim = getSize();
+        _iconPanel.setVisible(true);
+        _iconPanel.invalidate();
+        _previewPanel.setVisible(true);
+        _previewPanel.invalidate();
+        if (!_update) {
+            _dragIconPanel.removeAll();
+            _dragIconPanel.setVisible(false);
+            _dragIconPanel.invalidate();
+            _blurb.setVisible(false);
+            _blurb.invalidate();
+            
+        }
+        reSizeDisplay(isPalette, oldDim, totalDim);
+        _showIconsButton.setText(Bundle.getMessage("HideIcons"));
+    }
+
+    @Override
+    protected void hideIcons() {
+        if (log.isDebugEnabled()) {
+            log.debug("hideIcons for= {}, {}", _itemType, _family);
+        }
+        boolean isPalette = (_paletteFrame instanceof ItemPalette); 
+        Dimension totalDim;
+        if (isPalette) {
+            totalDim = ItemPalette._tabPane.getSize();
+        } else {
+            totalDim = _paletteFrame.getSize();            
+        }
+        Dimension oldDim = getSize();
+        _iconPanel.setVisible(false);
+        _iconPanel.invalidate();
+        if (!_update) {
+            _dragIconPanel.setVisible(true);
+            makeDndIconPanel(null, null);
+            _dragIconPanel.invalidate();
+            _blurb.setVisible(true);
+            _blurb.invalidate();
+            _previewPanel.setVisible(true);
+            _previewPanel.invalidate();
+        } else {
+            _previewPanel.setVisible(false);
+            _previewPanel.invalidate();
+        }
+        reSizeDisplay(isPalette, oldDim, totalDim);
+        _showIconsButton.setText(Bundle.getMessage("ShowIcons"));
+    }
 
     /**
      * ListSelectionListener action.

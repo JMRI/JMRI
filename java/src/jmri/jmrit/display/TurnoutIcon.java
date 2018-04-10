@@ -430,10 +430,11 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-        _paletteFrame.dispose();
-        _paletteFrame = null;
+        _itemPanel.closeDialogs();
         _itemPanel.dispose();
         _itemPanel = null;
+        _paletteFrame.dispose();
+        _paletteFrame = null;
         invalidate();
     }
 

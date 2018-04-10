@@ -121,6 +121,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             @Override
             public void actionPerformed(ActionEvent a) {
                 _table.clearSelection();
+                hideIcons();
             }
         });
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));

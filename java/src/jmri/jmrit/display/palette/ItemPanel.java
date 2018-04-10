@@ -215,7 +215,7 @@ public abstract class ItemPanel extends JPanel {
         return previewPanel;
     }
 
-    protected void closeDialogs() {
+    public void closeDialogs() {
     }
 
     protected void reset() {

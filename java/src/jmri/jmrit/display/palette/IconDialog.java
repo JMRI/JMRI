@@ -62,17 +62,11 @@ public class IconDialog extends ItemDialog {
         panel.add(p);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        if (iconMap != null) {
-            _iconMap = IconDialog.clone(iconMap);
-            makeDoneButtonPanel(buttonPanel, "ButtonDone");
-        } else {
-            _iconMap = ItemPanel.makeNewIconMap(type);
-            makeDoneButtonPanel(buttonPanel, "addNewFamily");
-        }
+        makeDoneButtonPanel(buttonPanel, iconMap);
         // null method for all except multisensor.
         makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
 
-        if (!(type.equals("IndicatorTO") || type.equals("MultiSensor"))) {
+        if (!(type.equals("IndicatorTO") || type.equals("MultiSensor") || type.equals("SignalHead"))) {
             ItemPanel.checkIconMap(type, _iconMap);
         }
         _iconEditPanel = new ImagePanel();
@@ -87,7 +81,6 @@ public class IconDialog extends ItemDialog {
         p.add(_catalog);
 
         JScrollPane sp = new JScrollPane(p);
-//        sp.setPreferredSize(parent.getPreferredSize());
         setContentPane(sp);
         setLocationRelativeTo(_parent);
         setVisible(true);
@@ -170,6 +163,16 @@ public class IconDialog extends ItemDialog {
         invalidate();
         repaint();
     }
+    
+    protected void makeDoneButtonPanel(JPanel buttonPanel, HashMap<String, NamedIcon> iconMap) {
+        if (iconMap != null) {
+            _iconMap = IconDialog.clone(iconMap);
+            makeDoneButtonPanel(buttonPanel, "ButtonDone");
+        } else {
+            _iconMap = ItemPanel.makeNewIconMap(_type);
+            makeDoneButtonPanel(buttonPanel, "addNewFamily");
+        }        
+    }
 
     protected void makeDoneButtonPanel(JPanel buttonPanel, String text) {
         JPanel panel = new JPanel();
@@ -213,6 +216,7 @@ public class IconDialog extends ItemDialog {
         } else {
             iconPanel.setImage(_parent._backgrounds[0]);   //update always should be the panel background
         }
+        log.debug("iconMap size = {}", _iconMap.size());
         _parent.addIconsToPanel(iconMap, iconPanel, true);
     }
 

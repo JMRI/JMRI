@@ -124,7 +124,7 @@ public class CatalogPanel extends JPanel {
         _splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 makeTreePanel(label1), makePreviewPanel());
         _splitPane.setContinuousLayout(true);
-//        _splitPane.setOneTouchExpandable(true);
+        _splitPane.setOneTouchExpandable(true);
         add(_splitPane, BorderLayout.CENTER);
         if (addButtonPanel) {
             add(makeButtonPanel());
@@ -428,7 +428,7 @@ public class CatalogPanel extends JPanel {
         _treePane = new JScrollPane(_dTree);
         panel.add(new JLabel(Bundle.getMessage(label)));
 //        _treePane.setPreferredSize(new Dimension(100, 350));
-        _treePane.setMinimumSize(new Dimension(60, 100));
+        _treePane.setMinimumSize(new Dimension(30, 100));
         panel.add(_treePane);
         return panel;
     }
@@ -444,9 +444,9 @@ public class CatalogPanel extends JPanel {
         _preview.setOpaque(false);
         _iconPane =  new JScrollPane(_preview);
         previewPanel.add(_iconPane);
-        _preview.setMaximumSize(new Dimension(300,300));
-        _iconPane.setMinimumSize(new Dimension(60, 100));
-        _iconPane.setPreferredSize(new Dimension(4*ICON_WIDTH, 3*ICON_HEIGHT));
+//        _preview.setMaximumSize(new Dimension(200,200));
+        _iconPane.setMinimumSize(new Dimension(30, 100));
+        _iconPane.setPreferredSize(new Dimension(2*ICON_WIDTH, 2*ICON_HEIGHT));
         _preview.addMouseListener(new IconListener());
         return previewPanel;
     }
@@ -632,12 +632,10 @@ public class CatalogPanel extends JPanel {
                 }
             } else if (!newCol) { // start new column
                 c.gridx++;
-//                numCol++;
                 c.gridy = 0;
                 newCol = true;
             } else {  // start new row
                 c.gridy++;
-//                numRow++;
                 c.gridx = 0;
                 newCol = false;
             }
@@ -998,6 +996,7 @@ public class CatalogPanel extends JPanel {
                 }
                 image.setIcon(icon);
                 image.setHorizontalAlignment(JLabel.CENTER);
+//                icon.addMouseListener(this); - maybe add this to NamedIcon later
                 image.addMouseListener(this);
                 add(image, BorderLayout.NORTH);
                 
