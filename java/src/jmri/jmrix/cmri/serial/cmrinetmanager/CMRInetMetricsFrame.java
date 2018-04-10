@@ -65,7 +65,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
    public void initComponents()
     {
         // For the class
-        setTitle(Bundle.getMessage("MetricsWindowTitle") + " - Connection "+_memo.getUserName());
+        setTitle(Bundle.getMessage("MetricsWindowTitle") + Bundle.getMessage("WindowConnectionMemo") +_memo.getUserName()); // NOI18N
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setPreferredSize(new Dimension(845,400)); // 415 375
         networkMetricsBorderTitled = BorderFactory.createTitledBorder(networkMetricsBorder,"Error Metrics",TitledBorder.LEFT,TitledBorder.ABOVE_TOP);  

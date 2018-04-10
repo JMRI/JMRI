@@ -137,7 +137,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
         
         // set the frame's initial state
-        setTitle(Bundle.getMessage("DiagnosticTitle") + " - Connection "+_memo.getUserName());
+        setTitle(Bundle.getMessage("DiagnosticTitle") + Bundle.getMessage("WindowConnectionMemo")+_memo.getUserName());  // NOI18N
         setSize(500, 200);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
