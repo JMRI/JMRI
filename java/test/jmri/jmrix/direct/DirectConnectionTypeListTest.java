@@ -2,11 +2,9 @@ package jmri.jmrix.direct;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -16,7 +14,6 @@ public class DirectConnectionTypeListTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DirectConnectionTypeList t = new DirectConnectionTypeList();
         Assert.assertNotNull("exists",t);
     }
