@@ -12,21 +12,18 @@ import org.junit.Test;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2018
  */
-public class LnStreamPortPacketizerTest {
-
-    @Test
-    public void testCTor(){
-        Assert.assertNotNull("exists", new LnStreamPortPacketizer());
-    }
+public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerTest {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        lnp = new LnPacketizer();
     }
 
     @After
     public void tearDown() {
+        lnp = null;
         JUnitUtil.tearDown();
     }
 }
