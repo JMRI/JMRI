@@ -12,21 +12,21 @@ import java.awt.GraphicsEnvironment;
 /**
  * Test simple functioning of CMRInetMetricsCollector
  *
- * @author	Chuck Catania Copyright (C) 2017
+ * @author	Chuck Catania Copyright (C) 2017, 2018
  */
 public class CMRInetMetricsCollectorTest {
 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsCollectorTest action = new CMRInetMetricsCollectorTest(); 
+        CMRInetMetricsCollector action = new CMRInetMetricsCollector(); 
         Assert.assertNotNull("exists", action);
     }
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsCollectorTest action = new CMRInetMetricsCollectorTest(); 
+        CMRInetMetricsCollector action = new CMRInetMetricsCollector(); 
         Assert.assertNotNull("exists", action);
     }
 

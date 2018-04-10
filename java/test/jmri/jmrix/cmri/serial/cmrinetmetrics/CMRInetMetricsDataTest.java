@@ -12,14 +12,14 @@ import java.awt.GraphicsEnvironment;
 /**
  * Test simple functioning of CMRInetMetricsData
  *
- * @author	Chuck Catania Copyright (C) 2017
+ * @author	Chuck Catania Copyright (C) 2017, 2018
  */
 public class CMRInetMetricsDataTest {
 
     @Test
     public void testMemoCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CMRInetMetricsDataTest action = new CMRInetMetricsDataTest(); 
+        CMRInetMetricsData action = new CMRInetMetricsData(); 
         Assert.assertNotNull("exists", action);
     }
 
