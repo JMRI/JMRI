@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import javax.annotation.*;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,7 +160,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                 lastSWREQ = null;
                 return;
         }
-        // reach here for loconet switch command; make sure we know about this one
+        // reach here for loconet switch command; make sure that a Turnout with this name exists
         String s = prefix + "T" + addr; // NOI18N
         if (getBySystemName(s) == null) {
             // no turnout with this address, is there a light?
@@ -167,6 +168,8 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
                 // no light, create a turnout
                 LnTurnout t = (LnTurnout) provideTurnout(s);
+                
+                // process the message to put the turnout in the right state
                 t.message(l);
             }
         }
