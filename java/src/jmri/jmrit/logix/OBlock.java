@@ -948,11 +948,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     @Override
-    public String toString() {
-        return getDisplayName();
-    }
-
-    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameOBlock");
     }

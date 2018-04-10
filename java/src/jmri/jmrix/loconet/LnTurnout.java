@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import javax.annotation.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NmraPacket;
 import jmri.implementation.AbstractTurnout;
@@ -70,6 +71,26 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     LocoNetInterface controller;
+    
+    /**
+     * True when setFeedbackMode has specified the mode;
+     * false when the mode is just left over from initialization.
+     * This is intended to indicate (when true) that a configuration 
+     * file has set the value; message-created turnouts have it false.
+     */     
+    boolean feedbackDeliberatelySet = false; // package to allow access from LnTurnoutManager
+    
+    @Override
+    public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException {
+        feedbackDeliberatelySet = true;
+        super.setFeedbackMode(mode);
+    }
+
+    @Override
+    public void setFeedbackMode(int mode) throws IllegalArgumentException {
+        feedbackDeliberatelySet = true;
+        super.setFeedbackMode(mode);
+    }
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout") // NOI18N
@@ -238,8 +259,9 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                         newKnownState(state);
                     }
                 }
-                break;
+                return;
             }
+            
             case LnConstants.OPC_SW_REP: {
                 /* page 9 of Loconet PE */
 
@@ -297,6 +319,10 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                                 } else if (getFeedbackMode() == INDIRECT) {
                                     // reached closed state
                                     newKnownState(adjustStateForInversion(CLOSED));
+                                } else if (!feedbackDeliberatelySet) {
+                                    // don't have a defined feedback mode, but know we've reached closed state 
+                                    log.debug("setting CLOSED with !feedbackDeliberatelySet");
+                                    newKnownState(adjustStateForInversion(CLOSED));
                                 }
                             } else {
                                 // switch input thrown (input on)
@@ -308,10 +334,22 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                                 } else if (getFeedbackMode() == INDIRECT) {
                                     // reached thrown state
                                     newKnownState(adjustStateForInversion(THROWN));
+                                } else if (!feedbackDeliberatelySet) {
+                                    // don't have a defined feedback mode, but know we're not in closed state, most likely is actually thrown
+                                    log.debug("setting THROWN with !feedbackDeliberatelySet");
+                                    newKnownState(adjustStateForInversion(THROWN));
                                 }
                             }
                         } else {
                             // Aux input report
+                            
+                            // This is only valid in EXACT mode, so if we encounter it
+                            //  without a feedback mode set, we switch to EXACT
+                            if (!feedbackDeliberatelySet) {
+                                setFeedbackMode(EXACT);
+                                feedbackDeliberatelySet = false; // was set when setting feedback
+                            }
+                            
                             if ((sw2 & LnConstants.OPC_SW_REP_HI) != 0) {
                                 // aux input closed (off)
                                 if (getFeedbackMode() == EXACT) {
@@ -331,12 +369,12 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
                     }
                 }
+                return;
             }
-            //$FALL-THROUGH$
+
             default:
                 return;
         }
-        // reach here only in error
     }
 
     @Override
