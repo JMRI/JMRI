@@ -19,6 +19,18 @@ public class LnPacketizerTest {
        Assert.assertNotNull("exists", lnp );
     }
 
+    @Test
+    public void testStatusWithoutInit() {
+       Assert.assertFalse("not connected", lnp.status() );
+    }
+
+    @Test
+    public void testStartThreads() {
+       // for now, just make sure there isn't an exception.
+       // the port hasn't been connected yet.
+       lnp.startThreads();
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
