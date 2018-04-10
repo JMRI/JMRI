@@ -23,6 +23,8 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         option3Name = "TurnoutHandle";
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"),
+                new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
     }
 
     /**
@@ -34,6 +36,8 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+        setTranspondingAvailable(getOptionState("TranspondingPresent"));
+
         // connect to a packetizing traffic controller
         LnOverTcpPacketizer packets = new LnOverTcpPacketizer();
         packets.connectPort(this);
@@ -42,7 +46,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

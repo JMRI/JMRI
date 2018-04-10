@@ -2,18 +2,25 @@ package jmri.server.json.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
 import jmri.Version;
 import jmri.jmris.json.JsonServerPreferences;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
@@ -32,8 +39,6 @@ import org.slf4j.LoggerFactory;
  * @author rhwood
  */
 public class JsonUtilHttpServiceTest {
-
-    private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
     public JsonUtilHttpServiceTest() {
     }
@@ -86,15 +91,24 @@ public class JsonUtilHttpServiceTest {
         Assert.assertNotNull(exception);
         Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
         ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
+        JUnitUtil.waitFor(() -> {
+            return service.isPublished() == false;
+        });
         service.publish();
-        Assume.assumeTrue("Publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
         }));
         Assert.assertEquals(instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE), instance.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE, locale));
+        service.stop();
+        JUnitUtil.waitFor(() -> {
+            return service.isPublished() == false;
+        });
     }
 
     /**
-     * Test of doGetList method, of class JsonUtilHttpService.
+     * Test of doGetList method, of class JsonUtilHttpService. Verifies that
+     * JSON types that are lists are reported the same if requested using GET or
+     * LIST methods.
      *
      * @throws jmri.server.json.JsonException if test fails in an unexpected
      *                                        manner
@@ -112,33 +126,35 @@ public class JsonUtilHttpServiceTest {
     }
 
     /**
-     * Test of doPost method, of class JsonUtilHttpService.
+     * Test of doPost method, of class JsonUtilHttpService. Verifies that POST
+     * and GET requests for HELLO message are the same.
+     *
+     * @throws jmri.server.json.JsonException if fails unexpectedly
      */
     @Test
-    public void testDoPost() {
+    public void testDoPost() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         String type = JSON.HELLO;
         String name = JSON.HELLO;
-        try {
-            Assert.assertEquals(instance.doGet(type, name, locale), instance.doPost(type, name, null, locale));
-        } catch (JsonException ex) {
-            log.error("Unexpected exception.", ex);
-            Assert.fail("Unexpected exception");
-        }
+        Assert.assertEquals(instance.doGet(type, name, locale), instance.doPost(type, name, null, locale));
     }
 
     /**
      * Test of getHello method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetHello() {
+    public void testGetHello() throws JsonException {
         Locale locale = Locale.ENGLISH;
-        int heartbeat = 10;
+        int heartbeat = 1000; // one second
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getHello(locale, heartbeat);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         Assert.assertEquals("Hello type", JSON.HELLO, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertEquals("JMRI Version", Version.name(), data.path(JSON.JMRI).asText());
@@ -155,23 +171,22 @@ public class JsonUtilHttpServiceTest {
 
     /**
      * Test of getMetadata method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetMetadata_Locale_String() {
+    public void testGetMetadata_Locale_String() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result;
-        try {
-            for (String metadata : Metadata.getSystemNameList()) {
-                result = instance.getMetadata(locale, metadata);
-                Assert.assertEquals(JSON.METADATA, result.path(JSON.TYPE).asText());
-                Assert.assertEquals(metadata, result.path(JSON.DATA).path(JSON.NAME).asText());
-                Assert.assertEquals(Metadata.getBySystemName(metadata), result.path(JSON.DATA).path(JSON.VALUE).asText());
-            }
-        } catch (JsonException ex) {
-            log.error("Unexpected exception.", ex);
-            Assert.fail("Unexpected exception");
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        for (String metadata : Metadata.getSystemNameList()) {
+            result = instance.getMetadata(locale, metadata);
+            cache.validateMessage(result, true, locale);
+            Assert.assertEquals(JSON.METADATA, result.path(JSON.TYPE).asText());
+            Assert.assertEquals(metadata, result.path(JSON.DATA).path(JSON.NAME).asText());
+            Assert.assertEquals(Metadata.getBySystemName(metadata), result.path(JSON.DATA).path(JSON.VALUE).asText());
         }
         JsonException exception = null;
         try {
@@ -184,41 +199,48 @@ public class JsonUtilHttpServiceTest {
 
     /**
      * Test of getMetadata method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetMetadata_Locale() {
+    public void testGetMetadata_Locale() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
-        JsonNode result = null;
-        try {
-            result = instance.getMetadata(locale);
-        } catch (JsonException ex) {
-            log.error("Unexpected exception.", ex);
-            Assert.fail("Unexpected exception");
-        }
+        JsonNode result = instance.getMetadata(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         Assert.assertNotNull(result);
         Assert.assertEquals(Metadata.getSystemNameList().size(), result.size());
     }
 
     /**
      * Test of getNetworkServices method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetNetworkServices() {
+    public void testGetNetworkServices() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         // no services published
         JsonNode result = instance.getNetworkServices(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         Assert.assertEquals(0, result.size());
         // publish a service
         ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
+        JUnitUtil.waitFor(() -> {
+            return service.isPublished() == false;
+        });
         service.publish();
         Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
         }));
         result = instance.getNetworkServices(locale);
+        cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
         JsonNode data = result.get(0).path(JSON.DATA);
@@ -229,17 +251,25 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
+        service.stop();
+        JUnitUtil.waitFor(() -> {
+            return service.isPublished() == false;
+        });
     }
 
     /**
      * Test of getNode method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetNode() {
+    public void testGetNode() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getNode(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         // We should have a single node with no history of nodes
         Assert.assertEquals(JSON.NODE, result.path(JSON.TYPE).asText());
         Assert.assertEquals(NodeIdentity.identity(), result.path(JSON.DATA).path(JSON.NODE).asText());
@@ -248,13 +278,17 @@ public class JsonUtilHttpServiceTest {
 
     /**
      * Test of getSystemConnections method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetSystemConnections() {
+    public void testGetSystemConnections() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getSystemConnections(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         // We should only have one internal connection
         Assert.assertEquals(1, result.size());
         JsonNode connection = result.get(0);
@@ -288,11 +322,16 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(HttpServletResponse.SC_NOT_FOUND, exception.getCode());
         // published service
         ZeroConfService service = ZeroConfService.create(JSON.ZEROCONF_SERVICE_TYPE, 9999);
+        JUnitUtil.waitFor(() -> {
+            return service.isPublished() == false;
+        });
         service.publish();
         Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
             return service.isPublished() == true;
         }));
         result = instance.getNetworkService(locale, JSON.ZEROCONF_SERVICE_TYPE);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         Assert.assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertFalse(data.isMissingNode());
@@ -302,20 +341,126 @@ public class JsonUtilHttpServiceTest {
         Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
+        service.stop();
+        JUnitUtil.waitFor(() -> {
+            return service.isPublished() == false;
+        });
     }
 
     /**
      * Test of getRailroad method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if messages are not schema valid
      */
     @Test
-    public void testGetRailroad() {
+    public void testGetRailroad() throws JsonException {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getRailroad(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
         Assert.assertEquals(JSON.RAILROAD, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
     }
+
+    /**
+     * Test of getPanel method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if the result cannot be validated
+     */
+    @Test
+    public void testGetPanel() throws JsonException {
+        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
+        Locale locale = Locale.ENGLISH;
+        Editor editor = new SwitchboardEditor("test");
+        JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
+        ObjectNode result = instance.getPanel(locale, editor, JSON.XML);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
+        editor.getTargetFrame().dispose();
+        editor.dispose();
+    }
+
+    /**
+     * Test of getPanels method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if the result cannot be validated
+     */
+    @Test
+    public void testGetPanels_Locale_String() throws JsonException {
+        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
+        Locale locale = Locale.ENGLISH;
+        Editor editor = new SwitchboardEditor("test");
+        JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
+        JsonNode result = instance.getPanels(locale, JSON.XML);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
+        editor.getTargetFrame().dispose();
+        editor.dispose();
+    }
+
+    /**
+     * Test of getPanels method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if the result cannot be validated
+     */
+    @Test
+    public void testGetPanels_Locale() throws JsonException {
+        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
+        Locale locale = Locale.ENGLISH;
+        Editor editor = new SwitchboardEditor("test");
+        JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
+        JsonNode result = instance.getPanels(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
+        editor.getTargetFrame().dispose();
+        editor.dispose();
+    }
+
+    /**
+     * Test of getConfigProfiles method, of class JsonUtilHttpService. Only
+     * tests that result is schema valid and contains all profiles.
+     *
+     * @throws jmri.server.json.JsonException if unable to read profiles
+     */
+    @Test
+    public void testGetConfigProfiles() throws JsonException {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
+        ArrayNode result = instance.getConfigProfiles(locale);
+        JsonSchemaServiceCache cache = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        cache.validateMessage(result, true, locale);
+        Assert.assertEquals("Result has every profile", ProfileManager.getDefault().getProfiles().length, result.size());
+    }
+
+    /**
+     * Test of addressForString method, of class JsonUtilHttpService.
+     */
+    @Test
+    public void testAddressForString() {
+        DccLocoAddress result = JsonUtilHttpService.addressForString("123(l)");
+        Assert.assertTrue("Address is long", result.isLongAddress());
+        Assert.assertEquals("Address is 123", 123, result.getNumber());
+        result = JsonUtilHttpService.addressForString("123(L)");
+        Assert.assertTrue("Address is long", result.isLongAddress());
+        Assert.assertEquals("Address is 123", 123, result.getNumber());
+        result = JsonUtilHttpService.addressForString("123(s)");
+        Assert.assertFalse("Address is short", result.isLongAddress());
+        Assert.assertEquals("Address is 123", 123, result.getNumber());
+        result = JsonUtilHttpService.addressForString("123");
+        Assert.assertFalse("Address is short", result.isLongAddress());
+        Assert.assertEquals("Address is 123", 123, result.getNumber());
+        result = JsonUtilHttpService.addressForString("3");
+        Assert.assertFalse("Address is short", result.isLongAddress());
+        Assert.assertEquals("Address is 3", 3, result.getNumber());
+        result = JsonUtilHttpService.addressForString("3(l)");
+        Assert.assertTrue("Address is long", result.isLongAddress());
+        Assert.assertEquals("Address is 3", 3, result.getNumber());
+    }
+
+    // private final static Logger log = LoggerFactory.getLogger(JsonUtilHttpServiceTest.class);
 
 }

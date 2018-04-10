@@ -2,10 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -112,17 +109,97 @@ public interface Manager<E extends NamedBean> {
      */
     public void dispose();
 
+    /**
+     * Get the count of managed objects
+     */
+    @CheckReturnValue
+    public int getObjectCount();
+    
+    /**
+     * This provides an array of system names.
+     * <p>
+     * Note: this is ordered by the underlying NamedBeans, not
+     *       on the Strings themselves.
+     * <p>
+     * Note: this is not a live array; the contents don't stay up to date
+     * @return (slow) copy of system names in array form
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
+     */
+    @Deprecated // 4.11.5
     @CheckReturnValue
     @Nonnull
     public String[] getSystemNameArray();
 
+    /**
+     * This provides an 
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
+     * of system names.
+     * <p>
+     * Note: this is ordered by the underlying NamedBeans, not
+     *       on the Strings themselves.
+     * <p>
+     * Note: Access via {@link getNamedBeanSet} is faster.
+     * <p>
+     * Note: This is not a live list; the contents don't stay up to date
+     * @return Unmodifiable access to a list of system names
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
+     */
+    @Deprecated // 4.11.5
     @CheckReturnValue
     @Nonnull
     public List<String> getSystemNameList();
 
+    /**
+     * This provides an 
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
+     * of system names.
+     * <p>
+     * Note: this is ordered by the original add order, used for ConfigureXML
+     * <p>
+     * Note: Access via {@link getNamedBeanSet} is faster.
+     * <p>
+     * Note: This is a live list, it will be updated as beans are added and removed.
+     * @return Unmodifiable access to a list of system names
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
+     */
+    @Deprecated // 4.11.5
+    @CheckReturnValue
+    @Nonnull
+    public default List<String> getSystemNameAddedOrderList() { return getSystemNameList(); }
+
+    /**
+     * This provides an
+     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
+     * of NamedBeans in system-name order.
+     * <p>
+     * Note: Access via {@link getNamedBeanSet} is faster.
+     * <p>
+     * Note: This is not a live list; the contents don't stay up to date
+     * @return Unmodifiable access to a List of NamedBeans
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link getNamedBeanSet} 
+     */
+    @Deprecated // 4.11.5
     @CheckReturnValue
     @Nonnull
     public List<E> getNamedBeanList();
+
+    /**
+     * This provides an
+     * {@linkplain java.util.Collections#unmodifiableSet unmodifiable}
+     * SortedSet of NamedBeans in system-name order.
+     * <p>
+     * Note: This is the fastest of the accessors, and is the only long-term form.
+     * <p>
+     * Note: This is a live set; the contents are kept up to date
+     * @return Unmodifiable access to a SortedSet of NamedBeans
+     */   
+    @CheckReturnValue
+    @Nonnull
+    public SortedSet<E> getNamedBeanSet();
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -413,6 +490,148 @@ public interface Manager<E extends NamedBean> {
      */
     public default String getEntryToolTip() {
         return null;
+    }
+
+    /**
+     * Register a {@link ManagerDataListener} to hear about 
+     * adding or removing items from the list of NamedBeans
+     */
+    public void addDataListener(ManagerDataListener<E> e);
+    
+    /**
+     * Unregister a previously-added {@link ManagerDataListener}
+     */
+    public void removeDataListener(ManagerDataListener<E> e);
+
+    /**
+     * Temporarily suppress DataListener notifications.
+     * This avoids O(N^2) behavior when doing bulk updates, 
+     * i.e. when loading lots of Beans.
+     * Note that this is (1) optional, in the sense that the
+     * manager is not required to mute and (2) if present, 
+     * its' temporary, in the sense that the manager must do
+     * a cumulative notification when done.
+     */
+    public default void setDataListenerMute(boolean muted) {}
+
+
+    /**
+     * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
+     * without introducing a Swing dependency into core JMRI
+     * @since JMRI 4.11.4
+     */
+    interface ManagerDataListener<E extends NamedBean> {
+        /**
+         * Sent when the contents of the list has changed in a way that's too complex to characterize with the previous methods.
+         * @param e encapsulates event information
+         */
+        void contentsChanged(ManagerDataEvent<E> e);
+        /**
+         * Sent after the indices in the index0,index1 interval have been inserted in the data model.
+         * @param e encapsulates the event information
+         */
+        void intervalAdded(ManagerDataEvent<E> e);
+        /**
+         * Sent after the indices in the index0,index1 interval have been removed from the data model.
+         * @param e encapsulates the event information
+         */
+        void intervalRemoved(ManagerDataEvent<E> e);
+    }
+    
+    /**
+     * Defines an event that encapsulates changes to a list.
+     * <p>
+     * Intended to be equivalent to {@link javax.swing.event.ListDataEvent}
+     * without introducing a Swing dependency into core JMRI
+     * @since JMRI 4.11.4
+     */
+    @javax.annotation.concurrent.Immutable
+    public final class ManagerDataEvent<E extends NamedBean> extends java.util.EventObject {
+        /**
+         * Equal to {@link javax.swing.event.ListDataEvent#CONTENTS_CHANGED}
+         */
+        final static public int CONTENTS_CHANGED = 0;
+        /**
+         * Equal to {@link javax.swing.event.ListDataEvent#INTERVAL_ADDED}
+         */
+        final static public int INTERVAL_ADDED = 1;
+        /**
+         * Equal to {@link javax.swing.event.ListDataEvent#INTERVAL_REMOVED}
+         */
+        final static public int INTERVAL_REMOVED = 2;
+        
+        final private int type;
+        final private int index0;
+        final private int index1;
+        final private E changedBean; // used when just one bean is added or removed as an efficiency measure
+        final private Manager<E> source;
+        /**
+         * Creates a <code>ListDataEvent</code> object.
+         * 
+         * @param source  the source of the event (<code>null</code> not permitted).
+         * @param type  the type of the event (should be one of 
+         *     {@link #CONTENTS_CHANGED}, {@link #INTERVAL_ADDED} or 
+         *     {@link #INTERVAL_REMOVED}, although this is not enforced).
+         * @param index0  the index for one end of the modified range of list 
+         *     elements.
+         * @param index1  the index for the other end of the modified range of list 
+         *     elements.
+         * @param changedBean used when just one bean is added or removed, otherwise null
+         */
+        public ManagerDataEvent(@Nonnull Manager<E> source, int type, int index0, int index1, E changedBean) {
+            super(source);
+            this.source = source;
+            this.type = type;
+            this.index0 = Math.min(index0, index1);  // from javax.swing.event.ListDataEvent implementation
+            this.index1 = Math.max(index0, index1);  // from javax.swing.event.ListDataEvent implementation
+            this.changedBean = changedBean;
+        }
+
+        /**
+         * Returns the source of the event in a type-safe manner.
+         *
+         * @return the event source
+         */
+        public Manager<E> getSource() { return source; }
+  
+        /**
+         * Returns the index of the first item in the range of modified list items.
+         * 
+         * @return The index of the first item in the range of modified list items.
+         */
+        public int getIndex0() { return index0; }
+
+        /**
+         * Returns the index of the last item in the range of modified list items.
+         * 
+         * @return The index of the last item in the range of modified list items.
+         */
+        public int getIndex1() { return index1; }
+
+        /**
+         * Returns the changed bean or null
+         * 
+         * @return null if more than one bean was changed
+         */
+        public E getChangedBean() { return changedBean; }
+
+        /**
+         * Returns a code representing the type of this event, which is usually one
+         * of {@link #CONTENTS_CHANGED}, {@link #INTERVAL_ADDED} or 
+         * {@link #INTERVAL_REMOVED}.
+         * 
+         * @return The event type.
+         */
+        public int getType() { return type; }
+   
+        /**
+         * Returns a string representing the state of this event.
+         * 
+         * @return A string.
+         */
+         public String toString() {
+            return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
+        }
     }
 
 }

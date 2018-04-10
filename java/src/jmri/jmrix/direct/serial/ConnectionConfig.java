@@ -19,7 +19,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -29,16 +29,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public String name() {
         if (SystemType.isMacOSX()
                 || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6)) {
-            return "(Direct Drive (Serial) not available)";
+            return Bundle.getMessage("DirectSerialNameNot");
         }
 
-        return "Direct Drive (Serial)";
+        return Bundle.getMessage("DirectSerialName");
     }
 
     @Override
     protected void setInstance() {
-        if(adapter == null ){
-           adapter = SerialDriverAdapter.instance();
+        if (adapter == null) {
+            adapter = new SerialDriverAdapter();
         }
     }
+    
 }

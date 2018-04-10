@@ -396,6 +396,7 @@ public class PositionablePointTest {
         if (le != null) {
             JUnitUtil.dispose(le);
         }
+        le = null;
         JUnitUtil.tearDown();
     }
 

@@ -178,6 +178,10 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     protected java.util.Vector<String> imageTypes = new java.util.Vector<>();
 
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
     @Override
     public String toString() {
         StringBuilder retval = new StringBuilder();

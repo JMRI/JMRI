@@ -44,8 +44,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         Turnout t = null;
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
-        if (bitNum == 0) {
-            return (null);
+        if (bitNum < 0) {
+            return null;
         }
         // make the new Turnout object
         t = new DCCppTurnout(prefix, bitNum, tc);
@@ -57,7 +57,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     @Override
     public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: {}", l.toString());
+            log.debug("received message: {}", l.toString());
         }
         if (l.isTurnoutReply()) {
             // parse message type
@@ -152,6 +152,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
 
     /**
      * Get the bit address from the system name.
+     * @return -1 for failure
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -159,7 +160,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             // here if an illegal DCC++ turnout system name
             log.error("illegal character in header field of DCC++ turnout system name: {} prefix {} type {}",
                     systemName, getSystemPrefix(), typeLetter());
-            return (0);
+            return -1;
         }
         // name must be in the DCCppTnnnnn format (DCCPP is user configurable)
         int num = 0;
@@ -167,17 +168,17 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             num = Integer.valueOf(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())).intValue();
         } catch (Exception e) {
-            log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
+            log.error("invalid character in number field of system name: {}", systemName);
+            return -1;
         }
-        if (num <= 0) {
-            log.debug("invalid DCC++ turnout system name: {}", systemName);
-            return (0);
+        if (num < 0) {
+            log.error("invalid DCC++ turnout system name: {}", systemName);
+            return -1;
         } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.debug("bit number out of range in DCC++ turnout system name: {}", systemName);
-            return (0);
+            log.error("bit number out of range in DCC++ turnout system name: {}", systemName);
+            return -1;
         }
-        return (num);
+        return num;
     }
 
     /**

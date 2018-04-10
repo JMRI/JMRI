@@ -3,7 +3,7 @@
 <!ENTITY target "it">
 ]>
 
-<!-- Process a JMRI decoder or progrmmer file, adding a name element (with specific     -->
+<!-- Process a JMRI decoder or programmer file, adding a name element (with specific     -->
 <!-- language) based on the name attribute             -->
 
 <!-- Provide the two-character language code in the ENTITY line above.      -->

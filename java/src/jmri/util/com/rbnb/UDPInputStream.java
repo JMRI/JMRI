@@ -122,7 +122,7 @@ public class UDPInputStream extends InputStream {
      *****************************************************************
      */
     public void open(String address, int port) throws UnknownHostException, SocketException {
-        //Changed by Kevin Dickerson to allow a datagram to be recieved on the broadcast address.
+        // Changed to allow a datagram to be received on the broadcast address.
         if (address != null) {
             dsock = new DatagramSocket(port, InetAddress.getByName(address));
         } else {

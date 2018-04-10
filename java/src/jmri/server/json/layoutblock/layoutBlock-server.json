@@ -13,7 +13,7 @@
             "description": "User name of the layoutBlock"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the layoutBlock"
         },
         "properties": {
@@ -30,14 +30,44 @@
                         "type": ["string", "null"],
                         "description": "String value of property or null"
                     }
-                }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
             }
         },
-        "value": {
+        "state": {
+            "type": "integer",
+            "description": "The state of the layoutBlock"
+        },
+        "blockColor": {
             "type": "string",
-            "description": "The value of the layoutBlock"
+            "description": "Color of block on panel"
+        },
+        "trackColor": {
+            "type": "string",
+            "description": "Color of track in block on panel"
+        },
+        "occupiedColor": {
+            "type": "string",
+            "description": "Color of track in block on panel when occupied"
+        },
+        "extraColor": {
+            "type": "string",
+            "description": "Extra color in block on panel"
+        },
+        "useExtraColor": {
+            "type": "boolean",
+            "description": "\"true\" is extra colors are to be used; \"false\" otherwise"
+        },
+        "occupancySensor": {
+            "type": ["string", "null"],
+            "description": "Name of occupancy sensor for block"
+        },
+        "occupiedSense": {
+            "type": "integer",
+            "description": "State of occupancy sensor for block"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["name", "userName", "comment", "state", "blockColor", "trackColor", "occupiedColor", "extraColor", "useExtraColor", "occupancySensor", "occupiedSense"]
 }

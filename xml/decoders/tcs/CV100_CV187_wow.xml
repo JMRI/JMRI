@@ -49,27 +49,17 @@
     <label>Mars/Gyra Max Brightness</label>
     <label xml:lang="it">Luminosità max.Mars/Gyra</label>
   </variable>
-  <variable CV="117" default="3" mask="XXXXVVVV" item="Function 2 behavior">
-    <enumVal>
-      <enumChoice choice="1 slowest" value="1">
-        <choice xml:lang="it">1 più lento</choice>
-      </enumChoice>
-      <enumChoice choice="2"/>
-      <enumChoice choice="3"/>
-      <enumChoice choice="4"/>
-      <enumChoice choice="5"/>
-      <enumChoice choice="6"/>
-      <enumChoice choice="7"/>
-      <enumChoice choice="8"/>
-      <enumChoice choice="9"/>
-      <enumChoice choice="10"/>
-      <enumChoice choice="11"/>
-      <enumChoice choice="12 fastest">
-        <choice xml:lang="it">12 più veloce</choice>
-     </enumChoice>
-    </enumVal>
+  <variable CV="117" default="213" item="Function 2 behavior" exclude="220">
+    <decVal/>
     <label>Ditch Light Blink Rate</label>
     <label xml:lang="it">Freq.lampeggio Luci Ditch</label>
+    <tooltip>the higher the number the faster they blink</tooltip>
+  </variable>
+  <variable CV="117" default="221" item="Function 2 behavior" include="220">
+    <decVal/>
+    <label>Ditch Light Blink Rate</label>
+    <label xml:lang="it">Freq.lampeggio Luci Ditch</label>
+    <tooltip>the higher the number the faster they blink</tooltip>
   </variable>
   <variable CV="118" default="1" item="Function F0R effect generated">
     <decVal min="1" max="5"/>
@@ -121,7 +111,12 @@
     <label>F3 controls output Dim</label>
     <label xml:lang="it">F3 controlla Smorzam.Uscita</label>
   </variable>
-  <variable item="F4 controls output Dim" CV="123" mask="XXVXXXXX" minOut="1" default="1">
+  <variable item="F4 controls output Dim" CV="123" mask="XXVXXXXX" minOut="1" default="1" exclude="220">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output Dim</label>
+    <label xml:lang="it">F4 controlla Smorzam.Uscita</label>
+  </variable>
+  <variable item="F4 controls output Dim" CV="123" mask="XXVXXXXX" minOut="1" include="220">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output Dim</label>
     <label xml:lang="it">F4 controlla Smorzam.Uscita</label>
@@ -146,7 +141,12 @@
     <label>FL(r) controls output Ditch</label>
     <label xml:lang="it">Luci(in retro) controlla Uscita Ditch</label>
   </variable>
-  <variable item="F1 controls output Ditch" CV="124" mask="XXXXXVXX" minOut="1">
+  <variable item="F1 controls output Ditch" CV="124" mask="XXXXXVXX" minOut="1" exclude="220">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output Ditch</label>
+    <label xml:lang="it">F1 controlla Uscita Ditch</label>
+  </variable>
+  <variable item="F1 controls output Ditch" CV="124" mask="XXXXXVXX" minOut="1" default="1" include="220">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Ditch</label>
     <label xml:lang="it">F1 controlla Uscita Ditch</label>
@@ -166,7 +166,12 @@
     <label>F4 controls output Ditch</label>
     <label xml:lang="it">F4 controlla Uscita Ditch</label>
   </variable>
-  <variable item="F5 controls output Ditch" CV="124" mask="XVXXXXXX" minOut="1">
+  <variable item="F5 controls output Ditch" CV="124" mask="XVXXXXXX" minOut="1" exclude="220">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output Ditch</label>
+    <label xml:lang="it">F5 controlla Uscita Ditch</label>
+  </variable>
+  <variable item="F5 controls output Ditch" CV="124" mask="XVXXXXXX" minOut="1" default="1" include="220">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output Ditch</label>
     <label xml:lang="it">F5 controlla Uscita Ditch</label>
@@ -385,14 +390,31 @@
     <label xml:lang="it">Luminosità Smorzam.Luci Retro</label>
     <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
+  <variable item="EMF Option 1" CV="182" mask="XXXXXXXV" default="0" tooltip="Special BEMF setting for 3-Pole Motors">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>3-Pole Motor</label>
+  </variable>
   <variable item="Advanced Group 2 Option 2" CV="182" mask="XXXXXXVX" default="1" tooltip="Disables Stop on DC for Keep Alive">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Enable Keep Alive</label>
   </variable>
-  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="0">
+  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="0" exclude="220">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>2x Function Packets Required</label>
-	<tooltip>Two function packets must be received before changing function state, is using SPROG set to disabled</tooltip>
+	<tooltip>Two function packets must be received before changing function state, if using SPROG set to disabled</tooltip>
+  </variable>
+  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="1" include="220">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+    <label>2x Function Packets Required</label>
+	<tooltip>Two function packets must be received before changing function state, if using SPROG set to disabled</tooltip>
+  </variable>
+  <variable item="EMF Option 2" CV="182" mask="XXXXVXXX" default="0" exclude="220">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Motor delay</label>
+  </variable>
+  <variable item="EMF Option 2" CV="182" mask="XXXXVXXX" default="1" include="220">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Motor delay</label>
   </variable>
   <variable item="Brake Rate 1" CV="183" default="32" tooltip="Larger number longer it will take to stop">
  	 <decVal/>

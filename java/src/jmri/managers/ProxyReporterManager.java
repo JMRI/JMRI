@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -44,6 +46,10 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     public Reporter provideReporter(String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
+
+    @Override
+    /** {@inheritDoc} */
+    public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
      * Locate an instance based on a system name. Returns null if no instance

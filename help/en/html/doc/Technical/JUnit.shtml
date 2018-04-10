@@ -417,22 +417,29 @@
 
       <ol>
         <li>All the test classes should include common code in
-        their setup() and teardown() code to ensure that log4j is
+        their setUp() and tearDown() code to ensure that log4j is
         properly initiated, and that the custom appender is told
         when a test is beginning and ending.
 
 <pre style="font-family: monospace;">
-    // The minimal setup for log4J<br>
-    protected void setUp() throws Exception { <br>
-    super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a><br>
-    jmri.util.JUnitUtil.setUp(); <br>
-    }<br>
-    protected void tearDown() throws Exception { <br>
-    jmri.util.JUnitUtil.tearDown(); <br>
-    super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a><br>
-    }<br>
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
+        jmri.util.JUnitUtil.setUp(); 
+    }
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
+        super.tearDown(); // Note: skip this line when using <a href="#super">JUnit4</a>
+    }
 </pre>
         </li>
+        <li>In addition, the tearDown() method should set all member variable 
+            references to null.  This is because JUnit4 keeps the test class
+            objects around until <em>all</em> the tests are complete, so any
+            memory you allocate in one class can't be garbage collected until all 
+            the tests are done.  Setting the references to null allows the objects
+            to be collected. (If the allocated objects have a dispose() method
+            or similar, you should call that too)
 
         <li>When a test is deliberately invoking a message, it
         should then use the check to see that the message was
@@ -440,7 +447,6 @@
         to do<br>
 <pre style="font-family: monospace;">
     log.warn("Provoked message");
-
 </pre>
     the invoking test case should follow that with the line:<br>
 
@@ -478,9 +484,11 @@
 <pre style="font-family: monospace;">
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
     jmri.util.JUnitUtil.setUp();
+    jmri.util.JUnitUtil.resetInstanceManager();
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
+    jmri.util.JUnitUtil.initReporterManager();
 </pre>
     (You can omit the initialization managers you don't need) See
     the jmri.util.JUnitUtil class for the full list of available ones,
@@ -791,10 +799,17 @@
       <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the Speedometer tests
       <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a>
       for an example.
+      
+      <p>
+      For more information on Jemmy, please see the 
+      <a href="http://wiki.netbeans.org/Jemmy_Tutorial">tutorial Wiki page</a> and the 
+      <a href="http://atetric.com/atetric/javadoc/org.netbeans/jemmy/2.2.7.5/overview-summary.html">Jemmy Javadoc</a>.
 
+      <a id="jemmylocate" name="jemmylocate"></a>
       <h4>Locating GUI Items using Jemmy</h4>
 
-      <p>Jemmy must be able to find the objects on the screen.  Jemmy Operators are generally used to both locate and manipulate items on the screen.</p>
+      <p>Jemmy must be able to find the objects on the screen.  
+        Jemmy Operators are generally used to both locate and manipulate items on the screen.</p>
 
       <p>Here are a few tips for locating items with Jemmy:</p>
 
@@ -804,6 +819,39 @@
       <li>If an item contains its own text (Buttons, for example), it is recommended you use the text to search for a component.</li>
       <li>If an item does not contain its own description, but the GUI contains a JLabel describing that component, be certain the JLabel's LabelFor property is set.  A Jemmy JLabelOperator can then be used to find the label, and retrieve the object.</li>
       </ul>
+      
+      <a id="jemmytimeout" name="jemmytimeout"></a>
+      <h4>Jemmy timeouts</h4>
+      Jemmy has an extensive system of built-in timeouts.  It'll wait to perform an operation
+      until e.g. the requested button or menu is on the screen, but will eventually timeout
+      if it can't find it.  In that case it throws a 
+      <code>org.netbeans.jemmy.TimeoutExpiredException</code>
+      with some included diagnostic test. 
+      Please don't catch this exception: the problem here is not the exception, it's that
+      Jemmy wasn't able to do what you asked.  That's the thing that needs to be debugged.
+      
+      <p>
+      If you want to change one of Jemmy's timeouts, do
+<pre style="font-family: monospace;">
+        myMenuOperator.getTimeouts().setTimeout("JMenuOperator.WaitBeforePopupTimeout", 30L);
+</pre>
+      where "<code>myMenuOperator</code>" is a reference to a Jemmy operator object, 
+      30L is the new value (a <code>long</code>) in milliseconds, and the 
+      particular timeout name comes from the Javadoc.  Sometimes, setting the "WaitBeforePopupTimeout"
+      from it's default of zero to a few milliseconds can improve the reliability of tests.
+      Also, setting "<code>JMenuOperator.WaitPopupTimeout</code>" 
+      and "<code>ComponentOperator.WaitComponentTimeout</code>" to a lower value from their
+      defaults of 60000L (a minute) can speed work when you're trying to debug the cause of a timeout.
+      
+      <a id="jemmyhints" name="jemmyhints"></a>
+      <h4>Jemmy hints and issues</h4>
+      
+      Actions like <code>operator.click()</code> work like clicking on a real screen:
+        if the click target isn't the foremost component when the click happens, the click
+        will go to some other component. This is particularly annoying when you're running
+        a long series of tests on your own computer will doing other work, as 
+        pushing test windows to the background will likely cause (false-negative) failures.
+    
 
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
 
@@ -861,10 +909,10 @@
       "-noloading" option in the <code>main</code> of whichever
       test class you're having trouble with:</p>
 <pre style="font-family: monospace;">
-    static public void main(String[] args) {<br>
-            String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br>
-            junit.swingui.TestRunner.main(testCaseName);<br>
-    }<br>
+    static public void main(String[] args) {
+            String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};
+            junit.swingui.TestRunner.main(testCaseName);
+    }
 </pre>
 
       <p>Please don't leave "-noloading" in place, as it prevents

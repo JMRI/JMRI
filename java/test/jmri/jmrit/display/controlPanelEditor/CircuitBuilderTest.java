@@ -30,6 +30,8 @@ public class CircuitBuilderTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }
