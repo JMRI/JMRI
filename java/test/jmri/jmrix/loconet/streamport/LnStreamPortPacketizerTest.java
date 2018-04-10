@@ -18,7 +18,7 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnPacketizer();
+        lnp = new LnStreamPortPacketizer();
     }
 
     @After
