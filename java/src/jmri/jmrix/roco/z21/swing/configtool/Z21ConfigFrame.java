@@ -260,7 +260,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
                 break;
             default:
                 // ignore all other message types.
-                log.debug("unhandled op-code recieved.");
+                log.debug("unhandled op-code received.");
         }
     }
 

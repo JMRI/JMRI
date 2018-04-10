@@ -17,8 +17,8 @@ public class SerialSensorTest {
 
     @Test
     public void testCTor() {
-        SerialSensor t = new SerialSensor("VS1",memo);
-        Assert.assertNotNull("exists",t);
+        SerialSensor t = new SerialSensor("VS1", memo);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

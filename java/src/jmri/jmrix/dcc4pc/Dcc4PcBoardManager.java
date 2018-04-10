@@ -124,9 +124,9 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("timeout recieved to our last message " + m.toString());
+            log.debug("timeout received to our last message " + m.toString());
         }
-        log.debug("Timeout to message " + m.toString() + " for board " + m.getBoard());
+        log.debug("Timeout to message {} for board {}", m.toString(), m.getBoard());
     }
 
     @Override

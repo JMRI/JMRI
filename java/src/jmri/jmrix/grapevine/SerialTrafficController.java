@@ -247,7 +247,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     @Override
     @Deprecated
     protected void setInstance() {
-        self = this;
     }
 
     /**

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for Maple serial systems
  * <p>
- * System names are "KLnnn", where nnn is the bit number without padding.
+ * System names are "KiLnnn", where nnn is the bit number without padding.
  * <p>
  * Based in part on SerialTurnoutManager.java
  *
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class SerialLightManager extends AbstractLightManager {
 
     MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "M";
+    protected String prefix = "K";
 
     public SerialLightManager() {
 

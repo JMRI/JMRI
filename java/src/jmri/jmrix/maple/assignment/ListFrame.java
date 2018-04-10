@@ -57,7 +57,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     ButtonGroup bitTypeGroup = new ButtonGroup();
     JRadioButton inputBits = new JRadioButton(Bundle.getMessage("ShowInputButton") + "   ", false);
     JRadioButton outputBits = new JRadioButton(Bundle.getMessage("ShowOutputButton"), true);
-    JLabel nodeInfoText = new JLabel("Node Information Text");
+    JLabel nodeInfoText = new JLabel(Bundle.getMessage("NodeInfoText"));
 
     // assignment pane items
     protected JPanel assignmentPanel = null;
@@ -257,7 +257,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             }
             if (s == null) {
                 // serious trouble, log error and ignore
-                log.error("Cannot find Node " + nodeID + " in list of configured Nodes.");
+                log.error("Cannot find Node {} in list of configured Nodes.", nodeID);
                 return;
             }
             // have node, initialize for new node
@@ -267,8 +267,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
             // prepare the information line
             numInputBits = InputBits.getNumInputBits();
             numOutputBits = OutputBits.getNumOutputBits();
-            nodeInfoText.setText(" - " + numInputBits + " " + Bundle.getMessage("InputBitsAnd") + " "
-                    + numOutputBits + " " + Bundle.getMessage("OutputBits"));
+            nodeInfoText.setText(" - " + Bundle.getMessage("BitsInfoText", numInputBits, numOutputBits));
         }
         // initialize for input or output assignments
         if (inputSelected) {

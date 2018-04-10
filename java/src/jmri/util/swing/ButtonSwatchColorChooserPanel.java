@@ -41,6 +41,7 @@ public class ButtonSwatchColorChooserPanel extends AbstractColorChooserPanel {
         g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
 
         ImageIcon icon = new ImageIcon(image); 
+        g.dispose();
 
         swatch.setIcon(icon);
     }
@@ -56,8 +57,11 @@ public class ButtonSwatchColorChooserPanel extends AbstractColorChooserPanel {
         g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
 
         ImageIcon icon = new ImageIcon(image); 
+        g.dispose();
+
         swatch = new JLabel(icon);
         add(swatch);
+    
         setButton = new JButton(Bundle.getMessage("SetColor"));
         setButton.addActionListener((ActionEvent e) -> {
             Color desiredColor = JColorChooser.showDialog(this,
