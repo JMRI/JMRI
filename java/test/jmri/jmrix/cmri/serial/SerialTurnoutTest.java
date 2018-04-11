@@ -35,13 +35,17 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         memo.setTrafficController(tcis);
         n = new SerialNode(0, SerialNode.SMINI,tcis);
         Assert.assertNotNull("node exists", n);
+        startingNumListeners = tcis.numListeners();
+        
         t = memo.getTurnoutManager().provideTurnout("4");
         Assert.assertNotNull("turnout exists", t);
     }
 
+    int startingNumListeners; // number at creation, before tests start allocating them.
+    
     @Override
     public int numListeners() {
-        return tcis.numListeners();
+        return tcis.numListeners() - startingNumListeners;
     }
 
     @Override
