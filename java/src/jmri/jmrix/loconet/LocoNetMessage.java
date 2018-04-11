@@ -6,30 +6,28 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single command or response on the LocoNet.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
- * <P>
+ * <p>
  * Note that this class does not manage the upper bit of the message. By
  * convention, most LocoNet messages have the upper bit set on the first byte,
  * and on no other byte; but not all of them do, and that must be managed
  * elsewhere.
- * <P>
+ * <p>
  * Note that many specific message types are created elsewhere. In general, if
  * more than one tool will need to use a particular format, it's useful to
  * refactor it to here.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  * @see jmri.jmrix.nce.NceMessage
- *
+ * @see jmri.jmrix.nce.NceMessage
  */
 public class LocoNetMessage implements Serializable {
     // Serializable, serialVersionUID used by jmrix.loconet.locormi, please do not remove
@@ -50,7 +48,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Create a message with specified contents
+     * Create a message with specified contents.
      *
      * @param contents The array of contents for the message. The error check
      *                 word must be present, e.g. a 4-byte message must have
@@ -83,14 +81,14 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Get a String representation of the op code in hex
+     * Get a String representation of the op code in hex.
      */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode()); // NOI18N
     }
 
     /**
-     * Get length, including op code and error-detection byte
+     * Get length, including op code and error-detection byte.
      */
     public int getNumDataElements() {
         return _nDataBytes;
@@ -115,7 +113,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Get a String representation of the entire message in hex
+     * Get a String representation of the entire message in hex.
      */
     @Override
     public String toString() {
@@ -134,7 +132,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Set the parity byte(s) of this message
+     * Set the parity byte(s) of this message.
      */
     public void setParity() {
         // check for the D3 special case
@@ -167,7 +165,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * check whether the message has a valid parity
+     * Check whether the message has a valid parity.
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -206,7 +204,7 @@ public class LocoNetMessage implements Serializable {
     // decode messages of a particular form
     // create messages of a particular form
     /**
-     * Get the 8 data bytes from an OPC_PEER_XFR message
+     * Get the 8 data bytes from an OPC_PEER_XFR message.
      *
      * @return int[8] data bytes
      */
@@ -353,7 +351,7 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Check if a high bit is set, usually used to store it in some other
-     * location (LocoNet does not allow the high bit to be set in data bytes)
+     * location (LocoNet does not allow the high bit to be set in data bytes).
      *
      * @return True if the argument has the high bit set
      */
@@ -392,7 +390,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * If this is an OPC_INPUT_REP, return the 0-n address, else -1
+     * If this is an OPC_INPUT_REP, get the 0-n address, else -1
      *
      * @return 0 to n-1 address
      */
@@ -405,7 +403,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Return the 1-N turnout address
+     * Get the 1-N turnout address
      *
      * @return 1-N address
      */

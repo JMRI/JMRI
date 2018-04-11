@@ -67,30 +67,40 @@
             <label xml:lang="nl">PIC-versie: </label>
         </variable>
 
-        <variable CV="13" mask="XXXVVVVV" comment="Board Blink Rate" item="Blink Rate" default="0">
+        <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0">
             <decVal min="0" max="15" default="0"/>
             <label>Blink Rate:</label>
             <tooltip>Choose from 0 = none to 15 = fast</tooltip>
         </variable>
 
-        <variable CV="12" mask="VVVXXXXX" comment="Board Mode" item="Action Mode" default="0">
+        <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0">
             <enumVal>
                 <enumChoice choice="0" value="0">
-                    <choice>Normal</choice>
+                    <choice>Normal Ports</choice>
                     <choice xml:lang="nl">Normaal</choice>
                 </enumChoice>
-                <enumChoice choice="1" value="2">
-                    <choice>Alternate push button</choice>
+                <enumChoice choice="2" value="2">
+                    <choice>2-Position Servo</choice>
                 </enumChoice>
-                <enumChoice choice="2" value="8">
-                    <choice>Servo</choice>
-                </enumChoice>
-                <enumChoice choice="3" value="12">
+                <enumChoice choice="3" value="3">
                     <choice>4-Position Servo</choice>
                 </enumChoice>
             </enumVal>
-            <tooltip>Select how the board should operate</tooltip>
+            <label>Board Port type:</label>
+            <tooltip>Select how the ports on this board should operate</tooltip>
         </variable>
+
+      <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Alternate code:</label>
+        <tooltip>Button sends alternating code, default unselected = fixed code</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Port Refresh:</label>
+        <tooltip>Refresh Ports, default unselected</tooltip>
+      </variable>
 
      <!-- This sets a single JMRI-style composite address in two CVs -->
       <variable CV="1" comment="Board SV address" item="Short Address" default="81">
@@ -104,7 +114,7 @@
       <!-- Note defaults must be present both locations and agree      -->
         <variable item="User Id #2" CV="2" default="81">
             <decVal min="1" max="127"/>
-            <label>LocoIO Address (7-bit high)</label>
+            <label>LocoIO Address (7-bit high):</label>
             <tooltip>Message DSTH byte</tooltip>
         </variable>
 
@@ -116,52 +126,123 @@
 
       <!-- per port config SVs, stored as CVs, use enum-HDL-PortMode ? -->
       <!-- Port 1 -->
-      <variable item="Port1 Type" CV="3" mask="VVVVVVVV" default="192">
-        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <label>Port 1 Type:</label>
-        <label xml:lang="nl">Poort 1 Type:</label>
+      <variable item="Port1 Type" CV="3" mask="VXXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-InputOutput.xml"/>
+        <label>Port Type:</label>
+        <label xml:lang="nl">Poorttype:</label>
+      </variable>
+      <!-- shows only for Input -->
+      <variable item="Port1 Input" CV="3" mask="XVVVVVVV" default="192">
+        <qualifier>
+          <variableref>Port1 Type</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-InputMode.xml"/>
+        <label>Attached to input:</label>
+        <label xml:lang="nl">Aansluiting:</label>
+      </variable>
+      <!-- Shows only for Output -->
+      <variable item="Port1 Output" CV="3" mask="XVVXXXXX" default="192">
+        <qualifier>
+          <variableref>Port1 Type</variableref>
+          <relation>ne</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputMode.xml"/>
+        <label>Attached to output:</label>
+        <label xml:lang="nl">Aansluiting:</label>
+      </variable>
+      <variable item="Port1 Contact" CV="5" mask="XXXXVVVV" default="16">
+        <qualifier>
+          <variableref>Port1 Type</variableref>
+          <relation>ne</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputContact.xml"/>
+        <label>On:</label>
       </variable>
 
-      <variable item="Port1 Add1" CV="3" default="1">
+      <variable CV="3" mask="XXXVXXXX" item="Port1 Blink" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Blink:</label>
+        <tooltip>Should output blink? (rate set on LocoIO tab)</tooltip>
+      </variable>
+
+      <variable item="Port1 Add1" CV="3">
         <hexVal/>
-        <label>Port1 Add1</label>
+        <label>Port1 Add1:</label>
       </variable>
 
       <variable item="Port1 Add2" CV="4" default="0">
         <hexVal/>
-        <label>Port1 Add2</label>
+        <label>Port1 Add2:</label>
       </variable>
 
-      <variable item="Port1 Address" CV="4" mask="XXXXVVVV" default="1">
+      <variable item="Port1 Address" CV="4" mask="XXXXVVVV">
           <decVal max="255"/>
-        <label>Port 1 Address (dec):</label>
-        <label>Adres Poort 1 (dec):</label>
+        <label>Port Address (dec):</label>
+        <label>Poortadres (dec):</label>
       </variable>
 
       <!-- Port 2 -->
-      <variable item="Port2 Type" CV="6" mask="VVVVVVVV" default="192">
-        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <label>Port 2 Type:</label>
-        <label xml:lang="nl">Poort 2 Type:</label>
+      <variable item="Port2 Type" CV="6" mask="VXXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-InputOutput.xml"/>
+        <label>Port Type:</label>
+        <label xml:lang="nl">Poorttype:</label>
+      </variable>
+      <!-- shows only for Input -->
+      <variable item="Port2 Input" CV="6" mask="XVVVVVVV" default="192">
+        <qualifier>
+          <variableref>Port2 Type</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-InputMode.xml"/>
+        <label>Attached to input:</label>
+        <label xml:lang="nl">Aansluiting:</label>
+      </variable>
+      <!-- shows only for Output -->
+      <variable item="Port2 Output" CV="6" mask="XVVVVVVV" default="192">
+        <qualifier>
+          <variableref>Port2 Type</variableref>
+          <relation>ne</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputMode.xml"/>
+        <label>Attached to output:</label>
+        <label xml:lang="nl">Aansluiting:</label>
+      </variable>
+      <variable item="Port2 Contact" CV="8" mask="XXXXVVVV" default="16">
+        <qualifier>
+          <variableref>Port2 Type</variableref>
+          <relation>ne</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputContact.xml"/>
+        <label>On:</label>
       </variable>
 
-      <variable item="Port2 Add1" CV="6" default="1">
+      <variable item="Port2 Add1" CV="6">
         <hexVal/>
-        <label>Port2 Add1</label>
+        <label>Port2 Add1:</label>
       </variable>
 
       <variable item="Port2 Add2" CV="7" default="0">
         <hexVal/>
-        <label>Port2 Add2</label>
+        <label>Port2 Add2:</label>
       </variable>
 
-      <variable item="Port2 Address" CV="7" default="1">
-            <decVal max="255"/>
-        <label>Port 2 Address (dec):</label>
-        <label>Adres Poort 2 (dec):</label>
+      <variable item="Port2 Address" CV="7" mask="XXXXVVVV">
+        <decVal max="255"/>
+        <label>Port Address (dec):</label>
+        <label>Poortadres (dec):</label>
       </variable>
 
       <!-- Below are dummy CV placeholders to be configured for LocoIO -->
+      <variable item="Dummy 8" CV="8">
+        <decVal/>
+      </variable>
       <variable item="Dummy 9" CV="9">
         <decVal/>
       </variable>
@@ -904,6 +985,8 @@
     </variables>
   </decoder>
 
+  <!-- LocoIO GUI Panes -->
+
     <pane>
         <name>LocoIO</name>
       <column>
@@ -917,10 +1000,10 @@
 
         <display item="Action Mode"/>
 
-        <display item="Demo"/>
+        <display item="Alternate Mode" format="checkbox"/>
+        <display item="Port Refresh" format="checkbox"/>
 
       </column>
-
     </pane>
 
   <pane>
@@ -932,6 +1015,9 @@
           <text xml:lang="nl">Poort 1</text>
         </label>
         <display item="Port1 Type"/>
+        <display item="Port1 Input"/>
+        <display item="Port1 Output"/>
+        <display item="Port2 Contact"/>
         <display item="Port1 Add1"/>
         <display item="Port1 Add2"/>
         <display item="Port1 Address"/>
@@ -942,19 +1028,12 @@
           <text xml:lang="nl">Poort 2</text>
         </label>
         <display item="Port2 Type"/>
+        <display item="Port2 Input"/>
+        <display item="Port2 Output"/>
+        <display item="Port2 Contact"/>
         <display item="Port2 Add1"/>
         <display item="Port2 Add2"/>
         <display item="Port2 Address"/>
-        <separator/>
-
-        <label>
-          <text>Port 3</text>
-          <text xml:lang="nl">Poort 3</text>
-        </label>
-        <display item="Port3 Type"/>
-        <display item="Port3 Add1"/>
-        <display item="Port3 Add2"/>
-        <display item="Port3 Address"/>
         <separator/>
 
       </column>
@@ -982,7 +1061,7 @@
         <separator/>
           <label>
               <text>&lt;html&gt;&lt;h3&gt;SV Programming/reading Ops Mode addressing (LOCONETSV1MODE)&lt;/h3&gt;&lt;html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;SV-Programmierung / Lesen auf dem Haputgleis (LOCONETSV1MODE)&lt;/h3&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;SV-Programmierung / Lesen auf dem Hauptgleis (LOCONETSV1MODE)&lt;/h3&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;SV Programmeren/Uitlezen via POM (LOCONETSV1MODE)&lt;/h3&gt;&lt;/html&gt;</text>
           </label>
           <label>

@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
  * <LI> (everything else)
  * </UL>
- * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -31,12 +30,11 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2018
- *
  */
 public class LnPacketizer extends LnTrafficController {
 
     /**
-     * true if the external hardware is not echoing messages, so we must
+     * True if the external hardware is not echoing messages, so we must
      */
     protected boolean echo = false;  // echo messages here, instead of in hardware
 
@@ -47,6 +45,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // The methods to implement the LocoNetInterface
+
     /**
      * {@inheritDoc}
      */
@@ -166,7 +165,7 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
@@ -332,7 +331,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     /**
-     * Captive class to notify of one message
+     * Captive class to notify of one message.
      */
     private static class RcvMemo implements jmri.util.ThreadingUtil.ThreadAction {
 
@@ -353,7 +352,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     /**
-     * Captive class to handle transmission
+     * Captive class to handle transmission.
      */
     class XmtHandler implements Runnable {
 
@@ -407,10 +406,9 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
-     * is needed
+     * is needed.
      *
      * @param msg message sent
-     *
      */
     protected void messageTransmited(byte[] msg) {
         log.debug("message transmitted");
@@ -472,4 +470,5 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
+
 }

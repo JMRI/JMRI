@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide an Ops Mode Programmer via a wrapper what works with the LocoNet
+ * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
  * SlotManager object.
  *
  * @see jmri.Programmer
@@ -46,7 +46,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     /**
-     * Forward a write request to an ops-mode write operation
+     * Forward a write request to an ops-mode write operation.
      */
     @Override
     @Deprecated

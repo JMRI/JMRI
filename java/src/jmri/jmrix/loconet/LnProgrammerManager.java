@@ -7,11 +7,11 @@ import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
+ * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet.
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002
-  */
+ */
 public class LnProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;
@@ -25,9 +25,9 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     LocoNetSystemConnectionMemo memo;
 
     /**
-     * LocoNet command station does provide Ops Mode
+     * LocoNet command stations provide Ops Mode.
      *
-     * @return true
+     * @return true always
      */
     @Override
     public boolean isAddressedModePossible() {

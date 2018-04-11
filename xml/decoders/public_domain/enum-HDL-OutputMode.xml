@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Output Block" value="192">
+    <choice>Block Detector (0xC0 command)</choice>
+  </enumChoice>
+  <enumChoice choice="Output Fixed On" value="129">
+    <choice>Fixed - On</choice>
+  </enumChoice>
+  <enumChoice choice="Output Fixed On Blink" value="155">
+    <choice>Fixed - On - Blinking</choice>
+  </enumChoice>
+  <enumChoice choice="Output Fixed Off" value="129">
+    <choice>Fixed - Off</choice>
+  </enumChoice>
+  <enumChoice choice="Output Fixed Off Blink" value="144">
+    <choice>Fixed - Off - Blinking</choice>
+  </enumChoice>
+  <enumChoice choice="Output Pulse Soft" value="136">
+    <choice>Fixed - Off - Blinking</choice>
+  </enumChoice>
+  <enumChoice choice="Output Fixed Off Blink" value="176">
+    <choice>Fixed - Off - Blinking - 4-Way</choice>
+  </enumChoice>
+</enumVal>
