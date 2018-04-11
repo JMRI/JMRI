@@ -41,10 +41,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    /**
-     * Simulator auto-init setting for number of banks to auto-reply on poll
-     */
-    private int autoInit = 0;
 
     /**
      * Create a new SimulatorAdapter.
@@ -274,10 +270,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
             case "RC": // Read Coils message
                 log.debug("Read Coils (poll) message detected");
                 int i = 1;
-                int lastNode = 1;
-                if (nodeAddress == 0) { // broadcast poll, reply from all existing nodes
-                    lastNode = 99;
-                }
                 // init reply
                 log.debug("RC Reply from node {}", nodeAddress);
                 reply.setElement(0, 0x02); // <STX>
@@ -326,7 +318,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Extract the number of coils to precess from RC/WC message.
+     * Extract the number of coils to process from RC/WC message.
      *
      * @param msg te SerialMessage received from Simulator inpipe
      * @return the number of consecutive coils to read/write (decimal)

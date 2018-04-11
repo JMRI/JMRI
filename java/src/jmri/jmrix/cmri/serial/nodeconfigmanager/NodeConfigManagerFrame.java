@@ -168,7 +168,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     @Override
     public void initComponents() {
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle") + Bundle.getMessage("WindowConnectionMemo")+_memo.getUserName());  // NOI18N
         setSize(500, 150);
 
         Container contentPane = getContentPane();
@@ -266,7 +266,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         JScrollPane nodeTableScrollPane = new JScrollPane(nodeTable);
 
         Border inputBorderTitled = BorderFactory.createTitledBorder(inputBorder,
-                Bundle.getMessage("Connection") + " " + _memo.getUserName(),
+                " ",
                 TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
         nodeTablePanel.add(nodeTableScrollPane, BorderLayout.CENTER);
         nodeTablePanel.setBorder(inputBorderTitled);
