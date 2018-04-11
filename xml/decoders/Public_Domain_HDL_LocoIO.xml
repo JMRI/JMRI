@@ -132,7 +132,7 @@
         <label xml:lang="nl">Poorttype:</label>
       </variable>
       <!-- shows only for Input -->
-      <variable item="Port1 Input" CV="3" mask="XVVVVVVV" default="192">
+      <variable item="Port1 Input" CV="3" mask="XVVVVVVV" default="47">
         <qualifier>
           <variableref>Port1 Type</variableref>
           <relation>eq</relation>
@@ -192,7 +192,7 @@
         <label xml:lang="nl">Poorttype:</label>
       </variable>
       <!-- shows only for Input -->
-      <variable item="Port2 Input" CV="6" mask="XVVVVVVV" default="192">
+      <variable item="Port2 Input" CV="6" mask="XVVVVVVV" default="47">
         <qualifier>
           <variableref>Port2 Type</variableref>
           <relation>eq</relation>
