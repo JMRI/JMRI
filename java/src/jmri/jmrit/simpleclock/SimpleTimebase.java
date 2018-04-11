@@ -505,6 +505,19 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void dispose() {
+        if (timer!=null) {
+            // end this timer
+            timer.setRepeats(false); // just in case
+            timer.stop();
+            
+            java.awt.event.ActionListener listeners[] = timer.getListeners(java.awt.event.ActionListener.class);
+            for (java.awt.event.ActionListener listener : listeners) timer.removeActionListener(listener);            
+
+            timer = null;
+        }
+        
+        java.beans.PropertyChangeListener[] plisteners = pcMinutes.getPropertyChangeListeners();
+        for (java.beans.PropertyChangeListener plistener : plisteners) pcMinutes.removePropertyChangeListener(plistener);
     }
 
     /**

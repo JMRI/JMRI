@@ -6,14 +6,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the system-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "OSnnnn", where nnnn is the sensor number without padding.
- * <P>
+ * <p>
  * Sensors are numbered from 1.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dave Duchamp, multi node extensions, 2004
-  */
+ */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
@@ -32,13 +32,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Number of sensors per address in the naming scheme.
-     * <P>
+     * <p>
      * The first node address uses sensors from 1 to SENSORSPERNODE-1, the
      * second from SENSORSPERNODE+1 to SENSORSPERNODE+(SENSORSPERNODE-1), etc.
-     * <P>
+     * <p>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
-     *
      */
     static final int SENSORSPERNODE = 1000;
 
@@ -94,7 +93,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Serial Node exists
-        SerialNode node = SerialAddress.getNodeFromSystemName(sName, prefix,_memo.getTrafficController());
+        SerialNode node = SerialAddress.getNodeFromSystemName(sName, _memo.getTrafficController());
         if (node == null) {
             log.warn("Sensor {} refers to an undefined Serial Node.", sName);
             return s;
@@ -150,7 +149,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is {}", sName);
                 if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
                     // This is a Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName, getSystemPrefix(),_memo.getTrafficController());
+                    tNode = SerialAddress.getNodeFromSystemName(sName, _memo.getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
                         node.registerSensor(getBySystemName(sName),
@@ -162,11 +161,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use, if
-     *         need be creating one.
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Static function returning the SerialSensorManager instance to use.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialSensorManager instance() {
         return null;
     }

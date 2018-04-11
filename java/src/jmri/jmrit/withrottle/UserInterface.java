@@ -49,8 +49,6 @@ import org.slf4j.LoggerFactory;
  */
 public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector {
 
-    private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
-
     JMenuBar menuBar;
     JMenuItem serverOnOff;
     JPanel panel;
@@ -83,6 +81,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         port = facelessServer.getPort();
 
+        //update the server with the currently selected roster group
+        facelessServer.setSelectedRosterGroup(rosterGroupSelector.getSelectedItem());
+
+        //show all IPv4 addresses in window, for use by manual connections
         addIPAddressesToUI();
 
         // add ourselves as device listeners for any existing devices
@@ -317,4 +319,5 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         return rosterGroupSelector.getSelectedRosterGroup();
     }
 
+    // private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 }

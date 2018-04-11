@@ -15,10 +15,40 @@ import org.junit.Test;
  */
 public class AnalogClock2DisplayTest extends PositionableJComponentTest {
 
+    private AnalogClock2Display a = null;
+
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("AnalogClock2Display Constructor",p);
+    }
+
+    @Test
+    public void testUrlCtor(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AnalogClock2Display a1 = new AnalogClock2Display(editor,"foo");
+        Assert.assertNotNull("AnalogClock2Display url Constructor",a1);
+        a1.dispose();
+    }
+
+    @Test
+    public void testGetFaceWidth(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Face Width",166,a.getFaceWidth());
+    }
+
+    @Test
+    public void testGetFaceWeight(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Face Height",166,a.getFaceHeight());
+    }
+
+    @Test
+    public void testGetAndSetURL(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNull("URL before set",a.getURL());
+        a.setULRL("bar");
+        Assert.assertEquals("URL after set","bar",a.getURL());
     }
 
     @Override
@@ -26,13 +56,22 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
-           Editor ef = new EditorScaffold();
-           p = new AnalogClock2Display(ef);
+           editor = new EditorScaffold();
+           p = a = new AnalogClock2Display(editor);
         }
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        if(editor != null){
+           editor.dispose();
+           editor = null;
+           a.dispose();
+           a = null;
+           p = null;
+        }
+        JUnitUtil.tearDown();
+    }
 
 
 }

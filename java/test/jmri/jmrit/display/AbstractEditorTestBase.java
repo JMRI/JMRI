@@ -81,6 +81,29 @@ abstract public class AbstractEditorTestBase {
         Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
     }
 
+    @Test
+    public void testChangeView() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // create a new Positionable Label on the existing editor (e);
+        PositionableLabel to = new PositionableLabel("one", e);
+        to.setBounds(80, 80, 40, 40);
+        e.putItem(to);
+
+        Editor newEditor = e.changeView("jmri.jmrit.display.EditorScaffold");
+        Assert.assertNotNull("changeView Result Not Null",newEditor);
+
+        // verify the editor object on to was changed to newEditor.
+        Assert.assertEquals("to moved to new editor",newEditor,to.getEditor());
+
+        // and that the object is now in the new editor's list of objects.
+
+        Assert.assertTrue("new editor includes to", newEditor.getContents().contains(to)); 
+        newEditor.dispose();
+    }
+
+
+
+
     // from here down is testing infrastructure
     @Before
     abstract public void setUp(); // must set Editor e

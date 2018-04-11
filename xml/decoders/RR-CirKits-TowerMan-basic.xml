@@ -22,7 +22,9 @@
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is programmed in OPs mode">
       <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>

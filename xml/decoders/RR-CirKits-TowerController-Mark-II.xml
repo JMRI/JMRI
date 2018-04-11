@@ -22,7 +22,9 @@
     <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The TowerController Mark-II is normally programmed in OPs mode">
       <model model="Mark-II" comment="64 Line I/O Driver" lowVersionID="11"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>

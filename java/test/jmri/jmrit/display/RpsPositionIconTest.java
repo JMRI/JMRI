@@ -7,10 +7,7 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the RpsIcon class.
@@ -21,6 +18,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
 
     private RpsPositionIcon rpsIcon = null;
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -91,6 +89,14 @@ public class RpsPositionIconTest extends PositionableTestBase {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
             p = rpsIcon = new RpsPositionIcon(editor);
         }
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+        rpsIcon = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class);

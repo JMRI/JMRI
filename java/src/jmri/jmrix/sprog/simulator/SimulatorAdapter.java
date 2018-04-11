@@ -37,7 +37,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    private boolean trackPowerState = false;
     private SprogMode operatingMode = SprogMode.SERVICE;
 
     // Simulator responses
@@ -302,13 +301,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case '+':
                 log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
                 //reply = new SprogReply(SPR_PR);
                 break;
 
             case '-':
                 log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
                 //reply = new SprogReply(SPR_PR);
                 break;
 
@@ -325,7 +322,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'S':
                 log.debug("getStatus detected");
-                reply = new SprogReply("S\n");
+                reply = new SprogReply("OK\n");
                 break;
 
             default:

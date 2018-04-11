@@ -1,0 +1,1901 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <!-- version 1: creation from Trix_sLD.xml v1 -->
+    <version author="Alain Le Marchand" version="1" lastUpdated="20180402"/>
+    <decoder>
+        <family name="Märklin mSD/3" mfg="Trix Modelleisenbahn" lowVersionID="3" highVersionID="3" comment="Märklin HO Locomotive Sound Decoders">
+             <model model="60975" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60975" connector="21MTC" comment="Sound decoder for Märklin HO Steam locomotives, with MTC21 plug">
+                <output name="1" label="LV|Gray" connection="solder">
+                  <label xml:lang="de">LV|Grau</label>
+                  <label xml:lang="fr">LV|Gris</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="solder">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Brown/Red" connection="solder">
+                  <label xml:lang="de">Aux 1|Braun/Rot</label>
+                  <label xml:lang="fr">Aux 1|Marron/Rouge</label>
+                </output>
+                <output name="4" label="Aux 2|Brown/Green" connection="solder">
+                  <label xml:lang="de">Aux 2|Braun/Grün</label>
+                  <label xml:lang="fr">Aux 2|Marron/Vert</label>
+                </output>
+                <output name="5" label="Aux 3|Brown/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Braun/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Marron/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Brown/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Braun/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Marron/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Smoke generator (Aux1)</text>
+                      <text xml:lang="de">Rauchgenerator (Aux 1)</text>
+                      <text xml:lang="fr">Générateur fumée (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Coal Shoveling</text>
+                      <text xml:lang="de">Kohle schaufeln</text>
+                      <text xml:lang="fr">Pelletage du charbon</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Short Whistle</text>
+                      <text xml:lang="de">Pfeife kurz</text>
+                      <text xml:lang="fr">Sifflet court</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Rocker Grate</text>
+                      <text xml:lang="de">Schüttelrost</text>
+                      <text xml:lang="fr">Grille à secousses</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Short Whistle</text>
+                      <text xml:lang="de">Pfeife kurz</text>
+                      <text xml:lang="fr">Sifflet court</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Unused Sound 7</text>
+                      <text xml:lang="de">Unbenutzter Sound 7</text>
+                      <text xml:lang="fr">Son inutilisé 7</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Unused Sound 8</text>
+                      <text xml:lang="de">Unbenutzter Sound 8</text>
+                      <text xml:lang="fr">Son inutilisé 8</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Coal Shoveling</text>
+                      <text xml:lang="de">Kohle schaufeln</text>
+                      <text xml:lang="fr">Pelletage du charbon</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Rocker Grate</text>
+                      <text xml:lang="de">Schüttelrost</text>
+                      <text xml:lang="fr">Grille à secousses</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 11</text>
+                      <text xml:lang="de">Unbenutzter Sound 11</text>
+                      <text xml:lang="fr">Son inutilisé 11</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>
+            <model model="60976" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60976" connector="21MTC" comment="Sound decoder for Märklin HO Diesel locomotives, with MTC21 plug">
+                <output name="1" label="LV|Gray" connection="solder">
+                  <label xml:lang="de">LV|Grau</label>
+                  <label xml:lang="fr">LV|Gris</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="solder">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Brown/Red" connection="solder">
+                  <label xml:lang="de">Aux 1|Braun/Rot</label>
+                  <label xml:lang="fr">Aux 1|Marron/Rouge</label>
+                </output>
+                <output name="4" label="Aux 2|Brown/Green" connection="solder">
+                  <label xml:lang="de">Aux 2|Braun/Grün</label>
+                  <label xml:lang="fr">Aux 2|Marron/Vert</label>
+                </output>
+                <output name="5" label="Aux 3|Brown/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Braun/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Marron/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Brown/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Braun/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Marron/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Engineer‘s Cab Lighting (Aux 1)</text>
+                      <text xml:lang="de">Führerstandsbeleuchtung (Aux 1)</text>
+                      <text xml:lang="fr">Eclairage cabine conducteur (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Auxiliary Diesel</text>
+                      <text xml:lang="de">Hilfsdiesel</text>
+                      <text xml:lang="fr">Diesel auxiliaire</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Unused Sound 4</text>
+                      <text xml:lang="de">Unbenutzter Sound 4</text>
+                      <text xml:lang="fr">Son inutilisé 4</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Auxiliary Diesel</text>
+                      <text xml:lang="de">Hilfsdiesel</text>
+                      <text xml:lang="fr">Diesel auxiliaire</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Unused Sound 8</text>
+                      <text xml:lang="de">Unbenutzter Sound 8</text>
+                      <text xml:lang="fr">Son inutilisé 8</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 11</text>
+                      <text xml:lang="de">Unbenutzter Sound 11</text>
+                      <text xml:lang="fr">Son inutilisé 11</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>
+            <model model="60977" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60977" connector="21MTC" comment="Sound decoder for Märklin HO Electric locomotives, with MTC21 plug">
+                 <output name="1" label="LV|Gray" connection="solder">
+                  <label xml:lang="de">LV|Grau</label>
+                  <label xml:lang="fr">LV|Gris</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="solder">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Brown/Red" connection="solder">
+                  <label xml:lang="de">Aux 1|Braun/Rot</label>
+                  <label xml:lang="fr">Aux 1|Marron/Rouge</label>
+                </output>
+                <output name="4" label="Aux 2|Brown/Green" connection="solder">
+                  <label xml:lang="de">Aux 2|Braun/Grün</label>
+                  <label xml:lang="fr">Aux 2|Marron/Vert</label>
+                </output>
+                <output name="5" label="Aux 3|Brown/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Braun/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Marron/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Brown/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Braun/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Marron/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <output name="ABV" label="deactivate">
+                  <label xml:lang="de">ausschalten</label>
+                  <label xml:lang="fr">désactivé</label>
+                </output>
+                <output name="RG" label="Switching">
+                  <label xml:lang="de">Rangiergang</label>
+                  <label xml:lang="fr">Manœuvre</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Engineer‘s Cab Lighting (Aux 1)</text>
+                      <text xml:lang="de">Führerstandsbeleuchtung (Aux 1)</text>
+                      <text xml:lang="fr">Eclairage cabine conducteur (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Short Whistle</text>
+                      <text xml:lang="de">Pfeife kurz</text>
+                      <text xml:lang="fr">Sifflet court</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Compressor</text>
+                      <text xml:lang="de">Luftpresser</text>
+                      <text xml:lang="fr">Compresseur</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Unused Sound 7</text>
+                      <text xml:lang="de">Unbenutzter Sound 7</text>
+                      <text xml:lang="fr">Son inutilisé 7</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Compressor</text>
+                      <text xml:lang="de">Luftpresser</text>
+                      <text xml:lang="fr">Compresseur</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>
+            <model model="60978" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60978" connector="21MTC" comment="Sound decoder for Märklin HO Diesel (Herkules) locomotives, with MTC21 plug">
+                <output name="1" label="LV|Gray" connection="solder">
+                  <label xml:lang="de">LV|Grau</label>
+                  <label xml:lang="fr">LV|Gris</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="solder">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Brown/Red" connection="solder">
+                  <label xml:lang="de">Aux 1|Braun/Rot</label>
+                  <label xml:lang="fr">Aux 1|Marron/Rouge</label>
+                </output>
+                <output name="4" label="Aux 2|Brown/Green" connection="solder">
+                  <label xml:lang="de">Aux 2|Braun/Grün</label>
+                  <label xml:lang="fr">Aux 2|Marron/Vert</label>
+                </output>
+                <output name="5" label="Aux 3|Brown/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Braun/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Marron/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Brown/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Braun/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Marron/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Engineer‘s Cab Lighting (Aux 1)</text>
+                      <text xml:lang="de">Führerstandsbeleuchtung (Aux 1)</text>
+                      <text xml:lang="fr">Eclairage cabine conducteur (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Checking Train Tickets</text>
+                      <text xml:lang="de">Fahrkartenkontrolle</text>
+                      <text xml:lang="fr">Contrôle des billets</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Unused Sound 4</text>
+                      <text xml:lang="de">Unbenutzter Sound 4</text>
+                      <text xml:lang="fr">Son inutilisé 4</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Checking Train Tickets</text>
+                      <text xml:lang="de">Fahrkartenkontrolle</text>
+                      <text xml:lang="fr">Contrôle des billets</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Unused Sound 8</text>
+                      <text xml:lang="de">Unbenutzter Sound 8</text>
+                      <text xml:lang="fr">Son inutilisé 8</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 11</text>
+                      <text xml:lang="de">Unbenutzter Sound 11</text>
+                      <text xml:lang="fr">Son inutilisé 11</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>
+            <model model="60979" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60979" connector="21MTC" comment="Sound decoder for Märklin HO Electric (TRAXX) locomotives, with MTC21 plug">
+                 <output name="1" label="LV|Gray" connection="solder">
+                  <label xml:lang="de">LV|Grau</label>
+                  <label xml:lang="fr">LV|Gris</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="solder">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Brown/Red" connection="solder">
+                  <label xml:lang="de">Aux 1|Braun/Rot</label>
+                  <label xml:lang="fr">Aux 1|Marron/Rouge</label>
+                </output>
+                <output name="4" label="Aux 2|Brown/Green" connection="solder">
+                  <label xml:lang="de">Aux 2|Braun/Grün</label>
+                  <label xml:lang="fr">Aux 2|Marron/Vert</label>
+                </output>
+                <output name="5" label="Aux 3|Brown/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Braun/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Marron/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Brown/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Braun/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Marron/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <output name="ABV" label="deactivate">
+                  <label xml:lang="de">ausschalten</label>
+                  <label xml:lang="fr">désactivé</label>
+                </output>
+                <output name="RG" label="Switching">
+                  <label xml:lang="de">Rangiergang</label>
+                  <label xml:lang="fr">Manœuvre</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Engineer‘s Cab Lighting (Aux 1)</text>
+                      <text xml:lang="de">Führerstandsbeleuchtung (Aux 1)</text>
+                      <text xml:lang="fr">Eclairage cabine conducteur (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Compressor</text>
+                      <text xml:lang="de">Luftpresser</text>
+                      <text xml:lang="fr">Compresseur</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Unused Sound 7</text>
+                      <text xml:lang="de">Unbenutzter Sound 7</text>
+                      <text xml:lang="fr">Son inutilisé 7</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Compressor</text>
+                      <text xml:lang="de">Luftpresser</text>
+                      <text xml:lang="fr">Compresseur</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>            
+            <model model="60985" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60985" connector="Wires/NEM652" comment="Sound decoder for Märklin HO Steam locomotives, with NEM652 8-pin plug">
+                <output name="1" label="LV|White" connection="wire">
+                  <label xml:lang="de">LV|Weiß</label>
+                  <label xml:lang="fr">LV|Blanc</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="wire">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Green" connection="wire">
+                  <label xml:lang="de">Aux 1|Grün</label>
+                  <label xml:lang="fr">Aux 1|Vert</label>
+                </output>
+                <output name="4" label="Aux 2|Violet" connection="wire">
+                  <label xml:lang="de">Aux 2|Violett</label>
+                  <label xml:lang="fr">Aux 2|Violet</label>
+                </output>
+                <output name="5" label="Aux 3|Violet/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Violett/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Violet/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Violet/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Violett/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Violet/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Smoke generator (Aux1)</text>
+                      <text xml:lang="de">Rauchgenerator (Aux 1)</text>
+                      <text xml:lang="fr">Générateur fumée (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Coal Shoveling</text>
+                      <text xml:lang="de">Kohle schaufeln</text>
+                      <text xml:lang="fr">Pelletage du charbon</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Short Whistle</text>
+                      <text xml:lang="de">Pfeife kurz</text>
+                      <text xml:lang="fr">Sifflet court</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Rocker Grate</text>
+                      <text xml:lang="de">Schüttelrost</text>
+                      <text xml:lang="fr">Grille à secousses</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Short Whistle</text>
+                      <text xml:lang="de">Pfeife kurz</text>
+                      <text xml:lang="fr">Sifflet court</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Unused Sound 7</text>
+                      <text xml:lang="de">Unbenutzter Sound 7</text>
+                      <text xml:lang="fr">Son inutilisé 7</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Unused Sound 8</text>
+                      <text xml:lang="de">Unbenutzter Sound 8</text>
+                      <text xml:lang="fr">Son inutilisé 8</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Coal Shoveling</text>
+                      <text xml:lang="de">Kohle schaufeln</text>
+                      <text xml:lang="fr">Pelletage du charbon</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Rocker Grate</text>
+                      <text xml:lang="de">Schüttelrost</text>
+                      <text xml:lang="fr">Grille à secousses</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 11</text>
+                      <text xml:lang="de">Unbenutzter Sound 11</text>
+                      <text xml:lang="fr">Son inutilisé 11</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>
+            <model model="60986" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60986" connector="Wires/NEM652" comment="Sound decoder for Märklin HO Diesel locomotives, with NEM652 8-pin plug">
+                <output name="1" label="LV|White" connection="wire">
+                  <label xml:lang="de">LV|Weiß</label>
+                  <label xml:lang="fr">LV|Blanc</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="wire">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Green" connection="wire">
+                  <label xml:lang="de">Aux 1|Grün</label>
+                  <label xml:lang="fr">Aux 1|Vert</label>
+                </output>
+                <output name="4" label="Aux 2|Violet" connection="wire">
+                  <label xml:lang="de">Aux 2|Violett</label>
+                  <label xml:lang="fr">Aux 2|Violet</label>
+                </output>
+                <output name="5" label="Aux 3|Violet/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Violett/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Violet/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Violet/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Violett/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Violet/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Engineer‘s Cab Lighting (Aux 1)</text>
+                      <text xml:lang="de">Führerstandsbeleuchtung (Aux 1)</text>
+                      <text xml:lang="fr">Eclairage cabine conducteur (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Auxiliary Diesel</text>
+                      <text xml:lang="de">Hilfsdiesel</text>
+                      <text xml:lang="fr">Diesel auxiliaire</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Bell</text>
+                      <text xml:lang="de">Glocke</text>
+                      <text xml:lang="fr">Cloche</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Unused Sound 4</text>
+                      <text xml:lang="de">Unbenutzter Sound 4</text>
+                      <text xml:lang="fr">Son inutilisé 4</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Auxiliary Diesel</text>
+                      <text xml:lang="de">Hilfsdiesel</text>
+                      <text xml:lang="fr">Diesel auxiliaire</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Unused Sound 8</text>
+                      <text xml:lang="de">Unbenutzter Sound 8</text>
+                      <text xml:lang="fr">Son inutilisé 8</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 11</text>
+                      <text xml:lang="de">Unbenutzter Sound 11</text>
+                      <text xml:lang="fr">Son inutilisé 11</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>
+            <model model="60987" numOuts="6" numFns="36" maxMotorCurrent="1.1A" productID="60987" connector="Wires/NEM652" comment="Sound decoder for Märklin HO Electric locomotives, with NEM652 8-pin plug">
+                <output name="1" label="LV|White" connection="wire">
+                  <label xml:lang="de">LV|Weiß</label>
+                  <label xml:lang="fr">LV|Blanc</label>
+                </output>
+                <output name="2" label="LR|Yellow" connection="wire">
+                  <label xml:lang="de">LR|Gelb</label>
+                  <label xml:lang="fr">LR|Jaune</label>
+                </output>
+                <output name="3" label="Aux 1|Green" connection="wire">
+                  <label xml:lang="de">Aux 1|Grün</label>
+                  <label xml:lang="fr">Aux 1|Vert</label>
+                </output>
+                <output name="4" label="Aux 2|Violet" connection="wire">
+                  <label xml:lang="de">Aux 2|Violett</label>
+                  <label xml:lang="fr">Aux 2|Violet</label>
+                </output>
+                <output name="5" label="Aux 3|Violet/Yellow" connection="solder">
+                  <label xml:lang="de">Aux 3|Violett/Gelb</label>
+                  <label xml:lang="fr">Aux 3|Violet/Jaune</label>
+                </output>
+                <output name="6" label="Aux 4|Violet/White" connection="solder">
+                  <label xml:lang="de">Aux 4|Violett/Weiß</label>
+                  <label xml:lang="fr">Aux 4|Violet/Blanc</label>
+                </output>
+                <output name="7" label="Aux 5|Green Mot.1" connection="solder">
+                  <label xml:lang="de">Aux 5|Grün Mot.1</label>
+                  <label xml:lang="fr">Aux 5|Vert Mot.1</label>
+                </output>
+                <output name="8" label="Aux 6|Blue Mot.2" connection="solder">
+                  <label xml:lang="de">Aux 6|Blau Mot.2</label>
+                  <label xml:lang="fr">Aux 6|Bleu Mot.1</label>
+                </output>
+                <output name="ABV" label="deactivate">
+                  <label xml:lang="de">ausschalten</label>
+                  <label xml:lang="fr">désactivé</label>
+                </output>
+                <output name="RG" label="Switching">
+                  <label xml:lang="de">Rangiergang</label>
+                  <label xml:lang="fr">Manœuvre</label>
+                </output>
+                <protocols>
+                    <protocol>mfx</protocol>
+                    <protocol>dcc</protocol>
+                    <protocol>motorola</protocol>
+                </protocols>
+                <functionlabels>
+                    <functionlabel num="1" lockable="true">
+                      <text>Engineer‘s Cab Lighting (Aux 1)</text>
+                      <text xml:lang="de">Führerstandsbeleuchtung (Aux 1)</text>
+                      <text xml:lang="fr">Eclairage cabine conducteur (Aux 1)</text>
+                    </functionlabel>
+                    <functionlabel num="3" lockable="true">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                      <text>Physical Functions (Aux 3)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux3)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 3)</text>
+                    </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                      <text>Physical Functions (Aux 4)</text>
+                      <text xml:lang="de">Physikalisch Funktion (Aux4)</text>
+                      <text xml:lang="fr">Fonction physique (Aux 4)</text>
+                    </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                      <text>Short Whistle</text>
+                      <text xml:lang="de">Pfeife kurz</text>
+                      <text xml:lang="fr">Sifflet court</text>
+                    </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                      <text>Compressor</text>
+                      <text xml:lang="de">Luftpresser</text>
+                      <text xml:lang="fr">Compresseur</text>
+                    </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">
+                      <text>Horn 1</text>
+                      <text xml:lang="de">Horn 1</text>
+                      <text xml:lang="fr">Avertisseur sonore 1</text>
+                    </soundlabel>
+                    <soundlabel num="2">
+                      <text>Horn 2</text>
+                      <text xml:lang="de">Horn 2</text>
+                      <text xml:lang="fr">Avertisseur sonore 2</text>
+                    </soundlabel>
+                    <soundlabel num="3">
+                      <text>Whistle</text>
+                      <text xml:lang="de">Pfeife</text>
+                      <text xml:lang="fr">Sifflet</text>
+                    </soundlabel>
+                    <soundlabel num="4">
+                      <text>Station Announcements</text>
+                      <text xml:lang="de">Bahnhofsansage</text>
+                      <text xml:lang="fr">Annonces en gare</text>
+                    </soundlabel>
+                    <soundlabel num="5">
+                      <text>Conductor Whistle</text>
+                      <text xml:lang="de">Schaffnerpfiff</text>
+                      <text xml:lang="fr">Sifflet Contrôleur</text>
+                    </soundlabel>
+                    <soundlabel num="6">
+                      <text>Unused Sound 6</text>
+                      <text xml:lang="de">Unbenutzter Sound 6</text>
+                      <text xml:lang="fr">Son inutilisé 6</text>
+                    </soundlabel>
+                    <soundlabel num="7">
+                      <text>Unused Sound 7</text>
+                      <text xml:lang="de">Unbenutzter Sound 7</text>
+                      <text xml:lang="fr">Son inutilisé 7</text>
+                    </soundlabel>
+                    <soundlabel num="8">
+                      <text>Compressor</text>
+                      <text xml:lang="de">Luftpresser</text>
+                      <text xml:lang="fr">Compresseur</text>
+                    </soundlabel>
+                    <soundlabel num="9">
+                      <text>Blower</text>
+                      <text xml:lang="de">Lüfter</text>
+                      <text xml:lang="fr">Ventilateur</text>
+                    </soundlabel>
+                    <soundlabel num="10">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="11">
+                      <text>Unused Sound 10</text>
+                      <text xml:lang="de">Unbenutzter Sound 10</text>
+                      <text xml:lang="fr">Son inutilisé 10</text>
+                    </soundlabel>
+                    <soundlabel num="12">
+                      <text>Unused Sound 12</text>
+                      <text xml:lang="de">Unbenutzter Sound 12</text>
+                      <text xml:lang="fr">Son inutilisé 12</text>
+                    </soundlabel>
+                    <soundlabel num="13">
+                      <text>Unused Sound 13</text>
+                      <text xml:lang="de">Unbenutzter Sound 13</text>
+                      <text xml:lang="fr">Son inutilisé 13</text>
+                    </soundlabel>
+                    <soundlabel num="15">
+                      <text>Unused Sound 15</text>
+                      <text xml:lang="de">Unbenutzter Sound 15</text>
+                      <text xml:lang="fr">Son inutilisé 15</text>
+                    </soundlabel>
+                    <soundlabel num="16">
+                      <text>Unused Sound 16</text>
+                      <text xml:lang="de">Unbenutzter Sound 16</text>
+                      <text xml:lang="fr">Son inutilisé 16</text>
+                    </soundlabel>
+                    <soundlabel num="17">
+                      <text>Unused Sound 17</text>
+                      <text xml:lang="de">Unbenutzter Sound 17</text>
+                      <text xml:lang="fr">Son inutilisé 17</text>
+                    </soundlabel>
+                    <soundlabel num="18">
+                      <text>Unused Sound 18</text>
+                      <text xml:lang="de">Unbenutzter Sound 18</text>
+                      <text xml:lang="fr">Son inutilisé 18</text>
+                    </soundlabel>
+                    <soundlabel num="19">
+                      <text>Unused Sound 19</text>
+                      <text xml:lang="de">Unbenutzter Sound 19</text>
+                      <text xml:lang="fr">Son inutilisé 19</text>
+                    </soundlabel>
+                    <soundlabel num="20">
+                      <text>Unused Sound 20</text>
+                      <text xml:lang="de">Unbenutzter Sound 20</text>
+                      <text xml:lang="fr">Son inutilisé 20</text>
+                    </soundlabel>
+                    <soundlabel num="21">
+                      <text>Unused Sound 21</text>
+                      <text xml:lang="de">Unbenutzter Sound 21</text>
+                      <text xml:lang="fr">Son inutilisé 21</text>
+                    </soundlabel>
+                    <soundlabel num="22">
+                      <text>Unused Sound 22</text>
+                      <text xml:lang="de">Unbenutzter Sound 22</text>
+                      <text xml:lang="fr">Son inutilisé 22</text>
+                    </soundlabel>
+                    <soundlabel num="23">
+                      <text>Unused Sound 23</text>
+                      <text xml:lang="de">Unbenutzter Sound 23</text>
+                      <text xml:lang="fr">Son inutilisé 23</text>
+                    </soundlabel>
+                    <soundlabel num="24">
+                      <text>Unused Sound 24</text>
+                      <text xml:lang="de">Unbenutzter Sound 24</text>
+                      <text xml:lang="fr">Son inutilisé 24</text>
+                    </soundlabel>
+                    <soundlabel num="25">
+                      <text>Unused Sound 25</text>
+                      <text xml:lang="de">Unbenutzter Sound 25</text>
+                      <text xml:lang="fr">Son inutilisé 25</text>
+                    </soundlabel>
+                    <soundlabel num="26">
+                      <text>Unused Sound 26</text>
+                      <text xml:lang="de">Unbenutzter Sound 26</text>
+                      <text xml:lang="fr">Son inutilisé 26</text>
+                    </soundlabel>
+                    <soundlabel num="27">
+                      <text>Unused Sound 27</text>
+                      <text xml:lang="de">Unbenutzter Sound 27</text>
+                      <text xml:lang="fr">Son inutilisé 27</text>
+                    </soundlabel>
+                    <soundlabel num="28">
+                      <text>Unused Sound 28</text>
+                      <text xml:lang="de">Unbenutzter Sound 28</text>
+                      <text xml:lang="fr">Son inutilisé 28</text>
+                    </soundlabel>
+                </soundlabels>
+            </model>            
+            <functionlabels>
+                <functionlabel num="0" lockable="true">
+                  <text>Headlights</text>
+                  <text xml:lang="de">Spitzensignal</text>
+                  <text xml:lang="fr">Feux</text>
+                </functionlabel>
+                <functionlabel num="2" lockable="true">
+                  <text>Operating Sounds</text>
+                  <text xml:lang="de">Betriebsgeräusch</text>
+                  <text xml:lang="fr">Bruit d'exploitation</text>
+                </functionlabel>
+                <functionlabel num="4" lockable="true">
+                  <text>Deactivate ABV</text>
+                  <text xml:lang="de">ABV ausschalten</text>
+                  <text xml:lang="fr">Désactivation ABV</text>
+                </functionlabel>
+                <functionlabel num="8" lockable="true">
+                  <text>Telex coupler (Aux2)</text>
+                  <text xml:lang="de">Telexkupplung (Aux 2)</text>
+                  <text xml:lang="fr">Attelage Telex (Aux 2)</text>
+                </functionlabel>
+                <functionlabel num="9" lockable="true">
+                  <text>Squealing Brakes off</text>
+                  <text xml:lang="de">Bremsenquietschen aus</text>
+                  <text xml:lang="fr">Grincement de freins désactivé</text>
+                </functionlabel>
+                <functionlabel num="12" lockable="true">
+                  <text>Station Announcements</text>
+                  <text xml:lang="de">Bahnhofsansage</text>
+                  <text xml:lang="fr">Annonce en gare</text>
+                </functionlabel>
+                <functionlabel num="14" lockable="true">
+                  <text>Rail Joints</text>
+                  <text xml:lang="de">Schienenstoß</text>
+                  <text xml:lang="fr">Joints de rail</text>
+                </functionlabel>
+                <functionlabel num="15" lockable="true">
+                  <text>Conductor Whistle</text>
+                  <text xml:lang="de">Schaffnerpfiff</text>
+                  <text xml:lang="fr">Sifflet Contrôleur</text>
+                </functionlabel>
+            </functionlabels>
+            <soundlabels>
+                <soundlabel num="14">
+                  <text>Rail Joints</text>
+                  <text xml:lang="de">Schienenstoß</text>
+                  <text xml:lang="fr">Joints de rail</text>
+                </soundlabel>
+            </soundlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+            </capability>
+        </programming>
+        <variables>
+          <variable CV="31" default="16" item="Index register H">
+              <decVal/>
+              <label>Index register H</label>
+              <label xml:lang="de">Themen (Auswahl für die CV 257 bis 512)</label>
+              <label xml:lang="fr">Catégorie (Sélection des CV 257 à 512)</label>
+              <label xml:lang="ca">CV indexades bloc H</label>
+          </variable>
+          <variable CV="32" default="0" item="Index register L">
+              <decVal/>
+              <label>Index register L</label>
+              <label xml:lang="de">Seite (Auswahl für die CV 257 bis 512)</label>
+              <label xml:lang="fr">Page (Sélection des CV 257 à 512)</label>
+              <label xml:lang="ca">Adreces indexades CV257-512</label>
+          </variable>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_standardCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_lightCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mSD_soundOptions.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mSD3_soundOptions.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mSD3_soundLevels.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_functionMap.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs" CV="8" default="8">
+                <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+                <label xml:lang="de">Decoder-Reset (Werkreset)</label>
+                <label xml:lang="fr">Reset de tous les CVs aux valeurs usine</label>
+            </factReset>
+            <factReset label="Automatic calibration" CV="7" default="77">
+                <label xml:lang="de">Einmessfahrt</label>
+                <label xml:lang="fr">Calibrage automatique</label>
+            </factReset>
+        </resets>
+    </decoder>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_motorPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_paneFunctionMap.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mSD_soundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mSD3_soundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD_mSD_advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/trix/mLD3_mSD3_infoPane.xml"/>
+</decoder-config>

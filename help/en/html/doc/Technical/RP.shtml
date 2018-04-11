@@ -61,9 +61,21 @@
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
         etc) in the 
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
-        Not everything needs to be an array! A 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
+        Not everything needs to be an array! Only use a 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
+        when there's a specific reason for it such as compatibility with an existing API;
+        they're slow and memory-intensive compared to e.g. an 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+        A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
         can be a good default solution to holding data that won't ever contain 'null'.
+        Consider using a
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
+        for data that's best kept in some sorted order; there's are very few good reasons for
+        sorting data during normal running in JMRI.  If you also need random access (e.g. 
+        "The 5th element") consider 
+        <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">IndexedTreeSet</a>
+        and
+        <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">IndexedTreeMap</a>
         </li>
 
         <li>JMRI uses <a href=
@@ -80,16 +92,53 @@
         this page</a> from the Java Tutorial.</li>
 
         <li>If you need to use comma-separated variable (CSV)
-        files, please use the <a href=
-        "http://javacsv.sourceforge.net/">javacsv API</a> if
+        files, please use the <a href="http://javacsv.sourceforge.net/">javacsv API</a> if
         possible. We are already using that in a number of places,
         and will probably use it in more. If that doesn't provide
         enough functionality, we might eventually move to the
-        <a href=
-        "http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">
-        opencsv API</a>, but since we only want to use one, the
+        <a href="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/">opencsv API</a>, 
+        but since we only want to use one, the
         conversion will be a lot of work.</li>
       </ul>
+
+      <a id="collections" name="collections"></a>
+      <h2>Collections</h2>
+        Take a few moments to learn about the different
+        types of <a href=
+        "https://docs.oracle.com/javase/tutorial/collections/intro/">
+        Java collections</a> that are available (
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
+        etc) in the 
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
+        
+        
+        <ul>
+        <li>
+        Please don't use fixed-size arrays for holding variable sized data in objects.
+        That generally ends up wasting huge amounts of space at runtime, and we 
+        try to keep the JMRI memory footprint small when we can.
+        
+        <li>
+        Only use a 
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html">Vector</a>
+            when there's a specific reason for it such as compatibility with an existing API;
+            they're slow and memory-intensive compared to e.g. an 
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">ArrayList</a>.
+        <li>
+            A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Deque.html">Deque</a>
+            can be a good default solution to holding data that won't ever contain 'null'.
+       <li> 
+            Consider using a
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/util/TreeSet.html">TreeSet</a>
+            for data that's best kept in some sorted order; there's are very few good reasons for
+            sorting data during normal running in JMRI.  If you also need random access (e.g. 
+            "The 5th element") consider 
+            <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeSet.html">IndexedTreeSet</a>
+            and
+            <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">IndexedTreeMap</a>
+        </ul>
 
       <h2>Code Format</h2>The <a href=
       "http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">
@@ -123,6 +172,23 @@
       deprecated interface working in the future, so that it would
       be good to code away from it while it's still working.</p>
 
+      <p>There are two forms of marking something as deprecated
+      (Javadoc tag and Annotation), and both allow you to add
+      additional information. A nice discussion of the
+      technicalities is <a href=
+      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
+      here</a>. We recommend using both of them like this:</p>
+<pre style="font-family: monospace;">
+/**
+ * (Other Javadoc comments)
+ * @deprecated 2.7.8 Use {@ link #foo()} instead
+ */
+@Deprecated // 2.7.8
+</pre>
+        where the line contains the version in which the deprecation
+        is applied. That lets you easily know how long ago it was
+        deprecated. 
+
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of
       build.xml:</p>
@@ -131,20 +197,6 @@
 </pre>
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
-
-      <p>There are two forms of marking something as deprecated
-      (Javadoc tag and Annotation), and both allow you to add
-      additional information. A nice discussion of the
-      technicalities is <a href=
-      "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
-      here</a>. We use them this way:</p>
-<pre style="font-family: monospace;">
-* @deprecated 2.7.8<br>
-@Deprecated // 2.7.8<br>
-</pre>
-        where the line contains the version in which the deprecation
-        is applied. That lets you easily know how long ago it was
-        deprecated. 
 
     <h2>Exceptions</h2>
     

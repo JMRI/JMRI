@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light Object for C/MRI
- * <P>
+ * <p>
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004, 2009, 2010
