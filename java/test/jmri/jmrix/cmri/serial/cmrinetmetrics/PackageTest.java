@@ -1,4 +1,4 @@
-package jmri.jmrix.cmri.serial.cmrinetmanager;
+package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,17 +7,14 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    CMRInetManagerActionTest.class,
-    CMRInetManagerFrameTest.class,
-    CMRInetMetricsActionTest.class,
-    CMRInetMetricsFrameTest.class,
-    BundleTest.class
+    CMRInetMetricsCollectorTest.class,
+    CMRInetMetricsDataTest.class
 })
 
 /**
- * Tests for the jmri.jmrix.cmri.serial.cmrinetmanager package
+ * Tests for the jmri.jmrix.cmri.serial.cmrimetrics package
  *
- * @author  Chuck Catania	Copyright (C) 2017, 2018
+ * @author  Chuck Catania	Copyright (C) 2017
  */
 public class PackageTest{
 
@@ -34,6 +31,6 @@ public class PackageTest{
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

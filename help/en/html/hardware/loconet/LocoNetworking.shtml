@@ -36,17 +36,21 @@
       communicate using standard TCP/IP protocols, but there are
       differences in the details.</p>
 
-      <p>One method uses the inbuilt <a href=
-      "LocoNetServer.shtml">LocoNet Client/Server capability</a> of
-      JMRI.<br>
-      The other method allows multiple JMRI nodes to connect as
+      <p>
+      One method allows multiple JMRI nodes to connect as
       Clients to a single <a href=
       "http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP
-      LbServer</a>, which is external to JMRI.</p>
+      LbServer</a>, which is external to JMRI.
+      The other method uses the inbuilt <a href=
+      "LocoNetServer.shtml">LocoNet Client/Server capability</a> of
+      JMRI.<br>
+      </p>
 
-      <p>The difference between these two methods is that JMRI
-      LocoNet Client/Server uses the native Java Remote Method
-      Invocation (RMI) protocol, whereas the LocoNetOverTCP uses a
+      <p>The difference between these two methods is that 
+      JMRI LocoNet Client/Server uses the native Java Remote Method
+      Invocation (RMI) protocol, 
+      whereas the 
+      LocoNetOverTCP uses a
       separate non-Java server process, LbServer, that communicates
       using plain ASCII String messages over TCP/IP sockets,
       allowing non-Java nodes to also share the one LocoBuffer.</p>
@@ -54,11 +58,14 @@
       <p>For most people who simply want to have several computers
       share a single LocoBuffer connection, the <a href=
       "LocoNetServer.shtml">JMRI LocoNet Client/Server option</a>
-      is probably the best choice as it is easy to configure. For
+      can be easier to configure. For
       others wanting to provide remote access the layout over
       Internet, the <a href="LbServer.shtml">LocoNetOverTCP
-      LbServer option</a> may be more suitable as firewall rule
-      changes to allow external access will be simpler.</p>
+      LbServer option</a> may be more suitable as configuring the firewall rules
+      to allow external access will be simpler.
+      Setting up networking equipment can be complicated, so if 
+      one of them doesn't work for you initially, you might want to 
+      just try the other one to see if it works on your home network.</p>
 
       <ul>
         <li><a href="LocoNetServer.shtml">How to set up LocoNet
@@ -71,13 +78,6 @@
       <h2>Notes:</h2>
 
       <ul>
-        <li>It's strongly recommended that you connect the master
-        computer to the LocoNet with a LocoBuffer or LocoBuffer-II.
-        Although a MS-100 will basically work for this application,
-        correction of the resulting occasional LocoNet errors may
-        cause noticeable delays in updating the remote
-        computers.</li>
-
         <li>If the computers are all close to the LocoNet, e.g.
         acting as local control panels, you don't really need any
         networking to do this. You can instead connect each of the
