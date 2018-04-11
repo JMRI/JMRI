@@ -128,7 +128,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         e.dropComplete(true);
         if (log.isDebugEnabled()) {
             log.debug("DropJLabel.drop COMPLETED for {}, {}",
-                    label.getName(), (newIcon != null ? newIcon.getURL() : " newIcon==null "));
+                    label.getName(), newIcon.getURL());
         }
     }
 

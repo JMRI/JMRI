@@ -88,6 +88,7 @@ public class IconItemPanel extends ItemPanel {
      *
      * @param doneAction doneAction
      */
+    @Override
     public void init(ActionListener doneAction) {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
@@ -333,17 +334,15 @@ public class IconItemPanel extends ItemPanel {
      */
     protected void deleteIcon() {
         if (_selectedIcon == null) {
-        } else {
             JOptionPane.showMessageDialog(_paletteFrame, Bundle.getMessage("ToSelectIcon"),
                     Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (_iconMap.remove(_selectedIcon.getIconName()) != null) {
-            addIconsToPanel(_iconMap);
-            _deleteIconButton.setEnabled(false);
-            _selectedIcon = null;
-            validate();
-        }
+        _iconMap.remove(_selectedIcon.getIconName());
+        addIconsToPanel(_iconMap);
+        _deleteIconButton.setEnabled(false);
+        _selectedIcon = null;
+        validate();
     }
  
     private void renameIcon() {
@@ -605,7 +604,6 @@ public class IconItemPanel extends ItemPanel {
                 setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), _borderName));
                 int width = fm.stringWidth(_borderName) + 10;
                 width = Math.max(fm.stringWidth(scaleMessage), Math.max(width, CatalogPanel.ICON_WIDTH+10));
-//                int height = 2*fm.getHeight() + CatalogPanel.ICON_HEIGHT;
                 int height = getPreferredSize().height;
                 setPreferredSize(new Dimension(width, height));
             } catch (java.lang.ClassNotFoundException cnfe) {
@@ -618,8 +616,11 @@ public class IconItemPanel extends ItemPanel {
         }
         @Override
         public void mouseClicked(MouseEvent event) {
-            if (event.getSource() instanceof JLabel ) {
+            if (event.getSource() instanceof JLabel) {
                 setSelection(this);
+            } else if (event.getSource() instanceof IconDisplayPanel) {
+                IconDisplayPanel panel = (IconDisplayPanel)event.getSource();
+                setSelection(panel);
             }
         }
         @Override
