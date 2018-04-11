@@ -1,21 +1,18 @@
-/*
- * LocoIO.java
- *
- * Manage the communication to/from a LocoIO board
- */
 package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
- * Programming SV's
+ * Manage the communication to/from a LocoIO board.
  *
+ * Programming SV's
+ * <p>
  * The SV's in LocoIO can be programmed using Loconet OPC_PEER_XFER messages.
  * Commands for setting SV's
- *
+ * <p>
  * PC to LocoIO loconet message (OPC_PEER_XFER)
- *
+ * <p>
  * Code LOCOIO_SV_READ LOCOIO_SV_WRITE ---- -------------- --------------- 0xE5
  * OPC_PEER_XFER OPC_PEER_XFER 0x10 Message length Message length SRCL 0x50 0x50
  * // low address byte of Locobuffer DSTL LocoIO low address LocoIO low address
@@ -23,10 +20,9 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * LOCOIO_SV_WRITE // Read/Write command D2 SV number SV number D3 0x00 0x00 D4
  * 0x00 Data to Write PXCT2 D5 LocoIO Sub-address LocoIO Sub-address D6 0x00
  * 0x00 D7 0x00 0x00 D8 0x00 0x00 CHK Checksum Checksum
- *
- *
+ * <p>
  * LocoIO to PC reply message (OPC_PEER_XFER)
- *
+ * <p>
  * Code LOCOIO_SV_READ LOCOIO_SV_WRITE ---- -------------- --------------- 0xE5
  * OPC_PEER_XFER OPC_PEER_XFER 0x10 Message length Message length SRCL LocoIO
  * low address LocoIO low address DSTL 0x50 0x50 // low address byte of
@@ -39,8 +35,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Requested Data 0x00 D7 Requested Data + 1 0x00 D8 Requested Data + 2 Written
  * Data CHK Checksum Checksum
  *
- *
- * @author plocher
+ * @author John Plocher
  */
 public class LocoIO {
 
@@ -54,7 +49,7 @@ public class LocoIO {
     public static final int LOCOIO_PEER_CODE_SV_VER2 = 0x09;
 
     /**
-     * Creates a new instance of LocoIO
+     * Create a new instance of LocoIO.
      */
     public LocoIO() {
     }
@@ -101,4 +96,5 @@ public class LocoIO {
         msg = LocoIO.readCV(0x0100, 0, 2);
         ln.sendLocoNetMessage(msg);
     }
+
 }

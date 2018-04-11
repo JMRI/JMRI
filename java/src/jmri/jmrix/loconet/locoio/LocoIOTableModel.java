@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The timeout code is modelled after that in jmri,jmrix.AbstractProgrammer,
  * though there are significant modifications.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LocoIOTableModel
@@ -41,12 +41,12 @@ public class LocoIOTableModel
 
     /**
      * Define the number of rows in the table, which is also the number of
-     * "channels" in a signel LocoIO unit
+     * "channels" in a single LocoIO unit.
      */
     private int _numRows = 16;
 
     /**
-     * Define the contents of the individual columns
+     * Define the contents of the individual columns.
      */
     public static final int PINCOLUMN = 0;  // pin number
     public static final int MODECOLUMN = 1;  // what makes this happen?
@@ -62,12 +62,12 @@ public class LocoIOTableModel
     private String[] msg = new String[_numRows];
 
     /**
-     * Reference to the JTextField which should receive status info
+     * Reference to the JTextField which should receive status info.
      */
     private JTextField status = null;
 
     /**
-     * Reference to JLabel for firmware version
+     * Reference to JLabel for firmware version.
      */
     //private JLabel     firmware = null;
     //private JLabel     locobuffer = null;

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Panel displaying and programming a LocoIO configuration.
  *
  * @author Bob Jacobsen Copyright (C) 2002
-  */
+ */
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
@@ -196,7 +196,6 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         } catch (NullPointerException e) {
             log.error("Caught NullPointerException", e); // NOI18N
         }
-
     }
 
     LnTrafficController ln;
@@ -212,7 +211,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * the SET LOCOIO ADDRESS button was pressed Since this does a broadcast
+     * The SET LOCOIO ADDRESS button was pressed. Since this does a broadcast
      * program-all to every LocoIO board on the LocoNet, it needs to be used
      * with caution.
      */

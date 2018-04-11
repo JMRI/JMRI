@@ -1,11 +1,3 @@
-/*
- * LocoIOModeList.java
- *
- * Created on January 30, 2007, 9:13 PM
- *
- * Manage the set of valid modes for a particular LocoIO port,
- * as well as the conversions between addresses and SV values.
- */
 package jmri.jmrix.loconet.locoio;
 
 import java.util.Vector;
@@ -14,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Manage the set of valid modes for a particular LocoIO port,
+ * as well as the conversions between addresses and SV values.
  *
- * @author plocher
+ * @author John Plocher, January 30, 2007
  */
 public class LocoIOModeList {
 
@@ -222,4 +216,5 @@ public class LocoIOModeList {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
+
 }

@@ -114,41 +114,20 @@
             <tooltip>Message DSTL byte</tooltip>
       </variable>
 
-      <!-- per port config SVs, stored as CVs -->
+      <!-- per port config SVs, stored as CVs, use enum-HDL-PortMode ? -->
       <!-- Port 1 -->
-      <variable item="Port1 Type" CV="3" mask="XXXXXXXX" default="192">
-        <enumVal>
-          <enumChoice choice="0" value="15">
-            <choice>Input - toggle switch - Direct</choice>
-            <choice xml:lang="nl">Ingang - wissel - Direct</choice>
-          </enumChoice>
-          <enumChoice choice="0" value="16">
-            <choice>Input - toggle switch - Indirect</choice>
-            <choice xml:lang="nl">Ingang - wissel - Indirect</choice>
-          </enumChoice>
-          <enumChoice choice="1" value="47">
-            <choice>Input - push button - active Low</choice>
-          </enumChoice>
-          <enumChoice choice="2" value="111">
-            <choice>Input - push button - active High </choice>
-          </enumChoice>
-          <enumChoice choice="3" value="192">
-            <choice>Output - Block Detector (0xC0 command)</choice>
-          </enumChoice>
-          <enumChoice choice="4" value="128">
-            <choice>Output - Switch Feedback (0x80 command)</choice>
-          </enumChoice>
-        </enumVal>
+      <variable item="Port1 Type" CV="3" mask="VVVVVVVV" default="192">
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Port 1 Type:</label>
         <label xml:lang="nl">Poort 1 Type:</label>
       </variable>
 
-      <variable item="Port1 Add1" CV="4" default="1">
+      <variable item="Port1 Add1" CV="3" default="1">
         <hexVal/>
         <label>Port1 Add1</label>
       </variable>
 
-      <variable item="Port1 Add2" CV="5" default="0">
+      <variable item="Port1 Add2" CV="4" default="0">
         <hexVal/>
         <label>Port1 Add2</label>
       </variable>
@@ -160,35 +139,18 @@
       </variable>
 
       <!-- Port 2 -->
-      <variable item="Port2 Type" CV="6" default="192">
-          <enumVal>
-              <enumChoice choice="0" value="15">
-                  <choice>Input - toggle switch</choice>
-                  <choice xml:lang="nl">Ingang - wissel</choice>
-              </enumChoice>
-              <enumChoice choice="1" value="47">
-                  <choice>Input - push button - active Low</choice>
-              </enumChoice>
-              <enumChoice choice="2" value="111">
-                  <choice>Input - push button - active High </choice>
-              </enumChoice>
-              <enumChoice choice="3" value="192">
-                  <choice>Output - 0xC0 command</choice>
-              </enumChoice>
-              <enumChoice choice="4" value="128">
-                  <choice>Output - 0x80 command</choice>
-              </enumChoice>
-          </enumVal>
+      <variable item="Port2 Type" CV="6" mask="VVVVVVVV" default="192">
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Port 2 Type:</label>
         <label xml:lang="nl">Poort 2 Type:</label>
       </variable>
 
-      <variable item="Port2 Add1" CV="7" default="1">
+      <variable item="Port2 Add1" CV="6" default="1">
         <hexVal/>
         <label>Port2 Add1</label>
       </variable>
 
-      <variable item="Port2 Add2" CV="8" default="0">
+      <variable item="Port2 Add2" CV="7" default="0">
         <hexVal/>
         <label>Port2 Add2</label>
       </variable>
@@ -199,47 +161,13 @@
         <label>Adres Poort 2 (dec):</label>
       </variable>
 
-      <!-- Port 3 -->
-      <variable item="Port3 Type" CV="9" default="192">
-        <enumVal>
-          <enumChoice choice="0" value="15">
-            <choice>Input - toggle switch</choice>
-            <choice xml:lang="nl">Ingang - wissel</choice>
-          </enumChoice>
-          <enumChoice choice="1" value="47">
-            <choice>Input - push button - active Low</choice>
-          </enumChoice>
-          <enumChoice choice="2" value="111">
-            <choice>Input - push button - active High </choice>
-          </enumChoice>
-          <enumChoice choice="3" value="192">
-            <choice>Output - 0xC0 command</choice>
-          </enumChoice>
-          <enumChoice choice="4" value="128">
-            <choice>Output - 0x80 command</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Port 3 Type:</label>
-        <label xml:lang="nl">Poort 3 Type:</label>
-      </variable>
-
-      <variable item="Port3 Add1" CV="10" default="1">
-        <hexVal/>
-        <label>Port3 Add1</label>
-      </variable>
-
-      <variable item="Port3 Add2" CV="11" default="0">
-        <hexVal/>
-        <label>Port3 Add2</label>
-      </variable>
-
-      <variable item="Port3 Address" CV="10" default="1">
-        <decVal max="255"/>
-        <label>Port 3 Address (dec):</label>
-        <label>Adres Poort 3 (dec):</label>
-      </variable>
-
       <!-- Below are dummy CV placeholders to be configured for LocoIO -->
+      <variable item="Dummy 9" CV="9">
+        <decVal/>
+      </variable>
+      <variable item="Dummy 10" CV="10">
+        <decVal/>
+      </variable>
       <variable item="Dummy 11" CV="11">
         <decVal/>
       </variable>
@@ -988,6 +916,9 @@
         <display item="Blink Rate" format="hslider"/>
 
         <display item="Action Mode"/>
+
+        <display item="Demo"/>
+
       </column>
 
     </pane>

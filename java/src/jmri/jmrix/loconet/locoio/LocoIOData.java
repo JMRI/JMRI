@@ -1,10 +1,3 @@
-/*
- * LocoIOData.java
- *
- * Created on January 28, 2007, 10:18 PM
- *
- * Data associated with a LocoIO device
- */
 package jmri.jmrix.loconet.locoio;
 
 import java.beans.PropertyChangeEvent;
@@ -18,8 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author plocher
+ * Data associated with a LocoIO device.
+ * 
+ * @author John Plocher, January 28, 2007
  */
 public class LocoIOData
         implements LocoNetListener, java.beans.PropertyChangeListener {
@@ -37,7 +31,7 @@ public class LocoIOData
 
     /**
      * Define the number of rows in the table, which is also the number of
-     * "channels" in a signel LocoIO unit
+     * "channels" in a signel LocoIO unit.
      */
     private int _numRows = 16;
     /**
@@ -59,7 +53,7 @@ public class LocoIOData
     private int[] writeState = new int[_numRows];
 
     /**
-     * Record whether this pin is looking to capture a value from the LocoNet
+     * Record whether this pin is looking to capture a value from the LocoNet.
      */
     private boolean[] capture = new boolean[_numRows];
     private String[] mode = new String[_numRows];
@@ -67,7 +61,7 @@ public class LocoIOData
     private LocoIOModeList validmodes;
 
     /**
-     * Creates a new instance of LocoIOData
+     * Create a new instance of LocoIOData.
      */
     public LocoIOData(int unitAddr, int unitSubAddr, LnTrafficController tc) {
         timeoutcounter = 0;
@@ -118,7 +112,7 @@ public class LocoIOData
      * High byte of the Address is fixed to 0x01
      * <p>
      * Low byte Address must be in the range of 0x01 .. 0x4F, 0x51 .. 0x7F
-     * <P>
+     * <p>
      * 0x50 is reserved for the LocoBuffer
      * <p>
      * The subAddress is in the range of 0x01 .. 0x7E
@@ -380,12 +374,12 @@ public class LocoIOData
      * Listen to the LocoNet. We're listening for incoming OPC_PEER_XFR
      * messages, which might be part of a read or write sequence. We're also
      * _sometimes_ listening for commands as part of a "capture" operation.
-     * <P>
+     * <p>
      * The incoming LocoNet OPC_PEER_XFR messages don't retain any information
      * about the CV number or whether it was a read or write operation. We store
      * the data regardless of whether it was read or write, but we need to
      * remember the cv number in the lastOpCv member.
-     * <P>
+     *
      * @param m Incoming message
      */
     @Override
@@ -702,7 +696,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     protected void stopTimer() {
         if (timer != null) {
@@ -711,7 +705,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -729,7 +723,7 @@ public class LocoIOData
     }
 
     /**
-     * Read a SV from a given LocoIO device
+     * Read a SV from a given LocoIO device.
      *
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
@@ -745,7 +739,7 @@ public class LocoIOData
     }
 
     /**
-     * Write an SV to a given LocoIO device
+     * Write an SV to a given LocoIO device.
      *
      */
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
@@ -774,5 +768,7 @@ public class LocoIOData
         v2 = null;
         lim = null;
     }
+
     private final static Logger log = LoggerFactory.getLogger(LocoIOData.class);
+
 }
