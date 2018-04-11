@@ -113,10 +113,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to IndicatorTrack.
+     * Initialization for conversion of plain track to indicator track by CircuitBuilder.
      *
      * @param doneAction doneAction
      */
+    @Override
     public void init(ActionListener doneAction) {
         _update = false;
         _suppressDragging = true; // no dragging in circuitBuilder
@@ -562,10 +563,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
             makeDragIconPanel(0);
         }
         if (makeBgBoxPanel) {
-            if (!_update) {
+            if (!_update && !_suppressDragging) {
                 _previewPanel = makePreviewPanel(_iconPanel, _dragIconPanel);
             } else {
                 _previewPanel = makePreviewPanel(_iconPanel, null);
+                _previewPanel.setVisible(false);
             }
             _iconFamilyPanel.add(_previewPanel);
         } else {

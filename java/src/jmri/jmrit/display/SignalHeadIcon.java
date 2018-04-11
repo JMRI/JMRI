@@ -397,7 +397,8 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead")));
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
+                Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
                 PickListModel.signalHeadPickModelInstance(), _editor); //NOI18N
         ActionListener updateAction = new ActionListener() {
@@ -421,7 +422,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         }
         _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSignalHead());
-        initPaletteFrame(_itemPanel);
+        initPaletteFrame(_paletteFrame, _itemPanel);
     }
 
     void updateItem() {
@@ -445,11 +446,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             setIcons(map2);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _itemPanel.dispose();
-        _itemPanel = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _itemPanel);
     }
 
     @Override

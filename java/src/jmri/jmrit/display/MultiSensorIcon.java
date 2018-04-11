@@ -237,7 +237,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     MultiSensorItemPanel _itemPanel;
 
     protected void editItem() {
-        makePaletteFrame(Bundle.getMessage("EditItem", Bundle.getMessage("MultiSensor")));
+        _paletteFrame = makePaletteFrame(Bundle.getMessage("EditItem", Bundle.getMessage("MultiSensor")));
         _itemPanel = new MultiSensorItemPanel(_paletteFrame, "MultiSensor", _iconFamily,
                 PickListModel.multiSensorPickModelInstance(), _editor);
         ActionListener updateAction = (ActionEvent a) -> {
@@ -256,7 +256,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             _itemPanel.setSelection(entries.get(i).namedSensor.getBean());
         }
         _itemPanel.setUpDown(getUpDown());
-        initPaletteFrame(_itemPanel);
+        initPaletteFrame(_paletteFrame, _itemPanel);
     }
 
     void updateItem() {
@@ -275,12 +275,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();
         setUpDown(_itemPanel.getUpDown());
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _itemPanel.dispose();
-        _itemPanel = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _itemPanel);
     }
 
     @Override

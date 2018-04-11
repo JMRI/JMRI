@@ -615,23 +615,33 @@ public class PositionableLabel extends JLabel implements Positionable {
      * Create a palette window.
      *
      * @param title the name of the palette
+     * @return DisplayFrame for palette item
      */
-    protected void makePaletteFrame(String title) {
+    public DisplayFrame makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
-        _paletteFrame = new jmri.jmrit.display.DisplayFrame(title, false, false);
-        _paletteFrame.setLocationRelativeTo(this);
-        _paletteFrame.toFront();
+        DisplayFrame paletteFrame = new DisplayFrame(title, false, false);
+        paletteFrame.setLocationRelativeTo(this);
+        paletteFrame.toFront();
+        return paletteFrame;
     }
 
-    protected void initPaletteFrame(ItemPanel itemPanel) {
+    public void initPaletteFrame(DisplayFrame paletteFrame, ItemPanel itemPanel) {
         Dimension dim = itemPanel.getPreferredSize();
         JScrollPane sp = new JScrollPane(itemPanel);
         dim = new Dimension(dim.width +25, dim.height + 25);
         sp.setPreferredSize(dim);
-        _paletteFrame.add(sp);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        paletteFrame.add(sp);
+        paletteFrame.pack();
+        paletteFrame.setVisible(true);
+    }
+
+    public void finishItemUpdate(DisplayFrame paletteFrame, ItemPanel itemPanel) {
+        itemPanel.closeDialogs();
+        itemPanel = null;
+        paletteFrame.dispose();
+        paletteFrame = null;
+        invalidate();
     }
 
     @Override
@@ -653,13 +663,14 @@ public class PositionableLabel extends JLabel implements Positionable {
     IconItemPanel _iconItemPanel;
 
     protected void editIconItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
+        _paletteFrame = makePaletteFrame(
+                java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
         _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon", _editor); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
                 updateIconItem();
          };
         _iconItemPanel.init(updateAction);
-        initPaletteFrame(_iconItemPanel);
+        initPaletteFrame(_paletteFrame, _iconItemPanel);
     }
 
     private void updateIconItem() {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
@@ -91,6 +92,13 @@ public abstract class ItemPanel extends JPanel {
             _initialized = true;
         }
     }
+
+    /**
+     * Initialization for conversion of plain track to indicator track by CircuitBuilder.
+     */
+    public void init(ActionListener doneAction) {
+    }
+
 
     protected void setEditor(Editor ed) {
         updateBackgrounds(ed);    // editor change may change panel background

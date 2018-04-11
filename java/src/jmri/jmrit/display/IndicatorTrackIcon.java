@@ -341,7 +341,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack")));
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
+                Bundle.getMessage("IndicatorTrack")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
 
         ActionListener updateAction = new ActionListener() {
@@ -371,7 +372,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         _trackPanel.setShowTrainName(_pathUtil.showTrain());
         _trackPanel.setPaths(_pathUtil.getPaths());
-        initPaletteFrame(_trackPanel);
+        initPaletteFrame(_paletteFrame, _trackPanel);
     }
 
     void updateItem() {
@@ -396,11 +397,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _trackPanel.dispose();
-        _trackPanel = null;
+        finishItemUpdate(_paletteFrame, _trackPanel);
         displayState(_status);
     }
 

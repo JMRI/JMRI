@@ -1840,6 +1840,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         try {
             //Point pt = evt.getLocation(); coords relative to entire window
             Point pt = _targetPanel.getMousePosition(true);
+            if (pt == null) {
+                return;
+            }
             Transferable tr = evt.getTransferable();
             if (log.isDebugEnabled()) { // avoid string building if not debug
                 DataFlavor[] flavors = tr.getTransferDataFlavors();

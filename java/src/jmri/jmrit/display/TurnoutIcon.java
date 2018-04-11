@@ -382,7 +382,8 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
+                Bundle.getMessage("BeanNameTurnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = new ActionListener() {
@@ -405,7 +406,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         }
         _itemPanel.init(updateAction, strMap);
         _itemPanel.setSelection(getTurnout());
-        initPaletteFrame(_itemPanel);
+        initPaletteFrame(_paletteFrame, _itemPanel);
     }
 
     void updateItem() {
@@ -430,12 +431,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-        _itemPanel.closeDialogs();
-        _itemPanel.dispose();
-        _itemPanel = null;
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _itemPanel);
     }
 
     @Override
