@@ -5,7 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.StringBufferInputStream;
 
 /**
@@ -43,7 +45,7 @@ public class LnPacketizerTest {
             }
             @Override
             public java.io.DataOutputStream getOutputStream(){
-                return null;
+                return new DataOutputStream(new ByteArrayOutputStream());
             }
 
             /**
