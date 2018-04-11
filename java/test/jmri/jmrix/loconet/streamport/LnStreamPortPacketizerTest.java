@@ -15,12 +15,14 @@ import org.junit.Test;
 public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerTest {
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         lnp = new LnStreamPortPacketizer();
     }
 
+    @Override
     @After
     public void tearDown() {
         lnp = null;
