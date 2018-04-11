@@ -92,7 +92,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
     @Override
     public void message(DCCppReply m) {
         if (log.isDebugEnabled()) {
-            log.debug("Message recieved: " + m.toString());
+            log.debug("Message received: " + m.toString());
         }
         if (m.isPowerReply()) {
             if (m.getPowerBool()) {

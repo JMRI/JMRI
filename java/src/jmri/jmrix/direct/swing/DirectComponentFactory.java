@@ -19,7 +19,7 @@ public class DirectComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     DirectSystemConnectionMemo memo;
 
     /**
-     * Provide a menu with all items attached to this system connection.
+     * Provide a menu with all (in this case: no) items attached to this system connection.
      */
     @Override
     public javax.swing.JMenu getMenu() {
@@ -28,5 +28,5 @@ public class DirectComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new DirectMenu(memo);
     }
-}
 
+}

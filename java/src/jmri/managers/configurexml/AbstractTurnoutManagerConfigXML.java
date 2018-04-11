@@ -49,7 +49,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             Element opElem = tomx.store(TurnoutOperationManager.getInstance());
             turnouts.addContent(opElem);
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not turnouts to include
             if (!iter.hasNext()) {
@@ -190,6 +190,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             log.debug("Found " + turnoutList.size() + " turnouts");
         }
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        tm.setDataListenerMute(true);
 
         try {
             if (shared.getChild("defaultclosedspeed") != null) {
@@ -380,6 +381,9 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 log.error(ex.toString());
             }
         }
+
+        tm.setDataListenerMute(false);
+
         return result;
     }
 

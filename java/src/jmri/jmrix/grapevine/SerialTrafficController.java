@@ -88,7 +88,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Public method to set up for initialization of a Serial node.
+     * Set up for initialization of a Serial node.
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -194,7 +194,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);
             } else {
-                log.warn("Timeout can't be handled due to missing node index = {}", curSerialNodeIndex);
+                log.warn("Timeout can't be handled due to missing node (index {})", curSerialNodeIndex);
             }
         }
     }
@@ -242,6 +242,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     @Deprecated
     static volatile protected SerialTrafficController self = null;
 
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "temporary until multi-system; only set at startup")
+    @Override
+    @Deprecated
+    protected void setInstance() {
+    }
+
     /**
      * Reference to the system connection memo.
      */
@@ -263,16 +270,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * @param m associated systemConnectionMemo object
      */
     public void setSystemConnectionMemo(GrapevineSystemConnectionMemo m) {
-        log.debug("GrapevineTrafficController set memo from {} to {}", mMemo.getUserName(), m.getUserName());
+        log.debug("GrapevineTrafficController set memo to {}", m.getUserName());
         mMemo = m;
-    }
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until multi-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        self = this;
     }
 
     @Override

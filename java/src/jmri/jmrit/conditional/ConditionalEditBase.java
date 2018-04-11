@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -205,6 +207,141 @@ public class ConditionalEditBase {
         for (LogixEventListener l : listenerList) {
             l.logixEventOccurred();
         }
+    }
+
+    // ------------ Antecedent Methods ------------
+
+    /**
+     * Create an antecedent string based on the current variables
+     * <p>
+     * The antecedent consists of all of the variables "in order"
+     * combined with the current operator.
+     * @since 4.11.5
+     * @param variableList The current variable list
+     * @return the resulting antecedent string
+     */
+    String makeAntecedent(ArrayList<ConditionalVariable> variableList) {
+        StringBuilder antecedent = new StringBuilder(64);
+        if (variableList.size() != 0) {
+            String row = "R"; //NOI18N
+            if (variableList.get(0).isNegated()) {
+                antecedent.append("not ");
+            }
+            antecedent.append(row + "1");
+            for (int i = 1; i < variableList.size(); i++) {
+                ConditionalVariable variable = variableList.get(i);
+                switch (variable.getOpern()) {
+                    case Conditional.OPERATOR_AND:
+                        antecedent.append(" and ");
+                        break;
+                    case Conditional.OPERATOR_OR:
+                        antecedent.append(" or ");
+                        break;
+                    default:
+                        break;
+                }
+                if (variable.isNegated()) {
+                    antecedent = antecedent.append("not ");
+                }
+                antecedent.append(row);
+                antecedent.append(i + 1);
+            }
+        }
+        return antecedent.toString();
+    }
+
+    /**
+     * Add a variable R# entry to the antecedent string.
+     * If not the first one, include <strong>and</strong> or <strong>or</strong> depending on the logic type
+     * @since 4.11.5
+     * @param logicType The current logic type.
+     * @param varListSize The current size of the variable list.
+     * @param antecedent The current antecedent
+     * @return an extended antecedent
+     */
+    String appendToAntecedent(int logicType, int varListSize, String antecedent) {
+        if (varListSize > 1) {
+            if (logicType == Conditional.OPERATOR_OR) {
+                antecedent = antecedent + " or ";   // NOI18N
+            } else {
+                antecedent = antecedent + " and ";  // NOI18N
+            }
+        }
+        return antecedent + "R" + varListSize; // NOI18N
+    }
+
+    /**
+     * Check the antecedent and logic type.
+     * <p>
+     * The antecedent text is translated and verified.  A new one is created if necessary.
+     * @since 4.11.5
+     * @param logicType The current logic type.  Types other than Mixed are ignored.
+     * @param antecedentText The proposed antecedent string using the local language.
+     * @param variableList The current variable list.
+     * @param curConditional The current conditional.
+     * @return false if antecedent can't be validated
+     */
+    boolean validateAntecedent(int logicType, String antecedentText, ArrayList<ConditionalVariable> variableList, Conditional curConditional) {
+        if (logicType != Conditional.MIXED
+                || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
+                || antecedentText == null
+                || antecedentText.trim().length() == 0) {
+            return true;
+        }
+
+        String antecedent = translateAntecedent(antecedentText, true);
+        if (antecedent.length() > 0) {
+            String message = curConditional.validateAntecedent(antecedent, variableList);
+            if (message != null) {
+                JOptionPane.showMessageDialog(null,
+                        message + Bundle.getMessage("ParseError8"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"),            // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Translate an antecedent string between English and the current language
+     * as determined by the Bundle classes.
+     * <p>
+     * The property files have Logic??? keys for translating to the target language.
+     * @since 4.11.5
+     * @param antecedent The antecedent string which can either local or English
+     * @param isLocal True if the antecedent string has local words.
+     * @return the translated antecedent string.
+     */
+    public static String translateAntecedent(String antecedent, boolean isLocal) {
+        if (antecedent == null) {
+            return null;
+        }
+        String oldAnd, oldOr, oldNot;
+        String newAnd, newOr, newNot;
+        if (isLocal) {
+            // To English
+            oldAnd = Bundle.getMessage("LogicAND").toLowerCase();  // NOI18N
+            oldOr = Bundle.getMessage("LogicOR").toLowerCase();    // NOI18N
+            oldNot = Bundle.getMessage("LogicNOT").toLowerCase();  // NOI18N
+            newAnd = "and";  // NOI18N
+            newOr = "or";    // NOI18N
+            newNot = "not";  // NOI18N
+        } else {
+            // From English
+            oldAnd = "and";  // NOI18N
+            oldOr = "or";    // NOI18N
+            oldNot = "not";  // NOI18N
+            newAnd = Bundle.getMessage("LogicAND").toLowerCase();  // NOI18N
+            newOr = Bundle.getMessage("LogicOR").toLowerCase();    // NOI18N
+            newNot = Bundle.getMessage("LogicNOT").toLowerCase();  // NOI18N
+        }
+        log.debug("translateAntecedent: before {}", antecedent);
+        antecedent = antecedent.replaceAll(oldAnd, newAnd);
+        antecedent = antecedent.replaceAll(oldOr, newOr);
+        antecedent = antecedent.replaceAll(oldNot, newNot);
+        log.debug("translateAntecedent: after  {}", antecedent);
+        return antecedent;
     }
 
     // ------------ Shared Conditional Methods ------------

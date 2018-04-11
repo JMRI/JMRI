@@ -75,7 +75,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             });
             connectionNameField.addActionListener((ActionEvent e) -> {
                 if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                    JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                     connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                 }
             });
@@ -83,7 +83,7 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }

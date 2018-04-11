@@ -260,17 +260,22 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         if (log.isDebugEnabled()) {
             log.debug("Found " + list.size() + " objects");
         }
-        //BlockManager tm = InstanceManager.getDefault(jmri.BlockManager.class);
 
-        // first pass don't load full contents (just create all the blocks)
-        for (Element block : list) {
-            loadBlock(block, false);
-        }
+        try {
+            InstanceManager.getDefault(jmri.BlockManager.class).setDataListenerMute(true);
+            // first pass don't load full contents (just create all the blocks)
+            for (Element block : list) {
+                loadBlock(block, false);
+            }
 
-        // second pass load full contents
-        for (Element block : list) {
-            loadBlock(block, true);
+            // second pass load full contents
+            for (Element block : list) {
+                loadBlock(block, true);
+            }
+        } finally {
+            InstanceManager.getDefault(jmri.BlockManager.class).setDataListenerMute(false);
         }
+        
         return result;
     }   // load
 

@@ -3,6 +3,8 @@ package jmri.managers;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.Manager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -55,6 +57,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     public Turnout provideTurnout(String name) throws IllegalArgumentException {
         return super.provideNamedBean(name);
     }
+
+    @Override
+    /** {@inheritDoc} */
+    public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
 
     /**
      * Locate an instance based on a system name. Returns null if no instance

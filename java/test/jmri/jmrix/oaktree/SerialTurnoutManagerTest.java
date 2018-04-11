@@ -61,9 +61,9 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        SerialTrafficController t = new SerialTrafficControlScaffold();
         memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
-        memo.setTrafficController(t);
+        SerialTrafficController t = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(t); // important for successful getTrafficController()
         t.registerNode(new SerialNode(0, SerialNode.IO48, memo));
         // create and register the manager object
         l = new SerialTurnoutManager(memo);

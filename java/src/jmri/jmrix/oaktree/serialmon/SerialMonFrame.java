@@ -6,7 +6,7 @@ import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) serial command messages
+ * Frame displaying (and logging) serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
@@ -16,12 +16,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public SerialMonFrame(OakTreeSystemConnectionMemo memo) {
         super();
-        _memo=memo;
+        _memo = memo;
     }
 
     @Override
     protected String title() {
-        return "Oak Tree Serial Command Monitor";
+        return Bundle.getMessage("MonitorXTitle", "OakTree");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 5) {
-            nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
+            nextLine("Truncated message of length " + l.getNumDataElements() + "\n", // TOD I18N
                     l.toString());
         } else if (l.isPoll()) {
             nextLine("Poll addr=" + l.getAddr() + "\n", l.toString());

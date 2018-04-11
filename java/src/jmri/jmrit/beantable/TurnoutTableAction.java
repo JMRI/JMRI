@@ -1061,9 +1061,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
              duplicate usernames in multiple classes */
             if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
-                List<Manager<Turnout>> managerList = proxy.getManagerList();
-                for (int x = 0; x < managerList.size(); x++) {
-                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
+                List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
+                for (Manager<Turnout> turnout : managerList) {
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(turnout.getSystemPrefix());
                     Boolean addToPrefix = true;
                     // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -1872,10 +1872,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
-            List<Manager<Turnout>> managerList = proxy.getManagerList();
+            List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (int x = 0; x < managerList.size(); x++) {
-                jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
+            for (Manager<Turnout> turnout : managerList) {
+                jmri.TurnoutManager mgr = (jmri.TurnoutManager) turnout;
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
                     log.debug("T Add box enabled1");

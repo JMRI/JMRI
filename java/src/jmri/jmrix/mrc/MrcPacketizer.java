@@ -402,7 +402,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                     transmitLock.notify();
                                 }
                                 break;
-                            case MrcPackets.GOODCMDRECIEVEDCODE:      //Possibly shouldn't change the state, as we wait for further confirmation.
+                            case MrcPackets.GOODCMDRECEIVEDCODE:      //Possibly shouldn't change the state, as we wait for further confirmation.
                                 if (mCurrentState == CONFIRMATIONONLY) {
                                     synchronized (transmitLock) {
                                         mCurrentState = IDLESTATE;
@@ -411,7 +411,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                                 msg = new MrcMessage(4);
                                 break;
-                            case MrcPackets.BADCMDRECIEVEDCODE:
+                            case MrcPackets.BADCMDRECEIVEDCODE:
                                 mCurrentState = BADCOMMAND;
                                 msg = new MrcMessage(4);
                                 break;
