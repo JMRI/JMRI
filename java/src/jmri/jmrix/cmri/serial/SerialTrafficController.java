@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
+import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     /**
      * Create a new C/MRI SerialTrafficController instance.
      */
+    CMRInetMetricsCollector metricsCollector;
+    
     public SerialTrafficController() {
         super();
 
@@ -40,7 +44,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 5;  // default = 25
-
+        
+        metricsCollector = new CMRInetMetricsCollector();
+        addSerialListener(metricsCollector);
     }
 
     // The methods to implement the SerialInterface
@@ -77,7 +83,16 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         log.warn("enterProgMode doesn't make sense for C/MRI serial");
         return null;
     }
-
+    
+    /**
+     * Expose metrics data
+     * @return metrics data
+     */
+    public CMRInetMetricsData getMetricsData()
+    {
+      return metricsCollector.getMetricData();
+    }
+    
     @Override
     protected AbstractMRMessage enterNormalMode() {
         // can happen during error recovery, null is OK
@@ -96,6 +111,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
+//        log.info("forward Message");
+
     }
 
     /**
@@ -110,6 +127,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         ((SerialListener) client).reply((SerialReply) m);
+//        log.info("reply Message");
     }
 
     SerialSensorManager mSensorManager = null;
@@ -203,7 +221,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // Poll node if polling enabled for this node  //c2
         // update polling status for the node
         //-------------------------------------
-//        SerialNode n = (SerialNode) SerialTrafficController.instance().getNode(curSerialNodeIndex);
+
         if (!n.getPollingEnabled()) {
             n.setPollStatus(SerialNode.POLLSTATUS_IDLE);
             return null;
@@ -242,7 +260,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (n.getPollingEnabled()) //c2
             {
                 n.setPollStatus(SerialNode.POLLSTATUS_TIMEOUT);
-//             CMRInetMetricsData.incMetricErrValue(CMRInetMetricsData.CMRInetMetricTimeout);
+             metricsCollector.getMetricData().incMetricErrValue(CMRInetMetricsData.CMRInetMetricTimeout);
             }
             setMustInit(curSerialNodeIndex, true);
         }
@@ -283,7 +301,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     protected void setInstance() {
         log.debug("deprecated setInstance should not have been called");
     }
-
+    
     @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();

@@ -67,7 +67,6 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2004
  * @author Egbert Broerse Copyright (C) 2018
  * @see jmri.jmrit.roster.LocoFile
- *
  */
 public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
 
@@ -1387,10 +1386,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void printEntryLine(HardcopyWriter w) {
         // no image
         // @see #printEntryDetails(w);
-        int linesadded = -1;
 
         try {
-            int textSpace = w.getCharactersPerLine() - 1; // no indent
+            //int textSpace = w.getCharactersPerLine() - 1; // could be used to truncate line.
+            // for now, text just flows to next line
             String thisText ="";
             String thisLine = "";
 
@@ -1443,9 +1442,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             startNext += colWidth;
             // dateModified (type)
             if (dateModified != null) {
-                if (dateModified instanceof Date) {
-                    DateFormat.getDateTimeInstance().format(dateModified);
-                }
+                DateFormat.getDateTimeInstance().format(dateModified);
                 thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
                 thisLine += thisText;
             }

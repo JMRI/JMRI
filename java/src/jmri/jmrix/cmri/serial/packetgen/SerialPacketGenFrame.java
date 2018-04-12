@@ -56,7 +56,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                 )
         );
 
-        setTitle(Bundle.getMessage("SendSerialCommandTitle"));
+        setTitle(Bundle.getMessage("SendSerialCommandTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName()); // NOI18N
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(jLabel1);

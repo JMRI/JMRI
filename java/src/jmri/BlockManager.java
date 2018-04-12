@@ -304,11 +304,11 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
         getSystemNameList().stream().forEach((sysName) -> {
             Block b = getBySystemName(sysName);
-            Object o = b.getValue();
-            if (o != null) {
-                if (o instanceof RosterEntry && o == re) {
+            Object obj;
+            if (b!= null && (obj = b.getValue()) != null) {
+                if (obj instanceof RosterEntry && obj == re) {
                     blockList.add(b);
-                } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())) {
+                } else if (obj.toString().equals(re.getId()) || obj.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
                 }
             }
