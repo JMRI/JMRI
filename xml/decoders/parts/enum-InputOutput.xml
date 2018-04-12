@@ -7,7 +7,7 @@
     <choice xml:lang="de">Eingang</choice>
     <choice xml:lang="nl">Ingang</choice>
   </enumChoice>
-  <enumChoice choice="Output" value="1">
+  <enumChoice choice="Output" value="128">
     <choice>Output</choice>
     <choice xml:lang="de">Ausgang</choice>
     <choice xml:lang="nl">Uitgang</choice>

@@ -2,39 +2,50 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice choice="Input Push High Direct" value="111">
-    <choice>Push button - active High </choice>
-  </enumChoice>
-  <enumChoice choice="Input Push High Indirect" value="103">
-    <choice>Push button - active High Indirect</choice>
-  </enumChoice>
-  <enumChoice choice="Input Push Low Direct" value="47">
-    <choice>Push button - active Low </choice>
-  </enumChoice>
-  <enumChoice choice="Input Push Low Indirect" value="39">
-    <choice>Push button - active Low Indirect</choice>
-  </enumChoice>
-  <enumChoice choice="Input Toggle Direct" value="15">
+  <!-- 2 bytes: Add1 (configure without bit 8) + Add2 -->
+  <enumChoice choice="Input Toggle Direct" value="3856">
     <choice>Toggle switch</choice>
     <choice xml:lang="nl">Omwissel</choice>
   </enumChoice>
-  <enumChoice choice="Input Toggle Indirect" value="7">
+  <enumChoice choice="Input Toggle Indirect" value="1808">
     <choice>Toggle switch - Indirect</choice>
     <choice xml:lang="nl">Omwissel - Indirect</choice>
   </enumChoice>
-  <enumChoice choice="Input Occu High" value="95">
+
+  <enumChoice choice="Input Push High Direct" value="28416">
+    <choice>Push button - active High </choice>
+  </enumChoice>
+  <enumChoice choice="Input Push High Indirect" value="26368">
+    <choice>Push button - active High Indirect</choice>
+  </enumChoice>
+  <enumChoice choice="Input Push Low Direct" value="12048">
+    <choice>Push button - active Low </choice>
+  </enumChoice>
+  <enumChoice choice="Input Push Low Indirect" value="10000">
+    <choice>Push button - active Low Indirect</choice>
+  </enumChoice>
+
+  <enumChoice choice="Input Occu High" value="24320">
   <choice>Occupancy - active High</choice>
   </enumChoice>
-  <enumChoice choice="Input Occu High Delayed" value="91">
+  <enumChoice choice="Input Occu High Delayed" value="23296">
     <choice>Occupancy - active High Delayed</choice>
   </enumChoice>
-  <enumChoice choice="Input Occu Low" value="33">
+  <enumChoice choice="Input Occu Low" value="8464">
     <choice>Occupancy - active Low</choice>
   </enumChoice>
-  <enumChoice choice="Input Occu Low Delayed" value="29">
+  <enumChoice choice="Input Occu Low Delayed" value="7440">
     <choice>Occupancy - active Low Delayed</choice>
   </enumChoice>
-  <enumChoice choice="Input Switch Feedback Normal" value="23">
+
+  <enumChoice choice="Input Switch Feedback Normal" value="6000">
     <choice>Feedback - Normal</choice>
   </enumChoice>
+  <enumChoice choice="Input Switch Feedback Contact1" value="14192">
+    <choice>Feedback - Contact 1</choice>
+  </enumChoice>
+  <enumChoice choice="Input Switch Feedback Contact2" value="14176">
+    <choice>Feedback - Contact 2</choice>
+  </enumChoice>
+
 </enumVal>
