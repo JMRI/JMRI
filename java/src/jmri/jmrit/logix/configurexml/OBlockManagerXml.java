@@ -248,8 +248,8 @@ public class OBlockManagerXml // extends XmlFile
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        _blockMap = new HashMap<String, OBlock>();
-        _pathMap = new HashMap<String, OPath>();
+        _blockMap = new HashMap<>();
+        _pathMap = new HashMap<>();
         _manager = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
         List<Element> blockList = shared.getChildren("oblock");
@@ -401,7 +401,7 @@ public class OBlockManagerXml // extends XmlFile
         if (eFromBlk != null && eFromBlk.getAttribute("blockName") != null) {
             String name = eFromBlk.getAttribute("blockName").getValue();
             if (fromBlockName != null && !fromBlockName.equals(name)) {
-                log.error("Portal has user name \"" + userName + "\" conflicting with " + portal.toString());
+                log.error("Portal has user name \"" + userName + "\" conflicting with " + portal.getDescription());
             } else {
                 fromBlock = getBlock(name);
                 if (fromBlock != null) {
@@ -434,7 +434,7 @@ public class OBlockManagerXml // extends XmlFile
         if (eToBlk != null && eToBlk.getAttribute("blockName") != null) {
             String name = eToBlk.getAttribute("blockName").getValue();
             if (toBlockName != null && !toBlockName.equals(name)) {
-                log.error("Portal has user name \"" + userName + "\" conflicting with " + portal.toString());
+                log.error("Portal has user name \"" + userName + "\" conflicting with " + portal.getDescription());
             } else {
                 toBlock = getBlock(name);
                 if (toBlock != null) {
@@ -537,7 +537,7 @@ public class OBlockManagerXml // extends XmlFile
         if (log.isDebugEnabled()) {
             log.debug("Path (" + pName + ") has " + settings.size() + " settings.");
         }
-        java.util.HashSet<String> turnouts = new java.util.HashSet<String>();
+        java.util.HashSet<String> turnouts = new java.util.HashSet<>();
         int dups = 0;
         for (int i = 0; i < settings.size(); i++) {
             Element setElem = settings.get(i);
