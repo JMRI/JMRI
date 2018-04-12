@@ -20,9 +20,14 @@ import org.netbeans.jemmy.operators.WindowOperator;
  */
 public class OpSessionLogTest {
 
+    jmri.util.JmriJFrame f;
+    boolean retval;
+    
     @Test
     public void openAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // create a thread that waits to close the dialog box opened later
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
@@ -30,8 +35,17 @@ public class OpSessionLogTest {
         });
         t.setName("OpSessionLog File Chooser Dialog Close Thread");
         t.start();
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("OpSessionLog Chooser Test");
-        Assert.assertFalse(OpSessionLog.makeLogFile(f));
+        
+        // create the window and make the log file on Swing thread
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            f = new jmri.util.JmriJFrame("OpSessionLog Chooser Test");
+            retval = OpSessionLog.makeLogFile(f);
+        });
+        
+        // check results
+        Assert.assertFalse(retval);
+        
+        // done
         f.dispose();
     }
 
