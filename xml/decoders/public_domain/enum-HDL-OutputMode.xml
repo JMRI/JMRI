@@ -69,7 +69,7 @@
 
   <!-- Servo value is identical to Fixed 1 Off -->
   <enumChoice choice="Output Servo" value="16">
-    <choice>Output Servo</choice>
+    <choice>Servo</choice>
   </enumChoice>
 
 <!-- new items? -->
