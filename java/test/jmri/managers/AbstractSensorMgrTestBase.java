@@ -74,6 +74,15 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     }
 
     @Test
+    public void testSettings() {
+        l.setDefaultSensorDebounceGoingActive(1234L);
+        Assert.assertEquals(1234L, l.getDefaultSensorDebounceGoingActive());
+
+        l.setDefaultSensorDebounceGoingInActive(12345L);
+        Assert.assertEquals(12345L, l.getDefaultSensorDebounceGoingInActive());
+    }
+
+    @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
