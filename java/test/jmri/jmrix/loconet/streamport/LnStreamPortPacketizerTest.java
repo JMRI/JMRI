@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.StringBufferInputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 
 /**
  * Tests for jmri.jmrix.loconet.streamport.StreamPortPacketizer
@@ -30,9 +30,17 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
         lnp = new LnStreamPortPacketizer();
         memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnp);
-        DataInputStream input = new DataInputStream(new StringBufferInputStream(""));
-        DataOutputStream output = new DataOutputStream(new ByteArrayOutputStream());
-        apc = new LnStreamPortController(memo,input,output,"Test Stream Port");
+        try {
+           PipedInputStream tempPipe;
+           tempPipe = new PipedInputStream();
+           DataOutputStream ostream;  // Traffic controller writes to this
+           DataInputStream tostream; // so we can read it from this
+           tostream = new DataInputStream(tempPipe);
+           ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+           apc = new LnStreamPortController(memo,tostream,ostream,"Test Stream Port");
+       } catch (java.io.IOException ioe) {
+           Assert.fail("failed to initialize port controller");
+       }
     }
 
     @Override
