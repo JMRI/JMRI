@@ -128,39 +128,34 @@
 
       <!-- Port 1 -->
       <variable item="Port1 Type" CV="3" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Input" value="0">
-            <choice>Input</choice>
-            <choice xml:lang="de">Eingang</choice>
-            <choice xml:lang="nl">Ingang</choice>
-          </enumChoice>
-          <enumChoice choice="Output" value="1">
-            <choice>Output</choice>
-            <choice xml:lang="de">Ausgang</choice>
-            <choice xml:lang="nl">Uitgang</choice>
-          </enumChoice>
-        </enumVal>
-        <!--<xi:include href="http://jmri.org/xml/decoders/parts/enum-InputOutput.xml"/>-->
+        <!-- note: the value is shifted to the left to fit in the mask, so "1" + mask = 128 -->
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-InputOutput.xml"/>
         <label>Port Type:</label>
         <label xml:lang="nl">Poorttype:</label>
       </variable>
 
       <!-- shows only for Input -->
-      <variable item="Port1 Input" CV="3" mask="VVVVVVVV">
-        <!--<splitVal highCV="5" upperMask="VVVVVVVV"/>-->
+      <variable item="Port1 Input" CV="5" mask="VVVVXXXX">
+        <splitVal highCV="3" factor="128"/>
         <qualifier>
           <variableref>Port1 Type</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <enumVal>
-          <enumChoice choice="Input Toggle Direct" value="15">
+          <enumChoice choice="Input Toggle Direct" value="1793">
             <choice>Toggle switch</choice>
             <choice xml:lang="nl">Omwissel</choice>
           </enumChoice>
-          <enumChoice choice="Input Toggle Indirect" value="7">
+          <enumChoice choice="Input Toggle Indirect" value="3841">
             <choice>Toggle switch - Indirect</choice>
             <choice xml:lang="nl">Omwissel - Indirect</choice>
+          </enumChoice>
+          <enumChoice choice="Input Push High Direct" value="24320">
+            <choice>Push button - active High </choice>
+          </enumChoice>
+          <enumChoice choice="Input Push High Indirect" value="26368">
+            <choice>Push button - active High Indirect</choice>
           </enumChoice>
         </enumVal>
         <!--<xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-InputMode.xml"/>-->
@@ -169,19 +164,25 @@
       </variable>
 
       <!-- Shows only for Output -->
-      <variable item="Port1 Output" CV="3" mask="VVVVVVVV">
-        <!--<splitVal highCV="5" upperMask="VVVVVVVV"/>-->
+      <variable item="Port1 Output" CV="5" mask="VVVVXXXX">
+        <splitVal highCV="3" factor="128" uppermask="XVVVVVVV"/>
         <qualifier>
           <variableref>Port1 Type</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
         <enumVal>
-          <enumChoice choice="Output Pulse Hard" value="140">
-            <choice>Pulse - Hard Reset</choice>
+          <enumChoice choice="Output Pulse 1 Hard" value="35842">
+            <choice>Pulse 1 - Hard Reset</choice>
           </enumChoice>
-          <enumChoice choice="Output Fixed On 4Way Blink" value="160">
-            <choice>Fixed - On - 4-Way - Blinking</choice>
+          <enumChoice choice="Output Fixed 1 On 4Way Blink" value="45313">
+            <choice>Fixed 1 - On - 4-Way - Blinking</choice>
+          </enumChoice>
+          <enumChoice choice="Output Block" value="46592">
+            <choice>Block Detector (0xC0 command)</choice>
+          </enumChoice>
+          <enumChoice choice="Output Block Blink" value="53248">
+            <choice>Block Detector - Blinking</choice>
           </enumChoice>
         </enumVal>
         <!--<xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputMode.xml"/>-->
@@ -190,7 +191,7 @@
       </variable>
 
       <!-- Shows only for Output Pulse Hard - TEST -->
-      <variable item="Port1 Output Pulse" CV="5" mask="XXXXVVVV">
+      <!--<variable item="Port1 Output Pulse" CV="5" mask="VVVVVVVV">
         <qualifier>
           <variableref>Port1 Output</variableref>
           <relation>eq</relation>
@@ -204,12 +205,11 @@
             <choice>2</choice>
           </enumChoice>
         </enumVal>
-        <!--<xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputMode.xml"/>-->
         <label>Contact:</label>
-      </variable>
+      </variable>-->
 
       <!-- Shows only for Input Toggle - TEST -->
-      <variable item="Port1 Input Toggle" CV="5" mask="XXXXVVVV">
+      <!--<variable item="Port1 Input Toggle" CV="5" mask="VVVVVVVV">
         <qualifier>
           <variableref>Port1 Input</variableref>
           <relation>eq</relation>
@@ -220,28 +220,27 @@
             <choice>1</choice>
           </enumChoice>
         </enumVal>
-        <!--<xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputMode.xml"/>-->
         <label>Contact:</label>
-      </variable>
+      </variable>-->
 
       <variable item="Port1 Config" CV="3">
         <decVal/>
-        <label>Config:</label>
+        <label>Config (dec):</label>
       </variable>
 
       <variable item="Port1 Value1" CV="4">
-        <hexVal/>
-        <label>Value1 (hex):</label>
+        <decVal/>
+        <label>Value1 (dec):</label>
       </variable>
 
       <variable item="Port1 Value2" CV="5">
         <decVal/>
-        <label>Value2 (hex):</label>
+        <label>Value2 (dec):</label>
       </variable>
 
       <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV"/>
+        <!--<splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV"/>-->
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
         <label>Poortadres (dec):</label>
@@ -1082,10 +1081,13 @@
         <display item="Port1 Input"/>
         <display item="Port1 Output"/>
 
-        <display item="Port1 Config"/>
-        <display item="Port1 Value2"/>
+        <!--<display item="Port1 Output Pulse"/>-->
+        <!--<display item="Port1 Input Toggle"/>-->
         <display item="Port1 Address"/>
+
+        <display item="Port1 Config"/>
         <display item="Port1 Value1"/>
+        <display item="Port1 Value2"/>
           </column>
           <separator/>
 
