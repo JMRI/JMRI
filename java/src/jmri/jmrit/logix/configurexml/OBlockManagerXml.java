@@ -55,7 +55,7 @@ public class OBlockManagerXml // extends XmlFile
             OBlock block = manager.getBySystemName(sname);
             String uname = block.getUserName();
             if (log.isDebugEnabled()) {
-                log.debug("OBlock: sysName= " + sname + ", userName= " + uname);
+                log.debug("OBlock: sysName= {}, userName= {}", sname, uname);
             }
             Element elem = new Element("oblock");
             elem.setAttribute("systemName", sname);
@@ -123,7 +123,7 @@ public class OBlockManagerXml // extends XmlFile
             }
             elem.addContent(fromElem);
         } else {
-            log.error("Portal \"" + portal.getName() + "\" has no fromBlock!");
+            log.error("Portal \"{}\" has no fromBlock!", portal.getName());
         }
         NamedBean signal = portal.getFromSignal();
         if (signal != null) {
@@ -145,7 +145,7 @@ public class OBlockManagerXml // extends XmlFile
             }
             elem.addContent(toElem);
         } else {
-            log.error("Portal \"" + portal.getName() + "\" has no toBlock!");
+            log.error("Portal \"{}\" has no toBlock!", portal.getName());
         }
         signal = portal.getToSignal();
         if (signal != null) {
@@ -227,7 +227,7 @@ public class OBlockManagerXml // extends XmlFile
         if (portal == null) {
             portal = _portalMgr.createNewPortal(null, name);
             if (log.isDebugEnabled()) {
-                log.debug("create Portal: (" + portal.getSystemName() + ", " + name + ")");
+                log.debug("create Portal: ({}, {})", portal.getSystemName(), name);
             }
         }
         return portal;
@@ -240,7 +240,7 @@ public class OBlockManagerXml // extends XmlFile
             path = new OPath(block, name);
             _pathMap.put(key, path);
             if (log.isDebugEnabled()) {
-                log.debug("create OPath: (" + name + ") in block (" + block.getSystemName() + ")");
+                log.debug("create OPath: \"{}\" in block {}", name, block.getSystemName());
             }
         }
         return path;
@@ -248,13 +248,13 @@ public class OBlockManagerXml // extends XmlFile
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        _blockMap = new HashMap<String, OBlock>();
-        _pathMap = new HashMap<String, OPath>();
+        _blockMap = new HashMap<>();
+        _pathMap = new HashMap<>();
         _manager = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
         List<Element> blockList = shared.getChildren("oblock");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + blockList.size() + " OBlock objects");
+            log.debug("Found {} OBlock objects", blockList.size());
         }
         for (int i = 0; i < blockList.size(); i++) {
             loadBlock(blockList.get(i));
@@ -275,7 +275,7 @@ public class OBlockManagerXml // extends XmlFile
 
     void loadBlock(Element elem) {
         if (elem.getAttribute("systemName") == null) {
-            log.error("unexpected null in systemName " + elem + " " + elem.getAttributes());
+            log.error("unexpected null for block systemName elem= ", elem);
             return;
         }
         String sysName = elem.getAttribute("systemName").getValue();
@@ -284,12 +284,12 @@ public class OBlockManagerXml // extends XmlFile
             userName = elem.getAttribute("userName").getValue();
         }
         if (log.isDebugEnabled()) {
-            log.debug("Load block sysName= " + sysName + " userName= " + userName);
+            log.debug("Load block sysName= {},userName= {}", sysName, userName);
         }
         // Portal may have already created a skeleton of this block
         OBlock block = getBlock(sysName);
         if (block == null) {
-            log.error("Null block!! sysName= " + sysName + ", userName= " + userName);
+            log.error("Null block!? sysName= {}, userName= {}", sysName, userName);
             return;
         }
         block.setUserName(userName);
@@ -310,7 +310,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         List<Element> sensors = elem.getChildren("sensor");
         if (sensors.size() > 1) {
-            log.error("More than one sensor present: " + sensors.size());
+            log.error("More than one sensor present: {}",sensors.size());
         }
         if (sensors.size() > 0) {
             // sensor
@@ -333,7 +333,7 @@ public class OBlockManagerXml // extends XmlFile
                     block.setReporter(rep);
                 }
             } catch (Exception ex) {
-                log.error("No Reporter named \"" + name + "\" found. threw exception: " + ex);
+                log.error("No Reporter named \"{}\" found. threw exception: {}", name,  ex);
             }
             if (reporter.getAttribute("reportCurrent") != null) {
                 block.setReportingCurrent(reporter.getAttribute("reportCurrent").getValue().equals("true"));
@@ -362,8 +362,8 @@ public class OBlockManagerXml // extends XmlFile
         List<Element> paths = elem.getChildren("path");
         for (int j = 0; j < paths.size(); j++) {
             if (!block.addPath(loadPath(paths.get(j), block))) {
-                log.error("load: block \"" + sysName + "\" failed to add path \""
-                        + paths.get(j).getName() + "\" in block \"" + block.getSystemName() + "\"");
+                log.error("load: block \"{}\" failed to add path \"{}\" in block \"{}\"",
+                        sysName, paths.get(j).getName(), block.getSystemName());
             }
         }
     }   // loadBlock
@@ -389,11 +389,12 @@ public class OBlockManagerXml // extends XmlFile
             portal = _portalMgr.providePortal(userName);
         }
         if (portal == null) {
-            log.error("unable to create Portal (" + sysName + ", " + userName + ") " + elem + " " + elem.getAttributes());
+            log.error("unable to create Portal ({}, {}) elem attrs= {}",
+                    sysName,  userName, elem.getAttributes());
             return null;
         }
         if (log.isDebugEnabled()) {
-            log.debug("create Portal: (" + sysName + ", " + userName + ")");
+            log.debug("create Portal: ({}, {})", sysName,  userName);
         }
 
         OBlock fromBlock = null;
@@ -401,7 +402,8 @@ public class OBlockManagerXml // extends XmlFile
         if (eFromBlk != null && eFromBlk.getAttribute("blockName") != null) {
             String name = eFromBlk.getAttribute("blockName").getValue();
             if (fromBlockName != null && !fromBlockName.equals(name)) {
-                log.error("Portal has user name \"" + userName + "\" conflicting with " + portal.toString());
+                log.error("Portal user name \"{}\" has conflicting fromBlock \"{}\". Should be \"{}\"",
+                        userName, fromBlockName, name);
             } else {
                 fromBlock = getBlock(name);
                 if (fromBlock != null) {
@@ -414,8 +416,8 @@ public class OBlockManagerXml // extends XmlFile
                         String pathName = e.getAttribute("pathName").getValue();
                         String blockName = e.getAttribute("blockName").getValue();
                         if (log.isDebugEnabled()) {
-                            log.debug("Load portal= " + userName + " fromBlock= " + fromBlock.getSystemName()
-                                    + " pathName= " + pathName + " blockName= " + blockName);
+                            log.debug("Load portal= \"{}\" fromBlock= {}, pathName= {}, blockName= {}",
+                                    userName, fromBlock.getSystemName(), pathName, blockName);
                         }
                         /*(if (fromBlock.getSystemName().equals(blockName))*/ {
                             // path is in the fromBlock
@@ -426,7 +428,7 @@ public class OBlockManagerXml // extends XmlFile
                 }
             }
         } else {
-            log.error("Portal \"" + userName + "\" has no fromBlock!");
+            log.error("Portal \"{}\" has no fromBlock!", userName);
         }
 
         OBlock toBlock = null;
@@ -434,7 +436,8 @@ public class OBlockManagerXml // extends XmlFile
         if (eToBlk != null && eToBlk.getAttribute("blockName") != null) {
             String name = eToBlk.getAttribute("blockName").getValue();
             if (toBlockName != null && !toBlockName.equals(name)) {
-                log.error("Portal has user name \"" + userName + "\" conflicting with " + portal.toString());
+                log.error("Portal user name \"{}\" has conflicting toBlock \"{}\". Should be \"{}\"",
+                        userName, toBlockName, name);
             } else {
                 toBlock = getBlock(name);
                 if (toBlock != null) {
@@ -447,8 +450,8 @@ public class OBlockManagerXml // extends XmlFile
                         String pathName = e.getAttribute("pathName").getValue();
                         String blockName = e.getAttribute("blockName").getValue();
                         if (log.isDebugEnabled()) {
-                            log.debug("Load portal= " + userName + " toBlock= " + toBlock.getSystemName()
-                                    + " pathName= " + pathName + " blockName= " + blockName);
+                            log.debug("Load portal= \"{}\" toBlock= {}, pathName= {}, blockName= {}",
+                                    userName, toBlock.getSystemName(), pathName, blockName);
                         }
                         /*if (toBlock.getSystemName().equals(blockName))*/ {
                             // path is in the toBlock
@@ -459,7 +462,7 @@ public class OBlockManagerXml // extends XmlFile
                 }
             }
         } else {
-            log.error("Portal \"" + userName + "\" has no toBlock!");
+            log.error("Portal \"{}\" has no toBlock!",  userName);
         }
         Element eSignal = elem.getChild("fromSignal");
         if (eSignal != null) {
@@ -471,7 +474,7 @@ public class OBlockManagerXml // extends XmlFile
                     length = attr.getFloatValue();
                 }
             } catch (org.jdom2.DataConversionException e) {
-                log.error("Could not parse signalDelay for signal (" + name + ") in portal (" + userName + ")");
+                log.error("Could not parse signalDelay fromSignal ({}) in portal ({})", name, userName);
             }
             portal.setProtectSignal(Portal.getSignal(name), length, toBlock);
         }
@@ -485,13 +488,13 @@ public class OBlockManagerXml // extends XmlFile
                     length = attr.getFloatValue();
                 }
             } catch (org.jdom2.DataConversionException e) {
-                log.error("Could not parse signalDelay for signal (" + name + ") in portal (" + userName + ")");
+                log.error("Could not parse signalDelay toSignal ({}) in portal ({})", name, userName);
             }
             portal.setProtectSignal(Portal.getSignal(name), length, fromBlock);
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("End Load portal " + userName);
+            log.debug("End Load portal {}", userName);
         }
         return portal;
     }   // loadPortal
@@ -513,7 +516,8 @@ public class OBlockManagerXml // extends XmlFile
                 path.setLength(attr.getFloatValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Could not parse attribute of path (" + pName + ") block (" + block.getSystemName() + ")");
+            log.error("Could not parse attribute of path \"{}\" in block \"{}\")",
+                    pName,  block.getSystemName());
         }
 
         Attribute attr = elem.getAttribute("fromPortal");
@@ -535,9 +539,9 @@ public class OBlockManagerXml // extends XmlFile
 
         List<Element> settings = elem.getChildren("setting");
         if (log.isDebugEnabled()) {
-            log.debug("Path (" + pName + ") has " + settings.size() + " settings.");
+            log.debug("Path \"{}\" has {} settings.", pName, settings.size());
         }
-        java.util.HashSet<String> turnouts = new java.util.HashSet<String>();
+        java.util.HashSet<String> turnouts = new java.util.HashSet<>();
         int dups = 0;
         for (int i = 0; i < settings.size(); i++) {
             Element setElem = settings.get(i);
@@ -545,8 +549,8 @@ public class OBlockManagerXml // extends XmlFile
             try {
                 setting = setElem.getAttribute("set").getIntValue();
             } catch (org.jdom2.DataConversionException e) {
-                log.error("Could not parse 'set' attribute for path (" + pName
-                        + ") block (" + block.getSystemName() + ")");
+                log.error("Could not parse 'set' attribute for path path \"{}\" in block \"{}\"",
+                        pName,  block.getSystemName());
             }
             String sysName = setElem.getAttribute("turnout").getValue();
             if (!turnouts.contains(sysName)) {
