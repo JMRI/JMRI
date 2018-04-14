@@ -26,6 +26,26 @@ public class ManagerTest {
         Assert.assertEquals("L21T1", 3, Manager.getSystemPrefixLength("L21T1"));
     }
 
+    @Test
+    public void testGetSystemPrefixLengthThrow1() {
+        try {
+            Manager.getSystemPrefixLength(".T1");
+        } catch (NamedBean.BadSystemNameException e) { 
+            return; // OK
+        }
+        Assert.fail("Should have thrown");
+    }
+
+    @Test
+    public void testGetSystemPrefixLengthThrow2() {
+        try {
+            Manager.getSystemPrefixLength("1T1");
+        } catch (NamedBean.BadSystemNameException e) { 
+            return; // OK
+        }
+        Assert.fail("Should have thrown");
+    }
+
     // Test legacy prefixes
     @Deprecated
     @Test
@@ -108,6 +128,10 @@ public class ManagerTest {
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("CT1"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("C2T12"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("DT12132"));
+
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix(""));
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("X"));
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("-"));
         
         for (String s : Manager.LEGACY_PREFIXES.toArray(new String[0])) {
             Assert.assertEquals("Length test of \""+s+"\"",s.length(), Manager.startsWithLegacySystemPrefix(s+"T12"));

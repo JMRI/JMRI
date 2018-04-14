@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.Dimension;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,6 +118,26 @@ public class DisplayFrame extends JmriJFrame {
 
     public int getPreviewBg() {
         return previewBgSet;
+    }
+
+    /**
+     * 
+     * @param container Container to be resized
+     * @param deltaDim Size difference of container with old contents
+     * @param newDim Size of the new contents
+     */
+    public void reSize(java.awt.Container container, Dimension deltaDim, Dimension newDim) {
+        Dimension dim = new Dimension(deltaDim.width + newDim.width + 10, 
+                deltaDim.height + newDim.height + 10);
+        container.setPreferredSize(dim);
+        if (log.isDebugEnabled())
+            log.debug(" deltaDim= ({}, {}) NewDim= ({}, {}) setPreferredSize to ({}, {})", 
+                deltaDim.width, deltaDim.height, newDim.width, newDim.height, dim.width, dim.height);
+        pack();
+        if (log.isDebugEnabled()) {
+            dim = container.getSize();
+            log.debug(" Resized to ({}, {})", dim.width, dim.height);
+        }
     }
 
     /**

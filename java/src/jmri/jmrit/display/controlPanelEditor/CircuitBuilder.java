@@ -37,14 +37,17 @@ import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.TurnoutIcon;
+import jmri.jmrit.display.palette.FamilyItemPanel;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
+import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,7 +114,6 @@ public class CircuitBuilder {
      * ***************************************************************
      */
     public CircuitBuilder() {
-        // _menuBar = new JMenuBar();
         log.error("CircuitBuilder ctor requires an Editor class");
     }
 
@@ -1049,11 +1051,10 @@ public class CircuitBuilder {
      * /********************* convert plain track to indicator track
      * *************
      */
-    IndicatorItemPanel _trackPanel;
+    FamilyItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
-    DisplayFrame _convertFrame;     // must be modal dialog to halt convertIcons loop
-    JDialog _convertDialog;     // must be modal dialog to halt convertIcons loop
+    ConvertFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
 
     /**
      * Check if the block being edited has all its icons converted to indicator
@@ -1131,59 +1132,67 @@ public class CircuitBuilder {
     /**
      * Converts icon to IndicatorTrack
      */
-    private void convertIcon(Positionable pos) {
-        _oldIcon = (PositionableLabel) pos;
+    private void convertIcon(Positionable p) {
+        PositionableLabel pos = (PositionableLabel) p;
+        _oldIcon = pos;
         _editor.highlight(_oldIcon);
         _editor.toFront();
         _editor.repaint();
         if (pos instanceof TurnoutIcon) {
-            makePaletteFrame("IndicatorTO");
-            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
+            _convertFrame = new ConvertFrame("IndicatorTO", pos);
+            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame._paletteFrame, "IndicatorTO", null, null, _editor);
             ActionListener updateAction = (ActionEvent a) -> {
                 convertTO();
             };
-            _trackTOPanel.init(updateAction);
-            _convertDialog.add(_trackTOPanel);
+            initConvertFrame(_trackTOPanel, updateAction);
         } else {
-            makePaletteFrame("IndicatorTrack");
-            _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
+            _convertFrame = new ConvertFrame("IndicatorTrack", pos);
+            _trackPanel = new IndicatorItemPanel(_convertFrame._paletteFrame, "IndicatorTrack", null, _editor);
             ActionListener updateAction = (ActionEvent a) -> {
                 convertSeg();
             };
-            _trackPanel.init(updateAction);
-            _convertDialog.add(_trackPanel);
+            initConvertFrame(_trackPanel, updateAction);
         }
-        _convertDialog.pack();
-        _convertDialog.setVisible(true);
         _editor.repaint();
     }
 
-    private void makePaletteFrame(String title) {
-        jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
-        _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
-                Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
-        _convertFrame = new ConvertFrame(_convertDialog);
 
-        _convertDialog.setLocationRelativeTo(_editor);
-        _convertDialog.toFront();
+    private void initConvertFrame(ItemPanel itemPanel, ActionListener updateAction) {
+        itemPanel.init(updateAction);
+        Dimension dim = itemPanel.getPreferredSize();
+        JScrollPane sp = new JScrollPane(itemPanel);
+        dim = new Dimension(dim.width +25, dim.height + 25);
+        sp.setPreferredSize(dim);
+        _convertFrame._dialog.add(sp);
+        _convertFrame._dialog.pack();
+        _convertFrame._dialog.setVisible(true);
     }
 
     /*
-     * gimmick to get JDialog to re-layout contents and repaint
+     * gimmick to get JDialog to wait until user makes a decision to convert each track icon.
+     * Holding the modal dialog does the trick.
+     * Also does re-layout contents and repaint
      */
-    static class ConvertFrame extends DisplayFrame {
+    class ConvertFrame extends JmriJFrame {
 
         JDialog _dialog;
+        DisplayFrame _paletteFrame;
 
-        ConvertFrame(JDialog dialog) {
+        ConvertFrame(String title, PositionableLabel pos) {
             super(false, false);
-            _dialog = dialog;
+            jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
+            _paletteFrame = pos.makePaletteFrame(title);
+            _dialog = new JDialog(_editor, java.text.MessageFormat.format(
+                    Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
+
+            _dialog.setLocationRelativeTo(_editor);
+            _dialog.toFront();
         }
 
         @Override
-        public void pack() {
-            super.pack();
-            _dialog.pack();
+        public void dispose() {
+            _dialog.dispose();
+            super.dispose();
         }
     }
 
@@ -1252,8 +1261,7 @@ public class CircuitBuilder {
         _oldIcon = null;
         _trackPanel = null;
         _trackTOPanel = null;
-        _convertDialog.dispose();
-        _convertDialog = null;
+        _convertFrame.dispose();
         _convertFrame = null;
     }
 
