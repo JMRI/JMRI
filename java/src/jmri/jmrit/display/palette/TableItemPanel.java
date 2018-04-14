@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -100,11 +101,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         topPanel.setLayout(new BorderLayout());
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
+        int cnt = Math.min(8, _table.getRowCount()) + 2;
+        _scrollPane.setPreferredSize(new Dimension(_scrollPane.getPreferredSize().width, cnt*ROW_HEIGHT));
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
-        java.awt.Dimension dim = _table.getPreferredSize();
-        dim.height = Math.min(ROW_HEIGHT * (_table.getRowCount() + 1), 15);
-        _scrollPane.getViewport().setPreferredSize(dim);
 
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
@@ -121,6 +121,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             @Override
             public void actionPerformed(ActionEvent a) {
                 _table.clearSelection();
+                hideIcons();
             }
         });
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
