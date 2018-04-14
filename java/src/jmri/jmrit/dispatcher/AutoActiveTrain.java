@@ -1198,11 +1198,13 @@ public class AutoActiveTrain implements ThrottleListener {
 
                     }
                 } else {
-                    log.debug("[{}]Request to execute BEGINNING_RESET cancelled", _activeTrain.getActiveTrainName());                break;
+                // dispatcher cancelled auto restart while train was stopping?
+ // djd debugging - may need code here
                 }
                 break;
             default:
-                log.error("Request to execute unknown stop train task - {}", task);
+                log.debug("[{}]Request to execute BEGINNING_RESET cancelled", _activeTrain.getActiveTrainName());
+                break;
         }
     }
 
@@ -1254,11 +1256,11 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             _targetSpeed = speed * _speedFactor;
         } else if (useSpeedProfile && _stopBySpeedProfile) {
-         // we are going to stop by profile
+            // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
             _autoEngineer.slowToStop(true);
         } else {
-             _autoEngineer.setHalt(true);
+            _autoEngineer.setHalt(true);
         }
     }
 
@@ -1606,6 +1608,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _targetSpeed = 0.0f;
                     _halted = true;
                 } else if (_slowToStop) {
+                    // this only sets to speed zero, stop
                     if (useSpeedProfile) {
                         re.getSpeedProfile().setExtraInitialDelay(1500f);
                         re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, 0,
@@ -1616,7 +1619,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _throttle.setSpeedSetting(0.0f);
                         _currentSpeed = 0.0f;
                         _targetSpeed = 0.0f;
-                        _halted = true;  
+                        _halted = true;
                     }
                 } else if (!_halt) {
                     // check for cancel speed profile
