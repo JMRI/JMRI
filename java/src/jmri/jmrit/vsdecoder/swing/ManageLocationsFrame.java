@@ -291,6 +291,7 @@ public class ManageLocationsFrame extends JmriJFrame {
                     (Double) locModel.getValueAt(0, 4));
             listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
                     (Double) locModel.getValueAt(0, 6));
+            VSDecoderManager.instance().getVSDecoderPreferences().save();
             VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
         }
 
@@ -354,6 +355,15 @@ public class ManageLocationsFrame extends JmriJFrame {
             HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {
+                    if (row[2] == null) { 
+                        row[2] = 0.0f;
+                    }
+                    if (row[3] == null) { 
+                        row[3] = 0.0f;
+                    }
+                    if (row[4] == null) { 
+                        row[4] = 0.0f;
+                    }
                     retv.put((String) row[0],
                             new PhysicalLocation((Float) row[2], (Float) row[3], (Float) row[4], (Boolean) row[5]));
                 }
