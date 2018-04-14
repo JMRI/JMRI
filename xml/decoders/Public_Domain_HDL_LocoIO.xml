@@ -124,7 +124,7 @@
         <tooltip>Message DSTH byte</tooltip>
       </variable>
 
-      <!-- per port config SVs, handled like CVs, uses lists from public_domain.enum-HDL-xyz -->
+      <!-- per port config SVs, handled like CVs, uses lists from public_domain.enum-HDL-PortMode -->
 
       <!-- Port 1 -->
       <variable item="Port1 Mode" CV="5" mask="VVVVXXXX">
@@ -135,38 +135,13 @@
         <tooltip>Enter code from list</tooltip>
       </variable>
 
-      <!-- Shows only for Output Pulse Hard - TEST -->
-      <!--<variable item="Port1 Output Pulse" CV="5" mask="XXXXVVVV">
-        <qualifier>
-          <variableref>Port1 Output</variableref>
-          <relation>eq</relation>
-          <value>140</value>
-        </qualifier>
-        <enumVal>
-          <enumChoice choice="1" value="16">
-            <choice>1</choice>
-          </enumChoice>
-          <enumChoice choice="2" value="48">
-            <choice>2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Contact:</label>
-      </variable>-->
-
-      <!-- Shows only for Input Toggle - TEST -->
-      <!--<variable item="Port1 Input Toggle" CV="5" mask="XXXXVVVV">
-        <qualifier>
-          <variableref>Port1 Input</variableref>
-          <relation>eq</relation>
-          <value>7</value>
-        </qualifier>
-        <enumVal>
-          <enumChoice choice="1" value="16">
-            <choice>1</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Contact:</label>
-      </variable>-->
+      <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV"/>
+        <decVal max="4096"/>
+        <label>Port Address (dec):</label>
+        <label>Poortadres (dec):</label>
+      </variable>
 
       <variable item="Port1 Config" CV="3">
         <decVal min="7" max="208"/>
@@ -229,30 +204,14 @@
         <label>Port Type:</label>
         <label xml:lang="nl">Poorttype:</label>
       </variable>-->
-      <!-- shows only for Input -->
+
+      <!-- list of Input and Output Port Modes -->
       <!--<variable item="Port2 Input" CV="8" mask="VVVVXXXX">
         <splitVal highCV="6" upperMask="XVVVVVVV"/>
-        <qualifier>
-          <variableref>Port2 Type</variableref>
-          <relation>eq</relation>
-          <value>0</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-InputMode.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Attached to:</label>
         <label xml:lang="nl">Aansluiting:</label>
       </variable>-->
-      <!-- Shows only for Output -->
-      <!--<variable item="Port2 Output" CV="8" mask="VVVVXXXX">
-        <splitVal highCV="6" upperMask="XVVVVVVV"/>
-        <qualifier>
-          <variableref>Port2 Type</variableref>
-          <relation>ne</relation>
-          <value>0</value>
-        </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-OutputMode.xml"/>
-        <label>Attached to:</label>
-        <label xml:lang="nl">Aansluiting:</label>
-      </variable>
 
       <variable item="Port2 Config" CV="6">
         <hexVal/>
@@ -264,9 +223,8 @@
         <label>Port2 Value1:</label>
       </variable>
 
-      <variable item="Port2 Address" CV="7" mask="XVVVVVVV">-->
+      <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-      <!--
         <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV"/>
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
@@ -276,7 +234,7 @@
       <variable item="Port2 Value2" CV="8">
         <hexVal/>
         <label>Port2 Value2:</label>
-      </variable>-->
+      </variable>
 
       <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 3 - 16 -->
 
