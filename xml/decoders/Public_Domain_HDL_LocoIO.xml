@@ -42,7 +42,7 @@
             <revnumber>2</revnumber>
             <date>2018-04-14</date>
             <authorinitials>EB</authorinitials>
-            <revremark>Added Board and Ports panes, manual entry</revremark>
+            <revremark>Added Board and Ports panes, manual entry, still experimental</revremark>
         </revision>
     </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
@@ -124,7 +124,7 @@
         <tooltip>Message DSTH byte</tooltip>
       </variable>
 
-      <!-- per port config SVs, handled like CVs, uses lists from public_domain.enum-HDL-PortMode -->
+      <!-- Per Port config SVs, handled like CVs, uses lists from public_domain.enum-HDL-PortMode -->
 
       <!-- Port 1 -->
       <variable item="Port1 Mode" CV="5" mask="VVVVXXXX">
@@ -163,7 +163,6 @@
       <variable item="Port2 Mode" CV="8" mask="VVVVXXXX">
         <splitVal highCV="6" factor="1" offset="0" upperMask="VVVVVVVV"/>
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <!--<decVal max="3328"/>-->
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
@@ -204,7 +203,6 @@
       <variable item="Port3 Mode" CV="11" mask="VVVVXXXX">
         <splitVal highCV="9" factor="1" offset="0" upperMask="VVVVVVVV"/>
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <!--<decVal max="3328"/>-->
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
@@ -245,7 +243,6 @@
       <variable item="Port4 Mode" CV="14" mask="VVVVXXXX">
         <splitVal highCV="12" factor="1" offset="0" upperMask="VVVVVVVV"/>
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <!--<decVal max="3328"/>-->
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
@@ -264,7 +261,7 @@
         <label>Config (dec):</label>
       </variable>
 
-      <variable item="Port2 Value1" CV="13">
+      <variable item="Port4 Value1" CV="13">
         <decVal/>
         <label>Value1 (dec):</label>
       </variable>
@@ -282,26 +279,8 @@
         <label>Poortadres (dec):</label>
       </variable>
 
-      <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 3 - 16 -->
+      <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 5 - 16 -->
 
-      <variable item="Dummy 9" CV="9">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 10" CV="10">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 11" CV="11">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 12" CV="12">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 13" CV="13">
-        <decVal/>
-      </variable>
-      <variable item="Dummy 14" CV="14">
-        <decVal/>
-      </variable>
       <variable item="Dummy 15" CV="15">
         <decVal/>
       </variable>
@@ -1028,6 +1007,7 @@
 
   <!-- LocoIO GUI Panes -->
 
+  <!-- Board Settings Pane -->
     <pane>
         <name>LocoIO</name>
       <column>
@@ -1047,10 +1027,12 @@
       </column>
     </pane>
 
+  <!-- Per Port Config Pane -->
   <pane>
     <name>Ports</name>
     <name xml:lang="nl">Poorten</name>
       <column>
+        <separator/>
 
         <row>
           <column>
@@ -1113,6 +1095,217 @@
       </column>
     </pane>
 
+  <!-- LocoIO Valid Values Reference (static info) -->
+  <pane>
+    <name>Cheat Sheet</name>
+    <name xml:lang="nl">Spiekblad</name>
+    <column>
+      <row>
+      <label>
+        <text>&lt;html&gt;&lt;strong&gt;What values to enter on the Parts tab?&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Kies een rij en vul de waarden in op tab Poorten&lt;/strong&gt;&lt;/html&gt;</text>
+      </label>
+      </row>
+
+      <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Port Mode&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poortfunctie&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              Input: Toggle Switch - Indirect&lt;br/&gt;
+              Input: Toggle Switch&lt;br/&gt;
+              Input: Switch Point Feedback - Normal&lt;br/&gt;
+              Input: Block Detect - Active Low - Delayed&lt;br/&gt;
+              Input: Block Detect - Active Low&lt;br/&gt;
+              Input: Push Button - Active Low - Indirect&lt;br/&gt;
+              Input: Push Button - Active Low&lt;br/&gt;
+              Input: Switch Point Feedback - Contact 2&lt;br/&gt;
+              Input: Switch Point Feedback - Contact 1&lt;br/&gt;
+              Input: Block Detect - Active High - Delayed&lt;br/&gt;
+              Input: Block Detect - Active High&lt;br/&gt;
+              Input: Push Button - Active High - Indirect&lt;br/&gt;
+              Input: Push Button - Active High&lt;br/&gt;
+              &lt;br/&gt;
+              Output: Servo&lt;br/&gt;
+              Output: Fixed - 1 - Off&lt;br/&gt;
+              Output: Fixed - 2 - Off&lt;br/&gt;
+              Output: Fixed - 1 - On&lt;br/&gt;
+              Output: Fixed - 2 - On&lt;br/&gt;
+              Output: Pulse - 2 - Soft Reset&lt;br/&gt;
+              Output: Pulse - 1 - Soft Reset&lt;br/&gt;
+              Output: Pulse - 2 - Hard Reset&lt;br/&gt;
+              Output: Pulse - 1 - Hard Reset&lt;br/&gt;
+              Output: Fixed - 1 - Off - Blink&lt;br/&gt;
+              Output: Fixed - 2 - Off - Blink&lt;br/&gt;
+              Output: Fixed - 1 - On - Blink&lt;br/&gt;
+              Output: Fixed - 2 - On - Blink&lt;br/&gt;
+              Output: Fixed - 1 - Off - 4-Way&lt;br/&gt;
+              Output: Fixed - 1 - Off - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 2 - Off - 4-Way&lt;br/&gt;
+              Output: Fixed - 2 - Off - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 1 - On - 4-Way&lt;br/&gt;
+              Output: Fixed - 1 - On - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 2 - On - 4-Way&lt;br/&gt;
+              Output: Fixed - 2 - On - 4-Way - Blink&lt;br/&gt;
+              Output: Occupancy&lt;br/&gt;
+              Output: Occupancy - Blink&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Config&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              7&lt;br/&gt;
+              15&lt;br/&gt;
+              23&lt;br/&gt;
+              29&lt;br/&gt;
+              33&lt;br/&gt;
+              39&lt;br/&gt;
+              47&lt;br/&gt;
+              55&lt;br/&gt;
+              55&lt;br/&gt;
+              91&lt;br/&gt;
+              95&lt;br/&gt;
+              103&lt;br/&gt;
+              111&lt;br/&gt;
+              &lt;br/&gt;
+              128&lt;br/&gt;
+              128&lt;br/&gt;
+              128&lt;br/&gt;
+              129&lt;br/&gt;
+              129&lt;br/&gt;
+              136&lt;br/&gt;
+              136&lt;br/&gt;
+              140&lt;br/&gt;
+              140&lt;br/&gt;
+              144&lt;br/&gt;
+              144&lt;br/&gt;
+              145&lt;br/&gt;
+              145&lt;br/&gt;
+              160&lt;br/&gt;
+              176&lt;br/&gt;
+              160&lt;br/&gt;
+              176&lt;br/&gt;
+              161&lt;br/&gt;
+              177&lt;br/&gt;
+              161&lt;br/&gt;
+              177&lt;br/&gt;
+              192&lt;br/&gt;
+              208&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Value1&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              Address&lt;br/&gt;
+              Address&lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              <br/>
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Value2&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              112&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              96&lt;br/&gt;
+              112&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              0&lt;br/&gt;
+              32&lt;br/&gt;
+              0&lt;br/&gt;
+              32&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              48&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+
+      </row>
+    </column>
+  </pane>
+
   <pane>
       <name>ReadMe</name>
       <name xml:lang="de">Lese Mich</name>
@@ -1120,10 +1313,10 @@
       <name xml:lang="nl">Lees Mij</name>
       <column>
           <label>
-              <text>&lt;html&gt;&lt;h1&gt;Important information about HDL LocoIO Boards&lt;/h1&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Wichtige information bzw. HDL LocoIO Einheiten&lt;/h1&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;h1&gt;Information about HDL LocoIO Boards&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Information bzw. HDL LocoIO Einheiten&lt;/h1&gt;&lt;/html&gt;</text>
               <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Modules LocoIO HDL&lt;/h1&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Belangrijke informatie over HDL LocoIO Modules&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Informatie over HDL LocoIO Modules&lt;/h1&gt;&lt;/html&gt;</text>
           </label>
           <separator/>
         <label>
@@ -1134,26 +1327,27 @@
         </label>
         <separator/>
           <label>
-              <text>&lt;html&gt;&lt;h3&gt;SV Programming/reading Ops Mode addressing (LOCONETSV1MODE)&lt;/h3&gt;&lt;html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;SV-Programmierung / Lesen auf dem Hauptgleis (LOCONETSV1MODE)&lt;/h3&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;SV Programmeren/Uitlezen via POM (LOCONETSV1MODE)&lt;/h3&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;h3&gt;TEST for SV Programming Ops Mode addressing (LOCONETSV1MODE), no Reading&lt;/h3&gt;&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Experimenteller SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), nicht Lesen&lt;/h3&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;TEST voor SV's Programmeren via POM (LOCONETSV1MODE), niet Uitlezen&lt;/h3&gt;&lt;/html&gt;</text>
           </label>
           <label>
               <text>&lt;html&gt;
-                  As an alternative for the HDL Windows LocoIO config program, follow these steps:&lt;br/&gt;
+                  As an alternative for the HDL Windows LocoIO Config program, follow these steps:&lt;br/&gt;
                   &lt;br/&gt;
-                  Be careful to disconnect all other LocoIO devices when changing the board address (broadcast).&lt;br/&gt;
+                  Be careful to disconnect all other LocoIO devices when changing a board's address (broadcast).&lt;br/&gt;
                   &lt;br/&gt;
                   Step 1: Connect power and LocoNet to the unit.&lt;br/&gt;
                   Step 2: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;
                   Step 3: Set desired options and click "Write to decoder".&lt;br/&gt;
                   Step 4: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
+                  &lt;br/&gt;
                   &lt;/html&gt;</text>
           </label>
           <label>
-              <text>&lt;html&gt;&lt;h3&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;/h3&gt;&lt;html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;/h3&gt;&lt;html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op http://users.telenet.be/deloof/&lt;/h3&gt;&lt;html&gt;</text>
+              <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="http://users.telenet.be/deloof"&gt;users.telenet.be/deloof&lt;/a&gt;/&lt;html&gt;</text>
           </label>
       </column>
   </pane>
