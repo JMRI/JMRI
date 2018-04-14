@@ -129,7 +129,8 @@
       <!-- Port 1 -->
       <variable item="Port1 Mode" CV="5" mask="VVVVXXXX">
         <splitVal highCV="3" factor="1" offset="0" upperMask="VVVVVVVV"/>
-        <decVal max="3328"/>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <!--<decVal max="3328"/>-->
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
@@ -161,7 +162,8 @@
       <!-- Port 2 -->
       <variable item="Port2 Mode" CV="8" mask="VVVVXXXX">
         <splitVal highCV="6" factor="1" offset="0" upperMask="VVVVVVVV"/>
-        <decVal max="3328"/>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <!--<decVal max="3328"/>-->
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
@@ -198,42 +200,86 @@
         <label>Poortadres (dec):</label>
       </variable>
 
-      <!-- Port 2 -->
-      <!--<variable item="Port2 Type" CV="6" mask="VXXXXXXX" default="128">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-InputOutput.xml"/>
-        <label>Port Type:</label>
-        <label xml:lang="nl">Poorttype:</label>
-      </variable>-->
-
-      <!-- list of Input and Output Port Modes -->
-      <!--<variable item="Port2 Input" CV="8" mask="VVVVXXXX">
-        <splitVal highCV="6" upperMask="XVVVVVVV"/>
+      <!-- Port 3 -->
+      <variable item="Port3 Mode" CV="11" mask="VVVVXXXX">
+        <splitVal highCV="9" factor="1" offset="0" upperMask="VVVVVVVV"/>
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <label>Attached to:</label>
-        <label xml:lang="nl">Aansluiting:</label>
-      </variable>-->
-
-      <variable item="Port2 Config" CV="6">
-        <hexVal/>
-        <label>Config2:</label>
+        <!--<decVal max="3328"/>-->
+        <label>Mode:</label>
+        <label xml:lang="nl">Functie:</label>
+        <tooltip>Enter code from list</tooltip>
       </variable>
 
-      <variable item="Port2 Value1" CV="7">
-        <hexVal/>
-        <label>Port2 Value1:</label>
-      </variable>
-
-      <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
+      <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV"/>
+        <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV"/>
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
         <label>Poortadres (dec):</label>
       </variable>
 
-      <variable item="Port2 Value2" CV="8">
-        <hexVal/>
-        <label>Port2 Value2:</label>
+      <variable item="Port3 Config" CV="9">
+        <decVal min="10" max="208"/>
+        <label>Config (dec):</label>
+      </variable>
+
+      <variable item="Port3 Value1" CV="10">
+        <decVal/>
+        <label>Value1 (dec):</label>
+      </variable>
+
+      <variable item="Port3 Value2" CV="11">
+        <decVal min="0" max="112"/>
+        <label>Value2 (dec):</label>
+      </variable>
+
+      <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV"/>
+        <decVal max="4096"/>
+        <label>Port Address (dec):</label>
+        <label>Poortadres (dec):</label>
+      </variable>
+
+      <!-- Port 4 -->
+      <variable item="Port4 Mode" CV="14" mask="VVVVXXXX">
+        <splitVal highCV="12" factor="1" offset="0" upperMask="VVVVVVVV"/>
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <!--<decVal max="3328"/>-->
+        <label>Mode:</label>
+        <label xml:lang="nl">Functie:</label>
+        <tooltip>Enter code from list</tooltip>
+      </variable>
+
+      <variable item="Port4 Address" CV="13" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV"/>
+        <decVal max="4096"/>
+        <label>Port Address (dec):</label>
+        <label>Poortadres (dec):</label>
+      </variable>
+
+      <variable item="Port4 Config" CV="12">
+        <decVal min="7" max="208"/>
+        <label>Config (dec):</label>
+      </variable>
+
+      <variable item="Port2 Value1" CV="13">
+        <decVal/>
+        <label>Value1 (dec):</label>
+      </variable>
+
+      <variable item="Port4 Value2" CV="14">
+        <decVal min="0" max="112"/>
+        <label>Value2 (dec):</label>
+      </variable>
+
+      <variable item="Port4 Address" CV="7" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV"/>
+        <decVal max="4096"/>
+        <label>Port Address (dec):</label>
+        <label>Poortadres (dec):</label>
       </variable>
 
       <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 3 - 16 -->
@@ -1020,7 +1066,6 @@
         <display item="Port1 Value2"/>
           </column>
           <separator/>
-
           <column>
             <label>
               <text>Port 2</text>
@@ -1032,6 +1077,35 @@
             <display item="Port2 Config"/>
             <display item="Port2 Value1"/>
             <display item="Port2 Value2"/>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>Port 3</text>
+              <text xml:lang="nl">Poort 3</text>
+            </label>
+            <display item="Port3 Mode"/>
+            <display item="Port3 Address"/>
+
+            <display item="Port3 Config"/>
+            <display item="Port3 Value1"/>
+            <display item="Port3 Value2"/>
+          </column>
+          <separator/>
+          <column>
+            <label>
+              <text>Port 4</text>
+              <text xml:lang="nl">Poort 4</text>
+            </label>
+            <display item="Port4 Mode"/>
+            <display item="Port4 Address"/>
+
+            <display item="Port4 Config"/>
+            <display item="Port4 Value1"/>
+            <display item="Port4 Value2"/>
           </column>
         </row>
         <separator/>
