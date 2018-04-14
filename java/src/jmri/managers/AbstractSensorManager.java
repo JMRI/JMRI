@@ -101,11 +101,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
         }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("systemName null in newSensor");
-        }
+        java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with "+systemName);
+
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {

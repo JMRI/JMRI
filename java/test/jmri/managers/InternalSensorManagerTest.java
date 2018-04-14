@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2016
  */
-public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener, PropertyChangeListener {
+public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
     /** {@inheritDoc} */
     @Override
@@ -106,7 +106,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Sensor s1 = l.provideSensor("IS1");
         s1.setUserName("Sensor 1");
         Sensor s2 = l.provideSensor("IS2");
-        Sensor s3 = l.provideSensor("IS3");
+        l.provideSensor("IS3");
         
         l.addDataListener(this);
         List<Sensor> tlist = l.getNamedBeanList();
@@ -226,7 +226,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Test
     public void testUnmodifiable() {
         Sensor s1 = l.provideSensor("IS1");
-        Sensor s2 = l.provideSensor("IS2");
+        l.provideSensor("IS2");
         
         List<String> nameList = l.getSystemNameList();
         List<Sensor> beanList = l.getNamedBeanList();

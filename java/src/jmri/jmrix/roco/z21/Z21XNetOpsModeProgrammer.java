@@ -117,6 +117,6 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
+    // private final static Logger log = LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
 
 }

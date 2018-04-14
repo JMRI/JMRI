@@ -74,7 +74,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 	    initializeNodes();
 
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle") + " - Connection "+_memo.getUserName());
         setSize(1200,300);
 
         Container contentPane = getContentPane();
@@ -142,8 +142,7 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 
         JScrollPane nodeTableScrollPane = new JScrollPane(nodeTable);
 
-        Border pollListBorderTitled = BorderFactory.createTitledBorder(pollListBorder,
-                                               jmri.jmrix.cmri.serial.cmrinetmanager.Bundle.getMessage("Connection")+" "+_memo.getUserName(),
+        Border pollListBorderTitled = BorderFactory.createTitledBorder(pollListBorder," ",
                                                                     TitledBorder.LEFT,TitledBorder.ABOVE_TOP);
         pollListPanel.add(nodeTableScrollPane,BorderLayout.EAST);
         pollListPanel.setBorder(pollListBorderTitled);

@@ -508,16 +508,16 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {
+    public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {
+    public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener> listeners = new ArrayList<>();    
+    final List<ManagerDataListener<E>> listeners = new ArrayList<>();    
 
     private boolean muted = false;
     

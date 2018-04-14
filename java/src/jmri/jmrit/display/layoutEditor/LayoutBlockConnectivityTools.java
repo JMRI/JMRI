@@ -67,10 +67,16 @@ public class LayoutBlockConnectivityTools {
 
     /**
      * Determines if a pair of NamedBeans (Signalhead, Signalmast or Sensor)
-     * assigned to a block boundary are reachable.
-     *
-     * @return true if source and destination beans are reachable, or false if
-     *         they are not
+     * assigned to a block boundary are reachable.<br>
+     * Called by {@link jmri.jmrit.signalling.SignallingPanel} using MASTTOMAST.
+     * <p>
+     * Search all of the layout editor panels to find the facing and protecting
+     * layout blocks for each bean.  Call the 3 block+list version of checkValidDest() to finish the checks.
+     * <p>
+     * @param sourceBean The source bean.
+     * @param destBean   The destination bean.
+     * @param pathMethod Indicates the type of path:  Signal head, signal mast or sensor.
+     * @return true if source and destination beans are reachable.
      * @throws jmri.JmriException if no blocks can be found that related to the
      *                            named beans.
      */
@@ -101,9 +107,9 @@ public class LayoutBlockConnectivityTools {
                 destProtectBlock = lbm.getProtectingBlocksByNamedBean(destBean, layout.get(i));
             }
             if ((destFacingBlock != null) && (facingBlock != null) && (protectingBlock != null)) {
-                /*Destination protecting block is allowed to be null, as the destination signalmast
+                /*Destination protecting block list is allowed to be empty, as the destination signalmast
                  could be assigned to an end bumper */
-                //A simple to check to see if the remote signal is in the correct direction to ours.
+                //A simple to check to see if the remote signal/sensor is in the correct direction to ours.
                 try {
                     return checkValidDest(facingBlock, protectingBlock, destFacingBlock, destProtectBlock, pathMethod);
                 } catch (jmri.JmriException e) {
@@ -124,7 +130,7 @@ public class LayoutBlockConnectivityTools {
      * discover a clear path from a source layout block through to a destination
      * layout block. By specifying the sourceLayoutBlock and
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
-     * then be termined, eg east to west, south to north etc.
+     * then be determined, eg east to west, south to north etc.
      * <p>
      * @param sourceBean   - The source bean (SignalHead, SignalMast or Sensor)
      *                     assigned to a block boundary that we are starting
@@ -217,24 +223,27 @@ public class LayoutBlockConnectivityTools {
     /**
      * Determines if one set of blocks is reachable from another set of blocks
      * based upon the directions of the set of blocks.
+     * <ul>
+     * <li>Called by {@link jmri.implementation.DefaultSignalMastLogic} using MASTTOMAST.</li>
+     * <li>Called by {@link jmri.jmrit.entryexit.DestinationPoints} using SENSORTOSENSOR.</li>
+     * <li>Called by {@link jmri.jmrit.entryexit.EntryExitPairs} using SENSORTOSENSOR.</li>
+     * </ul>
+     * Convert the destination protected block to an array list.
+     * Call the 3 block+list version of checkValidDest() to finish the checks.
      * <p>
-     * This is used to help with identifying items such as signalmasts located
-     * at positionable points or turnouts are facing in the same direction as
-     * other given signalmasts.
-     * <p>
-     * Given the current block and the next block we can work out the direction
-     * of travel. Given the destBlock and the next block on, we can determine
-     * the whether the destBlock comes before the destBlock+1.
-     *
-     * @return true if destBlock comes before destBlock+1 or false if destBlock
-     *         comes after destBlock+1
+     * @param currentBlock The facing layout block for the source signal or sensor.
+     * @param nextBlock    The protected layout block for the source signal or sensor.
+     * @param destBlock    The facing layout block for the destination signal mast or sensor.
+     * @param destProBlock The protected destination block.
+     * @param pathMethod   Indicates the type of path:  Signal head, signal mast or sensor.
+     * @return true if a path to the destination is valid.
      * @throws jmri.JmriException if any Block is null;
      */
-    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1, int pathMethod) throws jmri.JmriException {
+    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destProBlock, int pathMethod) throws jmri.JmriException {
 
         List<LayoutBlock> destList = new ArrayList<>();
-        if (destBlockn1 != null) {
-            destList.add(destBlockn1);
+        if (destProBlock != null) {
+            destList.add(destProBlock);
         }
         try {
             return checkValidDest(currentBlock, nextBlock, destBlock, destList, pathMethod);
@@ -244,20 +253,44 @@ public class LayoutBlockConnectivityTools {
 
     }
 
+    /**
+     * Determines if one set of blocks is reachable from another set of blocks
+     * based upon the directions of the set of blocks.
+     * <p>
+     * This is used to help with identifying items such as signalmasts located
+     * at positionable points or turnouts are facing in the same direction as
+     * other given signalmasts.
+     * <p>
+     * Given the current block and the next block we can work out the direction
+     * of travel. Given the destBlock and the next block on, we can determine
+     * the whether the destBlock comes before the destBlock+1.
+     * <p>
+     * Note:  This version is internally called by other versions that pre-process
+     * external calls.
+     * <p>
+     * @param currentBlock The facing layout block for the source signal or sensor.
+     * @param nextBlock    The protected layout block for the source signal or sensor.
+     * @param destBlock    The facing layout block for the destination signal mast or sensor.
+     * @param destBlockn1  A list of protected destination blocks.  Can be empty if the
+     *                     destination is at an end bumper.
+     * @param pathMethod   Indicates the type of path:  Signal head, signal mast or sensor.
+     * @return true if a path to the destination is valid.
+     * @throws jmri.JmriException if any layout block is null or advanced routing is not enabled.
+     */
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, int pathMethod) throws jmri.JmriException {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
-            log.info("Advanced routing has not been enabled therefore we cannot use this function");
+            log.debug("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
         }
 
         if (log.isDebugEnabled()) {
             try {
-                log.debug("faci " + currentBlock.getDisplayName());
-                log.debug("next " + nextBlock.getDisplayName());
-                log.debug("dest " + destBlock.getDisplayName());
+                log.debug("faci {}", currentBlock.getDisplayName());
+                log.debug("next {}", nextBlock.getDisplayName());
+                log.debug("dest {}", destBlock.getDisplayName());
                 for (LayoutBlock dp : destBlockn1) {
-                    log.debug("dest + 1 " + dp.getDisplayName());
+                    log.debug("dest + 1 {}", dp.getDisplayName());
                 }
             } catch (java.lang.NullPointerException e) {
 
@@ -287,40 +320,44 @@ public class LayoutBlockConnectivityTools {
                     log.debug("dest {} protecting {}", desCount, proCount);
                 }
             }
-            if (proCount > desCount && (proCount - 1) != desCount) {
-                /* The block that we are protecting should be one hop greater than the destination count
-                 if it is not then the route is not valid.
-                 */
-                log.debug("Protecting is more than one hop away from destination and therefore not valid.");
-                return false;
-            }
-            if (proCount < desCount) {
-                /*Need to do a more advanced check in this case as the destBlockn1
-                 could be reached via a different route and therefore have a smaller
-                 hop count we need to therefore step through each block until we reach
-                 the end.
-                 We also need to perform a more advanced check if the destBlockn1
-                 is null as this indicates that the destination signal mast is assigned
-                 on an end bumper*/
-                log.debug("proCount is less than destination");
-                List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); //Was MASTTOMAST
-                for (LayoutBlock dp : destBlockn1) {
-                    if (blockList.contains(dp) && currentBlock != dp) {
-                        log.debug("Signal mast in the wrong direction");
-                        return false;
-                    }
-                }
-                /*Work on the basis that if you get the blocks from source to dest
-                 then the dest+1 block should not be included*/
-                log.debug("Signal mast in the correct direction");
-                return true;
-            } else if ((proCount == -1) && (desCount == -1)) {
+
+            if ((proCount == -1) && (desCount == -1)) {
                 //The destination block and destBlock+1 are both directly connected
                 log.debug("Dest and dest+1 are directly connected");
                 return false;
             }
-            log.debug("Return true path");
+
+            if (proCount > desCount && (proCount - 1) == desCount) {
+                // The block that we are protecting should be one hop greater than the destination count.
+                log.debug("Protecting is one hop away from destination and therefore valid.");
+                return true;
+            }
+
+            /*Need to do a more advanced check in this case as the destBlockn1
+             could be reached via a different route and therefore have a smaller
+             hop count we need to therefore step through each block until we reach
+             the end.
+             The advanced check also covers cases where the route table is inconsistent.
+             We also need to perform a more advanced check if the destBlockn1
+             is null as this indicates that the destination signal mast is assigned
+             on an end bumper*/
+            List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); //Was MASTTOMAST
+            if (log.isDebugEnabled()) {
+                log.debug("checkValidDest blockList for {}", destBlock.getDisplayName());
+                blockList.forEach(blk -> log.debug("  block = {}", blk.getDisplayName()));
+            }
+            for (LayoutBlock dp : destBlockn1) {
+                log.debug("dp = {}", dp.getDisplayName());
+                if (blockList.contains(dp) && currentBlock != dp) {
+                    log.debug("Signal mast in the wrong direction");
+                    return false;
+                }
+            }
+                /*Work on the basis that if you get the blocks from source to dest
+                 then the dest+1 block should not be included*/
+            log.debug("Signal mast in the correct direction");
             return true;
+
         } else if (destBlock == null) {
             throw new jmri.JmriException("Block in Destination Field returns as invalid");
         } else if (currentBlock == null) {
@@ -333,12 +370,13 @@ public class LayoutBlockConnectivityTools {
 
     /**
      * This uses the layout editor to check if the destination location is
-     * reachable from the source location
-     *
+     * reachable from the source location.<br>
+     * Note: No known references to this method.
+     * <p>
      * @param facing     Layout Block that is considered our first block
      * @param protecting Layout Block that is considered first block +1
      * @param dest       Layout Block that we want to get to
-     * @return true if valid, false if not valid.
+     * @return true if valid.
      */
     public boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException {
         if (facing == null || protecting == null || dest == null) {
@@ -369,7 +407,7 @@ public class LayoutBlockConnectivityTools {
      * discover a clear path from a source layout block through to a destination
      * layout block. By specifying the sourceLayoutBlock and
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
-     * then be termined, eg east to west, south to north etc.
+     * then be determined, eg east to west, south to north etc.
      * <p>
      * @param sourceLayoutBlock      - The layout block that we are starting
      *                               from, can also be considered as the block
@@ -397,7 +435,7 @@ public class LayoutBlockConnectivityTools {
         lastErrorMessage = "Unknown Error Occured";
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
-            log.info("Advanced routing has not been enabled therefore we cannot use this function");
+            log.debug("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
         }
 

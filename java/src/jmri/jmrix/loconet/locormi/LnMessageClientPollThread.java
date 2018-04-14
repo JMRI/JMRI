@@ -28,7 +28,7 @@ class LnMessageClientPollThread extends Thread {
 
                 if (lnMessages != null) {
 
-                    log.debug("Recieved Message Array Size: " + lnMessages.length);
+                    log.debug("Received Message Array Size: {}", lnMessages.length);
                     for (int lnMessageIndex = 0; lnMessageIndex < lnMessages.length; lnMessageIndex++) {
                         LocoNetMessage message = (LocoNetMessage) lnMessages[lnMessageIndex];
                         parent.message(message);
@@ -36,7 +36,7 @@ class LnMessageClientPollThread extends Thread {
                 }
             }
         } catch (Exception ex) {
-            log.warn("Exception: " + ex);
+            log.warn("Exception: ", ex);
         }
     }
 }
