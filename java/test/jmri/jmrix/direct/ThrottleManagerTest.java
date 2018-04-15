@@ -14,16 +14,16 @@ public class ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTe
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+        Assert.assertNotNull("exists", tm);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initDebugCommandStation();
-        jmri.CommandStation cs = jmri.InstanceManager.getDefault(jmri.CommandStation.class);
-        tm = new ThrottleManager(cs);
+
+        DirectSystemConnectionMemo m = new DirectSystemConnectionMemo();
+        tm = new ThrottleManager(m);
     }
 
     @After

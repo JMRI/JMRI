@@ -15,14 +15,17 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20150315"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20160618"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20180406"/>  
   <!-- Created from version 0 of the Digitrax_01x6 file -->
-  <!-- Sole difference is absence of BEMF tuning (bemf.xml file) -->
-  <!-- Version 0 - New Series 6 Econmy Digitrax decoders (Alain Le Marchand) -->
+  <!-- Version 0 - New Series 6 Econmoy Digitrax decoders (Alain Le Marchand) -->
+  <!--             Sole difference is absence of BEMF tuning (bemf.xml file)  -->  
   <!--             DH126D, DH126P, DH126PD
                    New definition of CV61 bit0 as per Digitrax manual 2nd edition 01/14     -->
   <!-- Version 1 - CV7 reported equal to 51 by a user - from Bug Report #515 (Alain Le Marchand)    -->
   <!--             Changed Low Version from 52 to 51                                                -->
   <!-- Version 2 - Add DH126MT (Alain Le Marchand)    -->
+  <!-- Version 3 - Add BEMF tuning (bemf.xml file) that was previously omitted 
+                   due to lack of clarity of documentation (Alain Le Marchand)    -->  
   <!-- WARNING :   High Version of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
   <decoder>
     <family name="Economy Series 6 with FX3, silent" mfg="Digitrax" lowVersionID="51" highVersionID="64" comment="Economy series do NOT have Scaleable Speed Stabilization (Back EMF)">
@@ -63,7 +66,7 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
-      <!-- <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>     not available in the Economy series -->
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>

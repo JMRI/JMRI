@@ -9,7 +9,7 @@ import org.junit.Before;
  * Tests for the SerialTurnout class
  *
  * @author Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;

@@ -54,7 +54,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
-         back to the screen when the programming screen when we recieve
+         back to the screen when the programming screen when we receive
          something from the command station */
         progListener = p;
         value = val;

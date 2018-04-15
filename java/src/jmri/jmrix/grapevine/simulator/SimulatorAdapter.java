@@ -77,7 +77,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return
@@ -103,7 +103,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     public boolean okToSend() {
         if (checkBuffer) {
-            log.debug("Buffer Empty: " + outputBufferEmpty);
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
             log.debug("No Flow Control or Buffer Check");
@@ -343,7 +343,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 }
         }
         log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
-        return (reply);
+        return reply;
     }
 
     /**
@@ -406,7 +406,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         sum += (r.getElement(1 + start) * 2) & 0x0F;
         sum += ((r.getElement(1 + start) * 2) & 0xF0) >> 4;
         sum += (r.getElement(3 + start) & 0x70) >> 4;
-        //log.debug("PPPParity element read: {}",
+        //log.debug("Parity element read: {}",
         //       Integer.toHexString(r.getElement(3 + start) & 0x70));
         int parity = 16 - (sum & 0xF);
 

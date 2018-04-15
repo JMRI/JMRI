@@ -24,7 +24,6 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         }
         ImageIndexEditor indexEditor = InstanceManager.getDefault(ImageIndexEditor.class);
         Assert.assertNotNull(JFrameOperator.waitJFrame(Bundle.getMessage("editIndexFrame"), true, true));
-        Assert.assertFalse("Index not changed", indexEditor.isIndexChanged());
 
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             indexEditor.addNode();

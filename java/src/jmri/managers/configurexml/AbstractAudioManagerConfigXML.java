@@ -61,7 +61,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         AudioManager am = (AudioManager) o;
         if (am != null) {
             java.util.Iterator<String> iter
-                    = am.getSystemNameList().iterator();
+                    = am.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) {
@@ -80,7 +80,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            for (String sname : am.getSystemNameList()) {
+            for (String sname : am.getSystemNameAddedOrderList()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Check if " + sname + " is a VSD object");
                 }

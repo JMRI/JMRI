@@ -13,14 +13,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
-import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
-import jmri.implementation.swing.SwingShutDownTask;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import org.openide.util.lookup.ServiceProvider;
@@ -36,9 +34,6 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private CatalogPanel _catalog;
     private CatalogPanel _index;
-
-    private boolean _indexChanged = false;
-    private ShutDownTask _shutDownTask;
 
     public static final String IconDataFlavorMime = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.catalog.NamedIcon";
@@ -78,7 +73,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         storeItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                storeImageIndex();
+                InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex();
             }
         });
 
@@ -138,9 +133,14 @@ public final class ImageIndexEditor extends JmriJFrame {
         mainPanel.add(labelPanel);
         JPanel catalogsPanel = new JPanel();
         catalogsPanel.setLayout(new BoxLayout(catalogsPanel, BoxLayout.X_AXIS));
-        catalogsPanel.add(makeCatalogPanel());
-        catalogsPanel.add(new JSeparator(SwingConstants.VERTICAL));
-        catalogsPanel.add(makeIndexPanel());
+//        catalogsPanel.add(makeCatalogPanel());
+//        catalogsPanel.add(new JSeparator(SwingConstants.VERTICAL));
+//        catalogsPanel.add(makeIndexPanel());
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                makeCatalogPanel(), makeIndexPanel());
+        splitPane.setContinuousLayout(true);
+        splitPane.setOneTouchExpandable(true);
+        catalogsPanel.add(splitPane);
         mainPanel.add(catalogsPanel);
         getContentPane().add(mainPanel);
 
@@ -155,57 +155,9 @@ public final class ImageIndexEditor extends JmriJFrame {
         setVisible(true);
     }
 
-    public final synchronized void indexChanged(boolean changed) {
-        _indexChanged = changed;
-        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
-            if (changed) {
-                if (_shutDownTask == null) {
-                    _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
-                            Bundle.getMessage("IndexChanged"),
-                            Bundle.getMessage("SaveAndQuit"), null) {
-                        @Override
-                        public boolean checkPromptNeeded() {
-                            return !_indexChanged;
-                        }
-
-                        @Override
-                        public boolean doPrompt() {
-                            storeImageIndex();
-                            return true;
-                        }
-                    };
-                    sdm.register(_shutDownTask);
-                }
-            } else {
-                if (_shutDownTask != null) {
-                    sdm.deregister(_shutDownTask);
-                    _shutDownTask = null;
-                }
-            }
-        });
-    }
-
-    public boolean isIndexChanged() {
-        return _indexChanged;
-    }
-
-    public void storeImageIndex() {
-        jmri.jmrit.display.palette.ItemPalette.storeIcons();
-
-        if (log.isDebugEnabled()) {
-            log.debug("Start writing CatalogTree info");
-        }
-        try {
-            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
-            indexChanged(false);
-        } catch (java.io.IOException ioe) {
-            log.error("Exception writing CatalogTrees: {}", ioe);
-        }
-    }
-
     private JPanel makeCatalogPanel() {
-        _catalog = new CatalogPanel("defaultCatalog", "selectNode"); // make sure both these properties keys exist
-        _catalog.init(false);
+        _catalog = new CatalogPanel("defaultCatalog", "selectNode", false); // make sure both these properties keys exist
+        _catalog.init(false, true);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
 
@@ -223,8 +175,8 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     private JPanel makeIndexPanel() {
-        _index = new CatalogPanel("ImageIndex", "selectIndexNode"); // make sure both these properties keys exist
-        _index.init(true);
+        _index = new CatalogPanel("ImageIndex", "selectIndexNode", false); // make sure both these properties keys exist
+        _index.init(true, false);
 
         boolean found = false;
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);

@@ -23,8 +23,8 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void setUp() {
         JUnitUtil.setUp();
 
-        SerialTrafficController t = new SerialTrafficControlScaffold();
         SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
+        SerialTrafficController t = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(t);
         t.registerNode(new SerialNode(0, SerialNode.DAUGHTER,t));
         // create and register the manager object

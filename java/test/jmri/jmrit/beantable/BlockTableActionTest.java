@@ -11,7 +11,9 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -89,6 +91,29 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(af);
         _bTable.dispose();
         _b1Table.dispose();
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testAddBlock() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        a.actionPerformed(null); // show table
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleBlockTable"), true, true);
+        Assert.assertNotNull(f);
+
+        a.addPressed(null);
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddBlock"));  // NOI18N
+        Assert.assertNotNull("Found Add Block Frame", addFrame);  // NOI18N
+
+        new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
+        new JTextFieldOperator(addFrame, 2).setText("Block 105");  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+
+        Block chk105 = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBlock("Block 105");  // NOI18N
+        Assert.assertNotNull("Verify IB105 Added", chk105);  // NOI18N
+        Assert.assertEquals("Verify system name prefix", "IB105", chk105.getSystemName());  // NOI18N
+
         JUnitUtil.dispose(f);
     }
 

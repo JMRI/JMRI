@@ -86,6 +86,14 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 set.add(service);
             }
+            for (String type : factory.getReceivedTypes()) {
+                HashSet<JsonHttpService> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
+                }
+                set.add(service);
+            }
         }
     }
 
