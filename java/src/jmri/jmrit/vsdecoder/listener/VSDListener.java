@@ -11,30 +11,32 @@ import org.slf4j.LoggerFactory;
 
 public class VSDListener {
 
-    public final static String ListenerSysNamePrefix = "IAL$VSD:";
+    //public final static String ListenerSysNamePrefix = "IAL$VSD:";
+    // Only one Audio Listener can exist, and it is already present in the Audio Table
+    public final static String ListenerSysName = "IAL$";
 
     private AudioListener _listener;
     private String _sysname;
     private String _username;
     private ListeningSpot _location;
 
-    public VSDListener(String sname) {
-        this(sname, sname);
-    }
+    //public VSDListener(String sname) {
+    //    this(sname, sname);
+    //}
 
-    public VSDListener(String sname, String uname) {
-        _sysname = ListenerSysNamePrefix + sname;
-        _username = uname;
+    //public VSDListener(String sname, String uname) {
+    //    _sysname = ListenerSysNamePrefix + sname;
+    //    _username = uname;
 
-        AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
-        try {
-            _listener = (AudioListener) am.provideAudio(ListenerSysNamePrefix + _sysname);
-            log.debug("Listener Created: " + _listener);
-        } catch (AudioException | IllegalArgumentException ae) {
-            log.warn("Exception creating Listener: " + ae);
-            // Do nothing?
-        }
-    }
+    //    AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
+    //    try {
+    //        _listener = (AudioListener) am.provideAudio(ListenerSysNamePrefix + _sysname);
+    //        log.debug("Listener Created: " + _listener);
+    //    } catch (AudioException | IllegalArgumentException ae) {
+    //        log.warn("Exception creating Listener: " + ae);
+    //        // Do nothing?
+    //    }
+    //}
 
     public VSDListener(AudioListener l) {
         _listener = l;

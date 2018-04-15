@@ -29,6 +29,8 @@ public class LnStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortCon
     @After
     public void tearDown(){
        memo.dispose();
+       memo=null;
+       apc=null;
        JUnitUtil.tearDown();
     }
 

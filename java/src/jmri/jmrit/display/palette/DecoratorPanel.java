@@ -107,6 +107,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     private Hashtable<String, PositionableLabel> _sample = null;
     private int _selectedButton;
     ButtonGroup _buttonGroup = new ButtonGroup();
+    AJRadioButton _fontButton;
+    AJRadioButton _borderButton;
+    AJRadioButton _backgroundButton;
 
     protected BufferedImage[] _backgrounds; // array of Image backgrounds
     protected JComboBox<String> _bgColorBox;
@@ -136,7 +139,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _samplePanel.setOpaque(false);
     }
 
-    static class AJComboBox extends JComboBox {
+    static class AJComboBox extends JComboBox/*<Class<?>> - can't get this to work*/ {
         int _which;
 
         AJComboBox(Font[] items, int which) {
@@ -194,7 +197,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         makeFontPanels();
         this.add(makeTextPanel("Text", sample, TEXT_FONT, true));
         _samplePanel.add(sample);
-        finishInit();
+        finishInit(true);
     }
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
@@ -272,21 +275,24 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
             doPopupUtility("Text", TEXT_FONT, sample, addtextField);
         }
-        finishInit();
+        finishInit(false);
     }
     
-    private void finishInit() {
+    private void finishInit(boolean addBgCombo) {
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
-        this.add(_chooser);
+        add(_chooser);
         _previewPanel.add(_samplePanel, BorderLayout.CENTER);
 
         // add a SetBackground combo
-        this.add(add(makeBgButtonPanel(_previewPanel, null, _backgrounds))); // no listener on this variant
-        this.add(_previewPanel);
+        if (addBgCombo) {
+            add(add(makeBgButtonPanel(_previewPanel, null, _backgrounds))); // no listener on this variant            
+        }
+        add(_previewPanel);
         _previewPanel.setImage(_backgrounds[0]);
         _previewPanel.revalidate();        // force redraw
         updateSamples();
+        setButtonSelected(_fontButton);
     }
     
     private void doPopupUtility(String type, int which, 
@@ -301,6 +307,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         util.setBorderColor(_util.getBorderColor());
         util.setFont(util.getFont().deriveFont(_util.getFontStyle()));
         util.setFontSize(_util.getFontSize());
+        util.setFontStyle(_util.getFontStyle());
         util.setOrientation(_util.getOrientation());
         sample.updateSize();
        
@@ -313,8 +320,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     protected void makeFontPanels() {
         JPanel fontPanel = new JPanel();
         
-        // get the current font family name
-//        String defaultFontFamilyName = _util.getFont().getFamily();
         Font defaultFont = _util.getFont();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
@@ -430,11 +435,13 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         panel.add(p);
 
         p = new JPanel();
-        AJRadioButton button = makeButton(new AJRadioButton(Bundle.getMessage("FontColor"), state));
-        _buttonGroup.add(button);
-        p.add(button);
-        p.add(makeButton(new AJRadioButton(Bundle.getMessage("FontBackgroundColor"), state + 10)));
-        button = new AJRadioButton(Bundle.getMessage("transparentBack"), state + 20);
+        _fontButton = new AJRadioButton(Bundle.getMessage("FontColor"), state);
+        p.add(makeButton(_fontButton));
+        
+        _backgroundButton = new AJRadioButton(Bundle.getMessage("FontBackgroundColor"), state + 10);
+        p.add(makeButton(_backgroundButton));
+        
+        AJRadioButton button = new AJRadioButton(Bundle.getMessage("transparentBack"), state + 20);
         _buttonGroup.add(button);
         p.add(button);
         button.addActionListener(new ActionListener() {
@@ -472,7 +479,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 return this;
             }
         }.init(button));
-        p.add(makeButton(new AJRadioButton(Bundle.getMessage("borderColor"), BORDER_COLOR)));
+        _borderButton = new AJRadioButton(Bundle.getMessage("borderColor"), BORDER_COLOR);
+        p.add(makeButton(_borderButton));
 
         panel.add(p);
         return panel;
@@ -622,15 +630,19 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             switch (((AJSpinner) obj)._which) {
                 case BORDER:
                     _util.setBorderSize(num);
+                    setButtonSelected(_borderButton);
                     break;
                 case MARGIN:
                     _util.setMargin(num);
+                    setButtonSelected(_backgroundButton);
                     break;
                 case FWIDTH:
                     _util.setFixedWidth(num);
+                    setButtonSelected(_backgroundButton);
                     break;
                 case FHEIGHT:
                     _util.setFixedHeight(num);
+                    setButtonSelected(_backgroundButton);
                     break;
                 default:
                     log.warn("Unexpected _which {}  in stateChanged", ((AJSpinner) obj)._which);
@@ -755,6 +767,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             case SIZE:
                 String size = (String) comboBox.getSelectedItem();
                 _util.setFontSize(Float.valueOf(size));
+                setButtonSelected(_fontButton);
                 break;
             case STYLE:
                 int style = 0;
@@ -776,6 +789,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         break;
                 }
                 _util.setFontStyle(style);
+                setButtonSelected(_fontButton);
                 break;
             case JUST:
                 int just = 0;
@@ -798,12 +812,20 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             case FONT:
                 Font font = (Font) comboBox.getSelectedItem();
                 _util.setFont(font);
+                setButtonSelected(_fontButton);
                 break;
             default:
                 log.warn("Unexpected _which {}  in itemStateChanged", comboBox._which);
                 break;
             }
         updateSamples();
+    }
+    
+    private void setButtonSelected(AJRadioButton button) {
+        if (button != null) {
+            _selectedButton = button.which;
+            button.setSelected(true);
+        }
     }
 
     // initialize logging

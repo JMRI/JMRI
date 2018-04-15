@@ -649,7 +649,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public void addPortal(Portal portal) {
         String name = getDisplayName();
         if (!name.equals(portal.getFromBlockName()) && !name.equals(portal.getToBlockName())) {
-            log.warn("{} not in block {}", portal, getDisplayName());
+            log.warn("{} not in block {}", portal.getDescription(), getDisplayName());
             return;
         }
         String pName = portal.getName();

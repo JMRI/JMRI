@@ -20,7 +20,7 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
  */
 public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
 
-    /**
+    /*
      * Constructor types with multiple families and multiple icon families.
      */
     public PortalItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
@@ -39,6 +39,8 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
             super.init();
             _suppressDragging = true;
             add(makeChangeDefaultIconsPanel());
+            _previewPanel.setVisible(false);
+            _previewPanel.invalidate();
         }
     }
 
