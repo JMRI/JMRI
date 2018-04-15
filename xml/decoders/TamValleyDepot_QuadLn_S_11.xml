@@ -13,12 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-	<version author="robin@n3ix.com" version="2.03" lastUpdated="20180322"/>
+	<version author="robin@n3ix.com" version="2.03.1" lastUpdated="20180410"/>
 	<decoder>
 		<family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
 			<model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6"/>
 		</family>
-		<programming direct="no" paged="yes" register="no" ops="yes"/>
+        <programming direct="no" paged="yes" register="no" ops="no">
+            <mode>LOCONETOPSBOARD</mode>
+        </programming>
 		
 		<variables>
             <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
@@ -305,7 +307,7 @@
                         <text>Firmware version 2.0 or later is required when using the Detector Board.</text>
                     </label>
 					<label>
-                        <text>Decoder Template File Version: 2.03</text>
+                        <text>Decoder Template File Version: 2.03.1</text>
                     </label>
 					<label>
                         <text>Decoder Transform File Version: x.xx</text>

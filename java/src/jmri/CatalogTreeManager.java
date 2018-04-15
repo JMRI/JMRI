@@ -84,6 +84,11 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      */
     public CatalogTree newCatalogTree(String systemName, String userName);
 
+    public void storeImageIndex();
+        
+    public boolean isIndexChanged();
+    
+    public void indexChanged(boolean changed);
     /**
      * Get a list of all CatalogTree objects' system names.
      *
