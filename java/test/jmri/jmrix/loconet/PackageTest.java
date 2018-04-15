@@ -84,7 +84,7 @@ import org.junit.runners.Suite;
         UhlenbrockSlotTest.class,
         jmri.jmrix.loconet.streamport.PackageTest.class,
         CsOpSwAccessTest.class,
-        LnPacketizerTest.class,
+        LnPacketizerStrictTest.class,
 })
 
 /**
