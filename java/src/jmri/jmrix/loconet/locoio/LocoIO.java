@@ -9,31 +9,46 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Programming SV's
  * <p>
  * The SV's in LocoIO can be programmed using Loconet OPC_PEER_XFER messages.
- * Commands for setting SV's
+ * <p>
+ * Commands for setting SV's:
  * <p>
  * PC to LocoIO loconet message (OPC_PEER_XFER)
- * <p>
- * Code LOCOIO_SV_READ LOCOIO_SV_WRITE ---- -------------- --------------- 0xE5
- * OPC_PEER_XFER OPC_PEER_XFER 0x10 Message length Message length SRCL 0x50 0x50
- * // low address byte of Locobuffer DSTL LocoIO low address LocoIO low address
- * DSTH 0x01 0x01 // Fixed LocoIO high address PXCT1 D1 LOCOIO_SV_READ
- * LOCOIO_SV_WRITE // Read/Write command D2 SV number SV number D3 0x00 0x00 D4
- * 0x00 Data to Write PXCT2 D5 LocoIO Sub-address LocoIO Sub-address D6 0x00
- * 0x00 D7 0x00 0x00 D8 0x00 0x00 CHK Checksum Checksum
- * <p>
+ * <pre><code>
+ * Code LOCOIO_SV_READ _or_ LOCOIO_SV_WRITE ----
+ * 0xE5 OPC_PEER_XFER
+ * OPC_PEER_XFER 0x10 Message length
+ * SRCL 0x50 0x50 // low address byte of LocoBuffer
+ * DSTL LocoIO low address
+ * DSTH 0x01 0x01 // Fixed LocoIO high address PXCT1
+ * D1 LOCOIO_SV_READ _or_ LOCOIO_SV_WRITE // Read/Write command
+ * D2 SV number
+ * D3 0x00 0x00
+ * D4 0x00 Data to Write PXCT2
+ * D5 LocoIO Sub-address
+ * D6 0x00 0x00 D7 0x00 0x00
+ * D8 0x00 0x00
+ * CHK Checksum Checksum
+ * </code></pre>
+ *
  * LocoIO to PC reply message (OPC_PEER_XFER)
- * <p>
- * Code LOCOIO_SV_READ LOCOIO_SV_WRITE ---- -------------- --------------- 0xE5
- * OPC_PEER_XFER OPC_PEER_XFER 0x10 Message length Message length SRCL LocoIO
- * low address LocoIO low address DSTL 0x50 0x50 // low address byte of
- * Locobuffer DSTH 0x01 0x01 // high address byte of Locobuffer PXCT1 MSB LocoIO
- * version MSB LocoIO version // High order bit of LocoIO version D1
- * LOCOIO_SV_READ LOCOIO_SV_WRITE // Original Command D2 SV number requested SV
- * number requested D3 LSBs LocoIO version LSBs LocoIO version // Lower 7 bits
- * of LocoIO version D4 0x00 0x00 PXCT2 MSB Requested Data MSB Requested Data //
- * High order bit of requested data D5 LocoIO Sub-address LocoIO Sub-address D6
- * Requested Data 0x00 D7 Requested Data + 1 0x00 D8 Requested Data + 2 Written
- * Data CHK Checksum Checksum
+ * <pre><code>
+ * Code LOCOIO_SV_READ _or_ LOCOIO_SV_WRITE ----
+ * 0xE5 OPC_PEER_XFER
+ * 0x10 Message length
+ * SRCL LocoIO low address
+ * DSTL 0x50 0x50 // low address byte of LocoBuffer
+ * DSTH 0x01 0x01 // high address byte of LocoBuffer
+ * PXCT1 MSB LocoIO version // High order bit of LocoIO version
+ * D1 LOCOIO_SV_READ _or_ LOCOIO_SV_WRITE // Original Command
+ * D2 SV number requested
+ * D3 LSBs LocoIO version // Lower 7 bits of LocoIO version
+ * D4 0x00 0x00 PXCT2 MSB Requested Data // High order bit of requested data
+ * D5 LocoIO Sub-address
+ * D6 Requested Data 0x00
+ * D7 Requested Data + 1 0x00
+ * D8 Requested Data + 2 Written Data
+ * CHK Checksum Checksum
+ * </code></pre>
  *
  * @author John Plocher
  */

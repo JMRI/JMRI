@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Panel displaying and programming a LocoIO configuration.
+ * Panel to display and program a LocoIO configuration.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  */
@@ -216,12 +216,12 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
      * with caution.
      */
     protected int cautionAddrSet() {
-        log.info("Caution: Set locoio address is a broadcast operation"); // NOI18N
+        log.info("Caution: 'Set LocoIO Address' is a broadcast operation to boards on this connection"); // NOI18N
         return JOptionPane.showOptionDialog(this,
-                "This will set the address of all attached LocoIO boards",
-                "Global operation!",
+                Bundle.getMessage("LocoioIoSetAddressWarnDialog"),
+                Bundle.getMessage("WarningTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK"}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK")}, null);
     }
 
     protected void addrSet() {
@@ -234,16 +234,16 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         int subAddress = Integer.valueOf(subAddrField.getText(), 16).intValue();
 
         if ((address & 0x7F00) != 0x0100) {
-            log.warn("High part of address should be 0x01, was " // NOI18N
-                    + (address & 0x7F00) / 256);
+            log.warn("High part of address should be 0x01, was {}", // NOI18N
+                    (address & 0x7F00) / 256);
         }
         if ((address & 0x7FFF) == 0x0180) {
             log.warn("Only a LocoBuffer can use address 0x80"); // NOI18N
         }
 
         if (subAddress > 126) {
-            log.warn("subAddress must be [1..126]" // NOI18N
-                    + ", was " + subAddress); // NOI18N
+            log.warn("subAddress must be [1..126], was {}", // NOI18N
+                    subAddress); // NOI18N
         }
         address = 0x0100 | (address & 0x07F);  // range is [1..79, 81..127]
         subAddress = subAddress & 0x07F; // range is [1..126]

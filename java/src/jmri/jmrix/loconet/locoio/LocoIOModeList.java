@@ -17,14 +17,14 @@ public class LocoIOModeList {
     protected String[] validmodes;
 
     /**
-     * Creates a new instance of LocoIOModeList
+     * Create a new instance of LocoIOModeList
      */
     public LocoIOModeList() {
 
         /**
-         * Initialize various configuration modes... TODO: Need to tag these
-         * with which firmware rev supports them and only allow choices that
-         * match.
+         * Initialize various configuration modes.
+         * @TODO: Need to tag these with which firmware rev supports
+         * them and only allow choices that match.
          *
          * Inputs...
          */
@@ -44,7 +44,6 @@ public class LocoIOModeList {
         /**
          * and Outputs...
          */
-
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xC0, 0x00, "Block Occupied Indication"));
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xD0, 0x00, "Block Occupied Indication, Blinking"));
         modeList.add(new LocoIOMode(1, LnConstants.OPC_SW_REQ, 0x81, 0x10, "Steady State, single output, On at Power up"));
