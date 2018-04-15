@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -41,25 +40,23 @@ public class BackgroundItemPanel extends IconItemPanel {
         if (!_initialized) {
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             Thread.yield();
-            super.init(true);
-            add(initBottomPanel(), 2);
-            setSize(getPreferredSize());
+            super.init();
             _iconPanel.setImage(_backgrounds[0]);
-            _initialized = true;
         }
     }
 
     @Override
-    protected JPanel instructions(boolean isBackGround) {
+    protected JPanel instructions() {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        JPanel panel = super.instructions(isBackGround);
+        JPanel panel = super.instructions();
         JPanel blurb = (JPanel) panel.getComponent(0);
         blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor"))));
         blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         return panel;
     }
 
-    private JPanel initBottomPanel() {
+    @Override
+    protected void initLinkPanel() {
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel bottomPanel = new JPanel();
         JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
@@ -72,7 +69,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         });
         backgroundButton.setToolTipText(Bundle.getMessage("ToolTipEditColor"));
         bottomPanel.add(backgroundButton);
-        return bottomPanel;
+        add(bottomPanel);
     }
 
     @Override
@@ -84,7 +81,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2, BufferedImage[] imgArray, DisplayFrame parent) {
+    protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2) {
         return null; // no button to set Preview Bg on BackgroundItemPanel
     }
 
@@ -114,9 +111,6 @@ public class BackgroundItemPanel extends IconItemPanel {
             panel.add(makeDoneButtonPanel(), BorderLayout.SOUTH);
 
             setContentPane(panel);
-//            _preview.setBackground(_editor.getBackground());
-//            _preview.getParent().setBackground(_editor.getBackground());
-            setSize(_paletteFrame.getSize().width, this.getPreferredSize().height);
             setLocationRelativeTo(_paletteFrame);
             if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             pack();
