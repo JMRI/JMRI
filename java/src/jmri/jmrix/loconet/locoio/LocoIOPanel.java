@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -49,6 +50,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         model = new LocoIOTableModel(data);
         table = new JTable(model);
         scroll = new JScrollPane(table);
+        empty = new EmptyBorder(5, 5, 5, 5);
 
         data.addPropertyChangeListener(this);
 
@@ -76,32 +78,32 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         tcm.getColumn(LocoIOTableModel.CAPTURECOLUMN).setCellEditor(buttonEditor);
 
         // ensure the table rows, columns have enough room for buttons and comboBox contents
-        table.setRowHeight(new JButton("Capture").getPreferredSize().height);
+        table.setRowHeight(new JButton(Bundle.getMessage("ButtonCapture")).getPreferredSize().height);
         for (int col = 0; col < LocoIOTableModel.HIGHESTCOLUMN; col++) {
             table.getColumnModel().getColumn(col).setPreferredWidth(model.getPreferredWidth(col));
         }
 
-        // A pane for SV0, SV1, SV2, the board sub address and the PIC version
+        // Top (config) row for SV0, SV1, SV2, the board sub address and the PIC version
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-        p1.add(new JLabel("LocoIO address: 0x"));
+        p1.add(new JLabel(Bundle.getMessage("LocoioAddressLabel")));
         addrField.setMaximumSize(addrField.getPreferredSize());
         subAddrField.setMaximumSize(subAddrField.getPreferredSize());
         p1.add(addrField);
         p1.add(new JLabel("/"));
         p1.add(subAddrField);
         p1.add(Box.createGlue());  // -------------------
-        probeButton = new JButton("Probe");
+        probeButton = new JButton(Bundle.getMessage("ButtonProbe"));
         probeButton.addActionListener(new ActionListener() {
             @Override
                     public void actionPerformed(ActionEvent a) {
-                        data.setLIOVersion("<Not found>");
+                        data.setLIOVersion("<Not found>"); // NOI18N
                         LocoIO.probeLocoIOs(ln);
                     }
                 });
         p1.add(probeButton);
         p1.add(Box.createGlue());  // -------------------
-        readAllButton = new JButton("Read All");
+        readAllButton = new JButton(Bundle.getMessage("ButtonReadAll"));
         readAllButton.addActionListener(new ActionListener() {
             @Override
                     public void actionPerformed(ActionEvent a) {
@@ -109,7 +111,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                     }
                 });
         p1.add(readAllButton);
-        writeAllButton = new JButton("Write All");
+        writeAllButton = new JButton(Bundle.getMessage("ButtonWriteAll"));
         writeAllButton.addActionListener(new ActionListener() {
             @Override
                     public void actionPerformed(ActionEvent a) {
@@ -118,7 +120,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 });
         p1.add(writeAllButton);
         p1.add(Box.createGlue());  // -------------------
-        addrSetButton = new JButton("Set address");
+        addrSetButton = new JButton(Bundle.getMessage("ButtonSetAddress"));
         p1.add(addrSetButton);
         addrSetButton.addActionListener(new ActionListener() {
             @Override
@@ -137,21 +139,23 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
          saveButton.setEnabled(false);
          p1.add(saveButton);
          */
+        // bottom (status) row
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-        p2.add(new JLabel("Locobuffer rev: "));
+        p2.add(new JLabel("LocoBuffer rev: ")); // NOI18N
         p2.add(locobuffer);
         p2.add(Box.createGlue());  // -------------------
-        p2.add(new JLabel("Status: "));
+        p2.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol")) + " "));
         p2.add(status);
         p2.add(Box.createGlue());  // -------------------
-        p2.add(new JLabel("LocoIO Firmware rev: "));
+        p2.add(new JLabel("LocoIO Firmware rev: ")); // NOI18N
         p2.add(firmware);
 
         JPanel p3 = new JPanel();
         p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
         p3.add(p1);
-        p3.add(table);
+        scroll.setBorder(empty);
+        p3.add(scroll);
 
         add(p3);
         add(p2);
@@ -262,7 +266,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 addrField.setText(Integer.toHexString(v));
             }
             if (firmware != null) {
-                firmware.setText("unknown  ");
+                firmware.setText("<" + Bundle.getMessage("BeanStateUnknown").toLowerCase() + ">  "); // some trailing space at bottom right corner of pane
             }
         }
         if (evt.getPropertyName().equals("UnitSubAddress")) { // NOI18N
@@ -272,7 +276,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                 subAddrField.setText(Integer.toHexString(v));
             }
             if (firmware != null) {
-                firmware.setText("unknown  ");
+                firmware.setText("<" + Bundle.getMessage("BeanStateUnknown").toLowerCase() + ">  "); // some trailing space at bottom right corner of pane
             }
         }
         if (evt.getPropertyName().equals("LBVersionChange")) { // NOI18N
@@ -297,9 +301,9 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     JTextField addrField = new JTextField("00");
     JTextField subAddrField = new JTextField("00");
-    JLabel status = new JLabel("<unknown>");
-    JLabel firmware = new JLabel("<unknown>");
-    JLabel locobuffer = new JLabel("<unknown>");
+    JLabel status = new JLabel(Bundle.getMessage("StateUnknown"));
+    JLabel firmware = new JLabel(Bundle.getMessage("StateUnknown"));
+    JLabel locobuffer = new JLabel(Bundle.getMessage("StateUnknown"));
 
     JButton addrSetButton = null;
     JButton probeButton = null;
@@ -312,6 +316,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     LocoIOTableModel model;
     JTable table;
     JScrollPane scroll;
+    EmptyBorder empty;
 
     @Override
     public void dispose() {

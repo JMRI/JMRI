@@ -17,7 +17,7 @@ Usage model:
     Enter a LocoIO address and sub-address.
     Click the <probe> button.
     If a LocoIO is found at that address, its firmware version is displayed
-    (the Monitor Loconet window will show all the LocoIOs that responded
+    (the Monitor LocoNet window will show all the LocoIOs that responded
     to the probe request if you need to refresh your memory)
 
     <set address>
@@ -28,6 +28,7 @@ Usage model:
     on your LocoNet will be reprogrammed with the same new address.
 
     <read all> reads all the CV values from the LocoIO specified.
+
     <write all> writes them all out to that LocoIO board.
 
     The individual read/write buttons do the same, but for only one

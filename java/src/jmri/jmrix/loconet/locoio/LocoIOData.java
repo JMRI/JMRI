@@ -70,7 +70,7 @@ public class LocoIOData
         validmodes = new LocoIOModeList();
 
         for (int i = 0; i < _numRows; i++) {
-            setMode(i, "<none>");
+            setMode(i, "<none>"); // NOI18N
             lim[i] = null;
             setAddr(i, 0);
             setSV(i, 0);
@@ -579,7 +579,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGVALUE1;
                         lastOpCv = i * 3 + 4;
-                        setStatus("read SV" + lastOpCv + " (port" + i + " v1)");
+                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i, 1));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     case READVALUE2:
@@ -587,7 +587,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGVALUE2;
                         lastOpCv = i * 3 + 5;
-                        setStatus("read SV" + lastOpCv + " (port " + i + " v2)");
+                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i, 2));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     case READMODE:
@@ -595,7 +595,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGMODE;
                         lastOpCv = i * 3 + 3;
-                        setStatus("read SV" + lastOpCv + " (port " + i + " mode)");
+                        setStatus(Bundle.getMessage("StatusReadMode", lastOpCv, i));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     default:
@@ -616,7 +616,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         writeState[i] = WRITINGVALUE1;
                         lastOpCv = i * 3 + 4;
-                        setStatus("write SV" + lastOpCv + " ( port " + i + " v1)");
+                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i, 1));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getV1(i));
                         return;
                     case WRITEVALUE2:
@@ -624,7 +624,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         writeState[i] = WRITINGVALUE2;
                         lastOpCv = i * 3 + 5;
-                        setStatus("write SV" + lastOpCv + " (port" + i + " v2)");
+                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i, 2));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getV2(i));
                         return;
                     case WRITEMODE:
@@ -632,7 +632,7 @@ public class LocoIOData
                         // set new state, send write, then done
                         writeState[i] = WRITINGMODE;
                         lastOpCv = i * 3 + 3;
-                        setStatus("write SV" + lastOpCv + " (port" + i + " mode)");
+                        setStatus(Bundle.getMessage("StatusWriteMode", lastOpCv, i));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getSV(i));
                         return;
 

@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
  * a turnout address (where we don't have a mode setting) we presume that the
  * address seen in the OPC_SW_REQ packet is for a fixed contact, and interpret
  * the bits in that context.
- * <P>
- * The timeout code is modelled after that in jmri,jmrix.AbstractProgrammer,
+ * <p>
+ * The timeout code is modelled after that in jmri.jmrix.AbstractProgrammer,
  * though there are significant modifications.
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -111,17 +111,17 @@ public class LocoIOTableModel
     public String getColumnName(int col) {
         switch (col) {
             case PINCOLUMN:
-                return "Port";
+                return Bundle.getMessage("ColumnPort");
             case MODECOLUMN:
-                return "Action";
+                return Bundle.getMessage("ColumnAction");
             case ADDRCOLUMN:
-                return "Address";
+                return Bundle.getMessage("AddressCol");
             case SV0COLUMN:
-                return "SV";
+                return "SV"; // NOI18N
             case SV1COLUMN:
-                return "Value1";
+                return "Value1"; // NOI18N
             case SV2COLUMN:
-                return "Value2";
+                return "Value2"; // NOI18N
             case CAPTURECOLUMN:
                 return "";
             case READCOLUMN:
@@ -129,7 +129,7 @@ public class LocoIOTableModel
             case WRITECOLUMN:
                 return "";
             default:
-                return "unknown";
+                return "unknown"; // NOI18N
         }
     }
 
@@ -193,7 +193,7 @@ public class LocoIOTableModel
             case MODECOLUMN:
                 return liodata.getMode(row);
             case ADDRCOLUMN:
-                return (liodata.getAddr(row) == 0 ? "<none>" : Integer.toString(liodata.getAddr(row)));
+                return (liodata.getAddr(row) == 0 ? ("<" + Bundle.getMessage("None").toLowerCase() + ">") : Integer.toString(liodata.getAddr(row)));
             case SV0COLUMN:
                 return (inHex) ? "0x" + Integer.toHexString(liodata.getSV(row)) : "" + liodata.getSV(row);
             case SV1COLUMN:
@@ -201,30 +201,30 @@ public class LocoIOTableModel
             case SV2COLUMN:
                 return (inHex) ? "0x" + Integer.toHexString(liodata.getV2(row)) : "" + liodata.getV2(row);
             case CAPTURECOLUMN:
-                return "Capture";
+                return Bundle.getMessage("ButtonCapture");
             case READCOLUMN:
-                return "Read";
+                return Bundle.getMessage("ButtonRead");
             case WRITECOLUMN:
-                return "Write";
+                return Bundle.getMessage("ButtonWrite");
             default:
-                return "unknown";
+                return "unknown"; // NOI18N
         }
     }
 
     public int getPreferredWidth(int col) {
         switch (col) {
             case PINCOLUMN:
-                return new JLabel(" 16 ").getPreferredSize().width;
+                return new JLabel(" 16 ").getPreferredSize().width; // NOI18N
             case MODECOLUMN:
-                return new JLabel("1234567890123456789012345678901234567890").getPreferredSize().width;
+                return new JLabel("1234567890123456789012345678901234567890").getPreferredSize().width; // NOI18N
             case ADDRCOLUMN:
                 return new JLabel(getColumnName(ADDRCOLUMN)).getPreferredSize().width;
             case SV0COLUMN:
             case SV1COLUMN:
             case SV2COLUMN:
-                return new JLabel(" 0xFF ").getPreferredSize().width;
+                return new JLabel(" 0xFF ").getPreferredSize().width; // NOI18N
             case CAPTURECOLUMN:
-                return new JButton(" Capture ").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonCapture")).getPreferredSize().width;
             case READCOLUMN:
                 return new JButton(" Read ").getPreferredSize().width;
             case WRITECOLUMN:
@@ -269,7 +269,7 @@ public class LocoIOTableModel
                 a = 0xFFF;
             }
             liodata.setAddr(row, a);
-            if (!("<none>".equals(liodata.getMode(row)))) {
+            if (!("<none>".equals(liodata.getMode(row)))) { // NOI18N
                 LocoIOMode l = liodata.getLIM(row);
                 liodata.setV1(row, l, a);
                 liodata.setV2(row, l, a);
@@ -300,10 +300,9 @@ public class LocoIOTableModel
 
     // public static String[] getValidOnModes() { return validmodes.getValidModes(); }
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose"); // NOI18N
-        }
+        log.debug("dispose"); // NOI18N
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class);
+
 }

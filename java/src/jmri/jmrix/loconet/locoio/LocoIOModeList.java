@@ -66,7 +66,6 @@ public class LocoIOModeList {
         }
     }
 
-
     protected String[] getValidModes() {
         return validmodes;
     }
@@ -118,7 +117,10 @@ public class LocoIOModeList {
     }
 
     /**
-     * Low bits
+     * Convert Value1 (Low bits) from Port Address.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
      */
     protected int addressToValue1(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -128,7 +130,10 @@ public class LocoIOModeList {
     }
 
     /**
-     * High bits...
+     * Convert Value2 (High bits) from Port Address.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
      */
     protected int addressToValue2(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -143,12 +148,20 @@ public class LocoIOModeList {
      *
      * @param a1 Byte containing the upper bits
      * @param a2 Byte containing the lower bits
-     * @return 1-4096 address
+     * @return 1-4096 address as decimal
      */
     static private int SENSOR_ADR(int a1, int a2) {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
+    /**
+     * Create 2 byte value from Port Address bits.
+     *
+     * @param opcode coded value for message type
+     * @param sv index of SV value to create, ignored
+     * @param v2mask mask to apply on Value2
+     * @param address the address for this port
+     */
     protected int addressToValues(int opcode, int sv, int v2mask, int address) {
         int v1 = 0;
         int v2 = 0;
@@ -176,6 +189,12 @@ public class LocoIOModeList {
         return v2 * 256 + v1;
     }
 
+    /**
+     * Extract Port Address from 2 byte value.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
+     */
     protected int valuesToAddress(int opcode, int sv, int v1, int v2) {
         //int hi = 0;
         //int lo = 0;

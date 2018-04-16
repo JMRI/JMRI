@@ -48,19 +48,15 @@ public class NameCheckAction extends AbstractAction {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
-            if (log.isDebugEnabled()) {
-                log.debug("located file " + file + " for XML processing");
-            }
+            log.debug("located file {} for XML processing", file); // NOI18N
             // handle the file (later should be outside this thread?)
             try {
                 Element root = readFile(file);
-                if (log.isDebugEnabled()) {
-                    log.debug("parsing complete");
-                }
+                log.debug("parsing complete"); // NOI18N
 
                 // check to see if there's a decoder element
                 if (root.getChild("decoder") == null) {
-                    log.warn("Does not appear to be a decoder file");
+                    log.warn("Does not appear to be a decoder file"); // NOI18N
                     return;
                 }
 
@@ -88,31 +84,31 @@ public class NameCheckAction extends AbstractAction {
                     if (log.isDebugEnabled()) {
                         log.debug("Variable called \""
                                 + ((label != null) ? label : "<none>") + "\" \""
-                                + ((item != null) ? item : "<none>"));
+                                + ((item != null) ? item : "<none>")); // NOI18N
                     }
                     if (!(label == null ? false : nfile.checkName(label))
                             && !(item == null ? false : nfile.checkName(item))) {
                         log.warn("Variable not found: label=\""
                                 + ((label != null) ? label : "<none>") + "\" item=\""
-                                + ((item != null) ? label : "<none>") + "\"");
+                                + ((item != null) ? label : "<none>") + "\""); // NOI18N
                         warnings += "Variable not found: label=\""
                                 + ((label != null) ? label : "<none>") + "\" item=\""
-                                + ((item != null) ? item : "<none>") + "\"\n";
+                                + ((item != null) ? item : "<none>") + "\"\n"; // TODO I18N
                     }
                 }
 
                 if (!warnings.equals("")) {
                     JOptionPane.showMessageDialog(_who, warnings);
                 } else {
-                    JOptionPane.showMessageDialog(_who, "No mismatched items found");
+                    JOptionPane.showMessageDialog(_who, "No mismatched items found"); // TODO I18N
                 }
 
             } catch (HeadlessException | IOException | JDOMException ex) {
-                JOptionPane.showMessageDialog(_who, "Error parsing decoder file: " + ex);
+                JOptionPane.showMessageDialog(_who, "Error parsing decoder file: " + ex); // TODO I18N
             }
 
         } else {
-            log.debug("XmlFileCheckAction cancelled in open dialog");
+            log.debug("XmlFileCheckAction cancelled in open dialog"); // NOI18N
         }
     }
 
