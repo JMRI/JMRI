@@ -5,7 +5,9 @@ import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
+import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
+import jmri.implementation.swing.SwingShutDownTask;
 import jmri.managers.AbstractManager;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -21,6 +23,9 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> implements CatalogTreeManager {
+
+    private boolean _indexChanged = false;
+    private ShutDownTask _shutDownTask;
 
     public DefaultCatalogTreeManager() {
     }
@@ -200,6 +205,56 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameCatalog");
+    }
+
+    @Override
+    public void storeImageIndex() {
+        jmri.jmrit.display.palette.ItemPalette.storeIcons();
+
+        if (log.isDebugEnabled()) {
+            log.debug("Start writing CatalogTree info");
+        }
+        try {
+            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
+            indexChanged(false);
+        } catch (java.io.IOException ioe) {
+            log.error("Exception writing CatalogTrees: {}", ioe);
+        }
+    }
+
+    public boolean isIndexChanged() {
+        return _indexChanged;
+    }
+
+    @Override
+    public final synchronized void indexChanged(boolean changed) {
+        _indexChanged = changed;
+        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
+            if (changed) {
+                if (_shutDownTask == null) {
+                    _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                            Bundle.getMessage("IndexChanged"),
+                            Bundle.getMessage("SaveAndQuit"), null) {
+                        @Override
+                        public boolean checkPromptNeeded() {
+                            return !_indexChanged;
+                        }
+
+                        @Override
+                        public boolean doPrompt() {
+                            storeImageIndex();
+                            return true;
+                        }
+                    };
+                    sdm.register(_shutDownTask);
+                }
+            } else {
+                if (_shutDownTask != null) {
+                    sdm.deregister(_shutDownTask);
+                    _shutDownTask = null;
+                }
+            }
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);

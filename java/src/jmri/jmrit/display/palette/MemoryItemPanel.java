@@ -45,7 +45,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
             add(initTablePanel(_model, _editor));
             initIconFamiliesPanel();
             add(_iconFamilyPanel);
-            add(makeBgButtonPanel(_dragIconPanel, _iconPanel, _backgrounds, _paletteFrame));
+            add(makeBgButtonPanel(_dragIconPanel, _iconPanel));
             _initialized = true;
         }
     }
@@ -227,7 +227,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
 
     @Override
     protected void setEditor(Editor ed) {
-        super.setEditor(ed);
+        updateBackgrounds(ed);    // editor change may change panel background
         if (_initialized) {
             _dragIconPanel.removeAll();
             makeDragIconPanel(1);
