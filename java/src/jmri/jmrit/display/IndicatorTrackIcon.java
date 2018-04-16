@@ -47,7 +47,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         super(editor);
         _pathUtil = new IndicatorTrackPaths();
         _status = "ClearTrack";
-        _iconMap = new HashMap<String, NamedIcon>();
+        _iconMap = new HashMap<>();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         namedOccSensor = senHandle;
         if (namedOccSensor != null) {
             if (_iconMap == null) {
-                _iconMap = new HashMap<String, NamedIcon>();
+                _iconMap = new HashMap<>();
             }
             Sensor sensor = getOccSensor();
             sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Track");
@@ -151,7 +151,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
             if (_iconMap == null) {
-                _iconMap = new HashMap<String, NamedIcon>();
+                _iconMap = new HashMap<>();
             }
             OBlock block = getOccBlock();
             block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
@@ -341,7 +341,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack")));
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
+                Bundle.getMessage("IndicatorTrack")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
 
         ActionListener updateAction = new ActionListener() {
@@ -351,7 +352,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
+        HashMap<String, NamedIcon> map = new HashMap<>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -371,11 +372,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         _trackPanel.setShowTrainName(_pathUtil.showTrain());
         _trackPanel.setPaths(_pathUtil.getPaths());
-        _paletteFrame.add(_trackPanel);
-        _paletteFrame.setLocationRelativeTo(this);
-        _paletteFrame.toFront();
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_paletteFrame, _trackPanel);
     }
 
     void updateItem() {
@@ -400,11 +397,7 @@ public class IndicatorTrackIcon extends PositionableIcon
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _trackPanel.dispose();
-        _trackPanel = null;
+        finishItemUpdate(_paletteFrame, _trackPanel);
         displayState(_status);
     }
 
