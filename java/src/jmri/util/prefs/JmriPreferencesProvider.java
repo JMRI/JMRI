@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides instances of {@link java.util.prefs.Preferences} backed by a
  * JMRI-specific storage implementation based on a Properties file.
- *
+ * <p>
  * There are two Properties files per {@link jmri.profile.Profile} and
  * {@link jmri.util.node.NodeIdentity}, both stored in the directory
  * <code>profile:profile</code>:
@@ -259,9 +259,13 @@ public final class JmriPreferencesProvider {
         } else {
             dir = new File(this.path, Profile.PROFILE);
             if (!this.shared) {
+                File nodeDir = new File(dir, NodeIdentity.identity());
+                if (!nodeDir.exists()) {
+                    NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                }
                 dir = new File(dir, NodeIdentity.identity());
+                }
             }
-        }
         FileUtil.createDirectory(dir);
         return dir;
     }
