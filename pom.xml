@@ -525,6 +525,8 @@
                                 <File>jmri/jmrit/ussctc/Lock.class</File>
                                 <File>jmri/AddressedProgrammerManager.class</File>
                                 <File>jmri/PhysicalLocationReporter.class</File>
+                                <!-- deprecated classes -->
+                                <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                             </excludes>
                             <rules>
                                 <rule>

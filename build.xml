@@ -358,6 +358,8 @@
         <exclude name="jmri/jmrit/ussctc/Lock.class" />
         <exclude name="jmri/AddressedProgrammerManager.class" />
         <exclude name="jmri/PhysicalLocationReporter.class" />
+        <!-- Exclude deprecated classes. -->
+        <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
     </fileset>
 
 
