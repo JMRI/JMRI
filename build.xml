@@ -340,24 +340,25 @@
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
         <exclude name="jmri/util/web/BrowserFactory.class" />
         <!-- Exclude pure interfaces and classes only providing constants. -->
-        <exclude name="jmri/TurnoutManager.class" />
-        <exclude name="jmri/ReporterManager.class" />
+        <exclude name="jmri/AddressedProgrammerManager.class" />
         <exclude name="jmri/LightManager.class" />
+        <exclude name="jmri/PhysicalLocationReporter.class" />
+        <exclude name="jmri/ReporterManager.class" />
+        <exclude name="jmri/Turnout.class" />
+        <exclude name="jmri/TurnoutManager.class" />
         <exclude name="jmri/SensorManager.class" />
+        <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
+        <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
+        <exclude name="jmri/jmrit/audio/AudioSource.class" />
         <exclude name="jmri/jmrit/operations/locations/Xml.class" />
         <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
         <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
         <exclude name="jmri/jmrit/operations/trains/Xml.class" />
-        <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
+        <exclude name="jmri/jmrit/ussctc/Lock.class" />
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
-        <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
-        <exclude name="jmri/Turnout.class" />
         <exclude name="jmri/server/json/reporter/JsonReporter.class" />
         <exclude name="jmri/server/json/roster/JsonRoster.class" />
         <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
-        <exclude name="jmri/jmrit/ussctc/Lock.class" />
-        <exclude name="jmri/AddressedProgrammerManager.class" />
-        <exclude name="jmri/PhysicalLocationReporter.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
     </fileset>
