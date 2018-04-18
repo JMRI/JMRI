@@ -40,7 +40,7 @@
         </revision>
         <revision>
             <revnumber>2</revnumber>
-            <date>2018-04-14</date>
+            <date>2018-04-18</date>
             <authorinitials>EB</authorinitials>
             <revremark>Added Board and Ports panes, manual entry, still experimental</revremark>
         </revision>
@@ -141,7 +141,7 @@
         <splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV"/>
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
 
       <variable item="Port1 Config" CV="3">
@@ -173,7 +173,7 @@
         <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV"/>
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
 
       <variable item="Port2 Config" CV="6">
@@ -191,14 +191,6 @@
         <label>Value2 (dec):</label>
       </variable>
 
-      <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
-        <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
-        <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
-      </variable>
-
       <!-- Port 3 -->
       <variable item="Port3 Mode" CV="11" mask="VVVVXXXX">
         <splitVal highCV="9" factor="1" offset="0" upperMask="VVVVVVVV"/>
@@ -213,7 +205,7 @@
         <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV"/>
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
 
       <variable item="Port3 Config" CV="9">
@@ -231,14 +223,6 @@
         <label>Value2 (dec):</label>
       </variable>
 
-      <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
-        <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
-        <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
-      </variable>
-
       <!-- Port 4 -->
       <variable item="Port4 Mode" CV="14" mask="VVVVXXXX">
         <splitVal highCV="12" factor="1" offset="0" upperMask="VVVVVVVV"/>
@@ -253,7 +237,7 @@
         <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV"/>
         <decVal max="4096"/>
         <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
 
       <variable item="Port4 Config" CV="12">
@@ -269,14 +253,6 @@
       <variable item="Port4 Value2" CV="14">
         <decVal min="0" max="112"/>
         <label>Value2 (dec):</label>
-      </variable>
-
-      <variable item="Port4 Address" CV="7" mask="XVVVVVVV">
-        <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
-        <label>Port Address (dec):</label>
-        <label>Poortadres (dec):</label>
       </variable>
 
       <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 5 - 16 -->

@@ -141,7 +141,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
         }
-
     }
 
     /**

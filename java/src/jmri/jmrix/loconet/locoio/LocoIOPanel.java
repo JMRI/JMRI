@@ -87,11 +87,13 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
         p1.add(new JLabel(Bundle.getMessage("LocoioAddressLabel")));
-        addrField.setMaximumSize(addrField.getPreferredSize());
-        subAddrField.setMaximumSize(subAddrField.getPreferredSize());
+                addrField.setPreferredSize(spacer.getPreferredSize());
+        subAddrField.setPreferredSize(spacer.getPreferredSize());
         p1.add(addrField);
+        addrField.setToolTipText(Bundle.getMessage("AddressToolTip"));
         p1.add(new JLabel("/"));
         p1.add(subAddrField);
+        subAddrField.setToolTipText(Bundle.getMessage("SubAddressToolTip"));
         p1.add(Box.createGlue());  // -------------------
         probeButton = new JButton(Bundle.getMessage("ButtonProbe"));
         probeButton.addActionListener(new ActionListener() {
@@ -164,10 +166,21 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         ActionListener al4UnitAddress = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
+                log.debug("address =|{}|", addrField.getText());
+                if (addrField.getText().trim() == null || addrField.getText().trim() == "") {
+                    addrField.setText("1");
+                    log.warn("empty Address, set to 1");
+                    return;
+                }
+                if (subAddrField.getText() == null || subAddrField.getText() == "") {
+                    subAddrField.setText("0");
+                    log.warn("empty SubAddress, set to 0");
+                    return;
+                }
                 try {
                     data.setUnitAddress(
-                            Integer.valueOf(addrField.getText(), 16).intValue(),
-                            Integer.valueOf(subAddrField.getText(), 16).intValue());
+                            Integer.valueOf(addrField.getText().trim(), 16).intValue(),
+                            Integer.valueOf(subAddrField.getText().trim(), 16).intValue());
                 } catch (NullPointerException e) {
                     log.error("Caught NullPointerException", e); // NOI18N
                 }
@@ -180,10 +193,21 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
             @Override
             public void focusLost(FocusEvent event) {
+                log.debug("address =|{}|", addrField.getText());
+                if (addrField.getText().trim().length() < 1) {
+                    addrField.setText("1");
+                    log.warn("empty LocoIO Address");
+                    return;
+                }
+                if (subAddrField.getText().trim().length() < 1) {
+                    subAddrField.setText("0");
+                    log.warn("empty LocoIO SubAddress");
+                    return;
+                }
                 try {
                     data.setUnitAddress(
-                            Integer.valueOf(addrField.getText(), 16).intValue(),
-                            Integer.valueOf(subAddrField.getText(), 16).intValue());
+                            Integer.valueOf(addrField.getText().trim(), 16).intValue(),
+                            Integer.valueOf(subAddrField.getText().trim(), 16).intValue());
                 } catch (NullPointerException e) {
                     log.error("Caught NullPointerException", e); // NOI18N
                 }
@@ -301,6 +325,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     JTextField addrField = new JTextField("00");
     JTextField subAddrField = new JTextField("00");
+    final static JTextField spacer = new JTextField("123");
     JLabel status = new JLabel(Bundle.getMessage("StateUnknown"));
     JLabel firmware = new JLabel(Bundle.getMessage("StateUnknown"));
     JLabel locobuffer = new JLabel(Bundle.getMessage("StateUnknown"));
