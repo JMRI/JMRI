@@ -341,12 +341,8 @@
         <exclude name="jmri/util/web/BrowserFactory.class" />
         <!-- Exclude pure interfaces and classes only providing constants. -->
         <exclude name="jmri/AddressedProgrammerManager.class" />
-        <exclude name="jmri/LightManager.class" />
         <exclude name="jmri/PhysicalLocationReporter.class" />
-        <exclude name="jmri/ReporterManager.class" />
         <exclude name="jmri/Turnout.class" />
-        <exclude name="jmri/TurnoutManager.class" />
-        <exclude name="jmri/SensorManager.class" />
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
         <exclude name="jmri/jmrit/audio/AudioSource.class" />
