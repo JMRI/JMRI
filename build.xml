@@ -340,6 +340,10 @@
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
         <exclude name="jmri/util/web/BrowserFactory.class" />
         <!-- Exclude pure interfaces and classes only providing constants. -->
+        <exclude name="jmri/TurnoutManager.class" />
+        <exclude name="jmri/ReporterManager.class" />
+        <exclude name="jmri/LightManager.class" />
+        <exclude name="jmri/SensorManager.class" />
         <exclude name="jmri/jmrit/operations/locations/Xml.class" />
         <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
         <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
