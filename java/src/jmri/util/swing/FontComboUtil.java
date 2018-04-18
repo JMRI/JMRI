@@ -51,8 +51,8 @@ public class FontComboUtil {
     private static List<String> character = null;
     private static List<String> symbol = null;
 
-    private static boolean prepared = false;
-    private static boolean preparing = false;
+    private static volatile boolean prepared = false;
+    private static volatile boolean preparing = false;
 
     public static List<String> getFonts(int which) {
         if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
