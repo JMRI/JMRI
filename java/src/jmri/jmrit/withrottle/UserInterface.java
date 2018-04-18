@@ -35,8 +35,6 @@ import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * UserInterface.java Create a window for WiThrottle information and
@@ -67,7 +65,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     private FacelessServer facelessServer;
 
     // Server iVars
-    int port;
     boolean isListen;
     private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
@@ -79,14 +76,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
                 return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
         });
 
-        port = facelessServer.getPort();
-
-        //update the server with the currently selected roster group
-        facelessServer.setSelectedRosterGroup(rosterGroupSelector.getSelectedItem());
-
-        //show all IPv4 addresses in window, for use by manual connections
-        addIPAddressesToUI();
-
         // add ourselves as device listeners for any existing devices
         for(DeviceServer ds:facelessServer.getDeviceList()) {
            deviceList.add(ds);
@@ -95,11 +84,19 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         facelessServer.addDeviceListener(this);
 
+        //update the server with the currently selected roster group
+        facelessServer.setSelectedRosterGroup(rosterGroupSelector.getSelectedItem());
+
+        //show all IPv4 addresses in window, for use by manual connections
+        addIPAddressesToUI();
+
         createWindow();
 
     } // End of constructor
 
     private void addIPAddressesToUI() {
+        //get port# directly from prefs
+        int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
         //list the local IPv4 addresses on the UI, for manual connections
         List<InetAddress> has = ZeroConfService.hostAddresses(); //get list of local, non-loopback addresses
         String as = ""; //build multiline string of valid addresses
