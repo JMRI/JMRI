@@ -71,6 +71,15 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
     }
 
     @Test
+    public void testProvideName() {
+        // create
+        Turnout t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
     public void testDefaultSystemName() {
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
