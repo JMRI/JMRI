@@ -37,9 +37,19 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide(getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Override
+    @Test
     public void testDefaultSystemName() {
         // create
-        Sensor t = l.provideSensor("ABCS2:" + getNumToTest1());
+        Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -48,15 +58,15 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Test
     public void testUpperLower() {
-        Sensor t = l.provideSensor("ABCS2:" + getNumToTest2());
+        Sensor t = l.provideSensor(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
         Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
     @Test
     public void testMoveUserName() {
-        Sensor t1 = l.provideSensor("ABCS2:" + getNumToTest1());
-        Sensor t2 = l.provideSensor("ABCS2:" + getNumToTest2());
+        Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
+        Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
         

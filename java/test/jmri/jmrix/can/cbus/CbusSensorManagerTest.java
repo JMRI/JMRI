@@ -42,6 +42,16 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Test
     @Override
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    @Override
     public void testUpperLower() {
         Sensor t = l.provideSensor("MSX0A;+N15E" + getNumToTest2());
         String name = t.getSystemName();
