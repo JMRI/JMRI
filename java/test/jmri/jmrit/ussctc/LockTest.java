@@ -15,7 +15,7 @@ public class LockTest {
     @Test
     public void testMemoryName() {
         // this is a pretty poor test, but the class under test is an interface         // with an enum that isn't used anywhere in the Java code.
-        Assert.assertEqual(Lock.logMemoryName == "IMUSS CTC:LOCK:1:LOG" );
+        Assert.assertEquals(Lock.logMemoryName,"IMUSS CTC:LOCK:1:LOG" );
     }
 
     // The minimal setup for log4J
