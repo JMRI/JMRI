@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -29,6 +30,7 @@ public class LnPacketizerTest {
     }
 
     @Test
+    @Ignore("may be causing hang on travis and appveyor")
     public void testStartThreads() {
        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
        lnp.connectPort(new LnPortController(memo){

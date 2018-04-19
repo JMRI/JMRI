@@ -447,7 +447,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
@@ -467,12 +467,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSensor());
-        _paletteFrame.add(_itemPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_paletteFrame, _itemPanel);
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
@@ -491,12 +492,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _itemPanel.dispose();
-        _itemPanel = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _itemPanel);
     }
 
     @Override

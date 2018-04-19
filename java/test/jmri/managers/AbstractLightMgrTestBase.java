@@ -59,6 +59,15 @@ public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<L
     }
 
     @Test
+    public void testProvideName() {
+        // create
+        Light t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
     public void testDefaultSystemName() {
         // create
         Light t = l.provideLight("" + getNumToTest1());

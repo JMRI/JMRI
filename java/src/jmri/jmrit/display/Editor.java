@@ -2956,7 +2956,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
-            setContentPane(panel);
+            Dimension dim = panel.getPreferredSize();
+            JScrollPane sp = new JScrollPane(panel);
+            dim = new Dimension(dim.width +10, dim.height + 10);
+            sp.setPreferredSize(dim);
+            setContentPane(sp);
             pack();
             setLocationRelativeTo((Component) _pos);
         }
@@ -2971,6 +2975,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
                     _decorator.setAttributes(_pos);
                     if (_selectionGroup == null) {
+//                        _decorator.setAttributes(_pos);
                         setAttributes(util, _pos);
                     } else {
                         setSelectionsAttributes(util, _pos);
@@ -3015,12 +3020,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
         }
+        p.setBorder(new CompoundBorder(outlineBorder, borderMargin));
+        
         if (p instanceof PositionableLabel) {
             PositionableLabel pos = (PositionableLabel) p;
             if (pos.isText()) {
                 int deg = pos.getDegrees();
                 pos.rotate(0);
-                pos.setBorder(new CompoundBorder(outlineBorder, borderMargin));
                 if (deg == 0) {
                     p.setOpaque(newUtil.hasBackground());
                 } else {
@@ -3030,7 +3036,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else if (p instanceof PositionableJPanel) {
             p.setOpaque(newUtil.hasBackground());
             p.getTextComponent().setOpaque(newUtil.hasBackground());
-            p.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
         p.updateSize();
         p.repaint();
