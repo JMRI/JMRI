@@ -353,7 +353,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 default:
                     return Object.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) { return false;}
         public int getColumnCount () {return NUMCOLUMNS;}
         public int getRowCount () {return metricsData.CMRInetMetricErrName.length;}
@@ -458,7 +458,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 default:
                     return Object.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) { return false;}
         public int getColumnCount () {return DATANUMCOLUMNS;}
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricDataName.length;}
