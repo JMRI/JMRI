@@ -60,6 +60,15 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     }
 
     @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("" + getNumToTest1());
