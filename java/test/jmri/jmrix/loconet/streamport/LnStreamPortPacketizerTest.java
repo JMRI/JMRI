@@ -24,9 +24,13 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     private LnStreamPortController apc;
            
     private DataOutputStream ostream;  // Traffic controller writes to this
+    
+    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
     private DataInputStream tostream; // so we can read it from this
 
+    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
     private DataOutputStream tistream; // tests write to this
+    
     private DataInputStream istream;   // so the traffic controller can read from this
 
     // The minimal setup for log4J
