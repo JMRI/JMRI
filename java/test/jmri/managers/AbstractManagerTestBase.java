@@ -47,4 +47,11 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         
     }
 
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1");
+        Assert.assertTrue(s != null);
+        Assert.assertTrue(! s.isEmpty());
+    }
+
 }
