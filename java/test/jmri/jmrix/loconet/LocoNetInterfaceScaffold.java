@@ -41,6 +41,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     }
 
     // test control member functions
+
     /**
      * Forward a message that came from unit under test.
      */
@@ -49,7 +50,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     }
 
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt
      */
     public void sendTestMessage(LocoNetMessage m) {
         // forward a test message to LocoNetListeners
@@ -68,6 +69,3 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     private final static Logger log = LoggerFactory.getLogger(LocoNetInterfaceScaffold.class);
 
 }
-
-
-

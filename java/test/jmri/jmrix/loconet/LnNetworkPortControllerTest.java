@@ -5,10 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the LnNetworkPortController class
- * <p>
+ * JUnit tests for the LnNetworkPortController class.
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
@@ -32,4 +31,5 @@ public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortC
        memo.dispose();
        JUnitUtil.tearDown();
     }
+
 }

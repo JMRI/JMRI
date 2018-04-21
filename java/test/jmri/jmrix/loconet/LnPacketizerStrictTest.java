@@ -12,7 +12,6 @@ import org.junit.Test;
  */
 public class LnPacketizerStrictTest extends LnPacketizerTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
