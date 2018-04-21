@@ -207,9 +207,9 @@ public class SerialAddressTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        memo = new OakTreeSystemConnectionMemo();
-        memo.setTrafficController(new SerialTrafficControlScaffold(memo));
         JUnitUtil.setUp();
+        memo = new OakTreeSystemConnectionMemo();
+        memo.setTrafficController(new SerialTrafficControlScaffold(memo)); // important for successful getTrafficController()
     }
 
     @Override

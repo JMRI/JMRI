@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstract for controllers that want to recieve or send communications to a
+ * Abstract for controllers that want to receive or send communications to a
  * connected wi-fi device.
  *
  *

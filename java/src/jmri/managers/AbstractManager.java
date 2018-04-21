@@ -508,16 +508,16 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {
+    public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {
+    public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener> listeners = new ArrayList<>();    
+    final List<ManagerDataListener<E>> listeners = new ArrayList<>();    
 
     private boolean muted = false;
     
@@ -526,7 +526,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
             ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
-            for (ManagerDataListener listener : listeners) {
+            for (ManagerDataListener<E> listener : listeners) {
                 listener.contentsChanged(e);
             }          
         }
@@ -536,14 +536,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
-        for (ManagerDataListener m : listeners) {
+        for (ManagerDataListener<E> m : listeners) {
             m.intervalAdded(e);
         }
     }
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
-        for (ManagerDataListener m : listeners) {
+        for (ManagerDataListener<E> m : listeners) {
             m.intervalRemoved(e);
         }
     }
