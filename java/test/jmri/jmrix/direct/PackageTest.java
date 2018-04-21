@@ -18,6 +18,8 @@ import org.junit.runners.Suite;
         jmri.jmrix.direct.swing.PackageTest.class,
         DirectSystemConnectionMemoTest.class,
         jmri.jmrix.direct.simulator.PackageTest.class,
+        BundleTest.class,
+        DirectConnectionTypeListTest.class,
 })
 
 /**

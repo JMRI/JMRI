@@ -57,6 +57,15 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     }
 
     @Test
+    public void testProvideName() {
+        // Create
+        Reporter t = l.provide("" + getNameToTest1());
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
+    }
+
+
+    @Test
     public void testReporterProvideReporter() {
         // Create
         Reporter t = l.provideReporter("" + getNameToTest1());
