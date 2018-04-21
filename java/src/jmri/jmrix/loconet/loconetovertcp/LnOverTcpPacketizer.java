@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * <LI> XmtHandler - down one, which is assumed to be above the GUI
  * <LI> (everything else)
  * </UL>
- * <P>
+ *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Alex Shepherd Copyright (C) 2003, 2006
- *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
 
@@ -56,7 +55,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         if (networkController == null) {
             return false;
         }
-
         return true;
     }
 
@@ -227,7 +225,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     }
 
     /**
-     * Captive class to handle transmission
+     * Captive class to handle transmission.
      */
     class XmtHandler implements Runnable {
 
@@ -273,7 +271,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             log.warn("sendLocoNetMessage: no connection established");
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString());
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString());
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
@@ -288,4 +286,5 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class);
+
 }

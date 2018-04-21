@@ -22,7 +22,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
- * <P>
+ * <p>
  * Normally controlled by the LocoBufferFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010

@@ -126,7 +126,6 @@ public class HexFileFrame extends JmriJFrame {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
         // running.
         super.dispose();
-
     }
 
     LnPacketizer packets = null;

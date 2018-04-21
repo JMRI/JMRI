@@ -41,7 +41,7 @@ public class LocoNetMessage implements Serializable {
      */
     public LocoNetMessage(int len) {
         if (len < 1) {
-            log.error("invalid length in call to ctor: " + len);
+            log.error("invalid length in call to ctor: {}", len);
         }
         _nDataBytes = len;
         _dataBytes = new int[len];
@@ -96,18 +96,16 @@ public class LocoNetMessage implements Serializable {
 
     public int getElement(int n) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n // NOI18N
-                    + " in message of " + _dataBytes.length // NOI18N
-                    + " elements: " + this.toString()); // NOI18N
+            log.error("reference element {} in message of {} elements: ", // NOI18N
+                    n, _dataBytes.length, this.toString()); // NOI18N
         }
         return _dataBytes[n] & 0xFF;
     }
 
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n // NOI18N
-                    + " in message of " + _dataBytes.length // NOI18N
-                    + " elements: " + this.toString()); // NOI18N
+            log.error("reference element {} in message of {} elements: ", // NOI18N
+                    n, _dataBytes.length, this.toString()); // NOI18N
         }
         _dataBytes[n] = v;
     }
@@ -210,13 +208,13 @@ public class LocoNetMessage implements Serializable {
      */
     public int[] getPeerXfrData() {
         if (getOpCode() != LnConstants.OPC_PEER_XFER) {
-            log.error("getPeerXfrData called with wrong opcode " + getOpCode());
+            log.error("getPeerXfrData called with wrong opcode {}", getOpCode());
         }
         if (getElement(1) != 0x10) {
-            log.error("getPeerXfrData called with wrong secondary code " + getElement(1));
+            log.error("getPeerXfrData called with wrong secondary code {}", getElement(1));
         }
         if (getNumDataElements() != 16) {
-            log.error("getPeerXfrData called with wrong length " + getNumDataElements());
+            log.error("getPeerXfrData called with wrong length {}", getNumDataElements());
         }
 
         int[] data = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -357,8 +355,8 @@ public class LocoNetMessage implements Serializable {
      */
     static protected boolean highBit(int val) {
         if ((val & (~0xFF)) != 0) {
-            log.error("highBit called with too large value: 0x"
-                    + Integer.toHexString(val));
+            log.error("highBit called with too large value: 0x{}",
+                    Integer.toHexString(val));
         }
         return (0 != (val & 0x80));
     }
@@ -369,8 +367,8 @@ public class LocoNetMessage implements Serializable {
 
     static protected int highByte(int val) {
         if ((val & (~0xFFFF)) != 0) {
-            log.error("highByte called with too large value: "
-                    + Integer.toHexString(val));
+            log.error("highByte called with too large value: {}",
+                    Integer.toHexString(val));
         }
         return (val & 0xFF00) / 256;
     }

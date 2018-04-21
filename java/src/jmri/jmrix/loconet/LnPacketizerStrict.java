@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2018
- *
  */
 public class LnPacketizerStrict extends LnPacketizer {
 
@@ -337,7 +336,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     }
                                 }
                             }
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N

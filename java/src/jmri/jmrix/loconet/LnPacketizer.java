@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortController is via a pair of *Streams, which then carry sequences of
  * characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
@@ -34,14 +34,20 @@ import org.slf4j.LoggerFactory;
 public class LnPacketizer extends LnTrafficController {
 
     /**
-     * True if the external hardware is not echoing messages, so we must
+     * True if the external hardware is not echoing messages, so we must.
      */
-    protected boolean echo = false;  // echo messages here, instead of in hardware
+    protected boolean echo = false;  // true = echo messages here, instead of in hardware
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnPacketizer() {
         self = this;
+    }
+
+    public LnPacketizer(LocoNetSystemConnectionMemo m) {
+        // set the memo to point here
+        memo = m;
+        m.setLnTrafficController(this);
     }
 
     // The methods to implement the LocoNetInterface
@@ -56,7 +62,7 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * Synchronized list used as a transmit queue.
-     * <P>
+     * <p>
      * This is public to allow access from the internal class(es) when compiling
      * with Java 1.1
      */
@@ -76,7 +82,7 @@ public class LnPacketizer extends LnTrafficController {
      * Forward a preformatted LocoNetMessage to the actual interface.
      * <p>
      * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission
+     * to a byte array and queue for transmission.
      *
      * @param m Message to send; will be updated with CRC
      */
@@ -125,11 +131,12 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
+
     // This is public to allow access from the internal class(es) when compiling with Java 1.1
     public LnPortController controller = null;
 
     /**
-     * Make connection to existing LnPortController object.
+     * Make connection to an existing LnPortController object.
      *
      * @param p Port controller for connected. Save this for a later disconnect
      *          call
@@ -144,7 +151,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     /**
-     * Break connection to existing LnPortController object. Once broken,
+     * Break connection to an existing LnPortController object. Once broken,
      * attempts to send via "message" member will fail.
      *
      * @param p previously connected port
@@ -159,7 +166,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // data members to hold the streams. These are public so the inner classes defined here
-    // can access whem with a Java 1.1 compiler
+    // can access them with a Java 1.1 compiler
     public DataInputStream istream = null;
     public OutputStream ostream = null;
 
@@ -337,17 +344,17 @@ public class LnPacketizer extends LnTrafficController {
 
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;
-            thisTC = trafficController;
+            thisTc = trafficController;
         }
         LocoNetMessage thisMsg;
-        LnTrafficController thisTC;
+        LnTrafficController thisTc;
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void run() {
-            thisTC.notify(thisMsg);
+            thisTc.notify(thisMsg);
         }
     }
 
@@ -384,7 +391,7 @@ public class LnPacketizer extends LnTrafficController {
                             if (log.isTraceEnabled()) { // avoid String building if not needed
                                 log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             }
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
@@ -410,8 +417,8 @@ public class LnPacketizer extends LnTrafficController {
      *
      * @param msg message sent
      */
-    protected void messageTransmited(byte[] msg) {
-        log.debug("message transmitted");
+    protected void messageTransmitted(byte[] msg) {
+        log.debug("message transmitted (echo {})", echo);
         if (!echo) {
             return;
         }

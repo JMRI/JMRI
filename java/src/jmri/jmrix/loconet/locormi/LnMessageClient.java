@@ -85,7 +85,7 @@ public class LnMessageClient extends LnTrafficRouter {
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
                     "//" + serverName + "/" + LnMessageServer.serviceName); // NOI18N
 
-            lnMessageBuffer = lnServer.getMessageBuffer();
+            lnMessageBuffer = lnServer.getMessageBuffer(clientMemo.getLnTrafficController());
             lnMessageBuffer.enable(0);
             pollThread = new LnMessageClientPollThread(this);
         } catch (java.rmi.NotBoundException | java.rmi.RemoteException | java.net.MalformedURLException ex) {

@@ -203,7 +203,7 @@ public class Llnmon {
     }
 
     /**
-     * This function creates a string representation of the loco address in
+     * Create a string representation of the loco address in
      * addressLow & addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
      * <p>
@@ -383,7 +383,8 @@ public class Llnmon {
 
     private String figureAddressIncludingAliasing(int adr, int adr2, int ss2, int id1, int id2) {
 
-        /* build loco address string.  String will be a simple
+        /*
+         * Build loco address string. String will be a simple
          * number, unless the address is between 100 and 127
          * (inclusive), where a Digitrax "mixed mode" version
          * of the address will be appended.
@@ -4379,6 +4380,7 @@ public class Llnmon {
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
+
     private final static Logger log = LoggerFactory.getLogger(Llnmon.class);
 
 }

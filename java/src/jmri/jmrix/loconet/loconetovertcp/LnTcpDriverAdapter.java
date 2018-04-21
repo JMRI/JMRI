@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements SerialPortAdapter for the LocoNetOverTcp system network
  * connection.
- * <P>
+ * <p>
  * This connects a Loconet via a telnet connection. Normally controlled by the
  * LnTcpDriverFrame class.
  *
@@ -22,7 +22,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"), new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
         options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"),
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
     }

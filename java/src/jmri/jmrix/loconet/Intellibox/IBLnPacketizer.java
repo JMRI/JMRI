@@ -241,7 +241,7 @@ public class IBLnPacketizer extends LnPacketizer {
                             }
 
                             log.debug("end write to stream");
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established");

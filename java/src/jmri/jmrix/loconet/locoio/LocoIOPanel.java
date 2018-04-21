@@ -87,7 +87,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
         p1.add(new JLabel(Bundle.getMessage("LocoioAddressLabel")));
-                addrField.setPreferredSize(spacer.getPreferredSize());
+        addrField.setPreferredSize(spacer.getPreferredSize());
         subAddrField.setPreferredSize(spacer.getPreferredSize());
         p1.add(addrField);
         addrField.setToolTipText(Bundle.getMessage("AddressToolTip"));

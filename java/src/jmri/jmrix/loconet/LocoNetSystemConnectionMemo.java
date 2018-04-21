@@ -110,7 +110,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     protected boolean mTurnoutExtraSpace = false;
 
     /**
-     * Configure the programming manager and "command station" objects
+     * Configure the programming manager and "command station" objects.
      *
      * @param type               Command station type, used to configure various
      *                           operations

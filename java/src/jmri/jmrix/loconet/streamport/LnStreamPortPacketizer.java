@@ -110,7 +110,7 @@ public class LnStreamPortPacketizer extends jmri.jmrix.loconet.LnPacketizer {
                             if (log.isTraceEnabled()) { // avoid String building if not needed
                                 log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             }
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N

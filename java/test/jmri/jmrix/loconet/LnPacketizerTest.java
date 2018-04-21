@@ -31,4 +31,5 @@ public class LnPacketizerTest {
         lnp = null;
         JUnitUtil.tearDown();
     }
+
 }

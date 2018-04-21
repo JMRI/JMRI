@@ -55,6 +55,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     *
      * @param name the name of the command station
      */
     public void setCommandStationType(String name) {
@@ -68,7 +69,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     /**
-     * Set configcommand station type
+     * Set configcommand station type.
+     *
      * @param value command station type enum
      */
     public void setCommandStationType(LnCommandStationType value) {
@@ -96,7 +98,8 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     /**
-     * sets whether transponding is available
+     * Set whether transponding is available.
+     *
      * @param value either yes or no
      */
     public void setTranspondingAvailable(String value) {
@@ -107,7 +110,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     /**
      * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption3(String value) {
