@@ -1801,20 +1801,26 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 // does car have a wait count?
-                if (car.getWait() > 0 && _train.services(car)) {
+                if (car.getWait() > 0) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarWait"),
                             new Object[]{car.toString(), car.getTypeName(),
                                     car.getLocationName(), car.getTrackName(), car.getWait()}));
-                    car.setWait(car.getWait() - 1); // decrement wait count
-                    // a car's load changes when the wait count reaches 0
-                    String oldLoad = car.getLoadName();
-                    if (car.getTrack().getTrackType().equals(Track.SPUR)) {
-                        car.updateLoad(); // has the wait count reached 0?
-                    }
-                    String newLoad = car.getLoadName();
-                    if (!oldLoad.equals(newLoad)) {
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarLoadChangedWait"),
-                                new Object[]{car.toString(), car.getTypeName(), oldLoad, newLoad}));
+                    if (_train.services(car)) {
+                        addLine(_buildReport, SEVEN,
+                                MessageFormat.format(Bundle.getMessage("buildTrainCanServiceWait"),
+                                        new Object[]{_train.getName(), car.toString()}));
+                        car.setWait(car.getWait() - 1); // decrement wait count
+                        // a car's load changes when the wait count reaches 0
+                        String oldLoad = car.getLoadName();
+                        if (car.getTrack().getTrackType().equals(Track.SPUR)) {
+                            car.updateLoad(); // has the wait count reached 0?
+                        }
+                        String newLoad = car.getLoadName();
+                        if (!oldLoad.equals(newLoad)) {
+                            addLine(_buildReport, SEVEN,
+                                    MessageFormat.format(Bundle.getMessage("buildCarLoadChangedWait"),
+                                            new Object[]{car.toString(), car.getTypeName(), oldLoad, newLoad}));
+                        }
                     }
                     _carList.remove(car);
                     _carIndex--;
