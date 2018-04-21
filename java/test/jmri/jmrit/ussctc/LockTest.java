@@ -18,6 +18,12 @@ public class LockTest {
         Assert.assertEquals(Lock.logMemoryName,"IMUSS CTC:LOCK:1:LOG" );
     }
 
+    @Test
+    public void testEnumValues() {
+        // this is a pretty poor test, but the class under test is an interface         // with an enum that isn't used anywhere in the Java code.
+        Assert.assertNotEquals(Lock.Valid.FIELD_TURNOUT,Lock.Valid.FIELD_SIGNAL);
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
