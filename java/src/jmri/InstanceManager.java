@@ -796,10 +796,17 @@ public final class InstanceManager {
     }
 
     /**
-     * Clear all managed instances from this InstanceManager.
+     * Clear all managed instances from the common instance manager, effectively
+     * installing a new one.
      */
     public void clearAll() {
         log.debug("Clearing InstanceManager");
+        if (traceFileActive) traceFileWriter.println("clearAll");
+        
+        // replace the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.instanceManager = new InstanceManager();
+        
+        // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
             clear(type);
         });
