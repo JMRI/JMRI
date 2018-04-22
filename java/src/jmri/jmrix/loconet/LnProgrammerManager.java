@@ -84,7 +84,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(LOCONETOPSBOARD);
         ret.add(LOCONETSV2MODE);
-        ret.add(LOCONETSV1MODE); // the show in interface in order listed here
+        ret.add(LOCONETSV1MODE); // they show in interface in order listed here
         return ret;
     }
 

@@ -48,15 +48,15 @@ public class LocoIOTableModel
     /**
      * Define the contents of the individual columns.
      */
-    public static final int PINCOLUMN = 0;  // pin number
-    public static final int MODECOLUMN = 1;  // what makes this happen?
-    public static final int ADDRCOLUMN = 2;  // what address is involved?
-    public static final int SV0COLUMN = 3;  //  SV config code
-    public static final int SV1COLUMN = 4;  //  SV Value1
-    public static final int SV2COLUMN = 5;  //  SV Value2
-    public static final int CAPTURECOLUMN = 6;  // "capture" button
-    public static final int READCOLUMN = 7;  // "read" button
-    public static final int WRITECOLUMN = 8;  // "write" button
+    public static final int PINCOLUMN = 0;     // pin number
+    public static final int MODECOLUMN = 1;    // what makes this happen?
+    public static final int ADDRCOLUMN = 2;    // what address is involved?
+    public static final int SV0COLUMN = 3;     //  SV config code
+    public static final int SV1COLUMN = 4;     //  SV Value1
+    public static final int SV2COLUMN = 5;     //  SV Value2
+    public static final int CAPTURECOLUMN = 6; // "capture" button
+    public static final int READCOLUMN = 7;    // "read" button
+    public static final int WRITECOLUMN = 8;   // "write" button
     public static final int HIGHESTCOLUMN = WRITECOLUMN + 1;
 
     private String[] msg = new String[_numRows];

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locoio;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -86,14 +87,17 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         // Top (config) row for SV0, SV1, SV2, the board sub address and the PIC version
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-        p1.add(new JLabel(Bundle.getMessage("LocoioAddressLabel")));
+        JPanel p1a = new JPanel();
+        p1a.add(new JLabel(Bundle.getMessage("LocoioAddressLabel")));
+        p1a.add(addrField);
         addrField.setPreferredSize(spacer.getPreferredSize());
-        subAddrField.setPreferredSize(spacer.getPreferredSize());
-        p1.add(addrField);
         addrField.setToolTipText(Bundle.getMessage("AddressToolTip"));
-        p1.add(new JLabel("/"));
-        p1.add(subAddrField);
+        p1a.add(new JLabel("/"));
+        p1a.add(subAddrField);
+        subAddrField.setPreferredSize(spacer.getPreferredSize());
         subAddrField.setToolTipText(Bundle.getMessage("SubAddressToolTip"));
+        p1.add(p1a);
+        p1.add(new JLabel("   ")); // prevent the glue pulling on the address fields
         p1.add(Box.createGlue());  // -------------------
         probeButton = new JButton(Bundle.getMessage("ButtonProbe"));
         probeButton.addActionListener(new ActionListener() {
@@ -147,8 +151,12 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         p2.add(new JLabel("LocoBuffer rev: ")); // NOI18N
         p2.add(locobuffer);
         p2.add(Box.createGlue());  // -------------------
-        p2.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol")) + " "));
+        p2.add(statusLabel);
+        statusLabel.setFont(status.getFont().deriveFont(0.9f * locobuffer.getFont().getSize())); // a bit smaller
+        statusLabel.setForeground(Color.gray);
         p2.add(status);
+        status.setFont(status.getFont().deriveFont(0.9f * locobuffer.getFont().getSize())); // a bit smaller
+        status.setForeground(Color.gray);
         p2.add(Box.createGlue());  // -------------------
         p2.add(new JLabel("LocoIO Firmware rev: ")); // NOI18N
         p2.add(firmware);
@@ -167,6 +175,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
             @Override
             public void actionPerformed(ActionEvent a) {
                 log.debug("address =|{}|", addrField.getText());
+                // check for empty address fields
                 if (addrField.getText().trim() == null || addrField.getText().trim() == "") {
                     addrField.setText("1");
                     log.warn("empty Address, set to 1");
@@ -329,6 +338,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     JLabel status = new JLabel(Bundle.getMessage("StateUnknown"));
     JLabel firmware = new JLabel(Bundle.getMessage("StateUnknown"));
     JLabel locobuffer = new JLabel(Bundle.getMessage("StateUnknown"));
+    JLabel statusLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("StatusCol")) + " ");
 
     JButton addrSetButton = null;
     JButton probeButton = null;

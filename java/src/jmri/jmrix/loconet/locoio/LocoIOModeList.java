@@ -190,10 +190,13 @@ public class LocoIOModeList {
     }
 
     /**
-     * Extract Port Address from 2 byte value.
+     * Extract Port Address from the 3 SV values.
      *
-     * @param lim one of a list of defined port operation modes
-     * @param address the address for this port
+     * @param opcode coded value for message type
+     * @param sv first SV value, ignored
+     * @param v1 second value (high bit)
+     * @param v1 second value (high bit)
+     * @return address (int) of the port
      */
     protected int valuesToAddress(int opcode, int sv, int v1, int v2) {
         //int hi = 0;

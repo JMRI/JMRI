@@ -148,13 +148,14 @@ public class LocoIOData
      * Bit 2: 0 = default - Not used
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
+     * Possibly more recent config options for HDL boards
      * </pre>
      */
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
-        int newsv0 = ((portRefresh & 0x01)) | // bit 0
+        int newsv0 = ((portRefresh & 0x01)) |   // bit 0
                 ((altCodePBs & 0x01) << 0x01) | // bit 1
                 // bit 2 left at zero
-                ((isServo & 0x01) << 0x03) | // bit 3
+                ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
         dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0)); // NOI18N
         sv0 = newsv0;
@@ -289,7 +290,6 @@ public class LocoIOData
      * Start reading all rows back.
      */
     public void readAll() {
-        // System.out.println("readAll()");
         for (int row = 0; row < _numRows; row++) {
             readState[row] = READ;
         }
@@ -609,7 +609,7 @@ public class LocoIOData
             currentPin = i;
             if (writeState[i] != NONE) {
                 // yes, needs read.  Find what kind
-                // System.out.println("iNO: writeState[" + i + "] = " + readState[i]);
+                log.debug("iNO: writeState[" + i + "] = " + readState[i]);
                 switch (writeState[i]) {
                     case WRITEVALUE1:
                     case WRITINGVALUE1:
@@ -643,7 +643,7 @@ public class LocoIOData
             }
         }
         // nothing of interest found, so just end gracefully
-        //  if (log.isDebugEnabled()) log.debug("No operation needed");
+        log.debug("No operation needed");
         setStatus(Bundle.getMessage("StatusOK"));
         lastOpCv = -1;
         currentPin = 0;
@@ -719,10 +719,8 @@ public class LocoIOData
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
         reading = true;
-        //writing = false;
-        // System.out.println("sendReadCommand(to " + Integer.toHexString(locoIOAddress) + "/" +
-        //        Integer.toHexString(locoIOSubAddress) + " SV" + cv);
-
+        log.debug("sendReadCommand(to {}/{} SV {}",
+                Integer.toHexString(locoIOAddress), Integer.toHexString(locoIOSubAddress), cv);
         tc.sendLocoNetMessage(
                 LocoIO.readCV(locoIOAddress, locoIOSubAddress, cv));
         startTimer();        // and set timeout on reply
@@ -735,7 +733,6 @@ public class LocoIOData
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write
         reading = false;
-        //writing = true;
 
         tc.sendLocoNetMessage(
                 LocoIO.writeCV(locoIOAddress, locoIOSubAddress, cv, data));

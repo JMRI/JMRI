@@ -6,6 +6,12 @@ import jmri.jmrix.loconet.LocoNetMessage;
 /**
  * Manage the communication to/from a LocoIO board.
  *
+ * TODO: align with DecoderPro SV1/SV2MODE style of messages
+ * as currently (4.11.5) this tool does not work on the HDL LocoIO rev 3 boards,
+ * even breaking the stored config.
+ * @see jmri.jmrix.loconet.LnProgrammerManager.LOCONETSV1MODE
+ * @see jmri.jmrix.loconet.LnOpsModeProgrammer#message(LocoNetMessage)
+ *
  * Programming SV's
  * <p>
  * The SV's in LocoIO can be programmed using Loconet OPC_PEER_XFER messages.
@@ -82,7 +88,6 @@ public class LocoIO {
                 contents, // CV and SubAddr to read
                 LOCOIO_PEER_CODE_SV_VER1
         );
-
     }
 
     public static LocoNetMessage writeCV(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
