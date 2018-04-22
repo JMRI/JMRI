@@ -286,13 +286,19 @@ public class ManageLocationsFrame extends JmriJFrame {
     @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, 1)) {
-            listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
-                    (Double) locModel.getValueAt(0, 3),
-                    (Double) locModel.getValueAt(0, 4));
-            listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
-                    (Double) locModel.getValueAt(0, 6));
-            VSDecoderManager.instance().getVSDecoderPreferences().save();
-            VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+            // Don't accept Azimuth value 90 or -90 (they are not in the domain of definition)
+            if ((Double) locModel.getValueAt(0, 6) != null 
+                    && ((Double) locModel.getValueAt(0, 6) == 90.0d || (Double) locModel.getValueAt(0, 6) == -90.0d)) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
+            } else {
+                listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
+                        (Double) locModel.getValueAt(0, 3),
+                        (Double) locModel.getValueAt(0, 4));
+                listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
+                        (Double) locModel.getValueAt(0, 6));
+                VSDecoderManager.instance().getVSDecoderPreferences().save();
+                VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+            }
         }
 
         HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
