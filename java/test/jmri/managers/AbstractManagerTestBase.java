@@ -25,7 +25,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
     // check that you can add and remove listeners
     @Test
-    public void checkSimpleAddAndRemove() {
+    public final void checkSimpleAddAndRemove() {
         
         Manager.ManagerDataListener<E> listener = new Manager.ManagerDataListener<E>(){
             @Override public void contentsChanged(Manager.ManagerDataEvent<E> e){}
