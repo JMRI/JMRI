@@ -804,8 +804,13 @@ public final class InstanceManager {
             clear(type);
         });
         managerLists.keySet().forEach((type) -> {
+            if (getInitializationState(type) != InitializationState.NOTSET) {
+                log.warn("list of {} was reinitialized during clearAll", type, new Exception());
+                if (traceFileActive) traceFileWriter.println("WARN: list of "+type+" was reinitialized during clearAll");
+            }
             if (!managerLists.get(type).isEmpty()) {
-                log.warn("list of {} was not cleared", type, new Exception());
+                log.warn("list of {} was not cleared, {} entries", type, managerLists.get(type).size(), new Exception());
+                if (traceFileActive) traceFileWriter.println("WARN: list of "+type+" was not cleared, "+managerLists.get(type).size()+" entries");
             }
         });
         if (traceFileActive) {
