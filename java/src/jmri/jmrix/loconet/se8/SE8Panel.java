@@ -10,17 +10,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Display and modify an SE8c configuration.
- * <P>
+ * <p>
  * The read and write require a sequence of operations, which we handle with a
  * superclass.
- * <P>
+ * <p>
  * Programming of the SE8c is done via configuration messages, so the SE8c
  * should not be put into programming mode via the built-in pushbutton while
  * this tool is in use.
- * <P>
+ * <p>
  * Throughout, the terminology is "closed" == true, "thrown" == false. Variables
  * are named for their closed state.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,

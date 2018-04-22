@@ -18,16 +18,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * User interface for sending LocoNet messages to exercise the system
- * <P>
+ * <p>
  * When sending a sequence of operations:
- * <UL>
- * <LI>Send the next message
- * <LI>Wait until you hear the echo, then start a timer
- * <LI>When the timer trips, repeat if buttons still down.
- * </UL>
+ * <ul>
+ *   <li>Send the next message
+ *   <li>Wait until you hear the echo, then start a timer
+ *   <li>When the timer trips, repeat if buttons still down.
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
-  */
+ */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 

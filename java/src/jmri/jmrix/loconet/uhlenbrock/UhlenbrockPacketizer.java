@@ -21,12 +21,12 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <p>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
+ *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
- *
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
 

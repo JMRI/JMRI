@@ -21,7 +21,7 @@ import purejavacomm.UnsupportedCommOperationException;
 /**
  * Provide access to LocoNet via a MS100 attached to a serial comm port.
  * Normally controlled by the MS100Frame class.
- * <P>
+ * <p>
  * By default, this attempts to use 16600 baud. If that fails, it falls back to
  * 16457 baud. Neither the baud rate configuration nor the "option 1" option are
  * used.

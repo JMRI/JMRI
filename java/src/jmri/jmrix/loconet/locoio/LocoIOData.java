@@ -148,13 +148,14 @@ public class LocoIOData
      * Bit 2: 0 = default - Not used
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
-     * Possibly more recent config options for HDL boards
+     *
+     * If possibe add/support the additional config options for HDL boards
      * </pre>
      */
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
         int newsv0 = ((portRefresh & 0x01)) |   // bit 0
                 ((altCodePBs & 0x01) << 0x01) | // bit 1
-                // bit 2 left at zero
+                // bit 2 is left at zero
                 ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
         dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0)); // NOI18N
@@ -571,15 +572,15 @@ public class LocoIOData
         for (int i = 0; i < _numRows; i++) {
             currentPin = i;
             if (readState[i] != NONE) {
-                // yes, needs read.  Find what kind
-                // System.out.println("iNO: readState[" + i + "] = " + readState[i]);
+                // yes, needs read. Find what kind
+                log.debug("iNO: readState[{}] = {}", i, readState[i]);
                 switch (readState[i]) {
                     case READVALUE1:
                     case READINGVALUE1:
                         // set new state, send read, then done
                         readState[i] = READINGVALUE1;
                         lastOpCv = i * 3 + 4;
-                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i, 1));
+                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i + 1, 1)); // number port like table
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     case READVALUE2:
@@ -587,7 +588,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGVALUE2;
                         lastOpCv = i * 3 + 5;
-                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i, 2));
+                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i + 1, 2));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     case READMODE:
@@ -595,11 +596,11 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGMODE;
                         lastOpCv = i * 3 + 3;
-                        setStatus(Bundle.getMessage("StatusReadMode", lastOpCv, i));
+                        setStatus(Bundle.getMessage("StatusReadMode", lastOpCv, i + 1));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     default:
-                        log.error("found an unexpected state: {} on port {}", readState[1], i); // NOI18N
+                        log.error("found an unexpected state: {} on port {}", readState[1], i + 1); // NOI18N
                         return;
                 }
             }
@@ -609,14 +610,14 @@ public class LocoIOData
             currentPin = i;
             if (writeState[i] != NONE) {
                 // yes, needs read.  Find what kind
-                log.debug("iNO: writeState[" + i + "] = " + readState[i]);
+                log.debug("iNO: writeState[{}] = {}", i, readState[i]);
                 switch (writeState[i]) {
                     case WRITEVALUE1:
                     case WRITINGVALUE1:
                         // set new state, send read, then done
                         writeState[i] = WRITINGVALUE1;
                         lastOpCv = i * 3 + 4;
-                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i, 1));
+                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i + 1, 1));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getV1(i));
                         return;
                     case WRITEVALUE2:
@@ -624,7 +625,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         writeState[i] = WRITINGVALUE2;
                         lastOpCv = i * 3 + 5;
-                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i, 2));
+                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i + 1, 2));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getV2(i));
                         return;
                     case WRITEMODE:
@@ -632,12 +633,12 @@ public class LocoIOData
                         // set new state, send write, then done
                         writeState[i] = WRITINGMODE;
                         lastOpCv = i * 3 + 3;
-                        setStatus(Bundle.getMessage("StatusWriteMode", lastOpCv, i));
+                        setStatus(Bundle.getMessage("StatusWriteMode", lastOpCv, i + 1));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getSV(i));
                         return;
 
                     default:
-                        log.error("found an unexpected state: " + writeState[1] + " on port " + i); // NOI18N
+                        log.error("found an unexpected state: {} on port {}", writeState[1], i + 1); // NOI18N
                         return;
                 }
             }
@@ -740,9 +741,7 @@ public class LocoIOData
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose"); // NOI18N
-        }
+        log.debug("dispose"); // NOI18N
         // disconnect from future events
         stopTimer();
         tc.removeLocoNetListener(~0, this);

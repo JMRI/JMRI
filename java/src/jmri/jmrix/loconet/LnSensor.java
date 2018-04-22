@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for LocoNet layouts.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,

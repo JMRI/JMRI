@@ -59,7 +59,7 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
     /**
      * Can the port accept additional characters? This might go false for short
      * intervals, but it might also stick off if something goes wrong.
-     * <P>
+     * <p>
      * Provide a default implementation for the MS100, etc, in which this is
      * _always_ true, as we rely on the queueing in the port itself.
      */

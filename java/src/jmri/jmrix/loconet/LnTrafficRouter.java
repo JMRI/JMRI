@@ -17,18 +17,31 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
+    /**
+     * Create a default LnTrafficRouter instance without a SystemConnectionMemo.
+     * Not compatible with multi connections.
+     *
+     * @deprecated since 4.11.6, use LnTrafficRouter(LocoNetSystemConnectionMemo) instead
+     */
+    @Deprecated
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
     }
 
+    /**
+     * Create a default instance connected to a given SystemConnectionMemo.
+     *
+     * @since 4.11.6
+     * @param m the connected LocoNetSystemConnectionMemo
+     */
     public LnTrafficRouter(LocoNetSystemConnectionMemo m) {
         // set the memo to point here
         memo = m;
         m.setLnTrafficController(this);
     }
 
-    // The methods to implement the LocoNetInterface for clients.
+    // Methods to implement the LocoNetInterface for clients.
     // These use the parent implementations of listeners, addLocoNetListener,
     // removeLocoNetListener, notify
     boolean connected = false;

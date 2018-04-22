@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Implement the SKEME_START macro from the Digitrax sound definition language.
- * <P>
+ * <p>
  * This nests until the next SKEME_START.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008

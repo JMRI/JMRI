@@ -8,28 +8,28 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the LocoNet-specific Turnout implementation.
  * System names are "LTnnn", where nnn is the turnout number without padding.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ * <p>
  * Since LocoNet messages requesting turnout operations can arrive faster than
  * the command station can send them on the rails, the command station has a
  * short queue of messages. When that gets full, it sends a LACK, indicating
  * that the request was not forwarded on the rails. In that case, this class
  * goes into a tight loop, resending the last turnout message seen until it's
  * received without a LACK reply. Note two things about this:
- * <UL>
- * <LI>We provide this service for any turnout request, whether or not it came
- * from JMRI. (This might be a problem if more than one computer is executing
- * this algorithm)
- * <LI>By sending the message as fast as we can, we tie up the LocoNet during
- * the the recovery. This is a mixed bag; delaying can cause messages to get out
- * of sequence on the rails. But not delaying takes up a lot of LocoNet
- * bandwidth.
- * </UL>
+ * <ul>
+ *   <li>We provide this service for any turnout request, whether or not it came
+ *   from JMRI. (This might be a problem if more than one computer is executing
+ *   this algorithm)
+ *   <li>By sending the message as fast as we can, we tie up the LocoNet during
+ *   the the recovery. This is a mixed bag; delaying can cause messages to get out
+ *   of sequence on the rails. But not delaying takes up a lot of LocoNet
+ *   bandwidth.
+ * </ul>
  * In the end, this implementation is OK, but not great. An improvement would be
  * to control JMRI turnout operations centrally, so that retransmissions can be
  * controlled.
@@ -186,7 +186,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      */

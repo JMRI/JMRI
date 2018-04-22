@@ -365,7 +365,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Method to self print or print preview the table. Printed in equally sized
+     * Self print - or print preview - the table.
+     * <p>
+     * Printed in equally sized
      * columns across the page with headings and vertical lines between each
      * column. Data is word wrapped within a column. Can handle data as strings,
      * comboboxes or booleans.

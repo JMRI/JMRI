@@ -21,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
 
 /**
  * Frame providing a command station slot manager.
- * <P>
+ * <p>
  * Slots 102 through 127 are normally not used for loco control, so are shown
  * separately.
  *

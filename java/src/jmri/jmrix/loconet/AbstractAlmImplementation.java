@@ -10,13 +10,13 @@ import org.slf4j.LoggerFactory;
  * typically in the SW1, SW2 format, but don't have to be.
  * <p>
  * This ALM can operate in one of two modes:
- * <UL>
- * <LI>"image" - This ALM shadows one that really exists somewhere else. This
- * implementation keeps values that are being written, but doesn't reply to read
- * or write commands on the LocoNet.
- * <LI>"not image" - This is the only existing implementation of this particular
- * ALM, so it replies to read and write commands.
- * </UL>
+ * <ul>
+ *   <li>"image" - This ALM shadows one that really exists somewhere else. This
+ *   implementation keeps values that are being written, but doesn't reply to read
+ *   or write commands on the LocoNet.
+ *   <li>"not image" - This is the only existing implementation of this particular
+ *   ALM, so it replies to read and write commands.
+ * </ul>
  * LocoNet ALM messages showing a argument value N will show in the throttle
  * editor as N+1. Here, we refer to these as "arguments" and "throttle values".
  * Similarly, device addresses are "addresses" in the ALM, based on zero, and
@@ -299,10 +299,10 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * <p>
      * For a single write, that's not needed, but if you want to know when it is
      * complete you need to:
-     * <OL>
-     * <LI>Recognize when your write command has come back from the LocoNet
-     * <LI>Wait for the next LACK
-     * </OL>
+     * <ol>
+     *   <li>Recognize when your write command has come back from the LocoNet
+     *   <li>Wait for the next LACK
+     * </ol>
      * Hopefully this ALM writer is unique, so there won't be two writes to the
      * same ALM going on at the same time; the LocoNet is not well synchronized
      * against that.

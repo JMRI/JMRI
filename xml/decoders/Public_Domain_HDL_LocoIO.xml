@@ -40,7 +40,7 @@
         </revision>
         <revision>
             <revnumber>2</revnumber>
-            <date>2018-04-18</date>
+            <date>2018-04-20</date>
             <authorinitials>EB</authorinitials>
             <revremark>Added Board and Ports panes, manual entry, still experimental</revremark>
         </revision>

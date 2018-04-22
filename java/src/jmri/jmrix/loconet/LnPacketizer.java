@@ -18,11 +18,11 @@ import org.slf4j.LoggerFactory;
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -108,10 +108,10 @@ public class LnPacketizer extends LnTrafficController {
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify();
+                xmtHandler.notify(); // NPE here?
             }
         } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: " + e);
+            log.warn("passing to xmit: unexpected exception: ", e);
         }
     }
 
@@ -344,17 +344,17 @@ public class LnPacketizer extends LnTrafficController {
 
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;
-            thisTc = trafficController;
+            thisTC = trafficController;
         }
         LocoNetMessage thisMsg;
-        LnTrafficController thisTc;
+        LnTrafficController thisTC;
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void run() {
-            thisTc.notify(thisMsg);
+            thisTC.notify(thisMsg);
         }
     }
 

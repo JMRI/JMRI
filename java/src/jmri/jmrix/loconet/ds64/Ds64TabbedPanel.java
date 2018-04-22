@@ -37,36 +37,36 @@ import org.slf4j.LoggerFactory;
 /**
  * A "tabbed" swing panel to display and modify Digitrax DS64 board
  * configuration.
- * <P>
+ * <p>
  * The read and write operations require a sequence of operations, which are
  * handled with a state variable.
- * <P>
+ * <p>
  * Programming of the DS64 is done via LocoNet configuration messages, so the
  * DS64 should not be manually put into its programming mode via the DS64
  * built-in pushbutton while this tool is in use.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ * <p>
  * Extensions to include read/write of turnout output addresses and routes are
  * based on reverse-engineering of DS64 operating characteristics by B.
  * Milhaupt. As such, this tool may not be compatible with all DS64 devices.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * Based on Revision 1.1 of DS64Panel.java by Bob Jacobsen
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2005, 2007, 2010
  * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017
  */
@@ -100,7 +100,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Ds64TabbedPanel constructor when the boardNum is already known.
-     * <P>
+     * <p>
      * When instantiated, the object will not automatically read the basic
      * configuration information.
      *
@@ -120,7 +120,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * to pre-populate the GUI combobox showing BoardID numbers. The first
      * BoardID number in the array will automatically be selected upon
      * instantiation.
-     * <P>
+     * <p>
      * When instantiated, the object will automatically read the basic
      * configuration information if readOnInit is true.
      *
@@ -145,7 +145,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Ds64TabbedPanel constructor when the boardNum is not known; BoardID 1 is
      * assumed.
-     * <P>
+     * <p>
      * Allows the instantiating method to specify whether the basic feature
      * configuration information will be read upon instantiation.
      *
@@ -263,7 +263,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Copy from the GUI to the opsw array.
-     * <P>
+     * <p>
      * Used before write operations start.
      */
     @Override

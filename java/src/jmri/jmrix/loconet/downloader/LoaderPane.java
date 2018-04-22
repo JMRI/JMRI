@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Pane for downloading .hex files and .dmf files to those LocoNet devices which
  * support firmware updates via LocoNet IPL messages.
- *
+ * <p>
  * This version relies on the file contents interpretation mechanisms built into
  * the readHex() methods found in class jmri.jmrit.MemoryContents to
  * automatically interpret the file's addressing type - either 16-bit or 24-bit
  * addressing. The interpreted addressing type is reported in the pane after a
  * file is read. The user cannot select the addressing type.
- *
+ * <p>
  * This version relies on the file contents checking mechanisms built into the
  * readHex() methods found in class jmri.jmrit.MemoryContents to check for a
  * wide variety of possible issues in the contents of the firmware update file.
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
-  */
+ */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
 
@@ -58,7 +58,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-    /** This gets invoked early. We don't want it to do anything, so 
+    /** This gets invoked early. We don't want it to do anything, so
      * we just fail to pass it up. Instead, we wait for the later call of
      * initComponents(LocoNetSystemConnectionMemo memo)
      */
@@ -116,8 +116,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     static int PXCT2ENDOPERATION = 0x40;
 
     /*
-     * Flags for "Options"
-     * see http://embeddedloconet.cvs.sourceforge.net/viewvc/embeddedloconet/apps/BootLoader/BootloaderUser.c
+     * Flags for "Options".
+     * See {@link http://embeddedloconet.cvs.sourceforge.net/viewvc/embeddedloconet/apps/BootLoader/BootloaderUser.c}
      */
     private static final int DO_NOT_CHECK_SOFTWARE_VERSION = 0x00;
     private static final int CHECK_SOFTWARE_VERSION_LESS = 0x04;
@@ -951,7 +951,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         /**
          * Signal GUI that it's the end of the download
-         * <P>
+         * <p>
          * Should be invoked on the Swing thread
          */
         void enableGUI() {
@@ -959,7 +959,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
 
         /**
-         * Update the GUI for progress
+         * Update the GUI for progress.
+         *
          * @param value is the percentage of "doneness" to be displayed
          */
         void updateGUI(final int value) {
@@ -1005,7 +1006,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * intended for use immediately before a "verify" or "download" operation to
      * check that the user has not changed any of the GUI text values to ones
      * that are unsupported.
-     *
+     * <p>
      * Note that this method cannot guarantee that the values are suitable for
      * the hardware being updated and/or for the particular firmware information
      * which was read from the firmware file.
@@ -1140,6 +1141,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         updateDownloadVerifyButtons();
         log.info("ActionListener");
     }
+
     private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
 
 }

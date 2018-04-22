@@ -11,31 +11,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractReporter for LocoNet layouts
- * <P>
- * This implementation reports transponding messages.
- * <P>
+ * Extend jmri.AbstractReporter for LocoNet layouts.
+ * <p>
+ * This implementation reports Transponding messages.
+ * <p>
  * Each transponding message creates a new current report. The last report is
  * always available, and is the same as the contents of the last transponding
  * message received.
- * <P>
+ * <p>
  * Reports are Strings, formatted as
  * <ul>
  * <li>NNNN enter - locomotive address NNNN entered the transponding zone. Short
- * vs long address is indicated by the NNNN value
- * <LI>NNNN exits - locomotive address NNNN left the transponding zone.
- * <LI>NNNN seen northbound - LISSY measurement
- * <LI>NNNN seen southbound - LISSY measurement
+ *   vs long address is indicated by the NNNN value
+ *   <li>NNNN exits - locomotive address NNNN left the transponding zone.
+ *   <li>NNNN seen northbound - LISSY measurement
+ *   <li>NNNN seen southbound - LISSY measurement
  * </ul>
- * <p>
+ *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
-  */
+ */
 public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!

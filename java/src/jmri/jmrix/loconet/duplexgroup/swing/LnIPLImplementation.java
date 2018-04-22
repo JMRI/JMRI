@@ -715,14 +715,14 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Some IPL-capable devices cannot be completely determined based
      * solely on Host Manufacturer number and Host Device number.
-     * <P>
+     * <p>
      * NOTE: Some members of a device family do not support IPL. An interpreted
      * IPL Host Manufacturer number and Host Device number might imply that all
      * members do support IPL. As an example, UT4 and UT4R devices do not appear
      * to support IPL, while UT4D appears to support IPL. This method will
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
-     * <p>
+     *
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice,
@@ -803,14 +803,14 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Some IPL-capable devices cannot be completely determined based
      * solely on Host Manufacturer number and Host Device number.
-     * <P>
+     * <p>
      * NOTE: Some members of a device family do not support IPL. An interpreted
      * IPL Host Manufacturer number and Host Device number might imply that all
      * members do support IPL. As an example, UT4 and UT4R devices do not appear
      * to support IPL, while UT4D appears to support IPL. This method will
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
-     * <p>
+     *
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice) {

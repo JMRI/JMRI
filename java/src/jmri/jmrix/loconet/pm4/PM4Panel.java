@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying and programming a PM4 configuration.
- * <P>
+ * <p>
  * The read and write require a sequence of operations, which we handle with a
  * state variable.
- * <P>
+ * <p>
  * Programming of the PM4 is done via configuration messages, so the PM4 should
  * not be put into programming mode via the built-in pushbutton while this tool
  * is in use.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
-  */
+ */
 public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
     public PM4Panel() {

@@ -3,15 +3,15 @@ package jmri.jmrix.loconet;
 
 /**
  * Extends representation of a single slot for the UhlenBrock command station
- * <P>
+ * <p>
  * Does specific Uhlenbrock Intellibox message handling.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Alain Le Marchand Copyright (C) 2014
  */
 public class UhlenbrockSlot extends LocoNetSlot {

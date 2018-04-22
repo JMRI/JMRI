@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Display and modify an Digitrax board configuration.
- * <P>
+ * <p>
  * Supports boards which can be read and write using LocoNet opcode
  * OPC_MULTI_SENSE, such as PM4x, DS64, SE8c, BDL16x.
- * <P>
+ * <p>
  * The read and write require a sequence of operations, which we handle with a
  * state variable.
  * <p>
@@ -29,14 +29,14 @@ import org.slf4j.LoggerFactory;
  * times to try to get a response from the addressed board. If the board does
  * not respond, the access sequence is aborted and a failure message is
  * populated in the "status" variable.
- * <P>
+ * <p>
  * Programming of the board is done via configuration messages, so the board
  * should not be put into programming mode via the built-in pushbutton while
  * this tool is in use.
- * <P>
+ * <p>
  * Throughout, the terminology is "closed" == true, "thrown" == false. Variables
  * are named for their closed state.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -377,15 +377,16 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Configure the type word in the LocoNet messages.
-     * <P>
+     * <p>
      * Known values:
-     * </P><UL>
-     * <LI>0x70 - PM4
-     * <LI>0x71 - BDL16
-     * <LI>0x72 - SE8
-     * <LI>0x73 - DS64
+     * <ul>
+     *   <li>0x70 - PM4
+     *   <li>0x71 - BDL16
+     *   <li>0x72 - SE8
+     *   <li>0x73 - DS64
      * </ul>
-     * @param type - board type number, per list above.
+     *
+     * @param type board type number, per list above
      */
     protected void setTypeWord(int type) {
         typeWord = type;
@@ -439,7 +440,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     }
 
     /**
-     * Starts the pacing timer, which, at timeout, will begin the next OpSw
+     * Start the pacing timer, which, at timeout, will begin the next OpSw
      * access request.
      */
     private final void nextRequest() {
@@ -449,11 +450,11 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     }
 
     /**
-     * Converts the GUI text field containing the address into a valid integer
+     * Convert the GUI text field containing the address into a valid integer
      * address, and handles user-input errors as needed.
      *
-     * @param maxValid   highest Board ID number allowed for the given device type.
-     * @throws jmri.JmriException - when the board address is invalid
+     * @param maxValid highest Board ID number allowed for the given device type
+     * @throws jmri.JmriException when the board address is invalid
      */
     void setAddress(int maxValid) throws jmri.JmriException {
         try {
@@ -497,13 +498,13 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     /**
      * Compute the next OpSw number to be accessed, based on the current OpSw number.
      *
-     * @param state - current OpSw number
-     * @return - computed next OpSw nubmer
+     * @param state current OpSw number
+     * @return computed next OpSw nubmer
      */
     abstract protected int nextState(int state);
 
     /**
-     * Provides a mechanism to write several OpSw values in a sequence. The
+     * Provide a mechanism to write several OpSw values in a sequence. The
      * sequence is defined by the {@link #nextState(int)} method.
      */
     public void writeAll() {

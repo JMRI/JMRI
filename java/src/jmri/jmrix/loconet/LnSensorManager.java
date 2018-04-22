@@ -16,6 +16,10 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     public LnSensorManager(LnTrafficController tc, String prefix) {
         this.prefix = prefix;
+        if (tc == null) {
+            log.error("SensorManager Created, yet there is no Traffic Controller");
+            return;
+        }
         this.tc = tc;
         // ctor has to register for LocoNet events
         tc.addLocoNetListener(~0, this);
@@ -69,9 +73,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 a = new LnSensorAddress(sw1, sw2, prefix);
-                if (log.isDebugEnabled()) {
-                    log.debug("INPUT_REP received with address {}", a);
-                }
+                log.debug("INPUT_REP received with address {}", a);
                 break;
             default:  // here we didn't find an interesting command
                 return;
@@ -104,15 +106,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Method to set Route busy when commands are being issued to Route turnouts
+     * Set Route busy when commands are being issued to Route turnouts.
      */
     public void setUpdateBusy() {
         busy = true;
     }
 
     /**
-     * Method to set Route not busy when all commands have been issued to Route
-     * turnouts
+     * Set Route not busy when all commands have been issued to Route
+     * turnouts.
      */
     public void setUpdateNotBusy() {
         busy = false;
@@ -199,7 +201,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      */

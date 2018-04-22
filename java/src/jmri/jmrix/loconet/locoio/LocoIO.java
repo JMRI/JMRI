@@ -9,7 +9,8 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * TODO: align with DecoderPro SV1/SV2MODE style of messages
  * as currently (4.11.5) this tool does not work on the HDL LocoIO rev 3 boards,
  * even breaking the stored config.
- * @see jmri.jmrix.loconet.LnProgrammerManager.LOCONETSV1MODE
+ *
+ * @see jmri.jmrix.loconet.LnProgrammerManager#LOCONETSV1MODE
  * @see jmri.jmrix.loconet.LnOpsModeProgrammer#message(LocoNetMessage)
  *
  * Programming SV's
@@ -79,6 +80,15 @@ public class LocoIO {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
+    /**
+     * Compose a LocoNet message from the given ingredients for reading
+     * the value of one specific SV from a LocoIO.
+     *
+     * @param locoIOAddress base address of the LocoIO board to read from
+     * @param locoIOSubAddress subAddress of LocoIO board
+     * @param cv the SV index to query
+     * @return complete message to send
+     */
     public static LocoNetMessage readCV(int locoIOAddress, int locoIOSubAddress, int cv) {
         int[] contents = {LOCOIO_SV_READ, cv, 0, 0, locoIOSubAddress, 0, 0, 0};
 
@@ -89,7 +99,16 @@ public class LocoIO {
                 LOCOIO_PEER_CODE_SV_VER1
         );
     }
-
+    /**
+     * Compose a LocoNet message from the given ingredients for reading
+     * the value of one specific SV from a LocoIO.
+     *
+     * @param locoIOAddress base address of the LocoIO board to read from
+     * @param locoIOSubAddress subAddress of LocoIO board
+     * @param cv the SV index to change
+     * @param data the new value to store in the board's SV
+     * @return complete message to send
+     */
     public static LocoNetMessage writeCV(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         int[] contents = {LOCOIO_SV_WRITE, cv, 0, data, locoIOSubAddress, 0, 0, 0};
 
@@ -101,6 +120,17 @@ public class LocoIO {
         );
     }
 
+    /**
+     * Compose and send a message out onto LocoNet changing the LocoIO hardware board
+     * address of all connected LocoIO boards.
+     * <p>
+     * User is warned this is a broadcast type operation in
+     * {@link jmri.jmrix.loconet.locoio.LocoIOPanel#cautionAddrSet()}
+     *
+     * @param address the new base address of the LocoIO board to change
+     * @param subAddress the new subAddress of the board
+     * @param ln the TrafficController to use for sending the message
+     */
     public static void programLocoIOAddress(int address, int subAddress, LnTrafficController ln) {
         LocoNetMessage msg;
         msg = LocoIO.writeCV(0x0100, 0, 1, address & 0xFF);
@@ -111,6 +141,11 @@ public class LocoIO {
         }
     }
 
+    /**
+     * Send out a probe of all connected LocoIO units on a given LocoNet connection.
+     *
+     * @param ln the TrafficController to use for sending the message
+     */
     public static void probeLocoIOs(LnTrafficController ln) {
         LocoNetMessage msg;
         msg = LocoIO.readCV(0x0100, 0, 2);

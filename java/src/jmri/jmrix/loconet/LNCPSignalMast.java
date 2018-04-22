@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.SignalMast for signals implemented by an LNCP
- * <P>
+ * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.

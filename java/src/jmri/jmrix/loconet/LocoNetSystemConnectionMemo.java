@@ -73,11 +73,15 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      *
      * @return the LocoNet-specific TrafficController
      */
     public LnTrafficController getLnTrafficController() {
+        if (lt == null) {
+            setLnTrafficController(new LnPacketizer(this)); // default to Packetizer TrafficController
+            log.debug("Auto create of LnTrafficController for initial configuration");
+        }
         return lt;
     }
 
@@ -278,7 +282,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         ClockControl cc = getClockControl();
         // make sure InstanceManager knows about that
         InstanceManager.setDefault(ClockControl.class, cc);
-
     }
 
     protected LnPowerManager powerManager;

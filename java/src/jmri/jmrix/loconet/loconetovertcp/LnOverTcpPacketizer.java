@@ -15,16 +15,16 @@ import org.slf4j.LoggerFactory;
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortnetworkController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
+ * <ul>
+ * <li> RcvHandler - at highest available priority
+ * <li> XmtHandler - down one, which is assumed to be above the GUI
+ * <li> (everything else)
+ * </ul>
  *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does

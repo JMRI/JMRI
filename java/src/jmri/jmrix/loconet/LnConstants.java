@@ -16,7 +16,7 @@ package jmri.jmrix.loconet;
  *  </ul>
  *<p>
  * Slot Status byte definitions and macros
- * <UL>
+ * <ul>
  * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)
  *
  * <li>D6-SL_CONUP : CONDN/CONUP: bit encoding-Control double
@@ -62,7 +62,7 @@ package jmri.jmrix.loconet;
  *      <li>111=128 Step decoder, Allow Advanced DCC consisting
  *      <li>100=28 Step decoder ,Allow Advanced DCC consisting
  *      </ul>
- * </ul><p>
+ * </ul>
  * Note that the values in this class have been taken from the llnmom C program
  * of Ron W. Auld, which included some work of John Kabat. The symbol names are
  * copied from the loconet.h file, CVS revision 1.1.1.1, program release 0.3.0

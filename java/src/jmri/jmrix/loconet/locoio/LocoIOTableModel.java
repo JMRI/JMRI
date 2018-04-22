@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Configurer for LocoIO hardware.
- * <P>
+ * <p>
  * This code derves the SV values from the user-selected mode and address; this
  * is different from earlier versions where the user was expected to do the
  * derivation manually. This derivation is complicated by the fact that the
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * done - additional bits in "v2" SV[port.2] are also used. For example, 0x80 is
  * both turnout closed and turnout high. We read and write the mode SV _last_ to
  * handle this.
- * <P>
+ * <p>
  * The "addr" field is constructed from (or causes the construction of,
  * depending on whether we are reading or writing...) value1 and value2. In
  * particular, value2 requires knowledge of the mode being set. When "capturing"
@@ -260,7 +260,12 @@ public class LocoIOTableModel
             if (((String) (value)).startsWith("0x")) {
                 a = Integer.valueOf(((String) value).substring(2), 16).intValue();
             } else {
-                a = Integer.valueOf((String) value, 10).intValue();
+                try {
+                    a = Integer.valueOf((String) value, 10).intValue();
+                } catch (NumberFormatException ne) {
+                    log.info("Enter a number for the Port Address first");
+                    return;
+                }
             }
             if (a < 1) {
                 a = 1;
