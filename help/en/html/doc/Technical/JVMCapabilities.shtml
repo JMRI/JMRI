@@ -175,19 +175,35 @@
       finds numerous pages that show how to install Java 1.7 on XP
       or XP SP2. JMRI's 
       <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
-      will have updated information on this.</p>
+      will have updated information on this.
+      The corresponding 
+      <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a>
+      makes no mention of XP.</p>
 
-      <P>Last updated February 10, 2018. At that time, 
+      <P>Updated Feb 10, 2018: At that time, 
       although Java 9 was available, it was 
       <a href="http://java.com/en/download/manual.jsp">not being recommended</a> for 
-      any platform.  The situation may 
+      any platform.  That situation may 
       <a href="http://www.oracle.com/technetwork/java/eol-135779.html">become clearer</a>
       after the next Java release(s) are shipped,
       perhaps March or September 2018.
+              
+      <p>Updated April 18, 2018:  At that time,
+      the <a href="https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:
+<blockquote cite="https://java.com/en/download/release_notice.jsp">
+      Public updates for Oracle Java SE 8 will remain available for individual, personal use through at least the end of 2020.  
+</blockquote>
       
-      <P>As of April 2018, Java 10 runs on all 64-bit Windows versions, and only
-        on 64-bit versions (no 32-bit)
-        
+      <P>
+      For more details, see the Oracle Java pages for:
+      <ul>
+        <li><a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java 9</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
+      </ul>
+
+      <P>As of April 2018, Java 10 only runs on 64-bit Windows versions (no 32-bit).
+
       <table border="1">
         <tr>
           <th>OS and platform</th>
