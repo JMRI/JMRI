@@ -207,17 +207,17 @@ public class LnPacketizerStrict extends LnPacketizer {
 
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;
-            thisTC = trafficController;
+            thisTc = trafficController;
         }
         LocoNetMessage thisMsg;
-        LnTrafficController thisTC;
+        LnTrafficController thisTc;
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void run() {
-            thisTC.notify(thisMsg);
+            thisTc.notify(thisMsg);
         }
     }
 

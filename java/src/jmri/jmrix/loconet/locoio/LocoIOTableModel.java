@@ -89,7 +89,7 @@ public class LocoIOTableModel
         if (evt.getPropertyName().equals("PortChange")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
             int v = i.intValue();
-            // System.out.println(s + " ROW = " + v);
+            // log.debug("{} ROW = {}", i, v);
             fireTableRowsUpdated(v, v);
         } else {
             // System.out.println(s);
@@ -226,9 +226,9 @@ public class LocoIOTableModel
             case CAPTURECOLUMN:
                 return new JButton(Bundle.getMessage("ButtonCapture")).getPreferredSize().width;
             case READCOLUMN:
-                return new JButton(" Read ").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonRead")).getPreferredSize().width;
             case WRITECOLUMN:
-                return new JButton(" Write ").getPreferredSize().width;
+                return new JButton(Bundle.getMessage("ButtonWrite")).getPreferredSize().width;
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width;
         }
@@ -263,7 +263,7 @@ public class LocoIOTableModel
                 try {
                     a = Integer.valueOf((String) value, 10).intValue();
                 } catch (NumberFormatException ne) {
-                    log.info("Enter a number for the Port Address first");
+                    log.warn("Enter a hex or decimal number for the Port Address first");
                     return;
                 }
             }
@@ -274,7 +274,8 @@ public class LocoIOTableModel
                 a = 0xFFF;
             }
             liodata.setAddr(row, a);
-            if (!("<none>".equals(liodata.getMode(row)))) { // NOI18N
+            // ignore default start-up entry, created in #getValueAt(int, int)
+            if (!(("<" + Bundle.getMessage("None").toLowerCase() + ">").equals(liodata.getMode(row)))) {
                 LocoIOMode l = liodata.getLIM(row);
                 liodata.setV1(row, l, a);
                 liodata.setV2(row, l, a);
@@ -288,6 +289,8 @@ public class LocoIOTableModel
                 if (status != null) {
                     status.setText(msg[row]);
                 }
+            } else {
+                log.warn("Select an option from the Mode drop down first");
             }
             fireTableRowsUpdated(row, row);
         } else if (col == CAPTURECOLUMN) {

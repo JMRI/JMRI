@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
  * <ul>
- * <li> RcvHandler - at highest available priority
- * <li> XmtHandler - down one, which is assumed to be above the GUI
- * <li> (everything else)
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
  * </ul>
  *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -189,15 +189,15 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         }
 
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notify(msgForLater);
+                                myTc.notify(msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);

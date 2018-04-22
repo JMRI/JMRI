@@ -229,7 +229,7 @@ public class LocoIOData
     }
 
     /**
-     * The addr field (for the address info used in each LocoIO channel).
+     * Set new value in addr field (for the address info used in each LocoIO channel).
      *
      * @param channel integer value of the addresses in use for this row
      *                (0 = invalid)

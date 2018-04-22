@@ -171,15 +171,15 @@ public class IBLnPacketizer extends LnPacketizer {
                             log.debug("queue message for notification");
                         }
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notify(msgForLater);
+                                myTc.notify(msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);

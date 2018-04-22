@@ -458,15 +458,15 @@ public class MrcPacketizer extends MrcTrafficController {
                     {
                         log.trace("queue message for notification: {}", msg);
                         final MrcMessage thisMsg = msg;
-                        final MrcPacketizer thisTC = trafficController;
+                        final MrcPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             MrcMessage msgForLater = thisMsg;
-                            MrcPacketizer myTC = thisTC;
+                            MrcPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notifyRcv(time, msgForLater);
+                                myTc.notifyRcv(time, msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);
