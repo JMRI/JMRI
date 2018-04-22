@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
 public class ManageLocationsFrame extends JmriJFrame {
 
     // Map of Mnemonic KeyEvent values to GUI Components
-    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+    private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
         Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
@@ -254,7 +254,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
-        menuList = new ArrayList<>();
+        menuList = new ArrayList<>(1);
 
         menuList.add(editMenu);
 
@@ -351,7 +351,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         public HashMap<String, PhysicalLocation> getDataMap() {
             // Includes only the ones with the checkbox made
-            HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
+            HashMap<String, PhysicalLocation> retv = new HashMap<>();
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {
                     if (row[2] == null) { 
@@ -443,7 +443,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         @SuppressWarnings("unused")
         public HashMap<String, ListeningSpot> getDataMap() {
             // Includes only the ones with the checkbox made
-            HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
+            HashMap<String, ListeningSpot> retv = new HashMap<>();
             ListeningSpot spot = null;
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {
