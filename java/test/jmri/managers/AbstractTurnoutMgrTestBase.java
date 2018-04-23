@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen
  */
-public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase<TurnoutManager> {
+public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase<TurnoutManager, Turnout> {
 
     // implementing classes must implement to convert integer (count) to a system name
     abstract public String getSystemName(int i);
