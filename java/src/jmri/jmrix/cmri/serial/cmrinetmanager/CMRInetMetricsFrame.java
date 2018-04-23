@@ -1,5 +1,3 @@
-// CMRInetMetricsFrame.java
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.BorderLayout;
@@ -353,16 +351,16 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 default:
                     return Object.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) { return false;}
         public int getColumnCount () {return NUMCOLUMNS;}
-        public int getRowCount () {return metricsData.CMRInetMetricErrName.length;}
+        public int getRowCount () {return CMRInetMetricsData.CMRInetMetricErrName.length;}
         public Object getValueAt (final int r,int c)
         {           
             switch (c)
             {
                 case ERRORNAME_COLUMN :
-                    return metricsData.CMRInetMetricErrName[r]; 
+                    return CMRInetMetricsData.CMRInetMetricErrName[r]; 
                 case ERRORCOUNT_COLUMN :
                     return metricsData.getMetricErrorCount(r);
                 case ERRORRESET_COLUMN :
@@ -458,7 +456,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 default:
                     return Object.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) { return false;}
         public int getColumnCount () {return DATANUMCOLUMNS;}
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricDataName.length;}
@@ -467,7 +465,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
             switch (c)
             {
                 case DATANAME_COLUMN :
-                    return metricsData.CMRInetMetricDataName[r]; 
+                    return CMRInetMetricsData.CMRInetMetricDataName[r]; 
                 case DATACOUNT_COLUMN :
                     return metricsData.CMRInetMetricDataCount[r];
                 case DATARESET_COLUMN :
@@ -552,5 +550,3 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CMRInetMetricsFrame.class.getName());
 	
 }
-
-/* @(#)CMRInetMetricsFrame.java */
