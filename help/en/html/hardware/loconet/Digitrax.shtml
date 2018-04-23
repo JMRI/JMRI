@@ -64,6 +64,10 @@
                 Handling</a>
 
                 <ul>
+                  <li><a href="#commandStationOpswTurnoutHandling">
+                  Command Station Turnout Command Forwarding 
+                  Speed</a></li>
+                  
                   <li><a href="#turncmdhandsettings">Turnout
                   Command Handling Settings</a></li>
 
@@ -594,6 +598,26 @@
       "RailSync" wires.</p>
 
       <ul>
+        <li>
+          <a name="commandStationOpswTurnoutHandling" id=
+          "commandStationOpswTurnoutHandling">Command Station 
+          Turnout Command Forwarding Speed</a>
+          
+          <p>Some Digitrax command stations, including the DCS240
+          and DCS210, have an OpSw setting, OpSw31, which affects the
+          speed with which LocoNet turnout control messages are
+          propagated to the DCC track signal.</p>
+          
+          <p>The DCS240 and DCS210 command stations implement
+          an OpSw31 default value of "t", which provides slower
+          propagation of LocoNet turnout control messages to the DCC 
+          track signal.  Setting OpSw31 to "c" provides a faster 
+          propagation of LocoNet turnout control messages to the DCC
+          track signal.  This latter setting is the recommended 
+          setting when using JMRI with a DCS240 or DCS210 command 
+          station.</p>
+        </li>
+        
         <li>
           <a name="turncmdhandsettings" id=
           "turncmdhandsettings">Turnout Command Handling
