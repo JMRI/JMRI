@@ -335,6 +335,17 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         displayState(key);
     }
 
+    /**
+     * Special method to transfer a setAttributes call from the LE version of
+     * MemoryIcon.  This eliminates the need to change references to public.
+     * @since 4.11.6
+     * @param util The LE popup util object.
+     * @param that The current positional object (this).
+     */
+    public void setAttributes(PositionablePopupUtil util, Positionable that) {
+        _editor.setAttributes(util, that);
+    }
+
     protected void displayState(Object key) {
         log.debug("displayState({})", key);
         if (key != null) {
