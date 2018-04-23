@@ -120,14 +120,15 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // listen for changes
         slot.addSlotListener(this);
 
-        // perform the null slot move for low numbered slots
         if ( slot.getSlot() < 128 ) {
+            // perform the null slot move for low numbered slots
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
             msg.setElement(1, slot.getSlot());
             msg.setElement(2, slot.getSlot());
             network.sendLocoNetMessage(msg);
         } else {
+            // or the null move for higher numbered slots
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(0xd4);
             msg.setElement(1, (slot.getSlot() / 128) | 0b00111000 );
@@ -619,9 +620,18 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
+     * Unfortunately this is used by all throttles to send direction changes, but the expanded slots dont use this 
+     * for direction changes, they use speed... And we don't know if the caller wants to send functions or direction.
      */
     @Override
     protected void sendFunctionGroup1() {
+        // this is actually quite silly as anyone calling setFn or Setdir has already sent the message in
+        // those routines so this results in 2 sends
+        if (slot.getSlot() > 127) {
+            sendExpSpeedAndDirection();
+            sendExpFunctionGroup1();
+            return;
+        }
         int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR) |
                 (getF0() ? LnConstants.DIRF_F0 : 0) |
                 (getF1() ? LnConstants.DIRF_F1 : 0) |
@@ -781,6 +791,18 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
+     * Send the expanded slot command for speed and direction.
+     */
+    protected void sendExpSpeedAndDirection() {
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(0xd5);
+        msg.setElement(1, ((slot.getSlot() / 128) & 0x07) | (isForward ? 0x00 : 0x08));
+        msg.setElement(2, slot.getSlot() & 0x7f);
+        msg.setElement(3, (slot.id() & 0x7f));
+        msg.setElement(4, slot.speed());
+        network.sendLocoNetMessage(msg);
+    }
+    /**
      * Send a LocoNet message to set the loco speed speed.
      * <P>
      * @param speed Number from 0 to 1; less than zero is "emergency stop"
@@ -896,7 +918,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         boolean old = isForward;
         isForward = forward;
         log.debug("setIsForward to {}, old value {}", isForward, old);
-        sendFunctionGroup1();
+        if (slot.getSlot() < 128) {
+            sendFunctionGroup1();
+        } else {
+            sendExpSpeedAndDirection();
+        }
         if (old != this.isForward) {
             notifyPropertyChangeListener("IsForward", old, this.isForward); // NOI18N
         }
