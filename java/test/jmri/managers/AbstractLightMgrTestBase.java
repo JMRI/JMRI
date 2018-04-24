@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<LightManager> {
+public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<LightManager, Light> {
 
     // implementing classes must provide these abstract members:
     //
@@ -55,6 +55,15 @@ public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<L
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    public void testProvideName() {
+        // create
+        Light t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 

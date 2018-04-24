@@ -316,4 +316,9 @@
     <choice xml:lang="de">Sound 28</choice>
     <choice xml:lang="fr">Son 28</choice>
   </enumChoice>
+  <enumChoice value="255">
+    <choice>Empty</choice>
+    <choice xml:lang="de">Leer</choice>
+    <choice xml:lang="fr">Vide</choice>
+  </enumChoice>
 </enumVal>

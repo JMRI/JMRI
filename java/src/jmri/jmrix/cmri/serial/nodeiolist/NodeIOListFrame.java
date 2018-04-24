@@ -72,7 +72,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     public void initComponents() {
 
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName()); // NOI18N
         setSize(500, 300);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

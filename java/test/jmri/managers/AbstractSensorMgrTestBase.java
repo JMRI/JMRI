@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager> {
+public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager, Sensor> {
 
     // implementing classes must provide these abstract members:
     //
@@ -60,6 +60,15 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     }
 
     @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("" + getNumToTest1());
@@ -71,6 +80,15 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
         l.provideSensor("");
+    }
+
+    @Test
+    public void testSettings() {
+        l.setDefaultSensorDebounceGoingActive(1234L);
+        Assert.assertEquals(1234L, l.getDefaultSensorDebounceGoingActive());
+
+        l.setDefaultSensorDebounceGoingInActive(12345L);
+        Assert.assertEquals(12345L, l.getDefaultSensorDebounceGoingInActive());
     }
 
     @Test
