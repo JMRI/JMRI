@@ -69,6 +69,32 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     }
 
     @Test
+    public void testDelete() {
+        // create
+        Sensor t = l.provide("" + getNumToTest1());
+        
+        // two-pass delete, details not really tested
+        
+        try {
+            l.deleteBean(t, "CanDelete");
+        } catch (java.beans.PropertyVetoException e) {}
+        try {
+            l.deleteBean(t, "DoDelete");
+        } catch (java.beans.PropertyVetoException e) {}
+        
+        // check for bean
+        Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
+        // check for lengths
+        Assert.assertEquals(0, l.getNamedBeanList().size());
+        Assert.assertEquals(0, l.getNamedBeanSet().size());
+        Assert.assertEquals(0, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(0, l.getSystemNameList().size());
+        Assert.assertEquals(0, l.getSystemNameArray().length);
+        Assert.assertEquals(0, l.getObjectCount());
+    }
+
+
+    @Test
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("" + getNumToTest1());
