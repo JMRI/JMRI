@@ -735,7 +735,7 @@ public class Track {
         return _commentBoth;
     }
 
-    List<String> _typeList = new ArrayList<String>();
+    List<String> _typeList = new ArrayList<>();
 
     /**
      * Returns all of the rolling stock type names serviced by this track.
@@ -825,7 +825,7 @@ public class Track {
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _roadList = new ArrayList<String>();
+    List<String> _roadList = new ArrayList<>();
 
     public String[] getRoadNames() {
         String[] roads = new String[_roadList.size()];
@@ -901,7 +901,7 @@ public class Track {
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _loadList = new ArrayList<String>();
+    List<String> _loadList = new ArrayList<>();
 
     private void setLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1024,7 +1024,7 @@ public class Track {
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _shipLoadList = new ArrayList<String>();
+    List<String> _shipLoadList = new ArrayList<>();
 
     private void setShipLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1177,7 +1177,7 @@ public class Track {
         setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _dropList = new ArrayList<String>();
+    List<String> _dropList = new ArrayList<>();
 
     public String[] getDropIds() {
         String[] ids = new String[_dropList.size()];
@@ -1254,7 +1254,7 @@ public class Track {
         return _dropList.contains(id);
     }
 
-    List<String> _pickupList = new ArrayList<String>();
+    List<String> _pickupList = new ArrayList<>();
 
     public String[] getPickupIds() {
         String[] ids = new String[_pickupList.size()];
@@ -1711,8 +1711,7 @@ public class Track {
             if (!si.getRoadName().equals(ScheduleItem.NONE) &&
                     (!acceptsRoadName(si.getRoadName()) ||
                             !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
-                            CarManager
-                                    .instance().getByTypeAndRoad(si.getTypeName(), si.getRoadName()) == null)) {
+                            InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(), si.getRoadName()) == null)) {
                 status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getRoadName()});
                 break;
             }
@@ -2201,7 +2200,7 @@ public class Track {
         return NONE;
     }
 
-    List<String> _destinationIdList = new ArrayList<String>();
+    List<String> _destinationIdList = new ArrayList<>();
 
     public int getDestinationListSize() {
         return _destinationIdList.size();
