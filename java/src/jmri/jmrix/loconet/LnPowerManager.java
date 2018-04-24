@@ -169,9 +169,9 @@ public class LnPowerManager
         public void run() {
             // wait a little bit to allow PowerManager to be initialized
             try {
-                // Delay 750 mSec to allow init of traffic controller, listeners.
-                // sleep(500) mSec infrequently causes NPE upon sending via tc
-                Thread.sleep(750);
+                // Delay 800 mSec to allow init of traffic controller, listeners.
+                // sleep(500) or (750) mSec infrequently causes NPE upon sending via tc
+                Thread.sleep(800);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
                 return; // and stop work

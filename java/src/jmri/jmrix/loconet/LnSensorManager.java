@@ -264,7 +264,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
         /**
          * Runs the thread - sends 8 commands to query status of all stationary
-         * sensors per LocoNet PE Specs, page 12-13 Thread waits 500 msec
+         * sensors per LocoNet PE Specs, page 12-13 Thread waits 800 msec
          * between commands.
          */
         @Override
@@ -278,8 +278,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             for (int k = 0; k < 8; k++) {
                 try {
                     // Delay 750 mSec to allow init of traffic controller, listeners.
-                    // sleep(500) mSec infrequently causes NPE upon sending via tc
-                    Thread.sleep(750);
+                    // sleep(500( or even (750) mSec infrequently causes NPE upon sending via tc
+                    Thread.sleep(800);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                     sm.setUpdateNotBusy();
