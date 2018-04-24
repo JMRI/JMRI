@@ -59,6 +59,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    // Quite a few tests overload this to create their own name process
     @Test
     public void testProvideName() {
         // create
@@ -71,7 +72,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     @Test
     public void testDelete() {
         // create
-        Sensor t = l.provide("" + getNumToTest1());
+        Sensor t = l.provide(getSystemName(getNumToTest1()));
         
         // two-pass delete, details not really tested
         
