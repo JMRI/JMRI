@@ -33,7 +33,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
@@ -61,7 +60,7 @@ import org.slf4j.LoggerFactory;
 public class ManageLocationsFrame extends JmriJFrame {
 
     // Map of Mnemonic KeyEvent values to GUI Components
-    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+    private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
         Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
@@ -252,20 +251,14 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-
-        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile")));
-
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
-        menuList = new ArrayList<>();
+        menuList = new ArrayList<>(1);
 
-        menuList.add(fileMenu);
         menuList.add(editMenu);
 
         this.setJMenuBar(new JMenuBar());
-        this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
     }
@@ -286,13 +279,19 @@ public class ManageLocationsFrame extends JmriJFrame {
     @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, 1)) {
-            listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
-                    (Double) locModel.getValueAt(0, 3),
-                    (Double) locModel.getValueAt(0, 4));
-            listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
-                    (Double) locModel.getValueAt(0, 6));
-            VSDecoderManager.instance().getVSDecoderPreferences().save();
-            VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+            // Don't accept Azimuth value 90 or -90 (they are not in the domain of definition)
+            if ((Double) locModel.getValueAt(0, 6) != null 
+                    && ((Double) locModel.getValueAt(0, 6) == 90.0d || (Double) locModel.getValueAt(0, 6) == -90.0d)) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
+            } else {
+                listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
+                        (Double) locModel.getValueAt(0, 3),
+                        (Double) locModel.getValueAt(0, 4));
+                listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
+                        (Double) locModel.getValueAt(0, 6));
+                VSDecoderManager.instance().getVSDecoderPreferences().save();
+                VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+            }
         }
 
         HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
@@ -352,7 +351,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         public HashMap<String, PhysicalLocation> getDataMap() {
             // Includes only the ones with the checkbox made
-            HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
+            HashMap<String, PhysicalLocation> retv = new HashMap<>();
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {
                     if (row[2] == null) { 
@@ -444,7 +443,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         @SuppressWarnings("unused")
         public HashMap<String, ListeningSpot> getDataMap() {
             // Includes only the ones with the checkbox made
-            HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
+            HashMap<String, ListeningSpot> retv = new HashMap<>();
             ListeningSpot spot = null;
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {

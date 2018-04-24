@@ -6086,6 +6086,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     if ((ft.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (ft.getTurnoutType() == LayoutTurnout.LH_TURNOUT)) {
                         rotateTurnout(ft);
                     }
+
+                    // Assign a block to the new zero length track segment.
+                    ft.setTrackSegmentBlock(foundPointType, true);
                     break;
                 }
 

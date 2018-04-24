@@ -419,16 +419,34 @@
 
       <p>If you are going to control Turnouts, Signals or other
       devices on your layout from JMRI or another program, we
-      recommend that you set the command station's "Meter
-      route/switch output when not in trinary" option "Off"
-      (Thrown). When On, this option greatly reduces the number of
+      recommend that you disable, where available, the command 
+      station's "Meter route/switch output when not in trinary"
+      feature.  When enabled, this option greatly reduces the number of
       commands the LocoNet can handle each second, which can cause
       significant delays when you're controlling signals, etc. To
-      turn it off, you can use the "Configure Command Station" tool
-      in the <b>LocoNet</b> menu to set Option Switch 31 to "T"
-      (Thrown), or set it via the Roster-based mechanism, or set 
-      it directly in the command station using a Digitrax 
-      Throttle.</p>
+      disable it, you can use the "Configure Command Station" tool
+      in the <b>LocoNet</b> menu, or the Roster-based mechanism, or 
+      the throttle-based programming mechanisms as described in the
+      manual for your command station.  The command station may not 
+      immediately accept OpSw setting changes, so it may be necessary 
+      to "power-cycle" the command station, or to "put the command 
+      station to sleep" via the command station front-panel switch.</p>
+      
+      <p>Note that some command stations disable metering (i.e.
+      provide faster turnout command handling) when OpSw31="t" and 
+      others when OpSw31="c".  Here's a list of command stations 
+      and the OpSw31 setting which will speed-up command station 
+      turnout command handling:</p>
+      <ul>
+        <li>DCS100/DCS200 - OpSw31="t" for faster turnout command handling 
+        (i.e. disables metering)</li>
+        <li>DCS240 - OpSw31="c" for faster turnout command handling (i.e. disables metering)</li>
+        <li>DCS210 - OpSw31="c" for faster turnout command handling(i.e. disables metering)</li>
+        <li>DB150 - does not provide a way to control "metering"</li>
+        <li>DCS50 - does not provide a way to control "metering"</li>
+        <li>DCS51 - does not provide a way to control "metering"</li>
+        <li>DT200 acting as command station with DB100 - does not provide a way to control "metering"</li>
+      </ul>
 
       <p>If you will have multiple connections, the "Defaults" tab
       in the "Preferences" panel may be used to direct certain
