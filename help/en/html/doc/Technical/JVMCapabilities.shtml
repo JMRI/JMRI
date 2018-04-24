@@ -106,7 +106,7 @@
           <td>Multi-version JARs can help with migration, see
           <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
 
-          <td>...</td>
+          <td>?</td>
 
           <td>9</td>
         </tr>
@@ -131,7 +131,7 @@
           <td>9</td>
         </tr>
         <tr>
-          <td>JUTF-8 Properties files (simplifies I18N)</td>
+          <td>UTF-8 Properties files (simplifies I18N)</td>
 
           <td>9</td>
 
@@ -139,7 +139,7 @@
         </tr>
         
         <tr>
-          <td>J<A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
+          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
                 More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
                 worse code) of JMRI indepdendent.</td>
 
@@ -175,16 +175,35 @@
       finds numerous pages that show how to install Java 1.7 on XP
       or XP SP2. JMRI's 
       <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
-      will have updated information on this.</p>
+      will have updated information on this.
+      The corresponding 
+      <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a>
+      makes no mention of XP.</p>
 
-      <P>Last updated February 10, 2018. At that time, 
+      <P>Updated Feb 10, 2018: At that time, 
       although Java 9 was available, it was 
       <a href="http://java.com/en/download/manual.jsp">not being recommended</a> for 
-      any platform.  The situation may 
+      any platform.  That situation may 
       <a href="http://www.oracle.com/technetwork/java/eol-135779.html">become clearer</a>
       after the next Java release(s) are shipped,
       perhaps March or September 2018.
+              
+      <p>Updated April 18, 2018:  At that time,
+      the <a href="https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:
+<blockquote cite="https://java.com/en/download/release_notice.jsp">
+      Public updates for Oracle Java SE 8 will remain available for individual, personal use through at least the end of 2020.  
+</blockquote>
       
+      <P>
+      For more details, see the Oracle Java pages for:
+      <ul>
+        <li><a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java 9</a></li>
+        <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
+      </ul>
+
+      <P>As of April 2018, Java 10 only runs on 64-bit Windows versions (no 32-bit).
+
       <table border="1">
         <tr>
           <th>OS and platform</th>
@@ -199,21 +218,27 @@
         </tr>
 
         <tr>
+          <td>Win 10 (64-bit)</td>
+
+          <td>10</td>
+        </tr>
+
+        <tr>
           <td>Win 8 (32-bit)</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
           <td>Win 7 (32-bit)</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
           <td>Win Server 2008 (32-bit)</td>
 
-          <td>1.8</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -237,31 +262,31 @@
         <tr>
           <td>Win 8 (64-bit)</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 (64-bit)</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 R2 (64-bit)</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
           <td>Win 7 (64-bit)</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
           <td>Win Server 2008 R2 (64-bit)</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
@@ -279,13 +304,13 @@
         <tr>
           <td>Win Vista (64-bit)</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
           <td>Windows Vista (32-bit)</td>
 
-          <td>1.8<br>
+          <td>8<br>
           <a href=
           "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
           Support</a></td>
@@ -300,7 +325,7 @@
         <tr>
           <td>Windows XP</td>
 
-          <td>1.8<br>
+          <td>8<br>
           <a href=
           "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
           Support</a></td>
@@ -325,19 +350,25 @@
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3 and later on Intel</td>
+          <td>Mac OS X 10.10 and later</td>
 
-          <td>1.8</td>
+          <td>10</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.7.3 and later on Intel</td>
+          <td>Mac OS X 10.8.3</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td bgcolor="#FFD0D0">Mac OS X 10.7.3</td>
 
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.5.8 and later on Intel</td>
+          <td bgcolor="#FFD0D0">Mac OS X 10.5.8</td>
 
           <td>1.6 (Apple JVM)</td>
         </tr>

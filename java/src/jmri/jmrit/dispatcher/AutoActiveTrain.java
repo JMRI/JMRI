@@ -1042,7 +1042,13 @@ public class AutoActiveTrain implements ThrottleListener {
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
                 if (_previousAllocatedSection != null) {
-                    Block tBlock = _previousAllocatedSection.getSection().getLastBlock();
+                    Block tBlock = null;
+                    // just because current section has one block does not mean the previous one did.
+                    if (_previousAllocatedSection.getSection().getNumBlocks() == 1) {
+                       tBlock = _previousAllocatedSection.getSection().getLastBlock();
+                    } else {
+                       tBlock = _previousAllocatedSection.getSection().getExitBlock();
+                    }
                     if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
                         _stoppingBlock = tBlock;
                         setStopByBlockOccupancy();
@@ -1593,7 +1599,7 @@ public class AutoActiveTrain implements ThrottleListener {
             // this is the running loop, which adjusts speeds, including stop
             while (!_abort) {
                 // always get current speed
-                _currentSpeed = _throttle.getSpeedSetting();
+                // _currentSpeed = _throttle.getSpeedSetting();
                 if (_halt && !_halted) {
                     if (_speedProfileStoppingIsRunning) {
                         re.getSpeedProfile().cancelSpeedChange();
