@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
- *
- * System names are "LSnnn", where nnn is the sensor number without padding.
+ * System names are "LiSnnn", where nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -132,7 +131,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         if (curAddress.contains(":")) {
             int board = 0;
             int channel = 0;
-            //Address format passed is in the form of board:channel or T:turnout address
+            // Address format passed is in the form of board:channel or T:turnout address
             int seperator = curAddress.indexOf(":");
             boolean turnout = false;
             if (curAddress.substring(0, seperator).toUpperCase().equals("T")) {
@@ -157,7 +156,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 iName = 16 * board + channel - 16;
             }
         } else {
-            //Entered in using the old format
+            // Entered in using the old format
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
@@ -224,8 +223,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -278,7 +277,9 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             m.setOpCode(LnConstants.OPC_SW_REQ);
             for (int k = 0; k < 8; k++) {
                 try {
-                    Thread.sleep(500);
+                    // Delay 750 mSec to allow init of traffic controller, listeners.
+                    // sleep(500) mSec infrequently causes NPE upon sending via tc
+                    Thread.sleep(750);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                     sm.setUpdateNotBusy();
@@ -286,7 +287,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 m.setElement(1, sw1[k]);
                 m.setElement(2, sw2[k]);
-                tc.sendLocoNetMessage(m);
+                tc.sendLocoNetMessage(m); // NPE when sleep < 750
             }
             sm.setUpdateNotBusy();
         }

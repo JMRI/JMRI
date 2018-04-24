@@ -122,13 +122,13 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
             @Override
             public void run() {
-                int attempts = 1;  //already tried once above
+                int attempts = 1; // already tried once above
                 int maxAttempts = 10;
                 while (attempts <= maxAttempts) {
                     try {
-                        Thread.sleep(1000);  //wait one second
+                        Thread.sleep(1000); // wait one second
                     } catch (InterruptedException ex) {
-                        return;  //stop waiting if slot is found or error occurs
+                        return; // stop waiting if slot is found or error occurs
                     }
                     String msg = "No response to slot request for {}, attempt {}"; // NOI18N
                     if (attempts < maxAttempts) {
@@ -162,7 +162,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     boolean requestOutstanding = false;
 
     /**
-     * LocoNet does have a Dispatch function
+     * LocoNet does have a Dispatch function.
      *
      * @return true
      */
@@ -173,8 +173,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface
-     * <p>
+     * possible modes specifed by the DccThrottle interface.
+     *
      * @return an integer containing the combined speed step modes supported
      */
     @Override
@@ -344,7 +344,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     /**
-     * Local method for deciding short/long address
+     * Local method for deciding short/long address.
      *
      * @param num address to be checked
      * @return true if num is a long address else false
@@ -437,7 +437,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     }
 
     /**
-     * Cancel a request for a throttle
+     * Cancel a request for a throttle.
      *
      * @param address The decoder address desired.
      * @param isLong  True if this is a request for a DCC long (extended)

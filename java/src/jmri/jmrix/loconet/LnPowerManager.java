@@ -142,7 +142,7 @@ public class LnPowerManager
     volatile LnTrackStatusUpdateThread thread;
     
     /**
-     * Class providing a thread to delay then query slot 0. The LnPowerManager
+     * Class providing a thread to delay, then query slot 0. The LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the
      * current track status.
      */
@@ -151,7 +151,7 @@ public class LnPowerManager
         private LnTrafficController tc;
 
         /**
-         * Constructs the thread
+         * Construct the thread.
          *
          * @param tc LocoNetTrafficController which can be used to send the
          *           LocoNet message.
@@ -161,16 +161,17 @@ public class LnPowerManager
         }
 
         /**
-         * Runs the thread - Waits a while (to allow the managers to initialize)
-         * then sends a query of slot 0 so that the power manager can inspect
+         * Runs the thread - Waits a while (to allow the managers to initialize),
+         * then sends a query of slot 0 so that the PowerManager can inspect
          * the {@code "<trk>"} byte.
          */
         @Override
         public void run() {
-            // wait a little bit to allow power manager to be initialized
+            // wait a little bit to allow PowerManager to be initialized
             try {
-                // Delay 500 mSec to allow init of traffic controller, listeners.
-                Thread.sleep(500);
+                // Delay 750 mSec to allow init of traffic controller, listeners.
+                // sleep(500) mSec infrequently causes NPE upon sending via tc
+                Thread.sleep(750);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
                 return; // and stop work
@@ -179,7 +180,7 @@ public class LnPowerManager
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);
             msg.setElement(2, 0);
-            tc.sendLocoNetMessage(msg); // NPE here?
+            tc.sendLocoNetMessage(msg); // NPE here if wait is too short (on slower system).
         }
     }
 

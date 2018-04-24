@@ -403,7 +403,7 @@ public class LnPacketizer extends LnTrafficController {
                     // message queue was empty, wait for input
                     log.trace("start wait"); // NOI18N
 
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
+                    new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
 
                     log.trace("end wait"); // NOI18N
                 }

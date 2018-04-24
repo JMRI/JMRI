@@ -247,7 +247,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with: {}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
             log.debug("set turnout retry: {}", mTurnoutNoRetry);

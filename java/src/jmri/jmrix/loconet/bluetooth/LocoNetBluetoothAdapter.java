@@ -153,25 +153,25 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             }
             switch (responseCode[0]) {
                 case DiscoveryListener.SERVICE_SEARCH_COMPLETED:
-                    log.error("Bluetooth connection " + portName + " not opened, unknown error");
+                    log.error("Bluetooth connection {} not opened, unknown error", portName);
                     return "Unknown error: failed to connect to " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_DEVICE_NOT_REACHABLE:
-                    log.error("Bluetooth device " + portName + " could not be reached");
+                    log.error("Bluetooth device {} could not be reached", portName);
                     return "Could not find " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_ERROR:
-                    log.error("Error when searching for " + portName);
+                    log.error("Error when searching for {}", portName);
                     return "Error when searching for " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_NO_RECORDS:
-                    log.error("No serial service found on " + portName);
+                    log.error("No serial service found on {}", portName);
                     return "Invalid bluetooth device: " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
-                    log.error("Service search on " + portName + " ended prematurely");
+                    log.error("Service search on {} ended prematurely", portName);
                     return "Search for " + portName + " ended unexpectedly";
                 default:
                     log.warn("Unhandled response code: {}", responseCode[0]);
                     break;
             }
-            log.error("Unknown error when connecting to " + portName);
+            log.error("Unknown error when connecting to {}", portName);
             return "Unknown error when connecting to " + portName;
         }
 
