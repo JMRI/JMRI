@@ -242,7 +242,8 @@ public class OlcbSensorTest extends TestCase {
 
         t.tc.rcvMessage = null;
         s.requestUpdateFromLayout();
-        t.flush();
+        //t.flush();
+        JUnitUtil.waitFor( ()->{ return(t.tc.rcvMessage != null); });
         t.assertSentMessage(":X198F4C4CN0102030405060708;");
     }
 
