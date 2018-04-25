@@ -2109,12 +2109,11 @@
     <img src="images/EditSchedule.png">
    </p>
 
-   <p>Enter a name for your schedule and press the "Add Schedule" button at the bottom of the
-    window. Now add your first delivery for this spur by selecting a car type in the menu box found
-    in the lower left corner of the window and pressing the "Add car type" button. A new item should
-    appear in your schedule containing the type of car, pull down menus for random, delivery, road,
-    loads, destinations, and pickup. The schedule item also includes count of 1 and a wait of 0.
-    Leave the pull down menu item blank for any field you don't care about.</p>
+   <p>Enter a name for your schedule and press the "Add Schedule" button at the bottom of the window. Now add your
+    first delivery for this spur by selecting a car type in the menu box found in the lower left corner of the window
+    and pressing the "Add car type" button. A new item should appear in your schedule containing the type of car, pull
+    down menus for random, delivery, road, loads, destinations, and pickup. The schedule item also includes "Count" of 1
+    in sequential mode, and a wait of 0. Leave the pull down menu item blank for any field you don't care about.</p>
 
    <p>
     Repeat selecting the car types and pressing to "Add car type" until your have a delivery
@@ -2123,6 +2122,28 @@
     the car types serviced for the <a href="#RollingStockServiced">spur</a> and <a
      href="#LocationRollingStock">location</a>.
    </p>
+   
+    <h4>Schedule Sequential or Match Mode</h4>
+
+   <p>Schedules can operate in one of two modes, "Sequential" where the order in which car types and loads arrive is
+    important, or in "Match" mode where car type and load order isn't needed or desired. When you select sequential mode
+    for a schedule, the program will attempt to deliver cars in the order you entered in the schedule table. Car types
+    at the top of the table are requested first and once the last car type is delivered, the schedule resumes from the
+    top. A pointer shows the next car type to be delivered. Select the "Sequential" radio button in the top left corner
+    and press "Save" if car type and load delivery order is desired.</p>
+
+   <p>Match mode eliminates the sequential aspects of a schedule. In match mode, the program when building a train
+    will search the entire schedule to find a car type, delivery day, and receive load that matches the car that the
+    program is trying to place. In match mode the pointer shows the last car type that the program found acceptable for
+    the spur. To change the schedule to match mode, select "Match" in the edit schedule window and press "Save". Match
+    mode is useful when the order cars arrive isn't important, but you still want to receive or ship cars with a
+    specific load, provide the car's final destination, or have the car wait for a specific number of trains or pickup
+    day. In match mode the schedule item "Count" is ignored as it isn't used. Instead, a "Hit" count is provided. The
+    program increments the hit count for a schedule item each time it finds a match, and plans on sending the car to
+    that spur because of the match. In match mode, all of the schedule item fields are available, and you can have the
+    same type of car several times, with each item in the schedule looking for a specific receive load or delivery date.
+    Also in match mode the car type selection box advances automatically to the next car type when adding a car type.
+    This makes it easy to quickly add car types to the table.</p>
 
    <h4>Schedule Line Items</h4>
 
@@ -2170,9 +2191,9 @@
      Destination</a> in the various car windows.
    </p>
 
-   <p>If you wanted the same car type to be delivered consecutively, increase the "Count" to the
-    number that you wish. The maximum count is 100 and the minimum is 1. For example, a count of 3
-    is equal to entering the exact same schedule item three times in a row.</p>
+   <p>If you wanted the same car type to be delivered consecutively in sequential mode, increase the "Count" to the
+    number that you wish. The maximum count is 100 and the minimum is 1. For example, a count of 3 is equal to entering
+    the exact same schedule item three times in a row.</p>
 
    <p>The "Wait" field allows you determine how many trains will try to service the spur before
     picking up the car. Useful if you want a car to remain still for several operating sessions.
@@ -2198,13 +2219,12 @@
     only on Fridays. After the tankcar is delivered the schedule starts from the beginning, again
     requesting two SP boxcars followed by a tankcar with oil.</p>
 
-   <p>The schedule controls when and what cars will be delivered and the car order. It makes the
-    spur more restrictive, only cars demanded by the schedule will be delivered to the spur. Looking
-    at the schedule you will see a pointer in the table under the heading "Current", the pointer
-    shows the next car type that the program wants to place at the spur. When the program finds that
-    car and sets the car's destination to this spur, the pointer will move the next item in the
-    schedule. After servicing the last item in the schedule, the pointer will return to the first
-    item in the schedule.</p>
+   <p>The schedule controls when and what cars will be delivered and the car order. It makes the spur more
+    restrictive, only cars demanded by the schedule will be delivered to the spur. Looking at the schedule you will see
+    a pointer in the table under the heading "Current", the pointer shows the next car type that the program wants to
+    place at the spur in sequential mode. When the program finds that car and sets the car's destination to this spur,
+    the pointer will move the next item in the schedule. After servicing the last item in the schedule, the pointer will
+    return to the first item in the schedule.</p>
 
    <p>
     If you want custom <a href="#CarLoad">loads</a> for your cars, you can create them using the <a
@@ -2251,24 +2271,6 @@
     create an "Off Spot" track for your cars. See <a href="#AlternateTrack">Alternate Track or
      "Off Spot"</a> below for more details.
    </p>
-
-   <h4>Sequential or Match Mode</h4>
-
-   <p>Schedules can operate in one of two modes, sequential as described above, or in match
-    mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
-    when building a train will search the entire schedule to find a car type, delivery day, and
-    receive load that matches the car that the program is trying to place. In match mode the pointer
-    shows the last car type that the program found acceptable for the spur. To change the schedule
-    to match mode, select "Match" in the edit schedule window and press "Save". Match mode is useful
-    when the order cars arrive isn't important, but you still want to receive or ship cars with a
-    specific load, provide the car's final destination, or have the car wait for a specific number
-    of trains or pickup day. In match mode the schedule item count is ignored as it isn't used.
-    Instead, a hit count is provided. The program increments the hit count for a schedule item each
-    time it finds a match, and plans on sending the car to that spur because of the match. In match
-    mode, all of the schedule item fields are available, and you can have the same type of car
-    several times, with each item in the schedule looking for a specific receive load or delivery
-    date. Also in match mode the car type selection box advances automatically to the next car type
-    when adding a car type. This makes it easy to quickly add car types to the table.</p>
 
    <h4>Using the Same Schedule for Several Spurs</h4>
 
@@ -2375,6 +2377,7 @@
    <p>If you want a list of custom car loads for each of your car types, you can use the "Print
     Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules by car
     type and load" window.</p>
+    
    <a name="Interchange" id="Interchange"></a>
 
    <h3>Classification/Interchange Tracks</h3>
@@ -2653,6 +2656,12 @@
     list of loads that can be accepted by the track, you will see "A" followed by the number of
     loads that are accepted by that track. If you've built a list of loads that the track will not
     allow, you will see "E" and the number of loads that you want to exclude from this track.
+   </p>
+
+   <p>
+    Note that load restrictions for a spur will not create demand for that type of car and load. Other than the default
+    car loads of "E" and "L", you'll need <a href="#Schedules">Schedules</a> for your spurs to create demand for cars with
+    custom loads.
    </p>
 
    <a name="SpurOption" id="SpurOption"></a>

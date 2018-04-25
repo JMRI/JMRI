@@ -180,7 +180,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
                 || e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
             updateScheduleComboBox();
         }
-        if (e.getPropertyName().equals(Schedule.LISTCHANGE_CHANGED_PROPERTY)) {
+        if (e.getSource().getClass().equals(Schedule.class)) {
             textSchError.setText(_track.checkScheduleValid());
         }
         super.propertyChange(e);
