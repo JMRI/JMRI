@@ -64,7 +64,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     String _type = "";
     JMenu _toolMenu = null;
 
-    List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+    List<JCheckBox> checkBoxes = new ArrayList<>();
 
     // panels
     JPanel panelCheckBoxes = new JPanel();
@@ -138,7 +138,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JPanel panelOpt4 = new JPanel();
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<Reporter>();
+    JComboBox<Reporter> readerSelector = new JComboBox<>();
 
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
@@ -390,6 +390,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == saveTrackButton) {
             log.debug("track save button activated");
             if (_track != null) {
+                saveTrackDirections(_track); // save track directions so train pickups will check correctly
                 if (!checkUserInputs(_track)) {
                     return;
                 }
@@ -581,21 +582,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     protected void saveTrack(Track track) {
-        // save train directions serviced by this location
-        int direction = 0;
-        if (northCheckBox.isSelected()) {
-            direction += Track.NORTH;
-        }
-        if (southCheckBox.isSelected()) {
-            direction += Track.SOUTH;
-        }
-        if (eastCheckBox.isSelected()) {
-            direction += Track.EAST;
-        }
-        if (westCheckBox.isSelected()) {
-            direction += Track.WEST;
-        }
-        track.setTrainDirections(direction);
+        
+        saveTrackDirections(track);
+
         track.setName(trackNameTextField.getText());
 
         track.setComment(commentTextArea.getText());
@@ -611,6 +600,24 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         enableButtons(true);
         // save location file
         OperationsXml.save();
+    }
+    
+    private void saveTrackDirections(Track track) {
+        // save train directions serviced by this location
+        int direction = 0;
+        if (northCheckBox.isSelected()) {
+            direction += Track.NORTH;
+        }
+        if (southCheckBox.isSelected()) {
+            direction += Track.SOUTH;
+        }
+        if (eastCheckBox.isSelected()) {
+            direction += Track.EAST;
+        }
+        if (westCheckBox.isSelected()) {
+            direction += Track.WEST;
+        }
+        track.setTrainDirections(direction);
     }
 
     private boolean checkUserInputs(Track track) {
@@ -735,6 +742,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("Must enter trains or routes for this track");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("UseAddTrainsOrRoutes"), Bundle
                     .getMessage("PickUpsDisabled"), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        // check to see if all car types can be pulled from this track
+        String status = track.checkPickups();
+        if (!status.equals(Track.PICKUP_OKAY)) {
+            JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
