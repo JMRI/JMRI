@@ -216,7 +216,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
-        Assert.assertFalse(f.isActive());
         pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         trainA.addTypeName("Boxcar");
@@ -236,7 +235,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
-        Assert.assertFalse(f.isActive());
         pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         // restore pick ups
@@ -261,7 +259,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
-        Assert.assertFalse(f.isActive());
         pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         // train direction default when creating a route is north 
@@ -276,7 +273,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
-        Assert.assertFalse(f.isActive());
         pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         // restore move count
@@ -290,7 +286,6 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
-        Assert.assertFalse(f.isActive());
         pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         // kill all frames
