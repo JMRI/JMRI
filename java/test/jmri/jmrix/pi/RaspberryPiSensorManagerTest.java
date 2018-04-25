@@ -104,9 +104,14 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     }
 
     @Override
-    @Ignore // the parent test doesn't work right for these names
     @Test
-    public void testProvideName() {}
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + 14);
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(14)));
+    }
     
     @Override
     @Before
