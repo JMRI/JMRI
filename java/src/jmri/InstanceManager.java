@@ -796,16 +796,28 @@ public final class InstanceManager {
     }
 
     /**
-     * Clear all managed instances from this InstanceManager.
+     * Clear all managed instances from the common instance manager, effectively
+     * installing a new one.
      */
     public void clearAll() {
         log.debug("Clearing InstanceManager");
+        if (traceFileActive) traceFileWriter.println("clearAll");
+        
+        // replace the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.instanceManager = new InstanceManager();
+        
+        // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
             clear(type);
         });
         managerLists.keySet().forEach((type) -> {
+            if (getInitializationState(type) != InitializationState.NOTSET) {
+                log.warn("list of {} was reinitialized during clearAll", type, new Exception());
+                if (traceFileActive) traceFileWriter.println("WARN: list of "+type+" was reinitialized during clearAll");
+            }
             if (!managerLists.get(type).isEmpty()) {
-                log.warn("list of {} was not cleared", type, new Exception());
+                log.warn("list of {} was not cleared, {} entries", type, managerLists.get(type).size(), new Exception());
+                if (traceFileActive) traceFileWriter.println("WARN: list of "+type+" was not cleared, "+managerLists.get(type).size()+" entries");
             }
         });
         if (traceFileActive) {

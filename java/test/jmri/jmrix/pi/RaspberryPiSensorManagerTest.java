@@ -6,6 +6,7 @@ import jmri.Sensor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -102,6 +103,16 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
        Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
     }
 
+    @Override
+    @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + 14);
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(14)));
+    }
+    
     @Override
     @Before
     public void setUp() {
