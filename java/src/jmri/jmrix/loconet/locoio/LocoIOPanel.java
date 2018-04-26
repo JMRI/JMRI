@@ -297,7 +297,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
             log.warn("Address must be [1..126], was {}", // NOI18N
                     address);
         }
-        if ((address & 0x07F) == 0x080) {
+        if ((address & 0xFF) == 0x80) {
             log.warn("Only a LocoBuffer may use address 0x80"); // NOI18N
             return;
         }
