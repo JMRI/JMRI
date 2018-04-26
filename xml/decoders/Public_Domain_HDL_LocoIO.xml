@@ -40,7 +40,7 @@
         </revision>
         <revision>
             <revnumber>2</revnumber>
-            <date>2018-04-20</date>
+            <date>2018-04-26</date>
             <authorinitials>EB</authorinitials>
             <revremark>Added Board and Ports panes, manual entry, still experimental</revremark>
         </revision>
@@ -1299,7 +1299,7 @@
           <text>&lt;html&gt;&lt;strong&gt;JMRI 4.11 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.11 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.11 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
-          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;JMRI 4.11 of later vereist met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.11 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
         <separator/>
           <label>
