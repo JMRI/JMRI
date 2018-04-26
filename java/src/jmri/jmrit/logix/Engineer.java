@@ -25,9 +25,8 @@ import org.slf4j.LoggerFactory;
 public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
 
     private int _idxCurrentCommand;     // current throttle command
-    private int _idxSkipToSpeedCommand;     // make non-speed commands only untilndex
+    private int _idxSkipToSpeedCommand;   // only make non-speed commands until this index
     private float _normalSpeed = 0;       // current commanded throttle setting (unmodified)
-    private float _rampEndSpeed = -0.5f;
     private String _speedType = Warrant.Normal;    // current speed name
     private long et;    // elapsed time while waiting to do current command
     private float _timeRatio = 1.0f;     // ratio to extend scripted time when speed is modified
@@ -52,6 +51,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _atHalt = false;
     private boolean _atClear = false;
     private final SpeedUtil _speedUtil;
+    private long _cmdWaitTime;    // time to wait before executing command
+    private long _cmdStartTime;     // system time when command was received.
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -76,15 +77,16 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         while (_idxCurrentCommand < _commands.size()) {
             et = System.currentTimeMillis();
             ThrottleSetting ts = _commands.get(_idxCurrentCommand);
-            if (_idxSkipToSpeedCommand > _idxCurrentCommand) {
+            _cmdWaitTime = ts.getTime();
+            _cmdStartTime = System.currentTimeMillis();
+            String command = ts.getCommand().toUpperCase();
+            if (_idxSkipToSpeedCommand > _idxCurrentCommand && command.equals("SPEED")) {
                 _idxCurrentCommand++;
                 if (log.isDebugEnabled()) log.debug("Skip Cmd #{}: {} Warrant {}",
                         _idxCurrentCommand, ts.toString(), _warrant.getDisplayName());
                 continue;
             }
             _runOnET = _setRunOnET;     // OK to set here
-            long time = ts.getTime();
-            String command = ts.getCommand().toUpperCase();
             if (!"SET SENSOR".equals(command) && !"WAIT SENSOR".equals(command) && !"RUN WARRANT".equals(command)) {
                 int idx = _warrant.getIndexOfBlock(ts.getBeanDisplayName(), cmdBlockIdx);
                 if (idx >= 0) {
@@ -95,23 +97,23 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 // Train advancing too fast, need to process commands more quickly,
                 // allow some time for whistle toots etc.
                 if (log.isDebugEnabled()) log.debug("Train reached block \"{}\" before et={}ms . Warrant {}",
-                        ts.getBeanDisplayName(), time, _warrant.getDisplayName());
-                time = Math.min(time, 100); // 1/10 sec per command should be enough for toots etc.
+                        ts.getBeanDisplayName(), _cmdWaitTime, _warrant.getDisplayName());
+                _cmdWaitTime = Math.min(_cmdWaitTime, 200); // 200ms per command should be enough for toots etc.
             }
             if (_abort) {
                 break;
             }
             if (log.isDebugEnabled()) log.debug("Start Cmd #{} for block \"{}\" currently in \"{}\". wait {}ms to do cmd {}. Warrant {}",
-                    _idxCurrentCommand+1, ts.getBeanDisplayName(), _warrant.getCurrentBlockName(), time, command, _warrant.getDisplayName());
+                    _idxCurrentCommand+1, ts.getBeanDisplayName(), _warrant.getCurrentBlockName(), _cmdWaitTime, command, _warrant.getDisplayName());
             // actual playback total elapsed time is "ts.getTime()" before record time.
             // current block at playback may also be before current block at record
             synchronized (this) {
                 if (!Warrant.Normal.equals(_speedType)) {
-                    time = (long)(time*_timeRatio); // extend et when speed has been modified from scripted speed
+                    _cmdWaitTime = (long)(_cmdWaitTime*_timeRatio); // extend et when speed has been modified from scripted speed
                 }                
                 try {
-                    if (time > 0) {
-                        wait(time);
+                    if (_cmdWaitTime > 0) {
+                        wait(_cmdWaitTime);
                     }
                     if (_abort) {
                         break;
@@ -353,18 +355,18 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * Ramp speed change for smooth prototypical look.
      *
      * @param endSpeedType signal aspect speed name
-     * @param rampDelay time ramp thread should wait before ramping.
+     * @param endBlockIdx BlockOrder index of where ramp is to end.
+     * @param useIndex false if endBlockIdx should not be considered 
      */
-    protected void rampSpeedTo(String endSpeedType, long rampDelay, int endBlockIdx) {
+    protected void rampSpeedTo(String endSpeedType, int endBlockIdx, boolean useIndex) {
         if (!setSpeedRatio(endSpeedType)) {
             return;
         }
         float newSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);
         // if already at requested speed or ramping to it return;
-        if (Math.abs(newSpeed - getSpeedSetting()) < 0.002f || 
-                (_rampEndSpeed >= 0.0 && Math.abs(newSpeed - _rampEndSpeed) < 0.002f)) {
-            if (log.isDebugEnabled()) log.debug("rampSpeedTo type= {}, throttle= {} _endSpeed= {} _rampEndSpeed= {}. warrant {}",
-                    endSpeedType, getSpeedSetting(), newSpeed, _rampEndSpeed, _warrant.getDisplayName());
+        if (_ramp != null || Math.abs(newSpeed - getSpeedSetting()) < 0.002f) {
+            if (log.isDebugEnabled()) log.debug("rampSpeedTo: {} already done or in progress",
+                    endSpeedType, _warrant.getDisplayName());
             return;
         }
         if (log.isDebugEnabled()) log.debug("rampSpeedTo type= {}, throttle from {} to {}. warrant {}",
@@ -372,11 +374,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         synchronized (this) {
             // Either plain thread or SwingWorker thread, performance is identical
-            _ramp = new ThrottleRamp(endSpeedType, rampDelay, endBlockIdx);
-//            Thread t= new Thread(_ramp);r
+            _ramp = new ThrottleRamp(endSpeedType, endBlockIdx, useIndex);
+//            Thread t= new Thread(_ramp);
             _ramp.execute();
 //            t.start();
-            _rampEndSpeed = newSpeed;
         }
     }
 
@@ -390,13 +391,15 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private void rampDone(boolean stop, String type) {
         // ignore "IS2_INCONSISTENT_SYNC" warning here
         if (log.isDebugEnabled())
-            log.debug("ThrottleRamp {} for \"{}\" at speed= {}. _waitForClear= {} _halt= {} on warrant {}",
-                    (stop?"stopped":"completed"), type, _rampEndSpeed, _waitForClear, _halt, _warrant.getDisplayName());        
+            log.debug("ThrottleRamp {} for \"{}\" at speed= {}. _waitForClear= {} _halt= {} resume command index= {} on warrant {}",
+                    (stop?"stopped":"completed"), type, getSpeedSetting(), _waitForClear, _halt, 
+                    Math.max(_idxSkipToSpeedCommand, _idxCurrentCommand+1), _warrant.getDisplayName());        
         _ramp = null;
-        _rampEndSpeed = -0.5f;      // indicates not ramping
-        ThreadingUtil.runOnLayoutEventually(() -> {
-            _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
-        });
+        if (!stop) {
+            ThreadingUtil.runOnLayoutEventually(() -> {
+                _warrant.fireRunStatus("RampDone", _halt, type);
+            });
+        }
     }
 
     /**
@@ -515,11 +518,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     // if a ramp is needed to restore speed, delay setting flags until ramp is done
     // ramp up will set flags false
-    synchronized protected void resumeSpeedFrom(int which) {
+    synchronized protected void resumeSpeedFrom(int which, String speedType) {
+        _speedType = speedType;
         switch (which) {
             case Warrant.HALT:
                 if (!_waitForClear && _normalSpeed > 0.0f) {
-                    rampSpeedTo(_speedType, 0, 0);
+                    rampSpeedTo(_speedType, 0, false);
                     _resumePending = true;
                 } else {
                     setHalt(false);                    
@@ -527,7 +531,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 return;
             case Warrant.STOP:
                 if (!_halt && _normalSpeed > 0.0f) {
-                    rampSpeedTo(_speedType, 0, 0);                   
+                    rampSpeedTo(_speedType, 0, false);                   
                     _resumePending = true;
                 } else {
                     setWaitforClear(false);                    
@@ -535,7 +539,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 return;
             case Warrant.RESUME:
                 if (_normalSpeed > 0.0f) {
-                    rampSpeedTo(_speedType, 0, 0);                   
+                    rampSpeedTo(_speedType, 0, false);                   
                     _resumePending = true;
                 } else {
                     setWaitforClear(false);                    
@@ -570,10 +574,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return Warrant.STOP_PENDING;
         } else if (_resumePending) {
             return Warrant.RUNNING;            
-        } else if (_halt) {
-            return Warrant.HALT;
         } else if (_waitForClear) {
             return Warrant.WAIT_FOR_CLEAR;
+        } else if (_halt) {
+            return Warrant.HALT;
         } else if (_abort) {
             return Warrant.ABORT;
         } else if (_waitForSync) {
@@ -803,7 +807,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /**
      * Set Sensor state
      */
-    static private void setSensor(String sensorName, String act) {
+    private void setSensor(String sensorName, String act) {
         String action = act.toUpperCase();
         jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if (s != null) {
@@ -813,6 +817,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 } else if ("INACTIVE".equals(action)) {
                     s.setKnownState(jmri.Sensor.INACTIVE);
                 }
+                ThreadingUtil.runOnLayoutEventually(() -> {
+                    _warrant.fireRunStatus("SensorCommand", true, s.getDisplayName());
+                });
             } catch (jmri.JmriException e) {
                 log.warn("Exception setting sensor " + sensorName + " in action");
             }
@@ -852,7 +859,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 while (_waitForSensor) {
                     try {
                         ThreadingUtil.runOnLayoutEventually(() -> {
-                            _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
+                            _warrant.fireRunStatus("SensorCommand", false, _waitSensor.getDisplayName());
                         });
                         wait();
                         clearSensor();
@@ -953,13 +960,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         String _endSpeedType;
         float _endSpeed;
         boolean stop = false;   // aborts ramping
-        long _rampDelay;
         int _endBlockIdx;   // index of block where down ramp ends - not used for up ramps.
+        boolean _useIndex;
 
-        ThrottleRamp(String type, long rampDelay, int endBlockIdx) {
+        ThrottleRamp(String type, int endBlockIdx, boolean useIndex) {
             _endSpeedType = type;
-            _rampDelay = rampDelay;
             _endBlockIdx = endBlockIdx;
+            _useIndex = useIndex;
         }
 
         synchronized void quit() {
@@ -972,11 +979,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 //        public void run() {
         public Boolean doInBackground() {
             // the time 'right now' is at having done _idxCurrentCommand-1 and is waiting
-            // to do _idxCurrentCommand.  A non-scripted speed change is to begin now.
+            // to do the _idxCurrentCommand.  A non-scripted speed change is to begin now.
             // current speed at _idxCurrentCommand is (should be) _normalSpeed modified by _speedType
-            // endSpeed should match scripted speed modified by endSpeedType
+            // Note on ramp down the _normalSpeed value may be advanced. 
+            // "idxSkipToSpeedCommand" may be used rather than "_idxCurrentCommand".
+            // Note on ramp up endSpeed should match scripted speed modified by endSpeedType
             _endSpeed = _speedUtil.modifySpeed(_normalSpeed, _endSpeedType, _isForward);   // requested endspeed
-            float speed = _throttle.getSpeedSetting();
+            float speed = _throttle.getSpeedSetting();  // current speed
             if (speed < 0.0f) {
                 speed = 0.0f;
             }
@@ -986,51 +995,62 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             boolean increasing = _endSpeed >= speed;
             float throttleIncrement = _speedUtil.getRampThrottleIncrement(); // from Preferences
             int timeIncrement = _speedUtil.getRampTimeIncrement();
-            float momentumTime = _speedUtil.getMomentumTime(increasing);
+
 
             synchronized (this) {
                 try {
                      _lock.lock();
                     if (log.isTraceEnabled()) 
-                        log.debug("ThrottleRamp for \"{}\". Ramp {} to {}, rampDelay= {} throttleIncrement= {} delta= {}. on warrant {}",
-                            _endSpeedType, speed, _endSpeed, _rampDelay, throttleIncrement, timeIncrement, _warrant.getDisplayName());
+                        log.debug("ThrottleRamp for \"{}\". Ramp {} to {}.  throttleIncrement= {} delta= {}. on warrant {}",
+                            _endSpeedType, speed, _endSpeed, throttleIncrement, timeIncrement, _warrant.getDisplayName());
 
-                    if (_rampDelay > 0) {
-                        try {
-                            wait(_rampDelay);
-                        } catch (InterruptedException ie) {
-                            _lock.unlock();
-                            stop = true;
-                        }                       
-                    }
                     float rampDist = 0.0f;
-                    if (increasing) {    // ramp up should match endSpeed to speed when returned to the script
-                        int idxNextSpeedCmd = Math.max(_idxCurrentCommand, _idxSkipToSpeedCommand);
-                        float scriptSpeed = _normalSpeed;
-                        // get next script speed change and time to that command
-                        ThrottleSetting ts = _commands.get(idxNextSpeedCmd);
-                        long time = 0;  //ts.getTime();  // may be less due to the wait for executing _idxCurrentCommand
-                        for (int idx = idxNextSpeedCmd + 1; idx < _commands.size(); idx++) {
-                            ts = _commands.get(idx);
-                            time += ts.getTime();
-                            if ("SPEED".equals(ts.getCommand().toUpperCase())) {
-                                scriptSpeed = _speedUtil.modifySpeed(Float.parseFloat(ts.getValue()), _endSpeedType, _isForward);
-                                idxNextSpeedCmd = idx;
-                                break;
+                    if (increasing) {
+                        // ramp up endSpeed should match script speed when returned to the script
+                        // If the script is ramping down when resumed, the ramp up to endspeed may be too much.
+                        float scriptSpeed = 0;
+                        float prevSpeed = speed;
+                        float scriptDist = 0;
+                        rampDist = _speedUtil.rampLengthForSpeedChange(speed, _endSpeed, _isForward);
+                        int idxNextSpeedCmd = Math.max(_idxSkipToSpeedCommand, _idxCurrentCommand+1); // resume speed index
+                        // the wait for _idxCurrentCommand has probably expired.
+                        while (scriptDist < rampDist) {
+                            // Get next speed change in script
+                            long scriptTime = 0;
+                            for (int idx = idxNextSpeedCmd; idx < _commands.size(); idx++) {
+                                ThrottleSetting ts = _commands.get(idx);
+                                scriptTime += ts.getTime();
+                                if ("SPEED".equals(ts.getCommand().toUpperCase())) {
+                                    _normalSpeed = Float.parseFloat(ts.getValue()); // modify speed to be expected speed
+                                    scriptSpeed = _speedUtil.modifySpeed(_normalSpeed, _endSpeedType, _isForward);
+                                    idxNextSpeedCmd = idx;
+                                    break;
+                                }
+                                advanceToCommandIndex(idxNextSpeedCmd); // don't let script set this speed
                             }
-                        }          
-                        // Get distance to travel at normal current speed up to next speed change
-                        float scriptDist = _speedUtil.getTrackSpeed(_normalSpeed, _isForward) * time;
-                        if (log.isTraceEnabled()) 
-                            log.debug("Ramp up for \"{}\". curSpeed= {}, endSpeed= {}, rampDist= {}, scriptDist={} _scriptSpeed= {}",
-                                    _endSpeedType, speed, _endSpeed, rampDist, scriptDist, scriptSpeed);
-                        
-                        while (speed < _endSpeed) { // ramp up - find script "_normalSpeed" for end speed of ramp
+                            if (_endSpeed <= scriptSpeed) {
+                                // OK script will increase speed smoothly
+                                break;
+                            } // otherwise need to adjust endspeed and script
+                            _endSpeed = scriptSpeed; 
+                            // Get distance to next speed change in script
+                            float momentumTime = _speedUtil.getMomentumTime(prevSpeed - scriptSpeed, increasing);
+                            scriptDist += _speedUtil.getTrackSpeed((prevSpeed + scriptSpeed)/2, _isForward) * momentumTime;
+                            if (scriptTime > momentumTime) {
+                                scriptDist += _speedUtil.getTrackSpeed(scriptSpeed, _isForward) * (scriptTime - momentumTime);
+                            }
+                            prevSpeed = scriptSpeed;
+                            // Get ramp up distance 
+                            rampDist = scriptDist;
+                        }
+                        if (log.isDebugEnabled()) 
+                            log.debug("Ramp up for \"{}\". curSpeed= {}, endSpeed= {}, resume command index= {}, rampDist= {}",
+                                    _endSpeedType, speed, _endSpeed, _idxSkipToSpeedCommand, rampDist);
+
+                        while (speed < _endSpeed) { // do ramp up
                             if (stop) {
                                 break;
                             }
-                            rampDist += _speedUtil.getTrackSpeed(speed,  true) * momentumTime
-                                    + _speedUtil.getTrackSpeed(speed + throttleIncrement, _isForward) * (timeIncrement - momentumTime);
                             speed += throttleIncrement;
                             if (speed > _endSpeed) { // don't overshoot
                                 speed = _endSpeed;
@@ -1038,27 +1058,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             setSpeed(speed);
                             throttleIncrement *= NXFrame.INCRE_RATE;
 
-                            if (scriptDist <= rampDist) {
-                                // get next scripted speed change and distance
-                                // but before that, set parameters to current script speed
-                                advanceToCommandIndex(idxNextSpeedCmd + 1);    // script must skip ahead                
-                                _endSpeed = Math.min(scriptSpeed, _endSpeed);
-                                scriptDist += _speedUtil.getTrackSpeed(scriptSpeed, _isForward) * time;
-                                if (log.isTraceEnabled()) 
-                                    log.debug("Ramp up for \"{}\". curSpeed= {}, endSpeed= {}, rampDist= {}, scriptDist={} _scriptSpeed= {}",
-                                            _endSpeedType, speed, _endSpeed, rampDist, scriptDist, scriptSpeed);
-                                // get distance traveled up to next script speed change
-                                time = 0;
-                                for (int idx = idxNextSpeedCmd + 1; idx < _commands.size(); idx++) {
-                                    ts = _commands.get(idx);
-                                    time += ts.getTime();
-                                    if ("SPEED".equals(ts.getCommand().toUpperCase())) {
-                                        scriptSpeed = _speedUtil.modifySpeed(Float.parseFloat(ts.getValue()), _endSpeedType, _isForward);
-                                        idxNextSpeedCmd = idx;
-                                        break;
-                                    }
-                                }          
-                            }
                             try {
                                 wait(timeIncrement);
                             } catch (InterruptedException ie) {
@@ -1083,12 +1082,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             if (stop) {
                                 break;
                             }
-                            if (_warrant._idxCurrentOrder > _endBlockIdx) { // loco overran end block 
+                            if (_useIndex && _warrant._idxCurrentOrder > _endBlockIdx) { // loco overran end block 
                                 speed = _endSpeed;
                             } else {
-                                if (speed - _endSpeed < throttleIncrement + .0039) {
+                                if (speed - _endSpeed < throttleIncrement + .00794) {
                                     // next decrease will end ramp down.
-                                    while (_endBlockIdx - _warrant._idxCurrentOrder > 0) {
+                                    while (_useIndex && _endBlockIdx - _warrant._idxCurrentOrder > 0) {
                                         // Until loco reaches end block, continue current speed
                                         try {
                                             wait(timeIncrement);
@@ -1114,29 +1113,29 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             }
                         }
                         _stopPending = false;
-                        // end of down ramp may be beyond where the script was interrupted
-                        // _Skip all commands up to the current block. 
-                        String name = _warrant.getCurrentBlockOrder().getBlock().getDisplayName();
-                        if (log.isTraceEnabled()) 
-                            log.debug("Ramp down ends in block \"{}\" at command #{}", name, _idxCurrentCommand);
-                        // if there is a ramp overrun to another block, skip commands in previous blocks.
-                        // Look back i index for NOOP into current block
-                        int start;
-                        if (_idxCurrentCommand > 0) {
-                            start = _idxCurrentCommand - 1;
-                        } else {
-                            start = 0;
-                        }
-                        for (int idx = start; idx < _commands.size(); idx++) {
-                            ThrottleSetting ts = _commands.get(idx);
-                            NamedBean bean = ts.getNamedBeanHandle().getBean();
-                            if (bean instanceof OBlock ) {
-                                if (name.equals(bean.getDisplayName())) {
-                                    break;
+
+                        if (_useIndex) {
+                            String endBlkName = _warrant.getBlockAt(_endBlockIdx).getDisplayName();
+                            int idx = _idxCurrentCommand;   // command waiting to execute
+                            ThrottleSetting ts = _commands.get(idx++);
+                            String blkName = ts.getNamedBeanHandle().getBean().getDisplayName();
+                            boolean atEndBlk = (endBlkName.equals(blkName));    // script may not be at end block
+                            while (idx < _commands.size()) {
+                                ts = _commands.get(idx++);
+                                blkName = ts.getNamedBeanHandle().getBean().getDisplayName();
+                                if (atEndBlk) {
+                                    if (!endBlkName.equals(blkName)) {
+                                        break; // script just past stopping block
+                                    }
+                                } else {
+                                    atEndBlk = (endBlkName.equals(blkName));    // are we there yet?
                                 }
-                                advanceToCommandIndex(idx);    // script must skip ahead                
+                                if (ts.getCommand().toUpperCase().equals("SPEED")) {
+                                    _normalSpeed = Float.parseFloat(ts.getValue()); // modify 'resume' speed to be last the last speed
+                                    advanceToCommandIndex(idx); // skip this speed command
+                                }
                             }
-                        }          
+                        }
                     }
                     
                 } finally {
@@ -1149,10 +1148,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         setHalt(false);
                     }
                     _resumePending = false;
-                    if (stop) {
-                        if (log.isTraceEnabled()) 
-                            log.debug("ThrottleRamp stopped before completion. warrant= {}",  _warrant.getDisplayName());
-                    }
                 }
             }
             rampDone(stop, _endSpeedType);
