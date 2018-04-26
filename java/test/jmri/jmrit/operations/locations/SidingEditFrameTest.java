@@ -201,8 +201,9 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Spur Frame");
-        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly    
         f.initComponents(l, null);
+        f.setSize(650, 800); // need to see save button
 
         // create track
         f.trackNameTextField.setText("Train test siding track");
@@ -213,6 +214,13 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         trainA.deleteTypeName("Boxcar");
 
         // save button
+        enterClickAndLeave(f.saveTrackButton);
+        
+        // confirm no error dialogue
+        Assert.assertTrue(f.isActive());
+        
+        // specify train pickups using the exclude option
+        enterClickAndLeave(f.excludeTrainPickup);
         enterClickAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
