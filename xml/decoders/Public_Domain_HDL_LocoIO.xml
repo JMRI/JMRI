@@ -68,7 +68,7 @@
         </variable>
 
         <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0">
-            <decVal min="0" max="15" default="0"/>
+            <decVal min="0" max="15"/>
             <label>Blink Rate:</label>
             <tooltip>Choose from 0 = none to 15 = fast</tooltip>
         </variable>
@@ -129,8 +129,8 @@
       <!-- Port 1 -->
       <variable item="Port1 Mode" CV="5" mask="VVVVXXXX">
         <splitVal highCV="3" factor="1" offset="0" upperMask="VVVVVVVV"/>
-        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-        <!--<decVal max="3328"/>-->
+          <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+          <!--<decVal max="3328"/>-->
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
