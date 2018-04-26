@@ -543,6 +543,9 @@ public class PrintLocationsAction extends AbstractAction {
         writer.write(Bundle.getMessage("TrackErrorAnalysis") + NEW_LINE);
         List<Location> locations = manager.getLocationsByNameList();
         for (Location location : locations) {
+            if (_location != null && location != _location) {
+                continue;
+            }
             writer.write(location.getName() + NEW_LINE);
             for (Track track : location.getTrackByNameList(null)) {
                 writer.write(TAB + track.getName() + TAB + track.checkPickups() + NEW_LINE);

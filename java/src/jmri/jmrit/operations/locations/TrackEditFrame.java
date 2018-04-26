@@ -390,11 +390,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == saveTrackButton) {
             log.debug("track save button activated");
             if (_track != null) {
-                saveTrackDirections(_track); // save track directions so train pickups will check correctly
                 if (!checkUserInputs(_track)) {
                     return;
                 }
                 saveTrack(_track);
+                checkTrackPickups(_track); // warn user if there are car types that will be stranded
             } else {
                 addNewTrack();
             }
@@ -744,13 +744,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                     .getMessage("PickUpsDisabled"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        return true;
+    }
+    
+    private boolean checkTrackPickups(Track track) {
         // check to see if all car types can be pulled from this track
         String status = track.checkPickups();
         if (!status.equals(Track.PICKUP_OKAY)) {
             JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        return true;
+        return true; 
     }
 
     private void reportTrackExists(String s) {
