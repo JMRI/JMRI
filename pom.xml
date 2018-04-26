@@ -509,7 +509,6 @@
                                 <!-- pure interfaces and classes of constants -->
                                 <File>jmri/AddressedProgrammerManager.class</File>
                                 <File>jmri/PhysicalLocationReporter.class</File>
-                                <File>jmri/Turnout.class</File>
                                 <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>

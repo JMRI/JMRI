@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.jmri.org/xml/XSLT/panelfile.xsl"?>
+<layout-config
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/layout.xsd"
+>
+  <audio class="jmri.jmrit.audio.configurexml.DefaultAudioManagerXml" distanceattenuated="yes">
+    <audiobuffer systemName="IAB1">
+      <url>program:resources/sounds/Crossing.wav</url>
+    </audiobuffer>
+    <audiolistener systemName="IAL$" userName="Default Audio Listener">
+      <position x="0.0" y="0.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <orientation atX="0.0" atY="1.0" atZ="0.0" upX="0.0" upY="0.0" upZ="1.0" />
+      <gain>1.0</gain>
+      <metersperunit>1.0</metersperunit>
+    </audiolistener>
+    <audiosource systemName="IAS1">
+      <position x="-20.0" y="10.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB1</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="1000" out="1000" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+    <audiosource systemName="IAS2">
+      <position x="-23.406054" y="0.0" z="0.0" />
+      <velocity x="-1.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB1</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.1</pitch>
+      <distances ref="1.0" />
+      <loops min="3" max="6" />
+      <fadetimes in="1000" out="1000" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+  </audio>
+  <audio class="jmri.jmrit.audio.configurexml.DefaultAudioManagerXml" distanceattenuated="yes">
+    <audiolistener systemName="IAL$" userName="Default Audio Listener">
+      <position x="0.0" y="0.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <orientation atX="0.0" atY="1.0" atZ="0.0" upX="0.0" upY="0.0" upZ="1.0" />
+      <gain>1.0</gain>
+      <metersperunit>1.0</metersperunit>
+    </audiolistener>
+    <audiobuffer systemName="IAB10">
+      <url>program:resources/sounds/Crossing.wav</url>
+    </audiobuffer>
+    <audiosource systemName="IAS10">
+      <position x="-20.0" y="10.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB10</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="1000" out="1000" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+    <audiosource systemName="IAS20">
+      <position x="-23.406054" y="0.0" z="0.0" />
+      <velocity x="-1.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB10</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.1</pitch>
+      <distances ref="1.0" />
+      <loops min="3" max="6" />
+      <fadetimes in="1000" out="1000" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+  </audio>
+</layout-config>
