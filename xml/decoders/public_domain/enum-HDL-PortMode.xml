@@ -118,8 +118,8 @@
 
   <!-- Servo value is identical to Fixed 1 Off -->
   <enumChoice choice="Output Servo" value="2049">
-    <choice>Output: Servo (match tab LocoIO)</choice>
-    <choice xml:lang="nl">Output: Servo (zelfde op tab LocoIO)</choice>
+    <choice>Output: Servo (mustmatch tab LocoIO)</choice>
+    <choice xml:lang="nl">Output: Servo (zet zelfde op tab LocoIO)</choice>
   </enumChoice>
 
 <!-- new items? -->

@@ -128,9 +128,8 @@
 
       <!-- Port 1 -->
       <variable item="Port1 Mode" CV="5" mask="VVVVXXXX">
-        <splitVal highCV="3" factor="1" offset="0" upperMask="VVVVVVVV"/>
-          <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
-          <!--<decVal max="3328"/>-->
+        <!--<splitVal highCV="3" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
         <tooltip>Enter code from list</tooltip>
@@ -138,8 +137,7 @@
 
       <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
+        <splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
         <label>Port Address (dec):</label>
         <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
@@ -161,7 +159,7 @@
 
       <!-- Port 2 -->
       <variable item="Port2 Mode" CV="8" mask="VVVVXXXX">
-        <splitVal highCV="6" factor="1" offset="0" upperMask="VVVVVVVV"/>
+        <!--<splitVal highCV="6" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
@@ -170,8 +168,7 @@
 
       <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
+        <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
         <label>Port Address (dec):</label>
         <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
@@ -193,7 +190,7 @@
 
       <!-- Port 3 -->
       <variable item="Port3 Mode" CV="11" mask="VVVVXXXX">
-        <splitVal highCV="9" factor="1" offset="0" upperMask="VVVVVVVV"/>
+        <!--<splitVal highCV="9" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
@@ -202,8 +199,7 @@
 
       <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
+        <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
         <label>Port Address (dec):</label>
         <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
@@ -225,7 +221,7 @@
 
       <!-- Port 4 -->
       <variable item="Port4 Mode" CV="14" mask="VVVVXXXX">
-        <splitVal highCV="12" factor="1" offset="0" upperMask="VVVVVVVV"/>
+        <!--<splitVal highCV="12" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
         <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
         <label>Mode:</label>
         <label xml:lang="nl">Functie:</label>
@@ -234,8 +230,7 @@
 
       <variable item="Port4 Address" CV="13" mask="XVVVVVVV">
         <!-- splitVal misses bit 8 in port address -->
-        <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV"/>
-        <decVal max="4096"/>
+        <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
         <label>Port Address (dec):</label>
         <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
@@ -1225,7 +1220,7 @@
               &lt;br/&gt;
               &lt;br/&gt;
               &lt;br/&gt;
-              <br/>
+              &lt;br/&gt;
               &lt;/html&gt;</text>
           </label>
         </column>
