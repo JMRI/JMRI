@@ -750,7 +750,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     private boolean checkTrackPickups(Track track) {
         // check to see if all car types can be pulled from this track
         String status = track.checkPickups();
-        if (!status.equals(Track.PICKUP_OKAY)) {
+        if (!status.equals(Track.PICKUP_OKAY) && !track.getPickupOption().equals(Track.ANY)) {
             JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorStrandedCar"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
