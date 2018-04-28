@@ -11,10 +11,11 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    JsonThrottleServiceFactoryTest.class,
-    JsonThrottleManagerTest.class,
     JsonThrottleTest.class,
-    JsonThrottleSocketServiceTest.class,
+    JsonThrottleHttpServiceTest.class,
+    JsonThrottleManagerTest.class,
+    JsonThrottleServiceFactoryTest.class,
+    JsonThrottleSocketServiceTest.class
 })
 public class PackageTest {
 }

@@ -159,6 +159,16 @@
             <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
             <option class="boolean.class" setting="false">isPreview</option>
         </node>
+        <node name="List">
+            <name xml:lang="fr">Liste</name>
+            <name xml:lang="it">Lista</name>
+            <name xml:lang="de">Liste</name>
+            <name xml:lang="ca">Llista</name>
+            <name xml:lang="cs">Seznam</name>
+            <name xml:lang="nl">Lijst</name>
+            <adapter>jmri.jmrit.roster.PrintListAction</adapter>
+            <option class="boolean.class" setting="false">isPreview</option>
+        </node>
     </node>
     <node name="Print Preview Roster">
         <name xml:lang="fr">Imprimer Aperçu de l'Inventaire</name>
@@ -185,6 +195,16 @@
             <name xml:lang="cs">Souhrn</name>
             <name xml:lang="nl">Samenvatting</name>
             <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
+            <option class="boolean.class" setting="true">isPreview</option>
+        </node>
+        <node name="List">
+            <name xml:lang="fr">Liste</name>
+            <name xml:lang="it">Lista</name>
+            <name xml:lang="de">Liste</name>
+            <name xml:lang="ca">Llista</name>
+            <name xml:lang="cs">Seznam</name>
+            <name xml:lang="nl">Lijst</name>
+            <adapter>jmri.jmrit.roster.PrintListAction</adapter>
             <option class="boolean.class" setting="true">isPreview</option>
         </node>
     </node>

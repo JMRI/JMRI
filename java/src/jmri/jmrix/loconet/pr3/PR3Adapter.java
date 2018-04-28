@@ -22,6 +22,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
+
     }
 
     /**
@@ -80,7 +81,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace);
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);  // never transponding!
             this.getSystemConnectionMemo().configureManagersPR2();
 
             // start operation
@@ -97,8 +98,10 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         } else {
             // MS100 modes - connecting to a separate command station
+            // get transponding option
+            setTranspondingAvailable(getOptionState("TranspondingPresent"));
             // connect to a packetizing traffic controller
-            LnPacketizer packets = new LnPacketizer();
+            LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
 
             // create memo
@@ -107,7 +110,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace);
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
 
             this.getSystemConnectionMemo().configureManagersMS100();
 
@@ -177,6 +180,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             return null;
         }
     }
+
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }

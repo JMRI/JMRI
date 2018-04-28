@@ -55,7 +55,7 @@ public class TurnoutIconTest extends PositionableIconTest {
         Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
     }
 
-
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

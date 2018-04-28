@@ -25,94 +25,95 @@
     <div id="mainContent">
       <h1>Hardware Support: Chubb C/MRI</h1><a name="contents" id="contents"></a>
 
-<p>The documentation below discusses how JMRI may be used with C/MRI, and how
-to get started with connecting a C/MRI system to JMRI. It assumes a basic
-knowledge of JMRI (as documented on this JMRI web site), and some familiarity
-with C/MRI. It is highly recommended that C/MRI users have access to Bruce
-Chubb's <strong>C/MRI User Manual, Version 3.0</strong>, because it contains
-detailed hardware documentation not available elsewhere. Since you don't need
-to write the control software for your computer if you're using JMRI with your
-C/MRI system, you can skip over computer programming details when consulting
-the C/MRI User Manual. Excellent, detailed descriptions for various types of
-signaling systems and model railroad layout device controls are presented in
-Dr. Chubb's manuals.</p>
+  <p>The documentation below discusses how JMRI may be used with C/MRI, and how
+  to get started with connecting a C/MRI system to JMRI. It assumes a basic
+  knowledge of JMRI (as documented on this JMRI web site), and some familiarity
+  with C/MRI. It is highly recommended that C/MRI users have access to Bruce
+  Chubb's <strong>C/MRI User Manual, Version 3.0</strong>, because it contains
+  detailed hardware documentation not available elsewhere. Since you don't need
+  to write the control software for your computer if you're using JMRI with your
+  C/MRI system, you can skip over computer programming details when consulting
+  the C/MRI User Manual. Excellent, detailed descriptions for various types of
+  signaling systems and model railroad layout device controls are presented in
+  Dr. Chubb's manuals.</p>
 
-<p>The CMRInet protocol definition is published on the NMRA web site under the
-Standards and Recommendations Section, Layout Control Specifications: 
-<strong>LCS-9.10 C/MRI Introduction v1.0 (2014.12.01) and LCS-9.10.1 CMRInet v1.1 (2014.12.01).
-</strong><br>
-<a href="https://www.nmra.org/sites/default/files/standards/sandrp/Other_Specifications/lcs-9.10.1_cmrinet_v1.1.pdf"
->https://www.nmra.org/sites/default/files/standards/sandrp/Other_Specifications/lcs-9.10.1_cmrinet_v1.1.pdf</a></br></p>
+  <p>The CMRInet protocol definition is published on the NMRA web site under the
+  Standards and Recommendations Section, Layout Control Specifications:
+  <strong>LCS-9.10 C/MRI Introduction v1.0 (2014.12.01) and LCS-9.10.1 CMRInet v1.1 (2014.12.01).
+  </strong><br>
+  <a href="https://www.nmra.org/sites/default/files/standards/sandrp/Other_Specifications/lcs-9.10.1_cmrinet_v1.1.pdf"
+  >https://www.nmra.org/sites/default/files/standards/sandrp/Other_Specifications/lcs-9.10.1_cmrinet_v1.1.pdf</a></br></p>
 
-<p>Note: <strong>C/MRI</strong> and <strong>CMRI</strong> (without the slash)
-are used interchangeably.  The C/MRI communication protocol is referred to as
-<strong>CMRInet</strong>.</p>
-<ul>
-<li>The documentation below is divided into sections;
-  for easy access click an item in this list:</li>
-</ul>
+  <p>Note: <strong>C/MRI</strong> and <strong>CMRI</strong> (without the slash)
+  are used interchangeably.  The C/MRI communication protocol is referred to as
+  <strong>CMRInet</strong>.</p>
+  <ul>
+  <li>The documentation below is divided into sections;
+    for easy access click an item in this list:</li>
+  </ul>
 
-<div class="toc">
-<ul>
-  <li><a href="#L46">Hardware Support: Chubb C/MRI</a> 
-    <ul>
-      <li><a href="#L145">Supported Hardware</a></li>
-      <li><a href="#L164">Limitations</a></li>
-      <li><a href="#L170">Introduction to C/MRI on JMRI</a></li>
-    </ul>
-  </li>
-  <li><a href="#L215">Establishing a C/MRI System Connection</a> 
-    <ul>
-      <li><a href="#L258">Managing Nodes</a></li>
-      <li><a href="#L268">Configuring C/MRI Nodes</a></li>
-      <li><a href="#L281">Adding a Node Definition</a></li>
-      <li><a href="#L296">Creating a SMINI Node Definition</a></li>
-      <li><a href="#L323">Creating a USIC/SUSIC Node Definition</a></li>
-      <li><a href="#L352">Creating a CPNODE Node Definition</a></li>
-      <li><a href="#L363">Editing a Node Definition</a></li>
-      <li><a href="#L391">C/MRI Input and Output Bits</a> 
-        <ul>
-          <li><a href="#L395">Inputs - Sensors Table</a></li>
-          <li><a href="#L405">Outputs - Turnouts Table</a></li>
-          <li><a href="#L419">Outputs - Lights Table</a></li>
-          <li><a href="#L429">Unique Output Bits</a></li>
-          <li><a href="#L447">Alternate Numbering Scheme for C/MRI System Names</a></li>
-        </ul>
-      </li>
-      <li><a href="#L001">Forming a JMRI System Name For a C/MRI Bit</a></li>
-      <li><a href="#L459">Creating a Sensor Input</a></li>
-      <li><a href="#L484">Creating a Turnout Output</a></li>
-      <li><a href="#L519">Turnout Control Options</a></li>
-      <li><a href="#L547">Creating a Light Output</a></li>
-    </ul>
-  </li>
-  <li><a href="#L562">CMRInet Network Management Tools</a> 
-    <ul>
-      <li><a href="#L568">CMRInet Manager</a></li>
-      <li><a href="#L580">CMRInet Packet Monitor</a></li>
-      <li><a href="#L597">CMRInet Network Metrics</a></li>
-    </ul>
-    <ul>
-      <li><a href="#L609">Listing C/MRI Bit Assignments</a></li>
-    </ul>
-      <li><a href="#L624">Diagnostics</a></li>
-      <li style="margin-left:0;"><a href="#L632">CMRInet Network
-      Connections</a></li>
-      <li><a href="#L652">Using An Ethernet Network Connection</a></li>
-      <li><a href="#L662">Running JMRI when disconnected from your C/MRI
-        system</a></li>
-      <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>  
-      <li><a href="#L739">JMRI Help</a></li>
-      <li><a href="#L746">Third Party info</a></li>
-      <li><a href="#L145">Supported Hardware</a></li>
-    </ul>
-    
-  <h2 id="L164">Limitations</h2>
+  <div class="toc">
+  <ul>
+    <li><a href="#L46">Hardware Support: Chubb C/MRI</a>
+      <ul>
+        <li><a href="#L145">Supported Hardware</a></li>
+        <li><a href="#L164">Limitations</a></li>
+        <li><a href="#L170">Introduction to C/MRI on JMRI</a></li>
+      </ul>
+    </li>
+    <li><a href="#L215">Establishing a C/MRI System Connection</a>
+      <ul>
+        <li><a href="#L258">Managing Nodes</a></li>
+        <li><a href="#L268">Configuring C/MRI Nodes</a></li>
+        <li><a href="#L281">Adding a Node Definition</a></li>
+        <li><a href="#L296">Creating a SMINI Node Definition</a></li>
+        <li><a href="#L323">Creating a USIC/SUSIC Node Definition</a></li>
+        <li><a href="#L352">Creating a CPNODE Node Definition</a></li>
+        <li><a href="#L363">Editing a Node Definition</a></li>
+        <li><a href="#L391">C/MRI Input and Output Bits</a>
+          <ul>
+            <li><a href="#L395">Inputs - Sensors Table</a></li>
+            <li><a href="#L405">Outputs - Turnouts Table</a></li>
+            <li><a href="#L419">Outputs - Lights Table</a></li>
+            <li><a href="#L429">Unique Output Bits</a></li>
+            <li><a href="#L447">Alternate Numbering Scheme for C/MRI System Names</a></li>
+          </ul>
+        </li>
+        <li><a href="#L001">Forming a JMRI System Name For a C/MRI Bit</a></li>
+        <li><a href="#L459">Creating a Sensor Input</a></li>
+        <li><a href="#L484">Creating a Turnout Output</a></li>
+        <li><a href="#L519">Turnout Control Options</a></li>
+        <li><a href="#L547">Creating a Light Output</a></li>
+      </ul>
+    </li>
+    <li><a href="#L562">CMRInet Network Management Tools</a>
+      <ul>
+        <li><a href="#L568">CMRInet Manager</a></li>
+        <li><a href="#L580">CMRInet Packet Monitor</a></li>
+        <li><a href="#L597">CMRInet Network Metrics</a></li>
+      </ul>
+      <ul>
+        <li><a href="#L609">Listing C/MRI Bit Assignments</a></li>
+      </ul>
+        <li><a href="#L624">Diagnostics</a></li>
+        <li style="margin-left:0;"><a href="#L632">CMRInet Network
+        Connections</a></li>
+        <li><a href="#L652">Using An Ethernet Network Connection</a></li>
+        <li><a href="#L662">Running JMRI when disconnected from your C/MRI
+          system</a></li>
+        <li><a href="#L676">PanelPro Signaling Example Using C/MRI</a></li>
+        <li><a href="#L739">JMRI Help</a></li>
+        <li><a href="#L746">Third Party info</a></li>
+        <li><a href="#L145">Supported Hardware</a></li>
+      </ul>
+  </div>
+
+  <a name="L164" id="L164"></a><h2>Limitations</h2>
   <p>Original Chubb IBEC and UBEC interfaces for older PC system buses (ISA,
   PCI) are not supported.</p>
 
   <a name="intro" id="intro"></a>
-  <h2 id="L170">Introduction to C/MRI on JMRI</h2>
+  <a name="L170" id="L170"></a><h2>Introduction to C/MRI on JMRI</h2>
 
   <p>C/MRI is a system of digital input and digital output lines that can be
   used to connect a computer to a model railroad layout, allowing computer
@@ -231,7 +232,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   transmit output data to a particular addressed node to change the state of
   the defined output bits in the node.</p>
 
-  <h1 id="L215">Establishing a C/MRI System Connection</h1>
+  <a id="L215" name="L215"></a><h1>Establishing a C/MRI System Connection</h1>
 
   <p>Before C/MRI sensors and turnouts can be defined, a <strong>CMRInet system
   connection</strong> needs to be established. This is done from the
@@ -276,7 +277,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   one may be active at a time. Use the <strong>Disable Connection</strong>
   checkbox to enable or disable a connection.</p>
 
-  <h2 id="L258">Managing Nodes</h2>
+  <a name="L258" id="L258"></a><h2>Managing Nodes</h2>
 
   <p>An SMINI, USIC/SUSIC, or cpNode is called a "node". A node is a point in
   the CMRInet network where the physical connections for controlled layout
@@ -297,7 +298,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p>You will need to save your Preferences after making changes to your node
   configuration. Use the "Save" button in the Preferences window to do this.</p>
 
-  <h2 id="L268">Configuring C/MRI Nodes</h2>
+  <a name="L268" id="L268"></a><h2>Configuring C/MRI Nodes</h2>
 
   <p>CMRInet nodes are created from the Node Configuration Manager window.</p>
 
@@ -318,7 +319,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p><img alt="" src="images/nodeconfigurationmanager.png" width="1030"
   height="630"></p>
 
-  <h2 id="L281">Adding a Node Definition</h2>
+  <a name="L281" id="L281"></a><h2>Adding a Node Definition</h2>
 
   <p>To add a node, click the <strong>Add Node</strong> button at the bottom of
   the Node Configuration Manger window. The Add Node window will be
@@ -337,7 +338,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p>A printed list of configured nodes can be provided by clicking on the
   <strong>Print</strong> button.</p>
 
-  <h2 id="L296">Creating a SMINI Node Definition</h2>
+  <a name="L296" id="L296"></a><h2>Creating a SMINI Node Definition</h2>
 
   <p>Open the Node Configuration Window from either the Preferences window or
   from the PanelPro main menu, select CMRI -&gt; Configure Nodes.</p>
@@ -370,7 +371,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p>You must do a <strong>Save</strong> from the <strong>Preferences</strong>
   window for nodes which are added.</p>
 
-  <h2 id="L323">Creating a USIC/SUSIC Node Definition</h2>
+  <a name="L323" id="L323"></a><h2>Creating a USIC/SUSIC Node Definition</h2>
 
   <p>Open the Node Configuration Window from either the Preferences window or
   from the PanelPro main menu, select CMRI -&gt; Configure Nodes.</p>
@@ -409,7 +410,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p>You must do a Save from the Preferences window for nodes which are added,
   updated, or deleted.</p>
 
-  <h2 id="L352">Creating a CPNODE Node Definition</h2>
+  <a name="L352" id="L352"></a><h2>Creating a CPNODE Node Definition</h2>
 
   <p>Open the Node Configuration Window from either the Preferences window or
   from the PanelPro main menu, select CMRI -&gt; Configure Nodes.</p>
@@ -449,7 +450,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p>You must do a Save from the Preferences window for nodes which are added,
   updated, or deleted.</p>
 
-  <h2 id="L363">Editing a Node Definition</h2>
+  <a name="L363" id="L363"></a><h2>Editing a Node Definition</h2>
 
   <p>Node configuration parameters may be changed by selecting the
   <strong>Edit</strong> function from the Node Configuration Manager window.</p>
@@ -476,7 +477,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   warning dialog will be presented reminding you to save your changes from the
   Preferences window.</p>
 
-  <h2 id="L391">C/MRI Input and Output Bits</h2>
+  <a name="L391" id="L391"></a><h2>C/MRI Input and Output Bits</h2>
 
   <p>JMRI refers to C/MRI Input bits as <strong>Sensors</strong> and Output
   bits as <strong>Turnouts</strong> or <strong>Lights</strong>. The definition
@@ -484,7 +485,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   appropriate data table. Tables are accessed by selecting from the PanelPro
   main screen Tools -&gt; Tables -&gt; {table name}</p>
 
-  <h3 id="L395">Inputs - Sensors Table</h3>
+  <a name="L395" id="L395"></a><h3>Inputs - Sensors Table</h3>
   <p>Sensors provide input to JMRI about conditions on the layout; a button is
   pushed, a block is occupied, etc.
   <strong>When you see a "Sensor" reference, think "input bit" or "input
@@ -502,7 +503,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   "active" when its assigned input bit is On and "inactive" when its input bit
   is Off.</p>
 
-  <h3 id="L405">Outputs - Turnouts Table</h3>
+  <a name="L405" id="L405"></a><h3>Outputs - Turnouts Table</h3>
   <p>JMRI refers to C/MRI output bits as Turnouts. Turnouts are on/off switches
   that JMRI can change to control things on the layout.
   <strong>When you see a "Turnout" reference, think "output bit" or "output
@@ -524,7 +525,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   accessed by selecting <strong>Turnout Table</strong> in the Tools menu from
   the PanelPro main window.</p>
 
-  <h3 id="L419">Outputs - Lights Table</h3>
+  <a name="L419" id="L419"></a><h3>Outputs - Lights Table</h3>
   <p>Similarly, a new Light may be created via the JMRI Light Table
 	<strong>When you see a "Light" reference, think "output bit" or "output
   port".</strong>
@@ -542,7 +543,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   output bit, is called "assigning" that output bit. Each Light or Turnout is
   linked to a specific output line via the address part of the System Name.</p>
 
-  <h4 id="L429">Unique Output Bits</h4>
+  <a name="L429" id="L429"></a><h4>Unique Output Bits</h4>
   <p>A specific output bit may be referred to as a Turnout or a Light, but not
   both. Each output bit may be assigned only once. When a new C/MRI Turnout or
   a new C/MRI Light is created, JMRI checks that the specified output bit is
@@ -553,7 +554,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   unassigned for successful creation of a new Turnout controlled by two output
   bits.</p>
 
-  <h2 id="L001">Forming a JMRI System Name For a C/MRI Bit</h2>
+  <a name="L001" id="L001"></a><h2>Forming a JMRI System Name For a C/MRI Bit</h2>
   <p>C/MRI System Names are formed using the following format:
   <strong>Cpnbbb</strong> where C is the &lt;connection prefix&gt;, p is the
   &lt;port type&gt;, n is the &lt;node number&gt; and bbb is the &lt;bit
@@ -583,7 +584,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   section. For cross-user compatibility, it is recommended to use the 1-999 style for
   the numbering scheme.</p>
 
-  <h3 id="L447">Alternate Numbering Scheme for C/MRI System Names</h3>
+  <a name="L447" id="L447"></a><h3>Alternate Numbering Scheme for C/MRI System Names</h3>
   <p>An alternate scheme for numbering in C/MRI System Names was developed to
   give user access to the full number of lines allowed by C/MRI hardware
   design. The main numbering system allows access to 999 input and output lines
@@ -607,7 +608,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   numbering scheme is recommended unless bits greater than 999 need to be
   addressed.</p>
 
-  <h2 id="L459">Creating a Sensor Input</h2>
+  <a name="L459" id="L459"></a><h2>Creating a Sensor Input</h2>
   <p>To create a sensor input, open the Sensors table by selecting
   <strong>T</strong><strong>ools -&gt; Tables -&gt; Sensors</strong> in the
   main PanelPro menu.</p>
@@ -638,7 +639,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p>There needs to be one unique sensor defined for every active input bit in
   the node.</p>
 
-  <h2 id="L484">Creating a Turnout Output</h2>
+  <a name="L484" id="L484"></a><h2>Creating a Turnout Output</h2>
   <p>To create a turnout output, open the Turnouts table by selecting
   <strong>Tools -&gt; Tables -&gt; Turnouts</strong> in the main PanelPro
   menu.</p>
@@ -718,7 +719,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   unassigned for successful creation of a new Turnout controlled by two output
   bits.</p>
 
-  <h3 id="L519">Turnout Control Options</h3>
+  <a name="L519" id="L519"></a><h3>Turnout Control Options</h3>
 
   <p>Turnouts (switches) may be controlled using one or two output bits. When a
   Turnout is created using the Add option in the Turnout Table, the user is
@@ -790,7 +791,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   "1" being sent. This causes the hardware to act with the opposite
   polarity.</p>
 
-  <h2 id="L547">Creating a Light Output</h2>
+  <a name="L547" id="L547"></a><h2>Creating a Light Output</h2>
 
   <p>To create a Lights output, open the Lights table by selecting Tools -&gt;
   Tables -&gt; Lights in the main PanelPro menu.</p>
@@ -875,14 +876,14 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   based on information from the Hardware help pages
   by Egbert Broerse @silverailscolo July 2017 -->
 
-  <h1 id="L562">CMRInet Network Management Tools</h1>
+  <a name="L562" id="L562"></a><h1>CMRInet Network Management Tools</h1>
 
   <p>The CMRI menu contains three tools which are used to manage nodes in a
   CMRInet network. Controlling the polling of nodes, displaying the operational
   states of configured nodes, and monitoring the data message traffic on the
   network are all functions available in the tool suite.</p>
 
-  <h2 id="L568">CMRInet Network Manager</h2>
+  <a name="L568" id="L568"></a><h2>CMRInet Network Manager</h2>
 
   <p>The CMRInet Manager is selected by selecting the <strong>CMRInet
   Manager</strong> menu item from the <strong>CMRI</strong> menu in the main
@@ -898,7 +899,7 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p><img alt="" src="images/cmrinetnetworkmanager.png" width="830"
   height="580"></p>
 
-  <h2 id="L580">CMRInet Packet Monitor</h2>
+  <a name="L580" id="L580"></a><h2>CMRInet Packet Monitor</h2>
 
   <p>CMRInet protocol messages can be viewed by selecting <strong>CMRInet
   Monitor</strong> from the <strong>CMRI</strong> menu in main PanelPro window.
@@ -953,9 +954,6 @@ are used interchangeably.  The C/MRI communication protocol is referred to as
   <p><img alt="" src="images/cmrinetinit-SMINI.png" width="427"
   height="169"></p>
 
-
-  <p></p>
-
   <p>The following screen shows the node initialization message sequence for
   node 20, followed by the node coming on line and responding to polls. The
   <strong>Init</strong> message shows the node address (ua) of 20, followed by
@@ -1005,7 +1003,7 @@ height="586"></p>
   <p><img alt="" src="images/cmrinetworkpacketfilter.png" width="700"
   height="455"></p>
 
-  <h2 id="L597">CMRInet Network Metrics</h2>
+  <a name="L597" id="L597"></a><h2>CMRInet Network Metrics</h2>
 
   <p>Anytime the CMRInet is active, a network metrics collector is running in
   the background. The metrics collected are errors and performance or
@@ -1026,7 +1024,7 @@ height="586"></p>
   <p><img alt="" src="images/cmrinetworkmetrics.png" width="925"
   height="480"></p>
 
-  <h2 id="L609">Listing C/MRI Bit Assignments</h2>
+  <a name="L609" id="L609"></a><h2>Listing C/MRI Bit Assignments</h2>
 
   <p>For each node, you can view a summary list of C/MRI bits that are in use
   and those that are available.</p>
@@ -1047,7 +1045,7 @@ height="586"></p>
   <p><img alt="" src="images/listbitassignment.png" width="773"
   height="726"></p>
 
-  <h1 id="L624">Diagnostics</h2>
+  <a name="L624" id="L624"></a><h2>Diagnostics</h2>
 
   <p>JMRI supports the two automated diagnostic procedures mentioned in Chapter
   6 of Bruce Chubb's C/MRI User's Manual, Version 3.0. Diagnostics are useful
@@ -1067,7 +1065,8 @@ height="586"></p>
 
   <p>Click "Edit Node" to update, then close the pane.</p>
 
-  <h1 id="L632">CMRInet Network Connections</h1>
+  <a name="L632" id="L632"></a><h1>CMRInet Network Connections</h1>
+
   <h2>Send Command
   <img alt="" src="images/CMRISendSerialCommand.png" width="246"
           height="146" align ="right"></h2>
@@ -1077,7 +1076,7 @@ height="586"></p>
 
   <h2>Extra hints</h2>
 
-  <h3 id="L632">CMRInet Network Connections</h3>
+  <h3>CMRInet Network Connections</h3>
 
   <p>Using USB-serial adapters</p>
 
@@ -1113,7 +1112,7 @@ height="586"></p>
   selection popup menu, you may not have any operating system serial device
   drivers installed.</p>
 
-  <h3 style="margin-left:0;" id="L652">Using An Ethernet Network Connection</h3>
+  <a name="L652" id="L652"></a><h3 style="margin-left:0;">Using An Ethernet Network Connection</h3>
 
   <p>JMRI allows you to connect to C/MRI nodes through a network connection.
   JMRI communicates via the TCP/IP protocol across a network to a
@@ -1140,7 +1139,7 @@ height="586"></p>
   check the Additional Configuration Settings box and enter the port number.
   Click Save and restart the program.</p>
 
-  <h3 id="L662">Running JMRI when disconnected from your C/MRI system</h3>
+  <a name="L662" id="L662"></a><h3>Running JMRI when disconnected from your C/MRI system</h3>
 
   <p>JMRI continually polls the C/MRI hardware for status changes. If one or
   more C/MRI nodes are not responding, eventually their inputs (Sensors) are
@@ -1169,7 +1168,7 @@ height="586"></p>
   <p>When the C/MRI hardware is again available, go the JMRI Preferences,
   select "C/MRI Serial", save Preferences, quit and restart.</p>
 
-  <h3 id="L676">PanelPro Signaling Example Using C/MRI</h3>
+  <a name="L676" id="L676"></a><h3>PanelPro Signaling Example Using C/MRI</h3>
 
   <p>The following is an example of what is needed to create a simple ABS
   signaling system using an SMINI node and Control Panel Editor (CPE) in
@@ -1255,16 +1254,16 @@ height="586"></p>
   height="492"></p>
 
   <a name="documentation" id="documentation"></a>
-  <h2 id="L737">Documentation</h2>
+  <a name="L737" id="L737"></a><h2>Documentation</h2>
 
-  <h2 id="L739">JMRI Help</h2>
+  <a name="L739" id="L739"></a><h2>JMRI Help</h2>
   <ul>
     <li><a href="Signals.shtml">C/MRI signals</a></li>
   </ul>
 
-  <h2 id="L746">Third Party info</h2>
+  <a name="L746" id="L746"></a><h2>Third Party info</h2>
 
-  <h2 id="L145">Supported Hardware</h2>
+  <a name="L145" id="L145"></a><h2>Supported Hardware</h2>
       <ul>
         <li>Chubb C/MRI USIC</li>
         <li>Chubb C/MRI SMINI</li>
@@ -1283,4 +1282,9 @@ height="586"></p>
     <li><a href="http://www.modelrailroadcontrolsystems.com/">Model Railroad
       Control Systems (MRCS)</a></li>
   </ul>
-  
+
+    <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+</body>
+</html>

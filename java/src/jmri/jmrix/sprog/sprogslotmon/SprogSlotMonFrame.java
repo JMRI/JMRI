@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableRowSorter;
-import jmri.jmrix.sprog.SprogConstants;
+import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a command station slot manager.
- * <P>
+ * <p>
  * May-17 Modified to a SprogListener to handle status replies.
- * 
+ * <p>
  * Jan-18 Moved status request generation here, based on a timer.
  *
  * @author	Bob Jacobsen Copyright (C) 2001 
@@ -61,7 +61,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         tc = memo.getSprogTrafficController();
         tc.addSprogListener(this);
         
-        slotModel = new SprogSlotMonDataModel(SprogConstants.MAX_SLOTS, 8,_memo);
+        slotModel = new SprogSlotMonDataModel(SprogSlotMonDataModel.getSlotCount(), 8,_memo);
 
         slotTable = new JTable(slotModel);
         slotTable.setRowSorter(new TableRowSorter<>(slotModel));
@@ -232,6 +232,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogList
         slotModel = null;
         slotTable = null;
         slotScroll = null;
+        tc.removeSprogListener(this);
         super.dispose();
     }
 

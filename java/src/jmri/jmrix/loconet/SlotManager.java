@@ -50,7 +50,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Time to wait after programming operation complete on LocoNet
      * before reporting completion and hence starting next operation
      */
-    int postProgDelay = 100;
+    static public int postProgDelay = 100; // this is public to allow changes via script
 
     /**
      * Constructor
@@ -1462,7 +1462,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // schedule next read if needed
         if (nextReadSlot < 127) {
-            javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+            javax.swing.Timer t = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     readNextSlot();
@@ -1532,6 +1532,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return adaptermemo.getSystemPrefix();
     }
 
+    boolean transpondingAvailable = false;
+    public void setTranspondingAvailable(boolean val) { transpondingAvailable = val; }
+    public boolean getTranspondingAvailable() { return transpondingAvailable; }
+    
     /**
      * Returns the memo
      * <p>

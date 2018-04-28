@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Randall Wood
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonPowerHttpService extends JsonHttpService {
 
@@ -47,10 +47,10 @@ public class JsonPowerHttpService extends JsonHttpService {
                 for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
                     if (pm.getUserName().equals(name)) {
                         manager = pm;
-                        data.put(NAME, name);
                     }
                 }
             }
+            data.put(NAME, manager.getUserName());
             switch (manager.getPower()) {
                 case PowerManager.OFF:
                     data.put(STATE, OFF);
@@ -114,5 +114,18 @@ public class JsonPowerHttpService extends JsonHttpService {
             root.add(this.doGet(type, manager.getUserName(), locale));
         }
         return root;
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case POWER:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/power/power-server.json",
+                        "jmri/server/json/power/power-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

@@ -211,14 +211,14 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             wrTimeoutCount++;    // should not happen
         } else if (m.getElement(3) == 'R' && m.getElement(4) == 'C') {
             if (mNeedAdditionalPollPacket) {
-//    log.warn("Timeout of poll message, node = "+curSerialNodeIndex+" beg addr = "+mSavedPollAddress);
+                // log.warn("Timeout of poll message, node = {} beg addr = {}", curSerialNodeIndex, mSavedPollAddress);
                 getNode(curSerialNodeIndex).handleTimeout(m, l);
             } else {
-//    log.warn("Timeout of poll message, node = "+(curSerialNodeIndex-1)+" beg addr = "+mSavedPollAddress);
+                // log.warn("Timeout of poll message, node = {} beg addr = {}", (curSerialNodeIndex-1), mSavedPollAddress);
                 getNode(curSerialNodeIndex - 1).handleTimeout(m, l);
             }
         } else {
-            log.error("Timeout of unknown message - " + m.toString());
+            log.error("Timeout of unknown message - {}", m.toString());
         }
     }
 
@@ -277,7 +277,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     @Override
-    protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
+    public void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         boolean first = true;
         for (i = 0; i < msg.maxSize() - 1; i++) {
@@ -285,15 +285,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             msg.setElement(i, char1 & 0xFF);
             if (first) {
                 first = false;
-                if (log.isDebugEnabled()) {
-                    log.debug("start message with " + char1);
-                }
+                log.debug("start message with {}", char1);
             }
-            if (char1 == 0x03) {  // normal message
+            if (char1 == 0x03) { // normal message
                 // get checksum bytes and end
-                if (log.isDebugEnabled()) {
-                    log.debug("ETX ends message");
-                }
+                log.debug("ETX ends message");
                 char1 = readByteProtected(istream);
                 msg.setElement(i + 1, char1 & 0xFF);
                 char1 = readByteProtected(istream);
@@ -302,9 +298,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             }
             if (char1 == 0x06) { // ACK OK
                 // get station, command and end
-                if (log.isDebugEnabled()) {
-                    log.debug("ACK ends message");
-                }
+                log.debug("ACK ends message");
                 char1 = readByteProtected(istream);  // byte 2
                 msg.setElement(++i, char1 & 0xFF);
                 char1 = readByteProtected(istream);  // byte 3
@@ -317,9 +311,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             }
             if (char1 == 0x15) { // NAK error
                 // get station, command, error bytes and end
-                if (log.isDebugEnabled()) {
-                    log.debug("NAK ends message");
-                }
+                log.debug("NAK ends message");
                 char1 = readByteProtected(istream);  // byte 2
                 msg.setElement(++i, char1 & 0xFF);
                 char1 = readByteProtected(istream);  // byte 3

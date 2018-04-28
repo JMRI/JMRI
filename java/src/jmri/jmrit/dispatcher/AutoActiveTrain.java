@@ -1042,7 +1042,13 @@ public class AutoActiveTrain implements ThrottleListener {
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
                 if (_previousAllocatedSection != null) {
-                    Block tBlock = _previousAllocatedSection.getSection().getLastBlock();
+                    Block tBlock = null;
+                    // just because current section has one block does not mean the previous one did.
+                    if (_previousAllocatedSection.getSection().getNumBlocks() == 1) {
+                       tBlock = _previousAllocatedSection.getSection().getLastBlock();
+                    } else {
+                       tBlock = _previousAllocatedSection.getSection().getExitBlock();
+                    }
                     if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
                         _stoppingBlock = tBlock;
                         setStopByBlockOccupancy();
@@ -1131,7 +1137,9 @@ public class AutoActiveTrain implements ThrottleListener {
             // train will fit, but no way to stop it reliably
             setStopNow();
         }
-        if (task > NO_TASK) {
+        // even if no task is required it must be run if stopping by SpeedProfile
+        // as clean needs to be done when speed goes to zero
+        if (task > NO_TASK || _stoppingUsingSpeedProfile) {
             Runnable waitForStop = new WaitForTrainToStop(task);
             Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
             tWait.start();
@@ -1139,10 +1147,12 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     protected synchronized void executeStopTasks(int task) {
-        if (task <= 0) {
-            return;
-        }
+        // clean up stopping
+        cancelStopInCurrentSection();
         switch (task) {
+            case NO_TASK:
+                // clean up stop
+                break;
             case END_REVERSAL:
                 /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails
                 to stop the loco in the correct block
@@ -1198,7 +1208,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
                 break;
             default:
-                log.error("Request to execute unknown stop train task - {}", task);
+                log.debug("[{}]Request to execute BEGINNING_RESET cancelled", _activeTrain.getActiveTrainName());
                 break;
         }
     }
@@ -1251,11 +1261,10 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             _targetSpeed = speed * _speedFactor;
         } else if (useSpeedProfile && _stopBySpeedProfile) {
-            _targetSpeed = _speedRatio[speedState];
+            // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
             _autoEngineer.slowToStop(true);
         } else {
-            _targetSpeed = _speedRatio[speedState];
             _autoEngineer.setHalt(true);
         }
     }
@@ -1589,6 +1598,8 @@ public class AutoActiveTrain implements ThrottleListener {
             _throttle.setSpeedSetting(_currentSpeed);
             // this is the running loop, which adjusts speeds, including stop
             while (!_abort) {
+                // always get current speed
+                // _currentSpeed = _throttle.getSpeedSetting();
                 if (_halt && !_halted) {
                     if (_speedProfileStoppingIsRunning) {
                         re.getSpeedProfile().cancelSpeedChange();
@@ -1596,18 +1607,21 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     _throttle.setSpeedSetting(0.0f);
                     _currentSpeed = 0.0f;
+                    _targetSpeed = 0.0f;
                     _halted = true;
                 } else if (_slowToStop) {
+                    // this only sets to speed zero, stop
                     if (useSpeedProfile) {
                         re.getSpeedProfile().setExtraInitialDelay(1500f);
-                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, _targetSpeed,
+                        re.getSpeedProfile().changeLocoSpeed(_throttle, _currentBlock, 0,
                                 _stopBySpeedProfileAdjust);
                         _speedProfileStoppingIsRunning = true;
+                        _targetSpeed = 0.0f;
                     } else {
-                        if (_currentSpeed <= _targetSpeed) {
-                            _halted = true;
-                            _slowToStop = false;
-                        }
+                        _throttle.setSpeedSetting(0.0f);
+                        _currentSpeed = 0.0f;
+                        _targetSpeed = 0.0f;
+                        _halted = true;
                     }
                 } else if (!_halt) {
                     // check for cancel speed profile

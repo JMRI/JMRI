@@ -23,8 +23,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -41,7 +41,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.jmrit.catalog.ImageIndexEditor;
+import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -94,9 +94,9 @@ public class SwitchboardEditor extends Editor {
     private int rangeMin = 1;
     private int rangeMax = 24;
     private int _range = rangeMax - rangeMin;
-    private JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
-    private JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
-    private JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
+    private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
+    private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
+    private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
     private TargetPane switchboardLayeredPane; // JLayeredPane
     static final String TURNOUT = Bundle.getMessage("BeanNameTurnout");
     static final String SENSOR = Bundle.getMessage("BeanNameSensor");
@@ -115,8 +115,8 @@ public class SwitchboardEditor extends Editor {
     private final List<String> beanManuPrefixes = new ArrayList<>();
     private JComboBox<String> beanManuNames;
     private TitledBorder border;
-    private String interact = Bundle.getMessage("SwitchboardInteractHint");
-    private String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
+    private final String interact = Bundle.getMessage("SwitchboardInteractHint");
+    private final String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
 
     // editor items (adapted from LayoutEditor toolbar)
     private JPanel editToolBarPanel = null;
@@ -124,7 +124,7 @@ public class SwitchboardEditor extends Editor {
     private JPanel editorContainer = null;
     private Color defaultTextColor = Color.BLACK;
     private boolean _hideUnconnected = false;
-    private JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
+    private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
     // saved state of options when panel was loaded or created
     private transient boolean savedEditMode = true;
     private transient boolean savedControlLayout = true; // menu option to turn this off
@@ -652,7 +652,7 @@ public class SwitchboardEditor extends Editor {
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> {
-            InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
+            InstanceManager.getDefault(DefaultCatalogTreeManager.class).storeImageIndex();
         });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
@@ -667,7 +667,7 @@ public class SwitchboardEditor extends Editor {
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
-                dispose(true);
+                dispose();
             }
         });
         _fileMenu.addSeparator();

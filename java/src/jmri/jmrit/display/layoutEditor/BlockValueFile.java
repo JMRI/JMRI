@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import jmri.BasicRosterEntry;
 import jmri.Block;
 import jmri.BlockManager;
@@ -16,6 +17,8 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
+import jmri.PowerManager;
+import jmri.JmriException;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -71,47 +74,77 @@ public class BlockValueFile extends XmlFile {
                 if (blockvalues != null) {
                     // there are values defined, read and set block values if Block exists.
                     List<Element> blockList = blockvalues.getChildren("block");
-                    for (int i = 0; i < blockList.size(); i++) {
-                        if ((blockList.get(i)).getAttribute("systemname") == null) {
-                            log.warn("unexpected null in systemName "
-                                    + blockList.get(i) + " "
-                                    + blockList.get(i).getAttributes());
-                            break;
+                    // check if all powermanagers are turned on, if they are, we should expect
+                    // blocks with values to be occupied
+                    boolean allPoweredUp = true;
+                    for (PowerManager pm : jmri.InstanceManager.getList(PowerManager.class)) {
+                        try {
+                            if (pm.getPower() != jmri.PowerManager.ON) {
+                                allPoweredUp = false;
+                            }
+                        } catch (JmriException e) {
+                            allPoweredUp = false;
                         }
-                        String sysName = blockList.get(i).
-                                getAttribute("systemname").getValue();
-                        // get Block - ignore entry if block not found
-                        Block b = blockManager.getBySystemName(sysName);
-                        if (b != null) {
-                            // Block was found, set its value
-                            Object v = blockList.get(i).
-                                    getAttribute("value").getValue();
-                            if (blockList.get(i).getAttribute("valueClass") != null) {
-                                if (blockList.get(i).getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")) {
-                                    RosterEntry re = Roster.getDefault().getEntryForId(((String) v));
-                                    if (re != null) {
-                                        v = re;
+                    }
+                    List<String> passes = new ArrayList<>();
+                    passes.add("set");
+                    if (allPoweredUp) {
+                        // perform two passes, one to check blocks with values are occupied, the second to
+                        // set values
+                        passes.add(0, "check");
+                    }
+                    for (String pass : passes) {
+                        for (int i = 0; i < blockList.size(); i++) {
+                            if ((blockList.get(i)).getAttribute("systemname") == null) {
+                                log.warn("unexpected null in systemName "
+                                        + blockList.get(i) + " "
+                                        + blockList.get(i).getAttributes());
+                                break;
+                            }
+                            String sysName = blockList.get(i).getAttribute("systemname").getValue();
+                            // get Block - ignore entry if block not found
+                            Block b = blockManager.getBySystemName(sysName);
+                            if (b != null) {
+                                // Block was found
+                                if (pass.equals("check") && b.getState() != Block.OCCUPIED) {
+                                    // we have a recorded value for an empty block, the blockvalues file
+                                    // must be out of date, bail out before we set any values
+                                    log.error("block {} is not occupied but has a saved value, not setting saved block values", b.getDisplayName());
+                                    return;
+                                }
+                                if (pass.equals("set")) {
+                                    Object v = blockList.get(i).getAttribute("value").getValue();
+                                    if (blockList.get(i).getAttribute("valueClass") != null) {
+                                        if (blockList.get(i).getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")) {
+                                            RosterEntry re = Roster.getDefault().getEntryForId(((String) v));
+                                            if (re != null) {
+                                                v = re;
+                                            }
+                                        }
                                     }
+                                    b.setValue(v);
+                                }
+                                if (pass.equals("set")) {
+                                    // set direction if there is one
+                                    int dd = Path.NONE;
+                                    Attribute a = blockList.get(i).getAttribute("dir");
+                                    if (a != null) {
+                                        try {
+                                            dd = a.getIntValue();
+                                        } catch (DataConversionException e) {
+                                            log.error("failed to convert direction attribute");
+                                        }
+                                    }
+                                    b.setDirection(dd);
                                 }
                             }
-                            b.setValue(v);
-                            // set direction if there is one
-                            int dd = Path.NONE;
-                            Attribute a = blockList.get(i).getAttribute("dir");
-                            if (a != null) {
-                                try {
-                                    dd = a.getIntValue();
-                                } catch (DataConversionException e) {
-                                    log.error("failed to convert direction attribute");
-                                }
-                            }
-                            b.setDirection(dd);
                         }
                     }
                 }
             }
         }
     }
+
 
     /*
      *  Writes out block values to a file in the user's preferences directory

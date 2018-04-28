@@ -23,6 +23,7 @@ public class LnComponentFactoryTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         LnComponentFactory t = new LnComponentFactory(memo);
         Assert.assertNotNull("exists",t);
+        memo.dispose();
     }
 
     // The minimal setup for log4J

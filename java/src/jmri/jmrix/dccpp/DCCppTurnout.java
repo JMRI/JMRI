@@ -256,7 +256,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
 
         switch (getFeedbackMode()) {
@@ -295,10 +295,10 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         /* If commanded state does not equal known state, we are 
          going to check to see if one of the following conditions 
          applies:
-         1) The recieved message is a feedback message for a turnout
+         1) The received message is a feedback message for a turnout
          and one of the two addresses to which it applies is our 
          address
-         2) We recieve an "OK" message, indicating the command was 
+         2) We receive an "OK" message, indicating the command was
          successfully sent
            
          If either of these two cases occur, we trigger an off message
@@ -325,7 +325,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      *  <P> 
      *  After we send a request to operate a turnout, We ask the command 
      *  station to stop sending information to the stationary decoder
-     *  when the either a feedback message or an "OK" message is recieved.
+     *  when the either a feedback message or an "OK" message is received.
      *
      *  @param l an {@link DCCppReply} message
      *

@@ -31,6 +31,7 @@ public class ClockItemPanel extends IconItemPanel {
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
 
+    @Override
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -44,8 +45,12 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        _iconPanel = new ImagePanel();
-        updateBackgrounds(); // create array of backgrounds
+        if (_iconPanel == null) {
+            _iconPanel = new ImagePanel();            
+            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        } else {
+            _iconPanel.removeAll();
+        }
 
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -72,12 +77,7 @@ public class ClockItemPanel extends IconItemPanel {
             }
             _iconPanel.add(panel);
         }
-        add(_iconPanel, 1);
-    }
-
-    @Override
-    public void initButtonPanel() {
-        add(makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame));
+        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
     }
 
     public class ClockDragJLabel extends DragJLabel {

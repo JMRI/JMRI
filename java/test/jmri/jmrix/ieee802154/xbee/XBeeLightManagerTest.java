@@ -31,11 +31,21 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertNotNull("exists", l);
     }
 
+    @Test
+    @Override
+    public void testProvideName() {
+        // create
+        Light t = l.provide("" + getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
     @Override
     @Test
     public void testDefaultSystemName() {
         // create
-        Light t = l.provideLight("ABCL2:" + getNumToTest1());
+        Light t = l.provideLight(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -44,7 +54,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Override
     @Test
     public void testUpperLower() {
-        Light t = l.provideLight("ABCL2:" + getNumToTest2());
+        Light t = l.provideLight(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }

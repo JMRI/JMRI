@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the SerialTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005, 2007, 2008
+ * @author Bob Jacobsen Copyright 2005, 2007, 2008
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -178,7 +178,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Before
     public  void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new SerialTrafficController();
+        SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
+        tc = new SerialTrafficController(memo);
     }
 
     @Override

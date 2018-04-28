@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of the Roster contents.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -134,4 +134,5 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintRosterAction.class);
+
 }

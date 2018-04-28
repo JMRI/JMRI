@@ -79,7 +79,7 @@
 		   <td>Limited to 8 Locomotives</td>
 			<td>Allows any address but
 		       00 to be used.</td>
-		<tr>
+		</tr>
 		</table>
 		
 		<p>
@@ -285,8 +285,10 @@
 		<li>in DecoderPro: in the Actions menu</li>
 		<li>in PanelPro: in the Tools menu</li>
 	</ul>
-	When you first open the Consist Tool, you will see a screen similar to the following:
+
+	<p>When you first open the Consist Tool, you will see a screen similar to the following:
 	</p>
+
 	<img src="images/ConsistTool.png" alt="Blank Consist Tool"
 		 height="251" width="725"/>
 	<p>
@@ -387,6 +389,7 @@
 	</p>
 	<img src="images/ConsistTool-SelectConsist.png" alt="Select a Consist"
 		 height="83" width="353"/>
+
 	<!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->

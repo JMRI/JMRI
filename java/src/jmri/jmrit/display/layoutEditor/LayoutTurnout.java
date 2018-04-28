@@ -1530,6 +1530,7 @@ public class LayoutTurnout extends LayoutTrack {
                     && ((block == blockB) || (block == blockC) || (block == blockD))) {
                 block.decrementUse();
             }
+            setTrackSegmentBlocks();
         }
     }
 
@@ -1558,6 +1559,7 @@ public class LayoutTurnout extends LayoutTrack {
                         && ((blockB == block) || (blockB == blockC) || (blockB == blockD))) {
                     blockB.decrementUse();
                 }
+                setTrackSegmentBlocks();
             }
         } else {
             log.error("Attempt to set block B, but not a crossover");
@@ -1589,6 +1591,7 @@ public class LayoutTurnout extends LayoutTrack {
                         && ((blockC == block) || (blockC == blockB) || (blockC == blockD))) {
                     blockC.decrementUse();
                 }
+                setTrackSegmentBlocks();
             }
         } else {
             log.error("Attempt to set block C, but not a crossover");
@@ -1620,6 +1623,7 @@ public class LayoutTurnout extends LayoutTrack {
                         && ((blockD == block) || (blockD == blockB) || (blockD == blockC))) {
                     blockD.decrementUse();
                 }
+                setTrackSegmentBlocks();
             }
         } else {
             log.error("Attempt to set block D, but not a crossover");
@@ -1663,6 +1667,110 @@ public class LayoutTurnout extends LayoutTrack {
             blockDName = name;
         } else {
             log.error("Attempt to set block D name ('{}') on Layout Turnout {}, but not a crossover or slip", name, getName());
+        }
+    }
+
+    /**
+     * Check each connection point and update the block value for very short track segments.
+     * @since 4.11.6
+     */
+    void setTrackSegmentBlocks() {
+        setTrackSegmentBlock(TURNOUT_A, false);
+        setTrackSegmentBlock(TURNOUT_B, false);
+        setTrackSegmentBlock(TURNOUT_C, false);
+        if (getTurnoutType() > WYE_TURNOUT) {
+            setTrackSegmentBlock(TURNOUT_D, false);
+        }
+    }
+
+    /**
+     * Update the block for a track segment that provides a short connection
+     * between a turnout and another object, normally another turnout.
+     * These are hard to see and are frequently missed.
+     * <p>
+     * Skip block changes if signal heads, masts or sensors have been assigned.
+     * Only track segments with a length less than the turnout circle radius will be changed.
+     * @since 4.11.6
+     * @param pointType The point type which indicates which turnout connection.
+     * @param isAutomatic True for the automatically generated track segment created
+     * by the drag-n-drop process.  False for existing connections which require
+     * a track segment length calculation.
+     */
+    void setTrackSegmentBlock(int pointType, boolean isAutomatic) {
+        TrackSegment trkSeg;
+        Point2D pointCoord;
+        LayoutBlock currBlk = block;
+        boolean xOver = getTurnoutType() > WYE_TURNOUT && getTurnoutType() < SINGLE_SLIP;
+        switch (pointType) {
+            case TURNOUT_A:
+            case SLIP_A:
+                if (signalA1HeadNamed != null) return;
+                if (signalA2HeadNamed != null) return;
+                if (signalA3HeadNamed != null) return;
+                if (getSignalAMast() != null) return;
+                if (getSensorA() != null) return;
+                trkSeg = (TrackSegment) connectA;
+                pointCoord = getCoordsA();
+                break;
+            case TURNOUT_B:
+            case SLIP_B:
+                if (signalB1HeadNamed != null) return;
+                if (signalB2HeadNamed != null) return;
+                if (getSignalBMast() != null) return;
+                if (getSensorB() != null) return;
+                trkSeg = (TrackSegment) connectB;
+                pointCoord = getCoordsB();
+                if (xOver) {
+                    currBlk = blockB != null ? blockB : block;
+                }
+                break;
+            case TURNOUT_C:
+            case SLIP_C:
+                if (signalC1HeadNamed != null) return;
+                if (signalC2HeadNamed != null) return;
+                if (getSignalCMast() != null) return;
+                if (getSensorC() != null) return;
+                trkSeg = (TrackSegment) connectC;
+                pointCoord = getCoordsC();
+                if (xOver) {
+                    currBlk = blockC != null ? blockC : block;
+                }
+                break;
+            case TURNOUT_D:
+            case SLIP_D:
+                if (signalD1HeadNamed != null) return;
+                if (signalD2HeadNamed != null) return;
+                if (getSignalDMast() != null) return;
+                if (getSensorD() != null) return;
+                trkSeg = (TrackSegment) connectD;
+                pointCoord = getCoordsD();
+                if (xOver) {
+                    currBlk = blockD != null ? blockD : block;
+                }
+                break;
+            default:
+                log.error("setTrackSegmentBlock: Invalid pointType: {}", pointType);
+                return;
+        }
+        if (trkSeg != null) {
+            double chkSize = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double segLength = 0;
+            if (!isAutomatic) {
+                Point2D segCenter = trkSeg.getCoordsCenter();
+                segLength = MathUtil.distance(pointCoord, segCenter) * 2;
+            }
+            if (segLength < chkSize) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Set block:");
+                    log.debug("    seg: {}", trkSeg);
+                    log.debug("    cor: {}", pointCoord);
+                    log.debug("    blk: {}", (currBlk == null) ? "null" : currBlk.getDisplayName());
+                    log.debug("    len: {}", segLength);
+                }
+
+                trkSeg.setLayoutBlock(currBlk);
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            }
         }
     }
 
@@ -1791,12 +1899,14 @@ public class LayoutTurnout extends LayoutTrack {
         double distance, minDistance = POSITIVE_INFINITY;
 
         // check center coordinates
-        p = getCoordsCenter();
-        distance = MathUtil.distance(p, hitPoint);
-        if (distance < minDistance) {
-            minDistance = distance;
-            minPoint = p;
-            result = TURNOUT_CENTER;
+        if (!requireUnconnected) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = TURNOUT_CENTER;
+            }
         }
 
         //check the A connection point
@@ -1822,7 +1932,7 @@ public class LayoutTurnout extends LayoutTrack {
         }
 
         //check the C connection point
-        if (!requireUnconnected || (getConnectB() == null)) {
+        if (!requireUnconnected || (getConnectC() == null)) {
             p = getCoordsC();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
@@ -3334,7 +3444,6 @@ public class LayoutTurnout extends LayoutTrack {
 
         // Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
         // Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
-
         Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
         Point2D pAP = MathUtil.subtract(pM, vDisAP);
         Point2D pAPR = MathUtil.add(pAP, vAMo);
@@ -3971,25 +4080,26 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected void drawUnconnected(Graphics2D g2
-    ) {
-        if (getConnectA() == null) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+        if (((specificType == NONE) || (specificType == TURNOUT_A))
+                && (getConnectA() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
         }
 
-        if (getConnectB() == null) {
+        if (((specificType == NONE) || (specificType == TURNOUT_B))
+                && (getConnectB() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
         }
 
-        if (getConnectC() == null) {
+        if (((specificType == NONE) || (specificType == TURNOUT_C))
+                && (getConnectC() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
         }
         if ((getTurnoutType() == DOUBLE_XOVER)
                 || (getTurnoutType() == RH_XOVER)
-                || (getTurnoutType() == LH_XOVER)
-                || (getTurnoutType() == SINGLE_SLIP)
-                || (getTurnoutType() == DOUBLE_SLIP)) {
-            if (getConnectD() == null) {
+                || (getTurnoutType() == LH_XOVER)) {
+            if (((specificType == NONE) || (specificType == TURNOUT_D))
+                    && (getConnectD() == null)) {
                 g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
             }
         }

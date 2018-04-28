@@ -38,7 +38,7 @@ public class ConditionalTreeEditTest {
         Assert.assertNotNull(jto);
 
         // Create a new conditional, select the name field and give it a name
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonAdd")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("AddButtonText")).push();  // NOI18N
         JTextFieldOperator cdlName = new JTextFieldOperator(editFrame, 1);
         cdlName.clickMouse();
         cdlName.setText("IX102 Conditional 2");  // NOI18N
@@ -49,7 +49,7 @@ public class ConditionalTreeEditTest {
         jto.selectRow(3);
 
         // Add a sensor Variable
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonAdd")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("AddButtonText")).push();  // NOI18N
         new JComboBoxOperator(editFrame, 0).selectItem(Bundle.getMessage("BeanNameSensor"));  // NOI18N
         new JTextFieldOperator(editFrame, 1).setText("Sensor 2");  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
@@ -57,7 +57,7 @@ public class ConditionalTreeEditTest {
         jto.selectRow(7);
 
         // Add a turnout Action
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonAdd")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("AddButtonText")).push();  // NOI18N
         new JComboBoxOperator(editFrame, 0).selectItem(Bundle.getMessage("BeanNameTurnout"));  // NOI18N
         new JTextFieldOperator(editFrame, 1).setText("Turnout 2");  // NOI18N
         new JComboBoxOperator(editFrame, 1).selectItem(Bundle.getMessage("ActionSetTurnout"));  // NOI18N
@@ -65,7 +65,7 @@ public class ConditionalTreeEditTest {
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         // Add a sensor Action
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonAdd")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("AddButtonText")).push();  // NOI18N
         new JComboBoxOperator(editFrame, 0).selectItem(Bundle.getMessage("BeanNameSensor"));  // NOI18N
         new JTextFieldOperator(editFrame, 1).setText("Sensor 3");  // NOI18N
         new JComboBoxOperator(editFrame, 1).selectItem(Bundle.getMessage("ActionSetSensor"));  // NOI18N
@@ -129,7 +129,10 @@ public class ConditionalTreeEditTest {
         new JComboBoxOperator(editFrame, 2).selectItem("Sensor 4");  // NOI18N
 
         // Cancel and end the edit
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        JButtonOperator jbo = new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel"));  // NOI18N
+        if (jbo.isEnabled()) {
+            jbo.push();
+        }
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
 
@@ -145,4 +148,6 @@ public class ConditionalTreeEditTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalTreeEditTest.class);
 }

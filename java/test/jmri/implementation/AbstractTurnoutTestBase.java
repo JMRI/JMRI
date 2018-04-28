@@ -29,13 +29,16 @@ public abstract class AbstractTurnoutTestBase {
     @Before
     abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
-    abstract public int numListeners();	// return number of listeners registered with the TrafficController
+    /** 
+     * @return number of listeners registered with the TrafficController by the object under test
+     */
+    abstract public int numListeners();
 
     abstract public void checkThrownMsgSent() throws InterruptedException;
 
     abstract public void checkClosedMsgSent() throws InterruptedException;
 
-    protected Turnout t = null;	// holds objects under test
+    protected Turnout t = null;	// holds objects under test; set by setUp()
 
     static protected boolean listenerResult = false;
 
@@ -82,8 +85,7 @@ public abstract class AbstractTurnoutTestBase {
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController
-        //is deferred to after first use
+        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }

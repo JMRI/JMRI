@@ -492,7 +492,7 @@ public class DccConsist implements Consist, ProgListener {
     // include the programmingOpReply() function
     @Override
     public void programmingOpReply(int value, int status) {
-        log.debug("Programming Operation reply recieved, value is {}, status is {}", value, status);
+        log.debug("Programming Operation reply received, value is {}, status is {}", value, status);
         notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.OPERATION_SUCCESS);
     }
 

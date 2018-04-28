@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Sound pane for Märklin mSD decoders                                    -->
+
+<!-- v1: creation from generic SoundPane
+        (2018-03-17 Alain Le Marchand)                                      -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Sound</name>
+  <name xml:lang="ca">So</name>
+  <name xml:lang="cs">Zvuk</name>
+  <name xml:lang="da">Lyd</name>
+  <name xml:lang="de">Sound</name>
+  <name xml:lang="fr">Sons</name>
+  <name xml:lang="it">Suoni</name>
+  <name xml:lang="nl">Geluid</name>
+  <column>
+    <display item="Sound Group 1 Control" format="checkbox"/>
+    <row>
+      <display item="Sound Group 1 Option 1" layout="above" label=""/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Sound Group 1 Option 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Sound Group 1 Option 2" layout="above" label=""/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Sound Group 1 Option 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Sound Group 1 Option 3" layout="above" label=""/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Sound Group 1 Option 3" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Sound Group 1 Option 4" layout="above" label=""/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Sound Group 1 Option 4" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Sound Group 1 Option 5" layout="above" label=""/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Sound Group 1 Option 5" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Multi-station Announcements</text>
+      <text xml:lang="de">Multibahnhofsansage</text>
+      <text xml:lang="fr">Annonces multi-gares</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Sound Option 1"/>
+    <display item="Sound Option 2" format="checkbox"/>
+    <display item="Sound Option 3" format="checkbox"/>
+    <display item="Sound Option 4"/>
+    <display item="Sound Option 5"/>
+    <display item="Sound Option 6"/>
+    <display item="Sound Option 7"/>
+    <display item="Sound Option 8"/>
+  </column>
+</pane>

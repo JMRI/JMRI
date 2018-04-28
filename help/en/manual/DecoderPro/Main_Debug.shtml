@@ -128,7 +128,8 @@
       for DecoderPro&#174;</p><img src="images/separator.png" alt=
       "sep" height="4" width="340">
 
-      <p name="ValidateXML"><strong>Validate XML File</strong></p>
+      <p><a id="ValidateXML" name="ValidateXML"></a><strong>Validate
+        XML File</strong></p>
 
       <blockquote>
         <p>Opens the operating systems <strong>Open</strong>
@@ -209,6 +210,17 @@
 
       <div style="margin-left: 2em">
         <ul>
+          <li><a href="Main_VSD.shtml"><strong>VSDecoder
+          </strong></a></li>
+        </ul>
+      </div>
+
+      <div style="margin-left: 120px;">
+        Main page and introduction
+      </div>
+
+      <div style="margin-left: 2em">
+        <ul>
           <li><a href="VSD_Manager.shtml"><strong>VSDecoder
           Manager</strong></a></li>
         </ul>
@@ -239,6 +251,13 @@
 
       <div style="margin-left: 120px;">
         Manage VSD Preferences elements.
+      </div>
+
+      <div style="margin-left: 2em">
+        <ul>
+          <li><a href="VSD_File_and_Config.shtml"><strong>VSD File
+          and Configuration</strong></a></li>
+        </ul>
       </div>
 
       <p><img src="images/separator.png" alt="sep" height="4"

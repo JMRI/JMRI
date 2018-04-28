@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 // Usage:
 // Steam1Sound() : constructor
-// stop() : ends extended sustain horn (plays end sound)
 // Suppressing "unused" warnings throughout. There are a dozen
 // methods, ctors and values that aren't used and don't have
 // outside access.
@@ -57,6 +56,7 @@ class Steam1Sound extends EngineSound {
     private SoundBite boiling_sound;
     private SoundBite brake_sound;
     private SoundBite pre_arrival_sound;
+    float engine_rd;
 
     // Common variables
     boolean is_looping = false;
@@ -184,6 +184,12 @@ class Steam1Sound extends EngineSound {
         // auto-start
         is_auto_start = setXMLAutoStart(e);
         log.debug("config auto-start: {}", is_auto_start);
+
+        // Optional value
+        // Allows to adjust OpenAL attenuation
+        // Sounds with distance to listener position lower than reference-distance will not have attenuation
+        engine_rd = setXMLReferenceDistance(e); // Handle reference distance
+        log.debug("engine-sound referenceDistance: {}", engine_rd);
 
         // Optional value
         // Defines how many rpms in 0.5 seconds will trigger decel actions like braking.
@@ -323,8 +329,10 @@ class Steam1Sound extends EngineSound {
             log.debug("idle sound gain: {}", idle_sound.getGain());
             idle_sound.setLooped(true);
             idle_sound.setFadeTimes(500, 500);
+            idle_sound.setReferenceDistance(setXMLReferenceDistance(el)); // Handle reference distance
+            log.debug("idle-sound reference distance: {}", idle_sound.getReferenceDistance());
             trigger_sounds.put("idle", idle_sound);
-            log.debug("trigger sound idle: {}", trigger_sounds.get("idle"));
+            log.debug("trigger idle sound: {}", trigger_sounds.get("idle"));
         }
 
         // Get the boiling sound.
@@ -337,8 +345,10 @@ class Steam1Sound extends EngineSound {
             log.debug("boiling-sound gain: {}", boiling_sound.getGain());
             boiling_sound.setLooped(true);
             boiling_sound.setFadeTimes(500, 500);
+            boiling_sound.setReferenceDistance(setXMLReferenceDistance(el));
+            log.debug("boiling-sound reference distance: {}", boiling_sound.getReferenceDistance());
             trigger_sounds.put("boiling", boiling_sound);
-            log.debug("trigger boiling-sound: {}", trigger_sounds.get("boiling"));
+            log.debug("trigger boiling sound: {}", trigger_sounds.get("boiling"));
         }
 
         // Get the brake sound.
@@ -351,8 +361,10 @@ class Steam1Sound extends EngineSound {
             log.debug("brake sound gain: {}", brake_sound.getGain());
             brake_sound.setLooped(false);
             brake_sound.setFadeTimes(500, 500);
+            brake_sound.setReferenceDistance(setXMLReferenceDistance(el));
+            log.debug("brake-sound reference distance: {}", brake_sound.getReferenceDistance());
             trigger_sounds.put("brake", brake_sound);
-            log.debug("trigger sound brake: {}", trigger_sounds.get("brake"));
+            log.debug("trigger brake sound: {}", trigger_sounds.get("brake"));
         }
 
         // Get the pre-arrival sound
@@ -366,9 +378,10 @@ class Steam1Sound extends EngineSound {
             log.debug("pre-arrival sound gain: {}", pre_arrival_sound.getGain());
             pre_arrival_sound.setLooped(false);
             pre_arrival_sound.setFadeTimes(500, 500);
-            log.debug("getGain pre-arrival-sound: {}", pre_arrival_sound.getGain());
+            pre_arrival_sound.setReferenceDistance(setXMLReferenceDistance(el));
+            log.debug("pre-arrival-sound reference distance: {}", pre_arrival_sound.getReferenceDistance());
             trigger_sounds.put("pre_arrival", pre_arrival_sound);
-            log.debug("trigger sound pre_arrival: {}", trigger_sounds.get("pre_arrival"));
+            log.debug("trigger pre_arrival sound : {}", trigger_sounds.get("pre_arrival"));
         }
 
         // Kick-start the loop thread.
@@ -763,6 +776,7 @@ class Steam1Sound extends EngineSound {
             helper_notch = _parent.getNotch(1); // Helper buffers are bound to notch 1.
             _notch = _parent.getNotch(1); // Initial value.
             _parent.engine_pane.setThrottle(1); // Set EnginePane (DieselPane) notch
+            _sound.setReferenceDistance(_parent.engine_rd);
             setRpm(0);
             setRpmNominal(0);
             setupAccDec(); // Setup acceleration and deceleration factors.

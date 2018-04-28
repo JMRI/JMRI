@@ -1,49 +1,32 @@
 package jmri.server.json.throttle;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.DataOutputStream;
-import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonMockConnection;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * JsonThrottleServiceFactory tests.
  *
- * @author Randall Wood
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class JsonThrottleServiceFactoryTest {
 
-    /**
-     * Test of getTypes method, of class JsonThrottleServiceFactory.
-     */
     @Test
-    public void testGetTypes() {
-        JsonThrottleServiceFactory instance = new JsonThrottleServiceFactory();
-        String[] expResult = new String[]{JsonThrottle.THROTTLE};
-        String[] result = instance.getTypes();
-        Assert.assertArrayEquals(expResult, result);
+    public void testCTor() {
+        JsonThrottleServiceFactory t = new JsonThrottleServiceFactory();
+        Assert.assertNotNull("exists",t);
     }
 
-    /**
-     * Test of getSocketService method, of class JsonThrottleServiceFactory.
-     */
-    @Test
-    public void testGetSocketService() {
-        JsonConnection connection = new JsonMockConnection((DataOutputStream) null);
-        JsonThrottleServiceFactory instance = new JsonThrottleServiceFactory();
-        JsonThrottleSocketService result = instance.getSocketService(connection);
-        Assert.assertNotNull(result);
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    /**
-     * Test of getHttpService method, of class JsonThrottleServiceFactory.
-     */
-    @Test
-    public void testGetHttpService() {
-        JsonThrottleServiceFactory instance = new JsonThrottleServiceFactory();
-        JsonThrottleHttpService result = instance.getHttpService(new ObjectMapper());
-        Assert.assertNotNull(result);
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
