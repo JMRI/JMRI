@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -143,6 +144,9 @@ public class Track {
 
     // schedule status
     public static final String SCHEDULE_OKAY = "";
+    
+    // pickup status
+    public static final String PICKUP_OKAY = "";
 
     // pool
     protected Pool _pool = null;
@@ -1334,6 +1338,44 @@ public class Track {
 
     public boolean containsPickupId(String id) {
         return _pickupList.contains(id);
+    }
+    
+    /**
+     * Checks to see if all car types can be pulled from this track
+     * @return PICKUP_OKAY if any train can pull all car types from this track
+     */
+    public String checkPickups() {
+        String status = PICKUP_OKAY;
+        S1: for (String carType : InstanceManager.getDefault(CarTypes.class).getNames()) {
+            if (!acceptsTypeName(carType)) {
+                continue;
+            }
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
+                if (!train.acceptsTypeName(carType) || !acceptsPickupTrain(train)) {
+                    continue;
+                }
+                // does the train services this location and track?
+                Route route = train.getRoute();
+                if (route != null) {
+                    for (RouteLocation rLoc : route.getLocationsBySequenceList()) {
+                        if (rLoc.getName().equals(getLocation().getName()) &&
+                                rLoc.isPickUpAllowed() &&
+                                rLoc.getMaxCarMoves() > 0 &&
+                                !train.skipsLocation(rLoc.getId()) &&
+                                ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
+                                ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
+                                train.isLocalSwitcher())) {
+
+                            continue S1; // car type serviced by this train, try next car type
+                        }
+                    }
+                }
+            }
+            // None of the trains servicing this track can pick up car type ({0})
+            status = MessageFormat.format(Bundle.getMessage("ErrorNoTrain"), new Object[]{carType});
+            break;
+        }
+        return status;
     }
 
     /**
