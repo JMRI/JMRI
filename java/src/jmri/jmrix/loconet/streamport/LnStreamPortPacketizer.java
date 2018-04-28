@@ -2,9 +2,10 @@ package jmri.jmrix.loconet.streamport;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
+import java.util.NoSuchElementException;
+import jmri.jmrix.loconet.LnPacketizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.NoSuchElementException;
 
 /**
  * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
@@ -29,7 +30,7 @@ import java.util.NoSuchElementException;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnStreamPortPacketizer extends jmri.jmrix.loconet.LnPacketizer {
+public class LnStreamPortPacketizer extends LnPacketizer {
 
     public LnStreamPortPacketizer() {
         super();
@@ -114,7 +115,7 @@ public class LnStreamPortPacketizer extends jmri.jmrix.loconet.LnPacketizer {
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString()); // NOI18N
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
@@ -159,8 +160,8 @@ public class LnStreamPortPacketizer extends jmri.jmrix.loconet.LnPacketizer {
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnStreamPortPacketizer.class);
+
 }

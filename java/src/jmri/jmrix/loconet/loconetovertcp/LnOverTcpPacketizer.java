@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
+ * Converts Stream-based I/O over the LocoNetOverTcp system network
+ * connection to/from LocoNet messages. The "LocoNetInterface"
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortnetworkController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
@@ -59,7 +60,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     }
 
     /**
-     * Make connection to existing LnPortnetworkController object.
+     * Make connection to an existing LnPortnetworkController object.
      *
      * @param p Port networkController for connected. Save this for a later
      *          disconnect call
@@ -96,7 +97,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     class RcvHandler implements Runnable {
 
         /**
-         * Remember the LnPacketizer object
+         * Remember the LnPacketizer object.
          */
         LnOverTcpPacketizer trafficController;
 
@@ -153,8 +154,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                 /* N byte message */
 
                                 if (byte2 < 2) {
-                                    log.error("LocoNet message length invalid: " + byte2
-                                            + " opcode: " + Integer.toHexString(opCode));
+                                    log.error("LocoNet message length invalid: {} opcode: {}",
+                                            byte2, Integer.toHexString(opCode));
                                 }
                                 msg = new LocoNetMessage(byte2);
                                 break;
@@ -164,7 +165,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         msg.setOpCode(opCode);
                         msg.setElement(1, byte2);
                         int len = msg.getNumDataElements();
-                        //log.debug("len: "+len);
+                        //log.debug("len: {}", len);
 
                         for (int i = 2; i < len; i++) {
                             // check for message-blocking error
@@ -205,20 +206,20 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: " + e);
+                    log.warn("run: unexpected LocoNetMessageException: ", e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFIle: {}", e);
+                    log.debug("IOException, should only happen with HexFile: ", e);
                     log.info("End of file");
 //                    disconnectPort(networkController);
                     return;
                 } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception: " + e);
+                    log.warn("run: unexpected Exception: ", e);
                 }
             } // end of permanent loop
         }
@@ -245,8 +246,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            //Commented out as the origianl LnPortnetworkController always returned true.
-                            //if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
+                            // Commented out as the original LnPortnetworkController always returned true.
+                            // if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
                             log.debug("start write to stream");
                             StringBuffer packet = new StringBuffer(msg.length * 3 + SEND_PREFIX.length() + 2);
                             packet.append(SEND_PREFIX);

@@ -271,7 +271,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
     protected int cautionAddrSet() {
         log.info("Caution: 'Set LocoIO Address' is a broadcast operation to ALL boards on this connection"); // NOI18N
         return JOptionPane.showOptionDialog(this,
-                Bundle.getMessage("LocoioIoSetAddressWarnDialog"),
+                Bundle.getMessage("LocoIoSetAddressWarnDialog"),
                 Bundle.getMessage("WarningTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK")}, null);

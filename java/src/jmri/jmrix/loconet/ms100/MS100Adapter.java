@@ -35,7 +35,9 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
-        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"), new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
+                new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
+
     }
 
     Vector<String> portNameVector = null;

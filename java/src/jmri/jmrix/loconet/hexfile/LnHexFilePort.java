@@ -247,7 +247,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      * @return the options
      */
     public String[] validOption3() {
-        return new String[]{"Normal", "Spread", "One Only", "Both"}; // TODO I18N
+        return new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")}; // I18N
+
     }
 
     /**

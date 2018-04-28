@@ -17,8 +17,8 @@ import jmri.jmrix.loconet.LnConnectionTypeList;
  */
 public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortController {
 
-    public LnStreamPortController(LocoNetSystemConnectionMemo connectionMemo,DataInputStream in, DataOutputStream out, String pname) {
-        super(connectionMemo,in,out,pname);
+    public LnStreamPortController(LocoNetSystemConnectionMemo connectionMemo, DataInputStream in, DataOutputStream out, String pname) {
+        super(connectionMemo, in, out, pname);
         setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
@@ -73,30 +73,34 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
     protected boolean mTurnoutExtraSpace = false;
 
     /**
-     * Set config info from the command station type enum.
+     * Set config info from the Command Station type enum.
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {
             return;  // can happen while switching protocols
         }
-        log.debug("setCommandStationType: " + value); // NOI18N
+        log.debug("setCommandStationType: {}", value); // NOI18N
         commandStationType = value;
     }
 
     public void setTurnoutHandling(String value) {
-        if (value.equals("One Only") || value.equals("Both")) { // NOI18N
+        if (value.equals("One Only") || value.equals(Bundle.getMessage("HandleOneOnly"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutNoRetry = true;
         }
-        if (value.equals("Spread") || value.equals("Both")) { // NOI18N
+        log.debug("turnout no retry: {}", mTurnoutNoRetry); // NOI18N
+        if (value.equals("Spread") || value.equals(Bundle.getMessage("HandleSpread"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry); // NOI18N
-        log.debug("turnout extra space: " + mTurnoutExtraSpace); // NOI18N
+        log.debug("turnout extra space: {}", mTurnoutExtraSpace); // NOI18N
     }
 
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
     private final static Logger log = LoggerFactory.getLogger(LnStreamPortController.class);
+
 }
