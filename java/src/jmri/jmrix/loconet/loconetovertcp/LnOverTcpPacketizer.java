@@ -7,6 +7,7 @@ import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,12 +42,17 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     static final String RECEIVE_PREFIX = "RECEIVE";
     static final String SEND_PREFIX = "SEND";
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
-    public LnOverTcpPacketizer() {
-        //self = this;
+    public LnOverTcpPacketizer(LocoNetSystemConnectionMemo m) {
+        super(m);
         xmtHandler = new XmtHandler();
         rcvHandler = new RcvHandler(this);
+    }
+
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Only used during system initialization")
+    @Deprecated
+    public LnOverTcpPacketizer() {
+        this(new LocoNetSystemConnectionMemo());
     }
 
     public LnNetworkPortController networkController = null;
@@ -112,7 +118,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         public void run() {
 
             String rxLine;
-            while (true) {   // loop permanently, program close will exit
+            while (true) {  // loop permanently, program close will exit
                 try {
                     // start by looking for a complete line
                     rxLine = istream.readLine();
@@ -170,7 +176,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         for (int i = 2; i < len; i++) {
                             // check for message-blocking error
                             int b = Integer.parseInt(st.nextToken(), 16);
-                            //log.debug("char "+i+" is: "+Integer.toHexString(b));
+                            // log.debug("char {} is: {}", i, Integer.toHexString(b));
                             if ((b & 0x80) != 0) {
                                 log.warn("LocoNet message with opCode: "
                                         + Integer.toHexString(opCode)

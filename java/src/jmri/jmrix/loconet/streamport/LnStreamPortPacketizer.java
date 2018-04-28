@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,13 @@ import org.slf4j.LoggerFactory;
  */
 public class LnStreamPortPacketizer extends LnPacketizer {
 
+    public LnStreamPortPacketizer(LocoNetSystemConnectionMemo m) {
+        super(m);
+    }
+
+    @Deprecated
     public LnStreamPortPacketizer() {
-        super();
+        this(new LocoNetSystemConnectionMemo());
     }
 
     public LnStreamPortController streamController = null;
@@ -43,14 +49,13 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         if (streamController == null) {
             return false;
         }
-
         return true;
     }
 
     /**
      * Make connection to existing LnPortController object.
      *
-     * @param p Port controller for connected. Save this for a later disconnect
+     * @param p Port controller to connect to. Save this for a later disconnect
      *          call
      */
     public void connectPort(LnStreamPortController p) {

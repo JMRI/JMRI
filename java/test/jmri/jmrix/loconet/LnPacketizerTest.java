@@ -18,6 +18,7 @@ import java.io.StringBufferInputStream;
 public class LnPacketizerTest {
 
     protected LnPacketizer lnp;
+    protected LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testCtor() {
@@ -32,7 +33,6 @@ public class LnPacketizerTest {
     @Test
     @Ignore("may be causing hang on travis and appveyor")
     public void testStartThreads() {
-       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
        lnp.connectPort(new LnPortController(memo){
             @Override
             public boolean status(){
@@ -75,12 +75,14 @@ public class LnPacketizerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnPacketizer();
+        memo = new LocoNetSystemConnectionMemo();
+        lnp = new LnPacketizer(memo);
     }
 
     @After
     public void tearDown() {
         lnp = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

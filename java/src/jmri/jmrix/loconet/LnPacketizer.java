@@ -48,7 +48,6 @@ public class LnPacketizer extends LnTrafficController {
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnPacketizer() {
-        //self = this;
     }
 
     public LnPacketizer(LocoNetSystemConnectionMemo m) {

@@ -16,7 +16,8 @@ public class LnPacketizerStrictTest extends LnPacketizerTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnPacketizerStrict();
+        memo = new LocoNetSystemConnectionMemo();
+        lnp = new LnPacketizerStrict(memo);
     }
 
     @After
@@ -25,4 +26,5 @@ public class LnPacketizerStrictTest extends LnPacketizerTest {
         lnp = null;
         JUnitUtil.tearDown();
     }
+
 }

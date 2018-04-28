@@ -42,7 +42,7 @@ public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortControl
         setCommandStationType(LnCommandStationType.COMMAND_STATION_STANDALONE);
         setTurnoutHandling("");
         // connect to a packetizing traffic controller
-        LnStreamPortPacketizer packets = new LnStreamPortPacketizer();
+        LnStreamPortPacketizer packets = new LnStreamPortPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // setup memo
