@@ -4569,7 +4569,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         _turnouts.put(lt.getTurnout(), turnouts.get(i).getExpectedState());
                         lt.getTurnout().addPropertyChangeListener(this, lt.getTurnoutName(), "Layout Block Routing");
                     } else {
-                        log.error("{} has no physical turnout allocated", lt);
+                        log.error("{} has no physical turnout allocated, block = {}", lt, block.getDisplayName());
                     }
                 }
             }

@@ -1,9 +1,15 @@
-//SidingEditFrameTest.java
+
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import java.text.MessageFormat;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -14,13 +20,14 @@ import org.junit.Test;
 /**
  * Tests for the Operations Locations GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class SidingEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private LocationManager lManager = null;
     private Location l = null;
+    private Train trainA = null;
 
     @Test
     public void testAddSidingDefaults() {
@@ -31,7 +38,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Location l = lManager.getLocationByName("Test Loc C");
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create one siding tracks
@@ -58,6 +65,16 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("all directions", ALL, t.getTrainDirections());
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
+        // test error, try to create track with same name
+        enterClickAndLeave(f.addTrackButton);
+
+        // error dialogue should have appeared
+        pressDialogButton(f, MessageFormat.format(Bundle
+                .getMessage("CanNotTrack"),
+                new Object[]{Bundle
+                        .getMessage("add")}),
+                Bundle.getMessage("ButtonOK"));
+
         // kill all frames
         JUnitUtil.dispose(f);
     }
@@ -69,7 +86,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         f.trackNameTextField.setText("3rd siding track");
@@ -101,7 +118,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         f.trackNameTextField.setText("3rd siding track");
@@ -112,7 +129,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
-        JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd","3rd siding track"));
+        JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd", "3rd siding track"));
         Assert.assertNotNull(sef);
 
         // kill all frames
@@ -127,7 +144,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         }
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
-        f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents(l, null);
 
         // create three siding tracks
@@ -154,7 +171,7 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         enterClickAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
-        JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd","3rd siding track"));
+        JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd", "3rd siding track"));
         Assert.assertNotNull(sef);
 
         // kill all frames
@@ -177,6 +194,112 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         JUnitUtil.dispose(fl);
     }
 
+    @Test
+    public void testTrainServicesTrack() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't use Assume in TestCase subclasses
+        }
+        SpurEditFrame f = new SpurEditFrame();
+        f.setTitle("Test Spur Frame");
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly    
+        f.initComponents(l, null);
+        f.setSize(650, 800); // need to see save button
+
+        // create track
+        f.trackNameTextField.setText("Train test siding track");
+        f.trackLengthTextField.setText("1234");
+        enterClickAndLeave(f.addTrackButton);
+
+        // Don't allow train to service car type "Boxcar"
+        trainA.deleteTypeName("Boxcar");
+
+        // save button
+        enterClickAndLeave(f.saveTrackButton);
+        
+        // confirm no error dialogue
+        Assert.assertTrue(f.isActive());
+        
+        // specify train pickups using the exclude option
+        enterClickAndLeave(f.excludeTrainPickup);
+        enterClickAndLeave(f.saveTrackButton);
+
+        // error dialogue should have appeared
+        pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+
+        trainA.addTypeName("Boxcar");
+
+        // save button
+        enterClickAndLeave(f.saveTrackButton);
+
+        // confirm no error dialogue
+        Assert.assertTrue(f.isActive());
+
+        // disable pick ups by train
+        Route route = trainA.getRoute();
+        RouteLocation rloc = route.getLastLocationByName(l.getName());
+        rloc.setPickUpAllowed(false);
+
+        // save button
+        enterClickAndLeave(f.saveTrackButton);
+
+        // error dialogue should have appeared
+        pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+
+        // restore pick ups
+        rloc.setPickUpAllowed(true);
+
+        // deselect east, west, north check boxes
+        enterClickAndLeave(f.eastCheckBox);
+        enterClickAndLeave(f.westCheckBox);
+        enterClickAndLeave(f.northCheckBox);
+        enterClickAndLeave(f.southCheckBox);
+
+        // save button
+        enterClickAndLeave(f.saveTrackButton);
+
+        // confirm no error dialogue
+        Assert.assertTrue(f.isActive());
+
+        // Train had only one location in its route, a switcher, now make it a train with two locations
+        route.addLocation(lManager.getLocationByName("Test Loc A"));
+
+        // save button
+        enterClickAndLeave(f.saveTrackButton);
+
+        // error dialogue should have appeared
+        pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+
+        // train direction default when creating a route is north 
+        enterClickAndLeave(f.northCheckBox);
+        enterClickAndLeave(f.saveTrackButton);
+
+        // confirm no error dialogue
+        Assert.assertTrue(f.isActive());
+
+        // try 0 moves
+        rloc.setMaxCarMoves(0);
+        enterClickAndLeave(f.saveTrackButton);
+
+        // error dialogue should have appeared
+        pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+
+        // restore move count
+        rloc.setMaxCarMoves(5);
+        enterClickAndLeave(f.saveTrackButton);
+        Assert.assertTrue(f.isActive());
+
+        // try having the train skip the location
+        trainA.addTrainSkipsLocation(rloc.getId());
+
+        enterClickAndLeave(f.saveTrackButton);
+
+        // error dialogue should have appeared
+        pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
+
+        // kill all frames
+        JUnitUtil.dispose(f);
+    }
+
     private void loadLocations() {
         // create 5 locations
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
@@ -193,6 +316,16 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
 
     }
 
+    private void loadTrains() {
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        trainA = trainManager.newTrain("Test Train A");
+        // train needs to service location "l" or error message when saving track edit frame
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("Route Train A");
+        route.addLocation(l);
+        trainA.setRoute(route);
+    }
+
     // Ensure minimal setup for log4J
     @Override
     @Before
@@ -202,6 +335,8 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
         loadLocations();
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
+
+        loadTrains();
     }
 
     @Override

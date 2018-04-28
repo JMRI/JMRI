@@ -961,15 +961,15 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Train will skip the RouteLocation
      *
-     * @param locationId RouteLocation Id
+     * @param routelocationId RouteLocation Id
      */
-    public void addTrainSkipsLocation(String locationId) {
+    public void addTrainSkipsLocation(String routelocationId) {
         // insert at start of _skipLocationsList, sort later
-        if (_skipLocationsList.contains(locationId)) {
+        if (_skipLocationsList.contains(routelocationId)) {
             return;
         }
-        _skipLocationsList.add(0, locationId);
-        log.debug("train does not stop at " + locationId);
+        _skipLocationsList.add(0, routelocationId);
+        log.debug("train does not stop at " + routelocationId);
         setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1, _skipLocationsList.size());
     }
 
