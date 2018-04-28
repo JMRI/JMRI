@@ -13,8 +13,6 @@ import org.junit.Test;
  */
 public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
-    private LocoNetSystemConnectionMemo memo; 
-
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",instance);
@@ -409,7 +407,7 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
-        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         memo.setThrottleManager(new Ib1ThrottleManager(memo));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
         instance = new Ib1Throttle(memo,new LocoNetSlot(5));
@@ -419,7 +417,6 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void tearDown() {
         ((Ib1ThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class)).dispose();
-        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -106,10 +106,11 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
             return null;
         }
         // Block does not exist, create a new Block
-        r = new Block(systemName, userName);
+        String sName = systemName.toUpperCase();
+        r = new Block(sName, userName);
         // save in the maps
         register(r);
-        /*The following keeps track of the last created auto system name.
+        /*The following keeps trace of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IB:AUTO:")) {
@@ -227,15 +228,13 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      * {@inheritDoc}
      *
      * Forces upper case and trims leading and trailing whitespace.
-     * The IB prefix is added if necessary.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IB")) {
-            inputName = "IB" + inputName;
-        }
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
         return inputName.toUpperCase().trim();
     }
 
@@ -304,11 +303,11 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
         getSystemNameList().stream().forEach((sysName) -> {
             Block b = getBySystemName(sysName);
-            Object obj;
-            if (b!= null && (obj = b.getValue()) != null) {
-                if (obj instanceof RosterEntry && obj == re) {
+            Object o = b.getValue();
+            if (o != null) {
+                if (o instanceof RosterEntry && o == re) {
                     blockList.add(b);
-                } else if (obj.toString().equals(re.getId()) || obj.toString().equals(re.getDccAddress())) {
+                } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
                 }
             }

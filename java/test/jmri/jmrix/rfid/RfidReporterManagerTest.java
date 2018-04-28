@@ -33,12 +33,6 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Test
     @Override
     @Ignore("Abstract Class under test, test does not apply")
-    public void testProvideName() {
-    }
-
-    @Test
-    @Override
-    @Ignore("Abstract Class under test, test does not apply")
     public void testDefaultSystemName(){
     }
 

@@ -16,10 +16,8 @@ public class JsonSignalHead {
      */
     public static final String SIGNAL_HEADS = "signalHeads"; // NOI18N
 
-    /**
-     * Prevent instantiation, since this class only contains static values
-     */
+    // prevent documentation of constructor
     private JsonSignalHead() {
-        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
+
 }

@@ -33,9 +33,8 @@ public class JsonRoster {
     public static final String DATE_MODIFIED = "dateModified"; // NOI18N
 
     /**
-     * Prevent instantiation, since this class only contains static values
+     * Unusable constructor, made private to avoid public documentation.
      */
     private JsonRoster() {
-        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

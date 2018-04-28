@@ -41,7 +41,7 @@ public class Bundle extends jmri.jmrix.mrc.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return getBundle().handleGetMessage(key);
+        return b.handleGetMessage(key);
     }
 
     /**
@@ -58,7 +58,7 @@ public class Bundle extends jmri.jmrix.mrc.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return getBundle().handleGetMessage(key, subs);
+        return b.handleGetMessage(key, subs);
     }
 
     /**
@@ -76,7 +76,7 @@ public class Bundle extends jmri.jmrix.mrc.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return getBundle().handleGetMessage(locale, key, subs);
+        return b.handleGetMessage(locale, key, subs);
     }
 
 
@@ -88,7 +88,8 @@ public class Bundle extends jmri.jmrix.mrc.Bundle {
         return name;
     }
 
-    protected static jmri.Bundle getBundle() {
+    @Override
+    protected jmri.Bundle getBundle() {
         return b;
     }
 

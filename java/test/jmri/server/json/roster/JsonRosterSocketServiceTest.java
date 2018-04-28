@@ -28,6 +28,7 @@ public class JsonRosterSocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+
         JUnitUtil.initConfigureManager();
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
         // clear the last message (if any) from the connection
@@ -35,9 +36,7 @@ public class JsonRosterSocketServiceTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
     /**
      * Test of listen method, of class JsonRosterSocketService.

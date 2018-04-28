@@ -28,8 +28,7 @@ public class EditorScaffold extends Editor implements MouseListener, MouseMotion
 
     public EditorScaffold(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
-        setTargetPanel(null,this);
-        this.setJMenuBar(new javax.swing.JMenuBar());
+        setTargetPanel(null,null);
     }
 
     public EditorScaffold(String name) {

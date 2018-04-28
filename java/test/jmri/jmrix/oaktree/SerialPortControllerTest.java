@@ -16,12 +16,12 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       OakTreeSystemConnectionMemo memo = new OakTreeSystemConnectionMemo();
-       new SerialTrafficController(memo){
+       new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
        };
+       OakTreeSystemConnectionMemo memo = new OakTreeSystemConnectionMemo();
        apc = new SerialPortController(memo){
             @Override
             public boolean status(){

@@ -1,9 +1,10 @@
 package jmri.jmrix.direct;
 
+
 /**
  * Provide utilities for coding/decoding NMRA {@literal S&RP} DCC packets into
  * sequences to send through a standard serial port.
- * <p>
+ * <P>
  * This is strongly based on the makepckt.c file from the PacketScript 1.1.
  * package of Kenneth Rice. The original header comment from that file follows
  * here.
@@ -76,7 +77,7 @@ package jmri.jmrix.direct;
  * 73577,1653 (compuserve)
  *
  * Created 02/08/93
- *   03/05/93 Works for all 3 byte packets. Still errors for 4 byte.
+ *    03/05/93 Works for all 3 byte packets. Still errors for 4 byte.
  *   07/01/93 Renamed to makepckt.c to be nice to dos users.
  *   10/23/93 Added backtracking and max length.
  * </pre>
@@ -130,14 +131,14 @@ public class MakePacket {
     /* Node definition for first depth, prune largest tree. */
 
     /**
-     * Set the Preamble Length - Default is 15 NRMA '1's Every NMRA
+     * Function to set the Preamble Length - Default is 15 NRMA '1's Every NMRA
      * packet decoded starts with a preamble Service mode requires longer
      * preambles Thus this public function allowing user to define the lenght of
      * desired preamble
      *
      * @param preambleLen int
-     * @return boolean true if preamble is a multiple of 5, otherwise fails and
-     *         returns false
+     * @return boolean - true if preamble is a multiple of 5 otherwise fails and
+     *         returns alse
      */
     public static boolean setPreambleLength(int preambleLen) {
         //Just make sure that no negatives values are passed.
@@ -153,12 +154,12 @@ public class MakePacket {
     }
 
     /**
-     * Take in the packet as an array of Bytes and convert
+     * Function that takes in the packet as a array of Bytes and converts an
      * them into NMRA'1','0' representation, in preparation to be sent over a
      * serial link.
      *
-     * @param packet byte[] NRMA packet in a array of bytes
-     * @return int[]        first byte is length - 0 length indicates failed to do
+     * @param packet byte[] - NRMA packet in a array of bytes
+     * @return int[] - first byte is length - 0 length indicates failed to do
      */
     public static int[] createStream(byte[] packet) {
         int i = 0;
@@ -199,13 +200,13 @@ public class MakePacket {
 
     /**
      * Generate the serial bytes from the bit stream.
-     * <p>
+     * <P>
      * Basically this is a depth first, prune largest tree search, always going down the subtree
      * that uses the most bits for the next byte. If we get an error, backtrack up
      * the tree until we reach a Node that we have not completely traversed all the
      * subtrees for and try going down the subtree that uses the second most bits.
      * Keep going until we finish converting the packet or run out of things to try.
-     * <p>
+     * <P>
      * This is not guaranteed to find the shortest serial stream for a given
      * packet, but it is guaranteed to find a stream if one exists. Also, it
      * usually does come up with the shortest packet.
@@ -264,9 +265,10 @@ public class MakePacket {
     }
 
     /**
-     * Find the next largest (ie longest lenght) child at this Node.
+     * Routine to find the next largest (ie longest lenght) child
+     * at this Node.
      *
-     * @param thisNode (INPUT/OUTPUT) determine if there is another child
+     * @param thisNode - (INPUT/OUTPUT) determine if there is another child
      *                 if so update Node with ie the Bit
      *                 pattern and its associated lenght
      *
@@ -326,16 +328,16 @@ public class MakePacket {
     }
 
     /**
-     * Find the first largest (ie longest length) child
+     * Routine to find the first largest (ie longest length) child
      * at this Node.
      *
-     * @param bs        (INPUT) Bit stream array
-     * @param offset    Offset in to buffer
-     * @param validBits (INPUT) number of valid bits in the bit stream
-     * @param thisNode  (OUTPUT) where to put largest child found ie the Bit
-     *                  pattern and its associated lenght
+     * @param bs        - (INPUT) Bit stream array
+     * @param offset    - Offset in to buffer
+     * @param validBits - (INPUT) number of valid bits in the bit stream.
+     * @param thisNode  - (OUTPUT) where to put largest child found ie the Bit
+     *                  pattern and its associated lenght.
      *
-     * @return false if one doesn't exist otherwise returns true
+     * @return false if one doesn't exist otherwise returns true.
      */
     @SuppressWarnings("fallthrough")
     static boolean readFirstChild(int bs[], int offset, int validBits,

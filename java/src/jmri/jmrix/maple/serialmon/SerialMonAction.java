@@ -13,25 +13,25 @@ import jmri.jmrix.maple.MapleSystemConnectionMemo;
   */
 public class SerialMonAction extends AbstractAction {
 
-    private MapleSystemConnectionMemo _memo = null;
+    private MapleSystemConnectionMemo memo = null;
 
-    public SerialMonAction(String s, MapleSystemConnectionMemo memo) {
+    public SerialMonAction(String s, MapleSystemConnectionMemo _memo) {
         super(s);
-        _memo = memo;
+        memo = _memo;
     }
 
-    public SerialMonAction(MapleSystemConnectionMemo memo) {
-        this("Maple monitor", memo);
+    public SerialMonAction(MapleSystemConnectionMemo _memo) {
+        this("Maple monitor", _memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
-        SerialMonFrame f = new SerialMonFrame(_memo);
+        SerialMonFrame f = new SerialMonFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("SerialMonAction starting SerialMonFrame: Exception: {}", ex.toString());
+            log.warn("SerialMonAction starting SerialMonFrame: Exception: " + ex.toString());
         }
         f.setVisible(true);
     }

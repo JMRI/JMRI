@@ -1,5 +1,6 @@
 package jmri.server.json.turnout;
 
+import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
@@ -11,19 +12,24 @@ import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonTurnoutHttpServiceTest {
+public class JsonTurnoutHttpServiceTest extends TestCase {
 
-    @Test
+    public void testCtorSuccess() {
+        JsonTurnoutHttpService service = new JsonTurnoutHttpService(new ObjectMapper());
+        Assert.assertNotNull(service);
+    }
+
     public void testDoGet() throws JmriException {
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(new ObjectMapper());
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
@@ -49,7 +55,6 @@ public class JsonTurnoutHttpServiceTest {
         }
     }
 
-    @Test
     public void testDoPost() throws JmriException {
         ObjectMapper mapper = new ObjectMapper();
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
@@ -92,7 +97,6 @@ public class JsonTurnoutHttpServiceTest {
         }
     }
 
-    @Test
     public void testDoPut() {
         ObjectMapper mapper = new ObjectMapper();
         JsonTurnoutHttpService service = new JsonTurnoutHttpService(mapper);
@@ -108,8 +112,7 @@ public class JsonTurnoutHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
     }
-
-    @Test
+    
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -128,8 +131,7 @@ public class JsonTurnoutHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
     }
-
-    @Test
+    
     public void testDelete() {
         try {
             (new JsonTurnoutHttpService(new ObjectMapper())).doDelete(JsonTurnoutServiceFactory.TURNOUT, null, Locale.ENGLISH);
@@ -139,19 +141,42 @@ public class JsonTurnoutHttpServiceTest {
         }
         Assert.fail("Did not throw expected error.");
     }
+    
+    // from here down is testing infrastructure
+    public JsonTurnoutHttpServiceTest(String s) {
+        super(s);
+    }
 
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {JsonTurnoutHttpServiceTest.class.getName()};
+        TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(JsonTurnoutHttpServiceTest.class);
+
+        return suite;
+    }
+
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() throws Exception {
+        Log4JFixture.setUp();
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        Log4JFixture.tearDown();
     }
 
 }

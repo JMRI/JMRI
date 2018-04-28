@@ -19,9 +19,8 @@ package jmri.jmrit.beantable.oblock;
  */
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -134,8 +133,9 @@ public class SignalTableModel extends AbstractTableModel {
     private void makeList() {
         ArrayList<SignalRow> tempList = new ArrayList<SignalRow>();
         // collect signals entered into Portals
-        SortedSet<Portal> portals = _portalMgr.getNamedBeanSet();
-        for (Portal portal : portals) {
+        String[] sysNames = _portalMgr.getSystemNameArray();
+        for (int i = 0; i < sysNames.length; i++) {
+            Portal portal = _portalMgr.getBySystemName(sysNames[i]);
             NamedBean signal = portal.getFromSignal();
             SignalRow sr = null;
             if (signal != null) {
@@ -228,8 +228,9 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     private Portal getPortalwithBlocks(OBlock fromBlock, OBlock toBlock) {
-        SortedSet<Portal> portals = _portalMgr.getNamedBeanSet();
-        for (Portal portal : portals) {
+        String[] sysNames = _portalMgr.getSystemNameArray();
+        for (int i = 0; i < sysNames.length; i++) {
+            Portal portal = _portalMgr.getBySystemName(sysNames[i]);
             OBlock fromBlk = portal.getFromBlock();
             OBlock toBlk = portal.getToBlock();
             if ((fromBlk.equals(fromBlock) &&  toBlk.equals(toBlock)) ||

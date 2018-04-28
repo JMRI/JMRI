@@ -25,6 +25,12 @@ import org.junit.Test;
 public class JsonReporterSocketServiceTest {
 
     @Test
+    public void testCtorSuccess() {
+        JsonReporterSocketService service = new JsonReporterSocketService(new JsonMockConnection((DataOutputStream) null));
+        Assert.assertNotNull(service);
+    }
+
+    @Test
     public void testReporterChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -94,12 +100,11 @@ public class JsonReporterSocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+
         JUnitUtil.initReporterManager();
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
 }

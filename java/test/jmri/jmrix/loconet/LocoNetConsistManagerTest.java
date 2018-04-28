@@ -39,7 +39,6 @@ public class LocoNetConsistManagerTest extends jmri.implementation.AbstractConsi
     public void tearDown() {
         cm = null;
         ((LnThrottleManager)memo.getThrottleManager()).dispose();
-        memo.dispose();
         JUnitUtil.tearDown();
     }
 

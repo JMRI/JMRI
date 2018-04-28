@@ -43,7 +43,6 @@ public class SprogProgrammerManagerTest {
 
     @After
     public void tearDown() {
-        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

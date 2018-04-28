@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    JsonServiceFactoryTest.class
 })
 /**
  * Tests for the jmri.spi package

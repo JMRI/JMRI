@@ -51,7 +51,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javax.annotation.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -575,7 +577,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
-                dispose();
+                dispose(true);
             }
         });
         setJMenuBar(menuBar);
@@ -761,8 +763,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 Object o = event.getSource();
                 if (o instanceof JmriBeanComboBox) {
                     JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
-                    for (int idx = 0; idx < jbcb.getItemCount(); idx++) {
-                        jbcb.setItemEnabled(idx, validatePhysicalTurnout(jbcb.getItemAt(idx), null));
+                    Manager m = jbcb.getManager();
+                    if (m != null) {
+                        String[] systemNames = m.getSystemNameArray();
+                        for (int idx = 0; idx < systemNames.length; idx++) {
+                            String systemName = systemNames[idx];
+                            jbcb.setItemEnabled(idx, validatePhysicalTurnout(systemName, null));
+                        }
                     }
                 }
             }
@@ -1325,7 +1332,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         floatingEditContentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         // Force the help panel width to the same as the tabs section
-        int tabSectionWidth = (int) floatEditTabsPanel.getPreferredSize().getWidth();
+        int tabSectionWidth = floatEditTabsPanel.getWidth();
 
         //Change the textarea settings
         for (Component c : helpBar.getComponents()) {
@@ -5060,8 +5067,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     beginObject = foundObject;
                     beginPointType = foundPointType;
                     beginLocation = foundLocation;
-                    //BUGFIX: prevents initial drawTrackSegmentInProgress to {0, 0}
-                    currentLocation.setLocation(beginLocation);
                 } else {
                     //TODO: auto-add anchor point?
                     beginObject = null;
@@ -6081,9 +6086,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     if ((ft.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (ft.getTurnoutType() == LayoutTurnout.LH_TURNOUT)) {
                         rotateTurnout(ft);
                     }
-
-                    // Assign a block to the new zero length track segment.
-                    ft.setTrackSegmentBlock(foundPointType, true);
                     break;
                 }
 
@@ -9863,12 +9865,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             for (LayoutTrack lt : getLayoutTracks()) {
                 if (lt != beginObject) {
                     if (lt == foundObject) {
-                        lt.highlightUnconnected(g2);
                         g2.setColor(connectColor);
-                        lt.highlightUnconnected(g2, foundPointType);
+                        lt.drawUnconnected(g2);
                         g2.setColor(highlightColor);
                     } else {
-                        lt.highlightUnconnected(g2);
+                        lt.drawUnconnected(g2);
                     }
                 }
             }
@@ -10584,7 +10585,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     // The following have been moved to the LayoutTurnout class
     // These remain to ease migration
-
+    
     // defined constants - turnout types
     @Deprecated // 4.11.3
     public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;

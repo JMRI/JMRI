@@ -8,8 +8,9 @@ import org.junit.Test;
 
 /**
  * JUnit tests for the TrafficController class
+ * <p>
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class TrafficControllerTest {
 
@@ -17,15 +18,13 @@ public class TrafficControllerTest {
 
     @Test
     public void testCtor(){
-       Assert.assertNotNull("exists", tc);
+       Assert.assertNotNull("exists",tc);
     }
 
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-
-       DirectSystemConnectionMemo m = new DirectSystemConnectionMemo();
-       tc = new TrafficController(m);
+       tc = new TrafficController();
     }
 
     @After

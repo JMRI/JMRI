@@ -42,7 +42,7 @@ public class Bundle extends jmri.jmrix.easydcc.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return getBundle().handleGetMessage(key);
+        return b.handleGetMessage(key);
     }
     /**
      * Merges user data with a translated string for a given 
@@ -61,7 +61,7 @@ public class Bundle extends jmri.jmrix.easydcc.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object ... subs) {
-        return getBundle().handleGetMessage(key, subs);
+        return b.handleGetMessage(key, subs);
     }
 
     /**
@@ -79,12 +79,12 @@ public class Bundle extends jmri.jmrix.easydcc.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return getBundle().handleGetMessage(locale, key, subs);
+        return b.handleGetMessage(locale, key, subs);
     }
    
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
-    protected static jmri.Bundle getBundle() { return b; }
+    @Override protected jmri.Bundle getBundle() { return b; }
 
     @Override 
     protected String retry(Locale locale,String key) { 

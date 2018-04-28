@@ -23,7 +23,7 @@ public class AcelaSensor extends AbstractSensor {
 
     /**
      * Request an update on status.
-     * <p>
+     * <P>
      * Since status is continually being updated, this isn't active now.
      */
     @Override

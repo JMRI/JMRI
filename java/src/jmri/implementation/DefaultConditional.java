@@ -47,7 +47,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class providing the basic logic of the Conditional interface.
+ * Class providing the basic logic of the Conditional interface. This file is
+ * part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
@@ -57,7 +67,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditional extends AbstractNamedBean
         implements Conditional {
 
-    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");  // NOI18N
+    static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");  // NOI18N
 
     public DefaultConditional(String systemName, String userName) {
         super(systemName, userName);
@@ -93,7 +103,7 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Get antecedent (boolean string expression) of Conditional.
+     * Get antecedent (boolean expression) of Conditional
      */
     @Override
     public String getAntecedentExpression() {
@@ -101,7 +111,7 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Get type of operators in the antecedent statement.
+     * Get type of operators in the antecedent statement
      */
     @Override
     public int getLogicType() {
@@ -109,17 +119,14 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Set the logic type (all AND's all OR's or mixed AND's and OR's set the
+     * set the logic type (all AND's all OR's or mixed AND's and OR's set the
      * antecedent expression - should be a well formed boolean statement with
-     * parenthesis indicating the order of evaluation)
-     *
-     * @param type index of the logic type
-     * @param antecedent non-localized (US-english) string description of antecedent
+     * parenthesis indicating the order of evaluation
      */
     @Override
     public void setLogicType(int type, String antecedent) {
         _logicType = type;
-        _antecedent = antecedent; // non-localised (universal) string description
+        _antecedent = antecedent;
         setState(NamedBean.UNKNOWN);
     }
 
@@ -136,18 +143,20 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Set State Variables for this Conditional. Each state variable will
      * evaluate either True or False when this Conditional is calculated.
-     * <p>
+     * <P>
      * This method assumes that all information has been validated.
      */
     @Override
     public void setStateVariables(ArrayList<ConditionalVariable> arrayList) {
-        log.debug("Conditional \"{}\" ({}) updated ConditionalVariable list.",
-                getUserName(), getSystemName());  // NOI18N
+        if (log.isDebugEnabled()) {
+            log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName()  // NOI18N
+                    + ") updated ConditionalVariable list.");  // NOI18N
+        }
         _variableList = arrayList;
     }
 
     /**
-     * Make deep clone of variables.
+     * Make deep clone of variables
      */
     @Override
     public ArrayList<ConditionalVariable> getCopyOfStateVariables() {
@@ -180,7 +189,7 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Set list of actions.
+     * Set list of actions
      */
     @Override
     public void setAction(ArrayList<ConditionalAction> arrayList) {
@@ -188,7 +197,7 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-     * Make deep clone of actions.
+     * Make deep clone of actions
      */
     @Override
     public ArrayList<ConditionalAction> getCopyOfActions() {
@@ -223,7 +232,9 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
-        log.trace("calculate starts for {}", getSystemName());  // NOI18N
+        if (log.isTraceEnabled()) {
+            log.trace("calculate starts for " + getSystemName());  // NOI18N
+        }
 
         // check if  there are no state variables
         if (_variableList.isEmpty()) {
@@ -272,30 +283,38 @@ public class DefaultConditional extends AbstractNamedBean
                 }
                 break;
             default:
-                log.warn("Conditional {} fell through switch in calculate", getSystemName());  // NOI18N
+                log.warn("Conditional " + getSystemName() + " fell through switch in calculate");  // NOI18N
                 break;
         }
         int newState = FALSE;
-        log.debug("Conditional \"{}\" ({}) has calculated its state to be {}. current state is {}. enabled= {}",
-                getUserName(), getSystemName(), result, _currentState, enabled);  // NOI18N
+        if (log.isDebugEnabled()) {
+            log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName() + ") has calculated its state to be "  // NOI18N
+                    + result + ". current state is " + _currentState + ".  enabled= " + enabled);  // NOI18N
+        }
         if (result) {
             newState = TRUE;
         }
 
-        log.trace("   enabled starts at {}", enabled);  // NOI18N
+        if (log.isTraceEnabled()) {
+            log.trace("   enabled starts at " + enabled);  // NOI18N
+        }
 
         if (enabled) {
             if (evt != null) {
                 // check if the current listener wants to (NOT) trigger actions
                 enabled = wantsToTrigger(evt);
-                log.trace("   wantsToTrigger sets enabled to {}", enabled);  // NOI18N
+                if (log.isTraceEnabled()) {
+                    log.trace("   wantsToTrigger sets enabled to " + enabled);  // NOI18N
+                }
             }
         }
         if (_triggerActionsOnChange) {
             // pre 1/15/2011 on change only behavior
             if (newState == _currentState) {
                 enabled = false;
-                log.trace("   _triggerActionsOnChange sets enabled to false");  // NOI18N
+                if (log.isTraceEnabled()) {
+                    log.trace("   _triggerActionsOnChange sets enabled to false");  // NOI18N
+                }
             }
         }
         setState(newState);
@@ -328,23 +347,21 @@ public class DefaultConditional extends AbstractNamedBean
                 }
             }
         } catch (ClassCastException e) {
-            log.error("{} PropertyChangeEvent source of unexpected type: {}", getDisplayName(), evt);  // NOI18N
+            log.error(getDisplayName() + " PropertyChangeEvent source of unexpected type: " + evt);  // NOI18N
         }
         return true;
     }
 
     static class DataPair {
+
         boolean result = false;
         int indexCount = 0;         // index reached when parsing completed
         BitSet argsUsed = null;     // error detection for missing arguments
     }
 
     /**
-     * Check that an antecedent is well formed.
+     * Check that an antecedent is well formed
      *
-     * @param ant the antecedent string description
-     * @param variableList arraylist of existing Conditional variables
-     * @return error message string if not well formed
      */
     @Override
     public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList) {
@@ -430,7 +447,7 @@ public class DefaultConditional extends AbstractNamedBean
             argsUsed.or(dp.argsUsed);
         } else // cannot be '('.  must be either leftArg or notleftArg
         {
-            if (s.charAt(i) == 'R') {  // NOI18N
+            if (s.charAt(i) == 'R') { //NOI18N
                 try {
                     k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                     i += 2;
@@ -443,16 +460,15 @@ public class DefaultConditional extends AbstractNamedBean
                 }
                 i++;
                 argsUsed.set(k - 1);
-            } else if ("NOT".equals(s.substring(i, i + 3))) {  // NOI18N
-                i += 3;
-
-                // not leftArg
+            } else if (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length())))) { // compare the right length after i18n  // NOI18N
+                i += Bundle.getMessage("LogicNOT").length(); // was: 3;  // NOI18N
+                //not leftArg
                 if (s.charAt(i) == '(') {
                     dp = parseCalculate(s.substring(++i), variableList);
                     leftArg = dp.result;
                     i += dp.indexCount;
                     argsUsed.or(dp.argsUsed);
-                } else if (s.charAt(i) == 'R') {  // NOI18N
+                } else if (s.charAt(i) == 'R') { //NOI18N
                     try {
                         k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                         i += 2;
@@ -479,11 +495,11 @@ public class DefaultConditional extends AbstractNamedBean
         while (i < s.length()) {
             if (s.charAt(i) != ')') {
                 // must be either AND or OR
-                if ("AND".equals(s.substring(i, i + 3))) {  // NOI18N
-                    i += 3;
+                if (Bundle.getMessage("LogicAND").equals(s.substring(i, i + (Bundle.getMessage("LogicAND").length())))) { // compare the right length after i18n  // NOI18N
+                    i += Bundle.getMessage("LogicAND").length(); // EN AND: 3;  // NOI18N
                     oper = OPERATOR_AND;
-                } else if ("OR".equals(s.substring(i, i + 2))) {  // NOI18N
-                    i += 2;
+                } else if (Bundle.getMessage("LogicOR").equals(s.substring(i, i + (Bundle.getMessage("LogicOR").length())))) { // compare the right length after i18n  // NOI18N
+                    i += Bundle.getMessage("LogicOR").length(); // EN OR: 2;  // NOI18N
                     oper = OPERATOR_OR;
                 } else {
                     throw new JmriException(java.text.MessageFormat.format(
@@ -496,7 +512,7 @@ public class DefaultConditional extends AbstractNamedBean
                     argsUsed.or(dp.argsUsed);
                 } else // cannot be '('.  must be either rightArg or notRightArg
                 {
-                    if (s.charAt(i) == 'R') {  // NOI18N
+                    if (s.charAt(i) == 'R') { //NOI18N
                         try {
                             k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                             i += 2;
@@ -509,15 +525,15 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         i++;
                         argsUsed.set(k - 1);
-                    } else if ("NOT".equals(s.substring(i, i + 3))) {  // NOI18N
-                        i += 3;
-                        // not rightArg
+                    } else if ((i + 3) < s.length() && Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length())))) { // compare the right length after i18n  // NOI18N
+                        i += Bundle.getMessage("LogicNOT").length(); // EN NOT: 3;  // NOI18N
+                        //not rightArg
                         if (s.charAt(i) == '(') {
                             dp = parseCalculate(s.substring(++i), variableList);
                             rightArg = dp.result;
                             i += dp.indexCount;
                             argsUsed.or(dp.argsUsed);
-                        } else if (s.charAt(i) == 'R') {  // NOI18N
+                        } else if (s.charAt(i) == 'R') { //NOI18N
                             try {
                                 k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
                                 i += 2;

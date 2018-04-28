@@ -9,32 +9,30 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 /**
  * Swing action to create and register a SerialPacketGenFrame object
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2007, 2008
+ * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2008
   */
 public class SerialPacketGenAction extends AbstractAction {
 
-    private SecsiSystemConnectionMemo _memo = null;
+    private SecsiSystemConnectionMemo memo = null;
 
-    public SerialPacketGenAction(String s, SecsiSystemConnectionMemo memo) {
+    public SerialPacketGenAction(String s,SecsiSystemConnectionMemo _memo) {
         super(s);
-        _memo = memo;
+        memo = _memo;
     }
 
-    public SerialPacketGenAction(SecsiSystemConnectionMemo memo) {
-        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuSystem")), memo);
+    public SerialPacketGenAction(SecsiSystemConnectionMemo _memo) {
+        this("Send SECSI message",_memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SerialPacketGenFrame f = new SerialPacketGenFrame(_memo);
+        SerialPacketGenFrame f = new SerialPacketGenFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: {}", ex.toString());
+            log.error("Exception: " + ex.toString());
         }
         f.setVisible(true);
     }
-
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
-
 }

@@ -12,7 +12,11 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.LinkedHashMap;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -259,9 +263,9 @@ public class AddSignalMastPanel extends JPanel {
 
         // load the list of signal systems
         SignalSystemManager man = InstanceManager.getDefault(SignalSystemManager.class);
-        SortedSet<SignalSystem> systems = man.getNamedBeanSet();
-        for (SignalSystem system : systems) {
-            sigSysBox.addItem(system.getUserName());
+        String[] names = man.getSystemNameArray();
+        for (int i = 0; i < names.length; i++) {
+            sigSysBox.addItem(man.getSystem(names[i]).getUserName());
         }
         if (prefs.getComboBoxLastSelection(systemSelectionCombo) != null) {
             sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));

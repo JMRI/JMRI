@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring SerialLightManagers.
- * <p>
+ * <P>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
- * <p>
+ * <P>
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004

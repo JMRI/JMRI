@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * <dt>preInit<dd>Initialize log4j, invoked from the main()
  * <dt>ctor<dd>
  * </dl>
+ * <P>
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  */

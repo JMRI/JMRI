@@ -20,19 +20,16 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
 
-    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.MEMORIES;
     }
 
-    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'M';
     }
 
-    /** {@inheritDoc} */
     @Override
     public @Nonnull Memory provideMemory(@Nonnull String sName) {
         Memory t = getMemory(sName);
@@ -46,7 +43,6 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     public Memory getMemory(@Nonnull String name) {
         Memory t = getByUserName(name);
@@ -57,19 +53,16 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return getBySystemName(name);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Memory getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
-    /** {@inheritDoc} */
     @Override
     public Memory getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
-    /** {@inheritDoc} */
     @Override
     public @Nonnull Memory newMemory(@Nonnull String systemName, @Nullable String userName) {
         log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
@@ -124,7 +117,6 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return s;
     }
 
-    /** {@inheritDoc} */
     @Override
     public @Nonnull Memory newMemory(@Nonnull String userName) {
         int nextAutoMemoryRef = lastAutoMemoryRef + 1;
@@ -149,7 +141,6 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     @Nonnull
     abstract protected Memory createNewMemory(@Nonnull String systemName, @Nullable String userName);
 
-    /** {@inheritDoc} */
     @Override
     @Nonnull 
     public String getBeanTypeHandled() {

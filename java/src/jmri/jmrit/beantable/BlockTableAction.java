@@ -607,9 +607,9 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 }
 
                 public JLabel updateLabel(String value, int row) {
-//                     if (iconHeight > 0) { // if necessary, increase row height;
+                    if (iconHeight > 0) { // if necessary, increase row height;
                         //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Block icons
-//                     }
+                    }
                     if (value.equals(Bundle.getMessage("BlockUnOccupied")) && offIcon != null) {
                         label = new JLabel(offIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
@@ -981,15 +981,13 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 return;
             }
         }
-        String user = userName.getText();
-        user = NamedBean.normalizeUserName(user);
-        if (user == null || user.length() == 0) {
+        String user = userName.getText().trim(); // N11N
+        if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText();
-        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
-        // initial check for empty entry using the raw name
-        if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch an plain IB
+        String sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sysName.getText()); // N11N
+        // initial check for empty entry
+        if (sName.length() < 1 && !_autoSystemName.isSelected()) {
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
             sysName.setBackground(Color.red);
@@ -1005,63 +1003,55 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         for (int x = 0; x < NumberOfBlocks; x++) {
             if (x != 0) {
                 if (user != null) {
-                    b = new StringBuilder(user);
+                    b = new StringBuilder(userName.getText().trim()); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     user = b.toString();
                 }
                 if (!_autoSystemName.isSelected()) {
-                    b = new StringBuilder(sName);
+                    b = new StringBuilder(sysName.getText().trim()); // N11N
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
                 }
             }
             Block blk;
-            String xName = "";
             try {
                 if (_autoSystemName.isSelected()) {
                     blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(user);
-                    if (blk == null) {
-                        xName = user;
-                        throw new java.lang.IllegalArgumentException();
-                    }
                 } else {
                     blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
-                    if (blk == null) {
-                        xName = sName;
-                        throw new java.lang.IllegalArgumentException();
-                    }
                 }
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(xName);
-                statusBar.setText(Bundle.getMessage("ErrorAddFailedCheck"));
+                handleCreateException(sName);
                 statusBar.setForeground(Color.red);
                 return; // without creating
             }
-            if (lengthField.getText().length() != 0) {
-                blk.setLength(Integer.parseInt(lengthField.getText()));
-            }
-            /*if (blockSpeed.getText().length()!=0)
-             blk.setSpeedLimit(Integer.parseInt(blockSpeed.getText()));*/
-            try {
-                blk.setBlockSpeed((String) speeds.getSelectedItem());
-            } catch (jmri.JmriException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + (String) speeds.getSelectedItem());
-            }
-            if (checkPerm.isSelected()) {
-                blk.setPermissiveWorking(true);
-            }
-            String cName = (String) cur.getSelectedItem();
-            if (cName.equals(noneText)) {
-                blk.setCurvature(Block.NONE);
-            } else if (cName.equals(gradualText)) {
-                blk.setCurvature(Block.GRADUAL);
-            } else if (cName.equals(tightText)) {
-                blk.setCurvature(Block.TIGHT);
-            } else if (cName.equals(severeText)) {
-                blk.setCurvature(Block.SEVERE);
+            if (blk != null) {
+                if (lengthField.getText().length() != 0) {
+                    blk.setLength(Integer.parseInt(lengthField.getText()));
+                }
+                /*if (blockSpeed.getText().length()!=0)
+                 blk.setSpeedLimit(Integer.parseInt(blockSpeed.getText()));*/
+                try {
+                    blk.setBlockSpeed((String) speeds.getSelectedItem());
+                } catch (jmri.JmriException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + (String) speeds.getSelectedItem());
+                }
+                if (checkPerm.isSelected()) {
+                    blk.setPermissiveWorking(true);
+                }
+                String cName = (String) cur.getSelectedItem();
+                if (cName.equals(noneText)) {
+                    blk.setCurvature(Block.NONE);
+                } else if (cName.equals(gradualText)) {
+                    blk.setCurvature(Block.GRADUAL);
+                } else if (cName.equals(tightText)) {
+                    blk.setCurvature(Block.TIGHT);
+                } else if (cName.equals(severeText)) {
+                    blk.setCurvature(Block.SEVERE);
+                }
             }
             // add first and last names to statusMessage user feedback string
             if (x == 0 || x == NumberOfBlocks - 1) {

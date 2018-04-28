@@ -9,11 +9,7 @@
         daysMin: ['Ig', 'Al', 'Ar', 'Az', 'Og', 'Ol', 'Lr'],
         months: ['Urtarrila', 'Otsaila', 'Martxoa', 'Apirila', 'Maiatza', 'Ekaina', 'Uztaila', 'Abuztua', 'Iraila', 'Urria', 'Azaroa', 'Abendua'],
         monthsShort: ['Urt', 'Ots', 'Mar', 'Api', 'Mai', 'Eka', 'Uzt', 'Abu', 'Ira', 'Urr', 'Aza', 'Abe'],
-        today: "Gaur",
-        monthsTitle: "Hilabeteak",
-        clear: "Ezabatu",
-        weekStart: 1,
-        format: "yyyy/mm/dd"
+        today: "Gaur"
     };
 }(jQuery));
 

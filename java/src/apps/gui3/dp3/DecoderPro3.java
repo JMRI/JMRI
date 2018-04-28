@@ -90,6 +90,11 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         mainFrame.setVisible(true);
     }
 
+    @Override
+    protected ResourceBundle getActionModelResourceBundle() {
+        return ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3ActionListBundle");
+    }
+
     // Main entry point
     public static void main(String args[]) {
         preInit(args);

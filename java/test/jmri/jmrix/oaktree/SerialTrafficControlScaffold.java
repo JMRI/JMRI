@@ -11,8 +11,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
-    public SerialTrafficControlScaffold(OakTreeSystemConnectionMemo memo) {
-        super(memo);
+    public SerialTrafficControlScaffold() {
+        if (log.isDebugEnabled()) {
+            log.debug("setting instance: " + this);
+        }
+//        self = this;
     }
 
     // override some SerialTrafficController methods for test purposes

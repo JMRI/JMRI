@@ -3,12 +3,12 @@ package jmri;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
+import java.time.Instant;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
@@ -119,7 +119,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
-    // why isn't UNDETECTED == NamedBean.UNKNOWN?
     static final public int UNDETECTED = 0x100;  // bit coded, just in case; really should be enum
 
     // Curvature attributes
@@ -129,7 +128,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int SEVERE = 0x04;
 
     // this should only be used for debugging...
-    public String toDebugString() {
+    @Override
+    public String toString() {
         String result = getFullyFormattedDisplayName() + " ";
         switch (getState()) {
             case UNDETECTED: {

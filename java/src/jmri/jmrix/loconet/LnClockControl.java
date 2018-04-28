@@ -1,10 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Date;
-
-import jmri.PowerManager;
 import jmri.implementation.DefaultClockControl;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,33 +43,14 @@ import org.slf4j.LoggerFactory;
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener {
 
-
     /**
      * Create a ClockControl object for a Loconet clock
      */
-    public LnClockControl(LocoNetSystemConnectionMemo scm) {
-        this(scm.getSlotManager(), scm.getLnTrafficController(), scm.getPowerManager());
-    }
-    
-    /**
-     * Create a ClockControl object for a Loconet clock
-     * @deprecated 4.11.5
-     */
-    @Deprecated // 4.11.5
     public LnClockControl(SlotManager sm, LnTrafficController tc) {
-        this(sm, tc, null);
-    }
-
-    /**
-     * Create a ClockControl object for a Loconet clock
-     */
-    public LnClockControl(SlotManager sm, LnTrafficController tc, LnPowerManager pm) {
         super();
 
         this.sm = sm;
         this.tc = tc;
-        this.pm = pm;
-        
         // listen for updated slot contents
         if (sm != null) {
             sm.addSlotListener(this);
@@ -92,9 +70,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         clock.addMinuteChangeListener(minuteChangeListener);
     }
 
-    final SlotManager sm;
-    final LnTrafficController tc;
-    final LnPowerManager pm;
+    SlotManager sm;
+    LnTrafficController tc;
 
     /* Operational variables */
     jmri.Timebase clock = null;
@@ -334,31 +311,15 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         if (setInternal || synchronizeWithInternalClock || correctFastClock) {
             // we are allowed to send commands to the fast clock
             LocoNetSlot s = sm.slot(LnConstants.FC_SLOT);
-            
-            // load time
             s.setFcDays(curDays);
             s.setFcHours(curHours);
             s.setFcMinutes(curMinutes);
             s.setFcRate(curRate);
             s.setFcFracMins(curFractionalMinutes);
-            
-            // set other content
-            //     power (GTRK_POWER, 0x01 bit in byte 7)
-            boolean power = true;
-            if (pm != null) {
-                power = (pm.getPower() == PowerManager.ON);
-            } else {
-                jmri.util.Log4JUtil.warnOnce(log, "Can't access power manager for fast clock");
-            }
-            s.setTrackStatus(s.getTrackStatus() &  (~LnConstants.GTRK_POWER) );
-            if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);
-            
-            // and write
             tc.sendLocoNetMessage(s.writeSlot());
         }
     }
 
-    
     public void dispose() {
         // Drop loconet connection
         if (sm != null) {

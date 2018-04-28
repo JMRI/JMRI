@@ -18,11 +18,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract implementation of a ThrottleManager.
- * <p>
+ * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Steve Rawlinson Copyright (C) 2016
+ * @author      Steve Rawlinson Copyright (C) 2016
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 

@@ -98,7 +98,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("recieved message: " + l);
         }
         if (l.isTurnoutReply()) {
      // cache the message for later requests

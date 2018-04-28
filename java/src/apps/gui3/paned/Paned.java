@@ -43,4 +43,8 @@ public class Paned extends apps.gui3.Apps3 {
         new Paned(args);
     }
 
+    @Override
+    protected ResourceBundle getActionModelResourceBundle() {
+        return null;
+    }
 }

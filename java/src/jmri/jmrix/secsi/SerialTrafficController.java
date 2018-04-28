@@ -11,41 +11,38 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from SECSI serial messages.
- * <p>
+ * <P>
  * The "SerialInterface" side sends/receives message objects.
- * <p>
+ * <P>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <p>
+ * <P>
  * This handles the state transitions, based on the necessary state in each
  * message.
- * <p>
+ * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
- * @author Bob Jacobsen Copyright (C) 2003, 2006
+ * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
     /**
      * Create a new SerialTrafficController instance.
-     *
-     * @param adaptermemo the associated SystemConnectionMemo
      */
-    public SerialTrafficController(SecsiSystemConnectionMemo adaptermemo) {
+    public SerialTrafficController() {
         super();
-        memo = adaptermemo;
-        log.debug("creating a new SECSI SerialTrafficController object on {}", adaptermemo.getSystemPrefix());
+
         // set node range
         init(0, 255);
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 25;  // default = 25
+
     }
 
     // The methods to implement the SerialInterface
-
     @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
@@ -57,7 +54,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Set up for initialization of a Serial node.
+     * Public method to set up for initialization of a Serial node
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -124,8 +121,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         if (getMustInit(curSerialNodeIndex)) {
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
-            if (m != null) { // SECSI boards don't need this yet, so createInitPacket() returns null
-                log.debug("send init message: {} to node {}", m.toString(), curSerialNodeIndex);
+            if (m != null) { // SECSI boards don't need this yet
+                log.debug("send init message: " + m);
                 m.setTimeout(2000);  // wait for init to finish (milliseconds)
                 return m;
             }   // else fall through to continue
@@ -141,13 +138,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // poll for Sensor input
         if (getNode(curSerialNodeIndex).getSensorsActive()) {
             // Some sensors are active for this node, issue poll
-            log.debug("poll command start for {} nodes", getNumNodes());
             SerialMessage m = SerialMessage.getPoll(
                     getNode(curSerialNodeIndex).getNodeAddress());
             if (curSerialNodeIndex >= getNumNodes()) {
                 curSerialNodeIndex = 0;
             }
-            log.debug("poll command created");
             return m;
         } else {
             // no Sensors (inputs) are active for this node
@@ -162,7 +157,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);
             } else {
-                log.warn("Timeout can't be handled due to missing node (index {})", curSerialNodeIndex);
+                log.warn("Timeout can't be handled due to missing node index=" + curSerialNodeIndex);
             }
         }
     }
@@ -171,6 +166,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     synchronized protected void resetTimeout(AbstractMRMessage m) {
         // inform node
         getNode(curSerialNodeIndex).resetTimeout(m);
+
     }
 
     @Override
@@ -187,48 +183,29 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Return the SerialTrafficController instance to use.
+     * static function returning the SerialTrafficController instance to use.
      *
-     * @return the registered SerialTrafficController instance for general use,
-     *         if need be creating one
-     * @deprecated since 4.9.7
+     * @return The registered SerialTrafficController instance for general use,
+     *         if need be creating one.
      */
     @Deprecated
     static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for Secsi SerialTrafficController");
-        return null;
+        if (self == null) {
+            if (log.isDebugEnabled()) {
+                log.debug("creating a new SerialTrafficController object");
+            }
+            self = new SerialTrafficController();
+        }
+        return self;
     }
+
+    static volatile protected SerialTrafficController self = null;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until multi-system; only set at startup")
-    @Deprecated
+            justification = "temporary until mult-system; only set at startup")
     @Override
     protected void setInstance() {
-    }
-
-    /**
-     * Reference to the system connection memo.
-     */
-    SecsiSystemConnectionMemo memo = null;
-
-    /**
-     * Get access to the system connection memo associated with this traffic
-     * controller.
-     *
-     * @return associated systemConnectionMemo object
-     */
-    public SecsiSystemConnectionMemo getSystemConnectionMemo() {
-        return memo;
-    }
-
-    /**
-     * Set the system connection memo associated with this traffic controller.
-     *
-     * @param m associated systemConnectionMemo object
-     */
-    public void setSystemConnectionMemo(SecsiSystemConnectionMemo m) {
-        log.debug("Secsi SerialTrafficController set memo to {}", m.getUserName());
-        memo = m;
+        self = this;
     }
 
     @Override
@@ -296,22 +273,16 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Determine how many bytes the entire message will take, including
-     * space for header and trailer.
-     * @see SerialMessage#getPoll(int)
-     * @see SerialNode#createOutPacket()
+     * Determine how much many bytes the entire message will take, including
+     * space for header and trailer
      *
-     * @param m the message to be sent
-     * @return number of bytes in message
+     * @param m The message to be sent
+     * @return Number of bytes
      */
     @Override
     protected int lengthOfByteStream(AbstractMRMessage m) {
-        return m.getNumDataElements(); // Length varies by type. A fixed size of 5 as
-        // was copied from OakTree.SerialTrafficController#lengthOfByteStream
-        // caused an ArrayIndexOutOfBounds exception in AbstractSerialTrafficController
-        // over the 9 byte Node Reply message
+        return 5; // All are 5 bytes long
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
-
 }

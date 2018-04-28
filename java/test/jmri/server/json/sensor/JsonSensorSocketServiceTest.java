@@ -1,5 +1,6 @@
 package jmri.server.json.sensor;
 
+import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,19 +13,24 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonSensorSocketServiceTest {
+public class JsonSensorSocketServiceTest extends TestCase {
 
-    @Test
+    public void testCtorSuccess() {
+        JsonSensorSocketService service = new JsonSensorSocketService(new JsonMockConnection((DataOutputStream) null));
+        Assert.assertNotNull(service);
+    }
+
     public void testSensorChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -53,7 +59,6 @@ public class JsonSensorSocketServiceTest {
         }
     }
 
-    @Test
     public void testOnMessageChange() {
         try {
             JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
@@ -94,15 +99,38 @@ public class JsonSensorSocketServiceTest {
         }
     }
 
-    @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
+    // from here down is testing infrastructure
+    public JsonSensorSocketServiceTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {JsonSensorSocketServiceTest.class.getName()};
+        TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(JsonSensorSocketServiceTest.class);
+
+        return suite;
+    }
+
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() throws Exception {
+        Log4JFixture.setUp();
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        Log4JFixture.tearDown();
     }
 
 }

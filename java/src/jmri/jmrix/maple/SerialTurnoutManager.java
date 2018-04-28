@@ -7,15 +7,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for serial systems
- * <p>
- * System names are "KiTnnn", where nnn is the turnout number without padding.
+ * <P>
+ * System names are "KTnnn", where nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
- */
+  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "K";
+    protected String prefix = "M";
 
     public SerialTurnoutManager() {
 
@@ -102,8 +102,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to normalize a system name.
-     * @return a normalized system name if system name has a valid format, else
-     * return "".
+     * <P>
+     * Returns a normalized system name if system name has a valid format, else
+     * returns "".
      */
     @Override
     public String normalizeSystemName(String systemName) {

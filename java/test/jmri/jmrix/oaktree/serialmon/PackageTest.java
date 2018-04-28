@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     SerialMonActionTest.class,
-    SerialMonFrameTest.class,
-    BundleTest.class
+    SerialMonFrameTest.class
 })
 
 /**

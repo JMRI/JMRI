@@ -70,11 +70,6 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         neighbourDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         throughPathsDataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        // general GUI config
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        // - - - Configure data table - - -
         // resize columns as requested
         for (int i = 0; i < dataTable.getColumnCount(); i++) {
             int width = dataModel.getPreferredWidth(i);
@@ -82,9 +77,14 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
         }
         dataTable.sizeColumnsToFit(-1);
 
+        // general GUI config
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        // install items in GUI
         // set Viewport preferred size from size of table
         java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
-        // set minimum Viewport size
+        // width is right, but if table is empty, it's not high
+        // enough to reserve much space.
         dataTableSize.height = Math.max(dataTableSize.height, 400);
         dataTableSize.width = Math.max(dataTableSize.width, 400);
         dataScroll.getViewport().setPreferredSize(dataTableSize);
@@ -95,7 +95,6 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
         // set to single selection
         dataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // - - - Configure neighbor table - - -
         // resize columns as requested
         for (int i = 0; i < neighbourDataTable.getColumnCount(); i++) {
             int width = neighbourDataModel.getPreferredWidth(i);
@@ -103,9 +102,13 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
         }
         neighbourDataTable.sizeColumnsToFit(-1);
 
+        // general GUI config
+        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // install items in GUI
         // set Viewport preferred size from size of table
         java.awt.Dimension neighbourDataTableSize = neighbourDataTable.getPreferredSize();
-        // set minimum Viewport size
+        // width is right, but if table is empty, it's not high
+        // enough to reserve much space.
         neighbourDataTableSize.height = Math.max(neighbourDataTableSize.height, 400);
         neighbourDataTableSize.width = Math.max(neighbourDataTableSize.width, 400);
         neighbourDataScroll.getViewport().setPreferredSize(neighbourDataTableSize);
@@ -117,17 +120,16 @@ public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
         // set to single selection
         neighbourDataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // - - - Configure through paths table - - -
-        // resize columns as requested
-        for (int i = 0; i < throughPathsDataTable.getColumnCount(); i++) {
-            int width = throughPathsDataModel.getPreferredWidth(i);
-            throughPathsDataTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        for (int i = 0; i < neighbourDataTable.getColumnCount(); i++) {
+            int width = neighbourDataModel.getPreferredWidth(i);
+            neighbourDataTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        throughPathsDataTable.sizeColumnsToFit(-1);
+        neighbourDataTable.sizeColumnsToFit(-1);
 
         // set Viewport preferred size from size of table
         java.awt.Dimension throughPathsDataTableSize = throughPathsDataTable.getPreferredSize();
-        // set minimum Viewport size
+        // width is right, but if table is empty, it's not high
+        // enough to reserve much space.
         throughPathsDataTableSize.height = Math.max(throughPathsDataTableSize.height, 400);
         throughPathsDataTableSize.width = Math.max(throughPathsDataTableSize.width, 400);
         throughPathsDataScroll.getViewport().setPreferredSize(throughPathsDataTableSize);

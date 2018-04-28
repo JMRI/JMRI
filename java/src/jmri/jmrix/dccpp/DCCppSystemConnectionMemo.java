@@ -91,6 +91,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             throttleManager = new DCCppThrottleManager(this); // TODO: Create this throttle manager
         }
         return throttleManager;
+
     }
 
     public void setThrottleManager(ThrottleManager t) {

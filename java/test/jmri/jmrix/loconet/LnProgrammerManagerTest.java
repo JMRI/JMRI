@@ -19,7 +19,6 @@ public class LnProgrammerManagerTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         LnProgrammerManager t = new LnProgrammerManager(slotmanager,memo);
         Assert.assertNotNull("exists",t);
-        memo.dispose();
     }
 
     // The minimal setup for log4J

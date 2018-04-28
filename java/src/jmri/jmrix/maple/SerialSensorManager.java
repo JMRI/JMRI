@@ -7,34 +7,34 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the specific Sensor implementation.
- * <p>
- * System names are "KiSnnnn", where nnnn is the sensor number without padding.
- * <p>
+ * <P>
+ * System names are "KSnnnn", where nnnn is the sensor number without padding.
+ * <P>
  * Sensors are numbered from 1.
- * <p>
+ * <P>
  * This is a SerialListener to handle the replies to poll messages. Those are
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
- */
+  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
     /**
      * Number of sensors per UA in the naming scheme.
-     * <p>
+     * <P>
      * The first UA (node address) uses sensors from 1 to SENSORSPERUA-1, the
      * second from SENSORSPERUA+1 to SENSORSPERUA+(SENSORSPERUA-1), etc.
-     * <p>
+     * <P>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
      */
     static final int SENSORSPERUA = 1000;
 
     MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "K";
+    protected String prefix = "M";
 
     public SerialSensorManager(MapleSystemConnectionMemo memo) {
         super();
@@ -104,10 +104,10 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Normalize a system name.
-     * <p>
-     * @return a normalized system name if system name has a valid format, else
-     * return ""
+     * Public method to normalize a system name.
+     * <P>
+     * Returns a normalized system name if system name has a valid format, else
+     * returns "".
      */
     @Override
     public String normalizeSystemName(String systemName) {

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <p>
+ * <P>
  * This connects a Pi-SPROG One command station via a serial com port.
- * <p>
+ * <P>
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *

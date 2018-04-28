@@ -103,10 +103,8 @@ public class FastClockController extends AbstractController {
     public void sendFastTime() {
         updateMinuteCount++;
         if (updateMinuteCount >= updateMinsSetpoint) {
-            if (listeners != null) {
-                for (ControllerInterface listener : listeners) {
-                    listener.sendPacketToDevice("PFT" + getAdjustedTime());
-                }
+            for (ControllerInterface listener : listeners) {
+                listener.sendPacketToDevice("PFT" + getAdjustedTime());
             }
             updateMinuteCount = 0;
         }
@@ -121,16 +119,14 @@ public class FastClockController extends AbstractController {
      */
     public void sendFastRate() {
         //  Send the time and run rate whether running or not
-        if (listeners != null) {
+        for (ControllerInterface listener : listeners) {
+            listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + fastClock.userGetRate());
+        }
+        if (fastClock.getRun() == false) {
+            //  Not running, send rate of 0
+            //  This will stop a running clock without changing stored rate
             for (ControllerInterface listener : listeners) {
-                listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + fastClock.userGetRate());
-            }
-            if (fastClock.getRun() == false) {
-                //  Not running, send rate of 0
-                //  This will stop a running clock without changing stored rate
-                for (ControllerInterface listener : listeners) {
-                    listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + 0.0);
-                }
+                listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + 0.0);
             }
         }
     }

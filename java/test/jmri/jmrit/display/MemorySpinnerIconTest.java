@@ -4,7 +4,10 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * MemorySpinnerIconTest.java
@@ -28,7 +31,6 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
         Assert.assertNotNull("exists",p);
     }
 
-    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -87,19 +89,6 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
             p=tos1 = new MemorySpinnerIcon(editor);
             tos1.setMemory("IM1");
         }
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-        tos1 = null;
-        tos2 = null;
-        tos3 = null;
-        toi1 = null;
-        toi2 = null;
-        toi3 = null;
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

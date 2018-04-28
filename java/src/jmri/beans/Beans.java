@@ -82,7 +82,7 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
     }
@@ -136,13 +136,13 @@ public class Beans extends java.beans.Beans {
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (InvocationTargetException ex) {
                 Throwable tex = ex.getCause();
-                if (tex instanceof RuntimeException) {
-                    throw (RuntimeException) tex;
+                if (tex instanceof IndexOutOfBoundsException) {
+                    throw (IndexOutOfBoundsException) tex;
                 } else {
-                    log.error(ex.getMessage(), ex);
+                    log.error(ex.toString(), ex);
                 }
             } catch (IllegalAccessException | IllegalArgumentException | IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
         return null;
@@ -201,7 +201,7 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
     }
@@ -260,7 +260,7 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
         return null;
@@ -335,7 +335,7 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
         return false;
@@ -370,7 +370,7 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
         return false;
@@ -409,7 +409,7 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn(ex.toString(), ex);
             }
         }
         return names;

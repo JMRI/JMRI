@@ -14,12 +14,8 @@ import org.junit.runners.Suite;
         ThrottleManagerTest.class,
         ThrottleTest.class,
         MessageTest.class,
-        ReplyTest.class,
         jmri.jmrix.direct.swing.PackageTest.class,
         DirectSystemConnectionMemoTest.class,
-        jmri.jmrix.direct.simulator.PackageTest.class,
-        BundleTest.class,
-        DirectConnectionTypeListTest.class,
 })
 
 /**

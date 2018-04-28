@@ -1,5 +1,6 @@
 package jmri.server.json.memory;
 
+import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
@@ -11,19 +12,24 @@ import jmri.MemoryManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonMemoryHttpServiceTest {
+public class JsonMemoryHttpServiceTest extends TestCase {
 
-    @Test
+    public void testCtorSuccess() {
+        JsonMemoryHttpService service = new JsonMemoryHttpService(new ObjectMapper());
+        Assert.assertNotNull(service);
+    }
+
     public void testDoGet() throws JmriException {
         JsonMemoryHttpService service = new JsonMemoryHttpService(new ObjectMapper());
         MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
@@ -49,7 +55,6 @@ public class JsonMemoryHttpServiceTest {
         }
     }
 
-    @Test
     public void testDoPost() throws JmriException {
         ObjectMapper mapper = new ObjectMapper();
         JsonMemoryHttpService service = new JsonMemoryHttpService(mapper);
@@ -80,7 +85,6 @@ public class JsonMemoryHttpServiceTest {
         }
     }
 
-    @Test
     public void testDoPut() {
         ObjectMapper mapper = new ObjectMapper();
         JsonMemoryHttpService service = new JsonMemoryHttpService(mapper);
@@ -96,8 +100,7 @@ public class JsonMemoryHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
     }
-
-    @Test
+    
     public void testDoGetList() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -116,26 +119,51 @@ public class JsonMemoryHttpServiceTest {
             Assert.fail(ex.getMessage());
         }
     }
-
-    @Test
+    
     public void testDelete() {
         try {
-            (new JsonMemoryHttpService(new ObjectMapper())).doDelete(JsonMemory.MEMORY, "", Locale.ENGLISH);
+            (new JsonMemoryHttpService(new ObjectMapper())).doDelete(JsonMemory.MEMORY, null, Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
         }
         Assert.fail("Did not throw expected error.");
     }
-
-    @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
+    
+    // from here down is testing infrastructure
+    public JsonMemoryHttpServiceTest(String s) {
+        super(s);
     }
 
-    @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {JsonMemoryHttpServiceTest.class.getName()};
+        TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(JsonMemoryHttpServiceTest.class);
+
+        return suite;
+    }
+
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() throws Exception {
+        Log4JFixture.setUp();
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        Log4JFixture.tearDown();
     }
 
 }

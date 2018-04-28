@@ -382,7 +382,6 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void tearDown() {
         m.getSlotThread().interrupt();
-        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

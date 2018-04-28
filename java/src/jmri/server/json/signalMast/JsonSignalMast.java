@@ -16,10 +16,8 @@ public class JsonSignalMast {
      */
     public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
 
-    /**
-     * Prevent instantiation, since this class only contains static values
-     */
+    // prevent documentation of constructor
     private JsonSignalMast() {
-        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
+
 }

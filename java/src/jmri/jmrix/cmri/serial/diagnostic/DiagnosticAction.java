@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DiagnosticAction extends AbstractAction {
 
-    private CMRISystemConnectionMemo _memo = null;
+    CMRISystemConnectionMemo _memo = null;
 
     public DiagnosticAction(String s,CMRISystemConnectionMemo memo) {
         super(s);

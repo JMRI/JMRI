@@ -35,8 +35,6 @@ public class ControlPanelEditorActionTest {
     }
 
     @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

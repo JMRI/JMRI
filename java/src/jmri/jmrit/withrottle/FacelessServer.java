@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -52,7 +53,9 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         }
 
         port = socket.getLocalPort();
-        log.debug("WiThrottle listening on TCP port: {}", port);
+        if (log.isDebugEnabled()) {
+            log.debug("WiThrottle listening on TCP port: " + port);
+        }
 
         service = ZeroConfService.create("_withrottle._tcp.local.", port);
         service.addEventListener(this);
@@ -98,7 +101,6 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
      *
      * @param dl the device listener to add 
      */
-    @Override
     public void addDeviceListener(DeviceListener dl){
        if(!deviceListenerList.contains(dl)){
           deviceListenerList.add(dl);
@@ -111,7 +113,6 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
      *
      * @param dl the device listener to remove
      */
-    @Override
     public void removeDeviceListener(DeviceListener dl){
        if(deviceListenerList.contains(dl)){
           deviceListenerList.remove(dl);
@@ -152,7 +153,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             for (DeviceServer listDevice : deviceList) {
                 if (device != listDevice && device.getUDID().equals(listDevice.getUDID())) {
                     //  If in here, array contains duplicate of a device
-                    log.debug("Has duplicate of device '{}', clearing old one.", listDevice.getUDID());
+                    log.debug("Has duplicate of device, clearing old one.");
                     listDevice.closeThrottles();
                     break;
                 }
@@ -207,10 +208,8 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         stopDevices();
         try {
             socket.close();
-            log.debug("closed socket in ServerThread");
+            log.debug("UI socket in ServerThread just closed");
             service.stop();
-        } catch (NullPointerException ex) {
-            log.debug("NPE while attempting to close socket, ignored");
         } catch (IOException ex) {
             log.error("socket in ServerThread won't close");
         }

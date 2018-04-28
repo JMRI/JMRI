@@ -12,13 +12,11 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class LnDplxGrpInfoImplTest {
-    
+
     @Test
     public void testCtor() {
-        jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
-        LnDplxGrpInfoImpl action = new LnDplxGrpInfoImpl(memo);
+        LnDplxGrpInfoImpl action = new LnDplxGrpInfoImpl(new jmri.jmrix.loconet.LocoNetSystemConnectionMemo());
         Assert.assertNotNull("exists", action);
-        memo.dispose();
     }
 
     @Before

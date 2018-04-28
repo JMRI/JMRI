@@ -47,7 +47,6 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             panel.add(Box.createVerticalGlue());
             panel.add(_detectPanel);
             add(panel, 0);
-            hideIcons();
         }
     }
 
@@ -63,7 +62,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track by CircuitBuilder.
+     * Init for conversion of plain track to indicator track.
      */
     @Override
     public void init(ActionListener doneAction) {

@@ -4,10 +4,10 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <p>
+ * <P>
  * This connects an Pi-SPROG Nano via a serial com port or virtual USB serial 
  * com port.
- * <p>
+ * <P>
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *

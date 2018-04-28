@@ -1,8 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import jmri.*;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,8 +11,6 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class DCCppTurnoutManagerTest {
-    // Note: this doesn't use the usual test pattern for turnouts, which
-    // inherits an extensive set of tests
 
     @Test
     public void testCTor() {
@@ -23,37 +19,10 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
-        Assert.assertNotNull("exists",tm);
-    }
-
-    @Test
-    public void testZeroIsOkAddress() {
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
-        
-        Turnout t = tm.provideTurnout("DT0");
+        DCCppTurnoutManager t = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
         Assert.assertNotNull("exists",t);
-        Assert.assertEquals("DT0", t.getSystemName());
-        
     }
-    @Test
-    public void testAddressFormOK() {
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
-        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
-        
-        Turnout t = tm.provideTurnout("DT10");
-        Assert.assertNotNull("exists",t);
-        Assert.assertEquals("DT10", t.getSystemName());
-        
-    }
-    
     // The minimal setup for log4J
     @Before
     public void setUp() {

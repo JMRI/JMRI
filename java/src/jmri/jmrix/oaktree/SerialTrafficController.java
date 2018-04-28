@@ -10,17 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Convert Stream-based I/O to/from Oak Tree serial messages.
- * <p>
+ * Converts Stream-based I/O to/from Oak Tree serial messages.
+ * <P>
  * The "SerialInterface" side sends/receives message objects.
- * <p>
+ * <P>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <p>
+ * <P>
  * This handles the state transitions, based on the necessary state in each
  * message.
- * <p>
+ * <P>
  * Handles initialization, polling, output, and input for multiple Serial Nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
@@ -30,13 +30,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Create a new Oaktree SerialTrafficController instance. Simple implementation.
-     *
-     * @param adaptermemo the associated SystemConnectionMemo
      */
-    public SerialTrafficController(OakTreeSystemConnectionMemo adaptermemo) {
+    public SerialTrafficController() {
         super();
-        memo = adaptermemo;
-        log.debug("creating a new GrapevineTrafficController object on {}", adaptermemo.getSystemPrefix());
+
         // set node range
         init(0, 255);
 
@@ -58,7 +55,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Set up for initialization of a Serial node
+     * Public method to set up for initialization of a Serial node
      */
     public void initializeSerialNode(SerialNode node) {
         synchronized (this) {
@@ -127,7 +124,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             setMustInit(curSerialNodeIndex, false);
             AbstractMRMessage m = getNode(curSerialNodeIndex).createInitPacket();
             if (m != null) { // Oak Tree boards don't need this yet
-                log.debug("send init message: {}", m.toString());
+                log.debug("send init message: " + m);
                 m.setTimeout(2000);  // wait for init to finish (milliseconds)
                 return m;
             }   // else fall through to continue
@@ -162,7 +159,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             if (getNode(curSerialNodeIndex).handleTimeout(m, l)) {
                 setMustInit(curSerialNodeIndex, true);
             } else {
-                log.warn("Timeout can't be handled due to missing node (index {})", curSerialNodeIndex);
+                log.warn("Timeout can't be handled due to missing node index=" + curSerialNodeIndex);
             }
         }
     }
@@ -188,7 +185,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Return the SerialTrafficController instance to use.
+     * static function returning the SerialTrafficController instance to use.
      *
      * @return The registered SerialTrafficController instance for general use,
      *         if need be creating one.
@@ -196,40 +193,17 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      */
     @Deprecated
     static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for OakTree SerialTrafficController");
-        return null;
+        return self;
     }
 
+    static volatile protected SerialTrafficController self = null;
+
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until multi-system; only set at startup")
+            justification = "temporary until mult-system; only set at startup")
     @Override
     @Deprecated
     protected void setInstance() {
-    }
-
-    /**
-     * Reference to the system connection memo.
-     */
-    OakTreeSystemConnectionMemo memo = null;
-
-    /**
-     * Get access to the system connection memo associated with this traffic
-     * controller.
-     *
-     * @return associated systemConnectionMemo object
-     */
-    public OakTreeSystemConnectionMemo getSystemConnectionMemo() {
-        return memo;
-    }
-
-    /**
-     * Set the system connection memo associated with this traffic controller.
-     *
-     * @param m associated systemConnectionMemo object
-     */
-    public void setSystemConnectionMemo(OakTreeSystemConnectionMemo m) {
-        log.debug("OakTree SerialTrafficController set memo to {}", m.getUserName());
-        memo = m;
+        self = this;
     }
 
     @Override
@@ -298,7 +272,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Determine how much many bytes the entire message will take, including
-     * space for header and trailer.
+     * space for header and trailer
      *
      * @param m The message to be sent
      * @return Number of bytes

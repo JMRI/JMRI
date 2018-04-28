@@ -65,7 +65,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Initialize the node config window.
+     * Initialize the config window
      */
     @Override
     public void initComponents() {
@@ -196,7 +196,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Add button.
+     * Method to handle add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -207,7 +207,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get a SerialNode corresponding to this node address if one exists
         curNode = (SerialNode) memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            log.debug("Asked for new node address {}", Integer.toString(nodeAddress));
             statusText1.setText(Bundle.getMessage("Error1", Integer.toString(nodeAddress)));
             statusText1.setVisible(true);
             errorInStatus1 = true;
@@ -217,7 +216,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeType = nodeTypeBox.getSelectedIndex();
 
         // all ready, create the new node
-        curNode = new SerialNode(nodeAddress, nodeType, memo.getTrafficController());
+        curNode = new SerialNode(nodeAddress, nodeType,memo.getTrafficController());
         if (curNode == null) {
             statusText1.setText(Bundle.getMessage("Error3"));
             statusText1.setVisible(true);
@@ -240,7 +239,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Edit button.
+     * Method to handle edit button
      */
     public void editButtonActionPerformed() {
         // Find Serial Node address
@@ -279,7 +278,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Delete button.
+     * Method to handle delete button
      */
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
@@ -317,7 +316,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Done button.
+     * Method to handle done button
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
@@ -346,12 +345,12 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Update button.
+     * Method to handle update button
      */
     public void updateButtonActionPerformed() {
         // update node information
         nodeType = nodeTypeBox.getSelectedIndex();
-        log.debug("update performed: was {} request {}", curNode.getNodeType(), nodeType);
+        log.debug("update performed: was " + curNode.getNodeType() + " request " + nodeType);
         if (curNode.getNodeType() != nodeType) {
             // node type has changed
             curNode.setNodeType(nodeType);
@@ -381,7 +380,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Cancel button.
+     * Method to handle cancel button
      */
     public void cancelButtonActionPerformed() {
         // Reset 

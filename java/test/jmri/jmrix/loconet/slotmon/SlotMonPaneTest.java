@@ -24,7 +24,6 @@ public class SlotMonPaneTest extends jmri.util.swing.JmriPanelTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         // we are just making sure that initComponents doesn't cause an exception.
         t.initComponents(memo);
-        memo.dispose();
     }
 
     // The minimal setup for log4J

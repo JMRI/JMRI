@@ -49,21 +49,12 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public int getObjectCount() { return -1;}    
-
-
-    @Override
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
     @Override
     public java.util.List<Turnout> getNamedBeanList() {
-        return null;
-    }
-
-    @Override
-    public java.util.SortedSet<Turnout> getNamedBeanSet() {
         return null;
     }
 
@@ -224,11 +215,5 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     public String getEntryToolTip() { return "No Help"; }
-
-    /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {}
-
-    /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {}
 
 }

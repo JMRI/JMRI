@@ -1,11 +1,9 @@
 package jmri.server.json.throttle;
 
-import jmri.server.json.JsonMockConnection;
-import java.io.DataOutputStream;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,20 +14,30 @@ public class JsonThrottleSocketServiceTest {
 
     @Test
     public void testCTor() {
-        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        JsonThrottleSocketService t = new JsonThrottleSocketService(connection);
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        jmri.server.json.JsonMockConnection mc = new jmri.server.json.JsonMockConnection(output);
+        JsonThrottleSocketService t = new JsonThrottleSocketService(mc);
         Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketServiceTest.class);
 
 }

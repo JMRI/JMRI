@@ -782,9 +782,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
-            List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
-            for (Manager<Light> manager : managerList) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
+            List<Manager<Light>> managerList = proxy.getManagerList();
+            for (int i = 0; i < managerList.size(); i++) {
+                String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(i).getSystemPrefix());
                 prefixBox.addItem(manuName);
             }
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
@@ -823,9 +823,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // get tooltip from ProxyLightManager
         if (lightManager.getClass().getName().contains("ProxyLightManager")) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) lightManager;
-            List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
+            List<Manager<Light>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (Manager<Light> mgr : managerList) {
+            for (int x = 0; x < managerList.size(); x++) {
+                jmri.LightManager mgr = (jmri.LightManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     // get tooltip from ProxyLightManager
                     addEntryToolTip = mgr.getEntryToolTip();

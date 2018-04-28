@@ -8,7 +8,6 @@ import org.junit.Test;
 
 /**
  * Tests for AbstractMRTrafficController.
- *
  * @author Paul Bender Copyright (C) 2016
  */
 public class AbstractMRTrafficControllerTest {
@@ -83,7 +82,7 @@ public class AbstractMRTrafficControllerTest {
 
     @After
     public void tearDown(){
-        tc = null;
+       tc = null;
         JUnitUtil.tearDown(); 
     }
 

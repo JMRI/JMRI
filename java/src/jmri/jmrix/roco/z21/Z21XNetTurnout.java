@@ -125,7 +125,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
              if(internalState == COMMANDSENT) {
                 sendOffMessage();  // turn off the repition on the track.
              } else if(internalState == OFFSENT ) {
-                /* the command was successfully received */
+                /* the command was successfully recieved */
                 newKnownState(getCommandedState());
                 internalState = IDLE;
              }

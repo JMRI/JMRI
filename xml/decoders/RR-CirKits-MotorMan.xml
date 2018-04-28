@@ -26,9 +26,7 @@
       <model model="MotorMan" comment="8 Line Output Driver"/>
       <model model="MotorMan-II" comment="8 Line Output Driver"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="no">
-        <mode>LOCONETOPSBOARD</mode>
-    </programming>
+    <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
       <variable label="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>

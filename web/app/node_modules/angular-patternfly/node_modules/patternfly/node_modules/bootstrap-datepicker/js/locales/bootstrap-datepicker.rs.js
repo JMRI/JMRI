@@ -1,8 +1,6 @@
 /**
  * Serbian cyrillic translation for bootstrap-datepicker
  * Bojan Milosavlević <milboj@gmail.com>
- *
- * DEPRECATED: This language code 'rs' is deprecated (invalid serbian language code) and will be removed in 2.0.
  */
 ;(function($){
 	$.fn.datepicker.dates['rs'] = {
@@ -15,6 +13,4 @@
 		weekStart: 1,
 		format: "dd.mm.yyyy"
 	};
-
-	$.fn.datepicker.deprecated('This language code "rs" is deprecated (invalid serbian language code) and will be removed in 2.0. For Serbian support use "sr" instead.');
 }(jQuery));

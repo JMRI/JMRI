@@ -10,7 +10,6 @@ package jmri.util.junit.rules;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-import org.junit.AssumptionViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +36,6 @@ public class RetryRule implements TestRule {
                     try {
                         base.evaluate();
                         return;
-                    } catch (AssumptionViolatedException ave) {
-                        // an assumption was violated, so just re-throw ave.
-                        throw ave;
                     } catch (Throwable t) {
                         caughtThrowable = t;
                         log.info("{} : run  {} failed",description.getDisplayName(), (i + 1));

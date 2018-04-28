@@ -1,54 +1,53 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * XNetProgrammerManagerTest.java
  *
  * Description:	tests for the jmri.jmrix.lenz.XNetProgrammerManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2018
+ * @author	Paul Bender
  */
-public class XNetProgrammerManagerTest {
+public class XNetProgrammerManagerTest extends TestCase {
 
-    private XNetInterfaceScaffold tc;
-    private XNetSystemConnectionMemo memo;
-    private XNetProgrammer prog;
- 
-    @Test
     public void testCtor() {
-        XNetProgrammerManager t = new XNetProgrammerManager(prog,memo);
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+
+        XNetProgrammerManager t = new XNetProgrammerManager(new XNetProgrammer(tc), new XNetSystemConnectionMemo(tc));
         Assert.assertNotNull(t);
     }
 
-    @Test
-    public void testIsAddressedModePossible() {
-        XNetProgrammerManager t = new XNetProgrammerManager(prog,memo);
-        Assert.assertTrue(t.isAddressedModePossible());
+    // from here down is testing infrastructure
+    public XNetProgrammerManagerTest(String s) {
+        super(s);
     }
 
-    @Test
-    public void testGetAddressedProgrammer() {
-        XNetProgrammerManager t = new XNetProgrammerManager(prog,memo);
-        Assert.assertNotNull(t.getAddressedProgrammer(false,42));
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", XNetProgrammerManagerTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(XNetProgrammerManagerTest.class);
+        return suite;
     }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @Override
+    protected void setUp() {
         JUnitUtil.setUp();
-        tc = new XNetInterfaceScaffold(new LenzCommandStation());
-        memo = new XNetSystemConnectionMemo(tc);
-        prog = new XNetProgrammer(tc);
     }
 
-    @After
-    public void tearDown() {
+    @Override
+    protected void tearDown() {
         JUnitUtil.tearDown();
     }
 

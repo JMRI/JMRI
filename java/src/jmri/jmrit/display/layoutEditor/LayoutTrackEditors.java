@@ -472,8 +472,13 @@ public class LayoutTrackEditors {
                     Object o = e.getSource();
                     if (o instanceof JmriBeanComboBox) {
                         JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
-                        for (int idx = 0; idx < jbcb.getItemCount(); idx++) {
-                            jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(jbcb.getItemAt(idx), null));
+                        jmri.Manager m = jbcb.getManager();
+                        if (m != null) {
+                            String[] systemNames = m.getSystemNameArray();
+                            for (int idx = 0; idx < systemNames.length; idx++) {
+                                String systemName = systemNames[idx];
+                                jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(systemName, null));
+                            }
                         }
                     }
                 }

@@ -131,8 +131,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Handle initialization, output and polling for TMCC from within the
-     * running thread.
+     * Handles initialization, output and polling for TMCC from within the
+     * running thread
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {

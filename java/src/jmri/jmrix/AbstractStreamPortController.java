@@ -25,13 +25,13 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
         output = out;
     }
 
-    // return the InputStream from the port
+    // returns the InputStream from the port
     @Override
     public DataInputStream getInputStream() {
         return input;
     }
 
-    // return the outputStream to the port
+    // returns the outputStream to the port
     @Override
     public DataOutputStream getOutputStream() {
         return output;
@@ -60,5 +60,4 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
     }
 
     // static private final Logger log = LoggerFactory.getLogger(AbstractStreamPortController.class);
-
 }

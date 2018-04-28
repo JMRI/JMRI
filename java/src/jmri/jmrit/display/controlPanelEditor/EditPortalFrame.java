@@ -10,8 +10,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,7 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -513,8 +513,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private OBlock findAdjacentBlock(PortalIcon icon) {
         ArrayList<OBlock> neighbors = new ArrayList<OBlock>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
-        for (OBlock block : oblocks) {
+        String[] sysNames = manager.getSystemNameArray();
+        for (int j = 0; j < sysNames.length; j++) {
+            OBlock block = manager.getBySystemName(sysNames[j]);
             if (block.equals(_homeBlock)) {
                 continue;
             }

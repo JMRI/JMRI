@@ -6,7 +6,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.BlockManager;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.catalog.NamedIcon;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -44,18 +43,8 @@ public class BlockContentsIconTest extends PositionableLabelTest {
            bci.setIcon(icon);
            bci.setBlock(new jmri.NamedBeanHandle<>("B1",block));
            bci.setMemory("B1");
-           p = to = bci;
+           p = bci;
         }
-    }
-
-    @After
-    public void tearDown() {
-        if(!GraphicsEnvironment.isHeadless()){
-           editor.dispose();
-           p = null; 
-           to = null;
-        }
-        JUnitUtil.tearDown();
     }
 
 }

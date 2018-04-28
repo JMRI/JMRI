@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "jmri-json-client-message",
+    "type": "object",
+    "description": "Message from client",
+    "properties": {
+        "type": {
+            "type": "string",
+            "description": "Data type if data is present, message type otherwise"
+        },
+        "data": {
+            "type": "object",
+            "description": "Data carried in message, see individual types for valid schemas"
+        },
+        "method": {
+            "type": "string",
+            "enum": ["get", "put", "post", "delete"],
+            "description": "HTTP Method equivalent to be performed on data; defaults to \"post\" if \"data\" is present, in which case, it defaults to \"get\""
+        },
+        "list": {
+            "type": "string",
+            "description": "Request for a list of the given type"
+        }
+    },
+    "oneOf": [
+        {
+            "required": ["type", "data"]
+        },
+        {
+            "required": ["type", "list"]
+        },
+        {
+            "required": ["type"]
+        }
+    ]
+}
