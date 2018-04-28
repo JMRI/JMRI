@@ -1822,7 +1822,7 @@ public class Track {
             return OKAY;
         }
         if (getScheduleId().equals(NONE)) {
-            // does car have a scheduled load?
+            // does car have a custom load?
             if (car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) ||
                     car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName())) {
                 return OKAY; // no
@@ -1947,7 +1947,9 @@ public class Track {
                     si.getReceiveLoadName() +
                     ")";
         }
-        if (car.getFinalDestinationTrack() != this && !si.getRandom().equals(ScheduleItem.NONE)) {
+        if (car.getFinalDestinationTrack() != this &&
+                !si.getRandom().equals(ScheduleItem.NONE) &&
+                !car.getScheduleItemId().equals(si.getId())) {
             try {
                 int value = Integer.parseInt(si.getRandom());
                 double random = 100 * Math.random();
