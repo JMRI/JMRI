@@ -264,7 +264,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
         /**
          * Runs the thread - sends 8 commands to query status of all stationary
-         * sensors per LocoNet PE Specs, page 12-13 Thread waits 800 msec
+         * sensors per LocoNet PE Specs, page 12-13 Thread waits 500 msec
          * between commands.
          */
         @Override
@@ -272,14 +272,22 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             sm.setUpdateBusy();
             byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
             byte sw2[] = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
-            // create and initialize loconet message
+            // create and initialize LocoNet message
             LocoNetMessage m = new LocoNetMessage(4);
             m.setOpCode(LnConstants.OPC_SW_REQ);
             for (int k = 0; k < 8; k++) {
                 try {
-                    // Delay 750 mSec to allow init of traffic controller, listeners.
-                    // sleep(500( or even (750) mSec infrequently causes NPE upon sending via tc
-                    Thread.sleep(800);
+                    // Delay 500 mSec to allow init of traffic controller, listeners.
+                    Thread.sleep(500);
+                    // sleep(500) or even (750) mSec infrequently causes NPE upon sending via tc, so
+                } catch (NullPointerException ne) {
+                    log.warn("init of SensorManager delayed");
+                    try {
+                        Thread.sleep(1000); // wait a bit longer for SensorManager to init
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        return; // and stop work
+                    }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                     sm.setUpdateNotBusy();
@@ -287,7 +295,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 m.setElement(1, sw1[k]);
                 m.setElement(2, sw2[k]);
-                tc.sendLocoNetMessage(m); // NPE when sleep < 750
+                tc.sendLocoNetMessage(m);
             }
             sm.setUpdateNotBusy();
         }

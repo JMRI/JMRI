@@ -35,7 +35,7 @@ public class HexFileServer {
             return;
         }
         // connect to a packetizing LnTrafficController
-        packets = new LnPacketizer();
+        packets = new LnPacketizer(port.getSystemConnectionMemo());
         packets.connectPort(port);
         connected = true;
 

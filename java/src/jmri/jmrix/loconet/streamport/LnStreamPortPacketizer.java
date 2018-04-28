@@ -72,7 +72,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         istream = null;
         ostream = null;
         if (streamController != p) {
-            log.warn("disconnectPort: disconnect called from non-connected LnPortController");
+            log.warn("disconnectPort: disconnect called from non-connected LnStreamPortController");
         }
         streamController = null;
     }
@@ -147,7 +147,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
             xmtHandler = new XmtHandler();
         }
         Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
-        log.debug("Xmt thread starts at priority " + xmtpriority); // NOI18N
+        log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();

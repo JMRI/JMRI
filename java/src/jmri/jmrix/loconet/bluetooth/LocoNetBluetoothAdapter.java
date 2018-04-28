@@ -187,7 +187,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         setCommandStationType(getOptionState(option1Name));
         setTurnoutHandling(getOptionState(option2Name));
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // create memo

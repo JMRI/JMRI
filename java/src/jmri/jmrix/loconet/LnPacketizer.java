@@ -38,10 +38,17 @@ public class LnPacketizer extends LnTrafficController {
      */
     protected boolean echo = false;  // true = echo messages here, instead of in hardware
 
+    /**
+     * Create a default LnPacketizer instance without a SystemConnectionMemo.
+     * Not compatible with multi connections.
+     *
+     * @deprecated since 4.11.6, use LnPacketizer(LocoNetSystemConnectionMemo) instead
+     */
+    @Deprecated
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnPacketizer() {
-        self = this;
+        //self = this;
     }
 
     public LnPacketizer(LocoNetSystemConnectionMemo m) {

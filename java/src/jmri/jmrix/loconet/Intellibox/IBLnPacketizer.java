@@ -37,7 +37,7 @@ public class IBLnPacketizer extends LnPacketizer {
             justification = "Only used during system initialization")
     public IBLnPacketizer() {
         echo = true;
-        self = this;
+        //self = this;
     }
 
     /**

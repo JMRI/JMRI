@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface {
 
-    // versioned Jul 17, 2003 - was CVS revision 1.5
     // This is required for RMI usage, do not remove
     static final long serialVersionUID = 8934498417916438203L;
 

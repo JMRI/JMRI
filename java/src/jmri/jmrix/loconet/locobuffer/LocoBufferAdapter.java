@@ -307,13 +307,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         String packetSelection = getPacketizerOption(s);
         switch (packetSelection) {
             case "lnPacketizer":
-                packets = new LnPacketizer();
+                packets = new LnPacketizer(this.getSystemConnectionMemo());
                 break;
             case "lnPacketizerStrict":
-                packets = new LnPacketizerStrict();
+                packets = new LnPacketizerStrict(this.getSystemConnectionMemo());
                 break;
             default:
-                packets = new LnPacketizer();
+                packets = new LnPacketizer(this.getSystemConnectionMemo());
                 log.warn("Using Normal do not understand option [{}]", packetSelection);
         }
         return packets;

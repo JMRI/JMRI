@@ -97,8 +97,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             // set timeout
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}",
+                        activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
                 log.info("failed to set serial timeout: " + et);
             }
@@ -133,7 +133,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // create memo

@@ -44,7 +44,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnOverTcpPacketizer() {
-        self = this;
+        //self = this;
         xmtHandler = new XmtHandler();
         rcvHandler = new RcvHandler(this);
     }
