@@ -239,7 +239,11 @@
       <li><a href="#Kernel">Kernel (Group of Cars)</a></li>
 
       <li><a href="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
-        Kernel, Owner)</a></li>
+        Kernel, Owner)</a>
+
+       <ul>
+        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attributes</a></li>
+       </ul></li>
 
       <li><a href="#EditCarLoads">Edit Car Loads</a></li>
 
@@ -3161,10 +3165,6 @@
    <p>
     <img src="images/EditCarAttribute.png">
    </p>
-   Under "Tools" you will find two items, "Show the number of cars with this attribute" and "Delete
-   unused attributes". The first will show a count in front of the menu box. The count is the number
-   of'cars that have this particular attribute. The delete option will prompt you to delete any
-   attribute that hasn't been assigned to a car.
 
    <h4>Add Button</h4>
    To add a new car attribute, enter the desired text in the text box and press the "Add" button.
@@ -3176,14 +3176,20 @@
    "Delete" button.
 
    <h4>Replace Button</h4>
-   <p>If you need to change a specific car attribute (road, type, color, etc) in your entire car
+    If you need to change a specific car attribute (road, type, color, etc) in your entire car
     roster, you can use the "Replace" button found at the bottom right of the edit car attribute
     window. For example, if you wish to change the car road (reporting mark) attribute "UP" to "UPS"
     for all of your cars. Press the "Edit" button for any of your cars in the Cars window, and then
     press the "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in
     the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road
-    will now have "UPS" as their road.</p>
+    will now have "UPS" as their road.
 
+   <a name="DeleteUnusedAttributes" id="DeleteUnusedAttributes"></a>
+   <h4>Delete Unused Attributes</h4>
+   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute" and "Delete unused attributes".
+   The first will show a count in front of the menu box. The count is the number of'cars that have this particular
+   attribute. The delete option will prompt you to delete any attribute that hasn't been assigned to a car. 
+   
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
    To edit a car's load, press the Load "Edit" button in the <a href="#CarsEdit">Edit Car</a> window.
