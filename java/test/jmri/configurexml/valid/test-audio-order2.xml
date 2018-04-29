@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>11</minor>
+    <test>6</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor inverted="false">
+      <systemName>LS8</systemName>
+      <userName>LS8</userName>
+    </sensor>
+  </sensors>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <reporters class="jmri.jmrix.loconet.configurexml.LnReporterManagerXml">
+    <reporter>
+      <systemName>LR1</systemName>
+    </reporter>
+  </reporters>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="2:17 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix userName="Crossing Gate Control" enabled="yes">
+      <systemName>IX:AUTO:0003</systemName>
+      <userName>Crossing Gate Control</userName>
+      <logixConditional systemName="IX:AUTO:0003C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0003C2" order="1" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:AUTO:0003C1" userName="Crossing Gate 1 On" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C1</systemName>
+      <userName>Crossing Gate 1 On</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="LS8" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="Source Crossing Bell" data="64" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0003C2" userName="Crossing Gate 1 Off" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C2</systemName>
+      <userName>Crossing Gate 1 Off</userName>
+      <conditionalStateVariable operator="4" negated="no" type="2" systemName="LS8" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="Source Crossing Bell" data="65" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <audio class="jmri.jmrit.audio.configurexml.DefaultAudioManagerXml" distanceattenuated="yes">
+    <audiolistener systemName="IAL$">
+      <systemName>IAL$</systemName>
+      <userName>Default Audio Listener</userName>
+      <position x="0.0" y="0.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <orientation atX="0.0" atY="1.0" atZ="0.0" upX="0.0" upY="0.0" upZ="1.0" />
+      <gain>1.0</gain>
+      <metersperunit>1.0</metersperunit>
+    </audiolistener>
+    <audiobuffer systemName="IAB1">
+      <systemName>IAB1</systemName>
+      <userName>Buffer Crossing Bell</userName>
+      <url>program:resources/sounds/Crossing.wav</url>
+      <looppoint start="0" end="44557" />
+      <streamed>no</streamed>
+    </audiobuffer>
+    <audiosource systemName="IAS1">
+      <systemName>IAS1</systemName>
+      <userName>Source Crossing Bell</userName>
+      <position x="0.0" y="0.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB1</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" max="9999.99" />
+      <loops min="0" max="2" />
+      <fadetimes in="1000" out="1000" />
+      <positionrelative>no</positionrelative>
+    </audiosource>
+  </audio>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 04 14:43:48 CET 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Thu Apr 26 09:08:13 CEST 2018</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Apr 26 09:08:16 CEST 2018</date>
+      <filename>/C:/Users/Klaus/JMRI/Meine_JMRI_Bahngesellschaft/Reporters.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Apr 26 09:17:23 CEST 2018</date>
+      <filename>/C:/Users/Klaus/JMRI/Meine_JMRI_Bahngesellschaft/IX.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Fri Nov 04 13:43:47 GMT 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Fri Nov 04 14:17:41 GMT 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Thu Apr 26 09:17:42 CEST 2018</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.11.6ish+jenkins+20180426T0149Z+R4d8981a on Thu Apr 26 09:17:42 CEST 2018-->
+</layout-config>
