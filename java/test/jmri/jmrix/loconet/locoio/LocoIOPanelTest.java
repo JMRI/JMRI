@@ -37,7 +37,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
-        memo.dispose();
     }
 
     @Test
@@ -66,7 +65,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
-        memo.dispose();
     }
 
     @Test
@@ -96,7 +94,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
-        memo.dispose();
     }
 
     // The minimal setup for log4J

@@ -7,34 +7,32 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
- * Swing action to create and register a SerialPacketGenFrame object.
+ * Swing action to create and register a SerialPacketGenFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public class SerialPacketGenAction extends AbstractAction {
 
-    private MapleSystemConnectionMemo _memo = null;
+    private MapleSystemConnectionMemo memo = null;
 
-    public SerialPacketGenAction(String s, MapleSystemConnectionMemo memo) {
+    public SerialPacketGenAction(String s,MapleSystemConnectionMemo _memo) {
         super(s);
-        _memo = memo;
+        memo = _memo;
     }
 
-    public SerialPacketGenAction(MapleSystemConnectionMemo  memo) {
-        this(Bundle.getMessage("SendXCommandTitle", "Maple"), memo);
+    public SerialPacketGenAction(MapleSystemConnectionMemo _memo) {
+        this("Send Maple message",_memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        SerialPacketGenFrame f = new SerialPacketGenFrame(_memo);
+        SerialPacketGenFrame f = new SerialPacketGenFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: {}", ex.toString());
+            log.error("Exception: " + ex.toString());
         }
         f.setVisible(true);
     }
-
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
-
 }

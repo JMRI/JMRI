@@ -1,29 +1,26 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Block class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
  */
-public class BlockTest {
+public class BlockTest extends TestCase {
 
     /**
      * Normally, users create Block objects via a manager, but we test the
      * direct create here. If it works, we can use it for testing.
      */
-    @Test
     public void testDirectCreate() {
-        Block b = new Block("SystemName");
-        Assert.assertNotNull("Block Created",b);
+        new Block("SystemName");
     }
 
-    @Test
     public void testEquals() {
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -44,7 +41,6 @@ public class BlockTest {
         Assert.assertFalse(b1.equals(new StringBuffer("foo")));        
     }
 
-    @Test
     public void testHashCode() {
         Block b1 = new Block("SystemName1");
         
@@ -58,7 +54,6 @@ public class BlockTest {
         Assert.assertTrue(b1.hashCode() == b1a.hashCode());
     }
     
-    @Test
     public void testSensorAdd() {
         Block b = new Block("SystemName");
         b.setSensor("IS12");
@@ -66,7 +61,6 @@ public class BlockTest {
 
     static int count;
 
-    @Test
     public void testSensorInvoke() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
         count = 0;
@@ -82,14 +76,12 @@ public class BlockTest {
         Assert.assertEquals("count of detected changes", 1, count);
     }
 
-    @Test
     public void testValueField() {
         Block b = new Block("SystemName");
         b.setValue("string");
         Assert.assertEquals("Returned Object matches", "string", b.getValue());
     }
 
-    @Test
     public void testSensorSequence() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
         count = 0;
@@ -103,7 +95,6 @@ public class BlockTest {
         Assert.assertEquals("State with sensor inactive", Block.UNOCCUPIED, s.getState());
     }
 
-    @Test
     public void testCoding() {
         Assert.assertTrue("Block.OCCUPIED != Block.UNOCCUPIED", Block.OCCUPIED != Block.UNOCCUPIED);
         Assert.assertTrue("Block.OCCUPIED != Block.UNDETECTED", Block.OCCUPIED != Block.UNDETECTED);
@@ -118,7 +109,6 @@ public class BlockTest {
     }
 
     // test going active with only one neighbor
-    @Test
     public void testFirstGoActive() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
 
@@ -142,7 +132,6 @@ public class BlockTest {
 
     // Test going active with two neighbors, one active.
     // b2 is between b1 and b3. b1 contains a train
-    @Test
     public void testOneOfTwoGoesActive() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
 
@@ -185,7 +174,6 @@ public class BlockTest {
 
     // Test going active with two neighbors, both active.
     // b2 is between b1 and b3. 
-    @Test
     public void testTwoOfTwoGoesActive() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
 
@@ -231,7 +219,6 @@ public class BlockTest {
 
     // Test going active with two neighbors, both active, where FROM is a combination direction.
     // b2 is between b1 and b3. 
-    @Test
     public void testTwoOfTwoGoesActiveCombination() throws JmriException {
         SensorManager sm = new jmri.managers.InternalSensorManager();
 
@@ -274,15 +261,12 @@ public class BlockTest {
         Assert.assertEquals("Direction", Path.NORTH, b2.getDirection());
 
     }
-
-    @Test
     public void testReporterAdd() {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         Block b = new Block("SystemName");
         b.setReporter(rm.provideReporter("IR22"));
     }
 
-    @Test
     public void testReporterInvokeAll() {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
@@ -299,7 +283,6 @@ public class BlockTest {
         Assert.assertEquals("count of detected changes", 2, count);
     }
 
-    @Test
     public void testReporterInvokeCurrent() {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
@@ -321,7 +304,6 @@ public class BlockTest {
         Assert.assertEquals("count of detected changes", 2, count);
     }
 
-    @Test
     public void testReporterInvokeLast() {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
@@ -343,27 +325,32 @@ public class BlockTest {
         Assert.assertEquals("count of detected changes", 1, count);
     }
 
-    @Test
-    public void testGetLocoAddress(){
-        Block b = new Block("SystemName");
-        Assert.assertEquals("address", new DccLocoAddress(1234,LocoAddress.Protocol.DCC), b.getLocoAddress("1234 enter"));
+    // from here down is testing infrastructure
+    public BlockTest(String s) {
+        super(s);
     }
 
-    @Test
-    public void testGetLocoDirection(){
-        Block b = new Block("SystemName");
-        Assert.assertEquals("direction", jmri.PhysicalLocationReporter.Direction.ENTER, b.getDirection("1234 enter"));
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {BlockTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
     }
 
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(BlockTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         JUnitUtil.setUp();
     }
 
-    @After
-    public void tearDown() {
+    @Override
+    protected void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 

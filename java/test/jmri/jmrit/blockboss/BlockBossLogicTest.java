@@ -5,18 +5,17 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the BlockBossLogic class
  *
  * @author	Bob Jacobsen
  */
-public class BlockBossLogicTest {
+public class BlockBossLogicTest extends TestCase {
 
     protected void startLogic(BlockBossLogic b) {
         p.start();
@@ -37,14 +36,12 @@ public class BlockBossLogicTest {
     }
     
     // test creation
-    @Test
     public void testCreate() {
         BlockBossLogic p = new BlockBossLogic("IH2");
         Assert.assertEquals("driven signal name", "IH2", p.getDrivenSignal());
     }
 
     // test simplest block, just signal following
-    @Test
     public void testSimpleBlock() {
         setupSimpleBlock();
         startLogic(p);
@@ -69,7 +66,6 @@ public class BlockBossLogicTest {
     }
 
     // occupancy check
-    @Test
     public void testSimpleBlockOccupancy() throws jmri.JmriException {
         setupSimpleBlock();
         p.setSensor1("IS1");
@@ -87,7 +83,6 @@ public class BlockBossLogicTest {
     }
 
     // test signal following in distant simple block
-    @Test
     public void testSimpleBlockDistant() {
         setupSimpleBlock();
         p.setDistantSignal(true);
@@ -107,7 +102,6 @@ public class BlockBossLogicTest {
 
     // test signal following in limited simple block
     // (not particularly interesting, as next signal can't set red)
-    @Test
     public void testSimpleBlockLimited() {
         setupSimpleBlock();
         p.setLimitSpeed1(true);
@@ -124,7 +118,6 @@ public class BlockBossLogicTest {
     }
 
     // test signal following in distant, limited simple block
-    @Test
     public void testSimpleBlockDistantLimited() {
         setupSimpleBlock();
         p.setDistantSignal(true);
@@ -142,7 +135,6 @@ public class BlockBossLogicTest {
     }
 
     // test signal following in restricting simple block
-    @Test
     public void testSimpleBlockRestricting() throws jmri.JmriException {
         JUnitUtil.setBeanState(s1, Sensor.INACTIVE);
 
@@ -163,7 +155,6 @@ public class BlockBossLogicTest {
     }
 
     // if no next signal, next signal considered green
-    @Test
     public void testSimpleBlockNoNext() throws jmri.JmriException {
         s1.setState(Sensor.INACTIVE);
         
@@ -176,7 +167,6 @@ public class BlockBossLogicTest {
     }
 
     // if no next signal, next signal is considered green
-    @Test
     public void testSimpleBlockNoNextLimited() throws jmri.JmriException {
         s1.setState(Sensor.INACTIVE);
         
@@ -191,11 +181,10 @@ public class BlockBossLogicTest {
     }
 
     // check for basic not-fail if no signal name was set
-    @Test
     public void testSimpleBlockNoSignal() throws jmri.JmriException {
 
         try { 
-            new BlockBossLogic(null);
+            p = new BlockBossLogic(null);
         } catch (java.lang.IllegalArgumentException e) {
             // this is expected
         }
@@ -206,7 +195,6 @@ public class BlockBossLogicTest {
     boolean forceInterrupt = false;
 
     // test interruption
-    @Test
     public void testInterrupt() throws jmri.JmriException {
         s1.setState(Sensor.INACTIVE);
         
@@ -236,9 +224,8 @@ public class BlockBossLogicTest {
 
 
     // check that user names were preserved
-    @Test
     public void testUserNamesRetained() {
-        p = new BlockBossLogic("IH1");
+        BlockBossLogic p = new BlockBossLogic("IH1");
 
         p.setSensor1("1");
         p.setSensor2("2");
@@ -283,9 +270,8 @@ public class BlockBossLogicTest {
     }
 
     // check that system names were preserved
-    @Test
     public void testSystemNamesRetained() {
-        p = new BlockBossLogic("IH1");
+        BlockBossLogic p = new BlockBossLogic("IH1");
 
         p.setSensor1("IS1");
         p.setSensor2("IS2");
@@ -340,10 +326,12 @@ public class BlockBossLogicTest {
      * creates a set of turnouts, sensors and signals as common background for
      * testing
      */
-    @Before
-    public void setUp() {
+    @Override
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+
         // reset InstanceManager
-        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -381,8 +369,26 @@ public class BlockBossLogicTest {
         JUnitUtil.setBeanStateAndWait(h4, SignalHead.RED); // ensure starting point
     }
 
-    @After
-    public void tearDown() {
+    public BlockBossLogicTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        apps.tests.Log4JFixture.initLogging();
+        String[] testCaseName = {"-noloading", BlockBossLogicTest.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(BlockBossLogicTest.class);
+        return suite;
+    }
+
+    // The minimal setup for log4J
+    @Override
+    protected void tearDown() {
         stopLogic();
         // reset InstanceManager
         JUnitUtil.tearDown();

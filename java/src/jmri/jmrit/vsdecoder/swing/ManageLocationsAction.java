@@ -18,7 +18,7 @@ import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+/*
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -33,7 +33,8 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author Mark Underwood Copyright (C) 2011
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 public class ManageLocationsAction extends AbstractAction {
 
@@ -103,21 +104,25 @@ public class ManageLocationsAction extends AbstractAction {
             }
 
             // Handle Ops Locations
-            LocationManager lmgr = jmri.InstanceManager.getDefault(LocationManager.class);
+            LocationManager lmgr = LocationManager.instance();
             List<Location> locations = lmgr.getLocationsByIdList();
             opsMap = new HashMap<String, PhysicalLocation>();
-            log.debug("TableSize: {}", locations.size());
+            log.debug("TableSize : " + locations.size());
             Object[][] opsTable = new Object[locations.size()][6];
             i = 0;
             for (Location l : locations) {
-                log.debug("i: {}, MLA: {}, Name: {}, table: {}", i, l.getId(), l.getName(), java.util.Arrays.toString(opsTable[i]));
-                opsTable[i][0] = l.getName();
-                PhysicalLocation p = l.getPhysicalLocation();
-                if (p == PhysicalLocation.Origin) {
-                    opsTable[i][1] = false;
-                } else {
-                    opsTable[i][1] = true;
+                if (log.isDebugEnabled()) {
+                    log.debug("i = " + i + "MLA " + l.getId() + " Name: " + l.getName() + " table " + java.util.Arrays.toString(opsTable[i]));
                 }
+                PhysicalLocation p = l.getPhysicalLocation();
+                Boolean use = false;
+                if (p == PhysicalLocation.Origin) {
+                    use = false;
+                } else {
+                    use = true;
+                }
+                opsTable[i][0] = l.getName();
+                opsTable[i][1] = use;
                 opsTable[i][2] = p.getX();
                 opsTable[i][3] = p.getY();
                 opsTable[i][4] = p.getZ();
@@ -131,6 +136,7 @@ public class ManageLocationsAction extends AbstractAction {
         f.setExtendedState(Frame.NORMAL);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ManageLocationsAction.class);
+    private final static Logger log = LoggerFactory
+            .getLogger(ManageLocationsAction.class);
 
 }

@@ -38,7 +38,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
@@ -92,21 +91,21 @@ import org.slf4j.LoggerFactory;
  */
 public class PanelEditor extends Editor implements ItemListener {
 
-    private final JTextField nextX = new JTextField("0", 4);
-    private final JTextField nextY = new JTextField("0", 4);
+    private JTextField nextX = new JTextField("0", 4);
+    private JTextField nextY = new JTextField("0", 4);
 
-    private final JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
-    private final JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
-    private final JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
+    private JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
+    private JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
+    private JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
     //private JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
-    private final JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
-    private final JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
-    private final JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
-    private final JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
-    private final JComboBox<String> scrollableComboBox = new JComboBox<>();
+    private JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
+    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
+    private JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
+    private JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
+    private JComboBox<String> scrollableComboBox = new JComboBox<String>();
 
-    private final JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
-    private final JTextField nextLabel = new JTextField(10);
+    private JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
+    private JTextField nextLabel = new JTextField(10);
 
     private JComboBox<ComboBoxItem> _addIconBox;
 
@@ -166,7 +165,7 @@ public class PanelEditor extends Editor implements ItemListener {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex();
+                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
             }
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
@@ -197,7 +196,7 @@ public class PanelEditor extends Editor implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (deletePanel()) {
-                    dispose();
+                    dispose(true);
                 }
             }
         });
@@ -277,7 +276,7 @@ public class PanelEditor extends Editor implements ItemListener {
         }
 
         // Selection of the type of entity for the icon to represent is done from a combobox
-        _addIconBox = new JComboBox<>();
+        _addIconBox = new JComboBox<ComboBoxItem>();
         _addIconBox.setMinimumSize(new Dimension(75, 75));
         _addIconBox.setMaximumSize(new Dimension(200, 200));
         _addIconBox.addItem(new ComboBoxItem("RightTurnout"));
@@ -461,7 +460,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     static class ComboBoxItem {
 
-        private final String name;
+        private String name;
         private String bundleName;
 
         protected ComboBoxItem(String n) {
@@ -557,7 +556,7 @@ public class PanelEditor extends Editor implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (deletePanel()) {
-                    dispose();
+                    dispose(true);
                 }
             }
         });
@@ -990,7 +989,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     protected void copyItem(Positionable p) {
-        _multiItemCopyGroup = new ArrayList<>();
+        _multiItemCopyGroup = new ArrayList<Positionable>();
         _multiItemCopyGroup.add(p);
     }
 
@@ -1034,7 +1033,7 @@ public class PanelEditor extends Editor implements ItemListener {
         copy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _multiItemCopyGroup = new ArrayList<>();
+                _multiItemCopyGroup = new ArrayList<Positionable>();
                 // must make a copy or pasteItem() will hang
                 if (_selectionGroup != null) {
                     for (Positionable comp : _selectionGroup) {
@@ -1122,7 +1121,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;
         }
         if (_selectionGroup == null) {
-            _selectionGroup = new ArrayList<>();
+            _selectionGroup = new ArrayList<Positionable>();
         }
         boolean removed = false;
         for (int i = 0; i < _selectionGroup.size(); i++) {
@@ -1161,7 +1160,7 @@ public class PanelEditor extends Editor implements ItemListener {
             /*We make a copy of the selected items and work off of that copy
              as amendments are made to the multiItemCopyGroup during this process
              which can result in a loop*/
-            ArrayList<Positionable> _copyOfMultiItemCopyGroup = new ArrayList<>(_multiItemCopyGroup);
+            ArrayList<Positionable> _copyOfMultiItemCopyGroup = new ArrayList<Positionable>(_multiItemCopyGroup);
             Collections.copy(_copyOfMultiItemCopyGroup, _multiItemCopyGroup);
             for (Positionable comp : _copyOfMultiItemCopyGroup) {
                 copied = (JComponent) comp;

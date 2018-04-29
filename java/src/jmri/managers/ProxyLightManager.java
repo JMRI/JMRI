@@ -1,7 +1,5 @@
 package jmri.managers;
 
-import javax.annotation.Nonnull;
-
 import jmri.Light;
 import jmri.LightManager;
 
@@ -9,7 +7,7 @@ import jmri.LightManager;
  * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010, 2018
+ * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
  */
 public class ProxyLightManager extends AbstractProxyManager<Light>
@@ -43,10 +41,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     protected Light makeBean(int i, String systemName, String userName) {
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
-
-    @Override
-    /** {@inheritDoc} */
-    public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a

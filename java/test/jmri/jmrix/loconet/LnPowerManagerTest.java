@@ -12,8 +12,6 @@ import org.junit.Before;
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
 
-    private LocoNetSystemConnectionMemo memo;
-
     /**
      * service routines to simulate receiving on, off from interface
      */
@@ -68,14 +66,12 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     @Override
     public void setUp() {
         controller = new LocoNetInterfaceScaffold();
-        memo = new LocoNetSystemConnectionMemo(controller, null);
-        p = pwr = new LnPowerManager(memo);
+        p = pwr = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
     }
 
     @After
     public void tearDown() {
         pwr.dispose();
-        memo.dispose();
         JUnitUtil.tearDown();
     }
 

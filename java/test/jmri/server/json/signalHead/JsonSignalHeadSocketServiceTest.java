@@ -24,6 +24,12 @@ import org.junit.Test;
 public class JsonSignalHeadSocketServiceTest {
 
     @Test
+    public void testCtorSuccess() {
+        JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(new JsonMockConnection((DataOutputStream) null));
+        Assert.assertNotNull(service);
+    }
+
+    @Test
     public void testSignalHeadChange() {
         try {
             //create a signalhead for testing
@@ -99,16 +105,16 @@ public class JsonSignalHeadSocketServiceTest {
 
     }
 
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+
         JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-    }
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
 }

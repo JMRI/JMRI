@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user configuration of OakTree serial nodes.
+ * Frame for user configuration of Oaktree serial nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004, 2006
@@ -61,6 +61,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Constructor method
      */
     public NodeConfigFrame(OakTreeSystemConnectionMemo memo) {
+
         super();
         _memo = memo;
 
@@ -68,7 +69,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Initialize the config window.
+     * Initialize the config window
      */
     @Override
     public void initComponents() {
@@ -199,7 +200,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Add button
+     * Method to handle add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -243,7 +244,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Edit button
+     * Method to handle edit button
      */
     public void editButtonActionPerformed() {
         // Find Serial Node address
@@ -282,7 +283,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Delete button
+     * Method to handle delete button
      */
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
@@ -320,7 +321,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Done button
+     * Method to handle done button
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
@@ -349,7 +350,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Update button
+     * Method to handle update button
      */
     public void updateButtonActionPerformed() {
         // update node information
@@ -384,7 +385,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Handle Cancel button
+     * Method to handle cancel button
      */
     public void cancelButtonActionPerformed() {
         // Reset 
@@ -415,7 +416,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Set node parameters. The node must exist, and be in 'curNode'
+     * Method to set node parameters The node must exist, and be in 'curNode'
      * Also, the node type must be set and in 'nodeType'
      */
     void setNodeParameters() {

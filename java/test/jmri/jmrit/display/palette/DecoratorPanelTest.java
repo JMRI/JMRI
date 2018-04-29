@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JDialog;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -18,7 +19,7 @@ public class DecoratorPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        DecoratorPanel t = new DecoratorPanel(new EditorScaffold(), null);
+        DecoratorPanel t = new DecoratorPanel(new EditorScaffold(), new JDialog());
         Assert.assertNotNull("exists",t);
     }
 

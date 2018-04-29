@@ -19,18 +19,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI to configure communications links.
- * <p>
+ * <P>
  * This is really just a catalog of connections to classes within the systems.
  * Reflection is used to reduce coupling at load time.
- * <p>
+ * <P>
  * Objects of this class are based on an underlying ConnectionConfig
  * implementation, which in turn is obtained from the InstanceManager. Those
  * must be created at load time by the ConfigXml process, or in some Application
  * class.
- * <p>
+ * <P>
  * The classes referenced are the specific subclasses of
  * {@link jmri.jmrix.ConnectionConfig} which provides the methods providing data
  * to the configuration GUI, and responding to its changes.
+ * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
  */
@@ -46,7 +47,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     /**
      * Get access to a pane describing existing configuration information, or
      * create one if needed.
-     * <p>
+     * <P>
      * The index argument is used to connect the new pane to the right
      * communications info. A value of "1" means the first (primary) port, 2 is
      * the second, etc.
@@ -160,7 +161,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             try {
                 confPane.ccCurrent.dispose();
             } catch (RuntimeException ex) {
-                log.error("Error Occurred while disposing connection {}", ex.toString());
+                log.error("Error Occured while disposing connection {}", ex.toString());
             }
         }
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);

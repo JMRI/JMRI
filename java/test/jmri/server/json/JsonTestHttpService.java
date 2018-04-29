@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * JSON Test HTTP service.
@@ -41,20 +40,9 @@ public class JsonTestHttpService extends JsonHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
-        array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
-        array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
+        array.add(mapper.createObjectNode());
+        array.add(mapper.createObjectNode());
         return array;
-    }
-
-    @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
-        switch (type) {
-            case JsonTestServiceFactory.TEST:
-                // return an empty schema, which is valid, but accepts anything
-                return mapper.createObjectNode();
-            default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
-        }
     }
 
 }

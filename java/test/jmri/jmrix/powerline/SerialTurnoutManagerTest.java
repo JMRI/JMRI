@@ -67,19 +67,9 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     @Override
     @Test
-    public void testProvideName() {
-        // create
-        Turnout t = l.provide(getSystemName(getNumToTest1()));
-        // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
-    }
-
-    @Override
-    @Test
     public void testDefaultSystemName() {
         // create
-        Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
+        Turnout t = l.provideTurnout("PTB" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -88,7 +78,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     @Override
     @Test
     public void testUpperLower() {
-        Turnout t = l.provideTurnout(getSystemName(getNumToTest2()));
+        Turnout t = l.provideTurnout("PTB" + getNumToTest2());
 
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }

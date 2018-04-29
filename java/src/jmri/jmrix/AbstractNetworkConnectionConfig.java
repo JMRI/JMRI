@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -29,6 +30,8 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig {
+
+    private final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -53,7 +56,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
-        log.debug("init called for {}", name());
+        if (log.isDebugEnabled()) {
+            log.debug("init called for " + name());
+        }
         if (init) {
             return;
         }
@@ -170,7 +175,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
+                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -179,7 +184,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
+                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
@@ -192,7 +197,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
+                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -201,7 +206,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
+                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -251,7 +256,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JTextField portField = new JTextField(10);
     protected JLabel portFieldLabel;
 
-    protected JCheckBox showAutoConfig = new JCheckBox(Bundle.getMessage("AutoConfigLabel"));
+    protected JCheckBox showAutoConfig = new JCheckBox(rb.getString("AutoConfigLabel"));
     protected JTextField adNameField = new JTextField(15);
     protected JLabel adNameFieldLabel;
     protected JTextField serviceTypeField = new JTextField(15);
@@ -312,28 +317,28 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         NUMOPTIONS = NUMOPTIONS + options.size();
 
         hostNameField.setText(adapter.getHostName());
-        hostNameFieldLabel = new JLabel(Bundle.getMessage("HostFieldLabel"));
-        hostNameField.setToolTipText(Bundle.getMessage("HostFieldToolTip"));
+        hostNameFieldLabel = new JLabel(rb.getString("HostFieldLabel"));
+        hostNameField.setToolTipText(rb.getString("HostFieldToolTip"));
         if (adapter.getHostName() == null || adapter.getHostName().equals("")) {
             hostNameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".hostname"));
             adapter.setHostName(hostNameField.getText());
         }
 
-        portField.setToolTipText(Bundle.getMessage("PortFieldToolTip"));
+        portField.setToolTipText(rb.getString("PortFieldToolTip"));
         portField.setEnabled(true);
         portField.setText("" + adapter.getPort());
-        portFieldLabel = new JLabel(Bundle.getMessage("PortFieldLabel"));
+        portFieldLabel = new JLabel(rb.getString("PortFieldLabel"));
 
-        adNameField.setToolTipText(Bundle.getMessage("AdNameFieldToolTip"));
+        adNameField.setToolTipText(rb.getString("AdNameFieldToolTip"));
         adNameField.setEnabled(false);
         adNameField.setText("" + adapter.getAdvertisementName());
-        adNameFieldLabel = new JLabel(Bundle.getMessage("AdNameFieldLabel"));
+        adNameFieldLabel = new JLabel(rb.getString("AdNameFieldLabel"));
         adNameFieldLabel.setEnabled(false);
 
-        serviceTypeField.setToolTipText(Bundle.getMessage("ServiceTypeFieldToolTip"));
+        serviceTypeField.setToolTipText(rb.getString("ServiceTypeFieldToolTip"));
         serviceTypeField.setEnabled(false);
         serviceTypeField.setText("" + adapter.getServiceType());
-        serviceTypeFieldLabel = new JLabel(Bundle.getMessage("ServiceTypeFieldLabel"));
+        serviceTypeFieldLabel = new JLabel(rb.getString("ServiceTypeFieldLabel"));
         serviceTypeFieldLabel.setEnabled(false);
 
         showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));

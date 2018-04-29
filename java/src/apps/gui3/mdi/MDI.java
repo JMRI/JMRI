@@ -44,4 +44,8 @@ public class MDI extends apps.gui3.Apps3 {
         new MDI(args);
     }
 
+    @Override
+    protected ResourceBundle getActionModelResourceBundle() {
+        return null;
+    }
 }

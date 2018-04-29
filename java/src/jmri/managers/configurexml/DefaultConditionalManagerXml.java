@@ -263,8 +263,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             String ant = "";
             int logicType = Conditional.ALL_AND;
             if (condElem.getAttribute("antecedent") != null) {  // NOI18N
-                String antTemp = condElem.getAttribute("antecedent").getValue();  // NOI18N
-                ant = jmri.jmrit.conditional.ConditionalEditBase.translateAntecedent(antTemp, true);
+                ant = condElem.getAttribute("antecedent").getValue();  // NOI18N
             }
             if (condElem.getAttribute("logicType") != null) {  // NOI18N
                 logicType = Integer.parseInt(

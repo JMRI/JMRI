@@ -1,8 +1,6 @@
 package jmri.managers;
 
-import jmri.*;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,35 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
-
-    /** {@inheritDoc} */
-    @Override
-    public String getSystemName(int i) {
-        return "IT" + i;
-    }
+public class InternalTurnoutManagerTest {
 
     @Test
-    public void testAsAbstractFactory() {
-
-        // ask for a Turnout, and check type
-        Turnout tl = l.newTurnout("IT21", "my name");
-
-        Assert.assertTrue(null != tl);
-
-        // make sure loaded into tables
-        Assert.assertTrue(null != l.getBySystemName("IT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
-
+    public void testCTor() {
+        InternalTurnoutManager t = new InternalTurnoutManager();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.resetInstanceManager();
-        l = new InternalTurnoutManager();
     }
 
     @After

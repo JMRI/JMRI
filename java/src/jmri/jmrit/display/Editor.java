@@ -1059,7 +1059,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         break;
                     case 1:
                         if (deletePanel()) { // disposes everything
-                            dispose();
+                            dispose(true);
                         }
                         break;
                     case 2:
@@ -1090,7 +1090,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setName(getName());
             ed.init(getName());
 
-            ed._contents = (ArrayList<Positionable>) _contents.clone();
+            ed._contents = _contents;
             for (Positionable p : _contents) {
                 p.setEditor(ed);
                 ed.addToTarget(p);
@@ -1114,7 +1114,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 //            ed.pack();
             ed.setVisible(true);
             InstanceManager.getDefault(PanelMenu.class).addEditorPanel(ed);
-            dispose();
+            dispose(false);
             return ed;
         } catch (ClassNotFoundException cnfe) {
             log.error("changeView exception {}", cnfe.toString());
@@ -2636,19 +2636,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *
      * @param clear true to discard Positionables; false to retain Positionables
      *              for future use
-     * @deprecated since 4.11.5. use {@link #dispose()} instead.
      */
-    @Deprecated
     public void dispose(boolean clear) {
         log.debug("Editor delete and dispose done. clear= {}", clear);
-        dispose();
-    }
-
-    /**
-     * Dispose of the editor.
-     */
-    @Override
-    public void dispose() {
         Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
             JFrameItem frame = iter.next();
@@ -2663,9 +2653,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         InstanceManager.getDefault(PanelMenu.class).deletePanel(this);
         Editor.editors.remove(this);
         setVisible(false);
-        _contents.clear();
+        if (clear) {
+            _contents.clear();
+        }
         removeAll();
-        super.dispose();
+        this.dispose();
     }
 
     /*
@@ -2952,15 +2944,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(_pos.getEditor(), null);
+            _decorator = new DecoratorPanel(_pos.getEditor(), this);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
-            Dimension dim = panel.getPreferredSize();
-            JScrollPane sp = new JScrollPane(panel);
-            dim = new Dimension(dim.width +10, dim.height + 10);
-            sp.setPreferredSize(dim);
-            setContentPane(sp);
+            setContentPane(panel);
             pack();
             setLocationRelativeTo((Component) _pos);
         }
@@ -2975,12 +2963,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
                     _decorator.setAttributes(_pos);
                     if (_selectionGroup == null) {
-//                        _decorator.setAttributes(_pos);
                         setAttributes(util, _pos);
                     } else {
                         setSelectionsAttributes(util, _pos);
                     }
-                   dispose();
+                    dispose();
                 }
             });
             panel0.add(doneButton);
@@ -3020,13 +3007,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
         }
-        p.setBorder(new CompoundBorder(outlineBorder, borderMargin));
-        
         if (p instanceof PositionableLabel) {
             PositionableLabel pos = (PositionableLabel) p;
             if (pos.isText()) {
                 int deg = pos.getDegrees();
                 pos.rotate(0);
+                pos.setBorder(new CompoundBorder(outlineBorder, borderMargin));
                 if (deg == 0) {
                     p.setOpaque(newUtil.hasBackground());
                 } else {
@@ -3036,6 +3022,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else if (p instanceof PositionableJPanel) {
             p.setOpaque(newUtil.hasBackground());
             p.getTextComponent().setOpaque(newUtil.hasBackground());
+            p.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
         p.updateSize();
         p.repaint();

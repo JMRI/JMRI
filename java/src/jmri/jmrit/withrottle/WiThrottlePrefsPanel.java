@@ -11,8 +11,6 @@ import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -24,12 +22,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
-import jmri.profile.ProfileManager;
-import jmri.profile.ProfileUtils;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
-import jmri.util.zeroconf.ZeroConfService;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -50,8 +45,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JCheckBox routeCB;
     JCheckBox consistCB;
     JCheckBox startupCB;
-    JCheckBox useIPv4CB;
-    JCheckBox useIPv6CB;
     JCheckBox fastClockDisplayCB;
     ItemListener startupItemListener;
     int startupActionPosition = -1;
@@ -59,16 +52,11 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JRadioButton dccRB;
 
     WiThrottlePreferences localPrefs;
-    
-    Preferences zeroConfPrefs;
-    
+
     public WiThrottlePrefsPanel() {
         if (InstanceManager.getNullableDefault(WiThrottlePreferences.class) == null) {
             InstanceManager.store(new WiThrottlePreferences(FileUtil.getUserFilesPath() + "throttle" + File.separator + "WiThrottlePreferences.xml"), WiThrottlePreferences.class);
         }
-        zeroConfPrefs = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-                ZeroConfService.class,
-                false);
         localPrefs = InstanceManager.getDefault(WiThrottlePreferences.class);
         initGUI();
         setGUI();
@@ -81,7 +69,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         add(new JTitledSeparator(Bundle.getMessage("TitleFunctionsPanel")));
         add(functionsPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
-        add(networkPanel());
+        add(socketPortPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleControllersPanel")));
         add(allowedControllers());
     }
@@ -101,14 +89,12 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
             startupCB.setSelected(isStartUpAction());
         });
-        useIPv4CB.setSelected(isUseIPv4());
-        useIPv6CB.setSelected(isUseIPv6());
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
 
     /**
-     * set the local prefs to match the GUI Local prefs are independent from the
+     * set the local prefs to match the GUI Local prefs are independant from the
      * singleton instance prefs.
      *
      * @return true if set, false if values are unacceptable.
@@ -142,12 +128,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setDisplayFastClock(fastClockDisplayCB.isSelected());
         localPrefs.setAllowConsist(consistCB.isSelected());
         localPrefs.setUseWiFiConsist(wifiRB.isSelected());
-        zeroConfPrefs.putBoolean(ZeroConfService.IPv4, useIPv4CB.isSelected());
-        zeroConfPrefs.putBoolean(ZeroConfService.IPv6, useIPv6CB.isSelected());
-        try {
-            zeroConfPrefs.sync();
-        } catch (BackingStoreException ignore) {
-        }
 
         return didSet;
     }
@@ -175,21 +155,16 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         return panel;
     }
 
-    private JPanel networkPanel() {
-        JPanel nPanelRow1 = new JPanel();
-        JPanel nPanelRow2 = new JPanel();
-        JPanel nPanelRow3 = new JPanel();
-        JPanel nPanel = new JPanel(new GridLayout(3,1));
+    private JPanel socketPortPanel() {
+        JPanel SPPanel = new JPanel();
 
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
         JLabel label = new JLabel(Bundle.getMessage("LabelPort"));
         label.setToolTipText(port.getToolTipText());
-        nPanelRow1.add(port);
-        nPanelRow1.add(label);
-        nPanel.add(nPanelRow1);
-        
+        SPPanel.add(port);
+        SPPanel.add(label);
         startupCB = new JCheckBox(Bundle.getMessage("LabelStartup"), isStartUpAction());
         startupItemListener = (ItemEvent e) -> {
             this.startupCB.removeItemListener(this.startupItemListener);
@@ -211,18 +186,8 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
             this.startupCB.addItemListener(this.startupItemListener);
         };
         this.startupCB.addItemListener(this.startupItemListener);
-        nPanelRow2.add(startupCB);
-        nPanel.add(nPanelRow2);
-
-        useIPv4CB = new JCheckBox(Bundle.getMessage("LabelUseIPv4"), isUseIPv4());
-        useIPv4CB.setToolTipText(Bundle.getMessage("ToolTipUseIPv4"));
-        nPanelRow3.add(useIPv4CB);
-        useIPv6CB = new JCheckBox(Bundle.getMessage("LabelUseIPv6"), isUseIPv6());
-        useIPv6CB.setToolTipText(Bundle.getMessage("ToolTipUseIPv6"));
-        nPanelRow3.add(useIPv6CB);
-        nPanel.add(nPanelRow3);
-        
-        return nPanel;
+        SPPanel.add(startupCB);
+        return SPPanel;
     }
 
     private JPanel allowedControllers() {
@@ -336,12 +301,5 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private boolean isStartUpAction() {
         return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
                 .anyMatch((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName())));
-    }
-
-    private boolean isUseIPv4() {
-        return zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
-    }
-    private boolean isUseIPv6() {
-        return zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
     }
 }

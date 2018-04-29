@@ -151,7 +151,6 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     public void tearDown() {
         ltm.dispose();
         c = null;
-        memo.dispose();
         JUnitUtil.tearDown();
     }
 

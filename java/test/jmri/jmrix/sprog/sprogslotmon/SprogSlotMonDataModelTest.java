@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
-import jmri.jmrix.sprog.SprogConstants;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -24,8 +23,7 @@ public class SprogSlotMonDataModelTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        int numSlots = SprogSlotMonDataModel.getSlotCount();
-        SprogSlotMonDataModel action = new SprogSlotMonDataModel(numSlots, 8, m);
+        SprogSlotMonDataModel action = new SprogSlotMonDataModel(jmri.jmrix.sprog.SprogConstants.MAX_SLOTS, 8, m);
         Assert.assertNotNull("exists", action);
     }
 
@@ -41,7 +39,6 @@ public class SprogSlotMonDataModelTest {
     @After
     public void tearDown() {
         m.getSlotThread().interrupt();
-        stcs.dispose();
         JUnitUtil.tearDown();
     }
 }

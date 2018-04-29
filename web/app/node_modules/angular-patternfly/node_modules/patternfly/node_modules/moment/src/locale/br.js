@@ -75,7 +75,6 @@ export default moment.defineLocale('br', {
         future : 'a-benn %s',
         past : '%s \'zo',
         s : 'un nebeud segondennoù',
-        ss : '%d eilenn',
         m : 'ur vunutenn',
         mm : relativeTimeWithMutation,
         h : 'un eur',
@@ -87,7 +86,7 @@ export default moment.defineLocale('br', {
         y : 'ur bloaz',
         yy : specialMutationForYears
     },
-    dayOfMonthOrdinalParse: /\d{1,2}(añ|vet)/,
+    ordinalParse: /\d{1,2}(añ|vet)/,
     ordinal : function (number) {
         var output = (number === 1) ? 'añ' : 'vet';
         return number + output;

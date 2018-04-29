@@ -5,12 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide load and store functionality for configuring AcelaLightManagers.
- * <p>
+ * Provides load and store functionality for configuring AcelaLightManagers.
+ * <P>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
- *
+ * <P>
  * @author Dave Duchamp Copyright (c) 2006
+ *
  * @author Bob Coleman, Copyright (c) 2007, 2008 Based on Loconet example,
  * modified to establish Acela support.
  */

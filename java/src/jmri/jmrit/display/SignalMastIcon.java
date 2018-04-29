@@ -91,7 +91,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private void getIcons() {
-        _iconMap = new java.util.HashMap<>();
+        _iconMap = new java.util.HashMap<String, NamedIcon>();
         java.util.Enumeration<String> e = getSignalMast().getAppearanceMap().getAspects();
         boolean error = false;
         while (e.hasMoreElements()) {
@@ -414,8 +414,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
-                Bundle.getMessage("BeanNameSignalMast")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                 PickListModel.signalMastPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -427,16 +426,19 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
         _itemPanel.init(updateAction, _iconMap);
         _itemPanel.setSelection(getSignalMast());
-        initPaletteFrame(_paletteFrame, _itemPanel);
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
-        if (!_itemPanel.oktoUpdate()) {
-            return;
-        }
         setSignalMast(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
-        finishItemUpdate(_paletteFrame, _itemPanel);
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel.dispose();
+        _itemPanel = null;
+        invalidate();
     }
 
     /**

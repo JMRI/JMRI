@@ -824,8 +824,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void tearDown() {
         if (le != null) {
             JUnitUtil.dispose(le);
-            e = null;
-            le = null;
+            e = le = null;
         }
         JUnitUtil.tearDown();
     }

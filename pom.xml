@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.11.5-SNAPSHOT</version>
+    <version>4.9.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -21,7 +21,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.11</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.18</openlcb.version>
+        <openlcb.version>0.7.17</openlcb.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -259,11 +259,11 @@
                     </execution>
                 </executions>
                 <dependencies>
-                    <dependency>
-                        <groupId>net.java.dev.javacc</groupId>
-                        <artifactId>javacc</artifactId>
-                        <version>7.0.3</version>
-                    </dependency>
+                   <dependency>
+                      <groupId>net.java.dev.javacc</groupId>
+                      <artifactId>javacc</artifactId>
+                      <version>7.0.3</version>
+                   </dependency>
                 </dependencies>
             </plugin>
             <plugin>
@@ -464,7 +464,7 @@
                     <links>
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <!-- <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link> wrong format data -->
+                        <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>http://javacsv.sourceforge.net/</link>
                         <link>http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
@@ -505,24 +505,6 @@
                                 <File>jmri/util/swing/SamplePane.class</File>
                                 <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
-                                <File>jmri/util/web/BrowserFactory.class</File>
-                                <!-- pure interfaces and classes of constants -->
-                                <File>jmri/AddressedProgrammerManager.class</File>
-                                <File>jmri/PhysicalLocationReporter.class</File>
-                                <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
-                                <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
-                                <File>jmri/jmrit/audio/AudioSource.class</File>
-                                <File>jmri/jmrit/operations/locations/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
-                                <File>jmri/jmrit/operations/trains/Xml.class</File>
-                                <File>jmri/jmrit/ussctc/Lock.class</File>
-                                <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
-                                <File>jmri/server/json/roster/JsonRoster.class</File>
-                                <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
-                                <!-- deprecated classes -->
-                                <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -545,16 +527,6 @@
                                     <limits>
                                         <limit>
                                             <counter>CLASS</counter>
-                                            <value>COVEREDCOUNT</value>
-                                            <minimum>1</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                                <rule>
-                                    <element>SOURCEFILE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
                                             <value>COVEREDCOUNT</value>
                                             <minimum>1</minimum>
                                         </limit>
@@ -835,7 +807,7 @@
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.3</version>
         </dependency>
         <!--
         <dependency>
@@ -1008,29 +980,9 @@
             <artifactId>hid4java</artifactId>
             <version>0.5.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>0.1.16</version>
-        </dependency>
-	<dependency>
-	    <groupId>org.eclipse.paho</groupId>
-	    <artifactId>mqtt-client</artifactId>
-	    <version>0.4.0</version>
-	</dependency>
     </dependencies>
 
     <repositories>
-        <!-- Always try maven central first -->
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-        <!-- Automatic GitHub->Maven Dependency repository -->
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
         <!--
         Repository hosting NetBeans modules, especially APIs.
         Versions are based on IDE releases, e.g.: RELEASE691
@@ -1058,13 +1010,4 @@
         </repository>
     </repositories>
 
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>org.jmdns</groupId>
-    			<artifactId>jmdns</artifactId>
-    			<version>3.5.1</version>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
 </project>

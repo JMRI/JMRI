@@ -8,29 +8,27 @@ import org.junit.Test;
 
 /**
  *
- * @author Randall Wood Copyright 2018
+ * @author Paul Bender Copyright (C) 2017	
  */
 public class JsonWebSocketTest {
 
+    @Test
+    public void testCTor() {
+        JsonWebSocket t = new JsonWebSocket();
+        Assert.assertNotNull("exists",t);
+    }
+
+    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
-    @Test
-    public void testLifecycle() {
-        JsonWebSocket instance = new JsonWebSocket();
-        Assert.assertNull(instance.getConnection());
-        // until I can figure out how to create a Session, leave rest commented out
-        // since onOpen wants the Session to work and Session is abstract, and
-        // Eclipse.org is down
-        // instance.onOpen(new Session());
-        // Assert.assertNotNull(instance.getConnection().getSession());
-        // Assert.assertNull(instance.getConnection().getDataOutputStream());
-    }
+    // private final static Logger log = LoggerFactory.getLogger(JsonWebSocketTest.class);
+
 }

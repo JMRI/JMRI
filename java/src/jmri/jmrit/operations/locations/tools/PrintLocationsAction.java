@@ -122,17 +122,14 @@ public class PrintLocationsAction extends AbstractAction {
             if (printAnalysis.isSelected()) {
                 printAnalysisSelected();
             }
-            if (printErrorAnalysis.isSelected()) {
-                printErrorAnalysisSelected();
-            }
             // prevent NPE on close
             if (printLocations.isSelected() ||
                     printSchedules.isSelected() ||
                     printComments.isSelected() ||
                     printDetails.isSelected() ||
-                    printAnalysis.isSelected() ||
-                    printErrorAnalysis.isSelected()) {
-                writer.close(); // force completion of the printing
+                    printAnalysis.isSelected()) // force completion of the printing
+            {
+                writer.close();
             }
         } catch (IOException we) {
             log.error("Error printing PrintLocationAction: " + we);
@@ -258,8 +255,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (printSchedules.isSelected() ||
                 printComments.isSelected() ||
                 printDetails.isSelected() ||
-                printAnalysis.isSelected() ||
-                printErrorAnalysis.isSelected()) {
+                printAnalysis.isSelected()) {
             writer.write(FORM_FEED);
         }
     }
@@ -336,10 +332,7 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
         }
-        if (printComments.isSelected() ||
-                printDetails.isSelected() ||
-                printAnalysis.isSelected() ||
-                printErrorAnalysis.isSelected()) {
+        if (printComments.isSelected() || printDetails.isSelected() || printAnalysis.isSelected()) {
             writer.write(FORM_FEED);
         }
     }
@@ -388,9 +381,7 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
         }
-        if (printDetails.isSelected() ||
-                printAnalysis.isSelected() ||
-                printErrorAnalysis.isSelected()) {
+        if (printDetails.isSelected() || printAnalysis.isSelected()) {
             writer.write(FORM_FEED);
         }
     }
@@ -440,8 +431,7 @@ public class PrintLocationsAction extends AbstractAction {
                 printTrackInfo(location, stagings);
             }
         }
-        if (printAnalysis.isSelected() ||
-                printErrorAnalysis.isSelected()) {
+        if (printAnalysis.isSelected()) {
             writer.write(FORM_FEED);
         }
     }
@@ -507,11 +497,9 @@ public class PrintLocationsAction extends AbstractAction {
                 trackLength = getTrackLengthAcceptType(locations, type, Track.INTERCHANGE);
                 if (trackLength > 0) {
                     writer.write(
-                            SPACE +
-                                    MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"), new Object[]{type,
-                                            trackLength, Setup.getLengthUnit().toLowerCase(),
-                                            100 * totalTrackLength / trackLength}) +
-                                    NEW_LINE);
+                            SPACE + MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"), new Object[]{type,
+                                    trackLength, Setup.getLengthUnit().toLowerCase(),
+                                    100 * totalTrackLength / trackLength}) + NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
@@ -523,32 +511,13 @@ public class PrintLocationsAction extends AbstractAction {
                     trackLength = getTrackLengthAcceptType(locations, type, Track.STAGING);
                     if (trackLength > 0) {
                         writer.write(
-                                SPACE +
-                                        MessageFormat.format(Bundle.getMessage("TotalLengthStage"), new Object[]{type,
-                                                trackLength, Setup.getLengthUnit().toLowerCase(),
-                                                100 * totalTrackLength / trackLength}) +
-                                        NEW_LINE);
+                                SPACE + MessageFormat.format(Bundle.getMessage("TotalLengthStage"), new Object[]{type,
+                                        trackLength, Setup.getLengthUnit().toLowerCase(),
+                                        100 * totalTrackLength / trackLength}) + NEW_LINE);
                     } else {
                         writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                     }
                 }
-            }
-        }
-        if (printErrorAnalysis.isSelected()) {
-            writer.write(FORM_FEED);
-        }
-    }
-
-    private void printErrorAnalysisSelected() throws IOException {
-        writer.write(Bundle.getMessage("TrackErrorAnalysis") + NEW_LINE);
-        List<Location> locations = manager.getLocationsByNameList();
-        for (Location location : locations) {
-            if (_location != null && location != _location) {
-                continue;
-            }
-            writer.write(location.getName() + NEW_LINE);
-            for (Track track : location.getTrackByNameList(null)) {
-                writer.write(TAB + track.getName() + TAB + track.checkPickups() + NEW_LINE);
             }
         }
     }
@@ -565,12 +534,9 @@ public class PrintLocationsAction extends AbstractAction {
                 if (track.acceptsTypeName(carType)) {
                     trackLength = trackLength + track.getLength();
                     writer.write(
-                            SPACE +
-                                    SPACE +
-                                    MessageFormat.format(Bundle.getMessage("LocationTrackLength"), new Object[]{
-                                            location.getName(), track.getName(), track.getLength(),
-                                            Setup.getLengthUnit().toLowerCase()}) +
-                                    NEW_LINE);
+                            SPACE + SPACE + MessageFormat.format(Bundle.getMessage("LocationTrackLength"), new Object[]{
+                                    location.getName(), track.getName(), track.getLength(),
+                                    Setup.getLengthUnit().toLowerCase()}) + NEW_LINE);
                 }
             }
         }
@@ -672,8 +638,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
         } // does this location accept all types?
-        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length +
-                InstanceManager.getDefault(EngineTypes.class).getNames().length) {
+        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length + InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("LocationAcceptsAllTypes"));
         }
         buf.append(NEW_LINE);
@@ -711,8 +676,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
         } // does this track accept all types?
-        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length +
-                InstanceManager.getDefault(EngineTypes.class).getNames().length) {
+        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length + InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllTypes"));
         }
         buf.append(NEW_LINE);
@@ -950,8 +914,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
             op = Bundle.getMessage("Exclude") +
                     " " +
-                    (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() -
-                            track.getDestinationListSize()) +
+                    (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - track.getDestinationListSize()) +
                     " " +
                     Bundle.getMessage("Destinations") +
                     ":";
@@ -983,24 +946,15 @@ public class PrintLocationsAction extends AbstractAction {
         if (!track.getTrackType().equals(Track.SPUR) || track.getSchedule() == null) {
             return "";
         }
-        StringBuffer buf = new StringBuffer(TAB +
-                TAB +
-                MessageFormat
-                        .format(Bundle.getMessage("TrackScheduleName"), new Object[]{track.getScheduleName()}) +
-                NEW_LINE);
+        StringBuffer buf = new StringBuffer(TAB + TAB + MessageFormat
+                .format(Bundle.getMessage("TrackScheduleName"), new Object[]{track.getScheduleName()}) + NEW_LINE);
         if (track.getAlternateTrack() != null) {
-            buf.append(TAB +
-                    TAB +
-                    MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[]{track
-                            .getAlternateTrack().getName()}) +
-                    NEW_LINE);
+            buf.append(TAB + TAB + MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[]{track
+                    .getAlternateTrack().getName()}) + NEW_LINE);
         }
         if (track.getReservationFactor() != 100) {
-            buf.append(TAB +
-                    TAB +
-                    MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[]{track
-                            .getReservationFactor()}) +
-                    NEW_LINE);
+            buf.append(TAB + TAB + MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[]{track
+                    .getReservationFactor()}) + NEW_LINE);
         }
         return buf.toString();
     }
@@ -1018,7 +972,6 @@ public class PrintLocationsAction extends AbstractAction {
     JCheckBox printComments = new JCheckBox(Bundle.getMessage("PrintComments"));
     JCheckBox printDetails = new JCheckBox(Bundle.getMessage("PrintDetails"));
     JCheckBox printAnalysis = new JCheckBox(Bundle.getMessage("PrintAnalysis"));
-    JCheckBox printErrorAnalysis = new JCheckBox(Bundle.getMessage("PrintErrorAnalysis"));
 
     JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
@@ -1038,14 +991,12 @@ public class PrintLocationsAction extends AbstractAction {
             addItemLeft(pPanel, printComments, 0, 5);
             addItemLeft(pPanel, printDetails, 0, 7);
             addItemLeft(pPanel, printAnalysis, 0, 9);
-            addItemLeft(pPanel, printErrorAnalysis, 0, 11);
             // set defaults
             printLocations.setSelected(true);
             printSchedules.setSelected(true);
             printComments.setSelected(false);
             printDetails.setSelected(false);
             printAnalysis.setSelected(false);
-            printErrorAnalysis.setSelected(false);
 
             // add tool tips
             JPanel pButtons = new JPanel();

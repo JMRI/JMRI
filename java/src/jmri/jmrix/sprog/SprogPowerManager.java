@@ -3,8 +3,6 @@ package jmri.jmrix.sprog;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrix.AbstractMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PowerManager implementation for controlling SPROG layout power.
@@ -34,7 +32,6 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         checkTC();
         if (v == ON) {
             // configure to wait for reply
-            log.debug("setPower ON");
             waiting = true;
             onReply = PowerManager.ON;
             // send "Enable main track"
@@ -42,10 +39,9 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
             trafficController.sendSprogMessage(l, this);
         } else if (v == OFF) {
             // configure to wait for reply
-            log.debug("setPower OFF");
             waiting = true;
             onReply = PowerManager.OFF;
-//            firePropertyChange("Power", null, null);
+            firePropertyChange("Power", null, null);
             // send "Kill main track"
             SprogMessage l = SprogMessage.getKillMain();
             for (int i = 0; i < 3; i++) {
@@ -90,7 +86,6 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     @Override
     public void notifyReply(SprogReply m) {
         if (waiting) {
-            log.debug("Reply while waiting");
             power = onReply;
             firePropertyChange("Power", null, null);
         }
@@ -101,12 +96,10 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
     public void notifyMessage(SprogMessage m) {
         if (m.isKillMain()) {
             // configure to wait for reply
-            log.debug("Seen Kill Main");
             waiting = true;
             onReply = PowerManager.OFF;
         } else if (m.isEnableMain()) {
             // configure to wait for reply
-            log.debug("Seen Enable Main");
             waiting = true;
             onReply = PowerManager.ON;
         }
@@ -120,7 +113,4 @@ public class SprogPowerManager extends jmri.managers.AbstractPowerManager
         }
     }
 
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogPowerManager.class);
 }

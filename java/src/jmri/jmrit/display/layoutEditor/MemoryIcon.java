@@ -82,7 +82,6 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     setIcon(null);
                     _text = true;
                     _icon = false;
-                    setAttributes(getPopupUtility(), this);
                     updateSize();
                     return;
                 } else if (val instanceof javax.swing.ImageIcon) {

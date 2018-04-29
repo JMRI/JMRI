@@ -30,7 +30,6 @@ import org.junit.runners.Suite;
         SerialSensorTest.class,
         BundleTest.class,
         jmri.jmrix.maple.swing.PackageTest.class,
-        jmri.jmrix.maple.simulator.PackageTest.class
 })
 
 /**

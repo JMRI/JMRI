@@ -19,7 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @since 4.3.6
+ * @since 3.3.1
  */
 public class Bundle extends jmri.jmrix.secsi.Bundle {
 
@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrix.secsi.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return getBundle().handleGetMessage(key);
+        return b.handleGetMessage(key);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Bundle extends jmri.jmrix.secsi.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return getBundle().handleGetMessage(key, subs);
+        return b.handleGetMessage(key, subs);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Bundle extends jmri.jmrix.secsi.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return getBundle().handleGetMessage(locale, key, subs);
+        return b.handleGetMessage(locale, key, subs);
     }
 
 
@@ -86,7 +86,8 @@ public class Bundle extends jmri.jmrix.secsi.Bundle {
         return name;
     }
 
-    protected static jmri.Bundle getBundle() {
+    @Override
+    protected jmri.Bundle getBundle() {
         return b;
     }
 

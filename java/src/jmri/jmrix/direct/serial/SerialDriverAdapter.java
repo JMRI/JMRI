@@ -50,7 +50,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
-    justification="this is for skip-chars while loop: no matter how many, we're skipping")
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -74,8 +74,10 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                     log.warn("trouble setting 16457 baud");
                     activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                     javax.swing.JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("DirectBaudError", activeSerialPort.getBaudRate()),
-                            Bundle.getMessage("ErrorConnectionTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                            "Failed to set the correct baud rate. Port is set to "
+                            + activeSerialPort.getBaudRate()
+                            + " baud. See the README file for more info.",
+                            "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -83,8 +85,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
             configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
-                    activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialInStream = activeSerialPort.getInputStream();
@@ -93,7 +95,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
             // port is open, start work on the stream
             // purge contents, if any
             int count = serialInStream.available();
-            log.debug("input stream shows {} bytes available", count);
+            log.debug("input stream shows " + count + " bytes available");
             while (count > 0) {
                 serialInStream.skip(count);
                 count = serialInStream.available();
@@ -126,14 +128,10 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      */
     @Override
     public void configure() {
-        // connect to the traffic controller
-        TrafficController tc = new TrafficController((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo());
+        TrafficController tc = new TrafficController();
         ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
         // connect to the traffic controller
         tc.connectPort(this);
-
-        // do the common manager config
-        ((jmri.jmrix.direct.DirectSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
     }
 
     // base class methods for the PortController interface
@@ -174,7 +172,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{Bundle.getMessage("Baud19200")};
+        return new String[]{"19,200 bps"};
     }
 
     // private control members

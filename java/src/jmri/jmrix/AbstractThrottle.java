@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
  * original LnThrottleManager implementation.
- * <p>
+ * <P>
  * Note that this implements DccThrottle, not Throttle directly, so it has some
  * DCC-specific content.
  *

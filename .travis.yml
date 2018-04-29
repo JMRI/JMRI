@@ -6,7 +6,6 @@ addons:
     - graphviz
     - libalut0
     - dbus-x11
-    - tidy
   firefox: latest
   chrome: stable
 
@@ -45,21 +44,18 @@ sudo: required
 env:
   global:
   # false to silence most maven output; true to catch tests that do not complete
-  - PRINT_SUMMARY=false
+  - PRINT_SUMMARY=true
   - MAVEN_OPTS=-Xmx1536m
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
   matrix:
-  - HEADLESS=true STATIC=true
-  - HEADLESS=true STATIC=false
-  - HEADLESS=false STATIC=false
+  - HEADLESS=true
+  - HEADLESS=false
 
 matrix:
   exclude:
   - os: osx
-    env: HEADLESS=true STATIC=true
-  - os: osx
-    env: HEADLESS=true STATIC=false
+    env: HEADLESS=true
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi

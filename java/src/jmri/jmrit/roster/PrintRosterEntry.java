@@ -88,15 +88,21 @@ public class PrintRosterEntry implements PaneContainer {
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
 
-        log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
+        if (log.isDebugEnabled()) {
+            log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
+        }
         // locate a decoder like that.
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
-        log.debug("found {} matches", l.size());
+        if (log.isDebugEnabled()) {
+            log.debug("found {} matches", l.size());
+        }
         if (l.isEmpty()) {
-            log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
+            log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
             l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
-            log.debug("found {} matches without family key", l.size());
+            if (log.isDebugEnabled()) {
+                log.debug("found {} matches without family key", l.size());
+            }
         }
         DecoderFile d = null;
         if (l.size() > 0) {
@@ -210,7 +216,9 @@ public class PrintRosterEntry implements PaneContainer {
         }
         log.debug("List size length: {}", _paneList.size());
         for (int i = 0; i < _paneList.size(); i++) {
-            log.debug("start printing page {}", i);
+            if (log.isDebugEnabled()) {
+                log.debug("start printing page " + i);
+            }
             PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             if (pane.includeInPrint()) {
                 pane.printPane(w);
@@ -257,7 +265,7 @@ public class PrintRosterEntry implements PaneContainer {
             final PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             pane.includeInPrint(false);
             final JCheckBox item = new JCheckBox(_paneList.get(i).getName());
-            // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 146)
+            // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 164)
             printList.put(item, pane);
             item.addActionListener(new java.awt.event.ActionListener() {
                 @Override
@@ -336,7 +344,7 @@ public class PrintRosterEntry implements PaneContainer {
                 w.write(s, 0, s.length());
             }
         } catch (IOException e) {
-            log.warn("error during printing: ", e);
+            log.warn("error during printing: " + e);
         }
         _rosterEntry.printEntry(w);
         w.setFontStyle(Font.PLAIN);

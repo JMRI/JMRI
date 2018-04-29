@@ -224,9 +224,7 @@ public class SerialAddress {
 
     /**
      * Public static method to parse a system name and return the bit number.
-     * Notes: Bits are numbered from 1.
-     *
-     * @return 0 if an error is found
+     * Notes: Bits are numbered from 1. If an error is found, 0 is returned.
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the System Name leader characters

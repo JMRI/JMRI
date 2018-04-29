@@ -33,8 +33,14 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @Test
     public void testAsAbstractFactory() {
+        // create and register the manager object
+        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        jmri.InstanceManager.setLightManager(xlm);
+
         // ask for a Light, and check type
-        Light tl = l.newLight("XL21", "my name");
+        LightManager lm = jmri.InstanceManager.lightManagerInstance();
+
+        Light tl = lm.newLight("XL21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received light value " + tl);
@@ -43,14 +49,14 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("XL21"));
+            log.debug("by system name: " + lm.getBySystemName("XL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   " + lm.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != l.getBySystemName("XL21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != lm.getBySystemName("XL21"));
+        Assert.assertTrue(null != lm.getByUserName("my name"));
     }
 
     @Test

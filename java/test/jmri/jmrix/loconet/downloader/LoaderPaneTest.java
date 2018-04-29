@@ -47,7 +47,6 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @After
     public void tearDown() {
-        memo.dispose();
         JUnitUtil.tearDown();
     }
 

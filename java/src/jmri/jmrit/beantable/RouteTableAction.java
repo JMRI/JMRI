@@ -54,7 +54,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a Route Table.
+ * Swing action to create and register a Route Table
  *
  * Based in part on SignalHeadTableAction.java by Bob Jacobsen
  *
@@ -63,12 +63,15 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
+ *
  */
 public class RouteTableAction extends AbstractTableAction<Route> {
 
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+
     /**
      * Create an action with a specific title.
-     * <p>
+     * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -88,12 +91,12 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Routes.
+     * of Routes
      */
     @Override
     protected void createModel() {
 
-        // late initialization of string "constants" so that TurnoutManager
+        // late initialization of string "constants" so that TurnoutManager 
         // has time to be fully configured
         SET_TO_CLOSED = Bundle.getMessage("Set") + " "
                 + InstanceManager.turnoutManagerInstance().getClosedText();
@@ -347,7 +350,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 return Bundle.getMessage("BeanNameRoute");
             }
 
-            /*Routes do not get references by other parts of the code, we therefore
+            /*Routes do not get references by other parts of the code, we therefore 
              do not need to worry about controlling how the username is changed
              */
             @Override
@@ -819,7 +822,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             pb.add(createButton);
             createButton.addActionListener(this::createPressed);
             createButton.setToolTipText(Bundle.getMessage("TooltipCreateRoute"));
-            // Edit Route button
+            // Edit Route button 
             pb.add(editButton);
             editButton.addActionListener(this::editPressed);
             editButton.setToolTipText(Bundle.getMessage("TooltipEditRoute"));
@@ -897,7 +900,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Initialize list of included turnout positions.
+     * Initialize list of included turnout positions
      */
     void initializeIncludedList() {
         _includedTurnoutList = new ArrayList<>();
@@ -915,7 +918,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Respond to the Add button.
+     * Responds to the Add button.
      *
      * @param e the action event
      */
@@ -948,10 +951,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 // Route with this user name already exists
                 status1.setText(Bundle.getMessage("LightError8"));
                 return false;
+            } else {
+                return true;
             }
         }
         // check if a Route with this system name already exists
-        sName = jmri.InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
         g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
@@ -975,7 +979,6 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 return null;
             }
             try {
-                sName = jmri.InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
                 g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
@@ -991,7 +994,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Set the Turnout information for adding or editing.
+     * Sets the Turnout information for adding or editing.
      *
      * @param g the route to add the turnout to
      * @return number of turnouts in route
@@ -1019,7 +1022,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Set the Sensor, Turnout, and delay control information for adding or
+     * Sets the Sensor, Turnout, and delay control information for adding or
      * editing.
      *
      * @param g the route to configure
@@ -1081,7 +1084,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     JFileChooser soundChooser = null;
 
     /**
-     * Set the sound file.
+     * Set the sound file
      */
     void setSoundPressed() {
         if (soundChooser == null) {
@@ -1103,7 +1106,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     JFileChooser scriptChooser = null;
 
     /**
-     * Set the script file.
+     * Set the script file
      */
     void setScriptPressed() {
         if (scriptChooser == null) {
@@ -1122,7 +1125,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Respond to the Edit button.
+     * Responds to the Edit button.
      *
      * @param e the action event
      */
@@ -1225,7 +1228,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         // set up additional Delay
         timeDelay.setValue(g.getRouteCommandDelay());
-        // begin with showing all Turnouts
+        // begin with showing all Turnouts   
         // set up buttons and notes
         status1.setText(updateInst);
         status2.setText(cancelInst);
@@ -1244,7 +1247,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }   // editPressed
 
     /**
-     * Respond to the Delete button.
+     * Responds to the Delete button.
      *
      * @param e the action event
      */
@@ -1257,7 +1260,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Respond to the Update button - update to Route Table.
+     * Responds to the Update button - update to Route Table.
      *
      * @param e        the action event
      * @param newRoute true if a new route; false otherwise
@@ -1296,7 +1299,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     void finishUpdate() {
         // move to show all Turnouts if not there
         cancelIncludedOnly();
-        // Provide feedback to user
+        // Provide feedback to user 
         // switch GUI back to selection mode
         status2.setText(editInst);
         status2.setVisible(true);
@@ -1343,7 +1346,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
 /////////////////////// Export to Logix ////////////////////////////
     /**
-     * Respond to the Export button - export to Logix.
+     * Responds to the Export button - export to Logix.
      *
      * @param e the action event
      */
@@ -1475,7 +1478,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
         //String sensorSystemName = turnoutsAlignedSensor.getText();
         if (turnoutsAlignedSensor.getSelectedBean() != null) {
-            // verify name (logix doesn't use "provideXXX")
+            // verify name (logix doesn't use "provideXXX") 
             //Sensor s = turnoutsAlignedSensor.getSelectedBean();
             /*if (s == null) {
              s = InstanceManager.sensorManagerInstance().getBySystemName(sensorSystemName);
@@ -1524,7 +1527,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         ///////////////// Set lock turnout information if there is any //////////////////////////
         if (cLockTurnout.getSelectedBean() != null) {
             String turnoutLockSystemName = cLockTurnout.getSelectedDisplayName();
-            // verify name (logix doesn't use "provideXXX")
+            // verify name (logix doesn't use "provideXXX") 
             cSystemName = logixSystemName + "1L"; // NOI18N
             cUserName = turnoutLockSystemName + "L " + uName; // NOI18N
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
@@ -1632,7 +1635,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
-                // throw without creating any
+                // throw without creating any 
                 throw new IllegalArgumentException("user input no good");
             }
             c.setStateVariables(varList);
@@ -1682,7 +1685,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
-                // throw without creating any
+                // throw without creating any 
                 throw new IllegalArgumentException("user input no good");
             }
             c.setStateVariables(varList);
@@ -1746,7 +1749,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 }
                 type = Conditional.TYPE_SENSOR_INACTIVE;
                 break;
-            case Route.ONCHANGE:  // route fires if sensor goes active or inactive
+            case Route.ONCHANGE:  // route fires if sensor goes active or inactive 
                 if (makeVeto || !onChange) {
                     return null;
                 }
@@ -1839,7 +1842,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Cancel Add mode.
+     * Cancels Add mode.
      */
     void cancelAdd() {
         curRoute = null;
@@ -1880,7 +1883,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Cancel included Turnouts only option
+     * Cancels included Turnouts only option
      */
     void cancelIncludedOnly() {
         if (!showAll) {
@@ -2092,9 +2095,9 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
 
-    // This group will get runtime updates to system-specific contents at
+    // This group will get runtime updates to system-specific contents at 
     // the start of buildModel() above.  This is done to prevent
-    // invoking the TurnoutManager at class construction time,
+    // invoking the TurnoutManager at class construction time, 
     // when it hasn't been configured yet
     private static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");

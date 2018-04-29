@@ -7,7 +7,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author Randall Wood Copyright 2016, 2018
+ * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
 public class JsonPowerServiceFactory implements JsonServiceFactory<JsonPowerHttpService, JsonPowerSocketService> {
@@ -21,7 +21,8 @@ public class JsonPowerServiceFactory implements JsonServiceFactory<JsonPowerHttp
 
     @Override
     public String[] getTypes() {
-        return new String[]{POWER};
+        String[] types = {POWER};
+        return types;
     }
 
     @Override

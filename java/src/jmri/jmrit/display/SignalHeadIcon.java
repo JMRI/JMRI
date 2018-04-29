@@ -73,7 +73,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         }
         namedHead = sh;
         if (namedHead != null) {
-            _iconMap = new HashMap<>();
+            _iconMap = new HashMap<String, NamedIcon>();
             _validKey = getSignalHead().getValidStateNames();
             displayState(headState());
             getSignalHead().addPropertyChangeListener(this, namedHead.getName(), "SignalHead Icon");
@@ -397,8 +397,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
-                Bundle.getMessage("BeanNameSignalHead")));
+        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", getFamily(),
                 PickListModel.signalHeadPickModelInstance(), _editor); //NOI18N
         ActionListener updateAction = new ActionListener() {
@@ -409,7 +408,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         };
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
         // duplicate _iconMap map with unscaled and unrotated icons
-        HashMap<String, NamedIcon> map = new HashMap<>();
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -422,13 +421,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         }
         _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSignalHead());
-        initPaletteFrame(_paletteFrame, _itemPanel);
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
-        if (!_itemPanel.oktoUpdate()) {
-            return;
-        }
         _saveMap = _iconMap;  // setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
@@ -436,7 +434,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         if (map1 != null) {
             // map1 may be keyed with NamedBean names.  Convert to local name keys.
             // However perhaps keys are local - See above
-            Hashtable<String, NamedIcon> map2 = new Hashtable<>();
+            Hashtable<String, NamedIcon> map2 = new Hashtable<String, NamedIcon>();
             Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
@@ -446,7 +444,12 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             setIcons(map2);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
-        finishItemUpdate(_paletteFrame, _itemPanel);
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel.dispose();
+        _itemPanel = null;
+        invalidate();
     }
 
     @Override
@@ -488,7 +491,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * and rotation.
      */
     private void setIcons(Hashtable<String, NamedIcon> map) {
-        HashMap<String, NamedIcon> tempMap = new HashMap<>();
+        HashMap<String, NamedIcon> tempMap = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();

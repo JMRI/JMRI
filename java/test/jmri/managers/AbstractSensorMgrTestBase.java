@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager, Sensor> {
+public abstract class AbstractSensorMgrTestBase {
 
     // implementing classes must provide these abstract members:
     //
@@ -28,6 +28,8 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
+
+    protected SensorManager l = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -59,42 +61,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    // Quite a few tests overload this to create their own name process
-    @Test
-    public void testProvideName() {
-        // create
-        Sensor t = l.provide("" + getNumToTest1());
-        // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
-    }
-
-    @Test
-    public void testDelete() {
-        // create
-        Sensor t = l.provide(getSystemName(getNumToTest1()));
-        
-        // two-pass delete, details not really tested
-        
-        try {
-            l.deleteBean(t, "CanDelete");
-        } catch (java.beans.PropertyVetoException e) {}
-        try {
-            l.deleteBean(t, "DoDelete");
-        } catch (java.beans.PropertyVetoException e) {}
-        
-        // check for bean
-        Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
-        // check for lengths
-        Assert.assertEquals(0, l.getNamedBeanList().size());
-        Assert.assertEquals(0, l.getNamedBeanSet().size());
-        Assert.assertEquals(0, l.getSystemNameAddedOrderList().size());
-        Assert.assertEquals(0, l.getSystemNameList().size());
-        Assert.assertEquals(0, l.getSystemNameArray().length);
-        Assert.assertEquals(0, l.getObjectCount());
-    }
-
-
     @Test
     public void testDefaultSystemName() {
         // create
@@ -107,15 +73,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
         l.provideSensor("");
-    }
-
-    @Test
-    public void testSettings() {
-        l.setDefaultSensorDebounceGoingActive(1234L);
-        Assert.assertEquals(1234L, l.getDefaultSensorDebounceGoingActive());
-
-        l.setDefaultSensorDebounceGoingInActive(12345L);
-        Assert.assertEquals(12345L, l.getDefaultSensorDebounceGoingInActive());
     }
 
     @Test
@@ -186,5 +143,4 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     protected int getNumToTest2() {
         return 7;
     }
-
 }

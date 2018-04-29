@@ -105,7 +105,7 @@ public class SerialNodeTest extends TestCase {
     protected void setUp() {
         JUnitUtil.setUp();
         memo = new OakTreeSystemConnectionMemo();
-        memo.setTrafficController(new SerialTrafficControlScaffold(memo));
+        memo.setTrafficController(new SerialTrafficControlScaffold());
         b = new SerialNode(memo);
     }
 

@@ -28,12 +28,12 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     /**
      * Create a new AbstractMRMessage instance of a given byte size.
      *
-     * @param i number of elements in message
+     * @param i number of elements
      */
     public AbstractMRMessage(int i) {
         this();
         if (i < 1) {
-            log.error("invalid length {} in call to ctor", i);
+            log.error("invalid length in call to ctor");
             throw new IllegalArgumentException("invalid length in call to ctor");
         }
         _nDataChars = i;

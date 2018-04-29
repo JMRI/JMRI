@@ -6,8 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Using DecoderPro</title>
-  <!-- Style -->
+  <title>Using DecoderPro</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,8 +14,7 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
@@ -34,7 +32,7 @@
 
       <h1>Using DecoderPro&reg;</h1>
 
-      <a name="Setting_Up"></a><h2>What are the Programming
+      <h2><a name="Setting Up"></a>What are the Programming
       Modes?</h2>
 
       <div align="right">
@@ -226,9 +224,7 @@
 
         <p><a href="index.shtml#Basic%20Programmer">Back to
         Index</a><a href="index.shtml#Basic%20Programmer"></a></p>
-      </div>
-
-      <!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

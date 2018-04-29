@@ -46,6 +46,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super(makeSystemName(lowTO, highTO), userName);
         this.lowTurnout = lowTO;
         this.highTurnout = highTO;
+        systemName = makeSystemName(lowTO, highTO);
         init();
     }
 
@@ -61,6 +62,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super(makeSystemName(lowTO, highTO));
         this.lowTurnout = lowTO;
         this.highTurnout = highTO;
+        systemName = makeSystemName(lowTO, highTO);
         init();
     }
 
@@ -79,6 +81,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super(sname, userName);
         this.lowTurnout = lowTO;
         this.highTurnout = highTO;
+        systemName = sname;
         init();
     }
 
@@ -95,6 +98,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super(sname);
         this.lowTurnout = lowTO;
         this.highTurnout = highTO;
+        systemName = sname;
         init();
     }
 
@@ -108,6 +112,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super("LH" + pNumber, userName);
         this.lowTurnout = makeHandle(pNumber);
         this.highTurnout = makeHandle(pNumber + 1);
+        systemName = "LH" + pNumber;
         init();
     }
 
@@ -151,6 +156,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super("LH" + pNumber);
         this.lowTurnout = makeHandle(pNumber);
         this.highTurnout = makeHandle(pNumber + 1);
+        systemName = "LH" + pNumber;
         init();
     }
 
@@ -166,6 +172,12 @@ public class SE8cSignalHead extends DefaultSignalHead {
         mAppearance = DARK;  // start turned off
         updateOutput();
     }
+
+    @Override
+    public String getSystemName() {
+        return systemName;
+    }
+    String systemName;
 
     /**
      * Type-specific routine to handle output to the layout hardware.

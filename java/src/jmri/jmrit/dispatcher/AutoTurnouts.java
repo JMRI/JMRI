@@ -193,11 +193,8 @@ public class AutoTurnouts {
                 nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
                 nextBlockSeqNum = curBlockSeqNum - 1;
             }
-            if ((nextBlock == null &&
-                    ((!at.isAllocationReversed() && curBlock != at.getEndBlock()) ||
-                            (at.isAllocationReversed() && curBlock != at.getStartBlock())))) {
-                log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",
-                        curBlock.getUserName());
+            if ((nextBlock == null) && (curBlock != at.getEndBlock())) {
+                log.error("Error in block sequence numbers when setting/checking turnouts");
                 return false;
             }
         }

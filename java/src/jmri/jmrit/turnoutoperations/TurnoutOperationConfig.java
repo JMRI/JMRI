@@ -42,7 +42,7 @@ public class TurnoutOperationConfig extends JPanel {
      */
     static public TurnoutOperationConfig getConfigPanel(TurnoutOperation op) {
         TurnoutOperationConfig config = null;
-        String[] path = op.getClass().getName().split("\\.");
+        String[] path = jmri.util.StringUtil.split(op.getClass().getName(), ".");
         String configName = "jmri.jmrit.turnoutoperations." + path[path.length - 1] + "Config";
         try {
             Class<?> configClass = Class.forName(configName);

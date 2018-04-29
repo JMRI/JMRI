@@ -13,26 +13,26 @@ import org.slf4j.LoggerFactory;
  * The variable used in the antecedent (the 'if' part) of the Conditional.
  * proposition. The states of ConditionalVariables and logic expression of the
  * antecedent determine the state of the Conditional.
- * <p>
+ * <P>
  * ConditionalVariable objects are fully mutable, so use the default equals()
  * operator that checks for identical objects, not identical contents.
  *
  * This file is part of JMRI.
- * <p>
+ * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
+ * <P>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
+ * <P>
  * @author Pete Cressman Copyright (C) 2009
  * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariable {
 
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public static final int NUM_COMPARE_OPERATIONS = 5;
     public static final int LESS_THAN = 1;
@@ -57,22 +57,16 @@ public class ConditionalVariable {
     //private NamedBeanHandle<Sensor> _namedSensorBean = null;
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
-    // a listener was installed for this device and thus trigger calculation of the Conditional.
+    // a listener was installed for this device and thus trigger calcuation of the Conditional.
     // Now named '_triggersActions' because listeners are always installed for activated Logix
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
     private int _state = NamedBean.UNKNOWN;        // tri-state
 
-    /**
-     * Create a blank ConditionalVariable, to be filled in later.
-     */
     public ConditionalVariable() {
     }
 
-    /**
-     * Create a ConditionalVariable with a set of given properties.
-     */
     public ConditionalVariable(boolean not, int opern, int type, String name, boolean trigger) {
         _not = not;
         _opern = opern;
@@ -265,7 +259,7 @@ public class ConditionalVariable {
                     bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(_name);
                     break;
                 default:
-                    log.error("Type {} not set for {}", itemType, _name);
+                    log.error("Type " + itemType + " not set for " + _name);
             }
 
             //Once all refactored, we should probably register an error if the bean is returned null.
@@ -389,11 +383,6 @@ public class ConditionalVariable {
         return getTestTypeString(_type);
     }
 
-    /**
-     * Provide a localized text for screen display of the logic operator.
-     *
-     * @return translated string (from jmri.NamedBeanBundle.properties)
-     */
     public String getOpernString() {
         switch (_opern) {
             case Conditional.OPERATOR_AND:
@@ -427,7 +416,7 @@ public class ConditionalVariable {
                 //Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
                 Sensor sn = (Sensor) getBean();
                 if (sn == null) {
-                    log.error("invalid sensor name= \"{}\" in state variable", getName());
+                    log.error("invalid sensor name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 if (_type == Conditional.TYPE_SENSOR_ACTIVE) {
@@ -439,7 +428,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_TURNOUT:
                 Turnout t = (Turnout) getBean();
                 if (t == null) {
-                    log.error("invalid turnout name= \"{}\" in state variable", getName());
+                    log.error("invalid turnout name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 if (_type == Conditional.TYPE_TURNOUT_THROWN) {
@@ -451,7 +440,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_LIGHT:
                 Light lgt = (Light) getBean();
                 if (lgt == null) {
-                    log.error("invalid light name= \"{}\" in state variable", getName());
+                    log.error("invalid light name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 if (_type == Conditional.TYPE_LIGHT_ON) {
@@ -463,7 +452,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 SignalMast f = (SignalMast) getBean();
                 if (f == null) {
-                    log.error("invalid signal mast name= \"{}\" in state variable", getName());
+                    log.error("invalid signal mast name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 switch (_type) {
@@ -487,7 +476,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 SignalHead h = (SignalHead) getBean();
                 if (h == null) {
-                    log.error("invalid signal head name= \"{}\" in state variable", getName());
+                    log.error("invalid signal head name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 switch (_type) {
@@ -531,7 +520,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_MEMORY:
                 Memory m = (Memory) getBean();
                 if (m == null) {
-                    log.error("invalid memory name= \"{}\" in state variable", getName());
+                    log.error("invalid memory name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 String value1 = null;
@@ -550,7 +539,7 @@ public class ConditionalVariable {
                         try {
                             m2 = InstanceManager.memoryManagerInstance().provideMemory(_dataString);
                         } catch (IllegalArgumentException ex) {
-                            log.error("invalid data memory name= \"{}\" in state variable", _dataString);
+                            log.error("invalid data memory name= \"" + _dataString + "\" in state variable");
                             return false;
                         }
                     }
@@ -567,7 +556,7 @@ public class ConditionalVariable {
                 if (c == null) {
                     c = InstanceManager.getDefault(jmri.ConditionalManager.class).getByUserName(getName());
                     if (c == null) {
-                        log.error("invalid conditional name= \"{}\" in state variable", getName());
+                        log.error("invalid conditional name= \"" + getName() + "\" in state variable");
                         return false;
                     }
                 }
@@ -580,7 +569,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_WARRANT:
                 Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(getName());
                 if (w == null) {
-                    log.error("invalid Warrant name= \"{}\" in state variable", getName());
+                    log.error("invalid Warrant name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 switch (_type) {
@@ -622,7 +611,7 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_OBLOCK:
                 OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(getName());
                 if (b == null) {
-                    log.error("invalid OBlock name= \"{}\" in state variable", getName());
+                    log.error("invalid OBlock name= \"" + getName() + "\" in state variable");
                     return false;
                 }
                 result = b.statusIs(_dataString);
@@ -794,8 +783,7 @@ public class ConditionalVariable {
     }
 
     /**
-     * Get state name from Variable Test Type, used to fill ConditionalVariable
-     * config GUI state combo box.
+     * Get state name from Variable Test Type
      *
      * @param t the state
      * @return the localized description
@@ -813,9 +801,9 @@ public class ConditionalVariable {
             case Conditional.TYPE_TURNOUT_CLOSED:
                 return Bundle.getMessage("TurnoutStateClosed"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_TRUE:
-                return Bundle.getMessage("True"); // NOI18N
+                return rbx.getString("True"); // NOI18N
             case Conditional.TYPE_CONDITIONAL_FALSE:
-                return Bundle.getMessage("False"); // NOI18N
+                return rbx.getString("False"); // NOI18N
             case Conditional.TYPE_LIGHT_ON:
                 return rbx.getString("LightOn"); // NOI18N
             case Conditional.TYPE_LIGHT_OFF:
@@ -826,7 +814,6 @@ public class ConditionalVariable {
                 return rbx.getString("StateMemoryCompare"); // NOI18N
             case Conditional.TYPE_FAST_CLOCK_RANGE:
                 return ""; // NOI18N
-            // signal head appearance state text uses Bundle method
             case Conditional.TYPE_SIGNAL_HEAD_RED:
                 return Bundle.getMessage("SignalHeadStateRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
@@ -848,8 +835,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
                 return Bundle.getMessage("SignalHeadStateFlashingLunar"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return Bundle.getMessage("SignalHeadStateLit"); // NOI18N
-
+                return rbx.getString("TypeSignalHeadLit"); // NOI18N
             case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
                 return rbx.getString("StateMemoryEqualsInsensitive"); // NOI18N
             case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
@@ -868,12 +854,10 @@ public class ConditionalVariable {
                 return rbx.getString("TypeSignalMastAspectEquals"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS:
                 return rbx.getString("TypeSignalHeadAspectEquals"); // NOI18N
-            // signal mast held and lit state text uses Bundle method
             case Conditional.TYPE_SIGNAL_MAST_LIT:
-                return Bundle.getMessage("SignalMastStateLit"); // NOI18N
+                return rbx.getString("StateSignalMastLit"); // NOI18N
             case Conditional.TYPE_SIGNAL_MAST_HELD:
-                return Bundle.getMessage("SignalMastStateHeld"); // NOI18N
-
+                return rbx.getString("StateSignalMastHeld"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_ACTIVE:
                 return Bundle.getMessage("SensorStateActive"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
@@ -885,11 +869,10 @@ public class ConditionalVariable {
     }
 
     /**
-     * Convert Variable Test Type to Text String. Used in Logix
-     * GUI Maintenance tools.
+     * Convert Variable Test Type to Text String.
      *
      * @param t the type
-     * @return the localized state description
+     * @return the localized description
      */
     public static String getTestTypeString(int t) {
         switch (t) {
@@ -917,30 +900,28 @@ public class ConditionalVariable {
                 return rbx.getString("TypeMemoryCompare"); // NOI18N
             case Conditional.TYPE_FAST_CLOCK_RANGE:
                 return rbx.getString("TypeFastClockRange"); // NOI18N
-            // signal head appearance state text uses Bundle method
             case Conditional.TYPE_SIGNAL_HEAD_RED:
-                return Bundle.getMessage("SignalHeadStateRed"); // NOI18N
+                return rbx.getString("TypeSignalHeadRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                return Bundle.getMessage("SignalHeadStateYellow"); // NOI18N
+                return rbx.getString("TypeSignalHeadYellow"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                return Bundle.getMessage("SignalHeadStateGreen"); // NOI18N
+                return rbx.getString("TypeSignalHeadGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                return Bundle.getMessage("SignalHeadStateDark"); // NOI18N
+                return rbx.getString("TypeSignalHeadDark"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                return Bundle.getMessage("SignalHeadStateFlashingRed"); // NOI18N
+                return rbx.getString("TypeSignalHeadFlashRed"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                return Bundle.getMessage("SignalHeadStateFlashingYellow"); // NOI18N
+                return rbx.getString("TypeSignalHeadFlashYellow"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
+                return rbx.getString("TypeSignalHeadFlashGreen"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return Bundle.getMessage("SignalHeadStateLit"); // NOI18N
+                return rbx.getString("TypeSignalHeadLit"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
+                return rbx.getString("TypeSignalHeadHeld"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
-                return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
+                return rbx.getString("TypeSignalHeadLunar"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
-                return Bundle.getMessage("SignalHeadStateFlashingLunar"); // NOI18N
-
+                return rbx.getString("TypeSignalHeadFlashLunar"); // NOI18N
             case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
                 return rbx.getString("TypeMemoryEqualsInsensitive"); // NOI18N
             case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
@@ -959,12 +940,10 @@ public class ConditionalVariable {
                 return rbx.getString("TypeSignalMastAspectEquals"); // NOI18N
             case Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS:
                 return rbx.getString("TypeSignalHeadAspectEquals"); // NOI18N
-            // signal mast held and lit state text uses Bundle method
             case Conditional.TYPE_SIGNAL_MAST_LIT:
-                return Bundle.getMessage("SignalMastStateLit"); // NOI18N
+                return rbx.getString("TypeSignalMastLit"); // NOI18N
             case Conditional.TYPE_SIGNAL_MAST_HELD:
-                return Bundle.getMessage("SignalMastStateHeld"); // NOI18N
-
+                return rbx.getString("TypeSignalMastHeld"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_ACTIVE:
                 return rbx.getString("TypeEntryExitActive"); // NOI18N
             case Conditional.TYPE_ENTRYEXIT_INACTIVE:
@@ -1016,11 +995,11 @@ public class ConditionalVariable {
     }
 
     /**
-     * Identify action Data from Text String.
+     * Identifies action Data from Text String. Note: if string does not
+     * correspond to an action Data as defined in ConditionalAction, returns -1.
      *
      * @param str the text to check
-     * @return the conditional action type or -1 if if string does not
-     * correspond to an action Data as defined in ConditionalAction
+     * @return the conditional action type or -1 if no match
      */
     public static int stringToVariableTest(String str) {
         if (str.equals(Bundle.getMessage("SignalHeadStateRed"))) { // NOI18N
@@ -1044,7 +1023,7 @@ public class ConditionalVariable {
         }
         // empty strings can occur frequently with types that have no integer data
         if (str.length() > 0) {
-            log.warn("Unexpected parameter to stringToVariableTest({})", str);
+            log.warn("Unexpected parameter to stringToVariableTest(" + str + ")");
         }
         return -1;
     }

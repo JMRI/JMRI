@@ -17,8 +17,7 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head><!--#include virtual="/Header" -->
 
 <body>
@@ -41,18 +40,14 @@
       release every three years.  
       (For background, see 
       <a href="https://mreinhold.org/blog/forward-faster#Proposal">here</a>,
-      <a href="http://openjdk.java.net/jeps/322?elq_mid=102312&amp;sh=251225172624122582213150247717&amp;cmid=WWMK170418P00047">here</a>,
+      <a href="http://openjdk.java.net/jeps/322?elq_mid=102312&sh=251225172624122582213150247717&cmid=WWMK170418P00047">here</a>, 
       <a href="http://www.oracle.com/technetwork/java/eol-135779.html">here</a>).
       It's not yet clear what this will mean for JMRI's 
       development and migration path. Much discussion is necessary.
       
       <p>As of February 2018, Oracle has scheduled end-of-life for Java 8 in
       January 2019, and intendeds to release the next Long Term Support version 
-      (notionally known as both Java 11 and Java 18.9) in September of 2018.  
-      Given that some users will need to move forward for other applications
-      once Java 8 is EOL, at a minimum we'll have to have JMRI running under
-      both Java 8 and 
-      Java 11/18.9 by January 2019.
+      (notionally Java 11) in September of 2018.  
       
       <h2>Capabilities</h2>
       <p>This section lists new Java
@@ -78,9 +73,9 @@
           using very large fonts as a workaround, but it quickly
           breaks as text overlaps widget boundaries)</td>
 
-          <td>8?</td>
+          <td>1.8?</td>
 
-          <td>9</td>
+          <td>1.9</td>
         </tr>
 
         <tr>
@@ -88,28 +83,18 @@
           of the OS X App menu for About, Preferences, and
           (critically) Quit handling on that platform</td>
 
-          <td>9</td>
+          <td>1.9</td>
 
-          <td>9</td>
+          <td>1.9</td>
         </tr>
 
         <tr>
           <td>It seems that MacOS X (macOS) users will lose
           Applescript scripting</td>
 
-          <td>9</td>
+          <td>1.9</td>
 
-          <td>9</td>
-        </tr>
-
-        <tr>
-          <td>Multi-version JARs can help with migration, see
-          <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
-
-          <td>?</td>
-
-          <td>9</td>
-        </tr>
+          <td>1.9</td>
 
         <tr>
           <td>JMRI uses several com.sun classes that will, at some point.
@@ -126,35 +111,27 @@
         <tr>
           <td>Java Platform Module System</td>
 
-          <td>9</td>
+          <td>1.9</td>
 
-          <td>9</td>
+          <td>1.9</td>
         </tr>
         <tr>
-          <td>UTF-8 Properties files (simplifies I18N)</td>
+          <td>JUTF-8 Properties files (simplifies I18N)</td>
 
-          <td>9</td>
+          <td>1.9</td>
 
-          <td>9</td>
+          <td>1.9</td>
         </tr>
-        
         <tr>
-          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
+          <td>J<A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
                 More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
                 worse code) of JMRI indepdendent.</td>
 
-          <td>9</td>
+          <td>1.9</td>
 
-          <td>9</td>
+          <td>1.9</td>
         </tr>
 
-        <tr>
-          <td>Even better support for immutable collections</td>
-
-          <td>?</td>
-
-          <td>10</td>
-        </tr>
 
 
       </table>(* indicates that a compatibility library is used in
@@ -175,35 +152,16 @@
       finds numerous pages that show how to install Java 1.7 on XP
       or XP SP2. JMRI's 
       <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
-      will have updated information on this.
-      The corresponding 
-      <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a>
-      makes no mention of XP.</p>
+      will have updated information on this.</p>
 
-      <P>Updated Feb 10, 2018: At that time, 
+      <P>Last updated February 10, 2018. At that time, 
       although Java 9 was available, it was 
       <a href="http://java.com/en/download/manual.jsp">not being recommended</a> for 
-      any platform.  That situation may 
+      any platform.  The situation may 
       <a href="http://www.oracle.com/technetwork/java/eol-135779.html">become clearer</a>
       after the next Java release(s) are shipped,
       perhaps March or September 2018.
-              
-      <p>Updated April 18, 2018:  At that time,
-      the <a href="https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:
-<blockquote cite="https://java.com/en/download/release_notice.jsp">
-      Public updates for Oracle Java SE 8 will remain available for individual, personal use through at least the end of 2020.  
-</blockquote>
       
-      <P>
-      For more details, see the Oracle Java pages for:
-      <ul>
-        <li><a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8</a></li>
-        <li><a href="http://www.oracle.com/technetwork/java/javase/jdk9certconfig-3761018.html">Java 9</a></li>
-        <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
-      </ul>
-
-      <P>As of April 2018, Java 10 only runs on 64-bit Windows versions (no 32-bit).
-
       <table border="1">
         <tr>
           <th>OS and platform</th>
@@ -218,43 +176,37 @@
         </tr>
 
         <tr>
-          <td>Win 10 (64-bit)</td>
-
-          <td>10</td>
-        </tr>
-
-        <tr>
           <td>Win 8 (32-bit)</td>
 
-          <td>8</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Win 7 (32-bit)</td>
 
-          <td>8</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Win Server 2008 (32-bit)</td>
 
-          <td>8</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Web Server 2008 (32-bit)</td>
+          <td bgcolor="FFD0D0">Win Web Server 2008 (32-bit)</td>
 
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win 2000 (32-bit)</td>
+          <td bgcolor="FFD0D0">Win 2000 (32-bit)</td>
 
           <td>1.6</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Server 2003 (32-bit)</td>
+          <td bgcolor="FFD0D0">Win Server 2003 (32-bit)</td>
 
           <td>1.6</td>
         </tr>
@@ -262,41 +214,41 @@
         <tr>
           <td>Win 8 (64-bit)</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 (64-bit)</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 R2 (64-bit)</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Win 7 (64-bit)</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Win Server 2008 R2 (64-bit)</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Server 2008 (64-bit)</td>
+          <td bgcolor="FFD0D0">Win Server 2008 (64-bit)</td>
 
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win Web Server 2008 R2 (64-bit)</td>
+          <td bgcolor="FFD0D0">Win Web Server 2008 R2 (64-bit)</td>
 
           <td>1.6</td>
         </tr>
@@ -304,20 +256,20 @@
         <tr>
           <td>Win Vista (64-bit)</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
           <td>Windows Vista (32-bit)</td>
 
-          <td>8<br>
+          <td>1.8<br>
           <a href=
           "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
           Support</a></td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Win 2003 (64-bit)</td>
+          <td bgcolor="FFD0D0">Win 2003 (64-bit)</td>
 
           <td>1.6</td>
         </tr>
@@ -325,74 +277,68 @@
         <tr>
           <td>Windows XP</td>
 
-          <td>8<br>
+          <td>1.8<br>
           <a href=
           "https://www.java.com/en/download/faq/winxp.xml">Unofficial<br>
           Support</a></td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Windows 98 (2nd Ed)</td>
+          <td bgcolor="FFD0D0">Windows 98 (2nd Ed)</td>
 
           <td>1.5-11</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Windows 98</td>
+          <td bgcolor="FFD0D0">Windows 98</td>
 
           <td>1.4.2_14</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Windows 95</td>
+          <td bgcolor="FFD0D0">Windows 95</td>
 
           <td>1.3.1_20</td>
         </tr>
 
         <tr>
-          <td>Mac OS X 10.10 and later</td>
+          <td>Mac OS X 10.8.3 and later on Intel</td>
 
-          <td>10</td>
+          <td>1.8</td>
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3</td>
-
-          <td>8</td>
-        </tr>
-
-        <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.7.3</td>
+          <td bgcolor="FFD0D0">Mac OS X 10.7.3 and later on Intel</td>
 
           <td>1.7</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.5.8</td>
+          <td bgcolor="FFD0D0">Mac OS X 10.5.8 and later on Intel</td>
 
           <td>1.6 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.5.7 and earlier on Intel</td>
+          <td bgcolor="FFD0D0">Mac OS X 10.5.7 and earlier on Intel</td>
 
           <td>1.5 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">Mac OS X 10.3 and later on PowerPC</td>
+          <td bgcolor="FFD0D0">Mac OS X 10.3 and later on PowerPC</td>
 
           <td>1.5 (Apple JVM)</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">MacOS "Classic"</td>
+          <td bgcolor="FFD0D0">MacOS "Classic"</td>
 
           <td>1.1.8</td>
         </tr>
 
         <tr>
-          <td bgcolor="#FFD0D0">OS/2</td>
+          <td bgcolor="FFD0D0">OS/2</td>
 
           <td>1.3</td>
         </tr>
@@ -405,7 +351,7 @@
       "https://www.java.com/en/download/help/sysreq.xml">Java
       versions and hardware requirements</a>.</p>
 
-      <a name="sysreq" id="sysreq"></a><h2>System Requirements</h2>
+      <h2 id="sysreq">System Requirements</h2>
 
       <p>The following combination of JMRI - Java - Platform/OS
       versions was based on Oracle and OS developers sources. It's
@@ -566,6 +512,7 @@
         </tbody>
       </table>
 
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

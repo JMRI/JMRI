@@ -26,7 +26,6 @@ public class PreviewDialogTest {
         // the second paramter is a key for the bundle
         PreviewDialog t = new PreviewDialog(jf,"catalogs",folder.getRoot(),new String[0]);
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J

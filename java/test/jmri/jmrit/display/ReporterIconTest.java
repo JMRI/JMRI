@@ -7,7 +7,9 @@ import jmri.ReporterManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the ReporterIcon.
@@ -64,14 +66,6 @@ public class ReporterIconTest extends PositionableTestBase {
             NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
             to.setIcon(icon);
         }
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-        to = null;
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

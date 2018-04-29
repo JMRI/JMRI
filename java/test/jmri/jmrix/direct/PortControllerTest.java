@@ -5,9 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the PortController class.
+ * JUnit tests for the PortController class
+ * <p>
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
@@ -41,8 +42,8 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
                return retval;
             }
             /**
-             * Open a specified port. The appName argument is to be provided to the
-             * underlying OS during startup so that it can show on status displays, etc.
+             * Open a specified port. The appname argument is to be provided to the
+             * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
             public String openPort(String portName, String appName){

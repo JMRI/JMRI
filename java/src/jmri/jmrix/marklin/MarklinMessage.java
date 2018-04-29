@@ -3,8 +3,9 @@ package jmri.jmrix.marklin;
 
 /**
  * Encodes a message to a Marklin command station.
- * <p>
+ * <P>
  * The {@link MarklinReply} class handles the response from the command station.
+ * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2008
  */

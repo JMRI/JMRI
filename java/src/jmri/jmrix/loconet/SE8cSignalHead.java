@@ -63,6 +63,11 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         return mNumber;
     }
 
+    @Override
+    public String getSystemName() {
+        return "LH" + getNumber(); // NOI18N
+    }
+
     // Handle a request to change state by sending a LocoNet command
     @Override
     protected void updateOutput() {

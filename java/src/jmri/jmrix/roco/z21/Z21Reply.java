@@ -114,11 +114,11 @@ public class Z21Reply extends AbstractMRReply {
         return (getOpCode() == 0x0040);
     }
 
-    Z21XNetReply getXNetReply() {
-        Z21XNetReply xnr = null;
+    jmri.jmrix.lenz.XNetReply getXNetReply() {
+        jmri.jmrix.lenz.XNetReply xnr = null;
         if (isXPressNetTunnelMessage()) {
             int i = 4;
-            xnr = new Z21XNetReply();
+            xnr = new jmri.jmrix.lenz.XNetReply();
             for (; i < getLength(); i++) {
                 xnr.setElement(i - 4, getElement(i));
             }

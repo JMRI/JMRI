@@ -59,13 +59,13 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public void setUp() {
         JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
-        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
-        SerialTrafficController t = new SerialTrafficController(memo) {
+        SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {
                 setInstance();
                 return this;
             }
         }.test();
+        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
         memo.setTrafficController(t);
         Assert.assertNotNull("exists", t);
 

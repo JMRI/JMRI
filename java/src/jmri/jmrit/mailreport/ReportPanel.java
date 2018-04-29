@@ -149,9 +149,6 @@ public class ReportPanel extends JPanel {
         add(sendButton);
 
     }
-    
-    // made static, public, not final so can be changed via script
-    static public String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -163,6 +160,7 @@ public class ReportPanel extends JPanel {
 
             log.debug("start send");
             String charSet = "UTF-8";  //NO18N
+            String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
             MultipartMessage msg = new MultipartMessage(requestURL, charSet);
 

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Marklin systems.
- * <p>
+ * <P>
  * Based on work by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2012

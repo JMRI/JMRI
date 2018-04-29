@@ -9,28 +9,28 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 /**
  * Swing action to create and register a NodeConfigFrame object.
  *
- * @author Bob Jacobsen Copyright (C) 2006, 2008
+ * @author	Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class NodeConfigAction extends AbstractAction {
 
-    private SecsiSystemConnectionMemo _memo;
+    private SecsiSystemConnectionMemo memo;
 
-    public NodeConfigAction(String s, SecsiSystemConnectionMemo memo) {
+    public NodeConfigAction(String s, SecsiSystemConnectionMemo _memo) {
         super(s);
-        _memo = memo;
+        memo = _memo;
     }
 
-    public NodeConfigAction(SecsiSystemConnectionMemo memo) {
-        this(Bundle.getMessage("ConfigNodesTitle"), memo);
+    public NodeConfigAction(SecsiSystemConnectionMemo _memo) {
+        this(Bundle.getMessage("ConfigNodesTitle"), _memo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        NodeConfigFrame f = new NodeConfigFrame(_memo);
+        NodeConfigFrame f = new NodeConfigFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: ", ex.toString());
+            log.error("Exception: " + ex.toString());
         }
         f.setLocation(100, 30);
         f.setVisible(true);

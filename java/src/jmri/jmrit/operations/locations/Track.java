@@ -19,7 +19,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -144,9 +143,6 @@ public class Track {
 
     // schedule status
     public static final String SCHEDULE_OKAY = "";
-    
-    // pickup status
-    public static final String PICKUP_OKAY = "";
 
     // pool
     protected Pool _pool = null;
@@ -739,7 +735,7 @@ public class Track {
         return _commentBoth;
     }
 
-    List<String> _typeList = new ArrayList<>();
+    List<String> _typeList = new ArrayList<String>();
 
     /**
      * Returns all of the rolling stock type names serviced by this track.
@@ -829,7 +825,7 @@ public class Track {
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _roadList = new ArrayList<>();
+    List<String> _roadList = new ArrayList<String>();
 
     public String[] getRoadNames() {
         String[] roads = new String[_roadList.size()];
@@ -905,7 +901,7 @@ public class Track {
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _loadList = new ArrayList<>();
+    List<String> _loadList = new ArrayList<String>();
 
     private void setLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1028,7 +1024,7 @@ public class Track {
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _shipLoadList = new ArrayList<>();
+    List<String> _shipLoadList = new ArrayList<String>();
 
     private void setShipLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1181,7 +1177,7 @@ public class Track {
         setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _dropList = new ArrayList<>();
+    List<String> _dropList = new ArrayList<String>();
 
     public String[] getDropIds() {
         String[] ids = new String[_dropList.size()];
@@ -1258,7 +1254,7 @@ public class Track {
         return _dropList.contains(id);
     }
 
-    List<String> _pickupList = new ArrayList<>();
+    List<String> _pickupList = new ArrayList<String>();
 
     public String[] getPickupIds() {
         String[] ids = new String[_pickupList.size()];
@@ -1338,44 +1334,6 @@ public class Track {
 
     public boolean containsPickupId(String id) {
         return _pickupList.contains(id);
-    }
-    
-    /**
-     * Checks to see if all car types can be pulled from this track
-     * @return PICKUP_OKAY if any train can pull all car types from this track
-     */
-    public String checkPickups() {
-        String status = PICKUP_OKAY;
-        S1: for (String carType : InstanceManager.getDefault(CarTypes.class).getNames()) {
-            if (!acceptsTypeName(carType)) {
-                continue;
-            }
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
-                if (!train.acceptsTypeName(carType) || !acceptsPickupTrain(train)) {
-                    continue;
-                }
-                // does the train services this location and track?
-                Route route = train.getRoute();
-                if (route != null) {
-                    for (RouteLocation rLoc : route.getLocationsBySequenceList()) {
-                        if (rLoc.getName().equals(getLocation().getName()) &&
-                                rLoc.isPickUpAllowed() &&
-                                rLoc.getMaxCarMoves() > 0 &&
-                                !train.skipsLocation(rLoc.getId()) &&
-                                ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
-                                ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
-                                train.isLocalSwitcher())) {
-
-                            continue S1; // car type serviced by this train, try next car type
-                        }
-                    }
-                }
-            }
-            // None of the trains servicing this track can pick up car type ({0})
-            status = MessageFormat.format(Bundle.getMessage("ErrorNoTrain"), new Object[]{carType});
-            break;
-        }
-        return status;
     }
 
     /**
@@ -1753,7 +1711,8 @@ public class Track {
             if (!si.getRoadName().equals(ScheduleItem.NONE) &&
                     (!acceptsRoadName(si.getRoadName()) ||
                             !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
-                            InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(), si.getRoadName()) == null)) {
+                            CarManager
+                                    .instance().getByTypeAndRoad(si.getTypeName(), si.getRoadName()) == null)) {
                 status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getRoadName()});
                 break;
             }
@@ -1822,7 +1781,7 @@ public class Track {
             return OKAY;
         }
         if (getScheduleId().equals(NONE)) {
-            // does car have a custom load?
+            // does car have a scheduled load?
             if (car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName()) ||
                     car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName())) {
                 return OKAY; // no
@@ -1947,9 +1906,7 @@ public class Track {
                     si.getReceiveLoadName() +
                     ")";
         }
-        if (car.getFinalDestinationTrack() != this &&
-                !si.getRandom().equals(ScheduleItem.NONE) &&
-                !car.getScheduleItemId().equals(si.getId())) {
+        if (car.getFinalDestinationTrack() != this && !si.getRandom().equals(ScheduleItem.NONE)) {
             try {
                 int value = Integer.parseInt(si.getRandom());
                 double random = 100 * Math.random();
@@ -2244,7 +2201,7 @@ public class Track {
         return NONE;
     }
 
-    List<String> _destinationIdList = new ArrayList<>();
+    List<String> _destinationIdList = new ArrayList<String>();
 
     public int getDestinationListSize() {
         return _destinationIdList.size();

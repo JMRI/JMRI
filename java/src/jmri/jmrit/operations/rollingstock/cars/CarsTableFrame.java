@@ -109,9 +109,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         cp1.add(sortByType);
 
         JPanel clp = new JPanel();
-        clp.setBorder(BorderFactory.createTitledBorder(""));  
-        clp.add(sortByLoad);
+        clp.setBorder(BorderFactory.createTitledBorder(""));
         clp.add(sortByColor);
+        clp.add(sortByLoad);
         cp1.add(clp);
         cp1.add(sortByKernel);
         cp1.add(sortByLocation);

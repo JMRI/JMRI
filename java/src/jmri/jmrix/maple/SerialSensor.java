@@ -36,7 +36,7 @@ public class SerialSensor extends AbstractSensor {
 
     /**
      * Request an update on status.
-     * <p>
+     * <P>
      * Since status is continually being updated, this isn't active now.
      * Eventually, we may want to have this move the related AIU to the top of
      * the polling queue.

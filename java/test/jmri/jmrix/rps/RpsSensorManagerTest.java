@@ -25,15 +25,6 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         Assert.assertNotNull("exists", l);
     }
 
-    @Test
-    public void testProvideName() {
-        // create
-        Sensor t = l.provide(getSystemName(getNumToTest1()));
-        // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
-    }
-
     @Override
     @Test
     public void testDefaultSystemName() {

@@ -31,7 +31,6 @@ public class LnCommandStationTypeTest {
         jmri.ThrottleManager tm = LnCommandStationType.COMMAND_STATION_DCS200.getThrottleManager(memo);
         Assert.assertEquals(LnThrottleManager.class, tm.getClass());
         ((LnThrottleManager)tm).dispose();
-        memo.dispose();
     }
 
     // The minimal setup for log4J

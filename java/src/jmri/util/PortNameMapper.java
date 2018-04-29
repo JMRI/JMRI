@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class used to provide a mapping between port numbers and 'friendly' names,
@@ -90,12 +88,7 @@ public class PortNameMapper {
                         String pathKey = path + regEntry + "\\" + subRegEntries[0];
                         String deviceClass = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "Class");
                         if (deviceClass.equals("Ports") || deviceClass.equals("Modem")) {
-                            try {
-                                name = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "FriendlyName");
-                            }
-                            catch (Win32Exception | NullPointerException e) {
-                                    log.warn("'FriendlyName' not found while querying 'HKLM.{}`.  JMRI cannot use the device, so will skip it.", pathKey );
-                                    }
+                            name = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey, "FriendlyName");
                             try {
                                 String pathKey2 = path + regEntry + "\\" + subRegEntries[0] + "\\Device Parameters";
                                 port = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, pathKey2, "PortName");
@@ -168,7 +161,5 @@ public class PortNameMapper {
         }
 
     }
-        private final static Logger log = LoggerFactory.getLogger(PortNameMapper.class);
-
 
 }

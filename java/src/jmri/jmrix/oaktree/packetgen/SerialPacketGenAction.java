@@ -2,13 +2,13 @@ package jmri.jmrix.oaktree.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialPacketGenFrame
- * object.
+ * object
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -16,13 +16,12 @@ public class SerialPacketGenAction extends AbstractAction {
 
     private OakTreeSystemConnectionMemo _memo = null;
 
-    public SerialPacketGenAction(String s, OakTreeSystemConnectionMemo memo) {
+    public SerialPacketGenAction(String s,OakTreeSystemConnectionMemo memo) {
         super(s);
-        _memo = memo;
     }
 
     public SerialPacketGenAction(OakTreeSystemConnectionMemo memo) {
-        this(Bundle.getMessage("SendXCommandTitle", Bundle.getMessage("MenuOakTree")), memo);
+        this("Send Oak Tree message",memo);
     }
 
     @Override
@@ -31,11 +30,10 @@ public class SerialPacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: {}", ex.toString());
+            log.error("Exception: " + ex.toString());
         }
         f.setVisible(true);
     }
-
     private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
-
 }
+

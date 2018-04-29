@@ -36,7 +36,6 @@ import org.junit.runners.Suite;
         jmri.jmrix.marklin.PackageTest.class,
         jmri.jmrix.merg.PackageTest.class,
         jmri.jmrix.modbus.PackageTest.class,
-        jmri.jmrix.mqtt.PackageTest.class,
         jmri.jmrix.mrc.PackageTest.class,
         jmri.jmrix.nce.PackageTest.class,
         jmri.jmrix.oaktree.PackageTest.class,

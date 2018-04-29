@@ -61,7 +61,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         AudioManager am = (AudioManager) o;
         if (am != null) {
             java.util.Iterator<String> iter
-                    = am.getSystemNameAddedOrderList().iterator();
+                    = am.getSystemNameList().iterator();
 
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) {
@@ -80,7 +80,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            for (String sname : am.getSystemNameAddedOrderList()) {
+            for (String sname : am.getSystemNameList()) {
                 if (log.isDebugEnabled()) {
                     log.debug("Check if " + sname + " is a VSD object");
                 }
@@ -247,6 +247,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce = new Element("fadetimes");
                     ce.setAttribute("in", "" + as.getFadeIn());
                     ce.setAttribute("out", "" + as.getFadeOut());
+                    e.addContent(ce);
+
+                    ce = new Element("dopplerfactor");
+                    ce.addContent("" + as.getDopplerFactor());
                     e.addContent(ce);
 
                     ce = new Element("positionrelative");
@@ -435,6 +439,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     if ((value = ce.getAttributeValue("out")) != null) {
                         as.setFadeOut(Integer.parseInt(value));
                     }
+                }
+
+                if ((ce = e.getChild("dopplerfactor")) != null && ce.getValue().length() != 0) {
+                    as.setDopplerFactor(Float.parseFloat(ce.getValue()));
                 }
 
                 if ((ce = e.getChild("positionrelative")) != null) {

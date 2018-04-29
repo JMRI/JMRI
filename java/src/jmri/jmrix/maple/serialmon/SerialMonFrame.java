@@ -12,11 +12,11 @@ import jmri.jmrix.maple.MapleSystemConnectionMemo;
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    private MapleSystemConnectionMemo _memo = null;
+    private MapleSystemConnectionMemo memo = null;
 
-    public SerialMonFrame(MapleSystemConnectionMemo memo) {
+    public SerialMonFrame(MapleSystemConnectionMemo _memo) {
         super();
-        _memo = memo;
+        memo = _memo;
     }
 
     @Override
@@ -27,12 +27,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     @Override
     protected void init() {
         // connect to TrafficController
-        _memo.getTrafficController().addSerialListener(this);
+        memo.getTrafficController().addSerialListener(this);
     }
 
     @Override
     public void dispose() {
-        _memo.getTrafficController().removeSerialListener(this);
+        memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 

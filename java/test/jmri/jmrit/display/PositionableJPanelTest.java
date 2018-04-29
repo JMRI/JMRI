@@ -47,7 +47,6 @@ public class PositionableJPanelTest extends PositionableTestBase {
         if(!GraphicsEnvironment.isHeadless()){
            editor = new EditorScaffold();
            p = new PositionableJPanel(editor);
-           ((PositionableJPanel)p).setName("PositionableJPanel");
         }
     }
 

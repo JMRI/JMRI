@@ -76,7 +76,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     public void message(DCCppReply l) {
         int addr = -1;  // -1 flags that no sensor address was found in reply
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("recieved message: " + l);
         }
         if (l.isSensorDefReply()) {
             addr = l.getSensorDefNumInt();

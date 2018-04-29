@@ -18,12 +18,6 @@ public class DecoderPro3ActionTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMakePanel(){
-        DecoderPro3Action t = new DecoderPro3Action("test",true);
-        t.makePanel();  
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() {

@@ -1,11 +1,10 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
-import java.util.*;
-
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,7 +13,7 @@ import org.junit.Assert;
 /**
  * Test the ProxyTurnoutManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
+ * @author	Bob Jacobsen 2003, 2006, 2008, 2014
   */
 public class ProxyTurnoutManagerTest extends TestCase {
 

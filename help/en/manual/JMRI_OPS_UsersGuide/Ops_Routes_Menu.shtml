@@ -6,8 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Operations-Routes Menu Bar</title>
-  <!-- Style -->
+  <title>Operations-Routes Menu Bar</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,8 +14,7 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
 <body>
@@ -111,7 +109,7 @@
                 "width: 350px; height: 243px;" alt="set icoons"
                 src="images/Ops_Routes_SetTrainIcons.png"><br></td>
 
-                <td valign="top" width="47%">
+                <td v="" valign="top" width="47%">
                   <p><strong>Location</strong><br>
                   Select Location from <select name="select2" id=
                   "select2">
@@ -183,9 +181,7 @@
         "Ops_Trains.shtml"></a></p>
 
         <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-
-      <!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -28,9 +28,8 @@ public class TrafficController implements jmri.CommandStation {
     /**
      * Create a new Direct TrafficController instance.
      */
-    public TrafficController(DirectSystemConnectionMemo memo) {
+    public TrafficController() {
         super();
-        _memo = memo;
     }
 
     /**
@@ -94,10 +93,11 @@ public class TrafficController implements jmri.CommandStation {
         } catch (IOException e) {
             log.warn("sendMessage: Exception: {}", e.getMessage());
         }
+
     }
 
     // methods to connect/disconnect to a source of data in an AbstractSerialPortController
-    private DirectSystemConnectionMemo _memo = null;
+
     private AbstractSerialPortController controller = null;
 
     public boolean status() {
@@ -141,12 +141,12 @@ public class TrafficController implements jmri.CommandStation {
 
     @Override
     public String getUserName() {
-        return _memo.getUserName();
+        return "Others";
     }
 
     @Override
     public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+        return "N";
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrafficController.class);

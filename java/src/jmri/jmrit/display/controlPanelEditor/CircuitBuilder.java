@@ -8,7 +8,10 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -37,17 +40,14 @@ import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.TurnoutIcon;
-import jmri.jmrit.display.palette.FamilyItemPanel;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
-import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,6 +114,7 @@ public class CircuitBuilder {
      * ***************************************************************
      */
     public CircuitBuilder() {
+        // _menuBar = new JMenuBar();
         log.error("CircuitBuilder ctor requires an Editor class");
     }
 
@@ -132,8 +133,9 @@ public class CircuitBuilder {
             _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
             _circuitMap = new HashMap<>();
             OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
-            for (OBlock block : oblocks) {
+            String[] sysNames = manager.getSystemNameArray();
+            for (int i = 0; i < sysNames.length; i++) {
+                OBlock block = manager.getBySystemName(sysNames[i]);
                 _circuitMap.put(block, new ArrayList<>());
             }
         }
@@ -279,9 +281,9 @@ public class CircuitBuilder {
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
-            for (OBlock block : oblocks) {
-            WarrantTableAction.checkPathPortals(block);
+        String[] sysNames = manager.getSystemNameArray();
+        for (int i = 0; i < sysNames.length; i++) {
+            WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
             JOptionPane.showMessageDialog(_editCircuitFrame,
@@ -870,9 +872,11 @@ public class CircuitBuilder {
         _convertBlock.clear();
         _badPortalIcon.clear();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
-        hasOBlocks = (oblocks.size() > 0);
-        for (OBlock block : oblocks) {
+        String[] sysNames = manager.getSystemNameArray();
+        hasOBlocks = (sysNames.length > 0);
+        for (int i = 0; i < sysNames.length; i++) {
+            OBlock block = manager.getBySystemName(sysNames[i]);
+
             java.util.List<Portal> list = block.getPortals();
             if (list != null) {
                 Iterator<Portal> iter = list.iterator();
@@ -1051,10 +1055,11 @@ public class CircuitBuilder {
      * /********************* convert plain track to indicator track
      * *************
      */
-    FamilyItemPanel _trackPanel;
+    IndicatorItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
-    ConvertFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
+    DisplayFrame _convertFrame;     // must be modal dialog to halt convertIcons loop
+    JDialog _convertDialog;     // must be modal dialog to halt convertIcons loop
 
     /**
      * Check if the block being edited has all its icons converted to indicator
@@ -1132,67 +1137,59 @@ public class CircuitBuilder {
     /**
      * Converts icon to IndicatorTrack
      */
-    private void convertIcon(Positionable p) {
-        PositionableLabel pos = (PositionableLabel) p;
-        _oldIcon = pos;
+    private void convertIcon(Positionable pos) {
+        _oldIcon = (PositionableLabel) pos;
         _editor.highlight(_oldIcon);
         _editor.toFront();
         _editor.repaint();
         if (pos instanceof TurnoutIcon) {
-            _convertFrame = new ConvertFrame("IndicatorTO", pos);
-            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame._paletteFrame, "IndicatorTO", null, null, _editor);
+            makePaletteFrame("IndicatorTO");
+            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
             ActionListener updateAction = (ActionEvent a) -> {
                 convertTO();
             };
-            initConvertFrame(_trackTOPanel, updateAction);
+            _trackTOPanel.init(updateAction);
+            _convertDialog.add(_trackTOPanel);
         } else {
-            _convertFrame = new ConvertFrame("IndicatorTrack", pos);
-            _trackPanel = new IndicatorItemPanel(_convertFrame._paletteFrame, "IndicatorTrack", null, _editor);
+            makePaletteFrame("IndicatorTrack");
+            _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
             ActionListener updateAction = (ActionEvent a) -> {
                 convertSeg();
             };
-            initConvertFrame(_trackPanel, updateAction);
+            _trackPanel.init(updateAction);
+            _convertDialog.add(_trackPanel);
         }
+        _convertDialog.pack();
+        _convertDialog.setVisible(true);
         _editor.repaint();
     }
 
+    private void makePaletteFrame(String title) {
+        jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
+        _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
+                Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
+        _convertFrame = new ConvertFrame(_convertDialog);
 
-    private void initConvertFrame(ItemPanel itemPanel, ActionListener updateAction) {
-        itemPanel.init(updateAction);
-        Dimension dim = itemPanel.getPreferredSize();
-        JScrollPane sp = new JScrollPane(itemPanel);
-        dim = new Dimension(dim.width +25, dim.height + 25);
-        sp.setPreferredSize(dim);
-        _convertFrame._dialog.add(sp);
-        _convertFrame._dialog.pack();
-        _convertFrame._dialog.setVisible(true);
+        _convertDialog.setLocationRelativeTo(_editor);
+        _convertDialog.toFront();
     }
 
     /*
-     * gimmick to get JDialog to wait until user makes a decision to convert each track icon.
-     * Holding the modal dialog does the trick.
-     * Also does re-layout contents and repaint
+     * gimmick to get JDialog to re-layout contents and repaint
      */
-    class ConvertFrame extends JmriJFrame {
+    static class ConvertFrame extends DisplayFrame {
 
         JDialog _dialog;
-        DisplayFrame _paletteFrame;
 
-        ConvertFrame(String title, PositionableLabel pos) {
+        ConvertFrame(JDialog dialog) {
             super(false, false);
-            jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
-            _paletteFrame = pos.makePaletteFrame(title);
-            _dialog = new JDialog(_editor, java.text.MessageFormat.format(
-                    Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
-
-            _dialog.setLocationRelativeTo(_editor);
-            _dialog.toFront();
+            _dialog = dialog;
         }
 
         @Override
-        public void dispose() {
-            _dialog.dispose();
-            super.dispose();
+        public void pack() {
+            super.pack();
+            _dialog.pack();
         }
     }
 
@@ -1261,7 +1258,8 @@ public class CircuitBuilder {
         _oldIcon = null;
         _trackPanel = null;
         _trackTOPanel = null;
-        _convertFrame.dispose();
+        _convertDialog.dispose();
+        _convertDialog = null;
         _convertFrame = null;
     }
 

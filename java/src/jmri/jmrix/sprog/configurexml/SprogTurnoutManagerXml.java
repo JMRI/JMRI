@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide load and store functionality for configuring SprogTurnoutManagers.
- * <p>
+ * Provides load and store functionality for configuring SprogTurnoutManagers.
+ * <P>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *

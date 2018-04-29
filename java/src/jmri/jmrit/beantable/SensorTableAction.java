@@ -149,9 +149,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             };
             if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {
                 jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
-                List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
-                for (Manager<Sensor> manager : managerList) {
-                    String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
+                List<Manager<Sensor>> managerList = proxy.getManagerList();
+                for (int x = 0; x < managerList.size(); x++) {
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     Boolean addToPrefix = true;
                     // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -338,11 +338,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
-            List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
+            List<Manager<Sensor>> managerList = proxy.getManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (Manager<Sensor> mgr : managerList) {
+            for (int x = 0; x < managerList.size(); x++) {
+                jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
-                    range.setEnabled( ((SensorManager)mgr).allowMultipleAdditions(systemPrefix));
+                    range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxySensorManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("S add box enabled1");

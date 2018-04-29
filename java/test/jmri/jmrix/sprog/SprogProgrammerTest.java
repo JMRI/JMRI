@@ -37,7 +37,6 @@ public class SprogProgrammerTest {
 
     @After
     public void tearDown() {
-        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

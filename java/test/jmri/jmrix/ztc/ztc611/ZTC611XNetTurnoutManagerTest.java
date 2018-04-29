@@ -65,7 +65,6 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object

@@ -149,11 +149,4 @@ public class OlcbTestInterface {
     public CanInterface canInterface;
     public OlcbInterface iface;
     public OlcbConfigurationManager configurationManager;
-
-    public void dispose(){
-      // terminate the OlcbInterface (and terminate thread)
-      new Thread(() -> { iface.dispose();},"OLCB Interface dispose thread").start();
-    }
-
-
 }

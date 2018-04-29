@@ -1,9 +1,9 @@
 package jmri.server.json.throttle;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -21,12 +21,14 @@ public class JsonThrottleManagerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(JsonThrottleManagerTest.class);
 
 }

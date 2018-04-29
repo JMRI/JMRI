@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -237,7 +238,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     MultiSensorItemPanel _itemPanel;
 
     protected void editItem() {
-        _paletteFrame = makePaletteFrame(Bundle.getMessage("EditItem", Bundle.getMessage("MultiSensor")));
+        makePaletteFrame(Bundle.getMessage("EditItem", Bundle.getMessage("MultiSensor")));
         _itemPanel = new MultiSensorItemPanel(_paletteFrame, "MultiSensor", _iconFamily,
                 PickListModel.multiSensorPickModelInstance(), _editor);
         ActionListener updateAction = (ActionEvent a) -> {
@@ -256,18 +257,28 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             _itemPanel.setSelection(entries.get(i).namedSensor.getBean());
         }
         _itemPanel.setUpDown(getUpDown());
-        initPaletteFrame(_paletteFrame, _itemPanel);
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
-        if (!_itemPanel.oktoUpdate()) {
-            return;
-        }
         HashMap<String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
-        setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-        setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-        setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+        int[] positions = _itemPanel.getPositions();
+        if (selections == null || selections.size() < positions.length) {
+            JOptionPane.showMessageDialog(_paletteFrame,
+                    Bundle.getMessage("NeedPosition", positions.length),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (iconMap != null) {
+            setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
+            setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
+            setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+        } else {
+            return;
+        }
         entries = new ArrayList<>(selections.size());
         for (int i = 0; i < selections.size(); i++) {
             addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.getPositionName(i))));
@@ -275,7 +286,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();
         setUpDown(_itemPanel.getUpDown());
-        finishItemUpdate(_paletteFrame, _itemPanel);
+//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel.dispose();
+        _itemPanel = null;
+        invalidate();
     }
 
     @Override

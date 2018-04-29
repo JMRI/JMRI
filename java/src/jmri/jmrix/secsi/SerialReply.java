@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
- * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
+ * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -28,11 +28,10 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Is reply to poll message.
-     * @see SerialSensorManager#reply(SerialReply)
+     * Is reply to poll message
      */
     public int getAddr() {
-        //log.error("getAddr should not be called", new Exception()); // will happen replying to Secsi Simulator
+        log.error("getAddr should not be called", new Exception());
         return getElement(0);
     }
 
@@ -42,6 +41,8 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
+    private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
 
 }
+
+

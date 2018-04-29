@@ -19,10 +19,8 @@ import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.IdentifyEventsMessage;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -32,8 +30,6 @@ import org.junit.Test;
  * updated to JUnit4 2016
  */
 public class OlcbSignalMastTest {
-        
-    private static OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCtor1() {
@@ -202,10 +198,10 @@ public class OlcbSignalMastTest {
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
         Assert.assertEquals("four sent", 4, messages.size());
         // check by string comparison as a short cut
-        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
-        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
-        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
-        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(3).toString());
 
         messages = new java.util.ArrayList<>();
 
@@ -270,10 +266,10 @@ public class OlcbSignalMastTest {
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), nodeID), null); 
         Assert.assertEquals("four sent", 4, messages.size());
         // check by string comparison as a short cut
-        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
-        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
-        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
-        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
+        Assert.assertEquals("msg 0", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(0).toString());
+        Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(1).toString());
+        Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(2).toString());
+        Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(3).toString());
 
         messages = new java.util.ArrayList<>();
 
@@ -298,21 +294,15 @@ public class OlcbSignalMastTest {
     }
 
     // from here down is testing infrastructure
-    static Connection connection;
-    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
-    static java.util.ArrayList<Message> messages;
+    Connection connection;
+    NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    java.util.ArrayList<Message> messages;
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
-        messages = new java.util.ArrayList<>();
-    }
-
-    @BeforeClass
-    static public void preClassInit() {
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
-        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
         
         messages = new java.util.ArrayList<>();
         connection = new AbstractConnection() {
@@ -322,7 +312,7 @@ public class OlcbSignalMastTest {
             }
         };
 
-        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
             public Connection getOutputConnection() {
@@ -331,21 +321,11 @@ public class OlcbSignalMastTest {
         });
         
         jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        messages = new java.util.ArrayList<>();
     }
 
     @After
-    public void tearDown() {
-        messages = null;
-    }
-
-    @AfterClass
-    public static void postClassTearDown() throws Exception {
-        if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
-        }
-        memo = null;
-        connection = null;
-        nodeID = null;
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 }

@@ -103,10 +103,11 @@ public class TreePaneDemo {
     @After
     public void tearDown() {
         store = null;
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame.setVisible(false);
+        jmri.util.JUnitUtil.resetWindows(false, false);
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // don't bother tearing down a frame in headless.
         }
-        jmri.util.JUnitUtil.tearDown();
+        frame.setVisible(false);
     }
 
     @Test
