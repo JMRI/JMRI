@@ -15,6 +15,11 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
     public LocoNetInterfaceScaffold() {
     }
 
+    public LocoNetInterfaceScaffold(LocoNetSystemConnectionMemo adaptermemo) {
+        super();
+        setSystemConnectionMemo(adaptermemo);
+    }
+
     // override some LnTrafficController methods for test purposes
     @Override
     public boolean status() {
