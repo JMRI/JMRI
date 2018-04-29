@@ -273,29 +273,34 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
             byte sw2[] = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
             // create and initialize LocoNet message
-            LocoNetMessage m = new LocoNetMessage(4);
-            m.setOpCode(LnConstants.OPC_SW_REQ);
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_SW_REQ);
             for (int k = 0; k < 8; k++) {
                 try {
                     // Delay 500 mSec to allow init of traffic controller, listeners.
                     Thread.sleep(500);
                     // sleep(500) or even (750) mSec infrequently causes NPE upon sending via tc, so
-                } catch (NullPointerException ne) {
-                    log.warn("init of SensorManager delayed");
-                    try {
-                        Thread.sleep(1000); // wait a bit longer for SensorManager to init
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                        return; // and stop work
-                    }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                     sm.setUpdateNotBusy();
-                    return;
+                    return; // and stop work
                 }
-                m.setElement(1, sw1[k]);
-                m.setElement(2, sw2[k]);
-                tc.sendLocoNetMessage(m);
+                msg.setElement(1, sw1[k]);
+                msg.setElement(2, sw2[k]);
+                try {
+                    tc.sendLocoNetMessage(msg);
+                } catch (NullPointerException npe) {
+                    log.warn("init of LnSensorManager delayed");
+                    try {
+                        Thread.sleep(1000); // wait a bit longer for SensorManager to init
+                        tc.sendLocoNetMessage(msg);
+                        log.debug("delayed init of LnSensorManager succeeded, sent msg");
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        sm.setUpdateNotBusy();
+                        return; // and stop work
+                    }
+                }
             }
             sm.setUpdateNotBusy();
         }

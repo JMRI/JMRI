@@ -107,15 +107,16 @@ public class LnPacketizer extends LnTrafficController {
             msg[i] = (byte) m.getElement(i);
         }
 
-        if (log.isDebugEnabled()) { // avoid String building if not needed
-            log.debug("queue LocoNet packet: {}", m.toString());
-        }
+        log.debug("queue LocoNet packet: {}", m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify(); // NPE here?
+                xmtHandler.notify(); // NPE here on slow systems init
             }
+        } catch (NullPointerException npe) {
+            log.warn("xmtHandler.notify() npe");
+            throw new NullPointerException(); // caught by LnSensor/PowerManager run()
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }

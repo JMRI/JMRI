@@ -172,14 +172,6 @@ public class LnPowerManager
                 // Delay 500 mSec to allow init of traffic controller, listeners.
                 Thread.sleep(500);
                 // sleep(500) or (750) mSec infrequently causes NPE upon sending via tc
-            } catch (NullPointerException ne) {
-                log.warn("init of PowerManager delayed");
-                try {
-                    Thread.sleep(1000); // wait a bit longer for PowerManager to init
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                    return; // and stop work
-                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
                 return; // and stop work
@@ -188,7 +180,19 @@ public class LnPowerManager
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);
             msg.setElement(2, 0);
-            tc.sendLocoNetMessage(msg);
+            try {
+                tc.sendLocoNetMessage(msg);
+            } catch (NullPointerException npe) {
+                log.warn("init of LnPowerManager delayed");
+                try {
+                    Thread.sleep(1000); // wait a bit longer for LnPowerManager to init
+                    tc.sendLocoNetMessage(msg);
+                    log.debug("delayed init of LnPowerManager succeeded, sent msg");
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    return; // and stop work
+                }
+            }
         }
     }
 

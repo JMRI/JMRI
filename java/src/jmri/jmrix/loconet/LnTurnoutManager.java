@@ -160,7 +160,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                 lastSWREQ = null;
                 return;
         }
-        // reach here for loconet switch command; make sure that a Turnout with this name exists
+        // reach here for LocoNet switch command; make sure that a Turnout with this name exists
         String s = prefix + "T" + addr; // NOI18N
         if (getBySystemName(s) == null) {
             // no turnout with this address, is there a light?

@@ -102,7 +102,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      }
 
     /**
-     * Begin the processing of a Throttle Request
+     * Begin the processing of a Throttle Request.
      *
      * @param address Loco address
      * @param control whether the throttle object wants to control the loco
