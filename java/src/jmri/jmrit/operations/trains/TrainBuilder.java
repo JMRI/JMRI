@@ -3856,7 +3856,7 @@ public class TrainBuilder extends TrainCommon {
                 log.debug("Selected random {}, created random {}", si.getRandom(), random);
                 if (random > value) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildScheduleRandom"),
-                            new Object[]{track.getName(), track.getScheduleName(), si.getId(), value, random}));
+                            new Object[]{track.getLocation().getName(), track.getName(), track.getScheduleName(), si.getId(), si.getReceiveLoadName(), value, random}));
                     return null;
                 }
             } catch (NumberFormatException e) {
