@@ -221,20 +221,6 @@ public class SpeedUtil {
     }
 
     protected RosterSpeedProfile getSpeedProfile() {
-        if (_sessionProfile == null) {
-            if (_mergeProfile == null) {
-                makeSpeedTree();
-                makeRampParameters();                
-            } else {
-                return _mergeProfile;
-            }
-        } else if (!_sessionProfile.hasForwardSpeeds() && !_sessionProfile.hasReverseSpeeds()) {
-                return _mergeProfile;
-        }
-        return _sessionProfile;
-    }
-    
-    protected RosterSpeedProfile getMergeProfile() {
         if (_mergeProfile == null) {
             makeSpeedTree();
             makeRampParameters();                
@@ -365,7 +351,8 @@ public class SpeedUtil {
                 num = 0;;
             }
         }
-        if (log.isDebugEnabled()) log.debug("getMomentumFactor for cv \"{}\" {} num= {}", cv, attr, num);
+        if (log.isDebugEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}", 
+                cv.getAttribute("name"), attr, num);
         return num;
     }
     
@@ -384,7 +371,8 @@ public class SpeedUtil {
                 num = 0;
             }
         }
-        if (log.isDebugEnabled()) log.debug("getMomentumAdustment for cv \"{}\" {}  num= {}", cv, attr, num);
+        if (log.isDebugEnabled()) log.debug("getMomentumAdustment for cv {} {},  num= {}",
+                cv.getAttribute("name"), attr, num);
         return num;
     }
     
@@ -731,8 +719,7 @@ public class SpeedUtil {
                     log.debug("Speeds invalid between {} and {}", fromBlock.getDisplayName(), toBlock.getDisplayName());
                 return;
             }
-            RosterSpeedProfile mergeProfile = getMergeProfile();
-            float mergeSpeed = mergeProfile.getSpeed(throttle, isForward);                
+            float mergeSpeed = _mergeProfile.getSpeed(throttle, isForward);                
             float profileSpeed = _sessionProfile.getSpeed(throttle, isForward);                
             throttle = stepIncrement * Math.round(throttle/stepIncrement);
             if (log.isDebugEnabled()) {
