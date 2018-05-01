@@ -761,13 +761,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 Object o = event.getSource();
                 if (o instanceof JmriBeanComboBox) {
                     JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
-                    Manager m = jbcb.getManager();
-                    if (m != null) {
-                        String[] systemNames = m.getSystemNameArray();
-                        for (int idx = 0; idx < systemNames.length; idx++) {
-                            String systemName = systemNames[idx];
-                            jbcb.setItemEnabled(idx, validatePhysicalTurnout(systemName, null));
-                        }
+                    for (int idx = 0; idx < jbcb.getItemCount(); idx++) {
+                        jbcb.setItemEnabled(idx, validatePhysicalTurnout(jbcb.getItemAt(idx), null));
                     }
                 }
             }
