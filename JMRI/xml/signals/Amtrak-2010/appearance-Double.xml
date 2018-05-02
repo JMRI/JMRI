@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2014-01-25</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial Version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2014-06-23</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Correct case error in image paths</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>Amtrak-2010</aspecttable>
+  <name>Double head position light signal</name>
+  <reference>As described on the Railroad Signals of the US website.</reference>
+  <description>Appearances for a double head Amtrak color position light signal</description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <reference>281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Cab Speed</aspectname>
+      <show>flashgreen</show>
+      <show>dark</show>
+      <reference>281a</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281a-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281a-x.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>flashgreen</show>
+      <reference>281b</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281b-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281b-x.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited Clear</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <reference>281c</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281c-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-281c-x.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>282</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-282-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>flashyellow</show>
+      <show>dark</show>
+      <reference>282a</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-282a-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-282a-x.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>283</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-283-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Slow</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>284</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-284-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>285</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-285-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>286</reference>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-286-a.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-286-x.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>288</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-288-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>290</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-290-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>292</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-291-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>dark</show>
+      <reference>292</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Rule-292-a.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/Amtrak-2010/Unlit-a.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Cab Speed</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Limited</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited Clear</advancedAspect>
+      <ourAspect>Approach Limited</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Limited Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Unlit</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

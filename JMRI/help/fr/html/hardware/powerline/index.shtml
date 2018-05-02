@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Updated  by Blorec Herv&#233;  2013-09-18-->
+
+  <title>JMRI: Powerline Controllers</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>JMRI: Contr&ocirc;leurs CPL (Powerline)</h2>Cette page
+      explique comment configurer JMRI pour dialoguer avec les
+      contr&ocirc;leurs de la ligne &eacute;lectrique, par exemple
+      X10.
+
+      <p>Voir aussi la <a href="Compatibility.shtml">page de
+      compatibilit&eacute;</a> associ&eacute;e, pour voir les
+      interfaces prises en charge.</p>
+
+      <p>Pour plus d'informations sur la fa&ccedil;on d'adresser
+      vos &eacute;quipements via JMRI, s'il vous pla&icirc;t voir
+      la page <a href="Names.shtml">sur l'adressaget et les noms de
+      JMRI</a> pour X10.</p>
+
+      <p>Les lumi&egrave;res JMRI travaillent de mani&egrave;re
+      intuitive avec des appareils CPL. Lorsque la Lumi&egrave;re
+      JMRI est mis sur "ON", une commande est envoy&eacute;e au
+      p&eacute;riph&eacute;rique distant pour le mettre sur "ON".
+      Idem pour "OFF".</p>
+
+      <p>Il y a aussi un support limit&eacute; pour la gradation
+      (luminosit&eacute; variable) Lumi&egrave;res. Voir la
+      <a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">
+      page "Contr&ocirc;le-Lumi&egrave;re"</a> pour plus
+      d'informations &agrave; ce sujet.</p>
+
+      <p>Les Aiguillages JMRI sont disponibles pour X10. Lorsque
+      l'Aiguillage JMRI est r&eacute;gl&eacute; sur
+      "D&eacute;vi&eacute;", une commande est envoy&eacute;e
+      &agrave; l'appareil &agrave; distance qui est
+      r&eacute;gl&eacute; &agrave; "BRIGHT". Ceci est une pleine
+      puissance ,imm&eacute;diate. Lorsque l'Aiguillage est
+      r&eacute;gl&eacute; sur "Droit", une commande est
+      envoy&eacute;e au p&eacute;riph&eacute;rique distant pour
+      aller sur "OFF".Selon le mat&eacute;riel X10, ce peut
+      &ecirc;tre soit un arr&ecirc;t imm&eacute;diat, ou &ecirc;tre
+      baisse lente.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

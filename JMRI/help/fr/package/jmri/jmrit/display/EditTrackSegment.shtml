@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-23-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Edit Track Segment Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help Layout Editor Track Segment"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Editer Segment de Voie</h1>
+
+      <h2>Tron&ccedil;ons de Voie et de Points de
+      Raccordement</h2>Un <b>segment de voie</b> est un morceau de
+      voie droite s'&eacute;tendant entre deux points de connexion.
+      Les points de raccordement sont dessin&eacute;s comme des
+      petits carr&eacute;s rouges ou verts. Les points de connexion
+      sont disponibles sur les aiguillages, les points d'ancrage,
+      Heurtoirs, et croisement. Chaque aiguillage a trois ou quatre
+      points de connexion, chacun acceptant une connexion. Chaque
+      point d'ancrage a un point de connexion qui peut accepter
+      deux connexions. Un Heurtoir de fin est semblable, mais
+      accepte une seul connexion. Les croisements ont quatre points
+      de connexion, chacun acceptant une connexion. Un point de
+      connexion qui peut accepter un segment de voie de
+      raccordement est tir&eacute;s en rouge. Quand un point de
+      connexion a sa capacit&eacute; de connexions compl&egrave;te,
+      sa couleur est pass&eacute; au vert. Lorsque tous les points
+      de connexion sont verts, un sch&eacute;ma de voie est
+      complet, avec toutes les connexions d&eacute;finies.
+
+      <h2>Styles de Lignes</h2>Les segments de voie sont
+      normalement dessin&eacute;s en traits pleins. Mais vous
+      pouvez d&eacute;signer un segment de voie en
+      <i>pointill&eacute;s</i> pour montrer les tunnels ou les
+      voies traversant &agrave; diff&eacute;rents angles. Vous
+      pouvez demander une ligne pointill&eacute;e pour un segment
+      de voie en cherchant <b>pointill&eacute;</b> dans la barre
+      d'outil avant que le segment de voie soit cr&eacute;&eacute;,
+      ou vous pouvez changer un segment de voie en
+      <b>Pointill&eacute;s</b> dans le dialogue &eacute;diter
+      segment de voie . (Des points d'ancrage peuvent &ecirc;tre
+      ajout&eacute;s pour obtenir que votre voie pointill&eacute;e
+      couvre la zone exacte souhait&eacute;e.) Vous pouvez aussi
+      d&eacute;signer un segment de voie <i>cach&eacute;</i> donc
+      il est affich&eacute; uniquement lorsque le mode
+      &eacute;dition est actif. Les tron&ccedil;ons de voie
+      <i>cach&eacute;s</i>sont utiles pour suivre les diagrammes
+      tir&eacute;s de plusieurs plans o&ocirc; la fin d'une
+      rang&eacute;e se connecte au d&eacute;but de la m&ecirc;me
+      rang&eacute;e ou d'une autre. Pour faire un segment de voie
+      cach&eacute;, cochez <b>Masquer la Voie</b> dans la
+      bo&icirc;te de dialogue Modifier segment de voie.
+
+      <h2>Voie principale et Voie d'&eacute;vitement</h2>En option,
+      les segments de voie sont utilis&eacute;s pour
+      d&eacute;signer <i>la voie principale</i> ou <i>la voie
+      d'&eacute;vitement</i>. Les segments des aiguillages et des
+      croisements sont reli&eacute;s &agrave; la <i>voie
+      principale</i> ou &agrave; la <i>voie d'&eacute;vitement</i>
+      selon les d&eacute;signations des itin&eacute;raires continus
+      dans la section aiguillages ci-dessus pour des informations
+      sur une ligne principale suivi d'un aiguillage .
+
+      <p>Si <b>la Voie Principale</b> est coch&eacute;e dans la
+      barre d'outils quand un segment de voie est
+      cr&eacute;&eacute;, ce segment de voie est
+      d&eacute;sign&eacute; comme <i>voie principale</i>, sinon il
+      est consid&eacute;r&eacute; comme <i>voie
+      d'&eacute;vitement</i>. Vous pouvez changer de ligne
+      principale &agrave; voie d'&eacute;vitement, ou vice versa,
+      dans le dialogue &eacute;diter Voie. La voie principale et la
+      voie d'&eacute;vitement peuvent &ecirc;tre &eacute;tablies
+      avec des lignes de diff&eacute;rentes largeurs. Les Largeurs
+      de voie pour chacune sont d&eacute;finies en utilisant
+      l'option <b>R&eacute;gler Largeur de Voie...</b> dans le menu
+      Options.</p>
+
+      <h2>Cantons de Voie</h2>En option, vous pouvez
+      d&eacute;signer dans quel <b>Canton</b> se trouve un segment
+      de voie -soit en entrant un nom de canton dans le
+      <b>Canton&gt;: Nom</b> de la barre d'outil avant la
+      cr&eacute;ation de chaque segment de voie, ou en entrant un
+      nom de canton dans la boite de dialogue &eacute;diter segment
+      de voie &agrave; un moment ult&eacute;rieur. La bo&icirc;te
+      de dialogue Modifier Segment de Voie permet &eacute;galement
+      d'appeler une boite de dialogue Modifier Canton, afin que
+      l'information pour le segment de voie du canton puisse peut
+      &ecirc;tre entr&eacute;e ou modifi&eacute;e. Les cantons sont
+      discut&eacute;s plus en d&eacute;tail dans la page d'aide de
+      Cr&eacute;er/Modifier Cantons. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

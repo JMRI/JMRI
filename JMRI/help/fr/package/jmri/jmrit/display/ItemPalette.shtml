@@ -1,0 +1,365 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-31-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: L'&eacute;l&eacute;ment Palette</title>
+  <meta name="author" content="Pete Cressman">
+  <meta name="keywords" content="JMRI help Item Palette">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>L'&eacute;l&eacute;ment
+      Palette</h1><b>L'&eacute;l&eacute;ment Palette</b> est
+      utilis&eacute; pour placer des ic&ocirc;nes et du texte sur
+      l'<b>&eacute;diteur de TCO</b>. La palette est une
+      fen&ecirc;tre &agrave; onglets avec des onglets pour chaque
+      type d'&eacute;l&eacute;ment. La m&eacute;thode commune en
+      usage pour tous les &eacute;l&eacute;ments pour en ajouter un
+      par un TCO est "Glisser et D&eacute;poser". Chaque onglet
+      dispose d'un Panneau avec bordure &eacute;tiquet&eacute;
+      <b>Glisser vers le Panneau</b>. Faites glisser
+      l'&eacute;l&eacute;ment &agrave; l'int&eacute;rieur de cette
+      fronti&egrave;re vers le panneau. Dans le cas o&ugrave;
+      l'ic&ocirc;ne repr&eacute;sente un dispositif de
+      configuration (par exemple un aiguillage, un capteur, etc),
+      vous devez s&eacute;lectionner une ligne d'une table &agrave;
+      associer &agrave; ce dispositif particulier avec
+      l'ic&ocirc;ne - et ensuite faites glisser l'ic&ocirc;ne sur
+      le TCO.
+
+      <h2>Articles Iconiques</h2>Pour ces articles utilisant des
+      ic&ocirc;nes, de multiples ensembles d'ic&ocirc;nes sont
+      offerts par l'&eacute;l&eacute;ment Palette. Dans chacun de
+      ces cas plusieurs jeux d'ic&ocirc;nes diff&eacute;rents sont
+      fournis par d&eacute;faut. Les boutons radio sont
+      utilis&eacute;s pour s&eacute;lectionner un jeu
+      d'ic&ocirc;nes.Par exemple, sous l'onglet du capteur vous
+      pouvez avoir des ensembles de grands voyants, petits voyants,
+      chaque taille avec plusieurs jeux avec des couleurs
+      diff&eacute;rentes pour les actifs et inactfs - par exemple
+      rouge-vert, jaune-noir, etc
+
+      <p>Le bouton <b>Montrer Ic&ocirc;nes</b> affiche toutes les
+      ic&ocirc;nes dans le jeu s&eacute;lectionn&eacute;. Le bouton
+      <b>Modifier Ic&ocirc;nes</b> ouvre une bo&icirc;te de
+      dialogue o&ugrave; les ic&ocirc;nes peuvent &ecirc;tre
+      modifi&eacute;es en faisant glisser de nouvelles ic&ocirc;nes
+      depuis le catalogue ic&ocirc;ne.</p>
+
+      <h3>Nouveaux Jeux Ic&ocirc;nes</h3>Des jeux d'ic&ocirc;nes
+      peuvent &ecirc;tre ajout&eacute;s ou supprim&eacute;s
+      &agrave; partir de la boite de dialogue <b>Modifier
+      Ic&ocirc;nes</b>. Il n'y a aucune limite sur le nombre de
+      jeux d'ic&ocirc;nes qui peuvent &ecirc;tre ajout&eacute;s
+      &agrave; un onglet. Lorsque l'&eacute;l&eacute;ment Palette
+      est personnalis&eacute; avec d'autres jeux d'ic&ocirc;nes, la
+      fermeture de la Palette avec le bouton de fermeture dans la
+      barre de titre va ouvrir une bo&icirc;te de dialogue vous
+      demandant si vous souhaitez enregistrer vos modifications.
+      Lorsque des modifications sont sauvegard&eacute;es
+      l'&eacute;l&eacute;ment Palette est stock&eacute; dans le
+      fichier CatalogTrees.xml dans le r&eacute;pertoire des
+      pr&eacute;f&eacute;rences.
+
+      <p>La boite de dialogue <b>Modifier Ic&ocirc;nes</b> est
+      utilis&eacute;e pour supprimer un jeu d'ic&ocirc;nes ou
+      d'ajouter un jeu d'ic&ocirc;nes suppl&eacute;mentaires. Le
+      bouton <b>Supprimer Jeu d'Ic&ocirc;nes</b> supprime le jeu
+      d'ic&ocirc;nes s&eacute;lectionn&eacute;. Lorsque le bouton
+      <b>Ajouter Jeu d'Icones</b> est press&eacute;, le jeu
+      d'ic&ocirc;nes s&eacute;lectionn&eacute; est
+      sauvegard&eacute; et un jeu d'ic&ocirc;nes avec des
+      ic&ocirc;nes "inconnues" est affich&eacute; (Dark X). Changer
+      ces ic&ocirc;nes pour celles que vous voulez en faisant
+      glisser des ic&ocirc;nes du catalogue d'ic&ocirc;nes. Le
+      nouveau jeu d'ic&ocirc;nes doit &ecirc;tre nomm&eacute; dans
+      le champ de texte au sommet de la boite de dialogue. Enfin,
+      appuyez sur le bouton <b>Cr&eacute;er Jeu d'Icones</b> et la
+      bo&icirc;te de dialogue est ferm&eacute;e avec le nouveau jeu
+      d'ic&ocirc;nes ajout&eacute; &agrave; la liste des boutons
+      radio.</p>
+
+      <h3>Table des &eacute;l&eacute;ments</h3>Les
+      &eacute;l&eacute;ments associ&eacute;s &agrave; une table ont
+      un bouton <b>Ajouter un Nouvel &eacute;l&eacute;ment au
+      Tableau</b>. Ce bouton ouvre un dialogue o&ugrave; un nouvel
+      &eacute;l&eacute;ment d'un dispositif peut &ecirc;tre
+      ajout&eacute; &agrave; cette table. Les onglets avec des
+      tableaux n&eacute;cessitent la s&eacute;lection d'un
+      dispositif (une ligne dans le tableau) avant que
+      l'ic&ocirc;ne puisse &ecirc;tre gliss&eacute;e sur un TCO
+      pour le repr&eacute;senter.
+
+      <h2>Onglets &eacute;l&eacute;ment Palette</h2>
+
+      <ul>
+        <li><b>Aiguillage</b> Les jeux d'ic&ocirc;nes d'aiguillage
+        &agrave; la fois droite et gauche sont contenues dans cet
+        onglet. S&eacute;lectionnez un aiguillage depuis la table
+        et un jeu d'ic&ocirc;nes, puis faites glisser sur le
+        TCO.</li>
+
+        <li><b>Capteur</b> S&eacute;lectionner un capteur de la
+        table et un jeu d'ic&ocirc;nes, puis faites glisser sur le
+        TCO.</li>
+
+        <li><b>T&ecirc;te de Signal</b> Quand une t&ecirc;te de
+        signal est s&eacute;lectionn&eacute;e dans le tableau, le
+        Bouton [Montrer Ic&ocirc;nes] n'affiche que les
+        ic&ocirc;nes pour les apparences valides du signal. Lorsque
+        aucune ligne n'est s&eacute;lectionn&eacute;e toutes les
+        ic&ocirc;nes avec les apparence possibles sont
+        indiqu&eacute;es. Lorsque vous ajoutez un nouveau jeu
+        d'ic&ocirc;nes, toutes les ic&ocirc;nes avec les apparence
+        possibles sont indiqu&eacute;es.</li>
+
+        <li><b>M&acirc;t de Signal</b> Un m&acirc;t de signal doit
+        &ecirc;tre s&eacute;lectionn&eacute; depuis la table pour
+        faire glisser son ic&ocirc;ne sur le TCO et d'afficher
+        l'ic&ocirc;ne qu'il utilise pour ses aspects.</li>
+
+        <li><b>M&eacute;moire</b> S&eacute;lectionnez un
+        emplacement m&eacute;moire dans la table. Les trois types
+        de m&eacute;moire ont chacun une zone "Glisser sur le TCO".
+        Faites glisser l'&eacute;l&eacute;ment &agrave;
+        l'int&eacute;rieur de la fronti&egrave;re "Glisser sur le
+        TCO" sur le TCO. Notez que les types <b>Entr&eacute;e</b>
+        et <b>Spinner</b> ne peuvent &ecirc;tre
+        tra&icirc;n&eacute;s par les bords de leurs zones de
+        texte.</li>
+
+        <li><b>Rapport</b> S&eacute;lectionner un rapport dans le
+        tableau et faites glisser l'&eacute;l&eacute;ment &agrave;
+        l'int&eacute;rieur de la fronti&egrave;re "Glisser sur le
+        TCO" sur le TCO.</li>
+
+        <li><b>Lumi&egrave;re</b> S&eacute;lectionnez une
+        lumi&egrave;re (comme un objet CMRI) de la table et faites
+        glisser sur le TCO.</li>
+
+        <li><b>Multicapteurs</b> La table affiche le Tableau
+        Capteur et le jeu d'ic&ocirc;nes par d&eacute;faut &agrave;
+        trois positions de levier. Pour le cas par d&eacute;faut,
+        trois rang&eacute;es doivent &ecirc;tre
+        s&eacute;lectionn&eacute;es depuis la table pour placer
+        l'ic&ocirc;ne de multicapteurs dans un panneau. Les
+        s&eacute;lections de tableau sont &eacute;tiquet&eacute;s
+        "premi&egrave;re", "Seconde", etc, et ces &eacute;tiquettes
+        correspondant aux &eacute;tiquettes s'affichent lorsque le
+        jeu d'ic&ocirc;nes complet est affich&eacute;. Quand vous
+        &eacute;ditez un jeu d'ic&ocirc;nes des niveau de position,
+        peuvent &ecirc;tre ajout&eacute;s ou supprim&eacute;s.
+        Autrement dit, vous pouvez faire un capteur &agrave; deux
+        multicapteurs ou un jeu d'ic&ocirc;nes de quatre ou cinq
+        multicapteur.</li>
+
+        <li><b>Ic&ocirc;ne</b> Les ic&ocirc;nes affich&eacute;es
+        &agrave; la fronti&egrave;re (&eacute;tiquet&eacute;es
+        &agrave; leur nom) peuvent &ecirc;tre gliss&eacute;es
+        directement sur un TCO. Les ic&ocirc;nes peuvent aussi
+        &ecirc;tre gliss&eacute;es directement &agrave; partir du
+        Catalogue d'ic&ocirc;nes.</li>
+
+        <li><b>Arri&egrave;re Plan</b> Les ic&ocirc;nes
+        d'arri&egrave;re Plan sont plac&eacute;es dans un panneau
+        comme le sont les ic&ocirc;nes normales. Cependant, elle
+        sont affect&eacute;s du plus bas niveau d'affichage et ne
+        peut &ecirc;tre s&eacute;lectionn&eacute;s avec un simple
+        clic de souris. Utilisez "Ctrl-Clic" pour
+        s&eacute;lectionner une ic&ocirc;ne de fond. Plut&ocirc;t
+        qu'une ic&ocirc;ne, une couleur de fond
+        personnalis&eacute;e peut &ecirc;tre choisie avec le bouton
+        <b>Couleur de Fond</b>. Ce bouton affiche un
+        s&eacute;lecteur de couleur avec des onglets pour les
+        diff&eacute;rentes fa&ccedil;ons de d&eacute;finir une
+        couleur.</li>
+
+        <li><b>Texte</b> L'onglet Texte affiche un champ de texte
+        pour entrer le texte et les options d'attribut de rendu du
+        texte. Styles et taille de Police, la justification et les
+        attributs de la fronti&egrave;re peut &ecirc;tre choisi. Un
+        s&eacute;lecteur de couleur fournit des couleurs
+        personnalis&eacute;es pour les polices, les arri&egrave;re
+        plans et les bordures. <b>Remarque</b> <i>La "touche
+        Entr&eacute;e" doit &ecirc;tre press&eacute;e pour afficher
+        le texte avec ses attributs dans le Panneau de
+        Pr&eacute;visualisation.</i> Faites glisser l'
+        &eacute;l&eacute;ment du panneau de pr&eacute;visualisation
+        vers le TCO.</li>
+
+        <li><b>RPSReporter</b> Faites glisser l'ic&ocirc;ne
+        "Glisser vers le TCO" sur le TCO et installer le
+        RPSReporter &agrave; partir de son menu
+        d&eacute;roulant.</li>
+
+        <li><b>Horloge Rapide</b> Glisser l'horloge sur le
+        TCO.</li>
+
+        <li><b>Indicateur de Voie</b> L'indicateur de voie est
+        con&ccedil;u pour &ecirc;tre utilis&eacute; quand les
+        circuits de voie sont configur&eacute;s avec les OBlocks.
+        La plupart des &eacute;l&eacute;ments dans cet onglet
+        appartient &agrave; leur utilisation comme
+        pr&eacute;sentations des OBlocks et leur utilisation avec
+        des itin&eacute;raires mandat&eacute;s. Cependant, si les
+        OBlocks ne sont pas d&eacute;finis, mais que les capteurs
+        d'occupation sont install&eacute;s sur le TCO comme des
+        circuits de voie, le <b>Circuit Occupation</b> acceptera un
+        nom de capteur. Lorsque c'est le cas seuls les couleurs
+        "Occup&eacute;s" et "Libres" peuvent &ecirc;tre
+        affich&eacute;es.</li>
+
+        <li><b>Indicateur d'Aiguillage</b> Le commentaire ci-dessus
+        s'applique aussi aux Indicateurs d'Aiguillage.</li>
+      </ul>
+
+      <h2>Plus d'Infos sur les Indicateurs de Voies</h2>Les
+      Indicateurs de Voies (&agrave; savoir les segments de voie et
+      aiguillages) ont des couleurs pour afficher l'&eacute;tat du
+      circuit de voie qu'ils repr&eacute;sentent. Lorsque le
+      circuit de voie est configur&eacute; par un OBlock, et les
+      Portails et Chemins qu'il contient, les Statuts d'&eacute;tat
+      suivants sont affich&eacute;s en couleur:
+
+      <ul>
+        <li><b>Libre</b> Indique pr&ecirc;t &agrave; l'emploi. Plus
+        pr&eacute;cis&eacute;ment, le circuit est dans un
+        &eacute;tat connu et aucun des autre status ne
+        s'applique.</li>
+
+        <li><b>Occup&eacute;s</b> (Jaune) La voie est
+        occup&eacute;e par un train inconnu ou voiture.</li>
+
+        <li><b>Allou&eacute;</b> (Vert) La voie est
+        r&eacute;serv&eacute;e pour une utilisation par un
+        mandat.</li>
+
+        <li><b>Position du Train</b> (Bleu) La voie est
+        occup&eacute; par un train sous mandat et c'est sa position
+        actuelle.</li>
+
+        <li><b>Non En cours d'utilisation</b> (Gris) L'&eacute;tat
+        de la voie n'est pas connu ou qu'elle a &eacute;t&eacute;
+        fix&eacute;e &agrave; hors de service. Cet &eacute;tat est
+        &eacute;galement utilis&eacute; lorsque les cantons sont
+        supervis&eacute;s par un panneau local.</li>
+
+        <li><b>Erreur Alimentation</b> (Rouge) C'est l'&eacute;tat
+        d'un autre capteur - pas le capteur d'occupation. S'il est
+        utilis&eacute;, le plus probable, il serait
+        c&acirc;bl&eacute; pour indiquer un court-circuit ou un
+        &eacute;chec d'alimentation.</li>
+      </ul>
+
+      <p><b>Remarque:</b> La configuration des Ic&ocirc;nes
+      Indicateur Voie peut &ecirc;tre fait en groupe
+      automatiquement - y compris la conversion automatique des
+      ic&ocirc;nes de voie r&eacute;guli&egrave;rement avec le
+      <b>G&eacute;n&eacute;rateur de Circuit</b>. Le seul
+      &eacute;l&eacute;ment o&ugrave; vous pouvez vouloir
+      &eacute;diter un indicateur Ic&ocirc;ne de Voie
+      individuellement est de choisir l'ic&ocirc;ne qui montre le
+      nom du train quand le bloc repr&eacute;sent&eacute; est
+      occup&eacute; en vertu d'un mandat. (Souvent, plusieurs
+      ic&ocirc;nes affichent un OBlock et vous voulez seulement
+      l'un d'eux pour montrer le marqueur.)</p>
+
+      <h3>Onglet Indicateur de Voie</h3>
+
+      <p>Entrez le nom du circuit de voie (OBlock), cette
+      ic&ocirc;ne voie repr&eacute;sente dans le champs <b>Circuit
+      d'Occupation</b>. La bouton <b>Ouvrir Liste de
+      S&eacute;lection de D&eacute;tecteur</b> ouvre une liste de
+      choix montrant les circuits voie OBlock d&eacute;fini. Faites
+      glisser ou copier le nom du champ du Circuit d'Occupation.
+      <i><b>Ne pas utiliser</b> l'onglet "Table Capteur" de la
+      liste de s&eacute;lection <b>&agrave; moins qu'</b>il n'y ait
+      pas de OBlocks configur&eacute;s et que vous souhaitiez
+      utiliser uniquement le statut
+      "Occup&eacute;/Inoccup&eacute;".</i></p>
+
+      <p>(Obsol&egrave;te) Quand un nom de OBlock valide est
+      entr&eacute; dans le champ Circuit d'Occupation, un panneau
+      <b>CircuitPath</b> est ajout&eacute; &agrave; l'onglet. Si
+      les chemins ont &eacute;t&eacute; d&eacute;finis pour le
+      bloc, ils sont repr&eacute;sent&eacute;s dans ce panneau.
+      V&eacute;rifiez les chemins du circuit de voie qui passent
+      sur cette ic&ocirc;ne. Lorsque ces chemins font partie d'un
+      itin&eacute;raire allou&eacute; ou sont occup&eacute;s par un
+      train mandat&eacute;, elles montrent ce statut par la
+      couleur.</p>
+
+      <p>Si les chemins ont &eacute;t&eacute; cr&eacute;&eacute;s
+      ou &eacute;dit&eacute;s par le G&eacute;n&eacute;rateur de
+      Circuit, la fonction ci-dessus se fait automatiquement. Dans
+      l'avenir ci-dessus un "sous" panneau sera mis en lecture
+      seule.</p>
+
+      <p>En dessous du champ de circuit d'occupation est une case
+      lib&eacute;l&eacute; <b>Affichage du Nom du Train quand
+      occup&eacute; par un train mandat&eacute;</b>. Quand un train
+      mandat&eacute; occupe le circuit de voie, les ic&ocirc;nes
+      circuit ayant cette case coch&eacute;e, montrent un marqueur
+      avec l'Id du train occupant. Tr&egrave;s probablement, vous
+      ne voulez seulement l'une des ic&ocirc;nes dans le circuits
+      de voie pour afficher l'ID du train.</p>
+
+      <p>Les boutons radio <b>Jeux d'Ic&ocirc;nes</b> , la zone
+      <b>Glisser sur le TCO</b> et les boutons de fonction
+      <b>Afficher les Ic&ocirc;nes</b> et <b>Modifier
+      Ic&ocirc;nes</b> comme d&eacute;crit avant.</p>
+
+      <h3>Onglet Indicateur Aiguillage</h3>
+
+      <p>Cet onglet contient les m&ecirc;mes fonctions que l'onglet
+      Indicateur de Voie avec l'ajout d'un tableau Aiguillage. Un
+      aiguillage doit &ecirc;tre s&eacute;lectionn&eacute; dans la
+      Table Aiguillage pour &ecirc;tre en mesure de faire glisser
+      une ic&ocirc;ne sur un TCO.</p>
+
+      <p>Une l&eacute;g&egrave;re variation sont les boutons
+      <b>Ajouter Jeu d'Ic&ocirc;nes</b> et <b>Supprimer Jeu
+      d'Ic&ocirc;nes</b> au bas de l'onglet. En outre, le
+      bouton<b>Afficher les Ic&ocirc;nes</b> affiche le jeu
+      d'ic&ocirc;ne dans une matrice o&ugrave; les lignes montrent
+      l'&eacute;tat de l'ic&ocirc;ne pour chaque &eacute;tat de
+      l'aiguillage - direct, D&eacute;vi&eacute;, Incoh&eacute;rent
+      et Inconnu. &agrave; la droite de chaque ligne de la matrice
+      est un bouton <b>Modifier des Ic&ocirc;nes</b>. Ces boutons
+      ouvrent une bo&icirc;te de dialogue Modifier des Ic&ocirc;nes
+      pour chaque ligne de la matrice. Le bouton <b>Masquer les
+      Ic&ocirc;nes</b> ferme la matrice ic&ocirc;ne et retourne sur
+      l'onglet &agrave; son point d'origine.</p>
+
+      <p>Quand un des boutons <b>Modifier des Ic&ocirc;ne</b> est
+      press&eacute; sur une rang&eacute;e de l'affichage de
+      l'ic&ocirc;ne, une bo&icirc;te de dialogue d'&eacute;dition
+      de la ligne est ouverte. Les ic&ocirc;nes peuvent &ecirc;tre
+      modifi&eacute;s en faisant glisser des ic&ocirc;nes &agrave;
+      partir du Catalogue d'Ic&ocirc;nes. Aussi le statut entier
+      peut &ecirc;tre retir&eacute; par le bouton <b>Supprimer
+      Statut</b> - ou restaur&eacute; par le bouton <b>Ajouter
+      &eacute;tat Manquant</b>.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

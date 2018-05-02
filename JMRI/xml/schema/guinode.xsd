@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for JMRI aspect-signaling support                           -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+<xs:complexType name="NodeType" mixed="true">
+    <xs:annotation>
+    <xs:documentation>
+      Define the XML stucture for storing the one node in the GUI tree
+    </xs:documentation>
+    <xs:appinfo>
+        <jmri:usingclass configurexml="false">jmri.util.swing.GuiUtilBase</jmri:usingclass>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:sequence>
+    <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation>
+      Name or title of item described by this node, perhaps I8N'd
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="mnemonic" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Keyboard mnemonic for this node
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="group" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Menu items with in this node are all grouped together, with only one item valid at any one time
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="icon" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Image icon file name to display
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="help" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Help page to be invoked
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="adapter" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Adapter class to invoke
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="panel" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Panel class to invoke
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="current" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Action method to invoke in current window
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="type" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Define type of visual presentation (this schema element should have additional restrictions added to e.g. checkbox only)
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="option" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Optional parameters
+      </xs:documentation></xs:annotation>
+    </xs:element>
+    <xs:element name="node" type="NodeType" minOccurs="0" maxOccurs="unbounded"/>
+  </xs:sequence>
+  <xs:attribute name="name"/>
+</xs:complexType>
+
+
+<xs:element name="nodes">
+    <xs:annotation>
+        <xs:documentation>
+          XML Schema describing GUI node files for JMRI
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>
+          Name or title of this set of controls
+          </xs:documentation></xs:annotation>
+        </xs:element>
+     
+        <xs:element name="node" type="NodeType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>
+          Define an individual item to be read or written
+          </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="type" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="sensor"/>
+                    <xs:enumeration value="turnout"/>
+                    <xs:enumeration value="frame"/>
+                    <xs:enumeration value="panel"/>
+                    <xs:enumeration value="roster"/>
+                    <xs:enumeration value="memory"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="name" minOccurs="1" maxOccurs="1"/>
+              <xs:choice>
+                <xs:element name="value" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                  Expected value, confirmed during asynch reads
+                  </xs:documentation></xs:annotation>
+                </xs:element>
+                <xs:element name="set" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                  Specific value to be written
+                  </xs:documentation></xs:annotation>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

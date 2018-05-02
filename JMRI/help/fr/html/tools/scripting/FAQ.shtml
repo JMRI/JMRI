@@ -1,0 +1,581 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233;  2013-09-26-->
+
+  <title>JMRI: Scripting FAQ</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI: FAQ Scripts</h1>
+
+      <p class="subtitle">Foire aux questions sur les scripts JMRI
+      avec Jython</p>
+
+      <h2>O&ugrave; puis-je en apprendre davantage sur le langage
+      Jython?</h2>
+
+      <div class="para">
+        Voir la page
+
+        <p><a href="Python.shtml">Python &amp; JMRI</a> pour plus
+        d'informations, y compris sur les pointeurs vers des
+        articles, etc Voir aussi les liens de navigation &agrave;
+        gauche.</p>
+      </div>
+
+      <h2>En quoi Jython et Python diff&egrave;rent-ils?</h2>
+
+      <div class="para">
+        <p>Aux fins de la r&eacute;daction de scripts JMRI, ils ne
+        diff&egrave;rent pas beaucoup. La plupart des
+        diff&eacute;rences impliquent ce qui se passe en cas
+        d'erreur . Il y a aussi quelques restrictions sur ce que
+        vous pouvez faire avec les informations de configuration de
+        l'ordinateur , etc, en Jython, mais ce ne sont pas des
+        choses qu'un script JMRI est susceptible d'avoir
+        besoin.</p>
+
+        <p>Quelques informations suppl&eacute;mentaires sur les
+        diff&eacute;rences sont <a href=
+        "http://jython.sourceforge.net/docs/differences.html">disponibles
+        ici</a> . &lt;/ div&gt;</p>
+
+        <h2>O&ugrave; puis-je trouver des exemples de scripts
+        JMRI?</h2>
+
+        <div class="para">
+          Voir la <a href="Examples.shtml">page exemples</a> . En
+          outre, la page <a href="Start.shtml">introduction</a>
+          montre quelques-unes des commandes de base. &lt;/ div&gt;
+
+          <h2>Qu'est-ce que des mots comme " <code>import</code> ",
+          " <code>"classe</code> ", etc, dans les fichiers
+          d'exemple veulent dire?</h2>
+
+          <div class="para">
+            Ils font partie du langage utilis&eacute; pour les
+            scripts jython.
+
+            <p>Les importations permettent de se
+            r&eacute;f&eacute;rer &agrave; des choses par des noms
+            plus courts, essentiellement raconter jython
+            "rechercher Jarray, les paquets JMRI reconna&icirc;tre
+            tous les noms l&agrave;-bas ". Pour quelqu'un essayant
+            de comprendre ce script, vous pouvez simplement les
+            traiter comme des "assurer que le programme peut
+            trouver les pi&egrave;ces que nous voulons ".</p>
+
+            <p>"Classe" signifie "commencer la d&eacute;finition
+            d'un groupe de choses qui vont ensemble "( A vous tous
+            les autres experts, s'il vous pla&icirc;t ne me sauter
+            pas dessus au sujet de cela, je comprends &agrave; la
+            fois le polymorphisme
+            intrins&egrave;que/extrins&egrave;que, j'ai juste
+            essayer d'obtenir l'id&eacute;e
+            g&eacute;n&eacute;rale).</p>
+
+            <p>Par exemple, dans le fichier SigletExample.py il y a
+            une description d'une "Classe" appel&eacute;e
+            SigletExample, qui contient deux
+            routines/fonctions/membres: Un sous-programme
+            appel&eacute; "defineIO", et un appel&eacute;
+            "setOutput"</p>
+
+            <p>Cette "classe" est associ&eacute;e &agrave; une
+            autre classe appel&eacute; "Siglet" (en fait
+            jmri.jmrit.automat.Siglet; c'est encore une chose avec
+            une longue d&eacute;signation), qui sait quand il faut
+            appeler les routines par ces deux noms pour obtenir
+            qu'elles fassent ce que vous voulez.</p>
+
+            <p>Essentiellement, vous d&eacute;finissez deux parties
+            ("defineIO" &amp; "setOutput") qui se branchent dans
+            une structure pr&eacute;-existante pour piloter les
+            signaux. Cette structure pr&eacute;-existante est
+            tr&egrave;s puissante, et vous permet de faire toutes
+            sortes de choses, mais fournit &eacute;galement cette
+            m&eacute;thode pour essayer de le garder simple.</p>
+
+            <p>OK, &agrave; ce point les yeux de la plupart des
+            gens sont enti&egrave;rement retourn&eacute;s. Votre
+            meilleur pari quand &agrave; commencer par ce truc est
+            d'utiliser la copie et "modifier " l'approche du
+            d&eacute;veloppement logiciel. Il est bon d'essayer de
+            comprendre le contenu entier du fichier, mais ne vous
+            inqui&eacute;tez pas si vous ne le comprenez pas assez
+            bien pour &ecirc;tre capable de le recr&eacute;er
+            &agrave; partir de z&eacute;ro. Au lieu de cela, il
+            suffit de modifier de petits morceaux et jouer
+            avec.</p>
+          </div>
+
+          <h2>Y at-il besoin de conventions de
+          d&eacute;nomination?</h2>
+
+          <div class="para">
+            Dans de nombreux fichiers d'exemple, les aiguillages
+            sont vis&eacute;s par des noms comme "to 12", les
+            signaux par des noms comme "si21", et les capteurs par
+            des noms comme "bo45". Ces conventions sont n&eacute;es
+            de la fa&ccedil;on de coder h&eacute;rit&eacute;e de
+            certains vieux code, et ils peuvent rendre le code plus
+            clair. Mais ils ne sont en aucun cas n&eacute;cessaire;
+            le programme ne se soucie pas ce que vous appelez les
+            variables.
+
+            <p>Par exemple, "self.to12" est juste le nom d'une
+            variable. Vous pouvez appeler &ccedil;a comme vous
+            voulez, par exemple
+            self.MyBigFatNameForTheLeftTurnout</p>
+
+            <p>Le "self" est une partie compl&egrave;tement locale;
+            "self" se r&eacute;f&egrave;re &agrave; "un objet de la
+            classe particuli&egrave;re j'ai bien d&eacute;fini
+            d&egrave;s maintenant ". Alternativement, vous pouvez
+            d&eacute;finir une variable globale, mais ce n'est pas
+            recommand&eacute;. Si vous avez plusieurs scripts qui
+            fonctionnent (et vous pouvez en avoir autant que vous
+            voulez comme nous vous recommandons de placer chaque
+            t&ecirc;te de signal dans un script distinct), les
+            variables peuvent se confondre si vous utilisez le
+            m&ecirc;me nom de variable pour dire des choses trop
+            diff&eacute;rentes. En utilisant le "self" comme
+            celui-ci vous vous s'assurer que cela n'arrive pas.</p>
+
+            <p>Notez que les aiguillages, etc, ont des "Noms
+            syst&egrave;mes" qui ressemblent &agrave; "LT12". Vous
+            verrez ceci occasionnellement, mais c'est quelque chose
+            de diff&eacute;rent de celui des noms de variables dans
+            un fichier de script.</p>
+          </div><a name="windows" id="windows"></a>
+
+          <h2><a name="windows" id="windows">Un Script Peut-il
+          acc&eacute;der &agrave; une application fen&ecirc;tres de
+          JMRI ?</a></h2><a name="windows" id="windows"></a>
+
+          <div class="para">
+            Vos scripts peuvent modifier les
+            propri&eacute;t&eacute;s de tous les fen&ecirc;tres
+            principales JMRI. Elles sont toutes des objets
+            jmri.util.JmriJFrame, elles ont donc toutes les
+            diff&eacute;rentes m&eacute;thodes d'une JFrame Swing.
+            Par exemple, cet extrait de code
+
+            <p><code>window =
+            jmri.util.JmriJFrame.getFrameList()[1]<br>
+            window.setLocation(java.awt.Point(0,0))</code></p>
+
+            <p>localise la fen&ecirc;tre principale de
+            l'application, et d&eacute;finit sa situation dans le
+            coin sup&eacute;rieur gauche de l'&eacute;cran.</p>
+
+            <p>Le <code>jmri.util.JmriJFrame.getFrameList( )</code>
+            appel&eacute; dans la premi&egrave;re ligne renvoie une
+            liste des fen&ecirc;tres existantes.
+            L'&eacute;l&eacute;ment [0] de cette liste est
+            l'&eacute;cran original de d&eacute;marrage et
+            l'&eacute;l&eacute;ment [1] est la fen&ecirc;tre
+            principale; apr&egrave;s cela, ce sont les
+            diff&eacute;rentes fen&ecirc;tres dans l'ordre
+            o&ugrave; elles sont cr&eacute;&eacute;es. Pour trouver
+            une en particulier, vous pouvez l'index&eacute;e
+            &agrave; travers la liste en v&eacute;rifiant par
+            exemple Titre de la fen&ecirc;tre avec le
+            <code>getTitle ()</code> .</p>
+          </div>
+
+          <h2>Quelle est la diff&eacute;rence entre les classes
+          "Siglet" et "AbstractAutomaton" ?</h2>
+
+          <div class="para">
+            (Peut-&ecirc;tre pas une question
+            <em>fr&eacute;quemment</em> demand&eacute;e, mais elle
+            a besoin d'&ecirc;tre pos&eacute;e quelque part)
+
+            <p>Certains exemples utilisent la classe <a href=
+            "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">
+            AbstractAutomaton</a> comme une base, tandis que
+            d'autres utilisent la classe <a href=
+            "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">
+            Siglet</a> . C'est parce que ceux-ci sont
+            destin&eacute;s &agrave; des fins diff&eacute;rentes
+            .</p>
+
+            <p>"Siglet" est destin&eacute;e &agrave; &ecirc;tre
+            utilis&eacute;e pour piloter les signaux. Vous fournir
+            deux morceaux de code:</p>
+
+            <dl>
+              <dt>defineIO</dt>
+
+              <dd>qui d&eacute;finit les diff&eacute;rents
+              capteurs, les aiguillages et signale que le signal de
+              sortie d&eacute;pend de tant d'entr&eacute;e
+              lorsqu'il faut calculer l'apparence de ce
+              signal.</dd>
+
+              <dt>setOutout</dt>
+
+              <dd>qui recalcule l'apparence du signal avec les
+              entr&eacute;es d&eacute;finies.</dd>
+            </dl>
+
+            <p>La classe de base Siglet g&egrave;re alors
+            l'ensemble de l'&eacute;coute des changements, la mise
+            en place pour l'ex&eacute;cution en parall&egrave;le,
+            etc. Votre routine defineIO sera appel&eacute; une fois
+            au d&eacute;but, et tout le temps apr&egrave;s qu'une
+            ou plusieurs des entr&eacute;es seront
+            modifi&eacute;es, votre routine setOutput sera
+            appel&eacute;e &agrave; recalculer l'apparence du
+            signal.</p>
+
+            <p>Bien s&ucirc;r, vous pouvez utiliser cette classe
+            pour calculer d'autres choses que les apparences de
+            signaux. Mais l'&eacute;l&eacute;ment cl&eacute; est
+            que le calcul est refait quand les entr&eacute;es
+            changent, et seulement lors du changement des
+            entr&eacute;es.</p>
+
+            <p>AbstractAutomaton est une classe plus
+            g&eacute;n&eacute;rale qui vise &agrave; permettre des
+            op&eacute;rations plus puissantes (et Siglet en
+            r&eacute;alit&eacute; utilise cette base plus
+            puissante). Vous d&eacute;finissez deux fonctions:</p>
+
+            <dl>
+              <dd>Init qui est appel&eacute; une seule fois pour
+              accomplir un temps de configuration dont vous avez
+              besoin</dd>
+
+              <dd>handle</dd>
+
+              <dt>qui est appel&eacute; &agrave; plusieurs
+              reprises, encore et encore jusqu'&agrave; ce qu'il
+              retourne FALSE.</dt>
+            </dl>
+
+            <p>Utiliser AbstractAutomoton vous fournit un certain
+            nombre d' outils: vous pouvez attendre d'un capteur
+            particulier qu'il soit actif, faire quelque chose, puis
+            attendre qu'un autre capteur passe &agrave; inactif,
+            etc. Cela vous permet beaucoup plus de libert&eacute;
+            pour cr&eacute;er des s&eacute;quences plus
+            complexes&amp; et puissantes que la classe Siglet,
+            parce les Siglets sont limit&eacute;s &agrave; faire
+            une seule chose (ils n'ont pas pour objectif de faire
+            des s&eacute;quences d'op&eacute;rations).</p>
+
+            <p>Pour plus d'infos sur le changement de routines que
+            fournit AbstractAutomaton pour vous aider, consultez
+            les <a href=
+            "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">
+            Javadocs</a> pour la classe. (Faites d&eacute;filer
+            jusqu'&agrave; la section intitul&eacute;e
+            "R&eacute;sum&eacute; de la m&eacute;thode")</p>
+
+            <h2>Comment puis-je limiter la priorit&eacute; d'un
+            script?</h2>
+
+            <div class="para">
+              <p>Si le script ex&eacute;cute une boucle qui est
+              cens&eacute;e mettre &agrave; jour quelque chose, il
+              ne peut pas &ecirc;tre &eacute;crit pour fonctionner
+              en continu ou bien il va juste utiliser du temps
+              d'ordinateur autant qu'il peut. Il devrait
+              plut&ocirc;t attendre.</p>
+
+              <p>La meilleure chose &agrave; faire est d'attendre
+              que quelque chose change. Pour Par exemple, si votre
+              script observe certains capteurs pour d&eacute;cider
+              quoi faire, attendre que l'un de ces capteurs change
+              (voir les exemples de scripts pour les exemples)</p>
+
+              <p>Plus simple, mais pas aussi efficace, est
+              d'attendre un peu de temps avant de v&eacute;rifier
+              &agrave; nouveau. Par exemple</p>
+              <pre>
+    waitMsec (1000)
+</pre>provoque un script automate ou Siglet pour attendre 1000
+millisecondes (une seconde) avant de continuer.
+
+              <p>Pour juste un simple script, ce qui n'use pas le
+              les classes Automat ou Siglets , vous pouvez dormir
+              en faisant</p>
+              <pre>
+du sommeil &agrave; l'importation du temps
+le sommeil (10)
+</pre>La premi&egrave;re ligne d&eacute;finit le "sommeil" de
+routine, et ne doit &ecirc;tre fait qu'une fois. La deuxi&egrave;me
+ligne, puis dort pendant 10 secondes. Notez que la pr&eacute;cision
+de cette m&eacute;thode n'est pas aussi bonne que celle utilisant
+l'une des classes sp&eacute;ciales.
+            </div>
+
+            <h2>Comment puis je invoquer un autre fichier script
+            depuis un script?</h2>
+
+            <div class="para">
+              <pre>
+execfile("filename.py");
+</pre>
+            </div>
+
+            <h2>Comment puis je charger un fichier de panneau de
+            partir d'un script?</h2>
+
+            <div class="para">
+              <pre>
+<code> jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("filename.xml "))</code>
+</pre>
+            </div>Cela ressemble &agrave; "filename.xml" dans le
+            r&eacute;pertoire du programme JMRI, qui n'est pas un
+            bon endroit pour conserver vos fichiers. (Ils ont
+            tendance &agrave; &ecirc;tre perdus ou
+            endommag&eacute;s quand JMRI est mis &agrave; jour).
+            Voir la question suivante pour une solution &agrave;
+            cela.
+
+            <h2>Comment puis-je trouver un fichier dans le
+            r&eacute;pertoire des
+            pr&eacute;f&eacute;rences?</h2>Vous pouvez toujours
+            sp&eacute;cifier le chemin complet vers un fichier, par
+            exemple <code>C:\Documents and Files\
+            mine\JMRI\filename.xml</code> ou <code>/Users
+            /mine/.jmri/filename.xml</code> . Ce n'est pas
+            tr&egrave;s portable, d'ordinateur &agrave; ordinateur,
+            cependant, et peut devenir un handicap pour continuer
+            plus loin.
+
+            <p>JMRI fournit des routines pour convertir les noms
+            "portables" en des noms que votre ordinateur
+            reconna&icirc;tra:</p>
+
+            <div class="para">
+              <pre>
+<code> fullname jmri.util.FileUtil.getExternalFilename = ("pr&eacute;f&eacute;rence: filename.xml") </code>
+</pre>
+            </div>Le " <code>:pr&eacute;f&eacute;rence</code> "
+            signifie regarder quel fichier d&eacute;marre dans le
+            r&eacute;pertoire pr&eacute;f&eacute;rences sur
+            l'ordinateur actuel. D'autres choix sont "le
+            programme:" et "home".
+
+            <h2>Puis je communiquer entre les scripts?</h2>
+
+            <div class="para">
+              Tous les scripts partagent un espace d'adressage
+              unique, ce qui signifie qu'une variable comme le "x"
+              se r&eacute;f&egrave;re au m&ecirc;me endroit dans
+              tous les scripts. Cela vous permet de d&eacute;finir
+              un proc&eacute;dure, par exemple, dans un script, et
+              l'utiliser ailleurs. Par exemple, si un fichier
+              "definitions.py" contient:
+              <pre>
+ def printStatus ():
+   print "x est", x
+   print "y est", y
+   print "z est", z
+   retour
+
+a
+x = 0
+y = 0
+z = 0 
+</pre>Une fois que le fichier a &eacute;t&eacute;
+ex&eacute;cut&eacute;,plus tard des script pourront invoquer la
+routine <code>printStatus ()</code> en cas de besoin.
+            </div>
+
+            <div class="para">
+              Vous pouvez &eacute;galement partager des variables,
+              ce qui permet &agrave; deux routines de partager
+              l'information. Dans l'exemple ci-dessus, les
+              variables <code>x</code> , <code>y</code> , et
+              <code>z</code> sont disponibles pour n'importe qui.
+              Cela peut conduire &agrave; des bugs obscures, si
+              deux routines diff&eacute;rentes utilisent une
+              variable du m&ecirc;me nom, sans se rendre compte
+              qu'ils partagent les donn&eacute;es avec les autres.
+              Mettre votre code en "classes" est un moyen
+              d'&eacute;viter cela.
+            </div>
+
+            <h2>Un script peut-il attendre plus d'une chose
+            &agrave; changer?</h2>
+
+            <div class="para">
+              Si votre script est bas&eacute; sur une classe Siglet
+              ou AbstractAutomaton (par exemple si vous
+              &eacute;crivez une "poign&eacute;e" de routine ", il
+              y a une routine g&eacute;n&eacute;ral" waitChange"
+              qui attend que plusieurs capteurs aient changer avant
+              de revenir vers vous. Notez que plusieurs peuvent
+              changer dans le m&ecirc;me temps, de sorte que vous
+              pouvez supposer seulement qu'il y a une seule valeur
+              diff&eacute;rente! Et vous aurez alors &agrave;
+              v&eacute;rifier si elles sont devenues des
+              &eacute;tats particuliers. Il est &eacute;crit que:
+              <pre>
+ self.waitChange ([self.sensorA, self.sensorB, self.sensorC]) 
+</pre>o&ugrave; vous avez pr&eacute;c&eacute;demment d&eacute;fini
+chacun de ces "self.sensorA" et les choses via une ligne comme:
+              <pre>
+ self.sensorA = sensors.provideSensor ("21") 
+</pre>Vous pouvez ensuite v&eacute;rifier pour diverses
+combinaisons comme:
+              <pre>
+ si self.sensorA.knownState == ACTIF:
+         print "L'avion! L'avion!"
+    elif self.sensorB.knownState == INACTIF:
+         print "Croiriez-vous &agrave; un oiseau tr&egrave;s rapide?"
+    d'autre
+         print "Rien &agrave; voir ici, se d&eacute;placer le long ..."
+</pre>(Je n'ai pas vraiment saisi ce script et ni ex&eacute;cuter,
+alors il pourrait y avoir des fautes de frappe,
+d&eacute;sol&eacute;)
+            </div>
+
+            <h2>Un script peut il entendre plus d'un
+            aiguillage?</h2>
+
+            <div class="para">
+              Les Objets JMRI (aiguillages, capteurs, etc) peuvent
+              avoir des "Auditeurs" qui leur sont attach&eacute;s.
+              Ces derniers sont ensuite avertis lorsque le statut
+              de l'objet change. Si vous utilisez les classes ou
+              les Siglet Automat, vous n'avez pas besoin d'utiliser
+              cette possibilit&eacute;, et les classes
+              g&egrave;rent toutes les cr&eacute;ations et
+              enregistrements des auditeurs. Mais si vous voulez
+              faire quelque chose de sp&eacute;cial, vous devrez
+              peut-&ecirc;tre utiliser cette possibilit&eacute;
+
+              <p>Une routine simple peut &eacute;couter plus d'un
+              aiguillage, capteur, etc</p>
+
+              <p>Si vous conservez une r&eacute;f&eacute;rence de
+              votre objet &eacute;couteur, vous pouvez le joindre
+              &agrave; plusieurs objets:</p>
+              <pre>
+ m = MyListener ()
+turnouts.provideTurnout ("12"). addPropertyChangeListener (m)
+turnouts.provideTurnout ("13"). addPropertyChangeListener (m)
+turnouts.provideTurnout ("14"). addPropertyChangeListener (m) 
+</pre>
+
+              <p>Mais comment l'auditeur sait ce qui a
+              chang&eacute;?</p>
+
+              <p>Une routine auditeur ressemble &agrave;
+              ceci:</p>Paroles de classe MyListener
+              (java.beans.PropertyChangeListener): def
+              propertyChange (auto, &eacute;v&eacute;nement): print
+              "le changement", event.propertyName a print "&agrave;
+              partir", event.oldValue, "&agrave;", event.newValue
+              print "SystemName source", event.source.systemName a
+              print "userName source", event.source.userName
+
+              <p>Lorsque l'&eacute;couteur est appel&eacute;, il
+              donne un objet (appel&eacute; event ci-dessus) qui
+              contient le nom de la propri&eacute;t&eacute; qui a
+              chang&eacute;, ainsi que les valeurs anciennes et
+              nouvelles de cette propri&eacute;t&eacute;.</p>
+
+              <p>Vous pouvez &eacute;galement obtenir une
+              r&eacute;f&eacute;rence de l'objet original qui a
+              chang&eacute; par "nom", et ensuite faire tout ce que
+              vous voulez par l&agrave;. Dans l'exemple ci-dessus,
+              vous pouvez r&eacute;cup&eacute;rer les SystemName,
+              nom d'utilisateur (ou m&ecirc;me d'autres types de
+              statut).</p>
+
+              <h2>Comment puis-je obtenir un script pour jouer un
+              son?</h2>Le fichier Jython/SampleSound.py montre
+              comment jouer un son dans un script. En bref, vous
+              charger un son dans une variable ("snd" dans ce cas),
+              puis appelez "play ()" pour y jouer une fois, etc
+
+              <p>Notez que si plus d'un son est jou&eacute;
+              &agrave; un moment, le programme les combine entre
+              eux du mieux qu'il peut. G&eacute;n&eacute;ralement,
+              il fait un assez bon travail.</p>a
+
+              <p>Vous pouvez combiner le jeu () avec une autre
+              logique de jouer un son quand un capteur change, etc
+              Ron McKinnon a fourni un exemple pour faire cela. Il
+              joue une cloche passage &agrave; niveau lorsque le
+              capteur devient actif.</p>
+              <pre>
+# Il &eacute;coute les modifications apport&eacute;es &agrave; un capteur,
+# Puis joue un fichier son quand le capteur est actif
+
+Importation Jarray
+Importation JMRI
+
+# Cr&eacute;er l'objet sonore en chargeant un fichier
+snd = jmri.jmrit.Sound ("ressources/sons/Crossing.wav")
+
+Classe SensndExample (jmri.jmrit.automat.Siglet):
+
+         # Modifier ceci pour d&eacute;finir tous vos aiguillages, les capteurs et
+         # t&ecirc;tes de Signal.
+         def defineIO (auto):
+                
+                 # Obtenir le capteur de
+                 self.Sen1Sensor = sensors.provideSensor ("473")
+                                
+                  # Enregistrer les entr&eacute;es de sorte que setOutput sera appel&eacute; en cas de besoin.
+                  self.setInputs (jarray.array ([self.Sen1Sensor], jmri.NamedBean))
+
+                 Retour
+
+
+
+         # setOutput est appel&eacute;e lorsque d'un changements des entr&eacute;es, et est
+         # responsable de l'&eacute;tablissement la sortie correcte
+         #
+         # Modifier cela pour faire votre calcul.
+         def setOutput (auto):
+                                
+                 Si self.Sen1Sensor.knownState == ACTIVE:
+                         snd.play ()
+
+                 Retour
+        
+# Fin de d&eacute;finition de la classe
+
+# Lancer une de ceux ci-dessus
+SensndExample (). Start ()
+</pre><!--#include virtual="/Footer" -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

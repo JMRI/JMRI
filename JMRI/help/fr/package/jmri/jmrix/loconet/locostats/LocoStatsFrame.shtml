@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-30-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: LocoNet Statistics</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help digitrax downloader">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Statistiques LocoNet</h1>Les Interfaces
+      avanc&Atilde;&copy;es LocoNet comme la s&Atilde;&copy;rie des
+      LocoBuffer RR-CirKits ou la s&Atilde;&copy;rie de PRn
+      Digitrax collectent des statistiques sur le fonctionnement de
+      LocoNet qui lui est reli&Atilde;&copy;e. Cette
+      fen&Atilde;&ordf;tre les affiche.
+
+      <p>Le bouton "Update" demande des informations &Atilde; 
+      l'interface pour l'affichage.</p>
+
+      <h2>Valeurs LocoBuffer</h2>
+
+      <dl>
+        <dt>jmri/jmrix/loconet/locostats/LocoStatsFrame 
+        <!--#include virtual="/Footer" --></dt>
+
+        <dt>jmri/jmrix/loconet/locostats/LocoStatsFrame 
+        <!--#include virtual="/Footer" --></dt>
+
+        <dt>Version</dt>
+
+        <dd>Le num&Atilde;&copy;ro de version de l'appareil.</dd>
+
+        <dt>Breaks</dt>
+
+        <dd>Le nombre de ruptures de LocoNet vu depuis la
+        derni&Atilde;&uml;re fois que l'interface a
+        &Atilde;&copy;t&Atilde;&copy; allum&Atilde;&copy;e.</dd>
+
+        <dt>Erreurs</dt>
+
+        <dd>Le nombre d'erreurs LocoNet vu depuis la
+        derni&Atilde;&uml;re fois l'interface a
+        &Atilde;&copy;t&Atilde;&copy; allum&Atilde;&copy;e.</dd>
+      </dl>
+
+      <h2>Digitrax PRn</h2>
+
+      <dl>
+        <dt>Num&Atilde;&copy;ro de S&Atilde;&copy;rie</dt>
+
+        <dd>Le num&Atilde;&copy;ro de s&Atilde;&copy;rie de
+        l'appareil.</dd>
+
+        <dd>Statut PR2</dd>
+
+        <dt>Les bits d'&Atilde;&copy;tat &Atilde;  partir d'une
+        interface dans PR2 (programmateur) mode.</dt>
+
+        <dt>Courant</dt>
+
+        <dd>Le courant actuellement consomm&Atilde;&copy; par la
+        voie, dans certaines unit&Atilde;&copy;s arbitraires.</dd>
+
+        <dt>Version Mat&Atilde;&copy;riel</dt>
+
+        <dd>Le num&Atilde;&copy;ro de version du
+        mat&Atilde;&copy;riel de l'interface.</dd>
+
+        <dt>Version du logiciel</dt>
+
+        <dd>Le num&Atilde;&copy;ro de version du logiciel de
+        l'interface.</dd>
+
+        <dt>Compteur Message Bon</dt>
+
+        <dd>Le nombre de messages LocoNet bon vu depuis la
+        derni&Atilde;&uml;re fois que l'interface a
+        &Atilde;&copy;t&Atilde;&copy; allum&Atilde;&copy;e.</dd>
+
+        <dt>Compteur Message Mauvais</dt>
+
+        <dd>Le nombre de messages LocoNet mauvais vu depuis la
+        derni&Atilde;&uml;re fois que l'interface a
+        &Atilde;&copy;t&Atilde;&copy; allum&Atilde;&copy;e.</dd>
+
+        <dd>Statut MS100</dd>
+
+        <dt>Les bits d'&Atilde;&copy;tat &Atilde;  partir d'une
+        interface dans le mode MS100 (adaptateur LocoNet ) .</dt>
+      </dl>
+      <p>Certains d'entre eux sont affich&Atilde;&copy;es lorsque
+      l'interface agit comme un programmateur (PR2 mode), et
+      d'autres o&Atilde;&sup1; il agit comme une interface (MS100
+      mode).</p>
+
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

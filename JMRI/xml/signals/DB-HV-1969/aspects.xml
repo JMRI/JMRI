@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>DB HV 1969</name>
+  <date>1969</date>
+  <reference>German DB signals HV System 1969</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Joan</firstname><surname>Carrancà</surname></personname>
+        <email>jcarranca@gmail.com</email>
+    </author>
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+        <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
+        <email>oscar.moutinho@gmail.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-09</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-17</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Simpler namespace indicators. New imagetype tag</revremark>
+    </revision>
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2010-01-19</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Added small and medium size icons more suitable for panels</revremark>
+    </revision>
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2015-03-03</date>
+        <authorinitials>OM</authorinitials>
+        <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
+  </revhistory>
+
+  <aspects>
+    <aspect>
+      <name>Hp0</name>
+      <indication>Stop</indication>
+	  <description>One red light</description>
+	  <description>Previously one red light had the meaning of "Stop for train movements" (shunting movements were allowed). To actually stop shunting two horizontal red lights were neccessary. Since 1959 one red light is enough to stop all movements.</description>
+	  <comment>Halt</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Hp00</name>
+      <indication>Stop for all movements, shunting not allowed</indication>
+	  <description>Two horizontal red lights</description>
+	  <description>Previously one red light had the meaning of "Stop for train movements" (shunting movements were allowed). To actually stop shunting two horizontal red lights were neccessary. This is the reason why this signal has two red lights. Since 1959 one red light is enough to stop all movements, but old signals still have two lights to avoid rewiring.</description>
+	  <comment>Halt für alle Fahrten</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Hp0/Sh1</name>
+      <indication>Stop for trains, shunting allowed</indication>
+	  <description>One red light and two small white lights arranged diagonally</description>
+	  <comment>Halt für Zugfahrten / Fahrt für Rangierfahrten</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Hp1</name>
+      <indication>Proceed, line clear (with timetable speed)</indication>
+	  <description>One green light</description>
+	  <comment>Fahrt</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Hp2</name>
+      <indication>Proceed slowly, line clear with slow speed (40 km/h if not indicated otherwise)</indication>
+	  <description>One green light over one yellow light</description>
+	  <comment>Langsamfahrt</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Vr0</name>
+      <indication>Expect stop, prepare to stop at next main signal</indication>
+	  <description>Two yellow lights arranged diagonally</description>
+	  <comment>Halt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Vr1</name>
+      <indication>Expect proceed, prepare to proceed at next main signal</indication>
+	  <description>Two green lights arranged diagonally</description>
+	  <comment>Fahrt erwarten</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Vr2</name>
+      <indication>Expect slow, prepare to proceed slowly at next main signal</indication>
+	  <description>One green light over one yellow light, arranged diagonally</description>
+	  <comment>Langsamfahrt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Hp1+Vr0</name>
+      <indication>Proceed preparing to stop at next main signal</indication>
+	  <description>One green light + Two yellow lights arranged diagonally</description>
+	  <comment>Fahrt + Halt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Hp1+Vr1</name>
+      <indication>Proceed preparing to proceed at next main signal</indication>
+	  <description>One green light + Two green lights arranged diagonally</description>
+	  <comment>Fahrt + Fahrt erwarten</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Hp1+Vr2</name>
+      <indication>Proceed preparing to proceed slowly at next main signal</indication>
+	  <description>One green light + One green light over one yellow light, arranged diagonally</description>
+	  <comment>Fahrt + Langsamfahrt erwarten</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Hp2+Vr0</name>
+      <indication>Proceed slowly (40 km/h if not indicated otherwise) preparing to stop at next main signal</indication>
+	  <description>One green light over one yellow light + Two yellow lights arranged diagonally</description>
+	  <comment>Langsamfahrt + Halt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Hp2+Vr1</name>
+      <indication>Proceed slowly (40 km/h if not indicated otherwise) preparing to proceed at next main signal</indication>
+	  <description>One green light over one yellow light + Two green lights arranged diagonally</description>
+	  <comment>Langsamfahrt + Fahrt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Hp2+Vr2</name>
+      <indication>Proceed slowly (40 km/h if not indicated otherwise) preparing to proceed slowly at next main signal</indication>
+	  <description>One green light over one yellow light + One green light over one yellow light, arranged diagonally</description>
+	  <comment>Langsamfahrt + Langsamfahrt erwarten</comment>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Sh0</name>
+      <indication>Stop for all trains, shunting not allowed</indication>
+	  <description>Two horizontal small red lights</description>
+	  <description>Equivalent to Hp0 and Hp00</description>
+	  <comment>Halt für alle Fahrten</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Sh1</name>
+      <indication>Shunting allowed</indication>
+	  <description>Two small white lights arranged diagonally</description>
+	  <description>Equivalent to Hp0/Sh1</description>
+	  <comment>Rangierfahrt frei</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+  </aspects>
+
+  <imagetypes>
+	<imagetype type="prototype"/>
+	<imagetype type="medium panel"/>
+	<imagetype type="small panel"/>
+  </imagetypes>
+
+  <appearancefiles>
+    <appearancefile href="appearance-block.xml"/>
+    <appearancefile href="appearance-entry.xml"/>
+    <appearancefile href="appearance-exit.xml"/>
+    <appearancefile href="appearance-distant.xml"/>
+    <appearancefile href="appearance-distant_repeater.xml"/>
+    <appearancefile href="appearance-distant_short.xml"/>
+    <appearancefile href="appearance-block_distant.xml"/>
+    <appearancefile href="appearance-block_distant_short.xml"/>
+    <appearancefile href="appearance-entry_distant.xml"/>
+    <appearancefile href="appearance-entry_distant_short.xml"/>
+    <appearancefile href="appearance-exit_distant.xml"/>
+    <appearancefile href="appearance-exit_distant_short.xml"/>
+    <appearancefile href="appearance-shunting.xml"/>
+    <appearancefile href="appearance-shunting_dwarf.xml"/>
+  </appearancefiles>
+
+</aspecttable>

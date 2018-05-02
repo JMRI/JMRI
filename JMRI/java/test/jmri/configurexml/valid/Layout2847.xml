@@ -1,0 +1,1982 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>0</minor>
+    <test>1</test>
+    <modifier>.1</modifier>
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS1" inverted="true" userName="M2_EA_WestBigRock">
+      <systemName>LS1</systemName>
+      <userName>M2_EA_WestBigRock</userName>
+    </sensor>
+    <sensor systemName="LS10" inverted="true" userName="M2_WA_WestBigRock">
+      <systemName>LS10</systemName>
+      <userName>M2_WA_WestBigRock</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS11" inverted="true" userName="M2_TK_WestBigRock">
+      <systemName>LS11</systemName>
+      <userName>M2_TK_WestBigRock</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS12" inverted="true" userName="M2_WA_EastAurora">
+      <systemName>LS12</systemName>
+      <userName>M2_WA_EastAurora</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS13" inverted="true" userName="M1_WA_EastAurora">
+      <systemName>LS13</systemName>
+      <userName>M1_WA_EastAurora</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS14" inverted="true" userName="M1_TK_Aurora">
+      <systemName>LS14</systemName>
+      <userName>M1_TK_Aurora</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS15" inverted="true" userName="M2_EA_WestAurora">
+      <systemName>LS15</systemName>
+      <userName>M2_EA_WestAurora</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS16" inverted="true" userName="M1_EA_WestAurora">
+      <systemName>LS16</systemName>
+      <userName>M1_EA_WestAurora</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS2" inverted="true" userName="M2_IM_WestLoop">
+      <systemName>LS2</systemName>
+      <userName>M2_IM_WestLoop</userName>
+    </sensor>
+    <sensor systemName="LS25" inverted="false">
+      <systemName>LS25</systemName>
+    </sensor>
+    <sensor systemName="LS26" inverted="false">
+      <systemName>LS26</systemName>
+    </sensor>
+    <sensor systemName="LS27" inverted="false">
+      <systemName>LS27</systemName>
+    </sensor>
+    <sensor systemName="LS28" inverted="false">
+      <systemName>LS28</systemName>
+    </sensor>
+    <sensor systemName="LS29" inverted="false">
+      <systemName>LS29</systemName>
+    </sensor>
+    <sensor systemName="LS3" inverted="true" userName="M1_EA_WestBigRock">
+      <systemName>LS3</systemName>
+      <userName>M1_EA_WestBigRock</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS30" inverted="false">
+      <systemName>LS30</systemName>
+    </sensor>
+    <sensor systemName="LS31" inverted="false">
+      <systemName>LS31</systemName>
+    </sensor>
+    <sensor systemName="LS32" inverted="false">
+      <systemName>LS32</systemName>
+    </sensor>
+    <sensor systemName="LS33" inverted="false">
+      <systemName>LS33</systemName>
+    </sensor>
+    <sensor systemName="LS34" inverted="false">
+      <systemName>LS34</systemName>
+    </sensor>
+    <sensor systemName="LS35" inverted="false">
+      <systemName>LS35</systemName>
+    </sensor>
+    <sensor systemName="LS36" inverted="false">
+      <systemName>LS36</systemName>
+    </sensor>
+    <sensor systemName="LS37" inverted="false">
+      <systemName>LS37</systemName>
+    </sensor>
+    <sensor systemName="LS38" inverted="false">
+      <systemName>LS38</systemName>
+    </sensor>
+    <sensor systemName="LS39" inverted="false">
+      <systemName>LS39</systemName>
+    </sensor>
+    <sensor systemName="LS4" inverted="true" userName="M1_TK_GrainElevator">
+      <systemName>LS4</systemName>
+      <userName>M1_TK_GrainElevator</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS40" inverted="false">
+      <systemName>LS40</systemName>
+    </sensor>
+    <sensor systemName="LS41" inverted="false">
+      <systemName>LS41</systemName>
+    </sensor>
+    <sensor systemName="LS42" inverted="false">
+      <systemName>LS42</systemName>
+    </sensor>
+    <sensor systemName="LS43" inverted="false">
+      <systemName>LS43</systemName>
+    </sensor>
+    <sensor systemName="LS44" inverted="false">
+      <systemName>LS44</systemName>
+    </sensor>
+    <sensor systemName="LS45" inverted="false">
+      <systemName>LS45</systemName>
+    </sensor>
+    <sensor systemName="LS46" inverted="false">
+      <systemName>LS46</systemName>
+    </sensor>
+    <sensor systemName="LS47" inverted="false">
+      <systemName>LS47</systemName>
+    </sensor>
+    <sensor systemName="LS48" inverted="false">
+      <systemName>LS48</systemName>
+    </sensor>
+    <sensor systemName="LS49" inverted="false">
+      <systemName>LS49</systemName>
+    </sensor>
+    <sensor systemName="LS5" inverted="true" userName="M1_IM_WestLoop">
+      <systemName>LS5</systemName>
+      <userName>M1_IM_WestLoop</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS50" inverted="false">
+      <systemName>LS50</systemName>
+    </sensor>
+    <sensor systemName="LS51" inverted="false">
+      <systemName>LS51</systemName>
+    </sensor>
+    <sensor systemName="LS52" inverted="false">
+      <systemName>LS52</systemName>
+    </sensor>
+    <sensor systemName="LS53" inverted="false">
+      <systemName>LS53</systemName>
+    </sensor>
+    <sensor systemName="LS54" inverted="false">
+      <systemName>LS54</systemName>
+    </sensor>
+    <sensor systemName="LS55" inverted="false">
+      <systemName>LS55</systemName>
+    </sensor>
+    <sensor systemName="LS56" inverted="false">
+      <systemName>LS56</systemName>
+    </sensor>
+    <sensor systemName="LS57" inverted="false">
+      <systemName>LS57</systemName>
+    </sensor>
+    <sensor systemName="LS58" inverted="false">
+      <systemName>LS58</systemName>
+    </sensor>
+    <sensor systemName="LS59" inverted="false">
+      <systemName>LS59</systemName>
+    </sensor>
+    <sensor systemName="LS6" inverted="true">
+      <systemName>LS6</systemName>
+    </sensor>
+    <sensor systemName="LS60" inverted="false">
+      <systemName>LS60</systemName>
+    </sensor>
+    <sensor systemName="LS61" inverted="false">
+      <systemName>LS61</systemName>
+    </sensor>
+    <sensor systemName="LS62" inverted="false">
+      <systemName>LS62</systemName>
+    </sensor>
+    <sensor systemName="LS63" inverted="false">
+      <systemName>LS63</systemName>
+    </sensor>
+    <sensor systemName="LS64" inverted="false">
+      <systemName>LS64</systemName>
+    </sensor>
+    <sensor systemName="LS7" inverted="true">
+      <systemName>LS7</systemName>
+    </sensor>
+    <sensor systemName="LS8" inverted="true">
+      <systemName>LS8</systemName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS9" inverted="true" userName="M2_TK_Aurora">
+      <systemName>LS9</systemName>
+      <userName>M2_TK_Aurora</userName>
+      <comment />
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="LT1" userName="East Eola" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT1</systemName>
+      <userName>East Eola</userName>
+    </turnout>
+    <turnout systemName="LT17" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT17</systemName>
+      <comment>SignalHead::low</comment>
+    </turnout>
+    <turnout systemName="LT18" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT18</systemName>
+      <comment>SignalHead::high</comment>
+    </turnout>
+    <turnout systemName="LT19" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT19</systemName>
+      <comment>SignalHead::low</comment>
+    </turnout>
+    <turnout systemName="LT2" userName="West Big Rock" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT2</systemName>
+      <userName>West Big Rock</userName>
+    </turnout>
+    <turnout systemName="LT20" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT20</systemName>
+      <comment>SignalHead::high</comment>
+    </turnout>
+    <turnout systemName="LT3" userName="West Aurora" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT3</systemName>
+      <userName>West Aurora</userName>
+    </turnout>
+    <turnout systemName="LT4" userName="East Aurora" feedback="MONITORING" inverted="true" automate="Off">
+      <systemName>LT4</systemName>
+      <userName>East Aurora</userName>
+    </turnout>
+    <turnout systemName="LT5" userName="Industrial Spur" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT5</systemName>
+      <userName>Industrial Spur</userName>
+    </turnout>
+    <turnout systemName="LT6" userName="East Big Rock" feedback="MONITORING" inverted="true" automate="Off">
+      <systemName>LT6</systemName>
+      <userName>East Big Rock</userName>
+      <comment />
+    </turnout>
+    <turnout systemName="LT9" userName="GrainElevator" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT9</systemName>
+      <userName>GrainElevator</userName>
+      <comment />
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM0">
+      <systemName>IM0</systemName>
+    </memory>
+    <memory systemName="IMCURRENTTIME" value="6:45 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMLAYOUTINITIALIZED" userName="Initialized" value="1">
+      <systemName>IMLAYOUTINITIALIZED</systemName>
+      <userName>Initialized</userName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$1" userName="Test_1">
+      <systemName>LH$1</systemName>
+      <userName>Test_1</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$2" userName="Test_2">
+      <systemName>LH$2</systemName>
+      <userName>Test_2</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$21" userName="M1_WestAurora_T">
+      <systemName>LH$21</systemName>
+      <userName>M1_WestAurora_T</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$22" userName="M1_WestAurora_B">
+      <systemName>LH$22</systemName>
+      <userName>M1_WestAurora_B</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$23" userName="M1_EastAurora_T">
+      <systemName>LH$23</systemName>
+      <userName>M1_EastAurora_T</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$24" userName="M1_EastAurora_B">
+      <systemName>LH$24</systemName>
+      <userName>M1_EastAurora_B</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$3" userName="Test_3">
+      <systemName>LH$3</systemName>
+      <userName>Test_3</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$4" userName="Test_4">
+      <systemName>LH$4</systemName>
+      <userName>Test_4</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$5" userName="Test_5">
+      <systemName>LH$5</systemName>
+      <userName>Test_5</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$6" userName="Test_6">
+      <systemName>LH$6</systemName>
+      <userName>Test_6</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$7" userName="Test_7">
+      <systemName>LH$7</systemName>
+      <userName>Test_7</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$8" userName="Test_8">
+      <systemName>LH$8</systemName>
+      <userName>Test_8</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DccSignalHeadXml" systemName="LH$9" userName="Test_9">
+      <systemName>LH$9</systemName>
+      <userName>Test_9</userName>
+      <useAddressOffSet>no</useAddressOffSet>
+      <aspect defines="Dark">
+        <number>8</number>
+      </aspect>
+      <aspect defines="Red">
+        <number>0</number>
+      </aspect>
+      <aspect defines="Yellow">
+        <number>1</number>
+      </aspect>
+      <aspect defines="Green">
+        <number>2</number>
+      </aspect>
+      <aspect defines="Lunar">
+        <number>3</number>
+      </aspect>
+      <aspect defines="Flashing Red">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Flashing Yellow">
+        <number>5</number>
+      </aspect>
+      <aspect defines="Flashing Green">
+        <number>6</number>
+      </aspect>
+      <aspect defines="Flashing Lunar">
+        <number>7</number>
+      </aspect>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="M1_EastAurora">
+      <systemName>IF$shsm:BN-1989:SL-2N(M1_EastAurora_T)(M1_EastAurora_B)</systemName>
+      <userName>M1_EastAurora</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="M1_WestAurora">
+      <systemName>IF$shsm:BN-1989:SL-2N(M1_WestAurora_T)(M1_WestAurora_B)</systemName>
+      <userName>M1_WestAurora</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_1-2">
+      <systemName>IF$shsm:basic:two-searchlight(Test_1)(Test_2)</systemName>
+      <userName>Test_1-2</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_2-3">
+      <systemName>IF$shsm:basic:two-searchlight(Test_2)(Test_3)</systemName>
+      <userName>Test_2-3</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_3-4">
+      <systemName>IF$shsm:basic:two-searchlight(Test_3)(Test_4)</systemName>
+      <userName>Test_3-4</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_4-5">
+      <systemName>IF$shsm:basic:two-searchlight(Test_4)(Test_5)</systemName>
+      <userName>Test_4-5</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_5-6">
+      <systemName>IF$shsm:basic:two-searchlight(Test_5)(Test_6)</systemName>
+      <userName>Test_5-6</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_6-7">
+      <systemName>IF$shsm:basic:two-searchlight(Test_6)(Test_7)</systemName>
+      <userName>Test_6-7</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_7-8">
+      <systemName>IF$shsm:basic:two-searchlight(Test_7)(Test_8)</systemName>
+      <userName>Test_7-8</userName>
+      <unlit allowed="no" />
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="Test_8-9">
+      <systemName>IF$shsm:basic:two-searchlight(Test_8)(Test_9)</systemName>
+      <userName>Test_8-9</userName>
+      <unlit allowed="no" />
+    </signalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+      <userName>M1_WA_Aurora</userName>
+    </block>
+    <block systemName="IB10">
+      <systemName>IB10</systemName>
+      <userName>AUTOBLK:10</userName>
+    </block>
+    <block systemName="IB11">
+      <systemName>IB11</systemName>
+      <userName>AUTOBLK:11</userName>
+    </block>
+    <block systemName="IB12">
+      <systemName>IB12</systemName>
+      <userName>AUTOBLK:12</userName>
+    </block>
+    <block systemName="IB13">
+      <systemName>IB13</systemName>
+      <userName>AUTOBLK:13</userName>
+    </block>
+    <block systemName="IB14">
+      <systemName>IB14</systemName>
+      <userName>AUTOBLK:14</userName>
+    </block>
+    <block systemName="IB15">
+      <systemName>IB15</systemName>
+      <userName>AUTOBLK:15</userName>
+    </block>
+    <block systemName="IB16">
+      <systemName>IB16</systemName>
+      <userName>AUTOBLK:16</userName>
+    </block>
+    <block systemName="IB17">
+      <systemName>IB17</systemName>
+      <userName>AUTOBLK:17</userName>
+    </block>
+    <block systemName="IB18">
+      <systemName>IB18</systemName>
+      <userName>AUTOBLK:18</userName>
+    </block>
+    <block systemName="IB19">
+      <systemName>IB19</systemName>
+      <userName>AUTOBLK:19</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>M2_WA_Aurora</userName>
+    </block>
+    <block systemName="IB20">
+      <systemName>IB20</systemName>
+      <userName>AUTOBLK:20</userName>
+    </block>
+    <block systemName="IB21">
+      <systemName>IB21</systemName>
+      <userName>AUTOBLK:21</userName>
+    </block>
+    <block systemName="IB22">
+      <systemName>IB22</systemName>
+      <userName>AUTOBLK:22</userName>
+    </block>
+    <block systemName="IB23">
+      <systemName>IB23</systemName>
+      <userName>AUTOBLK:23</userName>
+    </block>
+    <block systemName="IB24">
+      <systemName>IB24</systemName>
+      <userName>AUTOBLK:24</userName>
+    </block>
+    <block systemName="IB25">
+      <systemName>IB25</systemName>
+      <userName>AUTOBLK:25</userName>
+    </block>
+    <block systemName="IB26">
+      <systemName>IB26</systemName>
+      <userName>AUTOBLK:26</userName>
+    </block>
+    <block systemName="IB27">
+      <systemName>IB27</systemName>
+      <userName>AUTOBLK:2</userName>
+    </block>
+    <block systemName="IB28">
+      <systemName>IB28</systemName>
+      <userName>M1_Aurora_Plant</userName>
+    </block>
+    <block systemName="IB29">
+      <systemName>IB29</systemName>
+      <userName>Aurora_Plant_Blk_2</userName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+      <userName>AUTOBLK:3</userName>
+    </block>
+    <block systemName="IB30">
+      <systemName>IB30</systemName>
+      <userName>Aurora_Plant_Blk_3</userName>
+    </block>
+    <block systemName="IB31">
+      <systemName>IB31</systemName>
+      <userName>Aurora_Plant_Blk_4</userName>
+    </block>
+    <block systemName="IB32">
+      <systemName>IB32</systemName>
+      <userName>M1_WA_EastAurora</userName>
+    </block>
+    <block systemName="IB33">
+      <systemName>IB33</systemName>
+      <userName>M2_WA_EastAurora</userName>
+    </block>
+    <block systemName="IB34">
+      <systemName>IB34</systemName>
+      <userName>M2_IM_WestLoop</userName>
+    </block>
+    <block systemName="IB35">
+      <systemName>IB35</systemName>
+      <userName>AUTOBLK:29</userName>
+    </block>
+    <block systemName="IB36">
+      <systemName>IB36</systemName>
+      <userName>AUTOBLK:30</userName>
+    </block>
+    <block systemName="IB37">
+      <systemName>IB37</systemName>
+      <userName>AUTOBLK:31</userName>
+    </block>
+    <block systemName="IB38">
+      <systemName>IB38</systemName>
+      <userName>AUTOBLK:32</userName>
+    </block>
+    <block systemName="IB39">
+      <systemName>IB39</systemName>
+      <userName>AUTOBLK:33</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>AUTOBLK:4</userName>
+    </block>
+    <block systemName="IB40">
+      <systemName>IB40</systemName>
+      <userName>AUTOBLK:34</userName>
+    </block>
+    <block systemName="IB41">
+      <systemName>IB41</systemName>
+      <userName>AUTOBLK:35</userName>
+    </block>
+    <block systemName="IB42">
+      <systemName>IB42</systemName>
+      <userName>AUTOBLK:36</userName>
+    </block>
+    <block systemName="IB43">
+      <systemName>IB43</systemName>
+      <userName>AUTOBLK:37</userName>
+    </block>
+    <block systemName="IB44">
+      <systemName>IB44</systemName>
+      <userName>AUTOBLK:38</userName>
+    </block>
+    <block systemName="IB45">
+      <systemName>IB45</systemName>
+      <userName>M2_EA_WestBigRock</userName>
+    </block>
+    <block systemName="IB46">
+      <systemName>IB46</systemName>
+      <userName>M2_TK_WestBigRock</userName>
+    </block>
+    <block systemName="IB47">
+      <systemName>IB47</systemName>
+      <userName>M1_TK_WestBigRock</userName>
+    </block>
+    <block systemName="IB48">
+      <systemName>IB48</systemName>
+      <userName>M2_BigRock</userName>
+    </block>
+    <block systemName="IB49">
+      <systemName>IB49</systemName>
+      <userName>M1_EA_WestBigRock</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>AUTOBLK:5</userName>
+    </block>
+    <block systemName="IB50">
+      <systemName>IB50</systemName>
+      <userName>M1_TK_GrainElevator</userName>
+    </block>
+    <block systemName="IB51">
+      <systemName>IB51</systemName>
+      <userName>M1_IM_WestLoop</userName>
+    </block>
+    <block systemName="IB52">
+      <systemName>IB52</systemName>
+      <userName>M1_EA_WestAurora</userName>
+    </block>
+    <block systemName="IB53">
+      <systemName>IB53</systemName>
+      <userName>M2_EA_WestAurora</userName>
+    </block>
+    <block systemName="IB54">
+      <systemName>IB54</systemName>
+      <userName>M2_TK_Aurora</userName>
+    </block>
+    <block systemName="IB55">
+      <systemName>IB55</systemName>
+      <userName>M1_TK_Aurora</userName>
+    </block>
+    <block systemName="IB56">
+      <systemName>IB56</systemName>
+      <userName>M1_AuroraPlant</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>AUTOBLK:6</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>AUTOBLK:7</userName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+      <userName>AUTOBLK:8</userName>
+    </block>
+    <block systemName="IB9">
+      <systemName>IB9</systemName>
+      <userName>AUTOBLK:9</userName>
+    </block>
+    <block systemName="IB1" length="0.0" curve="0" userName="M1_WA_Aurora">
+      <systemName>IB1</systemName>
+      <userName>M1_WA_Aurora</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_TK_Aurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB13" />
+      <path todir="128" fromdir="64" block="IB14">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB10" length="0.0" curve="0" userName="AUTOBLK:10">
+      <systemName>IB10</systemName>
+      <userName>AUTOBLK:10</userName>
+      <permissive>no</permissive>
+      <path todir="160" fromdir="80" block="IB52" />
+    </block>
+    <block systemName="IB11" length="0.0" curve="0" userName="AUTOBLK:11">
+      <systemName>IB11</systemName>
+      <userName>AUTOBLK:11</userName>
+      <permissive>no</permissive>
+      <path todir="80" fromdir="160" block="IB10" />
+      <path todir="160" fromdir="80" block="IB52" />
+    </block>
+    <block systemName="IB12" length="0.0" curve="0" userName="AUTOBLK:12">
+      <systemName>IB12</systemName>
+      <userName>AUTOBLK:12</userName>
+      <permissive>no</permissive>
+      <path todir="80" fromdir="160" block="IB11" />
+    </block>
+    <block systemName="IB13" length="0.0" curve="0" userName="AUTOBLK:13">
+      <systemName>IB13</systemName>
+      <userName>AUTOBLK:13</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB46">
+        <beansetting setting="2">
+          <turnout systemName="West Big Rock" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB46">
+        <beansetting setting="2">
+          <turnout systemName="West Big Rock" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB46">
+        <beansetting setting="4">
+          <turnout systemName="West Big Rock" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB14" length="0.0" curve="0" userName="AUTOBLK:14">
+      <systemName>IB14</systemName>
+      <userName>AUTOBLK:14</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB28">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB15" length="0.0" curve="0" userName="AUTOBLK:15">
+      <systemName>IB15</systemName>
+      <userName>AUTOBLK:15</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB28" />
+      <path todir="64" fromdir="128" block="IB28">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB18">
+        <beansetting setting="4">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB16" length="0.0" curve="0" userName="AUTOBLK:16">
+      <systemName>IB16</systemName>
+      <userName>AUTOBLK:16</userName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB20" />
+    </block>
+    <block systemName="IB17" length="0.0" curve="0" userName="AUTOBLK:17">
+      <systemName>IB17</systemName>
+      <userName>AUTOBLK:17</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB26" />
+      <path todir="64" fromdir="128" block="IB33" />
+    </block>
+    <block systemName="IB18" length="0.0" curve="0" userName="AUTOBLK:18">
+      <systemName>IB18</systemName>
+      <userName>AUTOBLK:18</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB28">
+        <beansetting setting="4">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB19">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB19" length="0.0" curve="0" userName="AUTOBLK:19">
+      <systemName>IB19</systemName>
+      <userName>AUTOBLK:19</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB18">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB2" length="0.0" curve="0" userName="M2_WA_Aurora">
+      <systemName>IB2</systemName>
+      <userName>M2_WA_Aurora</userName>
+      <comment />
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB20" length="0.0" curve="0" userName="AUTOBLK:20">
+      <systemName>IB20</systemName>
+      <userName>AUTOBLK:20</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB39" />
+      <path todir="96" fromdir="144" block="IB49" />
+    </block>
+    <block systemName="IB21" length="0.0" curve="0" userName="AUTOBLK:21">
+      <systemName>IB21</systemName>
+      <userName>AUTOBLK:21</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB22" length="0.0" curve="0" userName="AUTOBLK:22">
+      <systemName>IB22</systemName>
+      <userName>AUTOBLK:22</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB19" />
+      <path todir="160" fromdir="80" block="IB34" />
+    </block>
+    <block systemName="IB23" length="0.0" curve="0" userName="AUTOBLK:23">
+      <systemName>IB23</systemName>
+      <userName>AUTOBLK:23</userName>
+      <permissive>no</permissive>
+      <path todir="80" fromdir="160" block="IB22" />
+      <path todir="96" fromdir="144" block="IB34" />
+    </block>
+    <block systemName="IB24" length="0.0" curve="0" userName="AUTOBLK:24">
+      <systemName>IB24</systemName>
+      <userName>AUTOBLK:24</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB25" length="0.0" curve="0" userName="AUTOBLK:25">
+      <systemName>IB25</systemName>
+      <userName>AUTOBLK:25</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB32" />
+      <path todir="128" fromdir="64" block="IB51" />
+    </block>
+    <block systemName="IB26" length="0.0" curve="0" userName="AUTOBLK:26">
+      <systemName>IB26</systemName>
+      <userName>AUTOBLK:26</userName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB23" />
+      <path todir="64" fromdir="128" block="IB33" />
+    </block>
+    <block systemName="IB27" length="0.0" curve="0" userName="AUTOBLK:2">
+      <systemName>IB27</systemName>
+      <userName>AUTOBLK:2</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB28" length="0.0" curve="0" userName="M1_Aurora_Plant">
+      <systemName>IB28</systemName>
+      <userName>M1_Aurora_Plant</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_TK_Aurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB32">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB33">
+        <beansetting setting="4">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB52">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB53">
+        <beansetting setting="4">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB29" length="0.0" curve="0" userName="Aurora_Plant_Blk_2">
+      <systemName>IB29</systemName>
+      <userName>Aurora_Plant_Blk_2</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB28">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB31">
+        <beansetting setting="4">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB28" />
+    </block>
+    <block systemName="IB3" length="0.0" curve="0" userName="AUTOBLK:3">
+      <systemName>IB3</systemName>
+      <userName>AUTOBLK:3</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB30" length="0.0" curve="0" userName="Aurora_Plant_Blk_3">
+      <systemName>IB30</systemName>
+      <userName>Aurora_Plant_Blk_3</userName>
+      <comment />
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB54">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB54">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB31" length="0.0" curve="0" userName="Aurora_Plant_Blk_4">
+      <systemName>IB31</systemName>
+      <userName>Aurora_Plant_Blk_4</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB30">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB33" />
+      <path todir="64" fromdir="128" block="IB28">
+        <beansetting setting="4">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB32" length="0.0" curve="0" userName="M1_WA_EastAurora">
+      <systemName>IB32</systemName>
+      <userName>M1_WA_EastAurora</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_WA_EastAurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB51">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB28">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB33" length="0.0" curve="0" userName="M2_WA_EastAurora">
+      <systemName>IB33</systemName>
+      <userName>M2_WA_EastAurora</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M2_WA_EastAurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB34" />
+      <path todir="64" fromdir="128" block="IB54">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB28">
+        <beansetting setting="4">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB34" length="0.0" curve="0" userName="M2_IM_WestLoop">
+      <systemName>IB34</systemName>
+      <userName>M2_IM_WestLoop</userName>
+      <permissive>no</permissive>
+      <occupancysensor>M2_IM_WestLoop</occupancysensor>
+      <path todir="64" fromdir="128" block="IB33" />
+      <path todir="80" fromdir="160" block="IB45" />
+    </block>
+    <block systemName="IB35" length="0.0" curve="0" userName="AUTOBLK:29">
+      <systemName>IB35</systemName>
+      <userName>AUTOBLK:29</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB36" length="0.0" curve="0" userName="AUTOBLK:30">
+      <systemName>IB36</systemName>
+      <userName>AUTOBLK:30</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB37" length="0.0" curve="0" userName="AUTOBLK:31">
+      <systemName>IB37</systemName>
+      <userName>AUTOBLK:31</userName>
+      <permissive>no</permissive>
+      <path todir="32" fromdir="16" block="IB38" />
+      <path todir="96" fromdir="144" block="IB41" />
+      <path todir="64" fromdir="128" block="IB49" />
+    </block>
+    <block systemName="IB38" length="0.0" curve="0" userName="AUTOBLK:32">
+      <systemName>IB38</systemName>
+      <userName>AUTOBLK:32</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB25" />
+      <path todir="16" fromdir="32" block="IB50" />
+    </block>
+    <block systemName="IB39" length="0.0" curve="0" userName="AUTOBLK:33">
+      <systemName>IB39</systemName>
+      <userName>AUTOBLK:33</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB37" />
+      <path todir="64" fromdir="128" block="IB49" />
+    </block>
+    <block systemName="IB4" length="0.0" curve="0" userName="AUTOBLK:4">
+      <systemName>IB4</systemName>
+      <userName>AUTOBLK:4</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB48" />
+    </block>
+    <block systemName="IB40" length="0.0" curve="0" userName="AUTOBLK:34">
+      <systemName>IB40</systemName>
+      <userName>AUTOBLK:34</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB41" />
+    </block>
+    <block systemName="IB41" length="0.0" curve="0" userName="AUTOBLK:35">
+      <systemName>IB41</systemName>
+      <userName>AUTOBLK:35</userName>
+      <permissive>no</permissive>
+      <path todir="96" fromdir="144" block="IB42" />
+      <path todir="144" fromdir="96" block="IB50">
+        <beansetting setting="4">
+          <turnout systemName="GrainElevator" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB42" length="0.0" curve="0" userName="AUTOBLK:36">
+      <systemName>IB42</systemName>
+      <userName>AUTOBLK:36</userName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB41" />
+      <path todir="96" fromdir="144" block="IB43" />
+      <path todir="96" fromdir="144" block="IB44" />
+    </block>
+    <block systemName="IB43" length="0.0" curve="0" userName="AUTOBLK:37">
+      <systemName>IB43</systemName>
+      <userName>AUTOBLK:37</userName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB42" />
+    </block>
+    <block systemName="IB44" length="0.0" curve="0" userName="AUTOBLK:38">
+      <systemName>IB44</systemName>
+      <userName>AUTOBLK:38</userName>
+      <permissive>no</permissive>
+      <path todir="144" fromdir="96" block="IB42" />
+    </block>
+    <block systemName="IB45" length="0.0" curve="0" userName="M2_EA_WestBigRock">
+      <systemName>IB45</systemName>
+      <userName>M2_EA_WestBigRock</userName>
+      <permissive>no</permissive>
+      <occupancysensor>M2_EA_WestBigRock</occupancysensor>
+      <path todir="160" fromdir="80" block="IB34" />
+      <path todir="64" fromdir="128" block="IB46" />
+    </block>
+    <block systemName="IB46" length="0.0" curve="0" userName="M2_TK_WestBigRock">
+      <systemName>IB46</systemName>
+      <userName>M2_TK_WestBigRock</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M2_TK_WestBigRock</occupancysensor>
+      <path todir="128" fromdir="64" block="IB45">
+        <beansetting setting="2">
+          <turnout systemName="West Big Rock" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB47">
+        <beansetting setting="4">
+          <turnout systemName="West Big Rock" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB48" />
+    </block>
+    <block systemName="IB47" length="0.0" curve="0" userName="M1_TK_WestBigRock">
+      <systemName>IB47</systemName>
+      <userName>M1_TK_WestBigRock</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB46">
+        <beansetting setting="4">
+          <turnout systemName="West Big Rock" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB49" />
+    </block>
+    <block systemName="IB48" length="0.0" curve="0" userName="M2_BigRock">
+      <systemName>IB48</systemName>
+      <userName>M2_BigRock</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M2_WA_WestBigRock</occupancysensor>
+      <path todir="64" fromdir="128" block="IB4" />
+      <path todir="128" fromdir="64" block="IB46" />
+    </block>
+    <block systemName="IB49" length="0.0" curve="0" userName="M1_EA_WestBigRock">
+      <systemName>IB49</systemName>
+      <userName>M1_EA_WestBigRock</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_EA_WestBigRock</occupancysensor>
+      <path todir="64" fromdir="128" block="IB47" />
+      <path todir="128" fromdir="64" block="IB50" />
+    </block>
+    <block systemName="IB5" length="0.0" curve="0" userName="AUTOBLK:5">
+      <systemName>IB5</systemName>
+      <userName>AUTOBLK:5</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB50" length="0.0" curve="0" userName="M1_TK_GrainElevator">
+      <systemName>IB50</systemName>
+      <userName>M1_TK_GrainElevator</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_TK_GrainElevator</occupancysensor>
+      <path todir="64" fromdir="128" block="IB49" />
+      <path todir="96" fromdir="144" block="IB41">
+        <beansetting setting="4">
+          <turnout systemName="GrainElevator" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB51">
+        <beansetting setting="2">
+          <turnout systemName="GrainElevator" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB51" length="0.0" curve="0" userName="M1_IM_WestLoop">
+      <systemName>IB51</systemName>
+      <userName>M1_IM_WestLoop</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_IM_WestLoop</occupancysensor>
+      <path todir="16" fromdir="32" block="IB50">
+        <beansetting setting="2">
+          <turnout systemName="GrainElevator" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB32" />
+    </block>
+    <block systemName="IB52" length="0.0" curve="0" userName="M1_EA_WestAurora">
+      <systemName>IB52</systemName>
+      <userName>M1_EA_WestAurora</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M1_EA_WestAurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB28">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB53" length="0.0" curve="0" userName="M2_EA_WestAurora">
+      <systemName>IB53</systemName>
+      <userName>M2_EA_WestAurora</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M2_EA_WestAurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB54">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB28">
+        <beansetting setting="4">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB54" length="0.0" curve="0" userName="M2_TK_Aurora">
+      <systemName>IB54</systemName>
+      <userName>M2_TK_Aurora</userName>
+      <comment />
+      <permissive>no</permissive>
+      <occupancysensor>M2_TK_Aurora</occupancysensor>
+      <path todir="128" fromdir="64" block="IB33">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB53">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB55" length="0.0" curve="0" userName="M1_TK_Aurora">
+      <systemName>IB55</systemName>
+      <userName>M1_TK_Aurora</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB28" />
+      <path todir="128" fromdir="64" block="IB32">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB33">
+        <beansetting setting="4">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB28" />
+      <path todir="64" fromdir="128" block="IB52">
+        <beansetting setting="2">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB53">
+        <beansetting setting="4">
+          <turnout systemName="West Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB56" length="0.0" curve="0" userName="M1_AuroraPlant">
+      <systemName>IB56</systemName>
+      <userName>M1_AuroraPlant</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB28" />
+      <path todir="128" fromdir="64" block="IB32">
+        <beansetting setting="2">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB33">
+        <beansetting setting="4">
+          <turnout systemName="East Aurora" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB6" length="0.0" curve="0" userName="AUTOBLK:6">
+      <systemName>IB6</systemName>
+      <userName>AUTOBLK:6</userName>
+      <permissive>no</permissive>
+    </block>
+    <block systemName="IB7" length="0.0" curve="0" userName="AUTOBLK:7">
+      <systemName>IB7</systemName>
+      <userName>AUTOBLK:7</userName>
+      <permissive>no</permissive>
+      <path todir="160" fromdir="80" block="IB53" />
+    </block>
+    <block systemName="IB8" length="0.0" curve="0" userName="AUTOBLK:8">
+      <systemName>IB8</systemName>
+      <userName>AUTOBLK:8</userName>
+      <permissive>no</permissive>
+      <path todir="80" fromdir="160" block="IB7" />
+    </block>
+    <block systemName="IB9" length="0.0" curve="0" userName="AUTOBLK:9">
+      <systemName>IB9</systemName>
+      <userName>AUTOBLK:9</userName>
+      <permissive>no</permissive>
+    </block>
+  </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" userName="M2_TK_WestBigRock" occupancysensor="M2_TK_WestBigRock" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>M2_TK_WestBigRock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB13" userName="M2_BigRock" occupancysensor="M2_WA_WestBigRock" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB13</systemName>
+      <userName>M2_BigRock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB14" userName="M1_TK_GrainElevator" occupancysensor="M1_TK_GrainElevator" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB14</systemName>
+      <userName>M1_TK_GrainElevator</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB15" userName="M1_IM_WestLoop" occupancysensor="M1_IM_WestLoop" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB15</systemName>
+      <userName>M1_IM_WestLoop</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB16" userName="M1_EA_WestAurora" occupancysensor="M1_EA_WestAurora" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB16</systemName>
+      <userName>M1_EA_WestAurora</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB17" userName="M1_TK_WestBigRock" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB17</systemName>
+      <userName>M1_TK_WestBigRock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB18" userName="M2_EA_WestAurora" occupancysensor="M2_EA_WestAurora" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB18</systemName>
+      <userName>M2_EA_WestAurora</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" userName="M1_Aurora_Plant" occupancysensor="M1_TK_Aurora" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>M1_Aurora_Plant</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB27" userName="M2_WA_EastAurora" occupancysensor="M2_WA_EastAurora" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB27</systemName>
+      <userName>M2_WA_EastAurora</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB28" userName="M2_IM_WestLoop" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB28</systemName>
+      <userName>M2_IM_WestLoop</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" userName="M1_EA_WestBigRock" occupancysensor="M1_EA_WestBigRock" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>M1_EA_WestBigRock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB35" userName="AUTOBLK:35" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB35</systemName>
+      <userName>AUTOBLK:35</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB36" userName="AUTOBLK:36" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB36</systemName>
+      <userName>AUTOBLK:36</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB37" userName="AUTOBLK:37" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB37</systemName>
+      <userName>AUTOBLK:37</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB38" userName="AUTOBLK:38" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB38</systemName>
+      <userName>AUTOBLK:38</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB39" userName="M2_EA_WestBigRock" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB39</systemName>
+      <userName>M2_EA_WestBigRock</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" userName="AUTOBLK:4" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>AUTOBLK:4</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" userName="M2_TK_Aurora" occupancysensor="M2_TK_Aurora" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>M2_TK_Aurora</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB9" userName="M1_WA_EastAurora" occupancysensor="M1_WA_EastAurora" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB9</systemName>
+      <userName>M1_WA_EastAurora</userName>
+    </layoutblock>
+  </layoutblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix systemName="lx1" userName="layout_control" enabled="yes">
+      <systemName>lx1</systemName>
+      <userName>layout_control</userName>
+      <comment />
+      <logixConditional systemName="lx1C1" order="0" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="lx1C1" userName="InitialTurnoutState" antecedent="not R1" logicType="1" triggerOnChange="no">
+      <systemName>lx1C1</systemName>
+      <userName>InitialTurnoutState</userName>
+      <conditionalStateVariable operator="2" negated="yes" type="9" systemName="IMLAYOUTINITIALIZED" dataString="0" num1="3" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="2" systemName="LT1" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="LT2" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="LT3" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="LT4" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="LT5" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="LT6" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="2" systemName="LT9" data="2" delay="0" string="" />
+      <conditionalAction option="1" type="12" systemName="IMLAYOUTINITIALIZED" data="-1" delay="1" string="1" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Mar 13 10:53:48 CDT 2015" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Collins Layout" x="0" y="22" height="1080" width="1900" windowheight="759" windowwidth="1277" panelheight="1080" panelwidth="1900" sliders="yes" scrollable="vertical" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="yes" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="lightGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="cyan" turnoutcirclecolor="black" turnoutcirclesize="3" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="yes" redBackground="0" greenBackground="0" blueBackground="0" openDispatcher="no" useDirectTurnoutControl="no">
+    <positionablelabel x="438" y="364" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="West Big Rock" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="803" y="363" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="East Big Rock" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="539" y="246" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Aurora" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="603" y="300" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="West" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="506" y="299" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="East" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="911" y="30" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="East Eola" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="968" y="103" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Industrial Spur" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="1020" y="367" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="West Eola" size="16" style="0" red="255" green="200" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="936" y="4" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="1" size="24" style="1" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="485" y="382" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="2" size="24" style="1" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="617" y="240" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="3" size="24" style="1" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="505" y="241" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="4" size="24" style="0" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="909" y="92" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="5" size="24" style="1" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="849" y="380" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="6" size="24" style="1" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="62" y="261" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="9" size="24" style="0" red="0" green="0" blue="255" redBack="0" greenBack="0" blueBack="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <layoutturnout ident="TO6" turnoutname="West Big Rock" blockname="M2_TK_WestBigRock" blockbname="M2_TK_WestBigRock" blockcname="M1_TK_WestBigRock" blockdname="M1_TK_WestBigRock" type="6" connectaname="T45" connectbname="T4" connectcname="T5" connectdname="T16" continuing="2" disabled="no" disableWhenOccupied="yes" xcen="480.0" ycen="350.0" xa="465.64385986328125" ya="340.07122802734375" xb="523.0057146181534" yb="339.9808655142539" xc="494.35614013671875" yc="359.92877197265625" xd="436.99428538184657" yd="360.0191344857461" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO7" turnoutname="West Aurora" blockname="M1_Aurora_Plant" blockbname="M1_EA_WestAurora" blockcname="M2_EA_WestAurora" blockdname="M2_TK_Aurora" type="5" connectaname="T27" connectbname="T44" connectcname="T35" connectdname="T28" continuing="2" disabled="no" disableWhenOccupied="no" xcen="610.0" ycen="287.0" xa="577.0682983398438" ya="276.9251403808594" xb="620.9999854239198" yb="276.9999999751624" xc="642.9317016601562" yc="297.0748596191406" xd="599.0000145760802" yd="297.0000000248376" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO10" turnoutname="East Aurora" blockname="M1_WA_EastAurora" blockbname="M1_Aurora_Plant" blockcname="M2_TK_Aurora" blockdname="M2_WA_EastAurora" type="6" connectaname="T13" connectbname="T27" connectcname="T28" connectdname="T12" continuing="2" disabled="no" disableWhenOccupied="no" xcen="520.0" ycen="287.0" xa="509.99444580078125" ya="277.01666259765625" xb="550.0000231336305" yb="276.9999999903647" xc="530.0055541992188" yc="296.98333740234375" xd="489.99997686636954" yd="297.0000000096353" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO11" turnoutname="Industrial Spur" type="1" connectaname="T6" connectbname="T32" connectcname="T33" continuing="2" disabled="no" disableWhenOccupied="no" xcen="915.0" ycen="80.0" xa="894.0" ya="80.0" xb="936.0" yb="80.0" xc="935.0" yc="90.0" xd="894.0" yd="80.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO16" type="2" connectaname="T56" connectbname="T48" connectcname="T24" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1222.0" ycen="417.0" xa="1222.0" ya="437.0" xb="1222.0" yb="397.0" xc="1214.0" yc="413.0" xd="1222.0" yd="437.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO17" type="1" connectaname="T56" connectbname="T65" connectcname="T57" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1222.0" ycen="457.0" xa="1222.0" ya="437.0" xb="1222.0" yb="477.0" xc="1212.0" yc="477.0" xd="1222.0" yd="437.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO18" type="2" connectaname="T57" connectbname="T59" connectcname="T66" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1203.0" ycen="494.0" xa="1211.9442138671875" ya="476.1114501953125" xb="1194.0557861328125" yb="511.8885498046875" xc="1203.10546875" yc="515.9134521484375" xd="1211.9442138671875" yd="476.1114501953125" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO20" type="2" connectaname="T59" connectbname="T60" connectcname="T67" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1185.0" ycen="530.0" xa="1193.9442138671875" ya="512.1114501953125" xb="1176.0557861328125" yb="547.8885498046875" xc="1185.10546875" yc="552.9134521484375" xd="1193.9442138671875" yd="512.1114501953125" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO21" type="2" connectaname="T60" connectbname="T37" connectcname="T68" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1167.0" ycen="566.0" xa="1174.9442138671875" ya="549.1114501953125" xb="1159.0557861328125" yb="582.8885498046875" xc="1167.10546875" yc="585.9134521484375" xd="1174.9442138671875" yd="549.1114501953125" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO24" type="1" connectaname="T69" connectbname="T63" connectcname="T38" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1131.0" ycen="641.0" xa="1131.0" ya="661.0" xb="1131.0" yb="621.0" xc="1139.0" yc="625.0" xd="1131.0" yd="661.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO5" type="1" connectaname="T19" connectbname="T20" connectcname="T24" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1013.0" ycen="360.0" xa="993.0" ya="360.0" xb="1033.0" yb="360.0" xc="1059.0" yc="367.0" xd="993.0" yd="360.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO8" turnoutname="East Eola" type="5" connectaname="T9" connectbname="T30" connectcname="T29" connectdname="T32" continuing="2" disabled="no" disableWhenOccupied="no" xcen="954.0" ycen="70.0" xa="922.0594482421875" ya="60.02240753173828" xb="964.6466540348838" yb="60.021812439152725" xc="985.9405517578125" yc="79.97759246826172" xd="943.3533459651162" yd="79.97818756084727" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO9" type="2" connectaname="T37" connectbname="T38" connectcname="T39" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1150.0" ycen="602.0" xa="1158.938720703125" ya="582.9973754882812" xb="1141.061279296875" yb="621.0026245117188" xc="1149.6309814453125" yc="618.9285888671875" xd="1158.938720703125" yd="582.9973754882812" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO3" turnoutname="East Big Rock" blockname="AUTOBLK:4" type="5" connectaname="T4" connectbname="T3" connectcname="T19" connectdname="T5" continuing="2" disabled="no" disableWhenOccupied="no" xcen="848.0" ycen="350.0" xa="818.0" ya="340.0" xb="857.99999" yb="340.0" xc="878.0" yc="360.0" xd="838.00001" yd="360.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO4" turnoutname="GrainElevator" blockname="M1_TK_GrainElevator" type="2" connectaname="T2" connectbname="T1" connectcname="T8" continuing="2" disabled="no" disableWhenOccupied="no" xcen="47.0" ycen="274.0" xa="47.0" ya="253.0" xb="47.0" yb="295.0" xc="56.0" yc="294.0" xd="47.0" yd="253.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO13" blockname="AUTOBLK:36" type="2" connectaname="T8" connectbname="T23" connectcname="T36" continuing="2" disabled="no" disableWhenOccupied="no" xcen="73.0" ycen="315.0" xa="58.0" ya="295.0" xb="88.0" yb="335.0" xc="101.0" yc="325.0" xd="58.0" yd="295.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T3" connect1name="TO3" type1="3" connect2name="EB1" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="M2_BigRock" connect1name="TO3" type1="2" connect2name="TO6" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" connect1name="TO3" type1="5" connect2name="TO6" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T27" blockname="M1_Aurora_Plant" connect1name="TO10" type1="3" connect2name="TO7" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T28" blockname="M2_TK_Aurora" connect1name="TO7" type1="5" connect2name="TO10" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T33" connect1name="TO11" type1="4" connect2name="A34" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T34" connect1name="A34" type1="1" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T35" blockname="M2_EA_WestAurora" connect1name="TO7" type1="4" connect2name="A25" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T44" blockname="M1_EA_WestAurora" connect1name="A24" type1="1" connect2name="TO7" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T56" connect1name="TO17" type1="2" connect2name="TO16" type2="2" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T57" connect1name="TO18" type1="2" connect2name="TO17" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T59" connect1name="TO20" type1="2" connect2name="TO18" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T60" connect1name="TO21" type1="2" connect2name="TO20" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T63" connect1name="TO24" type1="3" connect2name="A44" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T65" connect1name="TO17" type1="3" connect2name="EB7" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T66" connect1name="TO18" type1="4" connect2name="EB8" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T67" connect1name="TO20" type1="4" connect2name="EB6" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T68" connect1name="TO21" type1="4" connect2name="EB5" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T69" connect1name="TO24" type1="2" connect2name="EB4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T70" connect1name="A44" type1="1" connect2name="EB9" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T16" blockname="M1_EA_WestBigRock" connect1name="A2" type1="1" connect2name="TO6" type2="5" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T19" connect1name="TO3" type1="4" connect2name="TO5" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T20" connect1name="TO5" type1="3" connect2name="A17" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T24" connect1name="TO5" type1="4" connect2name="TO16" type2="4" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="33.779509012773005" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T25" connect1name="A36" type1="1" connect2name="A19" type2="1" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T29" connect1name="A35" type1="1" connect2name="TO8" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T30" connect1name="A36" type1="1" connect2name="TO8" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T32" connect1name="TO11" type1="3" connect2name="TO8" type2="5" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T37" connect1name="TO9" type1="2" connect2name="TO21" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T38" connect1name="TO24" type1="4" connect2name="TO9" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T39" connect1name="TO9" type1="4" connect2name="EB3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T45" blockname="M2_TK_WestBigRock" connect1name="TO6" type1="2" connect2name="A33" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T47" connect1name="A35" type1="1" connect2name="A17" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="179.89655519394634" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T48" connect1name="A19" type1="1" connect2name="TO16" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="M2_EA_WestAurora" connect1name="TO11" type1="2" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="84.28826257438148" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="M2_EA_WestAurora" connect1name="A1" type1="1" connect2name="A25" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="87.29212363941963" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="M1_EA_WestAurora" connect1name="TO8" type1="2" connect2name="A4" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="M1_EA_WestAurora" connect1name="A4" type1="1" connect2name="A3" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="90.0" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="M1_EA_WestAurora" connect1name="A3" type1="1" connect2name="A24" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="89.26695344184334" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T12" blockname="M2_WA_EastAurora" connect1name="TO10" type1="5" connect2name="A7" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="M1_WA_EastAurora" connect1name="TO10" type1="2" connect2name="A8" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T14" blockname="M2_EA_WestBigRock" connect1name="A33" type1="1" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T15" blockname="M1_EA_WestBigRock" connect1name="A2" type1="1" connect2name="A6" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T17" blockname="M2_WA_EastAurora" connect1name="A7" type1="1" connect2name="A12" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="90.0" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T18" blockname="M1_WA_EastAurora" connect1name="A8" type1="1" connect2name="A11" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="90.0" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T21" blockname="M2_EA_WestBigRock" connect1name="A5" type1="1" connect2name="A9" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="90.0" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T22" blockname="M1_EA_WestBigRock" connect1name="A6" type1="1" connect2name="A10" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="90.0" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T26" blockname="M2_EA_WestBigRock" connect1name="A14" type1="1" connect2name="A9" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="179.987557533938" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T31" blockname="M2_IM_WestLoop" connect1name="A14" type1="1" connect2name="A15" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T40" blockname="M1_IM_WestLoop" connect1name="A11" type1="1" connect2name="A16" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="176.4646389331958" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T41" blockname="M2_IM_WestLoop" connect1name="A12" type1="1" connect2name="A15" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="179.1108153347763" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T1" blockname="M1_IM_WestLoop" connect1name="A16" type1="1" connect2name="TO4" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="M1_EA_WestBigRock" connect1name="TO4" type1="2" connect2name="A10" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="179.49741833328093" hideConLines="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="AUTOBLK:35" connect1name="TO13" type1="2" connect2name="TO4" type2="4" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T23" blockname="AUTOBLK:37" connect1name="TO13" type1="3" connect2name="A18" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T36" blockname="AUTOBLK:38" connect1name="TO13" type1="4" connect2name="A20" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="2" x="1028.0" y="340.0" connect1name="T3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A24" type="1" x="676.0" y="277.0" connect1name="T11" connect2name="T44" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A25" type="1" x="689.0" y="297.0" connect1name="T35" connect2name="T7" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="1073.0" y="100.0" connect1name="T34" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A34" type="1" x="965.0" y="100.0" connect1name="T33" connect2name="T34" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A35" type="1" x="1059.0" y="80.0" connect1name="T47" connect2name="T29" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A36" type="1" x="1059.0" y="60.0" connect1name="T25" connect2name="T30" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A44" type="1" x="1132.0" y="598.0" connect1name="T63" connect2name="T70" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="1131.0" y="676.0" connect1name="T69" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="2" x="1167.0" y="677.0" connect1name="T68" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="2" x="1185.0" y="676.0" connect1name="T67" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB7" type="2" x="1222.0" y="676.0" connect1name="T65" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB8" type="2" x="1203.0" y="676.0" connect1name="T66" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB9" type="2" x="1132.0" y="484.0" connect1name="T70" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="410.0" y="360.0" connect1name="T15" connect2name="T16" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A17" type="1" x="1059.0" y="360.0" connect1name="T20" connect2name="T47" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A19" type="1" x="1222.0" y="220.0" connect1name="T25" connect2name="T48" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="2" x="1150.0" y="676.0" connect1name="T39" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A33" type="1" x="438.0" y="340.0" connect1name="T45" connect2name="T14" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="1" x="801.0" y="185.0" connect1name="T6" connect2name="T7" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="779.0" y="184.0" connect1name="T10" connect2name="T11" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="905.0" y="60.0" connect1name="T9" connect2name="T10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="367.0" y="340.0" connect1name="T14" connect2name="T21" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="1" x="366.0" y="361.0" connect1name="T15" connect2name="T22" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A7" type="1" x="362.0" y="297.0" connect1name="T12" connect2name="T17" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A8" type="1" x="362.0" y="277.0" connect1name="T13" connect2name="T18" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A9" type="1" x="280.0" y="251.0" connect1name="T21" connect2name="T26" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A10" type="1" x="258.0" y="251.0" connect1name="T22" connect2name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A11" type="1" x="258.0" y="381.0" connect1name="T18" connect2name="T40" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A12" type="1" x="280.0" y="382.0" connect1name="T17" connect2name="T41" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A14" type="1" x="26.0" y="253.0" connect1name="T26" connect2name="T31" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A15" type="1" x="26.0" y="389.0" connect1name="T31" connect2name="T41" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A16" type="1" x="47.0" y="390.0" connect1name="T1" connect2name="T40" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A18" type="1" x="170.0" y="440.0" connect1name="T23" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A20" type="1" x="185.0" y="430.0" connect1name="T36" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Mon Nov 02 18:16:03 CST 2015</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Nov 02 18:16:03 CST 2015</date>
+      <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Nov 02 18:16:04 CST 2015</date>
+      <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Nov 02 18:16:07 CST 2015</date>
+      <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/Collins%20Layout.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Mon Nov 02 16:32:37 CST 2015</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Mon Nov 02 16:32:37 CST 2015</date>
+          <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Mon Nov 02 16:32:38 CST 2015</date>
+          <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Mon Nov 02 16:32:41 CST 2015</date>
+          <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/Collins%20Layout.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sat Oct 24 12:46:31 CDT 2015</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Oct 24 12:46:31 CDT 2015</date>
+              <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Oct 24 12:46:33 CDT 2015</date>
+              <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Oct 24 12:46:35 CDT 2015</date>
+              <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/Collins%20Layout.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Fri Oct 23 14:43:34 CDT 2015</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Oct 23 14:43:34 CDT 2015</date>
+                  <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Oct 23 14:43:36 CDT 2015</date>
+                  <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Fri Oct 23 14:43:39 CDT 2015</date>
+                  <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/Collins%20Layout.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Thu Oct 22 19:19:38 CDT 2015</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Thu Oct 22 19:19:38 CDT 2015</date>
+                      <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Thu Oct 22 19:19:40 CDT 2015</date>
+                      <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Thu Oct 22 19:19:43 CDT 2015</date>
+                      <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/Collins%20Layout.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Thu Oct 22 19:06:49 CDT 2015</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Thu Oct 22 19:06:49 CDT 2015</date>
+                          <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Thu Oct 22 19:06:51 CDT 2015</date>
+                          <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/ProfileConfig.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Thu Oct 22 19:06:54 CDT 2015</date>
+                          <filename>/Users/jmri/Library/Preferences/JMRI/My_JMRI_Railroad/Collins%20Layout.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Thu Oct 22 19:14:56 CDT 2015</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Thu Oct 22 20:31:36 CDT 2015</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Fri Oct 23 15:57:24 CDT 2015</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Oct 24 13:04:52 CDT 2015</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Mon Nov 02 16:43:35 CST 2015</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Mon Nov 02 18:45:57 CST 2015</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.0.1-r29956 on Mon Nov 02 18:45:57 CST 2015 $Id: XmlFile.java 28771 2015-02-22 16:58:13Z rhwood $-->
+</layout-config>

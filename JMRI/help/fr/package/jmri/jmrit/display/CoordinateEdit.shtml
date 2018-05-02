@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!--  Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Coordinate Edit Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Dan Boudreau">
+  <meta name="keywords" content="JMRI Coordinate Edit Help">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>L'&Eacute;diteur de Propri&eacute;t&eacute;s
+      &Eacute;tiquette et Ic&ocirc;ne</h1>Cet &eacute;diteur vous
+      permet de modifier les propri&eacute;t&eacute;s des
+      &eacute;l&eacute;ments sur votre panneau.
+
+      <h2>R&eacute;glage des Coordonn&eacute;es X et Y</h2>Il y a
+      deux zones de texte o&ugrave; vous pouvez
+      &eacute;ventuellement saisir les coordonn&eacute;es x et y
+      que vous d&eacute;sirez et en appuyant sur le bouton
+      "Valider" l'ic&ocirc;ne se d&eacute;place &agrave; cet
+      emplacement. Si vous souhaitez que l'ic&ocirc;ne revienne
+      &agrave; son emplacement d'origine lorsque l'&eacute;diteur a
+      &eacute;t&eacute; ouvert, appuyez sur le bouton "Annuler" et
+      l'&eacute;diteur va d&eacute;placer l'ic&ocirc;ne de retour
+      &agrave; sa position initiale et fermer la fen&ecirc;tre de
+      l'&eacute;diteur.
+
+      <p>Utilisez la molette, si vous voulez d&eacute;placer
+      l'ic&ocirc;ne d'un pixel.</p>
+
+      <h2>Changer le niveau d'Affichage</h2>Entrez le niveau
+      d'affichage souhait&eacute; dans la zone de texte. Les
+      niveaux vont de 1 &agrave; 10, 10 &eacute;tant la couche
+      sup&eacute;rieure. Utilisez le r&eacute;glage du niveau pour
+      placer une ic&ocirc;ne par dessus une autre pour obtenir le
+      point de vue que vous voulez sur votre panneau.
+
+      <h2>Modification du Texte des Bulles d'Aide</h2>Entrez le
+      texte que vous souhaitez afficher comme bulle d'aide pour
+      l'&eacute;l&eacute;ment de panneau.
+
+      <h2>R&eacute;glage de la Taille de la Bordure</h2>Entrez la
+      taille en pixels pour la largeur de la bordure.
+
+      <h2>R&eacute;glage de la Taille de la Marge</h2>Entrez la
+      largeur et la hauteur de la marge.
+
+      <h2>R&eacute;glage de la taille fixe</h2>Entrez la largeur et
+      la hauteur d'une r&eacute;gion d&eacute;termin&eacute;e qui
+      contient l'&eacute;l&eacute;ment.
+
+      <h2>Rotation d'une Ic&ocirc;ne</h2>Entrez l'angle de rotation
+      suppl&eacute;mentaire en degr&eacute;s de l'ic&ocirc;ne par
+      rapport &agrave; sa position actuelle. Pour restaurer
+      l'ic&ocirc;ne &agrave; son angle d'origine, entrez la valeur
+      0. Pour restaurer l'angle d'origine, la taille et position,
+      cliquez sur l'&eacute;l&eacute;ment Rotation (Orthogonal).
+
+      <h2>Mise &agrave; l'&eacute;chelle d'une
+      ic&ocirc;ne</h2>Entrez le pourcentage d'augmentation ou de
+      diminution de la taille de l'ic&ocirc;ne d'un montant
+      suppl&eacute;mentaire &agrave; sa taille actuelle. Pour
+      restaurer l'ic&ocirc;ne &agrave; sa taille d'origine, entrez
+      la valeur 100. Pour restaurer l'angle d'origine, la taille et
+      position, cliquez sur l'&eacute;l&eacute;ment Rotation
+      (Orthogonal).
+
+      <h2>Modification du texte</h2>Entrez le texte souhait&eacute;
+      dans la zone de texte. <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

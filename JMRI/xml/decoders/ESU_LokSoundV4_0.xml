@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <!-- made from the ESU_LokSound_Select.file -->
+    <!-- ver1 new file -->
+    <!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
+    <!-- ver3 fixed CV293.0 bug -->
+    <!-- ver4 fixed CV249 bug, added CVs 47,48,51,122,123,129,130,133,250,255 -->
+    <!-- ver5 fixed range and default values CVs 5 and 6 -->
+    <version author="Michael Mosher" version="1" lastUpdated="20110505"/>
+    <version author="Michael Mosher" version="2" lastUpdated="20110523"/>
+    <version author="Michael Mosher" version="3" lastUpdated="20120223"/>
+    <version author="Dave Heap" version="4" lastUpdated="20120721"/>
+    <version author="Dave Heap" version="5" lastUpdated="20120917"/>
+    <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
+    <version author="Dave Heap" version="6" lastUpdated="20121230"/>
+    <!-- ver7 added support for new mfx&reg; speed table -->
+    <version author="Dave Heap" version="7" lastUpdated="20130105"/>
+    <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
+    updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
+    <version author="Dave Heap" version="8" lastUpdated="20130429"/>
+    <!-- ver9 indexed CV fixes -->
+    <version author="Dave Heap" version="9" lastUpdated="20130606"/>
+    <!-- ver10 Add warning to CV reset -->
+    <version author="Dave Heap" version="10" lastUpdated="20130626"/>
+    <!-- ver11 new Function Outputs and Info panes, miscellaneous changes and corrections -->
+    <version author="Dave Heap" version="11" lastUpdated="20130910"/>
+    <!-- ver12 new Sound pane, many changes and corrections -->
+    <version author="Dave Heap" version="12" lastUpdated="20130926"/>
+    <!-- ver13 add new capability section to define high CV alternate write method -->
+    <version author="Dave Heap" version="13" lastUpdated="20131028"/>
+    <!-- ver14 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
+    <version author="Dave Heap" version="14" lastUpdated="20140107"/>
+    <!-- ver15 changed all indexed CVs to new form -->
+    <version author="Dave Heap" version="15" lastUpdated="20140114"/>
+    <!-- ver16 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+    <version author="Dave Heap" version="16" lastUpdated="20150427"/>
+    <!-- ver17 added LokSound V4.0 M4,LokSound V4.0 M4 OEM -->
+    <version author="Dave Heap" version="17" lastUpdated="20161101"/>
+    <!-- ver18 added German translation -->
+    <version author="Ronald Kuhn" version="18" lastUpdated="20170722"/>
+    <!-- ver19 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
+    <version author="Dave Heap" version="19" lastUpdated="20170819"/>
+    <!-- ver20 added German translation for functionlabels-->
+    <version author="Ronald Kuhn" version="20" lastUpdated="20171217"/>
+    <!-- ver21 added Dynamic Brake deceleration rate -->
+    <version author="Dave Heap" version="21" lastUpdated="20180102"/>
+    <decoder>
+        <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model model="LokSound V4.0 M4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554500,33554536">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model model="LokSound V4.0 M4 OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554521,33554547">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497,33554552">
+                <size length="25.3" width="10.6" height="3.8" units="mm"/>
+            </model>
+            <model model="LokSound L V4.0" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554544">
+                <size length="51" width="26" height="14" units="mm"/>
+            </model>
+            <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="33554507,33554541">
+                <size length="51" width="41" height="14" units="mm"/>
+            </model>
+            <model show="no" model="LokSound V4.0 NEM652" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokSound V4.0">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model show="no" model="LokSound V4.0 21MTC" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokSound V4.0">
+                <size length="30.5" width="15.5" height="5.5" units="mm"/>
+            </model>
+            <model show="no" model="LokSound Micro V4.0 NEM651" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+                <size length="25.3" width="10.6" height="3.8" units="mm"/>
+            </model>
+            <model show="no" model="LokSound Micro V4.0 NEM652" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+                <size length="25.3" width="10.6" height="3.8" units="mm"/>
+            </model>
+            <model show="no" model="LokSound Micro V4.0 Next18" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+                <size length="25.3" width="10.6" height="3.8" units="mm"/>
+            </model>
+            <model show="no" model="LokSound XL V4.0 Screw Terminals" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="LokSound XL V4.0">
+                <size length="51" width="41" height="14" units="mm"/>
+            </model>
+            <model show="no" model="LokSound XL V4.0 PIN connector" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="LokSound XL V4.0">
+                <size length="51" width="41" height="14" units="mm"/>
+            </model>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">
+                  <text>Light</text>
+                  <text xml:lang="de">Licht</text>
+                </functionlabel>
+                <functionlabel num="1" lockable="true">
+                  <text>Bell</text>
+                  <text xml:lang="de">Sound</text>
+                </functionlabel>
+                <functionlabel num="2" lockable="false">
+                  <text>Horn</text>
+                  <text xml:lang="de">Pfeife / Signalhorn</text>
+                </functionlabel>
+            </functionlabels>
+            <soundlabels>
+                <soundlabel num="25">
+                  <text>Random sounds</text>
+                  <text xml:lang="de">Zufallssound</text>
+                </soundlabel>
+                <soundlabel num="26">
+                  <text>Automatic brake sound</text>
+                  <text xml:lang="de">automatischer Bremssound</text>
+                </soundlabel>
+                <soundlabel num="27">
+                  <text>Gear shift sound</text>
+                  <text xml:lang="de">Schaltgeräusch</text>
+                </soundlabel>
+            </soundlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>High Access via Double Index</name>
+                <parameter name="Max Regular CV address">256</parameter>
+                <parameter name="High Address CV">96</parameter>
+                <parameter name="Low Address CV">97</parameter>
+                <parameter name="Access Register CV">99</parameter>
+                <parameter name="Modulo">100</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">false</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
+            <variable CV="48" item="Sound Option 2" default="0">
+                <decVal/>
+                <label>Sound Configuration Number</label>
+                <label xml:lang="de">Gewählte Soundkonfiguration</label>
+                <label xml:lang="ca">Número configurqació de so</label>
+            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs." CV="8" default="8"/>
+        </resets>
+    </decoder>
+    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
+</decoder-config>

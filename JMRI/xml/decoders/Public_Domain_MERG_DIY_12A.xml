@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Len Royles len@len-royles.co.uk" version="2" lastUpdated="20050204"/>
+  <!-- This is for the MERG Decod12A decoder, version 133 with the original DIY(13) mfg.  -->
+  <decoder>
+    <family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133">
+      <model model="MERG-DIY 12a" numOuts="5" numFns="3">
+        <output name="01" label="White"/>
+        <output name="02" label="Yellow"/>
+        <output name="03" label="Violet"/>
+        <output name="04" label="Green"/>
+        <output name="05" label="Brown"/>
+      </model>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="Range 0-254" default="1">
+        <decVal max="254"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>Range 0-254</comment>
+      </variable>
+      <variable item="Accel" CV="3" comment="Range 0-255" default="5">
+        <decVal max="255"/>
+        <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Decel" CV="4" comment="Range 0-255" default="5">
+        <decVal max="255"/>
+        <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-255)</label>
+        <label xml:lang="fr">Décélération (0-255)</label>
+        <label xml:lang="de">Bremszeit (0-255)</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Vhigh" CV="5" default="1">
+        <decVal max="255"/>
+        <label>Vhigh</label>
+      </variable>
+      <variable item="Vmid" CV="6" default="75">
+        <decVal max="255"/>
+        <label>Vmid</label>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="133">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="13">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="10" item="EMF Feedback Cutout" comment="Range 1-255" default="255">
+        <decVal/>
+        <label>EMF Cut</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable CV="11" item="Packet Time-out Value" comment="Range 0-255" default="0">
+        <decVal/>
+        <label>Packet TO</label>
+        <comment>Range 0-255</comment>
+      </variable>
+     <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F1</label>
+      </variable>
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F2</label>
+      </variable>
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F3</label>
+      </variable>
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F4</label>
+      </variable>
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F5</label>
+      </variable>
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F6</label>
+      </variable>
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F7</label>
+      </variable>
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F8</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For FL in Forward</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For FL in Reverse</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 5</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 3</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 4</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 5</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 4</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 5</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 4</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 5</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 4</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" default="1" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 5</label>
+      </variable>
+      <variable item="FL Dim" CV="49" mask="XXXXXXXV">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Dim</label>
+      </variable>
+      <variable item="FL Strobe" CV="49" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Strobe</label>
+      </variable>
+      <variable item="FL Mars Light" CV="49" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Mars Light</label>
+      </variable>
+      <variable item="FL Reverse On" CV="49" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Reverse On</label>
+      </variable>
+      <variable item="FL Forward On" CV="49" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Forward On</label>
+      </variable>
+      <variable item="FL Qtr Sec Phase B" CV="49" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Qtr Sec Phase B</label>
+      </variable>
+      <variable item="FL Qtr Sec Phase A" CV="49" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Qtr Sec Phase A</label>
+      </variable>
+      <variable item="FL Speed Related Counter (by pwm)" CV="49" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL Speed Related Counter (by pwm)</label>
+      </variable>
+      <variable item="RL D" CV="50" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL D</label>
+      </variable>
+      <variable item="RL S" CV="50" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL S</label>
+      </variable>
+      <variable item="RL ML" CV="50" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL ML</label>
+      </variable>
+      <variable item="RL RO" CV="50" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL RO</label>
+      </variable>
+      <variable item="RL FO" CV="50" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL FO</label>
+      </variable>
+      <variable item="RL QSPB" CV="50" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL QSPB</label>
+      </variable>
+      <variable item="RL QSPA" CV="50" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL QSPA</label>
+      </variable>
+      <variable item="RL SRC" CV="50" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>RL SRC</label>
+      </variable>
+      <variable item="F1 D" CV="51" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 D</label>
+      </variable>
+      <variable item="F1 S" CV="51" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 S</label>
+      </variable>
+      <variable item="F1 ML" CV="51" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 ML</label>
+      </variable>
+      <variable item="F1 RO" CV="51" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 RO</label>
+      </variable>
+      <variable item="F1 FO" CV="51" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 FO</label>
+      </variable>
+      <variable item="F1 QSPB" CV="51" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 QSPB</label>
+      </variable>
+      <variable item="F1 QSPA" CV="51" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 QSPA</label>
+      </variable>
+      <variable item="F1 SRC" CV="51" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 SRC</label>
+      </variable>
+      <variable item="F2 D" CV="52" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 D</label>
+      </variable>
+      <variable item="F2 S" CV="52" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 S</label>
+      </variable>
+      <variable item="F2 ML" CV="52" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 ML</label>
+      </variable>
+      <variable item="F2 RO" CV="52" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 RO</label>
+      </variable>
+      <variable item="F2 FO" CV="52" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 FO</label>
+      </variable>
+      <variable item="F2 QSPB" CV="52" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 QSPB</label>
+      </variable>
+      <variable item="F2 QSPA" CV="52" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 QSPA</label>
+      </variable>
+      <variable item="F2 SRC" CV="52" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 SRC</label>
+      </variable>
+      <variable item="F3 D" CV="53" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 D</label>
+      </variable>
+      <variable item="F3 S" CV="53" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 S</label>
+      </variable>
+      <variable item="F3 ML" CV="53" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 ML</label>
+      </variable>
+      <variable item="F3 RO" CV="53" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 RO</label>
+      </variable>
+      <variable item="F3 FO" CV="53" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 FO</label>
+      </variable>
+      <variable item="F3 QSPB" CV="53" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 QSPB</label>
+      </variable>
+      <variable item="F3 QSPA" CV="53" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 QSPA</label>
+      </variable>
+      <variable item="F3 SRC" CV="53" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 SRC</label>
+      </variable>
+      <variable CV="54" mask="XXXXVVVV" default="0000" item="HF-LF Transition" comment="Range 0-15">
+        <decVal/>
+        <label>HF-LF Transition</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable CV="54" mask="XXXVXXXX" default="1" item="Back EMF control" comment="bit 4 = ON">
+        <enumVal>
+          <enumChoice choice="BEMF Off">
+            <choice>BEMF Off</choice>
+          </enumChoice>
+          <enumChoice choice="BEMF On">
+            <choice>BEMF On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Back EMF control</label>
+        <comment>bit 4 = ON</comment>
+      </variable>
+      <variable CV="54" mask="XXVXXXXX" default="1" item="HF PWM Selection" comment="bit 5 = ON">
+        <enumVal>
+          <enumChoice choice="HF PWM Off">
+            <choice>HF PWM Off</choice>
+          </enumChoice>
+          <enumChoice choice="HF PWM On">
+            <choice>HF PWM On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>HF PWM On</label>
+        <comment>bit 5 = ON</comment>
+      </variable>
+      <variable CV="54" mask="VXXXXXXX" default="0" item="Analogue Mode on DC" comment="bit 7 set for good analogue mode on DC track,        bit 7 clear for stopping on reverse DC        If bit 7 is set, then bit 2 in CV29 is irrelevant">
+        <enumVal>
+          <enumChoice choice="Loco brakes to a stop on DC">
+            <choice>Loco brakes to a stop on DC</choice>
+             <choice xml:lang="it">Loco frena fino a fermarsi</choice>
+          </enumChoice>
+          <enumChoice choice="Loco runs under DC analog voltage control">
+            <choice>Loco runs under DC analog voltage control</choice>
+             <choice xml:lang="it">Loco va in Analogico</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analogue Mode on DC</label>
+        <label xml:lang="it">Frenata in Blocco Analogico</label>
+        <comment>bit 7 set for good analogue mode on DC track,        bit 7 clear for stopping on reverse DC        If bit 7 is set, then bit 2 in CV29 is irrelevant</comment>
+      </variable>
+      <variable CV="55" mask="VVVVVVVV" default="16" item="Integral Gain" comment="Range 0-15">
+        <decVal/>
+        <label>Integral Gain Ki</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable CV="56" mask="VVVVVVVV" default="80" item="Proportional Gain" comment="Range 0-15">
+        <decVal/>
+        <label>Proportional Gain Kp</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable CV="57" mask="VVVVVVVV" default="166" item="Feedback Filter" comment="Range 255-0 lower values increase filter">
+        <decVal/>
+        <label>Feedback Filter Kfr</label>
+        <comment>Range 255-0 lower values increase filter</comment>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Analogue Mode on DC"/>
+      <label>
+        <text>Note if analogue mode selected,this overides bit 2 in CV29</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Back EMF control"/>
+      <display item="HF PWM Selection"/>
+      <display item="HF-LF Transition"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Integral Gain"/>
+      <display item="Proportional Gain"/>
+      <display item="Feedback Filter"/>
+    </column>
+    <name>MERG Motor Control</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>None selected gives standard on/off function output</text>
+      </label>
+      <label>
+        <text>FL Effect</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="FL Dim"/>
+      <display item="FL Strobe"/>
+      <display item="FL Mars Light"/>
+      <display item="FL Reverse On"/>
+      <display item="FL Forward On"/>
+      <display item="FL Qtr Sec Phase A"/>
+      <display item="FL Qtr Sec Phase B"/>
+      <display item="FL Speed Related Counter (by pwm)"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>RL Effect</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="RL D"/>
+      <display item="RL S"/>
+      <display item="RL ML"/>
+      <display item="RL RO"/>
+      <display item="RL FO"/>
+      <display item="RL QSPA"/>
+      <display item="RL QSPB"/>
+      <display item="RL SRC"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>F1 Effect</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="F1 D"/>
+      <display item="F1 S"/>
+      <display item="F1 ML"/>
+      <display item="F1 RO"/>
+      <display item="F1 FO"/>
+      <display item="F1 QSPA"/>
+      <display item="F1 QSPB"/>
+      <display item="F1 SRC"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>F2 Effect</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="F2 D"/>
+      <display item="F2 S"/>
+      <display item="F2 ML"/>
+      <display item="F2 RO"/>
+      <display item="F2 FO"/>
+      <display item="F2 QSPA"/>
+      <display item="F2 QSPB"/>
+      <display item="F2 SRC"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>F3 Effect</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="F3 D"/>
+      <display item="F3 S"/>
+      <display item="F3 ML"/>
+      <display item="F3 RO"/>
+      <display item="F3 FO"/>
+      <display item="F3 QSPA"/>
+      <display item="F3 QSPB"/>
+      <display item="F3 SRC"/>
+    </column>
+    <name>MERG Lighting Effects</name>
+  </pane>
+</decoder-config>

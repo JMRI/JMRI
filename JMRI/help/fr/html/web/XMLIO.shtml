@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Herv&#233; le 2012-01-23-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Translated by Herv&#233; Blorec 2013-10-08 -->
+
+  <title>JMRI: XML IO Servlet</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: XML IO Servlet</h1>Le servlet JMRI XML fournit un
+      acc&egrave;s Web bi-directionnel aux services JMRI.
+
+      <p>Le servlet vit dans le paquet <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+      jmri.web.servlet.xmlio</a> , et fournit un acc&egrave;s Web
+      au <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+      JMRI XML IO paquet</a>. Par d&eacute;faut, le serveur web
+      JMRI enverra tout URL qui commence par/xmlio &agrave; ce
+      servlet. Il liste tous les &eacute;l&eacute;ments connus d'un
+      type sp&eacute;cifi&eacute;, accepte des changements de la
+      valeur/&eacute;tat des &eacute;l&eacute;ments, et
+      r&eacute;pond avec valeur actuelle/&eacute;tat des
+      &eacute;l&eacute;ments. Si envoy&eacute; une liste
+      d'&eacute;l&eacute;ments avec des valeurs actuelles, il
+      "surveillera" les changements de tous ces
+      &eacute;l&eacute;ments, retournant les valeurs
+      nouvelles.</p>El&eacute;ment types compl&egrave;ments
+      support&eacute;s :
+
+      <ul>
+        <li>alimentation</li>
+
+        <li>aiguillage</li>
+
+        <li>capteurr</li>
+
+        <li>t&ecirc;te signal</li>
+
+        <li>m&acirc;t signal</li>
+
+        <li>m&eacute;moire</li>
+
+        <li>itin&eacute;raire</li>
+      </ul>Les types d'&eacute;l&eacute;ments de liste seule:
+
+      <ul>
+        <li>Liste</li>
+
+        <li>trame</li>
+
+        <li>panneau</li>
+
+        <li>m&eacute;tadata</li>
+
+        <li>Chemin de fer</li>
+      </ul>Le R&eacute;gulateur est un cas unique, la syntaxe
+      l&eacute;g&egrave;rement diff&eacute;rente, soutient la
+      lecture et les modifications, mais pas la liste ou la
+      surveillance:
+
+      <ul>
+        <li>R&eacute;gulateur</li>
+      </ul>Il y a plusieurs exemples de pages qui montrent comment
+      cela peut &ecirc;tre utilis&eacute;:
+
+      <dl>
+        <dt><a href=
+        "http://localhost:12080/web/request.html">web/request.html</a></dt>
+
+        <dd>Rend une seule requ&ecirc;te XML pour tous les capteurs
+        disponibles, et montre leur statut dans un tableau.</dd>
+
+        <dt><a href=
+        "http://localhost:12080/web/monitor.html">web/monitor.html</a></dt>
+
+        <dd>utilise les requ&ecirc;tes temporis&eacute;es pour
+        surveiller l'&eacute;tat de tous les capteurs, la mise
+        &agrave; jour d'une table lors de tout changement.</dd>
+
+        <dt><a href=
+        "http://localhost:12080/web/throttle.html">web/throttle.html</a></dt>
+
+        <dd>Envoie une commande de vitesse pour une locomotive DCC
+        sur le r&eacute;seau quand une touche est
+        enfonc&eacute;e.</dd>
+
+        <dt><a href=
+        "http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a></dt>
+
+        <dd>Exemple d'un panneau de commande sur une page web.</dd>
+
+        <dt><a href=
+        "http://localhost:12080/web/turnoutPanel.html">web/turnoutMonitor.html</a></dt>
+
+        <dd>Table Aiguillage plus complexes, avec des boutons pour
+        mettre un aiguillage d&eacute;vi&eacute; ou droit.</dd>
+
+        <dt><a href=
+        "http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a></dt>
+
+        <dd>Utile pour envoyer plusieurs commandes au serveur xmlio
+        et voir les r&eacute;ponses.</dd>
+
+        <dt><a href=
+        "http://localhost:12080/web/JMRIMobile.%20html">web /
+        JMRIMobile.html</a></dt>
+
+        <dd>Utile le serveur xmlio pour r&eacute;cup&eacute;rer des
+        donn&eacute;es &agrave; partir de JMRI, l'envoi et le suivi
+        des changements des modificationsdes
+        &eacute;l&eacute;ments.</dd>
+      </dl>
+
+      <p>S'il vous pla&icirc;t noter que ce servlet a seulement
+      &eacute;t&eacute; utilis&eacute; avec le <a href=
+      "index.shtml">Serveur Web JMRI</a>, et peut ne pas
+      fonctionner avec d'autres conteneurs de servlets. Nous nous
+      sommes engag&eacute;s &agrave; le faire fonctionner,
+      cependant, entrer en contact avec les d&eacute;veloppeurs
+      JMRI si vous rencontrez des probl&egrave;mes.</p>
+
+      <h2>Format Demande</h2>Le sch&eacute;ma XML est d&eacute;fini
+      dans le <a href=
+      "http://jmri.org/xml/schema/xmlio.xsd">document sch&eacute;ma
+      xmlio.xsd</a> .
+
+      <p>Il ya aussi une syntaxe bas&eacute;e sur les attributs
+      disponibles. (voir les exemples de l'&eacute;tat ci-dessous)
+      Le serveur xmlio r&eacute;pond avec la m&ecirc;me syntaxe que
+      celle qu'utilise la demande.</p>
+
+      <p>Voici quelques exemple des demandes et
+      r&eacute;ponses.</p>
+
+      <h3>Obtenir le statut des objets individuels</h3>Demande:
+      <pre style="font-family: monospace;">
+
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;West sensor&lt;/name&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;power&lt;/type&gt;
+    &lt;name&gt;power&lt;/name&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre>
+      <pre style="font-family: monospace;">
+
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;West sensor&lt;/name&gt;
+    &lt;value&gt;4&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;power&lt;/type&gt;
+    &lt;name&gt;power&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre>La "valeur" &eacute;l&eacute;ment est ins&eacute;r&eacute;e
+dans la demande, et puis est retourn&eacute;e comme r&eacute;ponse.
+Vous pouvez simplement tourner autour de la r&eacute;ponse et
+l'utiliser comme une autre demande. Si la "valeur"
+&eacute;l&eacute;ments est pr&eacute;sente pour tous les articles,
+la r&eacute;ponse ne sera restitu&eacute;e que lorsque l'un ou
+plusieurs des &eacute;tat de l'&eacute;l&eacute;ment inclus a
+chang&eacute; pour quelque chose de diff&eacute;rent.
+
+      <h3>Obtenez tous les objets d'un type</h3>Demande:
+      <pre style="font-family: monospace;">
+
+&lt;xmlio&gt;
+  &lt;list&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+  &lt;/list&gt;
+&lt;/xmlio&gt;
+</pre>R&eacute;ponse:
+      <pre style="font-family: monospace;">
+
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;IS1&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;IS2&lt;/name&gt;
+    &lt;value&gt;4&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;sensor&lt;/type&gt;
+    &lt;name&gt;West sensor&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre>La r&eacute;ponse peut &ecirc;tre retourn&eacute;e et
+utilis&eacute;e comme la prochaine requ&ecirc;te.
+
+      <h3>R&eacute;gler le statut d'un objet</h3>Demande:
+      <pre style="font-family: monospace;">
+
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+    &lt;set&gt;2&lt;/set&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre>R&eacute;ponse:
+      <pre style="font-family: monospace;">
+
+&lt;xmlio&gt;
+  &lt;item&gt;
+    &lt;type&gt;turnout&lt;/type&gt;
+    &lt;name&gt;IT12&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/xmlio&gt;
+</pre>L'&eacute;l&eacute;ment "set" de la demande r&eacute;sulte de
+l'&eacute;tat fix&eacute; &agrave; la valeur donn&eacute;e, et puis
+est retourn&eacute;e dans la r&eacute;ponse comme un
+&eacute;l&eacute;ment de valeur avec la valeur correcte &agrave; ce
+point.
+
+      <p>Toutes les &eacute;critures sont faites avant que les
+      valeurs soient recueillies pour toute lecture, mais il n'y a
+      aucune garantie que les cons&eacute;quences de l'&eacute;crit
+      soient propag&eacute;es compl&egrave;tement.</p>
+
+      <h3>D&eacute;finir le statut d'un objet (syntaxe bas&eacute;e
+      sur les attributs)</h3>
+
+      <h3>Contr&ocirc;le un r&eacute;gulateur</h3>Demande:
+      <pre style="font-family: monospace;">
+
+&lt;turnout name="IT12" set="2" /&gt;
+</pre>R&eacute;ponse:
+      <pre style="font-family: monospace;">
+
+&lt;turnout name="IT12" value="2" /&gt;
+</pre>Un &eacute;l&eacute;ment peut &ecirc;tre utilis&eacute; pour
+contr&ocirc;ler un r&eacute;gulateur via le ThrottleManager DCC par
+d&eacute;faut. La premi&egrave;re utilisation alloue le
+r&eacute;gulateur, et tous les post&eacute;rieurs utilisent les
+attributs pr&eacute;sents:
+      <pre>
+<code>&lt;xmlio&gt;
+    &lt;throttle&gt;
+        &lt;adresse&gt; 1234&lt;/address&gt;
+  &lt;vitesse&gt; 0,75&lt;/vitesse&gt;
+  &lt;forward&gt; true&lt;/forward&gt;
+  &lt;F3&gt; False&lt;/F3&gt;
+   &lt;/throttle&gt;
+&lt;/Xmlio&gt;
+</code>
+</pre><code>Un &eacute;l&eacute;ment r&eacute;gulateur est
+retourn&eacute; inchang&eacute;.</code>
+
+      <h2><code>Documents associ&eacute;s</code></h2><code>C.F. K H
+      Wolf, K Froitzheim, M Weber, Department of Distributed
+      Systems, Universit&eacute; d'Ulm, "Interactive Video and
+      Remote Control via the World Wide Web", dans "Lecture Notes
+      in Computer Science", Springer, Berlin, 1996.<br>
+      Auparavant dans le volume 7, num&eacute;ro 5 de "M&auml;rklin
+      Digital Newsletter", Dr T. Catherall Ed, Septembre/Octobre
+      1995, <a href=
+      "http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/">
+      Page r&eacute;f&eacute;renc&eacute;e</a> <a href=
+      "http://rr.informatik.tu-freiberg.de/index.php?con=home&amp;sel=&amp;lang=eng&amp;js=1&amp;">
+      r&eacute;h&eacute;berg&eacute;e</a>. 
+      <!--#include virtual="/Footer" --></code>
+    </div>
+  </div>
+</body>
+</html>

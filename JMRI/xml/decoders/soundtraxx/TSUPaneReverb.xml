@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami                       -->
+<!-- version 2 - Additional items for SoundTraxx Tsunami2                   -->
+<!-- version 3 - Additional items for SoundTraxx Tsunami2 SW version 1.2    -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <label>
+        <text>REVERB CONTROLS AND MIXER</text>
+        <text xml:lang="it">CONTROLLO RIVERBERO E MIXER</text>
+      </label>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Reverb Control"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <row>
+          <display item="Reverb Output Level" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb Output Level" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb Delay" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb Delay" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb Gain" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb Gain" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Whistle Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Whistle Reverb Level" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Bell Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Bell Reverb Level" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Exhaust Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Exhaust Reverb Level" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Air Pump Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Air Pump Reverb Level" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Prime Mover 3 Reverb Level" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Prime Mover 3 Reverb Level" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="Reverb166" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb166" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb167" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb167" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb168" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb168" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb169" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb169" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+      </column>
+      <column>
+        <row>
+          <display item="Reverb170" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb170" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb171" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb171" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb172" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb172" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb173" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb173" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb174" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb174" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb175" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb175" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb176" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb176" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb177" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb177" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb178" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb178" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb179" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb179" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb180" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb180" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb181" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb181" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+      </column>
+      <column>
+        <row>
+          <display item="Reverb182" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb182" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb185" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb185" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb186" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb186" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb187" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb187" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb188" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb188" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb189" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb189" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb190" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb190" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb191" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb191" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb192" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb192" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+      </column>
+      <column>
+        <row>
+          <display item="Reverb200" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb200" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb201" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb201" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb202" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb202" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb203" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb203" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb204" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb204" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb205" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb205" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb206" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb206" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb207" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb207" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb208" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb208" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+        <row>
+          <display item="Reverb209" layout="above" label=""/>
+          <label><text> </text></label>
+          <display item="Reverb209" layout="above" format="hslider"/>
+        </row>
+          <label><text> </text></label>
+      </column>
+    </row>
+  </column>
+  <name>Reverb</name>
+  <name xml:lang="it">Riverbero</name>
+</pane>

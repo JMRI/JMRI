@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec 2016/06/12-->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Add/Edit Actions</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help Transit Special Actions"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Ajouter/&eacute;diter Action</h1>
+
+      <h2>La fen&ecirc;tre Ajouter/Modifier Action</h2>
+
+      <p>Les <b><a href="ViewSpecialActions.shtml">Actions</a></b>
+      sont des t&acirc;ches qui peuvent &ecirc;tre lanc&eacute;es
+      automatiquement comme un train qui traverse en mode
+      automatique le r&eacute;seau. La fen&ecirc;tre
+      Ajouter/Modifier action (voir ci-dessous pour la
+      version"Ajouter") pr&eacute;voit la cr&eacute;ation d'actions
+      nouvelles et pour l'&eacute;dition des actions en cours. La
+      version &Acirc;&laquo;Modifier&Acirc;&raquo; de cette
+      fen&ecirc;tre est la m&ecirc;me que celle montr&eacute;e
+      ci-dessous, &agrave; l'exception du bouton <b>Cr&eacute;er
+      Nouvelle action</b> qui est est remplac&eacute; par un bouton
+      <b>Mise &agrave; Jour Action</b>et les s&eacute;lections et
+      donn&eacute;es sont remplies par les valeurs actuelles de
+      l'action en cours d'&eacute;dition.</p><img src=
+      "AddEditAction.jpg" height="236" width="307">
+
+      <p>Une action est d&eacute;finie en sp&eacute;cifiant
+      <b>Quelle</b> action est demand&eacute;e et
+      <b>Quand</b>l'action doit &ecirc;tre engag&eacute;e.</p>
+
+      <p>Pour sp&eacute;cifier la partie <b>Quand</b>,
+      s&eacute;lectionnez une option dans le menu contextuel
+      <b>Quand</b>, et remplir toutes les donn&eacute;es qui
+      pourraient &ecirc;tre n&eacute;cessaires. Les Champs
+      d'&eacute;l&eacute;ment de donn&eacute;es ou de menus
+      appara&icirc;tront lorsque l'&eacute;l&eacute;ment qui en a
+      besoin est s&eacute;lectionn&eacute;. Chaque
+      &eacute;l&eacute;ment de donn&eacute;es est fourni avec une
+      description textuelle (bulle d'aide) qui peut &ecirc;tre
+      appel&eacute;e en pointant le curseur sur
+      l'&eacute;l&eacute;ment. Chaque option <b>Quand</b> est
+      d&eacute;crite plus en d&eacute;tail dans <b><a href=
+      "ViewSpecialActions.shtml">Actions</a></b>.</p>
+
+      <p>Un retard optionnel, sp&eacute;cifi&eacute; en
+      millisecondes, est disponible pour chaque option <b>Quand</b>
+      . Aucun retard est un d&eacute;faut. Si un d&eacute;lai
+      optionnel n'est pas entr&eacute; (ou un temporisation
+      z&eacute;ro est entr&eacute;e), l'action sera lanc&eacute;e
+      imm&eacute;diatement apr&egrave;s le <i>quand</i>
+      l'&eacute;v&eacute;nement se soit produit. Si un d&eacute;lai
+      est sp&eacute;cifi&eacute;, le programme attendra pendant le
+      temps sp&eacute;cifi&eacute; apr&egrave;s le <i>quand</i>
+      l'&eacute;v&eacute;nement se soit produit avant d'initier
+      l'action.</p>
+
+      <p>Pour sp&eacute;cifier <b>Quelle</b> action est
+      demand&eacute;e, s&eacute;lectionner une option dans le menu
+      contextuel <b>Quelle</b> , et remplir toutes les
+      donn&eacute;es qui pourraient &ecirc;tre n&eacute;cessaires.
+      Les Champs d'&eacute;l&eacute;ment de donn&eacute;es
+      appara&icirc;tront lorsque l'&eacute;l&eacute;ment qui en a
+      besoin est s&eacute;lectionn&eacute;. Chaque
+      &eacute;l&eacute;ment de donn&eacute;es est fourni avec une
+      description textuelle (bulle d'aide) qui peut &ecirc;tre
+      appel&eacute;e en pointant le curseur sur
+      l'&eacute;l&eacute;ment. Chaque <b>Quelle</b> action est
+      d&eacute;crite plus en d&eacute;tail dans <b><a href=
+      "ViewSpecialActions.shtml">Actions</a></b>.</p>
+
+      <p>Quand l'action est compl&egrave;tement d&eacute;finie
+      cliquez sur le bouton <b>Cr&eacute;er une Nouvelle Action</b>
+      (ou le bouton <b>Mise &agrave; Jour Action</b> si
+      &eacute;dition en cours). Toutes les donn&eacute;es
+      n&eacute;cessaires seront valid&eacute;es. Si un
+      probl&egrave;me est d&eacute;tect&eacute;, un message
+      appara&icirc;tra, et la fen&ecirc;tre Ajouter/&eacute;diter
+      Actions restera pour permettre la correction du
+      probl&egrave;me. Si tout est v&eacute;rifi&eacute;, la
+      fen&ecirc;tre Ajouter/&eacute;diter action va
+      dispara&icirc;tre et les actions(nouvelles ou
+      modifi&eacute;es) appara&icirc;tront dans la fen&ecirc;tre
+      <b>Voir Actions</b>.</p>
+
+      <p>Cliquez sur le bouton <b>Annuler</b> pour refermer la
+      fen&ecirc;tre Ajouter/Modifier l'Action, sans cr&eacute;er
+      une nouvelle action ou sans achever le montage d'une action
+      existante . La fermeture de la fen&ecirc;tre Ajouter/Modifier
+      l'Action &eacute;quivaut &agrave; cliquer sur le bouton
+      <b>Annuler</b>.</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

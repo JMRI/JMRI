@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Configure Digitrax PM4</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help configure loconet PM4">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Configure Digitrax PM4x</h1><a href=
+      "PM4xConfigTool.png"><img src="PM4xConfigTool.png" alt=
+      "PM4x Configuration Tool Screen Capture"></a>
+
+      <p>The JMRI PM4x programming tool lets you configure the
+      internal options of a PM4 or PM42 directly from your
+      computer.</p>
+
+      <p>To open this tool from the JMRI start page select the
+      LocoNet tab then find the tool on the drop down list.</p>
+
+      <p>To use it, you put the address of a PM4x board in the text
+      field and click "Read from PM4x". The tool will read back the
+      current state of the various options, and set the check boxes
+      to correspond to their current values.</p>
+
+      <p>You can then, if you wish, change the checkboxes and click
+      "Write to PM4x" to make your changes permanent.</p>
+
+      <h2>Limitations</h2>
+
+      <ul>
+        <li>This tool is able to access PM4x boards with addresses
+        between 1 and 256. Users are advised to avoid using the
+        factory default board address (board address 1) as it will
+        be difficult to program new boards with unique data if any
+        in-service board is using the factory default board
+        address.</li>
+
+        <li>Because of the way the PM4x board works, this tool
+        can't change the basic address of the unit. The PM4x
+        documentation describes how to change the board
+        address.</li>
+      </ul>
+
+      <h2>See Also</h2>
+
+      <p>Documentation for the PM4 and PM42 can be found at the
+      <a href="http://www.digitrax.com">Digitrax Web Site.</a></p>
+    </div>
+  </div><!--#include virtual="/Footer" -->
+</body>
+</html>

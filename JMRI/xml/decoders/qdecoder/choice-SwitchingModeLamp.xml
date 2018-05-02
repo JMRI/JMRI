@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+  <!-- Switching modes common to all standard decoders  -->
+  <enumChoice choice="[0]" value="0">
+		<choice>[0]  Not Used</choice>
+		<choice xml:lang="de">[0]  Nicht benutzt</choice>
+  </enumChoice>
+  <enumChoice choice="[1]" value="1">
+		<choice>[1]  Permanent Off/ON (normal)</choice>
+		<choice xml:lang="de">[1]  Dauerbetrieb (Ruhezustand aus)</choice>
+  </enumChoice>
+  <enumChoice choice="[2]" value="2">
+		<choice>[2]  2 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[2]  2 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[3]" value="3">
+		<choice>[3]  3 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[3]  3 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[4]" value="4">
+		<choice>[4]  4 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[4]  4 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[5]" value="5">
+		<choice>[5]  5 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[5]  5 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[6]" value="6">
+		<choice>[6]  6 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[6]  6 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[7]" value="7">
+		<choice>[7]  7 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[7]  7 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[8]" value="8">
+		<choice>[8]  8 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[8]  8 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[9]" value="9">
+		<choice>[9]  9 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[9]  9 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[10]" value="10">
+		<choice>[10] 10 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[10] 10 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[11]" value="11">
+		<choice>[11] 11 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[11] 11 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[12]" value="12">
+		<choice>[12] 12 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[12] 12 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[13]" value="13">
+		<choice>[13] 13 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[13] 13 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[14]" value="14">
+		<choice>[14] 14 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[14] 14 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[15]" value="15">
+		<choice>[15] 15 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[15] 15 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[16]" value="16">
+		<choice>[16] 16 Lamps/LEDs/Aspects</choice>
+		<choice xml:lang="de">[16] 16 Lampen/LEDs/-begriffig</choice>
+  </enumChoice>
+  <enumChoice choice="[17]" value="17">
+		<choice>[17] Permanent ON/Off (inverted)</choice>
+		<choice xml:lang="de">[17] Dauerbetrieb (Ruhezustand an)</choice>
+  </enumChoice>
+  <enumChoice choice="[18]" value="18">
+		<choice>[18] Blinking</choice>
+		<choice xml:lang="de">[18] Blinkbetrieb</choice>
+  </enumChoice>
+  <enumChoice choice="[19]" value="19">
+		<choice>[19] DB Hp 3-Aspects</choice>
+		<choice xml:lang="de">[19] DB Hp 3-begriffig</choice>
+  </enumChoice>
+</enumChoiceGroup>

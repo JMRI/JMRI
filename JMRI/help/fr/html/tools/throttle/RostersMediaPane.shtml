@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Herv&#233; le 2011-09-28-->
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Rosters Media Pane</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project">
+  <meta name="Keywords" content="JMRI">
+  <meta name="Author" content="Lionel Jeanson">
+  <meta name="Language" content="fr">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>R&eacute;glage des Listes Images et des
+      Ic&ocirc;nes</h1><img src="images/DecProRosterMediaPane.png"
+      alt=""><br>
+      <br>
+      Le volet liste des m&eacute;dias est accessible lorsque vous
+      utiliseze DecoderPro en mode avanc&eacute;.<br>
+      <br>
+      <img src="images/DecProAdvancedMode.png" alt=""><br>
+      <br>
+
+      <h2>Entr&eacute;e d'Image</h2>La suppression d'un fichier
+      image dans le cadre int&eacute;rieur mettra &agrave; jour
+      cette entr&eacute;e (il doit &ecirc;tre un fichier image,
+      donc apr&egrave;s avoir cherch&eacute; sur le web pour une
+      image que vous voulez, de l'enregistrer sur le bureau, puis
+      d&eacute;poser le fichier dans l'entr&eacute;e,
+      (d&eacute;poser le contenu des images directement &agrave;
+      partir de la fen&ecirc;tre du navigateur ne fonctionne
+      pas).<br>
+      <br>
+      Le bouton Supprimer supprime l'entr&eacute;e d'image en
+      entr&eacute;e de la liste actuelle.<br>
+      <br>
+      Liste des images sont stock&eacute;es dans &lt;dossier JMRI
+      Pr&eacute;f&eacute;rences &gt;/ressources. Lorsque l'image
+      est mise &agrave; jour ou retir&eacute;e de la liste, le
+      fichier image n'est pas retir&eacute; de son stockage dans
+      &lt;dossier JMRI Pr&eacute;f&eacute;rences
+      &gt;/ressources.<br>
+      <br>
+      l'entr&eacute;e d'Image est utilis&eacute;e comme un fond
+      pour <a href="ThrottlesPreferencesPane.shtml">les limites
+      JMRI lorsque cette option est activ&eacute;e</a>.<br>
+      <br>
+
+      <h2>Ic&ocirc;ne d'Entr&eacute;e</h2>D&eacute;poser un fichier
+      image  dans le cadre int&eacute;rieur mettra &agrave; jour
+      cette entr&eacute;e (il doit &ecirc;tre un fichier image,
+      donc apr&egrave;s avoir cherch&eacute; sur le web pour une
+      image qui vous pla&icirc;t, enregistrez-la sur le bureau,
+      puis d&eacute;poser le fichier dans l' entr&eacute;e, laisser
+      d&eacute;poser le contenu des images directement &agrave;
+      partir de fen&ecirc;tre du navigateur ne fonctionnera pas
+      ).<br>
+      .<br>
+      Le bouton Supprimer supprime l'entr&eacute;e dans
+      l'entr&eacute;e liste Ic&ocirc;ne actuelle.<br>
+      <br>
+      Liste des ic&ocirc;nes estt stock&eacute;es dans &lt; dossier
+      JMRI Pr&eacute;f&eacute;rences&gt;/ressources. Lorsque
+      l'ic&ocirc;ne est mise &agrave; jour ou supprim&eacute;e de
+      la liste, le fichier image n'est pas retir&eacute; de son
+      stockage dans &lt;dossier JMRI
+      Pr&eacute;f&eacute;rences&lt;/ressources.<br>
+      <br>
+      L'entr&eacute;e ic&ocirc;ne est utilis&eacute; dans diverses
+      zones de liste d&eacute;roulante Liste de JMRI, et dans la
+      <a href="ThrottlesListWindow.shtml">Liste des fen&ecirc;tres
+      R&eacute;gulateurs</a> .<br>
+      <br>
+      Il est recommand&eacute; d'utiliser des images GIF ou PNG
+      avec un fond transparent et d'avoir les images
+      tourn&eacute;es afin que la t&ecirc;te de locomotive soit
+      &agrave; la droite. Cela permettra de faciliter les
+      transformations de l'image dans des applications plus
+      tard.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">Remarque: un moyen facile
+      de trouver des ic&ocirc;nes est &agrave; la recherche pour
+      "train GIF" ou regarder des ressources li&eacute;e &agrave;
+      la circulation "<a href=
+      "http://www.fsz.bme.hu/traffic/indexe.htm">Screensaver</a>
+      "dans votre moteur de recherche Internet
+      pr&eacute;f&eacute;r&eacute;".</span><br>
+
+      <h2>R&eacute;f&eacute;rence Web</h2>Cette entr&eacute;e est
+      d&eacute;di&eacute;e &agrave; stocker une URL, ici je joint
+      au Wikip&eacute;dia pour un prototype de liste.<br>
+      <br>
+
+      <h1>fonction &eacute;tiquettes Liste</h1><img src=
+      "images/DecProFunctionLabels.png" alt=""><br>
+      <br>
+      Il est &eacute;galement recommand&eacute; de remplir les
+      &eacute;tiquettes de fonction des entr&eacute;es dans le
+      volet &eacute;tiquettes Fonction de DecoderPro
+      (&eacute;galement accessible &agrave; partir du mode
+      Avanc&eacute;). Ces entr&eacute;es seront
+      r&eacute;utilis&eacute;es par le Groupe Fonction <a href=
+      "BasicThrottleWindow.shtml">dans les fen&ecirc;tres
+      R&eacute;gulateurs</a> .<br>
+      <br>
+      Il y a une option pour les Limite JMRI qui montrera les
+      boutons Fonction R&eacute;gulateur <a href=
+      "ThrottlesPreferencesPane.shtml">s uniquement pour une
+      entr&eacute;e qui est d&eacute;finie ici</a> .<br>
+      <br>
+      <br>
+      Vous pouvez &eacute;galement jeter un oeil &agrave;
+      Jynstruments pour le bouton de fonction avanc&eacute;e.<br>
+      <br>
+    </div><!--#include virtual="/Footer" -->
+  </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!-- Defines XML documenting a car roster -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (options | cars | roadNames | carTypes | carColors | carLengths | carOwners | kernels | loads
+| roads | types | colors | lengths | owners | newKernels)*>
+
+<!ELEMENT roadNames (#PCDATA)>
+<!ELEMENT carTypes (#PCDATA)>
+<!ELEMENT carColors (#PCDATA)>
+<!ELEMENT carLengths (#PCDATA)>
+<!ELEMENT carOwners (#PCDATA)>
+<!ELEMENT kernels (#PCDATA)>
+
+<!ELEMENT options (carsOptions | carEditOptions)*>
+<!ELEMENT carsOptions EMPTY>
+<!ELEMENT carEditOptions EMPTY>
+
+<!ELEMENT cars (car*)>
+<!ELEMENT car EMPTY>
+
+<!ATTLIST car id					CDATA #REQUIRED>          
+<!ATTLIST car roadNumber			CDATA #IMPLIED>
+<!ATTLIST car roadName				CDATA #IMPLIED>       
+<!ATTLIST car type					CDATA #IMPLIED> 
+<!ATTLIST car color					CDATA #IMPLIED> 
+<!ATTLIST car length				CDATA #IMPLIED>
+<!ATTLIST car weight				CDATA #IMPLIED>
+<!ATTLIST car weightTons			CDATA #IMPLIED>
+<!ATTLIST car built					CDATA #IMPLIED>                                     
+<!ATTLIST car location				CDATA #IMPLIED>
+<!ATTLIST car locationId			CDATA #IMPLIED>    
+<!ATTLIST car secLocationId			CDATA #IMPLIED> 
+<!ATTLIST car secDestinationId		CDATA #IMPLIED> 
+<!ATTLIST car destination			CDATA #IMPLIED> 
+<!ATTLIST car destinationId			CDATA #IMPLIED> 
+<!ATTLIST car routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST car routeDestinationId	CDATA #IMPLIED> 
+<!ATTLIST car routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST car lastRouteId			CDATA #IMPLIED> 
+<!ATTLIST car kernel				CDATA #IMPLIED> 
+<!ATTLIST car load					CDATA #IMPLIED> 
+<!ATTLIST car nextLoad				CDATA #IMPLIED> 
+<!ATTLIST car wait					CDATA #IMPLIED>
+<!ATTLIST car nextWait				CDATA #IMPLIED>
+<!ATTLIST car nextDestId			CDATA #IMPLIED> 
+<!ATTLIST car nextDestTrackId		CDATA #IMPLIED> 
+<!ATTLIST car previousNextDestId	CDATA #IMPLIED> 
+<!ATTLIST car previousNextDestTrackId	CDATA #IMPLIED> 
+<!ATTLIST car rweDestId				CDATA #IMPLIED> 
+<!ATTLIST car rweDestTrackId		CDATA #IMPLIED>
+<!ATTLIST car scheduleId			CDATA #IMPLIED> 
+<!ATTLIST car previousScheduleId	CDATA #IMPLIED> 
+<!ATTLIST car leadKernel			(true | false ) "false"> 
+<!ATTLIST car passenger				(true | false ) "false"> 
+<!ATTLIST car caboose				(true | false ) "false"> 
+<!ATTLIST car fred					(true | false ) "false"> 
+<!ATTLIST car utility				(true | false ) "false"> 
+<!ATTLIST car hazardous				(true | false ) "false"> 
+<!ATTLIST car locUnknown			(true | false ) "false"> 
+<!ATTLIST car outOfService			(true | false ) "false">
+<!ATTLIST car loadFromStaging		(true | false ) "false">
+<!ATTLIST car train					CDATA #IMPLIED>  
+<!ATTLIST car trainId				CDATA #IMPLIED>
+<!ATTLIST car owner					CDATA #IMPLIED>  
+<!ATTLIST car moves					CDATA #IMPLIED>                    
+<!ATTLIST car comment				CDATA #IMPLIED>
+<!ATTLIST car value					CDATA #IMPLIED>
+<!ATTLIST car rfid					CDATA #IMPLIED>
+<!ATTLIST car order					CDATA #IMPLIED>
+<!ATTLIST car lastLocationId		CDATA #IMPLIED>
+<!ATTLIST car date					CDATA #IMPLIED>
+<!ATTLIST car selected				(true | false ) "false">
+<!ATTLIST car rweLoad				CDATA #IMPLIED>
+<!ATTLIST car blocking				CDATA #IMPLIED>
+<!ATTLIST car pickupId				CDATA #IMPLIED>
+<!ATTLIST car nextPickupId			CDATA #IMPLIED>
+
+<!ELEMENT loads (defaults | load*)*>
+<!ELEMENT defaults EMPTY>
+<!ELEMENT load (carLoad*)>
+<!ELEMENT carLoad EMPTY>
+
+<!ATTLIST defaults empty			CDATA #IMPLIED> 
+<!ATTLIST defaults load				CDATA #IMPLIED> 
+
+<!ATTLIST load type					CDATA #IMPLIED> 
+<!ATTLIST load names				CDATA #IMPLIED> 
+
+<!ATTLIST carLoad name				CDATA #IMPLIED>
+<!ATTLIST carLoad loadType			CDATA #IMPLIED> 
+<!ATTLIST carLoad priority			CDATA #IMPLIED>
+<!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
+<!ATTLIST carLoad dropComment		CDATA #IMPLIED>
+
+<!ELEMENT roads (road*)*>
+<!ELEMENT road EMPTY>
+<!ATTLIST road name					CDATA #IMPLIED> 
+
+<!ELEMENT types (type*)*>
+<!ELEMENT type EMPTY>
+<!ATTLIST type name					CDATA #IMPLIED> 
+
+<!ELEMENT colors (color*)*>
+<!ELEMENT color EMPTY>
+<!ATTLIST color name				CDATA #IMPLIED> 
+
+<!ELEMENT lengths (length*)*>
+<!ELEMENT length EMPTY>
+<!ATTLIST length value				CDATA #IMPLIED> 
+
+<!ELEMENT owners (owner*)*>
+<!ELEMENT owner EMPTY>
+<!ATTLIST owner name				CDATA #IMPLIED> 
+
+<!ELEMENT newKernels (kernel*)*>
+<!ELEMENT kernel EMPTY>
+<!ATTLIST kernel name				CDATA #IMPLIED> 

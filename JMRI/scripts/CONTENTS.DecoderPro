@@ -1,0 +1,29 @@
+Contents of this folder:
+
+	README				Installation and operation instructions
+	COPYING				Software license  (See also below)
+	CONTENTS			This file
+	
+	Decoder Pro			Macintosh Classic Application
+	Decoder Pro X		Mac OS X Application (some systems will show as Decoder Pro X.app)
+	DecoderPro.bat		Application start script for Windows
+	DecoderProDebug.bat	Application start script for Windows with debug window
+	DecoderPro.csh		Application start script for Linux
+	DecoderPro.CMD		Application start script for OS/2
+	
+	lib				    folder of needed resources
+	xml				    folder of configuration files provided with the distribution
+	prefs			    folder of preference and configuration files created by the program
+	
+	DecoderPro.jar	    The program in executable form
+	default.lcf		    Logging control file
+	
+	javax.comm.properties	Configures Windows systems for communication
+	win32com.dll			Windows communications library
+	
+
+The entire contents of the folder are copyright their respective authors, 
+2000-2002, and all rights are reserved except as described in the "COPYING" 
+file.  For more information, please see http://jmri.org/ and 
+http://jmri.org/PaneProg/
+

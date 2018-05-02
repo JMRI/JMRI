@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://openlcb.org/trunk/prototypes/xml/xslt/cdi.xsl"?>
+<cdi xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://openlcb.org/trunk/specs/schema/cdi.xsd">
+    <identification>
+        <manufacturer>Mustangpeak</manufacturer>
+        <model>DN100</model>
+        <hardwareVersion>1.0</hardwareVersion>
+        <softwareVersion>1.0</softwareVersion>
+        <map>
+            <relation>
+                <property>Description</property>
+                <value>Mustangpeak Database Train Node</value>
+            </relation>
+            <relation>
+                <property>Status</property>
+                <value>Prototype</value>
+            </relation>
+        </map>
+    </identification>
+    <acdi fixed="1" var="1"/>
+    <segment origin="0" space="253">
+        <name>User Custom Information</name>
+        <description>Use these fields for any user data you desire</description>
+        <group offset="1">
+            <name>User Data</name>
+            <description>Add your own unique node info here</description>
+            <string size="63">
+                <name>User Name</name>
+            </string>
+            <string size="64">
+                <name>User Description</name>
+            </string>
+        </group>
+    </segment>
+    <segment origin="128" space="253">
+        <name>Database Train Information</name>
+        <description>User definable information to uniquely identify this Train</description>
+        <group>
+            <name>Locomotive Specific Information</name>
+            <string size="32">
+                <name>Road Name</name>
+            </string>
+            <string size="32">
+                <name>Loco Class</name>
+            </string>
+            <string size="32">
+                <name>Road Number</name>
+            </string>
+            <string size="32">
+                <name>Train Name</name>
+            </string>
+        </group>
+        <group>
+            <name>Model Specific Information</name>
+            <description>Enter the user information to describe this model</description>
+            <string size="32">
+                <name>Manufacturer</name>
+            </string>
+            <string size="32">
+                <name>Owner</name>
+            </string>
+        </group>
+        <group>
+            <name>NMRA DCC Specific Information</name>
+            <int size="2">
+                <name>NMRA DCC Address</name>
+                <description>Enter the NMRA DCC address for the Train</description>
+            </int>
+            <int size="1">
+                <map>
+                    <description>Select the NMRA DCC address type</description>
+                    <relation>
+                        <property>0</property>
+                        <value>Short Address</value>
+                    </relation>
+                    <relation>
+                        <property>1</property>
+                        <value>Long Address</value>
+                    </relation>
+                </map>
+            </int>
+            <int size="1">
+                <map>
+                    <description>Select the NMRA DCC Speed Steps</description>
+                    <relation>
+                        <property>14</property>
+                        <value>14 Step</value>
+                    </relation>
+                    <relation>
+                        <property>28</property>
+                        <value>28 Step</value>
+                    </relation>
+                    <relation>
+                        <property>128</property>
+                        <value>128 Step</value>
+                    </relation>
+                </map>
+            </int>
+        </group>
+        <group>
+            <name>Function and Decoder Information Assignments</name>
+            <description>URLs that point to the Function Definition File (FDI) and Train Definition File (TDI) used by this Train</description>
+            <string size="512">
+                <name>FDI</name>
+                <description>Enter the URL to the Function Definition Resource for this Train</description>
+            </string>
+            <string size="512">
+                <name>TDI</name>
+                <description>Enter the URL to the Train Definition Resource for the Train</description>
+            </string>
+        </group>
+    </segment>
+    <segment origin="0" space="252">
+        <name/>
+        <group>
+            <name>Manufacturer Information</name>
+            <description>Manufacturer-provided fixed node description</description>
+            <int size="1">
+                <name>Version</name>
+            </int>
+            <string size="12">
+                <name>Manufacturer Name</name>
+            </string>
+            <string size="6">
+                <name>Manufacturer Info</name>
+            </string>
+            <string size="4">
+                <name>Hardware Version</name>
+            </string>
+            <string size="4">
+                <name>Software Version</name>
+            </string>
+        </group>
+    </segment>
+    <segment origin="0" space="251">
+        <name/>
+        <group offset="0">
+            <name>User Data</name>
+            <description>Add your own unique node info here</description>
+            <int size="1">
+                <name>Version</name>
+            </int>
+            <string size="63">
+                <name>User Name</name>
+            </string>
+            <string size="64">
+                <name>User Description</name>
+            </string>
+        </group>
+    </segment>
+</cdi>

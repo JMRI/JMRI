@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Translated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12 -->
+
+  <title>JMRI: Signal Group Table</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <h1>JMRI: Entr&eacute;e/Sortie (NX)</h1>
+
+    <h2>Pr&eacute;sentation</h2>Le syst&egrave;me Entr&eacute;e
+    Sortie utilise des capteurs affect&eacute;s &agrave; bloquer
+    les fronti&egrave;res dans l'&eacute;diteur de mise en page
+    pour d&eacute;finir un itin&eacute;raire entre les deux
+    endroits sur l'&eacute;diteur de r&eacute;seau lorsque les
+    capteurssont activ&eacute;s dans l'ordre correct. Ces deux
+    capteurs sont mentionn&eacute;es comme la paire NX .
+
+    <p><b>Limites de Cantons</b> Les Capteurs, comme les signaux (
+    soit des t&ecirc;tes ou des m&acirc;ts ), devraient &ecirc;tre
+    ajout&eacute;s aux limites de Cantons. Pour ce faire, si vous
+    faites un clic droit sur le "point d'ancrage" entre deux
+    segments de voie, si cet endroit est un point limite (c'est
+    &agrave; dire un Canton diff&eacute;rent de chaque
+    c&ocirc;t&eacute;), puis vous obtiendrez l'option dans le menu
+    pour d&eacute;finir les signaux, capteurs ou M&acirc;ts Signal
+    . Que celasoit ensuite associer cet &eacute;l&eacute;ment
+    &agrave; cet emplacement particulier sur le r&eacute;seau.<br>
+    La fen&ecirc;tre qui s'ouvre vous permet d'assigner l'objet
+    &agrave; travailler dans une direction particuli&egrave;re (ou
+    la protection d'un certain Canton).</p>
+
+    <p>Il ya trois types diff&eacute;rents d'entr&eacute;e/sortie
+    qui peut &ecirc;tre configur&eacute; .</p>
+
+    <ul>
+      <li>L'aiguillage seulement</li>
+
+      <li>Aiguillage et Logique M&acirc;t Signal</li>
+
+      <li>Verrouillage complet</li>
+    </ul>
+
+    <p><b>L'aiguillage seulement</b> Avec un aiguillage seulement,
+    la paire NX ne permet de r&eacute;gler les aiguillages &agrave;
+    l'&eacute;tat correct que pour cet itin&eacute;raire. Si un
+    Canton est d&eacute;j&agrave; montr&eacute; comme occup&eacute;
+    ou r&eacute;serv&eacute; dans cet itin&eacute;raire, une seule
+    alternative est disponible, l'itin&eacute;raire alternatif sera
+    fix&eacute;, sinon l'itin&eacute;raire ne sera pas
+    d&eacute;fini.</p>
+
+    <p><b>Aiguillage et Logique M&acirc;t Signal</b> Cette option
+    comprend ce qui est couvert par "l'Aiguillage Seulement" et
+    &eacute;galement g&eacute;n&eacute;rerera la Logique M&acirc;t
+    Signal pour cet itin&eacute;raire. La logique comprendra les
+    &eacute;tats des aiguillage et les Cantons qui se trouvent dans
+    cet itin&eacute;raire. Pour que cela fonctionne, les M&acirc;ts
+    Signal doivent &eacute;galement &ecirc;tre plac&eacute;s aux
+    m&ecirc;mes points limites que les capteurs qui travaillent
+    dans la m&ecirc;me direction. La Logique M&acirc;t Signal
+    restera pendant toute la dur&eacute;e de la session
+    d'exploitation, mais elle n'est pas enregistr&eacute;e et sera
+    recr&eacute;&eacute; la prochaine fois que le panneau sera
+    ouvert .<br>
+    Quand il n'y a pas d'itin&eacute;raire de d&eacute;fini alors
+    le M&acirc;t Signal sera plac&eacute; dans un &eacute;tat
+    maintenu .<br></p>
+
+    <p><b>Verrouillage Complet</b> &ccedil;a couvre les m&ecirc;mes
+    choses que les deux autres articles ci-dessus. En outre, il y
+    aura &eacute;galement "r&eacute;servation" ou "blocage" de
+    chaque Canton dans l'itin&eacute;raire de sorte qu'aucun autre
+    itin&eacute;raire incompatible ne peut &ecirc;tre
+    d&eacute;fini. Si la d&eacute;tection d'occupation de Canton
+    est utilis&eacute;e, le parcours sera automatiquement
+    interrompu. Si aucune occupation de Canton n'est
+    utilis&eacute;e, il est possible d'effacer manuellement
+    l'itin&eacute;raire en s&eacute;lectionnant la paire NX
+    correspondant, il laissera le dernier Canton montr&eacute;
+    comme occup&eacute;, comme si le train a parcouru l'
+    itin&eacute;raire et &eacute;tait maintenant en place en
+    attente du signal suivant.<br>
+    S'il n'y a pas de M&acirc;ts Signal configur&eacute;s entre la
+    paire NX, puis l'itin&eacute;raire sera encore d&eacute;fini et
+    r&eacute;serv&eacute;, mais aucune logique M&acirc;t Signal ne
+    sera g&eacute;n&eacute;r&eacute;e.<br>
+    Le parcours restera actif jusqu'&agrave; ce que le train ait
+    travers&eacute; les cantons et que ceux-ci sient revenus
+    &agrave; un &eacute;tat inoccup&eacute;, l'itin&eacute;raire a
+    &eacute;t&eacute; effac&eacute; manuellement, ou a
+    &eacute;t&eacute; annul&eacute;e.</p>
+
+    <h2>Entr&eacute;e/Sortie Window (NX)</h2>De cette
+    fen&ecirc;tre, vous pouvez cr&eacute;er et supprimer les paires
+    d'Entr&eacute;e Sortie paires pour un panneau de TCO
+    donn&eacute;
+
+    <p>Vous devez d'abord assigner des d&eacute;tecteurs aux
+    limites de Cantons dans l'&eacute;diteur de r&eacute;seau,
+    &agrave; l'aide de la fen&ecirc;tre pop-up sur les limites de
+    Cantons, les aiguillages ou les Croisements. Ces capteurs
+    agissent comme des boutons de s&eacute;lection NX .</p>
+
+    <p>Dans la fen&ecirc;tre Entr&eacute;e Sortie,
+    s&eacute;lectionnez le panneau de TCO sur lequel vous
+    travaillez, vous pouvez alors s&eacute;lectionner manuellement
+    la source et la paire de capteurs de destination, ou tout le
+    syst&egrave;me de d&eacute;tection automatique de tous les
+    chemins valides, en appuyant sur le bouton "
+    G&eacute;n&eacute;rer automatiquement paires Entr&eacute;e
+    Sortie".</p>
+
+    <p>Le r&eacute;sultat sera rempli dans le tableau en dessous du
+    bouton.</p>
+
+    <p>La d&eacute;couverte automatique d&eacute;couvrira seulement
+    et pleinement les paires valables pour les capteurs qui
+    prot&egrave;gent efficacement les Cantons qui se trouvent dans
+    la m&ecirc;me direction. Cela signifie &eacute;galement que,
+    pour d&eacute;finir l'itin&eacute;raire &agrave; travers vous
+    devez d'abord d&eacute;finir le champ capteur "Depuis" puis
+    activez le capteur "Vers", si vous voulez &ecirc;tre en mesure
+    de d&eacute;finir l'itin&eacute;raire en s&eacute;lectionnant
+    l'un des capteurs d'abord, alors vous devrez cocher l'option
+    "Les deux Fa&ccedil;ons ". Si le point
+    d'extr&eacute;mit&eacute; est affect&eacute; &agrave; un
+    Heurtoir alors ce ne sera pas possible.</p>
+
+    <p>Il est possible d'ajouter manuellement des paires
+    d'entr&eacute;e sortie pour les capteurs qui sont pour effet la
+    protection des cantons travaillant dans des directions
+    oppos&eacute;es. Ici, vous devrez utiliser le menu
+    d&eacute;roulant des options pour s&eacute;lectionner les
+    emplacements de d&eacute;but et de fin sur un panneau de TCO.
+    Encore une fois, vous pouvez s&eacute;lectionner cette paire
+    pour &ecirc;tre "les Deux Fa&ccedil;ons" de travailler .</p>
+
+    <p>Pour les aiguillages, vous devez cliquer droit sur le cercle
+    au centre, l&agrave; encore cela va mettre en place les
+    m&ecirc;mes options pour d&eacute;finir, si il y a des limites
+    Canton pr&eacute;sentes. Sortir Avec un aiguillage, vous pouvez
+    seulement affecter des &eacute;l&eacute;ments qui
+    prot&egrave;gent l'aiguillage dans le Canton, vous ne pouvez
+    pas prot&eacute;ger/attribuer un &eacute;l&eacute;ment &agrave;
+    la sortie d'un aiguillage pour ainsi dire. La m&ecirc;me chose
+    avec les croisements.</p>
+
+    <h3>options</h3><b>Ress&eacute;lection Itin&eacute;raire</b>
+    D&eacute;termine ce qui devrait survenir lorsque la voie NX est
+    &agrave; nouveau s&eacute;lectionn&eacute; par l'utilisateur,
+    les options sont
+
+    <ul>
+      <li>Demander &agrave; l'Utilisateur - Demandez &agrave;
+      l'utilisateur ce qu'il aimerait faire</li>
+
+      <li>Effacer Itin&eacute;raire - effacer automatiquement de
+      l'itin&eacute;raire</li>
+
+      <li>Annuler Itin&eacute;raire - Annuler
+      l'Itin&eacute;raire</li>
+    </ul>
+
+    <p><b>Couleur initiale du chemin Tandis que l'itin&eacute;raire
+    est configur&eacute;</b> Alors que l'Itin&eacute;raire est en
+    cours de configuration, d&eacute;finissez la couleur de la voie
+    pour que dans le menu d&eacute;roulant , apr&egrave;s un temps
+    pr&eacute;d&eacute;termin&eacute; que la voie revienne &agrave;
+    ce qui est d&eacute;fini dans la configuration du Canton.</p>
+
+    <p><b>Dur&eacute;e de la mise en Couleur (ms)</b> Combien de
+    temps la couleur initiale sera affich&eacute; apr&egrave;s que
+    l'itin&eacute;raire initial &eacute;t&eacute;
+    s&eacute;lectionn&eacute; .</p>
+
+    <p><b>Int&eacute;grer avec Dispatcher</b> S&eacute;lectionnez
+    cette option si vous voulez utiliser la voie NX pour prolonger
+    le trajet d'un train actif dans le r&eacute;partiteur, cette
+    option ne fonctionne que si le canton avant l'Itin&eacute;raire
+    NX est attribu&eacute; &agrave; un train actif et que le Canton
+    est &eacute;galement le Canton de fin.</p>
+
+    <h2>Utilisation</h2>
+
+    <p>Une fois que les paires NX ont &eacute;t&eacute;
+    cr&eacute;&eacute;s, vous pouvez d&eacute;finir un
+    itin&eacute;raire en s&eacute;lectionnant simplement le Capteur
+    d'Entr&eacute;e, suivi du Capteur de Sortie, si un chemin
+    d'acc&egrave;s valide peut &ecirc;tre trouv&eacute;,
+    l'Itin&eacute;raire sera mis en place en fonction de la
+    fa&ccedil;on dont il a &eacute;t&eacute; configur&eacute;. Si
+    un verrouillage complet a &eacute;t&eacute; configur&eacute;
+    les capteurs NX resteront actifs .</p>
+
+    <p>Lorsque vous s&eacute;lectionnez un capteur NX, il se met
+    &agrave; clignoter jusqu'&agrave; ce qu'un capteur de sortie
+    valide a &eacute;t&eacute; s&eacute;lectionn&eacute;. Si aucun
+    Capteur de Sortie valide n'a &eacute;t&eacute;
+    s&eacute;lectionn&eacute;, il sera automatiquement
+    annul&eacute; au bout de 30 secondes.</p>
+
+    <p>R&eacute;glage Itin&eacute;raire &Eacute;tendu</p>
+
+    <p>Normalement avec le verrouillage NX, vous devez
+    d&eacute;finir un Itin&eacute;raire jusqu'&agrave; la
+    s&eacute;lection des capteurs d'entr&eacute;e/sortie le long
+    d'un chemin, afin par exemple d'obtenir les'emplacements de A
+    &agrave; D, vous devez d'abord configurer A-B, C-D puis
+    finallement B-C. Toutefois, le syst&egrave;me vous permettra de
+    mettre en place un Itin&eacute;raire directement de A &agrave;
+    D, en s&eacute;lectionnant simplement les capteurs NX A &amp;
+    D, il passera alors passer &agrave; travers et trouvera le
+    meilleur chemin d'acc&egrave;s valide et configurera chaque
+    verrouillage individuellement le long du chemin . <b>Remarque
+    -</b> Si vous annulez ou d&eacute;sactivez un Itin&eacute;raire
+    &Eacute;tendue lorsqu'il est r&eacute;gl&eacute; comme un
+    verrouillage complet (voir ci-dessous), alors vous serez
+    invit&eacute; &agrave; annuler ou effacer chaque verrouillage
+    individuellement. En outre, il n'est pas actuellement possible
+    d'empiler un Itin&eacute;raire &eacute;tendu.</p>
+
+    <h3>Verrouillage complet</h3>
+
+    <p>Lorsque vous utilisez la m&eacute;thode Verrouillage
+    Complet, elle mettra l'accent sur l'Itin&eacute;raire et
+    &eacute;vitera un conflit d'Itin&eacute;raire. En outre, les
+    Capteurs d'Entr&eacute;e et de Sortie restent actifs, pour
+    montrer o&ugrave; le chemin a &eacute;t&eacute; d&eacute;fini
+    en provenance de et &agrave; destination. Une fois que le train
+    est entr&eacute; dans l'Itin&eacute;raire, le capteur
+    d'Entr&eacute;e sera de retour &agrave; l'&eacute;tat inactif,
+    tandis que le capteur de sortie passera deulement inactif si
+    aucun Itin&eacute;raire en avant n'a &eacute;t&eacute;
+    s&eacute;lectionn&eacute;.</p>
+
+    <p>Annuler Itin&eacute;raire</p>
+
+    <p>Pour annuler un Itin&eacute;raire qui a &eacute;t&eacute;
+    mis en place, il suffit de s&eacute;lectionner &agrave; nouveau
+    les Capteurs d'Entr&eacute;e et de Sortie. Vous aurez alors
+    acc&egrave;s &agrave; quatre options, il suffit de
+    s&eacute;lectionner "Annuler" .</p>
+
+    <p>Empilage d'Itin&eacute;raire</p>
+
+    <p>Si un Itin&eacute;raire ne peut &ecirc;tre d&eacute;fini en
+    raison d'un canton d&eacute;j&agrave; attribu&eacute; ou
+    occup&eacute;, il vous sera pr&eacute;sent&eacute; avec
+    l'option "empiler" l'Itin&eacute;raire. Lorsque
+    l'Itin&eacute;raire est empil&eacute;, une nouvelle
+    fen&ecirc;tre appara&icirc;tra &agrave; l'&eacute;cran qui
+    montre les Itin&eacute;raires qui ont &eacute;t&eacute;
+    empil&eacute;s. Une fois que l'Itin&eacute;raire a
+    &eacute;t&eacute; empil&eacute;, le syst&egrave;me
+    v&eacute;rifie toutes les 10 secondes pour voir si il est
+    possible de mettre en place cet itin&eacute;raire NX, plusieurs
+    Itin&eacute;raires NX peuvent &ecirc;tre empil&eacute;s, et ils
+    sont enregistr&eacute;s dans l'ordre o&ugrave; ils ont
+    &eacute;t&eacute; empil&eacute;s, un Itin&eacute;raire NX ne
+    peut pas &ecirc;tre empil&eacute; plus d'une fois. Pour annuler
+    une Itin&eacute;raire NX choisir dans le tableau et cliquez sur
+    le bouton Annuler en bas. Si le r&eacute;seau n'est pas
+    compl&egrave;tement Canton d&eacute;tect&eacute;, puis avec le
+    NX a la capacit&eacute; d' effacer la baisse Itin&eacute;raire,
+    ce qui se passe ici, c'est que les cantons sont occup&eacute;s,
+    alors inoccup&eacute; dans le bon ordre, laissant le dernier
+    Canton comme occup&eacute;, simulant ainsi un train qui passe
+    &agrave; travers le dispositif de verrouillage. Pour ce faire,
+    s&eacute;lectionnez &agrave; nouveau l'Itin&eacute;raire et
+    s&eacute;lectionnez " Effacer" .</p>
+
+    <p><b>Effacement Manuel Itin&eacute;raire</b></p>
+
+    <p>Si le r&eacute;seau n'est pas compl&egrave;tement
+    &eacute;quip&eacute; de Canton d&eacute;tect&eacute;, alors
+    avec le NX a la capacit&eacute; d' effacer l'Itin&eacute;raire,
+    ce qui se passe ici, c'est que les cantons sont occup&eacute;s,
+    alors qu'ils sont inoccup&eacute;s en r&eacute;alit&eacute;,
+    laissant le dernier Canton comme occup&eacute;, simulant ainsi
+    un train qui passe &agrave; travers le dispositif de
+    verrouillage. Pour ce faire, s&eacute;lectionnez &agrave;
+    nouveau l'Itin&eacute;raire et s&eacute;lectionnez "Effacer" .</p>
+
+    <!--#include virtual="/Footer" -->
+  </div>
+</body>
+</html>

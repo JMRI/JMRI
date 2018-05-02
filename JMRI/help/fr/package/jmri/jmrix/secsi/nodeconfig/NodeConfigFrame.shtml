@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-27-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Configure SECSI Nodes</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help configure grapevine node"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Configurer les N&Aring;"uds SECSI.</h1>Ceci est la page
+      d'aide: help/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame
+
+      <p>Les noeuds SECSI doivent &Atilde;&ordf;tre
+      configur&Atilde;&copy;s avant les travaux de saisie.</p>
+
+      <p>Ce qui suit est juste un espace
+      r&Atilde;&copy;serv&Atilde;&copy; ...</p>
+
+      <p>Le logiciel de n&Aring;"ud se d&Atilde;&copy;cline en
+      trois vari&Atilde;&copy;t&Atilde;&copy;s distinctes:</p>
+
+      <dl>
+        <dt>?</dt>
+
+        <dd>G&Atilde;&copy;n&Atilde;&copy;ralement
+        consid&Atilde;&copy;r&Atilde;&copy; comme le meilleur</dd>
+
+        <dt>???</dt>
+
+        <dd>Si vous avez un de ceux-ci, vous devriez probablement
+        mettre &Atilde;  jour le logiciel</dd>
+
+        <dt>N&Aring;"ud d'origine</dt>
+
+        <dd>Bien que JMRI ait le code pour soutenir ces derniers,
+        il n'a pas &Atilde;&copy;t&Atilde;&copy;
+        test&Atilde;&copy;. Si vous rencontrez des
+        probl&Atilde;&uml;mes, s'il vous pla&Atilde;&reg;t
+        permettez-nous maintenant d'am&Atilde;&copy;liorer le
+        support pour ces cartes.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

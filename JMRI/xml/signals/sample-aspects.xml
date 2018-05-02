@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>Sample</name>
+  <date>1804</date>
+  <reference>As described in the January 1804 version of "Iron Horse Quarterly", chapter II.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Sample</firstname><surname>Name</surname></personname>
+        <email>name@com.domain</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2009-12-28</date>
+        <authorinitials>initials</authorinitials>
+        <revremark>comment</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2009-12-29</date>
+        <authorinitials>initials</authorinitials>
+        <revremark>comment</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name></name>
+      <title></title>
+      <rule></rule>
+      <indication></indication>
+      <description></description>
+      <reference></reference>
+      <comment></comment>
+      <speed></speed>
+      <speed2></speed2>
+    </aspect>
+
+  </aspects>
+  
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="small" />
+  </imagetypes>
+  
+  <appearancefiles>
+    <appearancefile href="sample-appearance-file.xml"/>
+  </appearancefiles>
+</aspecttable>
+  

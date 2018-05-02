@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110110"/>
+  <!-- 
+      This decoder XML is meant to be used with the "Custom" programmer format.
+      The pane definitions are included below the decoder definition.  The LGB
+      decoders seem to fit the description of "weird" as mentioned in that
+      programmer.  Also, this allows the tooltips from this decoder file to be
+      displayed for the user.
+
+      I have tested this decoder file using the SPROG II interface.  The range
+      of versions listed is hypothetical as the versions for all the Massoth/LGB
+      decoder types overlap. The highest version I have encountered is 3.4 (in
+      both large and small onboard) and the lowest is 1.0 (in a MTS I 55020).
+
+      CV 106 is used by Massoth as "ID for decoder type" and is possibly one way
+      of determining decoder type from the CV's, as the version numbers overlap.
+      To date, I have encountered the following values in CV 106 (any additions to
+      this list would be appreciated):
+
+      55020:              10
+      55021:             192
+      55022:              16
+      Small onboard:      65 (steam), 73 (steam), 81 (diesel), 82 (diesel), 83 (rail car), 93
+      Large onboard:     129 (steam), 134 (2-10-2), 137 (Aster steam), 145 (diesel/electric)
+                         146 (rail car), 147 (US diesel)
+      OnBoard-Sound:     154
+      55027:             193
+      eMOTION M:         200
+      eMOTION L:         201 (according to 1.0 manual)
+      eMOTION LS:        202 (according to 2.2 manual)
+      eMOTION XL:        193 (according to 2.0 manual), 200
+      eMOTION XXL:       ???
+      eMOTION XLS:       202 (according to 1.3 manual), 203
+      eMOTION 8FL:       204 (according to 1.2 manual)
+      LED Light:         204
+      6500x sound unit:  208
+      Hot Metal Car:      10
+
+      This definition was based on the LGB instructions for the 65000, 65001, 65002,
+      65003, and 65004 Sound Units, "8.869110.228  1.0 0303 Pf" at bottom of last page.
+
+      I tried to match DeccoderPro "item" names when I was fairly certain they were
+      correct.  The "label" names tried to match the names used in the LGB
+      documentation.
+
+      Any and all feedback on this file would be appreciated.
+
+      Version History:
+
+        1.0 - 10 Jan 11
+              Initial release 
+-->
+  <decoder>
+    <family name="LGB" mfg="Massoth Elektronik, GmbH">
+      <model model="LGB MTS 6500x Sound Unit" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" maxMotorCurrent="? A" maxTotalCurrent="? A" numOuts="0" numFns="0" formFactor="G" connector="other">
+        <size length="68" width="60" height="23" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" default="0" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed">
+        <decVal min="0" max="255"/>
+        <label>Starting voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+      </variable>
+      <variable CV="3" default="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration">
+        <decVal min="1" max="255"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+      </variable>
+      <variable CV="4" default="3" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking)">
+        <decVal min="1" max="255"/>
+        <label>Braking</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
+      </variable>
+      <variable CV="5" default="255" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed">
+        <decVal min="1" max="255"/>
+        <label>Maximum Motor Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <!-- CV 7-8 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (not LGB MTS)">
+            <choice>28/128 (not LGB MTS)</choice>
+            <choice xml:lang="it">28/128 (non LGB MTS)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+        <label xml:lang="it">Step Velocità</label>
+      </variable>
+      <variable item="Analog Starting Voltage" CV="58" default="48" tooltip="Adjust the sound to the loco starting settings - if sound starts before the loco starts moving, increase value">
+        <decVal min="1" max="255"/>
+        <label>Analog Starting Voltage</label>
+      </variable>
+      <variable item="Analog Maximum Speed" CV="59" default="255" tooltip="Adjust the sound to the loco settings - if sound is too fast at high speed, decrease value">
+        <decVal min="1" max="255"/>
+        <label>Analog Maximum Speed</label>
+      </variable>
+      <variable item="Number of wheel magnets" CV="64" mask="XXXXXVVV" default="2" tooltip="Number of magnets on loco or sound car wheel/axle">
+        <enumVal>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+        </enumVal>
+        <label>Number of wheel magnets</label>
+      </variable>
+      <variable item="Wheel diameter ratio" CV="64" mask="VVVVVXXX" default="10" tooltip="Ratio of loco wheel diameter to sound car wheel diameter">
+        <enumVal>
+          <enumChoice choice="0.1" value="1"/>
+          <enumChoice choice="0.2" value="2"/>
+          <enumChoice choice="0.3" value="3"/>
+          <enumChoice choice="0.4" value="4"/>
+          <enumChoice choice="0.5" value="5"/>
+          <enumChoice choice="0.6" value="6"/>
+          <enumChoice choice="0.7" value="7"/>
+          <enumChoice choice="0.8" value="8"/>
+          <enumChoice choice="0.9" value="9"/>
+          <enumChoice choice="1.0" value="10"/>
+          <enumChoice choice="1.1" value="11"/>
+          <enumChoice choice="1.2" value="12"/>
+          <enumChoice choice="1.3" value="13"/>
+          <enumChoice choice="1.4" value="14"/>
+          <enumChoice choice="1.5" value="15"/>
+          <enumChoice choice="1.6" value="16"/>
+          <enumChoice choice="1.7" value="17"/>
+          <enumChoice choice="1.8" value="18"/>
+          <enumChoice choice="1.9" value="19"/>
+          <enumChoice choice="2.0" value="20"/>
+          <enumChoice choice="2.1" value="21"/>
+          <enumChoice choice="2.2" value="22"/>
+          <enumChoice choice="2.3" value="23"/>
+          <enumChoice choice="2.4" value="24"/>
+          <enumChoice choice="2.5" value="25"/>
+          <enumChoice choice="2.6" value="26"/>
+          <enumChoice choice="2.7" value="27"/>
+          <enumChoice choice="2.8" value="28"/>
+          <enumChoice choice="2.9" value="29"/>
+          <enumChoice choice="3.0" value="30"/>
+          <enumChoice choice="3.1" value="31"/>
+        </enumVal>
+        <label>Wheel diameter ratio</label>
+      </variable>
+      <!-- Do not attempt to read CV 105 on an LGB decoder -->
+      <variable CV="106" readOnly="yes" item="Product number" tooltip="ID for Decoder Type (read only)">
+        <decVal/>
+        <label>ID for Decoder Type</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset to factory settings" CV="55" default="55"/>
+    </resets>
+  </decoder>
+  <pane>
+    <name>Basic</name>
+    <column>
+      <dccaddress/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Short Address"/>
+      <display item="Long Address"/>
+      <display item="Address Format"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Locomotive Direction"/>
+      <display item="Speed Step Mode"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+      <display item="Product number"/>
+    </column>
+  </pane>
+  <pane>
+    <name>Sound Synchronization</name>
+    <column>
+      <label>
+        <text>Digital Synchronization</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
+          <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle"/>
+        </column>
+        <column>
+          <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1"/>
+          <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Accel"/>
+          <display item="Decel"/>
+        </column>
+      </row>
+    </column>
+    <column>
+      <label>
+        <text>Analog Synchronization</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Analog Starting Voltage"/>
+      <display item="Analog Maximum Speed"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <column>
+      <label>
+        <text>Wheel Sensor</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Number of wheel magnets"/>
+      <display item="Wheel diameter ratio"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+  </pane>
+  <pane>
+    <name>CVs</name>
+    <column>
+      <cvtable/>
+    </column>
+  </pane>
+</decoder-config>

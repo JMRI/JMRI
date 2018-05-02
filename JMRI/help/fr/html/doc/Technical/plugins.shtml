@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233; le 2013-09-08-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Plug-in mechanisms</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI technical code plugins extension plug-in"><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: M&eacute;canismes Plug-in</h1>
+        L'objectif initial du
+      projet &eacute;tait de produire une biblioth&egrave;que que
+      les gens pourraient utiliser pour cr&eacute;er leurs propres
+      applications. Bien que certaines personnes l'aient fait,
+      beaucoup utilisent les applications existantes telles que
+      DecoderPro, PanelPro et SoundPro. Nous voulons rendre ceci
+      plus souple en fournissant un moyen d'&eacute;tendre ces
+      programmes sans avoir &agrave; les reconstruire &agrave;
+      partir de z&eacute;ro. Cette note d&eacute;crit le
+      m&eacute;canismes de ce qui sera inclus dans JMRI 2.4 et
+      ult&eacute;rieures.
+
+      <ol>
+        <li>CLASSPATH
+
+          <p>DecoderPro et les autres sont g&eacute;r&eacute;s via
+          une commande java qui fixe le CLASSPATH et diverses
+          options. Comment c'est fait r&eacute;ellement, &ccedil;a
+          varie en fonction de la plate-forme: csh ,scripts sur
+          Unix, un <a href="StartUpScripts.shtml#windows">lanceur
+          d'applications</a> sous Windows, des kits d'applications
+          sous Mac OS X, etc</p>
+
+          <p>Pour rendre facile l'ajout des plug-ins, ils englobent
+          tous les fichiers.jar dans le r&eacute;pertoire de
+          l'application, et dans son sous-r&eacute;pertoire "lib/",
+          dans le CLASSPATH.</p>
+
+          <p>Si vous cr&eacute;ez un fichier jar, y compris votre
+          code, il sera automatiquement trouv&eacute;. Vous pouvez
+          aussi mettre vos classes dans le r&eacute;pertoire
+          "classes" du r&eacute;pertoire de d&eacute;marrage, ce
+          qui est recherch&eacute; en premier.</p>
+
+          <p>Pour plus d'informations, voir la page <a href=
+          "StartUpScripts.shtml">sur les scripts de
+          d&eacute;marrage</a>.</p>
+        </li>
+
+        <li>Remplacement des classes existantes
+
+          <p>Notez que vous pouvez remplacer directement l'un des
+          fichiers dans la distribution jmri.jar avec vos propres
+          versions en les mettant dans un fichier jar c'est la
+          premi&egrave;re recherche. Par exemple, inclure une
+          version modifi&eacute;e d'un fichier .properties vous
+          permet d'inclure des versions personnalis&eacute;es de
+          menu chaines. Cela peut aussi &ecirc;tre fait avec un
+          fichier .class, par exemple en changeant l'ordre des
+          items du menu en rempla&ccedil;ant la classe
+          DecoderPro.</p>
+        </li>
+
+        <li>Classes Plugin
+
+          <p>L'emplacement d'une classe peut entra&icirc;ner un
+          surcro&icirc;t de travail &agrave; long terme, le
+          remplacement d'une classe peut &ecirc;tre modifi&eacute;
+          quand JMRI &eacute;volue. Donc, nous fournissons
+          &eacute;galement un crochet sur lequel accrocher le
+          nouveau code. Apr&egrave;s que l'initialisation soit
+          termin&eacute;e, les programmes seront tent&eacute;s
+          d'invoquer un membre statique de la forme:</p>
+          <pre>
+
+  package jmri;
+  public class JmriPlugin {
+     public static void start(javax.swing.JFrame mainFrame, javax.swing.JMenuBar menuBar) {}
+  }
+
+</pre>Cette m&eacute;thode peut modifier la barre de menus par
+l'insertion, modification ou la suppression des menus ou le menu
+articles, ajouter des boutons sur le panneau principal, etc
+
+          <p>Comme les gens utilisent cette capacit&eacute;, vous
+          aurez probablement envie de remanier certaines classes
+          existantes afin de les rendre plus facile &agrave;
+          &eacute;tendre. Par exemple, une mise en forme
+          monolithique de classe comme llnmon devrait &ecirc;tre
+          divis&eacute;e en plus petits morceaux pour faciliter
+          l'ajout de nouveaux formats.</p>
+        </li>
+      </ol>
+
+      <h2>Autres M&eacute;canismes</h2>Il est &eacute;galement
+      possible de personnaliser votre version de JMRI utilisant des
+      scripts, et en utilisant les <a href=
+      "../../../package/apps/TabbedPreferences.shtml">pr&eacute;f&eacute;rences
+      avanc&eacute;es</a>.
+
+      <p>Les scripts peuvent localiser et acc&eacute;der &agrave;
+      n'importe quelle fen&ecirc;tre ouverte, par exemple.
+      L'exemple de script <a href=
+      "http://jmri.org/jython/AddButton.py">AddButton.py</a> est un
+      exemple de l'ajout d'un bouton de script sur la fen&ecirc;tre
+      principale. Le <a href=
+      "http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
+      montre un exemple de script pour comment faire pour modifier
+      la fen&ecirc;tre principale et supprimer le bouton de
+      programmation voie principale. L'exemple de script <a href=
+      "http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+      est un exemple encore plus avanc&eacute;s qui modifie
+      l'apparence des &eacute;l&eacute;ments sur les &eacute;crans
+      du panneau.</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1" lastUpdated="20030703"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20130307"/>
+  <!-- Ver 2: Add N103 decoder  -->
+  <decoder>
+    <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21">
+      <model model="D102EU" numOuts="2" numFns="2"/>
+      <model model="DA102EU" numOuts="5" numFns="5"/>
+      <model model="D104P2K" numOuts="4" numFns="4"/>
+      <model model="D104KRS" numOuts="4" numFns="4"/>
+      <model model="N103" numOuts="3" numFns="3"/>
+      <model model="P2K-SW9" numOuts="3" numFns="3"/>
+    </family>
+    <programming direct="no" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable item="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
+        <decVal/>
+        <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>A value of 255 corresponds to 100%</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_254.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <variable CV="9" item="Total PWM Period" comment="1-255 PWM drive freq in 128us increments" default="195">
+        <decVal/>
+        <label>Motor drive frequency</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+        <comment>1-255 PWM drive freq in 128us increments</comment>
+        <comment xml:lang="it">Valori 1-255, frequenza in incrementi di 128us</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>
+      <constant item="F2 controls output 4" minOut="4" minFn="2" default="1"/>
+      <constant item="F3 controls output 5" minOut="5" minFn="3" default="1"/>
+      <constant item="F4 controls output 6" minOut="6" minFn="4" default="1"/>
+      <constant item="F5 controls output 7" minOut="7" minFn="5" default="1"/>
+      <constant item="F6 controls output 8" minOut="8" minFn="6" default="1"/>
+      <constant item="F7 controls output 9" minOut="9" minFn="7" default="1"/>
+      <constant item="F8 controls output 10" minOut="10" minFn="8" default="1"/>
+    </variables>
+  </decoder>
+</decoder-config>

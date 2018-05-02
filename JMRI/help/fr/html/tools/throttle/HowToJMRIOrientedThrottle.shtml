@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- Translated by Blorec Herv&#233; le 2011-09-28-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
+  <meta content="text/html; charset=us-ascii" http-equiv=
+  "content-type" />
+
+  <title>How to build a throttle oriented JMRI interface</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmra throttle throttlepro" />
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project" />
+  <meta name="Keywords" content="JMRI" />
+  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Language" content="fr" />
+  <meta name="Robots" content="Index, Follow" />
+  <meta name="Revisit-After" content="7 Days" />
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii" />
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen" />
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print" />
+  <link rel="icon" href="/images/jmri.ico" type="image/png" />
+  <link rel="home" title="Home" href="/" /><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>Comment Construire une Interface R&eacute;gulateur
+      Orient&eacute;e JMRI</h1>Fort de son historique nous
+      supposons que vous &ecirc;tes un utilisateur
+      d&eacute;j&agrave; exp&eacute;riment&eacute; des JMRI.<br />
+      <br />
+      Particuli&egrave;rement, nous supposons que votre connexion
+      est d&eacute;j&agrave; active avec JMRI f et que vous
+      &ecirc;tes d&eacute;j&agrave; en mesure d'ouvrir une
+      fen&ecirc;tre R&eacute;gulateur et contr&ocirc;ler une
+      locomotive.<br />
+      <br />
+      De plus nous supposons que votre base de donn&eacute;es Liste
+      (Roster) existe d&eacute;j&agrave;, la plupart de ces
+      fonctionnalit&eacute;s R&eacute;gulateur sont
+      herm&eacute;tiquement li&eacute;es &agrave; la Liste DB et en
+      ont besoin pour travailler correctement.<br />
+
+      <h2>1) Pr&eacute;parez votre Entr&eacute;e listes</h2>La
+      premi&egrave;re &eacute;tape est de <a href=
+      "RostersMediaPane.shtml">remplir les m&eacute;dias et les
+      &eacute;tiquettes volets Fonctions dans DecoderPro</a>
+      .<br />
+      <br />
+      Une fois cela fait et toutes les &eacute;tiquettes fonctions
+      sont d&eacute;finies pour vos listes, <a href=
+      "ThrottlesPreferencesPane.shtml">vous voulez vous assurer que
+      les options pour masquer les boutons de fonction non
+      d&eacute;finie et ceux pour utiliser l'image comme un
+      illustration de fond pour une fen&ecirc;tre de
+      R&eacute;gulateur</a> sont activ&eacute;s.<br />
+      <br />
+
+      <h2>2) Concevez vos volets R&eacute;gulateurs</h2>&agrave;
+      cette &eacute;tape, lorsque vous ouvrez un R&eacute;gulateur
+      et s&eacute;lectionnez un fichier (ou entrez une adresse qui
+      corresponde &agrave; une liste (il y a un r&eacute;glage
+      pr&eacute;f&eacute;rence <a href=
+      "ThrottlesPreferencesPane.shtml">pour permettre de regarder
+      en arri&egrave;re</a> )), l'image de fond devrait &ecirc;tre
+      l&agrave;, et les boutons fonction devrait refl&eacute;ter ce
+      que vous avez entr&eacute; dans DecoderPro.<br />
+      <br />
+      Maintenant ce que vous pouvez faire, c'est mettre en place la
+      fen&ecirc;tre du R&eacute;gulateur comme vous voulez la
+      positioner sur le Panneau de configuration et la taille que
+      vous voulez (j'ai personnellement choisi de fermer
+      l'AdressPanel, vous pouvez toujours le rouvrir par le menu
+      Affichage, et je n'en ai pas besoin la plupart du temps,
+      l'entr&eacute;e de menu Enregistrer R&eacute;gulateur
+      enregistrerera &eacute;galement la fermeture (ou
+      iconifi&eacute;) de l'&eacute;tat des fen&ecirc;tres
+      int&eacute;rieures).<br />
+
+      <h2>3) Personnalisez-le avec Jynstruments</h2>Vous pouvez
+      &eacute;galement ajouter quelques <a href=
+      "../scripting/Jynstruments.shtml">Jynstruments
+      sp&eacute;cifiques</a> sur vos Fen&ecirc;tres
+      R&eacute;gulateur, en fait, vous pouvez m&eacute;langer les
+      &eacute;tiquettes dans les fonctions du Volet Fonction pour
+      les fonctions qui ne sont pas utilis&eacute;s souvent, et
+      Jynstruments pour les plus utilis&eacute;s, ou pour des
+      Fonctionnalit&eacute;s un peu plus complexes o&ugrave; seul
+      un script Jython peut le faire.<br />
+      <br />
+      Lorsque vous &ecirc;tes satisifait avec l'&eacute;tape 3) et
+      4) pour une liste sp&eacute;cifique, vous voulez atteindre
+      l'entr&eacute;e du menu Enregistrer dans le menu Fichier
+      <a href="ThrottleWindowMenus.shtml">fen&ecirc;tre
+      R&eacute;gulateur</a> Afin de sauvegarder la configuration
+      actuelle du R&eacute;gulateur,<br />
+      <br />
+      la prochaine fois le r&eacute;gulateur est requis pour cette
+      entr&eacute;e Liste, ce fichier de sauvegarde sera
+      charg&eacute; automatiquement et la fen&ecirc;tre
+      r&eacute;gulateur sera &agrave; jour.<br />
+      <br />
+
+      <h2>4) Conception de votre Disposition
+      R&eacute;gulateur</h2>La prochaine &eacute;tape est de mettre
+      en place la disposition d'&eacute;cran globale, avec
+      peut-&ecirc;tre plusieurs fen&ecirc;tres R&eacute;gulateur,
+      la <a href="ThrottlesListWindow.shtml">Liste des
+      fen&ecirc;tres R&eacute;gulateurs</a> (accessible &agrave;
+      partir des <a href="ThrottleToolBar.shtml">outils de la
+      fen&ecirc;tre R&eacute;gulateur</a> ) et, enfin, a
+      frapp&eacute; la disposition r&eacute;gulateur Enregistrer
+      (ou Enregistrer en tant que mise en page de r&eacute;gulateur
+      par d&eacute;faut) dans l'entr&eacute;e des menu Outils
+      <a href="ToolsMenuThrottleEntry.shtml">Limite JMRI</a>
+      .<br />
+      <br />
+
+      <h2>5) Obtenez plus de contr&ocirc;le avec
+      Jynstruments</h2><a href=
+      "AdvancedThrottleControl.shtml">utilisant Jysntruments il est
+      &eacute;galement possible de mettre en place un
+      contr&ocirc;leur externe pour une fen&ecirc;tre de
+      r&eacute;gulateurr.</a> (pour le moment USB Joypad ou Wiimote
+      de Nintendo, mais les scripts Jython plus classiques existent
+      pour les appareils USB Raildriver et ...)<br />
+      <br />
+
+      <h2>6) Enfin l'ajout d'un bouton de d&eacute;marrage rapide
+      &agrave; la fen&ecirc;tre principale JMRI</h2>Et enfin, en
+      utilisant les <a href=
+      "../scripting/Jynstruments.shtml">Lanceurs Jynstruments</a>
+      qui peuvent &ecirc;tre d&eacute;pos&eacute;s au fond de la
+      fen&ecirc;tre principale JMRI vous pouvez ajouter certains
+      lanceurs rapides pour les applications JMRI
+      sp&eacute;cifiques, en particulier <a href=
+      "http://jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/">
+      de chargement des boutons de configuration par d&eacute;faut
+      du R&eacute;gulateur</a>.<br />
+      <br />
+      <span style="font-style: italic;">Remarque: Il n'est pas
+      possible d'enregistrer les personnalisations des
+      &eacute;tapes 5) et 6) pour le moment..</span><br />
+      <br />
+    </div><!--#include virtual="/Footer" -->
+  </div>
+</body>
+</html>

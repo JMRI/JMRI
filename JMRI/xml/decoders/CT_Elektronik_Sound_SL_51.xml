@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="mark.kasprowicz@traindecoder.com" version="1.0 beta" lastUpdated="20040818"/>
+  <!-- Based on the contribution of sip@euronet.nl and many others -->
+  <decoder>
+    <family name="Sound Decoder SL 51" mfg="CT Elektronik">
+      <model model="SL 51" numOuts="10" numFns="8">
+        <versionCV lowVersionID="3"/>
+        <output name="3" label="Riding Sound"/>
+        <output name="4" label="Soundslot 1"/>
+        <output name="5" label="Soundslot 2"/>
+        <output name="6" label="Soundslot 3"/>
+        <output name="7" label="Soundslot 4"/>
+        <output name="8" label="Soundslot 5"/>
+        <output name="9" label="Soundslot 6"/>
+        <output name="10" label="Soundslot 7"/>
+        <output name="11" label="Soundslot 8"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+        <decVal/>
+        <label>Start Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>A value of 255 corresponds to 100%</comment>
+      </variable>
+      <!-- CV 3-4 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <variable item="Vhigh" CV="5" default="0" comment="Maximum Speed">
+        <decVal/>
+        <label>Vhigh</label>
+        <comment>Maximum Speed</comment>
+        <label xml:lang="it">Volt Massimi</label>
+        <label xml:lang="fr">Vmax</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable item="Vmid" CV="6" default="0">
+        <decVal/>
+        <label>Vmid</label>
+        <label xml:lang="it">Volt Intermedi</label>
+        <label xml:lang="fr">Vmoy</label>
+        <label xml:lang="de">Mittengeschwindigkeit</label>
+      </variable>
+      <variable CV="7" default="15" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Decoder Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" default="117" readOnly="yes" item="Manufacturer">
+        <decVal/>
+        <label>Manufacturer</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable item="Total PWM Period" CV="9" default="148">
+        <decVal min="13" max="63"/>
+        <label>Total PWM Period</label>
+        <label xml:lang="fr">Total PWM Period(fr)</label>
+        <label xml:lang="it">Periodo Totale PWM</label>
+      </variable>
+      <variable item="Analogue mode" CV="13" default="0" comment="DC/DCC">
+        <decVal/>
+        <label>Analogue mode</label>
+        <comment>DC/DCC</comment>
+      </variable>
+      <variable CV="19" item="Consist Address">
+        <decVal min="0" max="128"/>
+        <label>Consist Address</label>
+        <label xml:lang="it">Indirizzo Consist Avanzato</label>
+        <label xml:lang="fr">Addresse UM</label>
+        <label xml:lang="de">Verbundadresse</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable item="Error Diagnosis" CV="30" default="0">
+        <decVal min="0" max="3"/>
+        <label>Error Diagnosis</label>
+        <label xml:lang="it">Errore Diagnosi</label>
+      </variable>
+      <variable CV="33" default="1" mask="XXXXXXXV" item="Fl(f) controls output 1" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 2</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 3</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 4</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 5</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 5</label>
+      </variable>
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 6</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 6</label>
+      </variable>
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 7</label>
+        <label xml:lang="it">Luci (avanti) controlla uscita 7</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 1</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 2</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 2</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 3</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 3</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 4</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 4</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 5</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 5</label>
+      </variable>
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 6</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 6</label>
+      </variable>
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 7</label>
+        <label xml:lang="it">Luci (retro) controlla uscita 7</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXXXV" minOut="3" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 3</label>
+        <label xml:lang="it">F1 controlla uscita 3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXXXXXVX" minOut="4" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 4</label>
+        <label xml:lang="it">F1 controlla uscita 4</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXXXVXX" minOut="5" minFn="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 5</label>
+        <label xml:lang="it">F1 controlla uscita 5</label>
+      </variable>
+      <variable item="F1 controls output 6" CV="35" mask="XXXXVXXX" minOut="6" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 6</label>
+        <label xml:lang="it">F1 controlla uscita 6</label>
+      </variable>
+      <variable item="F1 controls output 7" CV="35" mask="XXXVXXXX" minOut="7" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 7</label>
+        <label xml:lang="it">F1 controlla uscita 7</label>
+      </variable>
+      <variable item="F1 controls output 8" CV="35" mask="XXVXXXXX" minOut="8" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 8</label>
+        <label xml:lang="it">F1 controlla uscita 8</label>
+      </variable>
+      <variable item="F1 controls output 9" CV="35" mask="XVXXXXXX" minOut="9" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 9</label>
+        <label xml:lang="it">F1 controlla uscita 9</label>
+      </variable>
+      <variable item="F1 controls output 10" CV="35" mask="VXXXXXXX" minOut="10" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 10</label>
+        <label xml:lang="it">F1 controlla uscita 10</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXXXV" minOut="3" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 3</label>
+        <label xml:lang="it">F2 controlla uscita 3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXXXXXVX" minOut="4" minFn="2" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 4</label>
+        <label xml:lang="it">F2 controlla uscita 4</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXXXVXX" minOut="5" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 5</label>
+        <label xml:lang="it">F2 controlla uscita 3</label>
+      </variable>
+      <variable item="F2 controls output 6" CV="36" mask="XXXXVXXX" minOut="6" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 6</label>
+        <label xml:lang="it">F2 controlla uscita 6</label>
+      </variable>
+      <variable item="F2 controls output 7" CV="36" mask="XXXVXXXX" minOut="7" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 7</label>
+        <label xml:lang="it">F2 controlla uscita 7</label>
+      </variable>
+      <variable item="F2 controls output 8" CV="36" mask="XXVXXXXX" minOut="8" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 8</label>
+        <label xml:lang="it">F2 controlla uscita 8</label>
+      </variable>
+      <variable item="F2 controls output 9" CV="36" mask="XVXXXXXX" minOut="9" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 9</label>
+        <label xml:lang="it">F2 controlla uscita 9</label>
+      </variable>
+      <variable item="F2 controls output 10" CV="36" mask="VXXXXXXX" minOut="10" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 10</label>
+        <label xml:lang="it">F2 controlla uscita 10</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXXXV" minOut="3" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 3</label>
+        <label xml:lang="it">F3 controlla uscita 3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXXXVX" minOut="4" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 4</label>
+        <label xml:lang="it">F3 controlla uscita 4</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" mask="XXXXXVXX" minOut="5" minFn="3" default="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 5</label>
+        <label xml:lang="it">F3 controlla uscita 5</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="37" mask="XXXXVXXX" minOut="6" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 6</label>
+        <label xml:lang="it">F3 controlla uscita 6</label>
+      </variable>
+      <variable item="F3 controls output 7" CV="37" mask="XXXVXXXX" minOut="7" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 7</label>
+        <label xml:lang="it">F3 controlla uscita 7</label>
+      </variable>
+      <variable item="F3 controls output 8" CV="37" mask="XXVXXXXX" minOut="8" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 8</label>
+        <label xml:lang="it">F3 controlla uscita 8</label>
+      </variable>
+      <variable item="F3 controls output 9" CV="37" mask="XVXXXXXX" minOut="9" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 9</label>
+        <label xml:lang="it">F3 controlla uscita 9</label>
+      </variable>
+      <variable item="F3 controls output 10" CV="37" mask="VXXXXXXX" minOut="10" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 10</label>
+        <label xml:lang="it">F3 controlla uscita 10</label>
+      </variable>
+      <variable item="F4 controls output 3" CV="38" mask="XXXXXXXV" minOut="3" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 3</label>
+        <label xml:lang="it">F4 controlla uscita 3</label>
+      </variable>
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXVX" minOut="4" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 4</label>
+        <label xml:lang="it">F4 controlla uscita 4</label>
+      </variable>
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXVXX" minOut="5" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 5</label>
+        <label xml:lang="it">F4 controlla uscita 5</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="38" mask="XXXXVXXX" minOut="6" minFn="4" default="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 6</label>
+        <label xml:lang="it">F4 controlla uscita 6</label>
+      </variable>
+      <variable item="F4 controls output 7" CV="38" mask="XXXVXXXX" minOut="7" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 7</label>
+        <label xml:lang="it">F4 controlla uscita 7</label>
+      </variable>
+      <variable item="F4 controls output 8" CV="38" mask="XXVXXXXX" minOut="8" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 8</label>
+        <label xml:lang="it">F4 controlla uscita 8</label>
+      </variable>
+      <variable item="F4 controls output 9" CV="38" mask="XVXXXXXX" minOut="9" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 9</label>
+        <label xml:lang="it">F4 controlla uscita 9</label>
+      </variable>
+      <variable item="F4 controls output 10" CV="38" mask="VXXXXXXX" minOut="10" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 10</label>
+        <label xml:lang="it">F4 controlla uscita 10</label>
+      </variable>
+      <variable item="F5 controls output 3" CV="39" mask="XXXXXXXV" minOut="3" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 3</label>
+        <label xml:lang="it">F5 controlla uscita 3</label>
+      </variable>
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXVX" minOut="4" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 4</label>
+        <label xml:lang="it">F5 controlla uscita 4</label>
+      </variable>
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXVXX" minOut="5" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 5</label>
+        <label xml:lang="it">F5 controlla uscita 5</label>
+      </variable>
+      <variable item="F5 controls output 6" CV="39" mask="XXXXVXXX" minOut="6" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 6</label>
+        <label xml:lang="it">F5 controlla uscita 6</label>
+      </variable>
+      <variable item="F5 controls output 7" CV="39" mask="XXXVXXXX" minOut="7" minFn="5" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 7</label>
+        <label xml:lang="it">F5 controlla uscita 7</label>
+      </variable>
+      <variable item="F5 controls output 8" CV="39" mask="XXVXXXXX" minOut="8" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 8</label>
+        <label xml:lang="it">F5 controlla uscita 8</label>
+      </variable>
+      <variable item="F5 controls output 9" CV="39" mask="XVXXXXXX" minOut="9" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 9</label>
+        <label xml:lang="it">F5 controlla uscita 9</label>
+      </variable>
+      <variable item="F5 controls output 10" CV="39" mask="VXXXXXXX" minOut="10" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 10</label>
+        <label xml:lang="it">F5 controlla uscita 10</label>
+      </variable>
+      <variable item="F6 controls output 3" CV="40" mask="XXXXXXXV" minOut="3" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 3</label>
+        <label xml:lang="it">F6 controlla uscita 3</label>
+      </variable>
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXVX" minOut="4" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 4</label>
+        <label xml:lang="it">F6 controlla uscita 4</label>
+      </variable>
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXVXX" minOut="5" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 5</label>
+        <label xml:lang="it">F6 controlla uscita 5</label>
+      </variable>
+      <variable item="F6 controls output 6" CV="40" mask="XXXXVXXX" minOut="6" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 6</label>
+        <label xml:lang="it">F6 controlla uscita 6</label>
+      </variable>
+      <variable item="F6 controls output 7" CV="40" mask="XXXVXXXX" minOut="7" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 7</label>
+        <label xml:lang="it">F6 controlla uscita 7</label>
+      </variable>
+      <variable item="F6 controls output 8" CV="40" mask="XXVXXXXX" minOut="8" minFn="6" default="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 8</label>
+        <label xml:lang="it">F6 controlla uscita 8</label>
+      </variable>
+      <variable item="F6 controls output 9" CV="40" mask="XVXXXXXX" minOut="9" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 9</label>
+        <label xml:lang="it">F6 controlla uscita 9</label>
+      </variable>
+      <variable item="F6 controls output 10" CV="40" mask="VXXXXXXX" minOut="10" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 10</label>
+        <label xml:lang="it">F6 controlla uscita 10</label>
+      </variable>
+      <variable item="F7 controls output 8" CV="41" mask="XXVXXXXX" minOut="8" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 8</label>
+        <label xml:lang="it">F7 controlla uscita 8</label>
+      </variable>
+      <variable item="F7 controls output 9" CV="41" mask="XVXXXXXX" minOut="9" minFn="7" default="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 9</label>
+        <label xml:lang="it">F7 controlla uscita 9</label>
+      </variable>
+      <variable item="F7 controls output 10" CV="41" mask="VXXXXXXX" minOut="10" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 10</label>
+        <label xml:lang="it">F7 controlla uscita 10</label>
+      </variable>
+      <variable item="F8 controls output 8" CV="42" mask="XXVXXXXX" minOut="8" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 8</label>
+        <label xml:lang="it">F8 controlla uscita 8</label>
+      </variable>
+      <variable item="F8 controls output 9" CV="42" mask="XVXXXXXX" minOut="9" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 9</label>
+        <label xml:lang="it">F8 controlla uscita 9</label>
+      </variable>
+      <variable item="F8 controls output 10" CV="42" mask="VXXXXXXX" minOut="10" minFn="8" default="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 10</label>
+        <label xml:lang="it">F8 controlla uscita 10</label>
+      </variable>
+      <variable CV="49" mask="XXXXXXXV" default="0" item="Sound Option 9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Decoder Properties/Synchropulses</label>
+      </variable>
+      <variable CV="49" mask="XXXXXXVX" default="0" item="Sound option 10">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Diesel and E Locosound</label>
+      </variable>
+      <variable item="2 Cylinder Steam" CV="49" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>2 Cylinder Steam</label>
+      </variable>
+      <variable item="3 Cylinder Steam" CV="49" mask="XXXXVXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>3 Cylinder Steam</label>
+      </variable>
+      <variable item="No Steamexhaust Downhill" CV="49" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>No Steamexhaust Downhill</label>
+      </variable>
+      <variable item="Continuous Sound CV 10, F 1" CV="49" mask="XXVXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Continuous Sound CV 10, F 1</label>
+      </variable>
+      <variable item="BEMF Power" CV="50" default="255" comment="Range 0-255">
+        <decVal/>
+        <label>BEMF Power</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="BEMF P-Value" CV="51" default="80" comment="Range 0-255">
+        <decVal/>
+        <label>BEMF P-Value</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="BEMF I-Value" CV="52" default="64" comment="Range 0-255">
+        <decVal/>
+        <label>BEMF I-Value</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Locmaus Addressing" CV="53" default="0">
+        <decVal/>
+        <label>Locmaus Addressing</label>
+      </variable>
+      <variable CV="54" default="50" item="Sound Setting 1">
+        <decVal min="1" max="100"/>
+        <label>Sound Fader</label>
+      </variable>
+      <variable item="Uncoupler Holding Current" CV="55" default="32" comment="Range 0-100">
+        <decVal min="1" max="100"/>
+        <label>Uncoupler Holding Current</label>
+        <comment>Range 0-100</comment>
+      </variable>
+      <variable item="Uncoupler Pulse Time" CV="56" default="60">
+        <decVal/>
+        <label>Uncoupler Pulse Time</label>
+      </variable>
+      <variable CV="57" mask="XXXXXXXV" default="0" item="Sound Option 1">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 1</label>
+      </variable>
+      <variable CV="57" mask="XXXXXXVX" default="0" item="Sound Option 2">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 2</label>
+      </variable>
+      <variable CV="57" mask="XXXXXVXX" default="0" item="Sound Option 3">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 3</label>
+      </variable>
+      <variable CV="57" mask="XXXXVXXX" default="0" item="Sound Option 4">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 4</label>
+      </variable>
+      <variable CV="57" mask="XXXVXXXX" default="0" item="Sound Option 5">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 5</label>
+      </variable>
+      <variable CV="57" mask="XXVXXXXX" default="0" item="Sound Option 6">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 6</label>
+      </variable>
+      <variable CV="57" mask="XVXXXXXX" default="0" item="Sound Option 7">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 7</label>
+      </variable>
+      <variable CV="57" mask="VXXXXXXX" default="0" item="Sound Option 8">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Fader Mask Slot 8</label>
+      </variable>
+      <variable item="Uncoupler Fader Mask 1" CV="58" mask="XXXXXXXV" default="0" comment="F1 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 1</label>
+        <comment>F1 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 2" CV="58" mask="XXXXXXVX" default="0" comment="F2 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 2</label>
+        <comment>F2 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 3" CV="58" mask="XXXXXVXX" default="0" comment="F3 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 3</label>
+        <comment>F3 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 4" CV="58" mask="XXXXVXXX" default="0" comment="F4 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 4</label>
+        <comment>F4 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 5" CV="58" mask="XXXVXXXX" default="0" comment="F5 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 5</label>
+        <comment>F5 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 6" CV="58" mask="XXVXXXXX" default="0" comment="F6 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 6</label>
+        <comment>F6 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 7" CV="58" mask="XVXXXXXX" default="0" comment="F7 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 7</label>
+        <comment>F7 Output</comment>
+      </variable>
+      <variable item="Uncoupler Fader Mask 8" CV="58" mask="VXXXXXXX" default="0" comment="F8 Output">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Uncoupler Fader Mask 8</label>
+        <comment>F8 Output</comment>
+      </variable>
+      <variable item="ZIMO Signal Controlled Speed L" CV="59" default="168" comment="Zimo Only">
+        <decVal/>
+        <label>ZIMO Signal Controlled Speed L</label>
+        <comment>Zimo Only</comment>
+      </variable>
+      <variable item="ZIMO Signal Controlled Speed U" CV="60" default="84" comment="Zimo Only">
+        <decVal/>
+        <label>ZIMO Signal Controlled Speed U</label>
+        <comment>Zimo Only</comment>
+      </variable>
+      <variable item="ZIMO Signal Controlled Acc Reaction" CV="61">
+        <decVal/>
+        <label>ZIMO Signal Controlled Acc Reaction</label>
+      </variable>
+      <variable item="Reference Voltage" CV="64" default="160" comment="160=16v track volts">
+        <decVal/>
+        <label>Reference Voltage</label>
+        <comment>160=16v track volts</comment>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable CV="105" default="0" item="User Id #1">
+        <decVal/>
+        <label>User Identification #1</label>
+      </variable>
+      <variable CV="106" default="0" item="User Id #2">
+        <decVal/>
+        <label>User Identification #2</label>
+      </variable>
+      <variable item="Brake Threshold" CV="107" default="0" comment="Range 0-255">
+        <decVal/>
+        <label>Brake Threshold</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="LGB Continuous Manual Sound Bitmask" CV="108" default="0">
+        <decVal/>
+        <label>LGB Continuous Manual Sound Bitmask</label>
+      </variable>
+      <variable item="Select CV set" CV="109" default="0">
+        <decVal min="0" max="1"/>
+        <label>Select CV set</label>
+      </variable>
+      <variable item="Load Dependant Sound Variation" CV="110" default="4">
+        <decVal min="0" max="15"/>
+        <label>Load Dependant Sound Variation</label>
+      </variable>
+      <variable item="ACK Pulse" CV="111" default="255">
+        <decVal/>
+        <label>ACK Pulse</label>
+      </variable>
+      <variable item="Random Aux Sound 1" CV="112">
+        <decVal/>
+        <label>Random Aux Sound 1</label>
+      </variable>
+      <variable item="Random Aux Sound 2" CV="113">
+        <decVal/>
+        <label>Random Aux Sound 2</label>
+      </variable>
+      <variable item="Switching 1" CV="116" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switching 1</label>
+      </variable>
+      <variable item="Switching 2" CV="116" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switching 2</label>
+      </variable>
+      <variable item="Switching 3" CV="116" mask="XXXXXVXX" default="0">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switching 3</label>
+      </variable>
+      <variable item="Chuff Sound Levels" CV="121" default="3">
+        <decVal min="0" max="3"/>
+        <label>Chuff Sound Levels</label>
+      </variable>
+      <variable item="F2 Repetitions" CV="122" default="11">
+        <decVal/>
+        <label>F2 Repetitions</label>
+      </variable>
+      <variable item="F3 Repetitions" CV="123" default="11">
+        <decVal/>
+        <label>F3 Repetitions</label>
+      </variable>
+      <variable item="F4 Repetitions" CV="124" default="11" comment="Bit 0-1 Aux Functs Bit 2-7 Repetitions">
+        <decVal/>
+        <label>F4 Repetitions</label>
+        <comment>Bit 0-1 Aux Functs Bit 2-7 Repetitions</comment>
+      </variable>
+      <variable item="F5 Repetitions" CV="125" default="11" comment="Bit 0-1 Aux Functs Bit 2-7 Repetitions">
+        <decVal/>
+        <label>F5 Repetitions</label>
+        <comment>Bit 0-1 Aux Functs Bit 2-7 Repetitions</comment>
+      </variable>
+      <variable item="F6 Repetitions" CV="126" default="11" comment="Bit 0-1 Aux Functs Bit 2-7 Repetitions">
+        <decVal/>
+        <label>F6 Repetitions</label>
+        <comment>Bit 0-1 Aux Functs Bit 2-7 Repetitions</comment>
+      </variable>
+      <variable item="F7 Repetitions" CV="127" default="11" comment="Bit 0-1 Aux Functs Bit 2-7 Repetitions">
+        <decVal/>
+        <label>F7 Repetitions</label>
+        <comment>Bit 0-1 Aux Functs Bit 2-7 Repetitions</comment>
+      </variable>
+      <variable item="F8 Repetitions" CV="128" default="11" comment="Bit 0-1 Aux Functs Bit 2-7 Repetitions">
+        <decVal/>
+        <label>F8 Repetitions</label>
+        <comment>Bit 0-1 Aux Functs Bit 2-7 Repetitions</comment>
+      </variable>
+      <variable CV="129" default="4" item="Sound Setting 2">
+        <decVal/>
+        <label>Load Sound Decay</label>
+      </variable>
+      <variable CV="130" default="11" item="Sound Setting 3" comment="Position 8-11 in Filelist">
+        <decVal/>
+        <label>Brake Sound Decay</label>
+        <comment>Position 8-11 in Filelist</comment>
+      </variable>
+      <variable item="Random Interval Aux Sounds" CV="131" default="20" comment="Unit=0.5secs">
+        <decVal/>
+        <label>Random Interval Aux Sounds</label>
+        <comment>Unit=0.5secs</comment>
+      </variable>
+      <variable item="Full Speed Exhaust Interval" CV="132" default="100" comment="Time between Exhaust Beats">
+        <decVal/>
+        <label>Full Speed Exhaust Interval</label>
+        <comment>Time between Exhaust Beats</comment>
+      </variable>
+      <variable item="Logical Exhaust Interval" CV="133" default="153" comment="Interval=1 Secs">
+        <decVal/>
+        <label>Logical Exhaust Interval</label>
+        <comment>Interval=1 Secs</comment>
+      </variable>
+      <variable item="Time Between Beats" CV="134" default="0" comment="HighByte">
+        <decVal/>
+        <label>Time Between Beats</label>
+        <comment>HighByte</comment>
+      </variable>
+      <variable item="Low Frequency Limit" CV="135" default="64">
+        <decVal/>
+        <label>Low Frequency Limit</label>
+      </variable>
+      <variable item="High Frequency Limit" CV="136" default="128">
+        <decVal/>
+        <label>High Frequency Limit</label>
+      </variable>
+      <variable item="Special CV" CV="137" default="0">
+        <decVal/>
+        <label>Special CV</label>
+      </variable>
+      <variable item="ZIMO Brake Time HLU" CV="138" default="3" comment="Zimo Only">
+        <decVal/>
+        <label>ZIMO Brake Time HLU</label>
+        <comment>Zimo Only</comment>
+      </variable>
+      <variable item="Direct Cut Off" CV="139" default="10">
+        <decVal/>
+        <label>Direct Cut Off</label>
+      </variable>
+      <variable item="Fast Cut Off" CV="140" default="8" comment="Fast Cut off Functions">
+        <decVal/>
+        <label>Fast Cut Off</label>
+        <comment>Fast Cut off Functions</comment>
+      </variable>
+      <variable item="Slow Cut Off" CV="141" default="6" comment="Slow Cut off Functions">
+        <decVal/>
+        <label>Slow Cut Off</label>
+        <comment>Slow Cut off Functions</comment>
+      </variable>
+      <variable item="Direct Cut Off Motor" CV="142" default="60" comment="Direct Cut off Motor">
+        <decVal/>
+        <label>Direct Cut Off Motor</label>
+        <comment>Direct Cut off Motor</comment>
+      </variable>
+      <variable item="Fast Cut Off Motor" CV="143" default="50" comment="Fast Cut Off Motor">
+        <decVal/>
+        <label>Fast Cut Off Motor</label>
+        <comment>Fast Cut Off Motor</comment>
+      </variable>
+      <variable item="Slow Cut Off Motor" CV="144" default="430" comment="Slow Cut off Motor">
+        <decVal/>
+        <label>Slow Cut Off Motor</label>
+        <comment>Slow Cut off Motor</comment>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Switching 1"/>
+      <display item="Switching 2"/>
+      <display item="Switching 3"/>
+    </column>
+    <name>Switching</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Direct Cut Off"/>
+      <display item="Fast Cut Off"/>
+      <display item="Slow Cut Off"/>
+      <display item="Direct Cut Off Motor"/>
+      <display item="Fast Cut Off Motor"/>
+      <display item="Slow Cut Off Motor"/>
+    </column>
+    <name>Shortcircuit Threshholds</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Decoder Properties/Synchropulses" tooltip=": Synchropulses OFF/ON"/>
+      <display item="Diesel and E Locosound" tooltip=":OFF/ON"/>
+      <display item="2 Cylinder Steam" tooltip=":OFF/ON"/>
+      <display item="3 Cylinder Steam" tooltip=":OFF/ON"/>
+      <display item="No Steamexhaust Downhill" tooltip=":OFF/ON"/>
+      <display item="Continuous Sound CV 10, F 1" tooltip=":OFF/ON"/>
+    </column>
+    <column>
+      <display item="Chuff Sound Levels"/>
+      <display item="Full Speed Exhaust Interval"/>
+      <display item="Logical Exhaust Interval"/>
+      <display item="Time Between Beats"/>
+      <display item="Random Interval Aux Sounds"/>
+      <display item="Random Aux Sound 1"/>
+      <display item="Random Aux Sound 2"/>
+    </column>
+    <column>
+      <display item="F2 Repetitions"/>
+      <display item="F3 Repetitions"/>
+      <display item="F4 Repetitions"/>
+      <display item="F5 Repetitions"/>
+      <display item="F6 Repetitions"/>
+      <display item="F7 Repetitions"/>
+      <display item="F8 Repetitions"/>
+    </column>
+    <name>Sound Tools 1</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="ACK Pulse"/>
+      <display item="Reference Voltage"/>
+      <display item="Special CV"/>
+      <display item="Error Diagnosis"/>
+    </column>
+    <name>CT Elektroniks</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="High Frequency Limit"/>
+      <display item="Low Frequency Limit"/>
+    </column>
+    <name>Frequency Roll Off</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="BEMF Power"/>
+      <display item="BEMF P-Value"/>
+      <display item="BEMF I-Value"/>
+    </column>
+    <name>BEMF</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Uncoupler Fader Mask 1"/>
+      <display item="Uncoupler Fader Mask 2"/>
+      <display item="Uncoupler Fader Mask 3"/>
+      <display item="Uncoupler Fader Mask 4"/>
+      <display item="Uncoupler Fader Mask 5"/>
+      <display item="Uncoupler Fader Mask 6"/>
+      <display item="Uncoupler Fader Mask 7"/>
+      <display item="Uncoupler Fader Mask 8"/>
+    </column>
+    <column>
+      <display item="Uncoupler Holding Current"/>
+      <display item="Uncoupler Pulse Time"/>
+    </column>
+    <name>Uncoupler</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="ZIMO Signal Controlled Speed L"/>
+      <display item="ZIMO Signal Controlled Speed U"/>
+      <display item="ZIMO Signal Controlled Acc Reaction"/>
+      <display item="ZIMO Brake Time HLU"/>
+    </column>
+    <column>
+      <display item="LGB Continuous Manual Sound Bitmask"/>
+      <display item="Locmaus Addressing"/>
+    </column>
+    <name>Roco LGB Zimo</name>
+  </pane>
+</decoder-config>

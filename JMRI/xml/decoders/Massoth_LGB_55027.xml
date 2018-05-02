@@ -1,0 +1,1688 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.3" lastUpdated="20090305"/>
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.2" lastUpdated="20090218"/>
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20080127"/>
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20070204"/>
+  <!-- 
+      This decoder XML is meant to be used with the "Custom" programmer format.
+      The pane definitions are included below the decoder definition.  The LGB
+      decoders seem to fit the description of "weird" as mentioned in that
+      programmer.  Also, this allows the tooltips from this decoder file to be
+      displayed for the user.
+
+      I'm afraid I have to admit that this decoder file has not been tested yet
+      with a LGB 55027 decoder.  The XML has been checked with DecoderPro. It
+      has been tested with a Massoth eMOTION XL Version 1.1.  While the two
+      decoders are physically very different, based on the documents it appears
+      that the firmware is very similar (if not identical).  I do feel that,
+      based on this testing and my experience with the other LGB decoders, this
+      55027 definition has a fair chance of being close to correct.
+
+      The range of versions listed is hypothetical as the versions for all the
+      Massoth/LGB decoder types overlap. The highest version I have encountered
+      is 3.4 (in both large and small onboard) and the lowest is 1.0 (in a
+      MTS I 55020).
+
+      CV 106 is used by Massoth as "ID for decoder type" and is possibly one way
+      of determining decoder type from the CV's, as the version numbers overlap.
+      To date, I have encountered the following values in CV 106 (any additions to
+      this list would be appreciated):
+
+      55020:              10
+      55021:             192
+      55022:              16
+      Small onboard:      65 (steam), 73 (steam), 81 (diesel), 82 (diesel), 83 (rail car), 93
+      Large onboard:     129 (steam), 134 (2-10-2), 137 (Aster steam), 145 (diesel/electric)
+                         146 (rail car), 147 (US diesel)
+      55027:             193
+      eMOTION L:         201 (according to 1.0 manual)
+      eMOTION LS:        202 (according to 2.2 manual)
+      eMOTION XL:        193 (according to 2.0 manual), 200
+      eMOTION XXL:       ???
+      eMOTION XLS:       202 (according to 1.3 manual), 203
+      eMOTION 8FL:       204 (according to 1.2 manual)
+      LED Light:         204
+      6500x sound unit:  208
+      Hot Metal Car:      10
+
+      This definition was based on the LGB document for the 55027, dated 03/06, which
+      is available from the LGB website.
+
+      I tried to match DeccoderPro "item" names when I was fairly certain they were
+      correct.  The "label" names tried to match the names used in the LGB
+      documentation.
+
+      Default values are from the 03/06 version of the instructions.
+
+      Any and all feedback on this file would be appreciated.
+
+      Version History:
+
+        1.0 - pre-testing release 4 Feb 2007
+
+        1.1 - 27 Jan 2008
+              Cosmetic fix to one tool tip
+              Cosmetic fix so XML would validate
+              Added attributes to model element
+              Removed high version
+              Implemented "factReset"
+              Added default values
+              Corrected CV 60 max value
+
+        1.2 - 18 Feb 2009
+              Added highVersionID, high version is higher than current version at time of writing
+
+        1.3 - 5 Mar 2009
+              Converted single "Speed Control" pane to "Basic Speed Control" and "Speed Table" following Bruce Shanks'
+                 Version 13 changes to the Comprehensive programmer
+-->
+  <decoder>
+    <family name="LGB" mfg="Massoth Elektronik, GmbH">
+      <model model="LGB MTS III 55027 loco decoders" lowVersionID="10" highVersionID="19" maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A" numOuts="8" numFns="18" formFactor="G" connector="other">
+        <output name="1" label="Front light" maxcurrent="0.3 A" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="0.3 A" connection="wire"/>
+        <output name="3" label="F1 " maxcurrent="0.3 A" connection="wire"/>
+        <output name="4" label="F2 " maxcurrent="0.3 A" connection="wire"/>
+        <output name="5" label="F3 " maxcurrent="0.3 A" connection="solder"/>
+        <output name="6" label="F4 " maxcurrent="0.3 A" connection="solder"/>
+        <output name="7" label="F5 " maxcurrent="0.3 A" connection="solder"/>
+        <output name="8" label="F6 " maxcurrent="0.3 A" connection="solder"/>
+        <size length="55" width="25" height="12" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" default="2" item="Vstart" tooltip="x (1/255 track power)">
+        <decVal min="1" max="255"/>
+        <label>Starting voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+      </variable>
+      <variable CV="3" default="3" item="Accel" tooltip="x 2ms x (1/255 track power)- 1: rapid acceleration, 255: gradual acceleration">
+        <decVal min="1" max="255"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+      </variable>
+      <variable CV="4" default="3" item="Decel" tooltip="x 2ms x (1/255 track power) - 1: rapid braking, 255: gradual braking)">
+        <decVal min="1" max="255"/>
+        <label>Braking</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
+      </variable>
+      <variable CV="5" default="255" item="Vhigh" tooltip="x (1/255 track power)">
+        <decVal min="1" max="255"/>
+        <label>Maximum Speed</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="6" default="64" item="Vmid" tooltip="x (1/255 track power)">
+        <decVal min="1" max="255"/>
+        <label>Medium Speed</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
+      </variable>
+      <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" default="123" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+        <label>Manufacturer Code</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="9" default="0" item="Total PWM Period" tooltip="Factory pre-set (16 kHz) is optimized for LGB motors">
+        <enumVal>
+          <enumChoice choice="16 kHz">
+            <choice>16 kHz</choice>
+          </enumChoice>
+          <enumChoice choice="2 kHz">
+            <choice>2 kHz</choice>
+          </enumChoice>
+          <enumChoice choice="0.4 kHz">
+            <choice>0.4 kHz</choice>
+          </enumChoice>
+          <enumChoice choice="0.06 kHz">
+            <choice>0.06 kHz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor Frequency</label>
+      </variable>
+      <variable CV="13" mask="XXXXXXXV" default="1" item="Analog Mode Function Status - F1" tooltip="(On if value set)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1 Function Output in Analog Mode</label>
+      </variable>
+      <variable CV="13" mask="XXXXXXVX" default="1" item="Analog Mode Function Status - F2" tooltip="(On if value set)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F2 Function Output in Analog Mode</label>
+      </variable>
+      <variable CV="13" mask="XXXXXVXX" default="0" item="Analog Mode Function Status - F3" tooltip="(On if value set)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3 Function Output in Analog Mode</label>
+      </variable>
+      <variable CV="13" mask="XXXXVXXX" default="0" item="Analog Mode Function Status - F4" tooltip="(On if value set)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F4 Function Output in Analog Mode</label>
+      </variable>
+      <variable CV="13" mask="XXXVXXXX" default="0" item="Analog Mode Function Status - F5" tooltip="(On if value set)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5 Function Output in Analog Mode</label>
+      </variable>
+      <variable CV="13" mask="XXVXXXXX" default="0" item="Analog Mode Function Status - F6" tooltip="(On if value set)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F6 Function Output in Analog Mode</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128 (not LGB MTS)">
+            <choice>28/128 (not LGB MTS)</choice>
+            <choice xml:lang="it">28/128 (non LGB MTS)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+        <label xml:lang="it">Step Velocità</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="29" mask="XXXVXXXX" default="0" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table">
+        <enumVal>
+        <enumChoice choice="internal speed step table">
+            <choice>internal speed step table</choice>
+            <choice xml:lang="it">tabella velocità interna</choice>
+          </enumChoice>
+          <enumChoice choice="user-programmed speed step table (CV's 67-94)">
+            <choice>user-programmed speed step table (CV's 67-94)</choice>
+            <choice xml:lang="it">tabella velocità personalizzata (CV 67-94)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Use Speed Table</label>
+        <label xml:lang="it">Usa Tabella velocità</label>
+      </variable>
+      <variable item="Function commands" CV="49" mask="XXXXXXXV" default="1" tooltip="When serial is selected, F1 - F8 also can be triggered parallel">
+        <enumVal>
+          <enumChoice choice="parallel">
+            <choice>parallel</choice>
+          </enumChoice>
+          <enumChoice choice="serial">
+            <choice>serial</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function commands</label>
+      </variable>
+      <variable item="Digital Back-EMF" CV="49" mask="XXXXXXVX" default="1" tooltip="Back-EMF keeps the loco speed constant even as the load varies">
+        <enumVal>
+          <enumChoice choice="off">
+            <choice>off</choice>
+          </enumChoice>
+          <enumChoice choice="on">
+            <choice>on</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Digital Back-EMF</label>
+      </variable>
+      <variable item="Analog Back-EMF" CV="49" mask="XXXXXVXX" default="1" tooltip="Back-EMF keeps the loco speed constant even as the load varies">
+        <enumVal>
+          <enumChoice choice="off">
+            <choice>off</choice>
+          </enumChoice>
+          <enumChoice choice="on">
+            <choice>on</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog Back-EMF</label>
+      </variable>
+      <variable item="Interface" CV="49" mask="XXXXVXXX" default="0" tooltip="If old LGB interface is selected, serial function commands must be selected as well">
+        <enumVal>
+          <enumChoice choice="no interface or DCC interface">
+            <choice>no interface or DCC interface</choice>
+          </enumChoice>
+          <enumChoice choice="old LGB interface for 55020/21">
+            <choice>old LGB interface for 55020/21</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Interface</label>
+      </variable>
+      <variable item="Voltage for lights" CV="50" default="32" tooltip="Locos with interface = 32(full track power); direct connection of 5V bulbs = 5; direct connection of 19V bulbs = 26">
+        <decVal min="1" max="32"/>
+        <label>Voltage for lights</label>
+      </variable>
+      <variable item="Command for front light - Direction" CV="51" mask="VVXXXXXX" default="2" tooltip="Direction for front light On">
+        <enumVal>
+          <enumChoice choice="Front Light On in both directions" value="0">
+            <choice>Front Light On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="Front Light On in Reverse only" value="1">
+            <choice>Front Light On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="Front Light On in Standard Driving Direction only" value="2">
+            <choice>Front Light On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for front light - Direction</label>
+      </variable>
+      <variable item="Command for front light - Function Keys" CV="51" mask="XXXVVVVV" default="0" tooltip="Function key which switches front light (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for front light - Function Keys</label>
+      </variable>
+      <variable item="Command for rear light - Direction" CV="52" mask="VVXXXXXX" default="1" tooltip="Direction for rear light On">
+        <enumVal>
+          <enumChoice choice="Rear Light On in both directions" value="0">
+            <choice>Rear Light On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="Rear Light On in Reverse only" value="1">
+            <choice>Rear Light On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="Rear Light On in Standard Driving Direction only" value="2">
+            <choice>Rear Light On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for rear light - Direction</label>
+      </variable>
+      <variable item="Command for rear light - Function Keys" CV="52" mask="XXXVVVVV" default="0" tooltip="Function key which switches rear light (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for rear light - Function Keys</label>
+      </variable>
+      <variable item="F1 + F2: Voltage" CV="53" mask="XXVVVVVV" default="32" tooltip="32 = full track voltage">
+        <decVal min="1" max="32"/>
+        <label>F1 + F2: Voltage</label>
+      </variable>
+      <variable item="F1 + F2: Voltage: Select Function to be Dimmed" CV="53" mask="VVXXXXXX" default="0" tooltip="Which function or functions is dimmed">
+        <enumVal>
+          <enumChoice choice="Full voltage on both outputs" value="0">
+            <choice>Full voltage on both outputs</choice>
+          </enumChoice>
+          <enumChoice choice="Only voltage for F1 is adjusted" value="1">
+            <choice>Only voltage for F1 is adjusted</choice>
+          </enumChoice>
+          <enumChoice choice="Only voltage for F2 is adjusted" value="2">
+            <choice>Only voltage for F2 is adjusted</choice>
+          </enumChoice>
+          <enumChoice choice="Voltage for both F1 and F2 is adjusted" value="3">
+            <choice>Voltage for both F1 and F2 is adjusted</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1 + F2: Voltage: Select Function to be Dimmed</label>
+      </variable>
+      <variable item="Command for F1 - Direction" CV="54" mask="VVXXXXXX" default="0" tooltip="Direction for F1 On">
+        <enumVal>
+          <enumChoice choice="F1 On in both directions" value="0">
+            <choice>F1 On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="F1 On in Reverse only" value="1">
+            <choice>F1 On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="F1 On in Standard Driving Direction only" value="2">
+            <choice>F1 On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F1 - Direction</label>
+      </variable>
+      <variable item="Command for F1 - Function Keys" CV="54" mask="XXXVVVVV" default="1" tooltip="Function key which switches F1 (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F1 - Function Keys</label>
+      </variable>
+      <variable item="F1: Special Function: Blinking/Monoflop time base" CV="55" mask="XXXXVVVV" default="0" tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value">
+        <enumVal>
+          <enumChoice choice="Steady On (Standard Operation)" value="0">
+            <choice>Steady On (Standard Operation)</choice>
+          </enumChoice>
+          <enumChoice choice="0.25 sec" value="1">
+            <choice>0.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.50 sec" value="2">
+            <choice>0.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.75 sec" value="3">
+            <choice>0.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.00 sec" value="4">
+            <choice>1.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.25 sec" value="5">
+            <choice>1.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.50 sec" value="6">
+            <choice>1.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.75 sec" value="7">
+            <choice>1.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.00 sec" value="8">
+            <choice>2.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.25 sec" value="9">
+            <choice>2.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.50 sec" value="10">
+            <choice>2.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.75 sec" value="11">
+            <choice>2.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.00 sec" value="12">
+            <choice>3.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.25 sec" value="13">
+            <choice>3.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.50 sec" value="14">
+            <choice>3.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.75 sec" value="15">
+            <choice>3.75 sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1: Special Function: Blinking/Monoflop time base</label>
+      </variable>
+      <variable item="F1: Special Function: Select Special Function" CV="55" mask="VVXXXXXX" default="0" tooltip="Which special function, if any, for F1. For Monoflop, output is switched off automatically after timeout.">
+        <enumVal>
+          <enumChoice choice="Symmetric Blinking" value="0">
+            <choice>Symmetric Blinking</choice>
+          </enumChoice>
+          <enumChoice choice="Short Term Function (Monoflop)" value="1">
+            <choice>Short Term Function (Monoflop)</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Short), Output blinks 1/3 On" value="2">
+            <choice>Asymmetric Blinking (Short), Output blinks 1/3 On</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Long), Output blinks 2/3 On" value="3">
+            <choice>Asymmetric Blinking (Long), Output blinks 2/3 On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1: Special Function: Select Special Function</label>
+      </variable>
+      <!-- NOTE: in eMOTION manual, inverse coupling of F1 and F2 is CV 57 not 55 -->
+      <variable item="F1: Inverse coupling of F1 and F2 terminals" CV="55" mask="XXXVXXXX" default="0" tooltip="Activate inverse coupling, usually alternate blinking, with F2">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="1">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1: Inverse coupling of F1 and F2 terminals</label>
+      </variable>
+      <variable item="Command for F2 - Direction" CV="56" mask="VVXXXXXX" default="0" tooltip="Direction for F2 On">
+        <enumVal>
+          <enumChoice choice="F2 On in both directions" value="0">
+            <choice>F2 On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="F2 On in Reverse only" value="1">
+            <choice>F2 On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="F2 On in Standard Driving Direction only" value="2">
+            <choice>F2 On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F2 - Direction</label>
+      </variable>
+      <variable item="Command for F2 - Function Keys" CV="56" mask="XXXVVVVV" default="2" tooltip="Function key which switches F2 (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F2 - Function Keys</label>
+      </variable>
+      <variable item="F2: Special Function: Blinking/Monoflop time base" CV="57" mask="XXXXVVVV" default="0" tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value">
+        <enumVal>
+          <enumChoice choice="Steady On (Standard Operation)" value="0">
+            <choice>Steady On (Standard Operation)</choice>
+          </enumChoice>
+          <enumChoice choice="0.25 sec" value="1">
+            <choice>0.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.50 sec" value="2">
+            <choice>0.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.75 sec" value="3">
+            <choice>0.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.00 sec" value="4">
+            <choice>1.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.25 sec" value="5">
+            <choice>1.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.50 sec" value="6">
+            <choice>1.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.75 sec" value="7">
+            <choice>1.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.00 sec" value="8">
+            <choice>2.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.25 sec" value="9">
+            <choice>2.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.50 sec" value="10">
+            <choice>2.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.75 sec" value="11">
+            <choice>2.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.00 sec" value="12">
+            <choice>3.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.25 sec" value="13">
+            <choice>3.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.50 sec" value="14">
+            <choice>3.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.75 sec" value="15">
+            <choice>3.75 sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F2: Special Function: Blinking/Monoflop time base</label>
+      </variable>
+      <variable item="F2: Special Function: Select Special Function" CV="57" mask="VVXXXXXX" default="0" tooltip="Which special function, if any, for F2. For Monoflop, output is switched off automatically after timeout.">
+        <enumVal>
+          <enumChoice choice="Symmetric Blinking" value="0">
+            <choice>Symmetric Blinking</choice>
+          </enumChoice>
+          <enumChoice choice="Short Term Function (Monoflop)" value="1">
+            <choice>Short Term Function (Monoflop)</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Short), Output blinks 1/3 On" value="2">
+            <choice>Asymmetric Blinking (Short), Output blinks 1/3 On</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Long), Output blinks 2/3 On" value="3">
+            <choice>Asymmetric Blinking (Long), Output blinks 2/3 On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F2: Special Function: Select Special Function</label>
+      </variable>
+      <variable item="Pause time when stopping and changing direction" CV="58" default="0" tooltip="Pause equals programmed value x 0.5 seconds">
+        <decVal min="0" max="255"/>
+        <label>Pause time when stopping and changing direction</label>
+      </variable>
+      <variable CV="59" default="8" item="Half-speed mode" tooltip="Command which triggers the Half-speed mode (MTS II buttons 1-8 only)">
+        <enumVal>
+          <!-- 0 equals "off" is guess based on eMOTION XL document/behavior -->
+          <enumChoice choice="Half Speed Off" value="0">
+            <choice>Half Speed Off</choice>
+          </enumChoice>
+          <enumChoice choice="button 1" value="1">
+            <choice>button 1</choice>
+          </enumChoice>
+          <enumChoice choice="button 2" value="2">
+            <choice>button 2</choice>
+          </enumChoice>
+          <enumChoice choice="button 3" value="3">
+            <choice>button 3</choice>
+          </enumChoice>
+          <enumChoice choice="button 4" value="4">
+            <choice>button 4</choice>
+          </enumChoice>
+          <enumChoice choice="button 5" value="5">
+            <choice>button 5</choice>
+          </enumChoice>
+          <enumChoice choice="button 6" value="6">
+            <choice>button 6</choice>
+          </enumChoice>
+          <enumChoice choice="button 7" value="7">
+            <choice>button 7</choice>
+          </enumChoice>
+          <enumChoice choice="button 8" value="8">
+            <choice>button 8</choice>
+          </enumChoice>
+          <enumChoice choice="button 9" value="9">
+            <choice>button 9</choice>
+          </enumChoice>
+          <enumChoice choice="button 10" value="10">
+            <choice>button 10</choice>
+          </enumChoice>
+          <enumChoice choice="button 11" value="11">
+            <choice>button 11</choice>
+          </enumChoice>
+          <enumChoice choice="button 12" value="12">
+            <choice>button 12</choice>
+          </enumChoice>
+          <enumChoice choice="button 13" value="13">
+            <choice>button 13</choice>
+          </enumChoice>
+          <enumChoice choice="button 14" value="14">
+            <choice>button 14</choice>
+          </enumChoice>
+          <enumChoice choice="button 15" value="15">
+            <choice>button 15</choice>
+          </enumChoice>
+          <enumChoice choice="button 16" value="16">
+            <choice>button 16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Half-speed mode</label>
+      </variable>
+      <variable item="Back-EMF Maximum Adjustment Factor" CV="60" default="2" tooltip="Large value = large adjustment">
+        <decVal min="1" max="255"/>
+        <label>Back-EMF Maximum Adjustment Factor</label>
+      </variable>
+      <variable item="Back-EMF Adjustment Frequency" CV="61" default="60" tooltip="Large value = slow reaction">
+        <decVal min="1" max="255"/>
+        <label>Back-EMF Adjustment Frequency</label>
+      </variable>
+      <variable item="Back-EMF Maximum Adjustment" CV="62" default="255" tooltip="255 = no limit">
+        <decVal min="1" max="255"/>
+        <label>Back-EMF Maximum Adjustment</label>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal>
+          <speedTableEntry step="1" value="8"/>
+          <speedTableEntry step="2" value="16"/>
+          <speedTableEntry step="3" value="24"/>
+          <speedTableEntry step="4" value="32"/>
+          <speedTableEntry step="5" value="40"/>
+          <speedTableEntry step="6" value="48"/>
+          <speedTableEntry step="7" value="56"/>
+          <speedTableEntry step="8" value="64"/>
+          <speedTableEntry step="9" value="72"/>
+          <speedTableEntry step="10" value="80"/>
+          <speedTableEntry step="11" value="88"/>
+          <speedTableEntry step="12" value="96"/>
+          <speedTableEntry step="13" value="104"/>
+          <speedTableEntry step="14" value="112"/>
+          <speedTableEntry step="15" value="120"/>
+          <speedTableEntry step="16" value="128"/>
+          <speedTableEntry step="17" value="136"/>
+          <speedTableEntry step="18" value="144"/>
+          <speedTableEntry step="19" value="152"/>
+          <speedTableEntry step="20" value="160"/>
+          <speedTableEntry step="21" value="168"/>
+          <speedTableEntry step="22" value="176"/>
+          <speedTableEntry step="23" value="184"/>
+          <speedTableEntry step="24" value="192"/>
+          <speedTableEntry step="25" value="208"/>
+          <speedTableEntry step="26" value="224"/>
+          <speedTableEntry step="27" value="240"/>
+          <speedTableEntry step="28" value="255"/>
+        </speedTableVal>
+        <label>Speed Table</label>
+      </variable>
+      <!-- Do not attempt to read CV 105 on an LGB decoder -->
+      <variable CV="106" readOnly="yes" item="Decoder Type" tooltip="ID for Decoder Type (read only)">
+        <decVal/>
+        <label>ID for Decoder Type</label>
+      </variable>
+      <variable item="F3 + F4: Voltage" CV="112" mask="XXVVVVVV" default="32" tooltip="32 = full track voltage">
+        <decVal min="1" max="32"/>
+        <label>F3 + F4: Voltage</label>
+      </variable>
+      <variable item="F3 + F4: Voltage: Select Function to be Dimmed" CV="112" mask="VVXXXXXX" default="0" tooltip="Which function or functions is dimmed">
+        <enumVal>
+          <enumChoice choice="Full voltage on both outputs" value="0">
+            <choice>Full voltage on both outputs</choice>
+          </enumChoice>
+          <enumChoice choice="Only voltage for F3 is adjusted" value="1">
+            <choice>Only voltage for F3 is adjusted</choice>
+          </enumChoice>
+          <enumChoice choice="Only voltage for F4 is adjusted" value="2">
+            <choice>Only voltage for F4 is adjusted</choice>
+          </enumChoice>
+          <enumChoice choice="Voltage for both F3 and F4 is adjusted" value="3">
+            <choice>Voltage for both F3 and F4 is adjusted</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3 + F4: Voltage: Select Function to be Dimmed</label>
+      </variable>
+      <variable item="Command for F3 - Direction" CV="113" mask="VVXXXXXX" default="0" tooltip="Direction for F3 On">
+        <enumVal>
+          <enumChoice choice="F3 On in both directions" value="0">
+            <choice>F3 On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="F3 On in Reverse only" value="1">
+            <choice>F3 On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="F3 On in Standard Driving Direction only" value="2">
+            <choice>F3 On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F3 - Direction</label>
+      </variable>
+      <variable item="Command for F3 - Function Keys" CV="113" mask="XXXVVVVV" default="3" tooltip="Function key which switches F3 (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F3 - Function Keys</label>
+      </variable>
+      <variable item="F3: Special Function: Blinking/Monoflop time base" CV="114" mask="XXXXVVVV" default="0" tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value">
+        <enumVal>
+          <enumChoice choice="Steady On (Standard Operation)" value="0">
+            <choice>Steady On (Standard Operation)</choice>
+          </enumChoice>
+          <enumChoice choice="0.25 sec" value="1">
+            <choice>0.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.50 sec" value="2">
+            <choice>0.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.75 sec" value="3">
+            <choice>0.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.00 sec" value="4">
+            <choice>1.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.25 sec" value="5">
+            <choice>1.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.50 sec" value="6">
+            <choice>1.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.75 sec" value="7">
+            <choice>1.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.00 sec" value="8">
+            <choice>2.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.25 sec" value="9">
+            <choice>2.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.50 sec" value="10">
+            <choice>2.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.75 sec" value="11">
+            <choice>2.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.00 sec" value="12">
+            <choice>3.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.25 sec" value="13">
+            <choice>3.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.50 sec" value="14">
+            <choice>3.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.75 sec" value="15">
+            <choice>3.75 sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3: Special Function: Blinking/Monoflop time base</label>
+      </variable>
+      <variable item="F3: Special Function: Select Special Function" CV="114" mask="VVXXXXXX" default="0" tooltip="Which special function, if any, for F3. For Monoflop, output is switched off automatically after timeout.">
+        <enumVal>
+          <enumChoice choice="Symmetric Blinking" value="0">
+            <choice>Symmetric Blinking</choice>
+          </enumChoice>
+          <enumChoice choice="Short Term Function (Monoflop)" value="1">
+            <choice>Short Term Function (Monoflop)</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Short), Output blinks 1/3 On" value="2">
+            <choice>Asymmetric Blinking (Short), Output blinks 1/3 On</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Long), Output blinks 2/3 On" value="3">
+            <choice>Asymmetric Blinking (Long), Output blinks 2/3 On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3: Special Function: Select Special Function</label>
+      </variable>
+      <!-- NOTE: in eMOTION manual, inverse coupling of F3 and F4 is CV 116 not 114 -->
+      <variable item="F3: Inverse coupling of F3 and F4 terminals" CV="114" mask="XXXVXXXX" default="0" tooltip="Activate inverse coupling, usually alternate blinking, with F4">
+        <enumVal>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On" value="1">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3: Inverse coupling of F3 and F4 terminals</label>
+      </variable>
+      <variable item="Command for F4 - Direction" CV="115" mask="VVXXXXXX" default="0" tooltip="Direction for F4 On">
+        <enumVal>
+          <enumChoice choice="F4 On in both directions" value="0">
+            <choice>F4 On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="F4 On in Reverse only" value="1">
+            <choice>F4 On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="F4 On in Standard Driving Direction only" value="2">
+            <choice>F4 On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F4 - Direction</label>
+      </variable>
+      <variable item="Command for F4 - Function Keys" CV="115" mask="XXXVVVVV" default="4" tooltip="Function key which switches F4 (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F4 - Function Keys</label>
+      </variable>
+      <variable item="F4: Special Function: Blinking/Monoflop time base" CV="116" mask="XXXXVVVV" default="0" tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value">
+        <enumVal>
+          <enumChoice choice="Steady On (Standard Operation)" value="0">
+            <choice>Steady On (Standard Operation)</choice>
+          </enumChoice>
+          <enumChoice choice="0.25 sec" value="1">
+            <choice>0.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.50 sec" value="2">
+            <choice>0.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.75 sec" value="3">
+            <choice>0.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.00 sec" value="4">
+            <choice>1.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.25 sec" value="5">
+            <choice>1.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.50 sec" value="6">
+            <choice>1.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.75 sec" value="7">
+            <choice>1.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.00 sec" value="8">
+            <choice>2.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.25 sec" value="9">
+            <choice>2.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.50 sec" value="10">
+            <choice>2.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.75 sec" value="11">
+            <choice>2.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.00 sec" value="12">
+            <choice>3.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.25 sec" value="13">
+            <choice>3.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.50 sec" value="14">
+            <choice>3.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.75 sec" value="15">
+            <choice>3.75 sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F4: Special Function: Blinking/Monoflop time base</label>
+      </variable>
+      <variable item="F4: Special Function: Select Special Function" CV="116" mask="VVXXXXXX" default="0" tooltip="Which special function, if any, for F4. For Monoflop, output is switched off automatically after timeout.">
+        <enumVal>
+          <enumChoice choice="Symmetric Blinking" value="0">
+            <choice>Symmetric Blinking</choice>
+          </enumChoice>
+          <enumChoice choice="Short Term Function (Monoflop)" value="1">
+            <choice>Short Term Function (Monoflop)</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Short), Output blinks 1/3 On" value="2">
+            <choice>Asymmetric Blinking (Short), Output blinks 1/3 On</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Long), Output blinks 2/3 On" value="3">
+            <choice>Asymmetric Blinking (Long), Output blinks 2/3 On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F4: Special Function: Select Special Function</label>
+      </variable>
+      <variable item="Command for F5 - Direction" CV="117" mask="VVXXXXXX" default="0" tooltip="Direction for F5 On">
+        <enumVal>
+          <enumChoice choice="F5 On in both directions" value="0">
+            <choice>F5 On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="F5 On in Reverse only" value="1">
+            <choice>F5 On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="F5 On in Standard Driving Direction only" value="2">
+            <choice>F5 On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F5 - Direction</label>
+      </variable>
+      <variable item="Command for F5 - Function Keys" CV="117" mask="XXXVVVVV" default="5" tooltip="Function key which switches F5 (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F5 - Function Keys</label>
+      </variable>
+      <variable item="F5: Special Function: Blinking/Monoflop time base" CV="118" mask="XXXXVVVV" default="2" tooltip="0=Steady On (Standard Operation), 1..15=Blinking/Monoflop Time Base 0.25sec per value">
+        <enumVal>
+          <enumChoice choice="Steady On (Standard Operation)" value="0">
+            <choice>Steady On (Standard Operation)</choice>
+          </enumChoice>
+          <enumChoice choice="0.25 sec" value="1">
+            <choice>0.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.50 sec" value="2">
+            <choice>0.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.75 sec" value="3">
+            <choice>0.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.00 sec" value="4">
+            <choice>1.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.25 sec" value="5">
+            <choice>1.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.50 sec" value="6">
+            <choice>1.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.75 sec" value="7">
+            <choice>1.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.00 sec" value="8">
+            <choice>2.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.25 sec" value="9">
+            <choice>2.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.50 sec" value="10">
+            <choice>2.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="2.75 sec" value="11">
+            <choice>2.75 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.00 sec" value="12">
+            <choice>3.00 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.25 sec" value="13">
+            <choice>3.25 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.50 sec" value="14">
+            <choice>3.50 sec</choice>
+          </enumChoice>
+          <enumChoice choice="3.75 sec" value="15">
+            <choice>3.75 sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5: Special Function: Blinking/Monoflop time base</label>
+      </variable>
+      <variable item="F5: Special Function: Select Special Function" CV="118" mask="VVXXXXXX" default="1" tooltip="Which special function, if any, for F5. For Monoflop, output is switched off automatically after timeout.">
+        <enumVal>
+          <enumChoice choice="Symmetric Blinking" value="0">
+            <choice>Symmetric Blinking</choice>
+          </enumChoice>
+          <enumChoice choice="Short Term Function (Monoflop)" value="1">
+            <choice>Short Term Function (Monoflop)</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Short), Output blinks 1/3 On" value="2">
+            <choice>Asymmetric Blinking (Short), Output blinks 1/3 On</choice>
+          </enumChoice>
+          <enumChoice choice="Asymmetric Blinking (Long), Output blinks 2/3 On" value="3">
+            <choice>Asymmetric Blinking (Long), Output blinks 2/3 On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5: Special Function: Select Special Function</label>
+      </variable>
+      <variable item="Command for F6 - Direction" CV="119" mask="VVXXXXXX" default="0" tooltip="Direction for F6 On">
+        <enumVal>
+          <enumChoice choice="F6 On in both directions" value="0">
+            <choice>F6 On in both directions</choice>
+          </enumChoice>
+          <enumChoice choice="F6 On in Reverse only" value="1">
+            <choice>F6 On in Reverse only</choice>
+          </enumChoice>
+          <enumChoice choice="F6 On in Standard Driving Direction only" value="2">
+            <choice>F6 On in Standard Driving Direction only</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F6 - Direction</label>
+      </variable>
+      <variable item="Command for F6 - Function Keys" CV="119" mask="XXXVVVVV" default="6" tooltip="Function key which switches F6 (MTS II buttons 1-8 only)">
+        <enumVal>
+          <enumChoice choice="Light Key" value="0">
+            <choice>Light Key</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="4">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="5">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="6">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="7">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="8">
+            <choice>F8</choice>
+          </enumChoice>
+          <enumChoice choice="F9" value="9">
+            <choice>F9</choice>
+          </enumChoice>
+          <enumChoice choice="F10" value="10">
+            <choice>F10</choice>
+          </enumChoice>
+          <enumChoice choice="F11" value="11">
+            <choice>F11</choice>
+          </enumChoice>
+          <enumChoice choice="F12" value="12">
+            <choice>F12</choice>
+          </enumChoice>
+          <enumChoice choice="F13" value="13">
+            <choice>F13</choice>
+          </enumChoice>
+          <enumChoice choice="F14" value="14">
+            <choice>F14</choice>
+          </enumChoice>
+          <enumChoice choice="F15" value="15">
+            <choice>F15</choice>
+          </enumChoice>
+          <enumChoice choice="F16" value="16">
+            <choice>F16</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Command for F6 - Function Keys</label>
+      </variable>
+      <variable item="F6: Special Function: Time Base for Sound Pulse Generator" CV="120" mask="XXXXVVVV" default="8" tooltip="0=Steady On (Standard Operation), 1..15=Timing for sound cam simulator (1=slow, 15=fast">
+        <decVal min="0" max="15"/>
+        <label>F6: Special Function: Time Base for Sound Pulse Generator</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset basic settings" CV="7" default="55"/>
+      <factReset label="Reset motor settings" CV="7" default="66"/>
+      <factReset label="Reset lights and functions" CV="7" default="77"/>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <dccaddress/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Short Address"/>
+      <display item="Extended Address"/>
+      <display item="Address Format"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Locomotive Direction"/>
+      <display item="Speed Step Mode"/>
+      <display item="Analog (DC) Operation"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+      <display item="Decoder Type"/>
+    </column>
+    <name>Basic</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Accel"/>
+      <display item="Decel"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Total PWM Period"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Pause time when stopping and changing direction"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Digital Back-EMF"/>
+      <display item="Analog Back-EMF"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Back-EMF Maximum Adjustment Factor"/>
+      <display item="Back-EMF Adjustment Frequency"/>
+      <display item="Back-EMF Maximum Adjustment"/>
+    </column>
+    <name>Motor</name>
+  </pane>
+  <pane>
+    <column>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below">
+            <label>Select this button to use settings shown below</label>
+          </display>
+          <label>
+            <text>           To turn off, use Speed Table pane</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <row>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <row>
+        <column>
+          <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
+          <display item="Vmid" tooltip="Sets the voltage at mid throttle"/>
+          <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle"/>
+          <display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first"/>
+        </column>
+        <column>
+          <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1">
+            <label/>
+          </display>
+          <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle">
+            <label/>
+          </display>
+          <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle">
+            <label/>
+          </display>
+        </column>
+      </row>
+    </column>
+    <name>Basic Speed Control</name>
+  </pane>
+  <pane>
+    <column>
+      <row>
+        <column>
+          <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
+            <label>Select this button to use a Speed Table for Speed Control</label>
+          </display>
+          <label>
+            <text>            To turn off, use Basic Speed Control pane</text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <row>
+        <label>
+          <text> </text>
+        </label>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Speed Table" layout="above"/>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+    </column>
+    <name>Speed Table</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Voltage for lights"/>
+      <display item="Command for front light - Direction"/>
+      <display item="Command for front light - Function Keys"/>
+      <display item="Command for rear light - Direction"/>
+      <display item="Command for rear light - Function Keys"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Command for F1 - Direction"/>
+      <display item="Command for F1 - Function Keys"/>
+      <display item="F1: Special Function: Blinking/Monoflop time base"/>
+      <display item="F1: Special Function: Select Special Function"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="F1 + F2: Voltage"/>
+      <display item="F1 + F2: Voltage: Select Function to be Dimmed"/>
+      <display item="F1: Inverse coupling of F1 and F2 terminals"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Command for F2 - Direction"/>
+      <display item="Command for F2 - Function Keys"/>
+      <display item="F2: Special Function: Blinking/Monoflop time base"/>
+      <display item="F2: Special Function: Select Special Function"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Command for F3 - Direction"/>
+      <display item="Command for F3 - Function Keys"/>
+      <display item="F3: Special Function: Blinking/Monoflop time base"/>
+      <display item="F3: Special Function: Select Special Function"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="F3 + F4: Voltage"/>
+      <display item="F3 + F4: Voltage: Select Function to be Dimmed"/>
+      <display item="F3: Inverse coupling of F3 and F4 terminals"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Command for F4 - Direction"/>
+      <display item="Command for F4 - Function Keys"/>
+      <display item="F4: Special Function: Blinking/Monoflop time base"/>
+      <display item="F4: Special Function: Select Special Function"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Command for F5 - Direction"/>
+      <display item="Command for F5 - Function Keys"/>
+      <display item="F5: Special Function: Blinking/Monoflop time base"/>
+      <display item="F5: Special Function: Select Special Function"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Command for F6 - Direction"/>
+      <display item="Command for F6 - Function Keys"/>
+      <display item="F6: Special Function: Time Base for Sound Pulse Generator"/>
+    </column>
+    <name>Lights and Functions</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Analog (DC) Operation"/>
+    </column>
+    <column>
+      <display item="Analog Mode Function Status - F1" format="checkbox"/>
+      <display item="Analog Mode Function Status - F2" format="checkbox"/>
+      <display item="Analog Mode Function Status - F3" format="checkbox"/>
+      <display item="Analog Mode Function Status - F4" format="checkbox"/>
+      <display item="Analog Mode Function Status - F5" format="checkbox"/>
+      <display item="Analog Mode Function Status - F6" format="checkbox"/>
+    </column>
+    <name>Analog Controls</name>
+  </pane>
+  <pane>
+    <column>
+      <row>
+        <column>
+          <display item="Half-speed mode"/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>LGB configuration</text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Function commands"/>
+          <display item="Interface"/>
+        </column>
+      </row>
+    </column>
+    <name>Miscellaneous</name>
+  </pane>
+  <pane>
+    <column>
+      <cvtable/>
+    </column>
+    <name>CVs</name>
+  </pane>
+</decoder-config>

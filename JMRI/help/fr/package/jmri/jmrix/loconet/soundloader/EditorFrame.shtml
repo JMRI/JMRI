@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-11-1-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Sound Editor</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help sound editor">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>SPJ Sound File Editor</h1>
+
+      <h1>&Atilde;&permil;diteur de fichiers audio SPJ</h1>Les
+      d&Atilde;&copy;codeurs sonores Digitrax sont
+      charg&Atilde;&copy;s avec des "projets sons",
+      stock&Atilde;&copy;s dans des fichiers "Sound Project" (.
+      spj) . Ceux contiennent un certain nombre de "fragments
+      sonores" au format .wav, plus un petit programme qui dit au
+      d&Atilde;&copy;codeur quand jouer les sons
+      diff&Atilde;&copy;rents, et contr&Atilde;&acute;le
+      l'utilisation des fonctions et des CV. Ce programme est
+      stock&Atilde;&copy; dans un format "d&Atilde;&copy;finition
+      du son" (SDF).
+
+      <p>La fen&Atilde;&ordf;tre "&Atilde;&permil;diteur Digitrax
+      SPJ" vous permet d'examiner et de changer le contenu d'un
+      fichier de projet son. Une fois que vous les avez
+      chang&Atilde;&copy;s, vous pouvez les installer dans votre
+      d&Atilde;&copy;codeur avec le <a href=
+      "LoaderFrame.shtml">T&Atilde;&copy;l&Atilde;&copy;chargeur
+      son</a>.</p>
+
+      <p>Digitrax fournit des exemples de fichiers projet sons dans
+      leurs site Web de Depot Son <a href=
+      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
+      . Vous pouvez &Atilde;&copy;galement trouver l&Atilde;  des
+      liens vers la documentation et des outils
+      suppl&Atilde;&copy;mentaires .</p>
+
+      <p>Lorsque vous appelez l'outil &Atilde;&permil;diteur de
+      Fichiers Sons SPJ dans le menu LocoNet, vous obtenez d'abord
+      une fen&Atilde;&ordf;tre de s&Atilde;&copy;lection de
+      fichier:<br>
+      <img width="240" height="61" src="OpenFilePane.gif" alt=
+      " s&Atilde;&copy;lection File window"></p>
+
+      <p>Cliquez sur "Ouvrir Fichier ..." et
+      s&Atilde;&copy;lectionnez le fichier. SPJ que vous aimeriez
+      travailler. (Les exemples sur cette page sont un exemple de
+      la Digitrax AC4400 ) La fen&Atilde;&ordf;tre de
+      l'&Atilde;&copy;diteur sera ensuite s'&Atilde;&copy;tendue
+      pour afficher le contenu du fichier:<br>
+      <a href="InitEditorPane.gif"><img width="351" height="251"
+      src="InitEditorPane.gif" alt=
+      "Initial &Atilde;&copy;diteur Image"></a><br>
+      (Cliquez sur l'une des images sur cette page pour voir une
+      version agrandie)</p>
+
+      <p>La plupart du contenu d'un fichier Digitrax SPJ est un
+      fragment sonore individuel .wav. Pour ceux-ci, les colonnes
+      de la table sont:</p>
+
+      <ul>
+        <li>Le num&Atilde;&copy;ro de fragment</li>
+
+        <li>Le type, WAV pour les fragments sonores .wav</li>
+
+        <li>Le nom court donn&Atilde;&copy; &Atilde;  ce fragment
+        par l'auteur du fichier</li>
+
+        <li>Le num&Atilde;&copy;ro de poign&Atilde;&copy;e, que la
+        d&Atilde;&copy;finition du son SDF utilise pour
+        d&Atilde;&copy;signer le son</li>
+
+        <li>Le nom original pour ce fragment</li>
+
+        <li>La longueur des fragments en deuxi&Atilde;&uml;me</li>
+
+        <li>Un bouton qui g&Atilde;&copy;n&Atilde;&uml;re le son
+        sur les haut-parleurs de vos ordinateurs</li>
+
+        <li>Un bouton "Remplacer"</li>
+      </ul>
+
+      <p>Apr&Atilde;&uml;s avoir effectu&Atilde;&copy; des
+      modifications, vous pouvez cliquez sur "Enregistrer" en haut
+      de la fen&Atilde;&ordf;tre de l'&Atilde;&copy;diteur pour
+      enregistrer le fichier avec le nom original, ou (mieux) sous
+      un autre nom. Vous pouvez ensuite les utiliser avec l'outil
+      <a href="LoaderFrame.shtml">Downloader son</a> pour charger
+      le fichier modifi&Atilde;&copy; dans un d&Atilde;&copy;codeur
+      Digitrax via une interface <a href=
+      "../../../../../html/hardware/loconet/PR2.shtml">PR2</a> ou
+      <a href=
+      "../../../../../html/hardware/loconet/PR3.shtml">PR3</a>
+      .</p>
+
+      <p>Les fichiers SPJ contiennent quelques pi&Atilde;&uml;ces
+      suppl&Atilde;&copy;mentaires, visible en bas de la liste
+      ici:<br>
+      <a href="LowerEditorPane.gif"><img width="351" height="251"
+      src="LowerEditorPane.gif" alt=
+      "Lower &Atilde;&copy;diteur Image"></a></p>
+
+      <p>L'&Atilde;&copy;l&Atilde;&copy;ment "commentaire" contient
+      des informations lisibles depuis le fichier SPJ de l'auteur,
+      en un format sp&Atilde;&copy;cifique avec d'autres parties de
+      DecoderPro qui sont capables de lire. Le bouton Afficher
+      l'affiche dans une autre fen&Atilde;&ordf;tre:<br></p>
+
+      <p>L'&Atilde;&copy;l&Atilde;&copy;ment "fichier .mape"
+      contient le lien entre les noms de sons (3e colonne) et le
+      num&Atilde;&copy;ro de la poign&Atilde;&copy;e
+      (4&Atilde;&uml;me colonne) utilis&Atilde;&copy; par le
+      programme de son SDF. Le bouton Afficher l'affiche dans une
+      autre fen&Atilde;&ordf;tre:<br>
+      <a href="MapPane.gif"></a><img width="82" height="237" src=
+      "MapPane.gif" alt="MAP View"></p>
+
+      <p>L'&Atilde;&copy;l&Atilde;&copy;ment
+      &Acirc;&laquo;SDF&Acirc;&raquo; contient le fichier de
+      d&Atilde;&copy;finition du son (ou format) informations que
+      le d&Atilde;&copy;codeur utilise pour d&Atilde;&copy;terminer
+      quels fragments sonores sera montr&Atilde;&copy;s et &Atilde;
+       quel moment. Elles sont &Atilde;&copy;crites dans une forme
+      de langage d'assemblage, &Atilde;&copy;crit dans un format
+      sp&Atilde;&copy;cifique. Le fichier ne contient que le
+      r&Atilde;&copy;sultat de ce processus; le code source lisible
+      par l'homme n'est pas stock&Atilde;&copy; dans le fichier
+      SPJ. Pourtant, JMRI peut le recr&Atilde;&copy;er (sauf pour
+      l'espacement et les commentaires d'origine) pour vous donner
+      une id&Atilde;&copy;e approximative du contenu, et montrer
+      que dans une autre fen&Atilde;&ordf;tre si vous cliquez sur
+      le bouton Afficher:<br>
+      <a href="SDFview.gif"><img width="620" height="439" src=
+      "SDFview.gif" alt="SDF View"></a><br>
+      JMRI fournit &Atilde;&copy;galement une capacit&Atilde;&copy;
+      limit&Atilde;&copy;e &Atilde;  modifier les informations de
+      SDF en utilisant les <a href=
+      "../sdfeditor/EditorFrame.shtml">&Atilde;&permil;diteurs
+      SDF</a>. Cliquez sur le bouton "&Atilde;&permil;diter" pour
+      ouvrir une fen&Atilde;&ordf;tre
+      s&Atilde;&copy;par&Atilde;&copy;e &Atilde;&copy;diteur
+      SDF,</p>
+
+      <p>avec ses propres page d'aide <a href=
+      "../sdfeditor/EditorFrame.shtml"></a>.<br>
+      <a href="../sdfeditor/SdfInitSound.gif"><img width="415"
+      height="235" src="../sdfeditor/SdfInitSound.gif" alt=
+      "SDF Editor"></a></p>
+
+      <p>L'&Atilde;&copy;l&Atilde;&copy;ment
+      &Acirc;&laquo;donn&Atilde;&copy;es de CV&Acirc;&laquo; n'est
+      pas utilis&Atilde;&copy; par JMRI. DecoderPro utilise une
+      autre m&Atilde;&copy;thode pour stocker des informations
+      CV.</p>
+
+      <h2>Outils connexes</h2>Le <a href=
+      "LoaderFrame.shtml">T&Atilde;&copy;l&Atilde;&copy;chargeur de
+      fichier son</a> JMRI vous permet de
+      t&Atilde;&copy;l&Atilde;&copy;charger des fichiers sonores
+      SPJ dans un d&Atilde;&copy;codeur Digitrax si vous avez une
+      interface Digitrax PR2.
+
+      <p><a href=
+      "../sdfeditor/EditorFrame.shtml">&Atilde;&permil;diteur
+      SDF</a> , r&Atilde;&copy;f&Atilde;&copy;renc&Atilde;&copy;
+      ci-dessus, vous permet de modifier le programme SDf dans un
+      fichier SPJ.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

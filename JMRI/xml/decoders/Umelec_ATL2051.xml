@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004 All rights reserved                            -->
+<!-- $Id$                                                                   -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
+	<version author="W.D.Kok" version="2.00" lastUpdated="20180217"/>
+	<!-- version 1.00 - initial version                                          -->
+	<!-- Version 2.00 - CV Corrections and German and Dutch translating inserted -->
+	<decoder>
+		<family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
+			<model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ModelA">
+			<size length="25" width="13.5" height="5.5" units="mm"/>
+			</model>
+			<model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ModelB">
+			<size length="25" width="12.5" height="5" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable CV="2" item="Vstart" comment="Range 0-15"  default="8">
+				<decVal max="15"/>
+				<label>Start value (0-15)</label>
+				<label xml:lang="it">Volt Partenza (0-15)</label>
+				<label xml:lang="fr">V démarr. (0-15)</label>
+				<label xml:lang="de">Startspannung (0-15)</label>
+				<label xml:lang="nl">Start spanning (0-15)</label>
+				<comment>Range 0-15</comment>
+			</variable>
+			<variable CV="3" item="Accel Normal" mask="XXXXVVVV" default="4">
+				<decVal min="0" max="15"/>
+				<label>Acceleration</label><!--Normal Mode-->
+				<label xml:lang="it">Accellerazione (0-15)</label>
+				<label xml:lang="fr">Accelération (0-15)</label>
+				<label xml:lang="de">Anfahrverzögerung (015)</label>
+				<label xml:lang="nl">Acceleratie tijd (0-15)</label>
+			</variable>
+			<variable CV="3" item="Accel Signal" mask="VVVVXXXX" default="4">
+				<decVal min="0" max="15"/>
+				<label>Acceleration</label><!--Signal Mode-->
+				<label xml:lang="it">Accellerazione (0-15)</label>
+				<label xml:lang="fr">Accelération (0-15)</label>
+				<label xml:lang="de">Beschleunigung zeit (0-15)</label>
+				<label xml:lang="nl">Acceleratie tijd (0-15)</label>
+			</variable>
+			<variable CV="4" item="Decel Normal" mask="XXXXVVVV" default="4">
+				<decVal min="0" max="15"/>
+				<label>Deceleration</label><!--Normal Mode-->
+				<label xml:lang="it">Decellerazione (0-15)</label>
+				<label xml:lang="fr">Décélération (0-15)</label>
+				<label xml:lang="de">Bremszeit (0-15)</label>
+				<label xml:lang="nl">Rem tijd (0-15)</label>
+			</variable>
+			<variable CV="4" item="Decel Signal" mask="VVVVXXXX" default="4">
+				<decVal min="0" max="15"/>
+				<label>Deceleration</label><!--Signal Mode-->
+				<label xml:lang="it">Decellerazione (0-15)</label>
+				<label xml:lang="fr">Décélération (0-15)</label>
+				<label xml:lang="de">Bremszeit (0-15)</label>
+				<label xml:lang="nl">Rem tijd (0-15)</label>
+			</variable>
+			<!-- ATL CV -->
+			<variable CV="5" item="ATL-A" mask="XXXXXXXV"> <!-- ++ mode -->
+				<enumVal>
+					<enumChoice choice="Speed Step Mode">
+						<choice>Speed Step Mode</choice>
+						<choice xml:lang="de">++Modus Aus</choice>
+						<choice xml:lang="nl">++Modus uit</choice>
+					</enumChoice>
+					<enumChoice choice="++Mode">
+						<choice>++Mode</choice>
+						<choice xml:lang="de">++Modus Ein</choice>
+						<choice xml:lang="nl">++Modus aan</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Speed Control Mode</label>
+				<label xml:lang="de">Spezielle Betriebsart</label>
+				<label xml:lang="nl">Speciale modus</label>
+			</variable>
+			<variable CV="5" item="ATL-B" mask="XXXXXXVX"> <!-- Shuttle mode -->
+				<enumVal>
+					<enumChoice choice="No Shuttle">
+						<choice>No Shuttle</choice>
+						<choice xml:lang="de">Pendelbetrieb Aus</choice>
+						<choice xml:lang="nl">Pendelautomaat uit</choice>
+					</enumChoice>
+					<enumChoice choice="Shuttle Operation">
+						<choice>Shuttle Operation</choice>
+						<choice xml:lang="de">Pendelbetrieb Ein</choice>
+						<choice xml:lang="nl">Pendelautomaat aan</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Shuttle Operation</label>
+				<label xml:lang="de">Pendelbetrieb</label>
+				<label xml:lang="nl">Pendeldienst</label>
+			</variable>
+			<variable CV="5" item="ATL-C" mask="XXXXXVXX"> <!-- Signal mode -->
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Signal mode</label>
+				<label xml:lang="de">Signal Modus</label>
+				<label xml:lang="nl">Signaal modus</label>
+			</variable>
+			<variable CV="5" item="ATL-D" mask="XXXXVXXX"> <!-- Whistle mode -->
+				<enumVal>
+					<enumChoice choice="Lanier brake">
+						<choice>One tone whistle</choice>
+						<choice xml:lang="de">Ein Ton Pfeife</choice>
+						<choice xml:lang="nl">Één ton fluit</choice>
+					</enumChoice>
+					<enumChoice choice="Braking curve">
+						<choice>Two-tone whistle</choice>
+						<choice xml:lang="de">Zwei Ton Pfeife</choice>
+						<choice xml:lang="nl">Twee ton fluit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Whistle mode</label>
+				<label xml:lang="de">Pfeife Modus</label>
+				<label xml:lang="nl">Fluit modus</label>
+			</variable>      
+			<variable CV="5" item="ATL-E" mask="XXXVXXXX"> <!-- Sound Style -->
+				<enumVal>
+					<enumChoice choice="Steam">
+				<choice>Steam</choice>
+				<choice xml:lang="de">Dampf</choice>
+				<choice xml:lang="nl">Stoom</choice>
+					</enumChoice>
+					<enumChoice choice="Diesel">
+						<choice>Diesel</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Sound Style</label>
+				<label xml:lang="de">Sound type</label>
+				<label xml:lang="nl">Geluids type</label>
+			</variable>
+			<variable CV="5" item="ATL-F" mask="XXVXXXXX"> <!-- Exhaust Beat Control -->
+				<enumVal>
+					<enumChoice choice="Internal">
+						<choice>Internal</choice>
+						<choice xml:lang="de">Intern</choice>
+						<choice xml:lang="nl">Interne</choice>
+					</enumChoice>
+					<enumChoice choice="External e.g. Cam">
+						<choice>External e.g. Cam</choice>
+						<choice xml:lang="de">Extern</choice>
+						<choice xml:lang="nl">Externe</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Exhaust Beat Control</label>
+				<label xml:lang="de">Dampftrigger</label>
+				<label xml:lang="nl">Stoom slag controle</label>
+			</variable>
+			<variable CV="5" item="ATL-G" mask="XVXXXXXX"> <!-- module input -->
+				<enumVal>
+					<enumChoice choice="Remote Only">
+						<choice>Remote Only</choice>
+						<choice xml:lang="de">Nur Pendelfunktion</choice>
+						<choice xml:lang="nl">Pendelbetrieb</choice>
+					</enumChoice>
+					<enumChoice choice="Remote and Reed Switch">
+						<choice>Remote and Reed Switch</choice>
+						<choice xml:lang="de">Pendelfunktion und Lokpfeife</choice>
+						<choice xml:lang="nl">Pendelbetrieb en Lokpfeife</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Switches the module input</label>
+				<label xml:lang="de">Schaltet den Moduleingang</label>
+				<label xml:lang="nl">Schakelt de module-ingang</label>
+			</variable>
+			<variable CV="5" item="ATL-H" mask="VXXXXXXX" include="ModelA"> <!-- Motor EMP -->
+				<enumVal>
+					<enumChoice choice="Brake">
+						<choice>Normal pulse rate to motor</choice>
+						<choice xml:lang="de">Normale Puls-rate zum Motor</choice>
+						<choice xml:lang="nl">Normale puls frequents naar de motor</choice>
+					</enumChoice>
+					<enumChoice choice="Stop">
+						<choice>quadrupled pulse rate to the motor</choice>
+						<choice xml:lang="de">Vervierfachte Puls rate zum Motor</choice>
+						<choice xml:lang="nl">verviervoudigde puls frequents naar de motor</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Motor EMP, Optimises the speed regulator</label>
+				<label xml:lang="de">Motor EMP, optimiert den Drehzahlregler</label>
+				<label xml:lang="nl">Motor EMP, optimaliseert de snelheidsregelaar</label>
+			</variable>
+			<variable CV="5" item="ATL-H" mask="VXXXXXXX" include="ModelB"> <!-- Motor EMP -->
+				<enumVal>
+					<enumChoice choice="Brake">
+						<choice>Normal pulse rate to motor</choice>
+						<choice xml:lang="de">Normale Puls-rate zum Motor</choice>
+						<choice xml:lang="nl">Normale puls frequents naar de motor</choice>
+					</enumChoice>
+					<enumChoice choice="Stop">
+						<choice>Half pulse rate to motor</choice>
+						<choice xml:lang="de">Halbe Pulsrate zum Motor</choice>
+						<choice xml:lang="nl">Halveerde puls frequents naar de motor</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Motor EMP, Optimises the speed regulator</label>
+				<label xml:lang="de">Motor EMP, optimiert den Drehzahlregler</label>
+				<label xml:lang="nl">Motor EMP, optimaliseert de snelheidsregelaar</label>
+			</variable>
+			<variable CV="6" item="Vmax Signal Mode" default="40" comment="Range 30-63">
+				<decVal min="30" max="63"/>
+				<label>Run Speed</label>
+				<label xml:lang="de">Signal-Geschwindigkeit</label>
+				<label xml:lang="nl">Signaal snelheid</label>
+				<comment>Range 30-63</comment>
+			</variable>
+			<variable CV="7" item="Decoder Version" readOnly="yes" default="59" include="ModelA">
+				<decVal/>
+				<label>Decoder Version No</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>				
+			</variable>
+			<variable CV="7" item="Decoder Version" readOnly="yes" default="17" include="ModelB">
+				<decVal/>
+				<label>Decoder Version No</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>
+			</variable>
+			<variable CV="8" item="Manufacturer"    readOnly="yes" default="147">
+				<decVal/>
+				<label>Manufacturer ID</label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikanten ID: </label>
+			</variable>
+			<variable CV="9" item="Total PWM Period ATL2051"    default="17"  comment="Range 0-250, default is 17  on ATL2051" include="ModelA">
+				<decVal/>
+				<label>Total PWM Period</label>
+				<label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+				<label xml:lang="de">Periode PWM (Pulsweitenmodulation der Motoransteuerung)</label>
+				<label xml:lang="nl">Periode PWM (Pulsbreedtemodulatie der Motoraansteuering)</label>
+				<comment>Range 0-250, default is 17 on ATL2051</comment>
+				</variable>
+			<variable CV="9" item="Total PWM Period ATL2054"    default="240" comment="Range 0-250, default is 240 on ATL2054" include="ModelB">
+				<decVal/>
+				<label>Total PWM Period</label>
+				<label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+				<label xml:lang="de">Periode PWM (Pulsweitenmodulation der Motoransteuerung)</label>
+				<label xml:lang="nl">Periode PWM (Pulsbreedtemodulatie der Motoraansteuering)</label>
+				<comment>Range 0-250, default is 240 on ATL2054</comment>
+			</variable>
+			<variable CV="10" item="Vmax ++Mode"                default="48"  comment="Range 30-63">
+				<decVal/>
+				<label>Vmax ++Mode</label>
+				<label xml:lang="de">Vmax ++Modus</label>
+				<label xml:lang="nl">Vmax ++Modus</label>
+				<comment>Range 30-63</comment>
+			</variable>
+			<variable CV="11" item="Sound Group 1 Option 1"     default="64"  comment="Range 0-255, default is 64  on ATL2051" include="ModelA">
+				<decVal/>
+					<label>Steam Divider per wheel turn</label>
+					<label xml:lang="de">Dampftrigger</label>
+					<label xml:lang="nl">Stoom deler per wiel omdraaiing</label>
+					<comment>Range 0-255, default is 64 on ATL2051</comment>
+			</variable>
+			<variable CV="11" item="Sound Group 1 Option 2"     default="127" comment="Range 0-255, default is 127 on ATL2054" include="ModelB">			
+				<decVal/>
+					<label>Steam Divider per wheel turn</label>
+					<label xml:lang="de">Dampftrigger</label>
+					<label xml:lang="nl">Stoom deler per wiel omdraaiing</label>
+					<comment>Range 0-255, default is 127 on ATL2054</comment>
+			</variable>
+			<variable CV="12" item="Sound Group 2 Option 1"     default="44"  comment="Range 44-63">
+				<decVal min="44" max="63"/>
+				<label>Whistle Tone Start Pointer 1 </label>
+				<label xml:lang="de">Pfeifton Start punkt 1 </label>
+				<label xml:lang="nl">Fluittoon start punt 1 </label>
+				<comment>Range 44-63</comment>
+			</variable>
+			<variable CV="13" item="Sound Group 2 Option 2"     default="44"  comment="Range 44-63">
+				<decVal min="44" max="63"/>
+				<label>Whistle Tone Start Pointer 2 </label>
+				<label xml:lang="de">Pfeifton Start punkt 2 </label>
+				<label xml:lang="nl">Fluittoon start punt 2 </label>
+				<comment>Range 44-63</comment>
+			</variable>
+			<variable CV="14" item="Function 1" mask="XXXXXXVV" default="0"   include="ModelB"> <!-- Function output C -->
+				<enumVal>
+					<enumChoice choice="F1">
+						<choice> F1 </choice>
+					</enumChoice>
+					<enumChoice choice="F2">
+						<choice> F2 </choice>
+					</enumChoice>
+					<enumChoice choice="F3">
+						<choice> F3 </choice>
+					</enumChoice>
+					<enumChoice choice="F4">
+						<choice> F4 </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Function output C (FET) on </label>
+				<label xml:lang="de">Funktion Ausgang C (FET) auf </label>
+				<label xml:lang="nl">Functie uitgang C (FET) op </label>
+			</variable>
+			<variable CV="14" item="Function 2" mask="XXXVVXXX" default="1"   include="ModelB"> <!-- Function output D -->
+				<enumVal>
+					<enumChoice choice="F1">
+						<choice> F1 </choice>
+					</enumChoice>
+					<enumChoice choice="F2">
+						<choice> F2 </choice>
+					</enumChoice>
+					<enumChoice choice="F3">
+						<choice> F3 </choice>
+					</enumChoice>
+					<enumChoice choice="F4">
+						<choice> F4 </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Function output D (CMOS) on </label>
+				<label xml:lang="de">Funktion Ausgang D (CMOS) auf </label>
+				<label xml:lang="nl">Functie uitgang D (CMOS) op </label>
+			</variable>
+			<variable CV="14" item="Function 3" mask="XVVXXXXX" default="0"   include="ModelB"> <!-- Function output D Blink/Whistle/output -->
+				<enumVal>
+					<enumChoice choice="off">
+						<choice> - </choice>
+					</enumChoice>
+					<enumChoice choice="blink/flash">
+						<choice> blink/flash </choice>
+						<choice xml:lang="de"> Blinken/Blitzen </choice>
+						<choice xml:lang="nl">Knipperen/Flitsend </choice>
+					</enumChoice>
+					<enumChoice choice="whistle">
+						<choice> whistle </choice>
+						<choice xml:lang="de"> Pfeife </choice>
+						<choice xml:lang="nl">Fluit </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Function output D </label>
+				<label xml:lang="de">Funktion Ausgang D </label>
+				<label xml:lang="nl">Functie uitgang D </label>
+			</variable>
+			<variable CV="14" item="Function 4" mask="VXXXXXXX" default="0"   include="ModelB"> <!-- Main switch -->
+				<enumVal>
+					<enumChoice choice="On">
+						<choice> On </choice>
+						<choice xml:lang="de"> Ein </choice>
+						<choice xml:lang="nl"> Aan </choice>
+					</enumChoice>
+					<enumChoice choice="Off">
+						<choice> Off </choice>
+						<choice xml:lang="de"> Aus </choice>
+						<choice xml:lang="nl"> Uit </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Main switch on F4</label>
+				<label xml:lang="de">Hauptschalter auf F4 </label>
+				<label xml:lang="nl">Hoofdschakelaar op F4 </label>
+			</variable>
+			<variable CV="15" item="Period"     mask="XXXXXVVV" default="1"   include="ModelB"> <!-- Blink/flash generator Period -->
+				<enumVal>
+					<enumChoice choice="-">
+						<choice> - </choice>
+					</enumChoice>
+					<enumChoice choice="1800">
+						<choice> 1800 ms </choice>
+					</enumChoice>
+					<enumChoice choice="900">
+						<choice> 900 ms </choice>
+					</enumChoice>
+					<enumChoice choice="600">
+						<choice> 600 ms </choice>
+					</enumChoice>
+					<enumChoice choice="450">
+						<choice> 450 ms </choice>
+					</enumChoice>
+					<enumChoice choice="360">
+						<choice> 360 ms </choice>
+					</enumChoice>
+					<enumChoice choice="300">
+						<choice> 300 ms </choice>
+					</enumChoice>
+					<enumChoice choice="250">
+						<choice> 250 ms </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Period </label>
+				<label xml:lang="de">Zeitraum </label>
+				<label xml:lang="nl">Periode </label>
+			</variable>
+			<variable CV="15" item="Duty cycle" mask="VVVVVXXX" default="16"  include="ModelB"> <!-- Blink/flash generator Duty cycle-->
+				<enumVal>	
+					<enumChoice choice="3%" value = "1">
+						<choice> 3% </choice>
+					</enumChoice>
+					<enumChoice choice="6%" value = "2">
+						<choice> 6% </choice>
+					</enumChoice>
+					<enumChoice choice="12%" value = "4">
+						<choice> 12% </choice>
+					</enumChoice>
+					<enumChoice choice="25%" value = "8">
+						<choice> 25% </choice>
+					</enumChoice>
+					<enumChoice choice="50%" value = "16">
+						<choice> 50% </choice>
+					</enumChoice>
+					<enumChoice choice="53%" value = "17">
+						<choice> 53% </choice>
+					</enumChoice>
+					<enumChoice choice="75%" value = "24">
+						<choice> 75% </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Duty cycle </label>
+				<label xml:lang="de">Einschaltdauer </label>
+				<label xml:lang="nl">Inschakeltijd </label>
+			</variable>
+			<variable CV="16" item="Operation byte" readOnly="yes" default="160">
+				<decVal min="160" max="160"/>
+				<label>Operation byte</label>
+				<label xml:lang="de">Betriebs Byte</label>
+				<label xml:lang="nl">Werking byte</label>
+				<comment>Range 160</comment>
+			</variable>
+			<!-- CV=19 -->
+			<variable CV="19" item="ConsistAddress"         mask="XVVVVVVV" default="0">
+				<decVal min="0" max="127"/>
+				<label>Advanced Consist Address</label>
+				<label xml:lang="it">Indirizzo Consist Avanzato</label>
+				<label xml:lang="fr">Addresse UM</label>
+				<label xml:lang="de">Verbundadresse</label>
+				<label xml:lang="cs">Adresa soupravy</label>
+				<label xml:lang="nl">Multitractie-adres</label>
+			</variable>
+			<!--<variable CV="19" item="ConsistDirection"   mask="VXXXXXXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+				<label>Locomotive Direction In Consist</label>
+				<label xml:lang="it">Direzione Loco nel Consist</label>
+				<label xml:lang="fr">Direction UM</label>
+				<label xml:lang="de">Verbund-Richtung</label>
+				<label xml:lang="cs">Směr lokomotivy v soupravě</label>
+				<label xml:lang="nl">Rijrichting Multitractie</label>
+			</variable>-->
+			<!-- CV=29 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<variable CV="29" item="Speed Step Mode"        mask="XXXXXXVX" default="1">
+				<enumVal>
+					<enumChoice choice="14 speed step mode">
+						<choice xml:lang="de">14 Fahrstufen Modus</choice>
+						<choice xml:lang="nl">14 rij stappen modus</choice>
+					</enumChoice>
+					<enumChoice choice="28 speed step mode">
+						<choice>28 speed step mode</choice>
+						<choice xml:lang="de">28 Fahrstufen Modus</choice>
+						<choice xml:lang="nl">28 rij stappen modus</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Speed Steps</label>
+				<label xml:lang="de">Fahrstufen</label>
+				<label xml:lang="nl">Rij stappen</label>
+				<tooltip>Sets the Speed Step mode in</tooltip>
+				<tooltip xml:lang="de">Setzt den Fahrstufenmodus in</tooltip>
+				<tooltip xml:lang="nl">Hiermee stelt u de rijstappenmodus in</tooltip>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<variable CV="29" item="Speed Table Definition" mask="XXXVXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
+						<choice>Use bild-in Speed Table </choice>
+						<choice xml:lang="de">Interne Geschwindigkeitstabelle verwenden </choice>
+						<choice xml:lang="nl">Gebruik interne snelheid's tabel </choice>
+					</enumChoice>
+					<enumChoice choice="Use Speed Table">
+						<choice>Use Speed Table (CV30 - CV43, CV44)</choice>
+						<choice xml:lang="de">Geschw.-Kennlinie nutzen (CV30 - CV43, CV44)</choice>
+						<choice xml:lang="nl">Gebruik de snelheid's grafiek (CV30 - CV43, CV44)</choice>
+					</enumChoice>
+				</enumVal>
+				<label>                    </label>
+				<label xml:lang="de">                     </label>
+				<label xml:lang="nl">                     </label>
+			</variable>
+			<variable CV="29" item="Speed control"          mask="XVXXXXXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+				<label>Speed control</label>
+				<label xml:lang="de">Drehzahlregelung</label>
+				<label xml:lang="nl">Toerental regeling</label>
+			</variable>
+			<!-- Non-Standard Speed Table -->
+			<variable CV="30" item="Speed Table" comment="Range 1-63">
+				<speedTableVal min="1" max="63" entries="14"/>
+				<label>Speed Table (CV30-CV43)</label>
+				<label xml:lang="de">Einstellbare Fahrkurve (CV30-CV43)</label>
+				<label xml:lang="nl">Instelbare snelheid’s tabel (CV30-CV43)</label>
+			</variable>
+			<variable CV="44" item="Speed Table 15" comment="Range 1-126" default="29">
+				<decVal min="1" max="126"/>
+				<label>Speed Step 15</label>
+				<label xml:lang="de">Fahrstufe 15</label>
+				<label xml:lang="nl">Snelheid's stap 15</label>
+				<comment>Range 1-126</comment>
+			</variable>
+			<!-- Whistle Table -->
+			<variable CV="45" item="Sound Group 3 Option 1"  comment="Range 0-255" default="0">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 1  (44) </label>
+				<label xml:lang="de">Pfeif Speicher 1  (44) </label>
+				<label xml:lang="nl">Fluit geheugen 1  (44) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="46" item="Sound Group 3 Option 2"  comment="Range 0-255" default="255">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 2  (45) </label>
+				<label xml:lang="de">Pfeif Speicher 2  (45) </label>
+				<label xml:lang="nl">Fluit geheugen 2  (45) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="47" item="Sound Group 3 Option 3"  comment="Range 0-255" default="128">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 3  (46) </label>
+				<label xml:lang="de">Pfeif Speicher 3  (46) </label>
+				<label xml:lang="nl">Fluit geheugen 3  (46) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="48" item="Sound Group 3 Option 4"  comment="Range 0-255" default="252">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 4  (47) </label>
+				<label xml:lang="de">Pfeif Speicher 4  (47) </label>
+				<label xml:lang="nl">Fluit geheugen 4  (47) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="49" item="Sound Group 3 Option 5"  comment="Range 0-255" default="15">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 5  (48) </label>
+				<label xml:lang="de">Pfeif Speicher 5  (48) </label>
+				<label xml:lang="nl">Fluit geheugen 5  (48) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="50" item="Sound Group 3 Option 6"  comment="Range 0-255" default="231">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 6 (49) </label>
+				<label xml:lang="de">Pfeif Speicher 6  (49) </label>
+				<label xml:lang="nl">Fluit geheugen 6  (49) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="51" item="Sound Group 3 Option 7"  comment="Range 0-255" default="65">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 7 (50) </label>
+				<label xml:lang="de">Pfeif Speicher 7  (50) </label>
+				<label xml:lang="nl">Fluit geheugen 7  (50) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="52" item="Sound Group 3 Option 8"  comment="Range 0-255" default="243">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 8 (51) </label>
+				<label xml:lang="de">Pfeif Speicher 8  (51) </label>
+				<label xml:lang="nl">Fluit geheugen 8  (51) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="53" item="Sound Group 3 Option 9"  comment="Range 0-255" default="120">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 9  (52) </label>
+				<label xml:lang="de">Pfeif Speicher 9  (52) </label>
+				<label xml:lang="nl">Fluit geheugen 9  (52) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="54" item="Sound Group 3 Option 10" comment="Range 0-255" default="31">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 10 (53) </label>
+				<label xml:lang="de">Pfeif Speicher 10 (53) </label>
+				<label xml:lang="nl">Fluit geheugen 10 (53) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="55" item="Sound Group 3 Option 11" comment="Range 0-255" default="0">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 11 (54) </label>
+				<label xml:lang="de">Pfeif Speicher 11 (54) </label>
+				<label xml:lang="nl">Fluit geheugen 11 (54) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="56" item="Sound Group 3 Option 12" comment="Range 0-255" default="255">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 12 (55) </label>
+				<label xml:lang="de">Pfeif Speicher 12 (55) </label>
+				<label xml:lang="nl">Fluit geheugen 12 (55) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="57" item="Sound Group 3 Option 13" comment="Range 0-255" default="0">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 13 (56) </label>
+				<label xml:lang="de">Pfeif Speicher 13 (56) </label>
+				<label xml:lang="nl">Fluit geheugen 13 (56) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="58" item="Sound Group 3 Option 14" comment="Range 0-255" default="252">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 14 (57) </label>
+				<label xml:lang="de">Pfeif Speicher 14 (57) </label>
+				<label xml:lang="nl">Fluit geheugen 14 (57) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="59" item="Sound Group 3 Option 15" comment="Range 0-255" default="31">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 15 (58) </label>
+				<label xml:lang="de">Pfeif Speicher 15 (58) </label>
+				<label xml:lang="nl">Fluit geheugen 15 (58) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="60" item="Sound Group 3 Option 16" comment="Range 0-255" default="135">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 16 (59) </label>
+				<label xml:lang="de">Pfeif Speicher 16 (59) </label>
+				<label xml:lang="nl">Fluit geheugen 16 (59) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="61" item="Sound Group 3 Option 17" comment="Range 0-255" default="192">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 17 (60) </label>
+				<comment>Range 0-255</comment>
+				<label xml:lang="de">Pfeif Speicher 17 (60) </label>
+				<label xml:lang="nl">Fluit geheugen 17 (60) </label>
+			</variable>
+			<variable CV="62" item="Sound Group 3 Option 18" comment="Range 0-255" default="255">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 18 (61) </label>
+				<comment>Range 0-255</comment>
+				<label xml:lang="de">Pfeif Speicher 18 (61) </label>
+				<label xml:lang="nl">Fluit geheugen 18 (61) </label>
+			</variable>
+			<variable CV="63" item="Sound Group 3 Option 19" comment="Range 0-255" default="96">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 19 (62) </label>
+				<label xml:lang="de">Pfeif Speicher 19 (62) </label>
+				<label xml:lang="nl">Fluit geheugen 19 (62) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+			<variable CV="64" item="Sound Group 3 Option 20" comment="Range 0-255" default="127">
+				<decVal min="0" max="255"/>
+				<label>Whistle Memory 20 (63) </label>
+				<label xml:lang="de">Pfeif Speicher 20 (63) </label>
+				<label xml:lang="nl">Fluit geheugen 20 (63) </label>
+				<comment>Range 0-255</comment>
+			</variable>
+		</variables>	
+	</decoder>
+	<pane nameFmt="label"> <!-- Consist mode -->
+		<column>
+			<display item="ConsistAddress" layout="left" format="default"/>
+			<display item="ConsistDirection" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<separator/>
+			<label>
+				<text>The additional functions are always</text>
+				<text xml:lang="de">Die Zusatzfunktionen werden immer nur</text>
+				<text xml:lang="nl">De extrafuncties worden altijd </text>
+			</label>
+			<label>
+				<text>addressed via the own address</text>
+				<text xml:lang="de">über die eigene Adresse angesprochen</text>
+				<text xml:lang="nl">aangesproken via het eigen adres</text>
+			</label>
+		</column>
+		<name>Consist Address</name>
+		<name xml:lang="de">Verbundadresse</name>
+		<name xml:lang="nl">Multi-tractie</name>
+	</pane>
+	<pane nameFmt="label"> <!-- Speed Table -->
+				<column>
+			<!-- BEGIN Start options grid(s)  -->
+			<label>
+				<text> </text>
+			</label>
+			<grid gridy="NEXT" weightx="1" ipadx="10">
+				<griditem gridx="0" gridy="0" gridwidth="1">
+					<label>
+						<text>Select this button to use Speed Table shown below</text>
+						<text xml:lang="de">Um diese Fahrstufe Tabel zu benutzen, diesen Butten markieren</text>
+						<text xml:lang="nl">Selecteer om onderstaande snelheidsgrafiek toe te passen</text>
+					</label>
+				</griditem>
+				<griditem>
+					<row>
+						<display item="Speed Table Definition" format="onradiobutton"/>
+					</row>
+				</griditem>
+				<griditem>
+					<label>
+						<text>To turn off, use Basic Speed Control pane</text>
+						<text xml:lang="de">Zum Deselektieren, die lasche Geschwindigkeit aktivieren</text>
+						<text xml:lang="nl">Om deze tab uit te schakelen, de tab Snelheid activeren</text>
+					</label>
+				</griditem>
+			</grid>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Speed Table" layout="above"/>
+			<!-- END Start options grid(s)  -->
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<!-- Start 2 grid(s)  -->
+			<grid>
+				<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+					<display item="Speed Step Mode" layout="left" format="default"/>
+				</griditem>
+				<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Speed Table 15" layout="left" format="hslider"/>
+						<display item="Speed Table 15" layout="left" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="1" gridy="0" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>     </text>
+					</label>
+				</griditem>
+				<griditem gridx="2" gridy="0" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>In 14-step-mode, these 14 values correspond directly to the speed steps. In the 28-step-mode, these 14 values apply to the</text>
+						<text xml:lang="de">Im 14-Stufen-Modus entsprechen diese 14 werte direkt den Geschwindigkeitsstufen. Beim 28-Stufen-Modus gelten diese 14</text>
+						<text xml:lang="nl">In de 14-stappen-modus corresponderen deze 14 waarden rechtstreeks met de snelheid stappen. In de 28-stape-modus zijn </text>
+					</label>
+				</griditem>
+				<griditem gridx="2" gridy="1" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>ungraded levels 1, 3, 5,…, The even steps 2, 4, 6,… are then calculated from the mean value from the adjacent steps. The</text>
+						<text xml:lang="de">Werte für die ungraden Stufen 1, 3, 5, … die geraden Stufen 2, 4, 6,. ergeben sich dann als Mittelwert aus den benachbarten</text>
+						<text xml:lang="nl">deze 14 waarden van toepassing op de oneven stappen 1, 3, 5,…, de even stappen 2, 4, 6, … word dan uit de aangrenzende</text>
+					</label>
+				</griditem>
+				<griditem gridx="2" gridy="2" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>value for Speed step 14 corresponds to the 28 mode of step 27. Therefore, in this case, the module still needs a 15de value</text>
+						<text xml:lang="de">Stufen. Der Wert für Fahrstufe 14 entspricht im 28-mode der stufe 27. Deshalb benötigt das Modul in diesem Fall noch einen</text>
+						<text xml:lang="nl">stappen de gemiddelde waarde berekent. De waarde voor stap 14 komt in de 28-modus overeen met stap 27. Daarom heeft</text>
+					</label>
+				</griditem>
+				<griditem gridx="2" gridy="3" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text>so that level 28 can be calculated. Value 15 may need to be higher than 63 for level 28 to be calculated.</text>
+						<text xml:lang="de">15de wert, damit Stufe 28 berechnet werden kann. kann. Wert 15 muss eventuell höher als 63 sein, damit Stufe 28 berechnet</text>
+						<text xml:lang="nl">de module in dit geval nog een 15de waarde nodig, zodat stap 28 kan worden berekend. Waarde 15 moet eventueel hoger</text>
+					</label>
+				</griditem>	
+				<griditem gridx="2" gridy="4" gridwidth="1" anchor="LINE_START">
+					<label>
+						<text></text>
+						<text xml:lang="de">werden kann.</text>
+						<text xml:lang="nl">zijn dan 63 voor het berekenen van stap 28.</text>
+					</label>
+				</griditem>
+			</grid>
+		</column>
+		<name>Speed Table</name>
+		<name xml:lang="de">Fahrstufe Tabelle</name>
+		<name xml:lang="nl">Snelheidsgrafiek</name>
+	</pane>
+	<pane nameFmt="label" include="ModelB"> <!-- Function assignment -->
+		<column>
+			<label>
+				<text>This memory location contains bits for the definition</text>
+				<text xml:lang="de">Dieser Speicherplatz enthält Bits zur Definition</text>
+				<text xml:lang="nl">Deze geheugenlocatie bevat bits voor de definitie van</text>
+			</label>
+			<label>
+				<text>of the functional outputs on the ATL2054 module</text>
+				<text xml:lang="de">der Funktion Ausgänge des ATL2054-Moduls</text>
+				<text xml:lang="nl">de functionele uitgangen op de ATL2054 module</text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<row>
+				<label>
+					<text>Function mapping</text>
+					<text xml:lang="de">Funktionszuordnung</text>
+					<text xml:lang="nl">Functie mapping</text>
+				</label>
+			</row>
+			<separator/>
+			<display item="Function 1" layout="left" format="default"/>
+			<display item="Function 2" layout="left" format="default"/>
+			<display item="Function 3" layout="left" format="default"/>
+			<display item="Function 4" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>This value drives the period and the duty</text>
+				<text xml:lang="de">Dieser Wert steuert den Zeitraum und den</text>
+				<text xml:lang="nl">Deze waarde stuurt de periode en de arbeid</text>
+			</label>
+			<label>
+				<text>cycle of the blink/flash generator in CV14</text>
+				<text xml:lang="de">Einschaltzyklus des Blink/Flash-Generators in CV14</text>
+				<text xml:lang="nl">cyclus van de Blink/Flash Generator in CV14</text>
+			</label>
+			<label>
+				<text>Only for ATL2054 modules)</text>
+				<text xml:lang="de">Nur beim Modul 2054 wirksam</text>
+				<text xml:lang="nl">Werkt alleen bij het 2054 module</text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<row>
+				<label>
+					<text>Blink Generator</text>
+					<text xml:lang="de">Blinkgenerator</text>
+					<text xml:lang="nl">Flitsgenerator</text>
+				</label>
+			</row>
+			<separator/>
+				<display item="Period" format="default"/>
+				<display item="Duty cycle" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+		</column>
+		<name>Function assignment</name>
+		<name xml:lang="de">Funktion Zuordnung</name>
+		<name xml:lang="nl">Functietoewijzing</name>
+	</pane>
+	<pane nameFmt="label"> <!-- ATLPlus -->
+		<column>
+			<label>
+		<text>CV>5, Configuration byte ATL, Defines special ATL functions</text>
+		<text xml:lang="de">CV 5, ATL Konfiguration byte, Definiert spezielle ATL-Funktionen</text>
+		<text xml:lang="nl">CV 5, ATL Configuratie byte, Definieert speciale ATL-Functies</text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="ATL-A" layout="left" format="default"/>
+			<display item="ATL-B" layout="left" format="default"/>
+			<display item="ATL-C" layout="left" format="default"/>
+			<display item="ATL-D" layout="left" format="default"/>
+			<display item="ATL-E" layout="left" format="default"/>
+			<display item="ATL-F" layout="left" format="default"/>
+			<display item="ATL-G" layout="left" format="default"/>
+			<display item="ATL-H" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Vmax ++Mode" layout="left" format="default"/>			
+		</column>
+		<name>ATLPlus</name>
+	</pane>
+	<pane nameFmt="label"> <!-- Motor -->
+		<column>
+			<display item="Vstart" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Accel Normal" layout="left" format="default"/>
+			<display item="Decel Normal" layout="left" format="default"/>
+				<label>
+				<text>  </text>
+			</label>     
+			<display item="Total PWM Period ATL2051" layout="left" format="default"/>
+			<display item="Total PWM Period ATL2054" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="ATL-H" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Speed control" layout="left" format="default"/>	
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Operation byte" layout="left" format="default"/>	
+		</column>
+	<name>Motor</name>
+	</pane>
+	<pane nameFmt="label"> <!-- Signal Mode -->
+		<column>
+				<display item="ATL-C" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>Parameters employed in Signal Mode only</text>
+				<text xml:lang="de">Parameter, die nur im Signal Modus verwendet werden</text>
+				<text xml:lang="nl">Alleen in de signaal modus gehanteerde parameters</text>
+			</label>
+			<separator/>
+			<label>
+				<text/>
+			</label>
+			<display item="Accel Signal" layout="left" format="default"/>
+			<display item="Decel Signal" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>			
+			<label>
+				<text>Additionale parameters for Signal mode</text>
+				<text xml:lang="de">Zusätzliche Parameter für den Signal Modus</text>
+				<text xml:lang="nl">Extra parameters voor signaal modus</text>
+			</label>
+			<separator/>
+				<display item="ATL-B" layout="left" format="default"/>
+				<display item="ATL-G" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+		</column>
+		<name>Signal Mode</name>
+		<name xml:lang="de">Signal Modes</name>
+		<name xml:lang="nl">Signaal modes</name>
+		
+	</pane>
+	<pane nameFmt="label"> <!-- Sound -->
+		<column>
+			<display item="ATL-F" layout="left" format="default"/>
+			<display item="Sound Group 1 Option 1" layout="left" format="default"/>
+			<display item="Sound Group 1 Option 2" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="ATL-E" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<separator/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="ATL-D" layout="left" format="default"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>The whistle memory from CV45 to 64 is divided in</text>
+				<text xml:lang="de">Die Pfeife Speicher von CV45 bis 64 ist für in</text>
+				<text xml:lang="nl">Het Fluit geheugen van CV45 tot 64 is voor</text>
+			</label>
+			<label>
+				<text>two blocks for a two-tone whistle.</text>
+				<text xml:lang="de">zwei Tons-Pfeife in zwei Blöcke aufgeteilt.</text>
+				<text xml:lang="nl">tweetoons-fluit verdeeld in twee blokken.</text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>For single-tone whistles The starting point</text>
+				<text xml:lang="de">Für Eintönige-Pfeifen wird dem Start punkt 1</text>
+				<text xml:lang="nl">Voor ééntoons-fluit wordt het start punt 1</text>
+			</label>
+			<label>
+				<text>1 is not used.</text>
+				<text xml:lang="de">nicht verwendet.</text>
+				<text xml:lang="nl">niet gebruikt.</text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+				<display item="Sound Group 2 Option 1" layout="left" format="default"/>
+				<display item="Sound Group 2 Option 2" layout="left" format="default"/>
+		</column>
+		<column>
+			<row>
+				<display item="Sound Group 3 Option 1" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 1" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 2" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 2" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 3" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 3" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 4" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 4" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 5" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 5" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 6" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 6" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 7" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 7" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 8" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 8" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 9" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 9" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 10" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 10" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 11" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 11" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 12" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 12" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 13" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 13" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 14" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 14" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 15" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 15" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 16" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 16" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 17" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 17" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 18" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 18" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 19" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 19" layout="left" label=""/>
+			</row>
+			<row>
+				<display item="Sound Group 3 Option 20" layout="left" format="hslider"/>
+				<display item="Sound Group 3 Option 20" layout="left" label=""/>
+			</row>
+		</column>
+		<name>Sound</name>
+		<name xml:lang="de">Sound</name>
+		<name xml:lang="nl">Geluid</name>
+	</pane>
+</decoder-config>

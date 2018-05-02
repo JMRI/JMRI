@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+  <title>JMRI: RPS Tracking Frame</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: RPS &Atilde;&permil;cran de Poursuite</h1><a href=
+      "../../../../../html/hardware/rps/images/RpsTracker.jpg"><img src="../../../../../html/hardware/rps/images/RpsTracker.jpg"
+      height="248" width="209" align="right" alt=
+      "screenshot"></a><br>
+      Ce cadre affiche une carte de la vue du r&Atilde;&copy;seau
+      <a href=
+      "../../../../../html/hardware/rps/index.shtml">syst&Atilde;&uml;me
+      RPS</a>.
+
+      <h2>Affichage</h2>Il existe deux types de choses
+      dessin&Atilde;&copy;es:
+
+      <ul>
+        <li>les positions mesur&Atilde;&copy;es et les chemins
+        d'&Atilde;&copy;metteurs RPS</li>
+
+        <li>Les "r&Atilde;&copy;gions de d&Atilde;&copy;tection"
+        utilis&Atilde;&copy;e pour les cantons RPS et les <a href=
+        "../../../../../html/hardware/rps/sensors.shtml">Capteurs</a>.</li>
+      </ul>
+
+      <h3>Positions Emetteur</h3>Quand une bonne position de
+      lecture est faite, elle est dessin&Atilde;&copy;e &Atilde; 
+      l'&Atilde;&copy;cran comme un petit cercle
+      repr&Atilde;&copy;sentatif de la pr&Atilde;&copy;cision de la
+      mesure. Une ligne est trac&Atilde;&copy;e &Atilde;  cette
+      nouvelle position depuis la derni&Atilde;&uml;re position.
+
+      <p>Diff&Atilde;&copy;rentes couleurs sont
+      attribu&Atilde;&copy;es &Atilde;  diff&Atilde;&copy;rents
+      &Atilde;&copy;metteurs afin que vous puissiez les distinguer.
+      Si vous "survolez" le curseur sur un point, une info-bulle
+      appara&Atilde;&reg;t qui vous montre o&Atilde;&sup1;
+      l'&Atilde;&copy;metteur a &Atilde;&copy;t&Atilde;&copy; vu
+      l&Atilde; -bas et quelle position a
+      &Atilde;&copy;t&Atilde;&copy; mesur&Atilde;&copy;e.</p>
+
+      <p>Normalement,les mauvaises mesures sont simplement
+      dessin&Atilde;&copy;es comme des points, sans les relier
+      &Atilde;  la prochaine mesure via une ligne. Ils sont souvent
+      porteurs de valeurs de position tr&Atilde;&uml;s importantes,
+      et se traduira par des lignes sortant du panneau. Si vous ne
+      voulez les voir connect&Atilde;&copy;, cocher la case
+      &amp;rlquo;Montrer les Points Erron&Atilde;&copy;s "</p>
+
+      <h3>R&Atilde;&copy;gions</h3>JMRI peut suivre n'importe
+      quelle r&Atilde;&copy;gion sur le r&Atilde;&copy;seau
+      contenant des &Atilde;&copy;metteurs RPS actifs. Ceci est
+      utilis&Atilde;&copy; par exemple pour les <a href=
+      "../../../../../html/hardware/rps/sensors.shtml">capteurs
+      RPS</a> qui sont utilis&Atilde;&copy;s pour
+      contr&Atilde;&acute;ler les signaux.
+
+      <p>Ces r&Atilde;&copy;gions sont affich&Atilde;&copy;es comme
+      des blocs de couleur, qui peuvent se chevaucher.</p>
+
+      <p>Pour obtenir les coordonn&Atilde;&copy;es exactes d'une
+      r&Atilde;&copy;gion, placez le curseur dessus.
+      Apr&Atilde;&uml;s un court moment, une infobulle affiche les
+      coordonn&Atilde;&copy;es des coins.</p>
+
+      <h2>Contr&Atilde;&acute;les</h2>Dans la partie
+      sup&Atilde;&copy;rieure de la fen&Atilde;&ordf;tre il y a
+      quelques commandes simples.
+
+      <ul>
+        <li>Le bouton &Acirc;&laquo;Effacer&Acirc;&raquo; efface
+        l'&Atilde;&copy;cran du transmetteur, laissant les
+        r&Atilde;&copy;gions visibles.</li>
+
+        <li>La case &Atilde;  cocher &amp;rlquo;Montrer erreur de
+        points" c, mentionn&Atilde;&copy;s ci-dessus, inclura les
+        lignes de moindre qualit&Atilde;&copy; des mesures.</li>
+
+        <li>La case &amp;rlquo;Montrer r&Atilde;&copy;cepteurs",
+        lorsqu'elle est coch&Atilde;&copy;e, affiche des
+        emplacements des r&Atilde;&copy;cepteur comme des points
+        noirs l&Atilde;&copy;g&Atilde;&uml;rement plus grands.</li>
+
+        <li>&amp;rlquo;Afficher r&Atilde;&copy;gions"
+        contr&Atilde;&acute;le si les r&Atilde;&copy;gions sont
+        dessin&Atilde;&copy;es ou non.</li>
+      </ul>Les quatre zones de texte et le bouton "Valider" vous
+      permettent de d&Atilde;&copy;finir les
+      coordonn&Atilde;&copy;es de la cartographie pour la
+      fen&Atilde;&ordf;tre. Les deux du haut
+      d&Atilde;&copy;finissent la position RPS qui correspond
+      &Atilde;  l'angle de la partie sup&Atilde;&copy;rieure droite
+      du cadre d'affichage, tandis que les deux
+      inf&Atilde;&copy;rieurs d&Atilde;&copy;finissent la position
+      RPS qui correspond &Atilde;  l'angle de la partie
+      inf&Atilde;&copy;rieure gauche. Le coin
+      inf&Atilde;&copy;rieur gauche est souvent fix&Atilde;&copy;
+      &Atilde;  0,0, et le coin sup&Atilde;&copy;rieur gauche mis
+      &Atilde;  de grandes valeurs pour montrer votre
+      r&Atilde;&copy;seau en entier, mais vous n'avez pas &Atilde; 
+      le faire comme &Atilde;&sect;a. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

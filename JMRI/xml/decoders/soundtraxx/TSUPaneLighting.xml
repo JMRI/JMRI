@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami                       -->
+<!-- change 2014-05-18 (Alain LM)
+       removed <label/> preventing display of the expected variable label   -->
+<!-- version 2 - Additional items for SoundTraxx Tsunami2                   -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <label>
+        <text>LIGHTING EFFECTS AND CONTROLS</text>
+        <text xml:lang="fr">EFFETS et COMMANDES des LUMIÈRES</text>
+        <text xml:lang="it">EFFETTI LUMINOSI E CONTROLLI</text>
+      </label>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+      <column>
+        <display item="Headlight F0(f) Effect Selection"/>
+        <display item="Headlight F0(f) Phase Selection"/>
+        <display item="Headlight F0(f) Grade Crossing Logic"/>
+        <display item="Headlight F0(f) Rule 17 Mode"/>
+        <display item="Headlight F0(f) Light Type"/>
+        <display item="Headlight F0(f) Forward Directional Control" format="checkbox"/>
+        <display item="Headlight F0(f) Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Backup Light F0(r) Effect Selection"/>
+        <display item="Backup Light F0(r) Phase Selection"/>
+        <display item="Backup Light F0(r) Grade Crossing Logic"/>
+        <display item="Backup Light F0(r) Rule 17 Mode"/>
+        <display item="Backup Light F0(r) Light Type"/>
+        <display item="Backup Light F0(r) Forward Directional Control" format="checkbox"/>
+        <display item="Backup Light F0(r) Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <display item="FX5 Effect Selection"/>
+        <display item="FX5 Phase Selection"/>
+        <display item="FX5 Grade Crossing Logic"/>
+        <display item="FX5 Rule 17 Mode"/>
+        <display item="FX5 Light Type"/>
+        <display item="FX5 Forward Directional Control" format="checkbox"/>
+        <display item="FX5 Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="FX6 Effect Selection"/>
+        <display item="FX6 Phase Selection"/>
+        <display item="FX6 Grade Crossing Logic"/>
+        <display item="FX6 Rule 17 Mode"/>
+        <display item="FX6 Light Type"/>
+        <display item="FX6 Forward Directional Control" format="checkbox"/>
+        <display item="FX6 Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>          </text>
+        </label>
+      </column>
+      <column>
+        <display item="FX5B Effect Selection"/>
+        <display item="FX5B Phase Selection"/>
+        <display item="FX5B Grade Crossing Logic"/>
+        <display item="FX5B Rule 17 Mode"/>
+        <display item="FX5B Light Type"/>
+        <display item="FX5B Forward Directional Control" format="checkbox"/>
+        <display item="FX5B Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="FX6B Effect Selection"/>
+        <display item="FX6B Phase Selection"/>
+        <display item="FX6B Grade Crossing Logic"/>
+        <display item="FX6B Rule 17 Mode"/>
+        <display item="FX6B Light Type"/>
+        <display item="FX6B Forward Directional Control" format="checkbox"/>
+        <display item="FX6B Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>  </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Hyperlight Flash Rate (0-15)"/>
+        <display item="Grade Crossing Hold Time (0-15)"/>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brightness 1" layout="above" label=""/>
+			<display item="Brightness 1" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brightness 2" layout="above" label=""/>
+			<display item="Brightness 2" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Dimmer" layout="above" label=""/>
+			<display item="Dimmer" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Master Brightness" layout="above" label=""/>
+			<display item="Master Brightness" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>                              </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="FX5 Lighting Overide"/>
+        <display item="FX6 Lighting Overide"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Lights</name>
+  <name xml:lang="ca">Llums</name>
+  <name xml:lang="cs">Osvětlení</name>
+  <name xml:lang="da">Lys</name>
+  <name xml:lang="de">Licht</name>
+  <name xml:lang="fr">Lumières</name>
+  <name xml:lang="it">Luci</name>
+  <name xml:lang="nl">Licht</name>
+</pane>

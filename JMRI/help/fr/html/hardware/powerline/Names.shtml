@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Updated  by Blorec Herv&#233; 2013-09-18-->
+
+  <title>JMRI: Power Line System Names</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Noms Syst&egrave;me Powerline</h1>Les
+      entr&eacute;es individuelles (Capteurs) et sorties
+      (Aiguillages et lumi&egrave;res) dans JMRI sont accessibles
+      via des noms. Pour plus d'informations sur le sh&eacute;ma
+      g&eacute;n&eacute;ral, s'il vous pla&icirc;t voir la <a href=
+      "../../doc/Technical/Names.shtml">page d&eacute;signation</a>
+      dans la <a href=
+      "../../doc/Technical/index.shtml">documentation
+      technique</a>.
+
+      <h2>X10</h2>Les dispositifs X10 sont trait&eacute;s via un
+      "code Maison" de A &agrave; P, et un "Code de
+      P&eacute;riph&eacute;riques" de 1 &agrave; 16.
+
+      <p>Les sorties (Lumi&egrave;res ou Aiguillages) dans chaque
+      code maison sont num&eacute;rot&eacute;es avec leur code de
+      l'appareil, par exemple PTA1 est un Aiguillage JMRI qui
+      dialogue avec le dispositif 1 sur le code maison A; PTB3 est
+      un Aiguillage pour le dispositif 3 sur code maison B; PLP16
+      est une Lumi&egrave;re JMRI pour le dispositif 16 sur le code
+      maison P.</p>
+
+      <p>Si une sortie est appel&eacute;e comme un aiguillage (le
+      nom commence par PT), vous obtenez seulement On et Off pour
+      les options de sortie.</p>
+
+      <p>Une sortie qui est utilis&eacute;e comme une
+      lumi&egrave;re (le nom commence par PL) prendra des
+      intensit&eacute;s variables. Cependant, certains
+      p&eacute;riph&eacute;riques physiques X10 peuvent ne pas
+      supporter de graduation</p>
+
+      <p>Les entr&eacute;es (Capteurs) sont identifi&eacute;es par
+      le code maison et le num&eacute;ro de
+      p&eacute;riph&eacute;rique qui a &eacute;t&eacute;
+      rapport&eacute; par un autre p&eacute;riph&eacute;rique X10
+      comme un capteur de mouvement ou pav&eacute; de commande de
+      lumi&egrave;re. REMARQUE: en raison d'un grand nombre de faux
+      codes due &agrave; d'autres utilisateurs X10 Les capteurs ne
+      sont pas g&eacute;n&eacute;r&eacute;es automatiquement. Ils
+      doivent &ecirc;tre inscrits dans la table capteur par
+      l'utilisateur.</p>
+
+      <p>JMRI configure la carte d'utilisation du Code Maison "A"
+      maintenant. Nous finirons par le faire configurable, mais
+      pour l'instant cela signifie que les messages d'entr&eacute;e
+      ne seront seulement re&ccedil;us qu'&agrave; partir de
+      p&eacute;riph&eacute;riques mis au code maison A, de sorte
+      que seuls les capteurs PSA1 &agrave; PSA16 vont
+      fonctionner.</p>
+
+      <p>(Les premi&egrave;res versions du JMRI X10 mise en ouuvre
+      utilisaient une adresse tout-num&eacute;rique comme le PT12,
+      sans lettres code de maison, ce qui n'est plus disponible,
+      parce qu'il a caus&eacute; beaucoup trop de confusion</p>
+
+      <h2>Insteon</h2>Les adaptateurs INSTEON sont
+      &eacute;tiquet&eacute;s avec un num&eacute;ro en quatre
+      parties qui ressemble &agrave; "01.2A.B4". Ce sont juste des
+      chaines al&eacute;atoires comme faisant partie de
+      l'utilisateur et le programme est concern&eacute;, et nous ne
+      faisons aucun effort pour les subdiviser. Vous devrez entrer
+      ces noms exactement comme ils apparaissent sur l'appareil que
+      vous souhaitez aborder. Ne pas supprimer ou ajouter des
+      z&eacute;ros, etc
+
+      <p>Par exemple, si l'appareil est &eacute;tiquet&eacute;
+      "01.2A.B4", le nom syst&egrave;me de la lumi&egrave;re
+      correspondant est "PL01.2A.B4".</p>
+
+      <h3>plus d'information</h3>Davantage d'informations sur le
+      mat&eacute;riel X10 peuvent &ecirc;tre trouv&eacute;es sur le
+      (certes d&eacute;sagr&eacute;able) <a href=
+      "http://www.x10.com">site Web X10</a> . En savoir plus sur
+      l'information
+
+      <p><a href=
+      "http://www.x10.com/support/technology1.htm">Technologie X10
+      des Courants Porteurs (PLC) Technologie.</a></p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- UpDated by Herv&#233; Blorec  2013-09-10-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: Signals with C/MRI</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "Bruce Chubb C/MRI Computer interface java model railroad JMRI signals">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>s&eacute;quences JMRI Guide Mat&eacute;riel: Signaux avec
+      C/MRI</h2>
+
+      <p>Pour des signaux s&eacute;par&eacute;s avec des diodes
+      rouge/jaune/vert, la situation est simple: Connectez chacune
+      &agrave; une sortie s&eacute;par&eacute;e avec la bonne
+      polarit&eacute;, avoir le programme qui pilote ces trois
+      sorties, et cela marchera. Le type de signal "Sortie triple"
+      g&egrave;re ce type de c&acirc;blage.</p>
+
+      <p>Pour les signaux avec des simples diodes rouge et verte,
+      il y a deux fa&ccedil;ons de les c&acirc;bler entre
+      elles:</p>
+
+      <p>A) Les diodes ont une connexion commune, plus un fil pour
+      alimenter chaque diode. Ceci est aussi appel&eacute; le type
+      "trois fils&Acirc; . Notez qu'il y a encore seulement deux
+      diodes ici, mais il y a trois 3 fils.</p>
+
+      <p>B) Les diodes sont c&acirc;bl&eacute;es dos &agrave; dos.
+      C'est ce qu'on appelle le type "deux fils"</p>
+
+      <p>Dans les deux cas vous c&acirc;blez ceux-ci &agrave; deux
+      sorties C/MRI. Il y a un certain paire de r&eacute;sistances
+      suppl&eacute;mentaires, et peut-&ecirc;tre une source
+      d'alimentation externe impliqu&eacute;es, de sorte que
+      lorsque l'une des sorties C/MRI est activ&eacute;e, la
+      puissance est appliqu&eacute;e &agrave; une diode et elle
+      s'allume, et quand l'autre est activ&eacute; l'autre diode
+      est aliment&eacute;e. Cela rend Rouge et Vert. Le type signal
+      "Double sortie" g&egrave;re ces s&eacute;quences</p>
+
+      <p>Pour obtenir Jaune, vous devez alimenter les deux LED.
+      C'est facile avec le c&acirc;blage (A) ci-dessus, le
+      programme active tout &agrave; la fois les sorties, les deux
+      voyants s'allument, et le rouge et le vert se combinent pour
+      faire Jaune.</p>
+
+      <p>Avec le c&acirc;blage B, vous ne pouvez pas avoir
+      simultan&eacute;ment les deux voyants lumineux, puisque le
+      courant ne peut pas circuler dans les deux directions en
+      m&ecirc;me temps. Mais "en m&ecirc;me temps "est la
+      cl&eacute;; simplement alterner le sens du courant
+      tr&egrave;s rapidement, trop rapidement pour que l'&Aring;"il
+      voit les transitions, et les couleurs vont fusionner en
+      jaune. Il y a deux fa&ccedil;ons de faire cela:</p>
+
+      <p>A1) Utiliser un circuit externe. Il y a une carte
+      drives&eacute;quencer signal pour faire ceci et qui se relie
+      les sorties C/MRI et les fils des LEDs. Lorsque il
+      d&eacute;tecte que les deux sorties sont sur _on_, il alterne
+      rapidement les tension &agrave; la LED, ce qui donne le
+      jaune. Ce circuit peut &ecirc;tre utilis&eacute; avec tout
+      type de syst&egrave;me C/MRI, et vous n'avez pas &agrave;
+      dire quoi que ce soit PanelPro pour le faire fonctionner.</p>
+
+      <p><a href="NodeConfig.jpg"><img src="NodeConfig.jpg" alt=
+      "Config Pane" align="right" height="212" width="205"></a> A2)
+      Utiliser un support int&eacute;gr&eacute; dans la carte
+      SMINI. Une carte SMINI peut &ecirc;tre configur&eacute; de
+      mani&egrave;re &agrave; faire une chose semblable. Lorsque la
+      SMIN d&eacute;tecte les deux sorties activ&eacute;es,elle
+      alterne la tension. Pour configurer cela, vous devez aller
+      dans les pr&eacute;f&eacute;rences PanelPro, cliquez sur
+      "Configurer noeuds C/MRI ", s&eacute;lectionnez une SMINI
+      &agrave; configurer, cliquez sur l'une des petites cases
+      &agrave; cocher pour configurer une sortie sp&eacute;cifique
+      comme " Signal &agrave; deux fils &agrave; s&eacute;quences
+      oscillante ". Cliquez sur" &eacute;diter Noeud "pour mettre
+      &agrave; jour, puis fermer ce panneau, cliquez sur
+      "Enregistrer" et red&eacute;marrer le programme. Une fois
+      cela fait, un double " Type de signal d'aiguillage" fera
+      &eacute;galement g&eacute;n&eacute;rer des signaux jaunes sur
+      ces sorties.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

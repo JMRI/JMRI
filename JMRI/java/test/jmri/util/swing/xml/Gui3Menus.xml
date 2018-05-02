@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<nodes
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+    <node>
+        <name>Tests</name>
+
+        <node>
+            <name>License</name>
+            <adapter>apps.LicenseAction</adapter>
+        </node>
+        <node>
+            <name>Sample</name>
+            <panel>jmri.util.swing.SamplePane</panel>
+        </node>
+
+    </node>
+
+</nodes>
+  

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
+>
+  <name>DanishSimplified</name>
+  <date>2015</date>
+  <reference>B and I signals from Togdillen or Banestyrelsen - not exactly prototypical</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>KJ</firstname><surname>Lisby</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2015-01-15</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Initial Release</revremark>
+    </revision>
+</revhistory>
+
+  <aspects>
+    <aspect>
+      <name>Kør igennem</name>
+      <indication>Next signal displaying Kør or Kør igennem aspect</indication>
+      <description>2 x green or blinking green Showing</description>
+      <reference>Section 2.1, 2.2</reference>
+      <comment></comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+    
+    <aspect>
+      <name>Kør</name>
+      <indication>Proceed: be prepared to find the next signal displaying Stop aspect</indication>
+      <description>Single green or green + yellow Showing</description>
+      <comment></comment>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+    </aspect>
+    
+
+    <aspect>
+      <name>Stop</name>
+      <indication>Stop</indication>
+      <description>Red or Red + Yellow</description>
+      <comment></comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+    
+    <aspect>
+      <name>Off</name>
+      <indication>Proceed at Caution</indication>
+      <description>Dark signal.</description>
+      <comment></comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+
+  </aspects>
+  <imagetypes>
+    <imagetype type="large"/>
+    <imagetype type="aspects"/>
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-B.xml"/>
+    <appearancefile href="appearance-B2.xml"/>
+    <appearancefile href="appearance-I.xml"/>
+    <appearancefile href="appearance-buffer-stop.xml"/>
+    <appearancefile href="appearance-feather.xml"/>
+  </appearancefiles>
+</aspecttable>
+  

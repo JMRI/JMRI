@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1">
+    <connections xmlns="http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd">
+        <connection xmlns="" class="jmri.jmrix.easydcc.simulator.configurexml.ConnectionConfigXml" disabled="no" manufacturer="Easy DCC" port="(none selected)" speed="" systemPrefix="E" userName="EasyDCC Simulator">
+            <options/>
+        </connection>
+    </connections>
+    <startup xmlns="http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd">
+    </startup>
+</auxiliary-configuration>

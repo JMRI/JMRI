@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Michael</firstname>
+        <surname>Mosher</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2018-02-28</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Added Dutch translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2014-04-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Added Italian</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2013-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added French and German translations</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-01-22</date>
+      <authorinitials>MM</authorinitials>
+      <revremark>Initial release</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" tooltip="'2' bit. Sets the Speed Step for motor, also may affect some light settings" default="1">
+    <enumVal>
+      <enumChoice choice="14 speed step format">
+        <choice xml:lang="cs">Režim 14 rychlostních kroků</choice>
+        <choice xml:lang="de">14 Fahrstufen Modus</choice>
+        <choice xml:lang="fr">Format 14 Pas de vitesse</choice>
+        <choice xml:lang="it">Formato 14 step</choice>
+        <choice xml:lang="nl">14 rijstappenmodus</choice>
+      </enumChoice>
+      <enumChoice choice="28/128 speed step format">
+        <choice>28/128 speed step format(recommended)</choice>
+        <choice xml:lang="cs">Režim 28/128 rychlostních kroků</choice>
+        <choice xml:lang="de">28/128 Fahrstufen Modus (empfohlen)</choice>
+        <choice xml:lang="fr">Format 28/128 Pas de vitesse (recommandé)</choice>
+        <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
+        <choice xml:lang="nl">28/128 rijstappenmodus mode (aanbevolen)</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Speed Steps</label>
+    <label xml:lang="cs">Rychlostních kroků</label>
+    <label xml:lang="de">Fahrstufen</label>
+    <label xml:lang="fr">Pas de vitesse</label>
+    <label xml:lang="it">Step Velocità</label>
+    <label xml:lang="nl">Rijstappen</label>
+    <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
+    <tooltip xml:lang="cs">Nastaví režim rychlostních kroků, může mít také vliv na některé efekty světel</tooltip>
+    <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
+    <tooltip xml:lang="fr">Règle les Pas de vitesse pour le moteur; peut aussi influencer certains réglages de lumières</tooltip>
+    <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
+    <tooltip xml:lang="nl">Hiermee stelt u de rijstappenmodus in en beinvloedt mogelijk bepaalde lichteffecten.</tooltip>
+  </variable>
+</variables>

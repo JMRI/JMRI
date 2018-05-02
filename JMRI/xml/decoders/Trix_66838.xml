@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2007, 2015 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Marc Fournier forfoum@videotron.ca" version="1" lastUpdated="20091018"/>
+  <!-- Version 1 - created from Trix_Modellwisenbahn_version_1.xml "20091018"-->
+  <!-- This is a Trix Selectrix - DCC decoder -->
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150118"/>
+  <!-- Version 2 - moved hi and lo version number from family to model, following creation of model 66840 in a separate file -->
+  <decoder>
+    <family name="Minitrix" mfg="Trix Modelleisenbahn">
+      <model model="66838" numOuts="0" numFns="0" highVersionID="65" lowVersionID="65" comment="Trix Selectrix &amp; DCC decoder">
+		</model>
+    </family>
+    <programming direct="no" paged="yes" register="no" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="3" item="Accel" default="6" comment="Range 0-127">
+        <decVal min="0" max="127"/>
+        <label>Acceleration Momentum (0-127)</label>
+        <label xml:lang="it">Accellerazione (0-127)</label>
+        <label xml:lang="fr">Accelération (0-127)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-127)</label>
+        <comment>Range 0-127</comment>
+      </variable>
+      <variable CV="4" item="Decel" default="5" comment="Range 0-127">
+        <decVal min="0" max="127"/>
+        <label>Deceleration (Brake) Momentum (0-127)</label>
+        <label xml:lang="it">Decellerazione (0-127)</label>
+        <label xml:lang="fr">Décélération (0-127)</label>
+        <label xml:lang="de">Bremszeit (0-127)</label>
+        <comment>Range 0-127</comment>
+      </variable>
+      <variable CV="5" item="Vhigh" default="7" comment="Sets the maximum voltage at full throttle">
+        <decVal min="0" max="7"/>
+        <label>Max Volts (0-7)</label>
+        <label xml:lang="it">Volt Massimi (0-7):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <comment>Sets the maximum voltage at full throttle</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="52">
+        <decVal/>
+        <label>Decoder Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="131">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="49" mask="XXXXVVVV" item="Motor Option 1" default="0" comment="Range 0-3">
+        <enumVal>
+          <enumChoice choice="0 ">
+            <choice>0 </choice>
+          </enumChoice>
+          <enumChoice choice="1 ">
+            <choice>1 </choice>
+          </enumChoice>
+          <enumChoice choice="2 ">
+            <choice>2 </choice>
+          </enumChoice>
+          <enumChoice choice="3 ">
+            <choice>3 </choice>
+          </enumChoice>
+        </enumVal>
+        <label>Pulse Width for Motor Control</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="50" mask="XXXXVVVV" item="Motor Option 2" default="0" comment="Range 0-3">
+        <enumVal>
+          <enumChoice choice="0 ">
+            <choice>0 </choice>
+          </enumChoice>
+          <enumChoice choice="1 ">
+            <choice>1 </choice>
+          </enumChoice>
+          <enumChoice choice="2 ">
+            <choice>2 </choice>
+          </enumChoice>
+          <enumChoice choice="3 ">
+            <choice>3 </choice>
+          </enumChoice>
+        </enumVal>
+        <label>Motor Type(0-5)</label>
+        <comment>Range 0-3</comment>
+      </variable>
+      <variable CV="51" mask="XXXXXXXV" item="Motor Polarity Reversal" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Motor Polarity Reversal</label>
+      </variable>
+      <variable CV="51" mask="XXXXXXVX" item="Lighting Polarity Reversal" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Lighting Polarity Reversal</label>
+      </variable>
+      <variable CV="51" mask="XXXXXVXX" item="Track Polarity Reversal" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Track Polarity Reversal</label>
+      </variable>
+      <variable CV="128" readOnly="yes" item="Decoder Software Version" default="1">
+        <decVal/>
+        <label>Decoder Software Version (read only): </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

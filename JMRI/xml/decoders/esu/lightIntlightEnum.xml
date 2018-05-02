@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Dimmer" value="0">
+    <choice>Dimmer</choice>
+    <choice xml:lang="de">Dimmbares Licht</choice>
+    <choice xml:lang="it">Dimmer</choice>
+    <choice xml:lang="ca">Regular Intensitat</choice>
+  </enumChoice>
+  <enumChoice choice="Zoom" value="1">
+    <choice>Fade in-out</choice>
+    <choice xml:lang="de">Ein- und Ausblenden</choice>
+    <choice xml:lang="it">Fade in-out</choice>
+    <choice xml:lang="ca">Fade entrada - sortida</choice>
+  </enumChoice>
+  <enumChoice choice="Neon light" value="2">
+    <choice>Neon light</choice>
+    <choice xml:lang="de">Neonlampe</choice>
+    <choice xml:lang="it">Luce Neon</choice>
+    <choice xml:lang="ca">Llum de neó</choice>
+  </enumChoice>
+  <enumChoice choice="Defective neon" value="3">
+    <choice>Defective neon light</choice>
+    <choice xml:lang="de">Defekte Neonlampe</choice>
+    <choice xml:lang="it">Defective Luce Neon</choice>
+    <choice xml:lang="ca">Llum de neó per defecte</choice>
+  </enumChoice>
+  <enumChoice choice="Flash light (phase 1)" value="4">
+    <choice>Flash light (phase 1)</choice>
+    <choice xml:lang="de">Blinklicht (Phase 1)</choice>
+    <choice xml:lang="it">Luce a Flash (fase 1)</choice>
+    <choice xml:lang="ca">Llum amb flash fase 1</choice>
+  </enumChoice>
+  <enumChoice choice="Flash light (phase 2)" value="5">
+    <choice>Flash light (phase 2)</choice>
+    <choice xml:lang="de">Blinklicht (Phase 2)</choice>
+    <choice xml:lang="it">Luce a Flash (fase 2)</choice>
+    <choice xml:lang="ca">Llum amb flash fase 2</choice>
+  </enumChoice>
+  <enumChoice choice="Strobe" value="6">
+    <choice>Single strobe</choice>
+    <choice xml:lang="de">Single Strobe</choice>
+    <choice xml:lang="it">Single strobe</choice>
+     <choice xml:lang="ca">Estroboscòpica simple</choice>
+  </enumChoice>
+  <enumChoice choice="Flickering" value="7">
+    <choice>Flickering light (Firebox)</choice>
+    <choice xml:lang="de">Flackerlicht (Feuerbüchse)</choice>
+    <choice xml:lang="it">Flickering light (Firebox)</choice>
+    <choice xml:lang="ca">Intermitent (Caixa de focs)</choice>
+  </enumChoice>
+</enumVal>

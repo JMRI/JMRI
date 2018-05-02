@@ -1,0 +1,6 @@
+/* Styles for the JSON console */
+
+div#console > pre {
+    height: 60ex;
+    overflow: auto;
+}

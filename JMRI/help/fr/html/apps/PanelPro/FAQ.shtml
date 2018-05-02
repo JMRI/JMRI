@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- UpDated by Blorec Herv&#233; 2013-09-02-->
+
+  <title>JMRI: PanelPro Questions Fr&eacute;quemment
+  Pos&eacute;es</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: PanelPro Questions Fr&eacute;quemment Pos&eacute;es
+      (FAQ)</h1><a name="context" id="context"></a>
+
+      <h3><a name="context" id="context">Comment JMRI fait le lien
+      avec le reste de mon r&eacute;seau?</a></h3><a name="context"
+      id="context"></a>
+
+      <p>Jim Betz a r&eacute;pondu &agrave; ces questions sur la
+      liste des utilisateur de JMRI</p>
+
+      <ol>
+        <li>JMRI fonctionne comme un r&eacute;gulateur - il envoie
+        et et &eacute;coute les messages sur les "bus de commande".
+        Rien de plus, rien de moins. Et ce qui est en fait -
+        beaucoup - et sont la vraie beaut&eacute; de JMRI. Dans le
+        cas de DecoderPro les commandes qui sont utilis&eacute;es
+        et surveill&eacute;es sont celles li&eacute;es &agrave; la
+        programmation d'une locomotive. Dans le cas de PanelPro les
+        messages/commandes qui sont utilis&eacute;es sont celles
+        qui sont pertinentes pour l'occupation des cantons, les
+        aiguillage, etc</li>
+
+        <li>Chaque syst&egrave;me a ses "bus de commande" propres
+        ou"interface de l'ordinateur" - &agrave; savoir son propre
+        jeu de commandes (penser"format de la commande") qu'il
+        utilise. C'est pourquoi vous ne pouvez pas utiliser un
+        r&eacute;gulateur Digitrax sur un syst&egrave;me NCE.
+        Beaucoup de gens se r&eacute;f&egrave;rent au bus de
+        commande comme un"r&eacute;gulateur" - pour le distinguer
+        des bus de voie. Et il est important de noter que les
+        messages sur les deux ne sont pas identiques dans tous les
+        cas. Certains syst&egrave;mes sont assez semblables les uns
+        aux autres pour permettre d'utiliser un r&eacute;gulateur
+        de l'un sur l'autre ...mais cela est relativement rare
+        (tr&egrave;s peu de r&eacute;seau en font l'usage. Une
+        autre solution est C/MRI - qui a son propre jeu de
+        commandes. Celles de JMRI sont aussi assez intelligentes
+        pour "parler C/MRI" (ainsi que les capacit&eacute;
+        &agrave;"parler" Digitrax, NCE et Lenz ...etc) La
+        diff&eacute;rence sont que les C/MRI sont un jeu de
+        commandes et du mat&eacute;riel qui se concentre uniquement
+        sur les syst&egrave;mes de soutien RR (signaux,
+        aiguillages, etc) et n'a pas la capacit&eacute; de
+        contr&ocirc;ler ou de programmer les trains. Et, en
+        effet,C/MRI ne "sait" pas si l'alimentation est DC ou DCC.
+        La plupart des r&eacute;seaux qui ont &eacute;t&eacute; mis
+        en place r&eacute;cemment ont utilis&eacute; le
+        mat&eacute;riel C/MRI et JMRI (PanelPro) pour l'interface
+        de l'homme/machine.</li>
+
+        <li>Sur les r&eacute;seaux DCC la centrale de commande est
+        l'interface entre la voie et le r&eacute;gulateur/bus de
+        commande. Vous utilisez les bus r&eacute;gulateur pour
+        prendre une locomotive ...et envoyer des messages de
+        contr&ocirc;le &agrave; la centrale de commande - ce qui
+        met"en avant" vos modifications de r&eacute;gulateur pour
+        les locomotives ...et pour les d&eacute;codeurs
+        stationnaires ...soit par la voie ou le bus de commande (ou
+        les deux).</li>
+
+        <li>Il est possible - certains diront m&ecirc;me
+        souhaitable - de s&eacute;parer votre support train( bus de
+        voie) de votre support de commande du r&eacute;seau. Bien
+        que ce ne soit pas intuitif - vous n'avez pas &agrave;
+        utiliser les m&ecirc;me syst&egrave;me que vous utilisez
+        pour la commande des trains et pour la commande des
+        aiguillages et signaux - tout simplement parce que les
+        messages n'ont pas besoin de traverser cette
+        fronti&egrave;re. C'est pourquoi certains ont
+        recommand&eacute; que vous consid&eacute;riez un
+        environnement tel que des NCE pour les trains et C/MRI ou
+        Digitrax pour le mat&eacute;riel r&eacute;seau
+        (PanelPro).</li>
+
+        <li>Parce que Digitrax et C/MRI ont publi&eacute; leurs
+        interfaces, il y a plus de produits disponibles pour le
+        contr&ocirc;le de r&eacute;seau pour les deux
+        syst&egrave;mes que pour les NCE. Les deux RR-Cirkits et
+        Team num&eacute;riques ont sorti d'excellents produits qui
+        travaillent pour Digitrax (par exemple). Pour autant que je
+        sache il n'y a pas de produits pour les NCE. Je ne sais pas
+        ce qui est/n'est pas disponibles pour Lenz.</li>
+
+        <li>PanelPro est encore en d&eacute;veloppement &agrave; un
+        rythme rapide. Plusieurs configurations sont
+        d&eacute;j&agrave; op&eacute;rationnelles &agrave; l'aide
+        de PanelPro - mais les d&eacute;veloppements les plus
+        r&eacute;cents qui ont &eacute;t&eacute; mis &agrave;
+        disposition dans PanelPro rendent son utilisation un peu
+        plus facile que par le pass&eacute;. En fait, si vous
+        parlez juste des aiguillages et d'occupation de cantons
+        alors PanelPro sera utilisable pendant un certain
+        temps.</li>
+
+        <li>Lorsque vous commencez &agrave; faire de la
+        signalisation alors "tout change". Parce que la
+        signalisation exige que les occupation de cantons et de
+        l'&eacute;tat des aiguillages soient utilis&eacute;s dans
+        le processus de prise de d&eacute;cision :"quel aspect doit
+        &ecirc;tre affich&eacute; sur lequel des signaux &agrave;
+        ce stade? ". Cela n&eacute;cessite une ensemble de code
+        sp&eacute;cifique/logique. Je suppose que vous voulez
+        utiliser un ordinateur pour prendre ces d&eacute;cisions.
+        Il est possible de mettre en &oelig;uvre un syst&egrave;me
+        o&ugrave; un &ecirc;tre humain, g&eacute;n&eacute;ralement
+        les dispatcheurs, prend l'ensemble des d&eacute;cisions
+        ...les plus complexe le r&eacute;seau/syst&egrave;me de
+        signalisation plus les erreurs que les r&eacute;partiteur
+        feront. Et il y a aussi la question (s) de la "charge de
+        travail" ...mais un ordinateur utilisant PanelPro est
+        habituellement de repos et a plus qu'assez de puissance
+        pour devancer les besoins du r&eacute;seau.
+
+          <p>La mise en &oelig;uvre de commande du r&eacute;seau
+          (aiguillages, occupation de cantons, signaux, etc) n'est
+          pas un "accord facile". Et, &agrave; mon avis, c'est
+          quelque chose que vous ne devriez pas essayer d'apprendre
+          tout seul - ou de le faire seul avec les aides/des
+          conseils pris sur les listes en ligne comme celle-ci. Je
+          ne dis pas "ne pas utiliser en ligne" ... Je dis que si
+          vous voulez le faire aussi facilement que possible, vous
+          devriez chercher ceux qui nous ont
+          pr&eacute;c&eacute;d&eacute;s et obtenir leur appui .
+          Oui, vous pouvez le faire vous-m&ecirc;me - non, ce n'est
+          pas les meilleure fa&ccedil;on de le faire et vous verrez
+          que vous ferez plusieurs erreurs qui entra&icirc; des
+          retards consid&eacute;rables et des rec&acirc;blages. De
+          nombreux projets d'automatisation de r&eacute;seaux sont
+          au point mort justement pour cette m&ecirc;me raison.</p>
+
+          <p>Et juste pour cela soit mentionn&eacute;s... Ajouter
+          des capacit&eacute;s telles que la d&eacute;tection
+          d'occupation de cantons, aiguillages
+          contr&ocirc;l&eacute;s par ordinateur, et les signaux ne
+          sont pas bon march&eacute;s et doivent &ecirc;tre
+          budg&eacute;tis&eacute;s. Et vous pouvez constater que
+          vous aurez besoin de rec&acirc;bler m&ecirc;me des
+          parties importantes de votre r&eacute;seau afin de les
+          aider &agrave; fonctionner correctement.</p>
+        </li>
+      </ol><a name="store" id="store"></a>
+
+      <h3>Comment faire pour Sauver mon Travail?</h3>Il y a
+      plusieurs fa&ccedil;ons de sauvegarder votre panneau. C'est
+      parce que les programmes ont &agrave; stocker &agrave; la
+      fois de la configuration (aiguillages, capteurs, etc) et de
+      la mise en page (les d&eacute;tails de votre panneau
+      sp&eacute;cifique) de l'information.
+
+      <p>Habituellement, le plus simple est d'utiliser un seul
+      fichier pour tout contenir. Par exemple, vous pouvez stocker
+      votre panneau(x) dans un fichier(s) appel&eacute;
+      "MainPanel.xml" (ou quelque chose comme &ccedil;a), et
+      d&eacute;finir les pr&eacute;f&eacute;rences pour charger ce
+      fichier. Ensuite, tout ce que vous avez &agrave; faire est de
+      sauvegarder ce fichier &agrave; chaque fois que vous changer
+      quelque chose. Une mise en garde: Assurez - vous que vous
+      avez "toujours le panneau ouvert lorsque vous enregistrez le
+      fichier! Si vous le fermez, puis enregistrez le fichier, il
+      sera bien s&ucirc;r &eacute;crit une version du fichier qui
+      ne montre pas les panneaux. Et enregistrer ce fichier
+      &agrave; partir du menu "Panneaux", en utilisant les
+      &eacute;l&eacute;ment "Enregistrer Panneaux ...".</p>
+
+      <p>Cela fonctionne parce que les panneaux sont
+      conserv&eacute;s avec toutes les informations de
+      configuration au m&ecirc;me moment (ce qui garantit qu'ils
+      vont travailler quand ils seront recharg&eacute;s) <a name=
+      "multifile" id="multifile"></a></p>
+
+      <h3>Puis - Enregistrer Uniquement les Informations de
+      Configuration?</h3>Vous pouvez enregistrer seulement la
+      "configuration" des informations dans un fichier, que vous
+      pouvez enregistrer sans vous soucier de savoir si votre
+      panneau est ouvert, etc" Si vous faites cela, vous pouvez
+      &eacute;galement enregistrer vos panneaux dans leurs propres
+      fichiers s&eacute;par&eacute;s.
+
+      <p>Pour ce faire:</p>
+
+      <ul>
+        <li>Aller &agrave; l'un des outils de Tableau (par exemple
+        Tableau Itin&eacute;raire ) et choisissez "configuration
+        enregistrement du menu "Fichier".</li>
+
+        <li>Cela vous permettra de s&eacute;lectionner un nom de
+        fichier; assurez-vous qu'il n'a _PAS_ le m&ecirc;me que le
+        nom de fichier du panneau (par exemple l'utilisation
+        "MyConfig.xml"au lieu de "MyPanel.xml").</li>
+
+        <li>Rappelez-vous le nom et l'emplacement, puis
+        enregistrer.</li>
+      </ul>Cela met une information de configuration, mais pas les
+      panneaux, dans les fichier.
+
+      <p>Maintenant, assurez vous que ces informations de
+      configuration se chargent automatiquement au d&eacute;marrage
+      du programme:</p>
+
+      <ul>
+        <li>Ouvrez le panneau de pr&eacute;f&eacute;rences,</li>
+
+        <li>Cochez la case "Afficher les pr&eacute;f&eacute;rences
+        avanc&eacute;es", et attendre une sec"onde pour les voir
+        appara&icirc;</li>
+
+        <li>Descendez jusqu'&agrave; "fichier du panneau de
+        chargement au d&eacute;marrage", cliquez sur
+        "Ajouter",</li>
+
+        <li>Et s&eacute;lectionnez le fichier dans lequel vous avez
+        enregistr&eacute; la configuration.</li>
+
+        <li>Cliquez sur "Enregistrer" sur les fen&ecirc;tre de
+        pr&eacute;f&eacute;rences pour s'assurer que cela est
+        stock&eacute;.</li>
+
+        <li>Quittez le programme et le red&eacute;marrer pour
+        tester.</li>
+      </ul><a name="location" id="location"></a>
+
+      <h3>O&ugrave; dois-je mettre mes Ic&ocirc;nes
+      Personnalis&eacute;es et Autres Fichiers?</h3>Le meilleur
+      endroit pour mettre vos propres fichiers est dans le
+      r&eacute;pertoire pr&eacute;f&eacute;rences du programme.
+      (DecoderPro utilise <a href=
+      "../DecoderPro/Files.shtml#location">le m&ecirc;me
+      r&eacute;pertoire</a> ) Vous devez mettre toutes les versions
+      locales des fichiers modifi&eacute;s ici afin qu'elles ne
+      soient pas &eacute;cras&eacute;es par une nouvelle version du
+      programme. Tous les fichiers que le programme &eacute;crit
+      pour contenir" des informations locales, par exemple
+      entr&eacute;es liste, sont aussi &eacute;crits ici.
+
+      <p>L'emplacement de celui-ci varie selon le type
+      d'ordinateur.</p>
+
+      <ul>
+        <li>Sur une machine Linux, vous trouverez un
+        r&eacute;pertoire. jmri dans votre r&eacute;pertoire
+        personnel.</li>
+
+        <li>Sur un Macintosh, regardez dans le dossier
+        Pr&eacute;f&eacute;rences du Dossier Syst&egrave;me en
+        cours si vous utilisez Mac OS 8 ou 9, ou les dossier
+        Biblioth&egrave;que/Pr&eacute;f&eacute;rences dans votre
+        r&eacute;pertoire utilisateur sur Mac OS X.</li>
+
+        <li>Sur Windows, cela peut &ecirc;tre dans un certain
+        nombre de places selon la version Windows que vous utilisez
+        et si vous avez configur&eacute; plusieurs utilisateurs;
+        Recherche d'un r&eacute;pertoire "JMRI".</li>
+      </ul>Assurez-vous de trouver les pr&eacute;f&eacute;rences,
+      et <em>pas</em> le dossier d'application d'origine. Ils sont
+      s&eacute;par&eacute;s pour simplifier la mise &agrave; jour
+      de la version du programme. Vous saurez que vous avez
+      trouv&eacute; les bon endroit si vous voyez les fichiers de
+      pr&eacute;f&eacute;rences qui stockent vos param&egrave;tres
+      d'applications: <tt>PanelProConfig2.xml</tt> . Vous pouvez
+      &eacute;galement rechercher ce fichier pour trouver ce
+      r&eacute;pertoire
+
+      <p><img src="../../../images/IconFileTree.gif" alt=
+      "Capture d'&eacute;cran de l'arborescence de fichiers" align=
+      "right" width="288 HEIGHT=" hspace="5" vspace="0"> Si vous
+      avez cr&eacute;&eacute; des ic&ocirc;nes et que vous voulez
+      qu'elles soient utilisable depuis l'&eacute;diteur de
+      panneaux, les mettre dans un r&eacute;pertoire
+      appel&eacute;"ressources" dans le r&eacute;pertoire des
+      pr&eacute;f&eacute;rences. Elles vont alors appara&icirc;
+      dans les bo&icirc; de s&eacute;lection "fichiers" lorsque
+      vous appuyez sur un bouton "Changer ic&ocirc;ne... " sur le
+      panneau de l'&eacute;diteur."</p>
+
+      <p>Par exemple, si le r&eacute;pertoire contient les fichiers
+      pr&eacute;f&eacute;rences ci-dessous, vous obtiendrez
+      l'affichage du fichier affich&eacute; &agrave; droite.</p>
+      <pre>
+<code>&gt; ls Ressources/icons green.gif decoderpro.gif red.gif tester.gif<br>&gt; ls ressources/tester/ic&ocirc;nes/quelque chose &agrave; tester.gif/<br>&gt; ls ressources/icons/quelque chose/tester.gif
+</code>
+</pre>
+
+      <p>Il est &eacute;galement possible de mettre vos fichiers
+      dans le r&eacute;pertoire <code>resources</code> de la
+      distribution JMRI que vous obtenez lorsque vous installez le
+      programme. Ce <em>n'est pas</em> recommand&eacute;, car les
+      fichiers qu'il y a seront probablement remplac&eacute;s
+      lorsque vous installerez une version future. (Une version
+      plus r&eacute;cente d'un fichier, peut-&ecirc;tre
+      &eacute;crasera votre copie, le remplacement est bas&eacute;
+      sur la date du fichier).</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

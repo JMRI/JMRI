@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-signalHead-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"signalHead\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the signalHead"
+        },
+        "userName": {
+            "type": "string",
+            "description": "User name of the signalHead"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the signalHead"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the signalHead",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "aspect": {
+            "type": "string",
+            "description": "The current signalHead aspect"
+        },
+        "lit": {
+            "type": "boolean",
+            "description": "\"true\" if lit; \"false\" otherwise"
+        },
+        "held": {
+            "type": "boolean",
+            "description": "\"true\" if held; \"false\" otherwise"
+        },
+        "state": {
+            "type": "integer",
+            "description": "The current appearance or 100 if held == \"true\""
+        },
+        "appearance": {
+            "type": "integer",
+            "description": "The current appearance"
+        },
+        "appearanceName": {
+            "type": "string",
+            "description": "The name of the current appearance"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "lit", "held", "state", "appearance", "appearanceName"]
+}

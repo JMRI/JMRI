@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/roster2array.xsl" type="text/xsl"?>
+<roster-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/roster.xsd">
+  <!--Written by JMRI version 4.3.5ish-201603220441-jenkins-R6c862e9 on Tue Mar 22 06:47:50 EDT 2016 $Id$-->
+  <roster>
+    <locomotive id="testEntry1" fileName="testEntry1.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="3" comment="" maxSpeed="100" imageFilePath="" iconFilePath="" URL="" IsShuntingOn="">
+      <dateUpdated>Mar 22, 2016 5:57:04 AM</dateUpdated>
+      <decoder model="NMRA standard CV definitions" family="NMRA standard CV definitions" comment="" />
+      <locoaddress>
+        <dcclocoaddress number="3" longaddress="no" />
+        <number>3</number>
+        <protocol>dcc_short</protocol>
+      </locoaddress>
+      <attributepairs>
+        <keyvaluepair>
+          <key>RosterGroup:testGroup1</key>
+          <value>yes</value>
+        </keyvaluepair>
+      </attributepairs>
+    </locomotive>
+    <locomotive id="testEntry2" fileName="testEntry2.xml" roadNumber="" roadName="" mfg="" owner="" model="" dccAddress="3" comment="" maxSpeed="100" imageFilePath="" iconFilePath="" URL="" IsShuntingOn="">
+      <decoder model="NMRA standard CV definitions" family="NMRA standard CV definitions" comment="" />
+      <locoaddress>
+        <dcclocoaddress number="3" longaddress="no" />
+        <number>3</number>
+        <protocol>dcc_short</protocol>
+      </locoaddress>
+    </locomotive>
+  </roster>
+  <rosterGroup>
+    <group>testGroup1</group>
+  </rosterGroup>
+</roster-config>

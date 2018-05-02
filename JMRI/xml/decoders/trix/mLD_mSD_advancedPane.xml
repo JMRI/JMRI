@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Pane of Advanced options of Märklin mLD and mSD decoders               -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Advanced</name>
+  <name xml:lang="ca">Avançat</name>
+  <name xml:lang="cs">Pokročilý</name>
+  <name xml:lang="da">Avanceret</name>
+  <name xml:lang="de">Erweitert</name>
+  <name xml:lang="fr">Avancé</name>
+  <name xml:lang="it">Avanzato</name>
+  <name xml:lang="nl">Uitgebreid</name>
+  <column>
+    <separator/>
+    <label>
+      <text>Enabled Protocols</text>
+      <text xml:lang="it">Protocolli Abilitati</text>
+      <text xml:lang="de">Protokolle Aktivieren</text>
+      <text xml:lang="fr">Protocoles activés</text>      
+      <text xml:lang="ca">Protocols Habilitats</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Advanced Protocols Option 1" format="checkbox"/>
+    <display item="Advanced Protocols Option 2" format="checkbox"/>
+    <display item="Advanced Protocols Option 3" format="checkbox"/>
+    <display item="Advanced Protocols Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Save Settings</text>
+      <text xml:lang="de">Speichereinstellungen</text>
+      <text xml:lang="fr">Paramètres d'enregistrement</text>      
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Advanced Save Setting Option 1" format="checkbox"/>
+    <display item="Advanced Save Setting Option 2" format="checkbox"/>
+    <display item="Advanced Save Setting Option 3" format="checkbox"/>
+    <display item="Advanced Save Setting Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+  </column>
+  <column>
+    <separator/>
+    <label>
+      <text>Brake Sections</text>
+      <text xml:lang="de">Bremsstrecken</text>
+      <text xml:lang="fr">Sections de freinage</text>       
+      <text xml:lang="ca">Seccions de Frenada</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Advanced Brake Sections Option 1" format="checkbox"/>
+    <display item="Advanced Brake Sections Option 2" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Speed</text>
+      <text xml:lang="de">Geschwindigkeit</text>
+      <text xml:lang="fr">Vitesse</text>       
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Advanced Speed Option 1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Speed Option 1" label="" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Timer</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="Advanced Timer Option 1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 1" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 2" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 3"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 3" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 4"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 4" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 5"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 5" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 6"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 6" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 7"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 7" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Advanced Timer Option 8"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Advanced Timer Option 8" label="" format="hslider"/>
+    </row>                    
+  </column>
+</pane>

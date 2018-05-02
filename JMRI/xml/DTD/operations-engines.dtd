@@ -1,0 +1,84 @@
+<!-- Defines XML documenting a engine roster -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (options | engines | engineModels | engineTypes | engineLengths | consists
+| models | types | lengths | newConsists)*>
+
+<!ELEMENT engineModels (#PCDATA)>
+<!ELEMENT engineTypes (#PCDATA)>
+<!ELEMENT engineLengths (#PCDATA)>
+<!ELEMENT consists (#PCDATA)>
+
+<!ELEMENT options (enginesOptions | engineEditOptions)*>
+<!ELEMENT enginesOptions EMPTY>
+<!ELEMENT engineEditOptions EMPTY>
+
+<!ELEMENT engines (engine*)>
+<!ELEMENT engine EMPTY>
+
+<!ATTLIST engine id						CDATA #REQUIRED>          
+<!ATTLIST engine roadNumber				CDATA #IMPLIED>
+<!ATTLIST engine roadName				CDATA #IMPLIED>  
+<!ATTLIST engine type					CDATA #IMPLIED>      
+<!ATTLIST engine model					CDATA #IMPLIED> 
+<!ATTLIST engine color					CDATA #IMPLIED> 
+<!ATTLIST engine length					CDATA #IMPLIED>
+<!ATTLIST engine weight					CDATA #IMPLIED>
+<!ATTLIST engine weightTons				CDATA #IMPLIED>
+<!ATTLIST engine built					CDATA #IMPLIED>  
+<!ATTLIST engine hp						CDATA #IMPLIED>  
+<!ATTLIST engine consist				CDATA #IMPLIED> 
+<!ATTLIST engine consistNum				CDATA #IMPLIED>  
+<!ATTLIST engine leadConsist			CDATA #IMPLIED>                                       
+<!ATTLIST engine location				CDATA #IMPLIED>
+<!ATTLIST engine locationId				CDATA #IMPLIED>    
+<!ATTLIST engine secLocationId			CDATA #IMPLIED> 
+<!ATTLIST engine secDestinationId		CDATA #IMPLIED> 
+<!ATTLIST engine destination			CDATA #IMPLIED> 
+<!ATTLIST engine destinationId			CDATA #IMPLIED> 
+<!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST engine routeDestinationId		CDATA #IMPLIED> 
+<!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
+<!ATTLIST engine lastRouteId			CDATA #IMPLIED> 
+<!ATTLIST engine lastLocationId			CDATA #IMPLIED>
+<!ATTLIST engine train					CDATA #IMPLIED>
+<!ATTLIST engine trainId 				CDATA #IMPLIED>  
+<!ATTLIST engine owner					CDATA #IMPLIED>  
+<!ATTLIST engine moves					CDATA #IMPLIED>                    
+<!ATTLIST engine comment				CDATA #IMPLIED>
+<!ATTLIST engine value					CDATA #IMPLIED>
+<!ATTLIST engine rfid					CDATA #IMPLIED>
+<!ATTLIST engine locUnknown				(true | false ) "false"> 
+<!ATTLIST engine outOfService			(true | false ) "false">
+<!ATTLIST engine date					CDATA #IMPLIED>
+<!ATTLIST engine selected				(true | false ) "false">
+<!ATTLIST engine blocking				CDATA #IMPLIED>
+<!ATTLIST engine bUnit					(true | false ) "false">
+
+<!ELEMENT models (model*)*>
+<!ELEMENT model EMPTY>
+<!ATTLIST model name					CDATA #IMPLIED> 
+
+<!ELEMENT types (type*)*>
+<!ELEMENT type EMPTY>
+<!ATTLIST type name						CDATA #IMPLIED> 
+
+<!ELEMENT lengths (length*)*>
+<!ELEMENT length EMPTY>
+<!ATTLIST length value					CDATA #IMPLIED> 
+
+<!ELEMENT newConsists (consist*)*>
+<!ELEMENT consist EMPTY>
+<!ATTLIST consist name					CDATA #IMPLIED> 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- the following format strings identifiers are used in this template:
+1 = railroad name
+2 = scripts (in comments)
+3 = style sheets (in comments)
+4 = body content (divs)
+5 = help menu contents (in comments)
+6 = personal menu contents (in comments)
+-->
+<html class="layout-pf layout-pf-fixed transitions">
+    <head>
+        <title>%1$s</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- scripts %2$s -->
+        <!-- style sheets %3$s -->
+    </head>
+    <body ng-app="jmri.app">
+        %4$s
+        <div id="verticalNavLayout" class="layout-pf layout-pf-fixed faux-layout" ng-controller="NavigationCtrl">
+            <pf-toast-notification-list
+                 notifications="toastNotifications"
+                 close-callback="tnCloseCallback"
+                 update-viewing="updateToastNotificationViewing"></pf-toast-notification-list>
+            <pf-vertical-navigation items="navigationItems" brand-alt="{{railroad}}"
+                 show-badges="true" persistent-secondary="true" pinnable-menus="true"
+                 navigate-callback="handleNavigateClick">
+                <div class="ng-scope">
+                    <ul class="nav navbar-nav navbar-right navbar-iconic">
+                        <li class="dropdown">
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-power" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span data-translate-attr="{ title: 'POWER.POWER' }" class="fa fa-power-off" ></span>
+                                <span class="carat fa {{defaultPowerState| powerTriState}} small"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-power">
+                                <li ng-repeat="pm in power| orderBy:'name'"><a ng-click="setPower(pm.name, pm.state)"><span class="fa fa-fw {{pm.state| powerTriState}}"></span> {{pm.name}}<span ng-show="pm.default === true"> <span data-translate>POWER.DEFAULT</span></span></a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-help" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span data-translate-attr="{ title: 'HELP.HELP' }" class="fa pficon-help"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-help">
+                                <!-- help menu items %5$s -->
+                            </ul>
+                        </li>
+                        <li class="dropdown hidden">
+                            <a class="dropdown-toggle nav-item-iconic" id="navbar-menu-personal" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span data-translate-attr="{ title: 'USER.USER' }" class="fa pficon-user"></span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbar-menu-personal">
+                                <!-- user menu items %6$s -->
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </pf-vertical-navigation>
+            <div ng-view id="contentContainer" class="container-fluid container-cards-pf container-pf-nav-pf-vertical nav-pf-vertical-with-badges nav-pf-persistent-secondary">
+            </div>
+            <pf-about-modal is-open="isAboutModalOpen" on-close="onAboutModalClose()"
+                 additional-info="additionalInfo" product-info="productInfo"
+                 title="title" copyright="copyright" img-alt="imgAlt" img-src="imgSrc">
+            </pf-about-modal>
+        </div>
+    </body>
+</html>

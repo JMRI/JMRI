@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Hardware Support - CBUS - Naming</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+<div id="mainContent">
+
+<h1>Structure Mat&#233;riel: CBUS - D&#233;signation</h1>
+<p>
+Cette page explique comment JMRI utilise les Noms Syst&#232;mes pour acc&#233;der aux ressources li&#233;es &#224; CBUS.
+
+<h2>Noms Syst&#232;mes</h2>
+<p>JMRI fournit une interface au r&#233;seau r&#233;el via des
+objets internes, tels que les Aiguillages, les Capteurs, etc qui
+sont &#233;troitement "mapp&#233;s" pour correspondres &#224; des p&#233;riph&#233;riques physiques.
+Ce "mapping" est r&#233;alis&#233;e via les "Noms Syst&#232;mes", qui &#224; la fois
+identifie comment acc&#233;der &#224; un dispositif particulier, et sont la cl&#233;
+ de la recherche d'un objet correspondant dans JMRI.</p>
+
+<h2>&#201;v&#233;nements CBUS</h2>
+Le <a href="http://www.merg.org.uk/resources/lcb.html"> CBUS</a>
+<a href="http://www.merg.org.uk/"> MERG</a>  
+communique par messages avec un format fix&#233;:
+Un octet de commande et d'information sur la longueur, suivi &#233;ventuellement
+par des octets de donn&#233;es suppl&#233;mentaires.
+Et ceci est la forme la plus simple, il est utilis&#233; pour envoyer des "&#233;v&#233;nements" identifiables.
+ &#193; leur tour, les &#233;v&#233;nements sont de deux types: "ON" et "OFF".
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<p>Retour &#224; la page d'aide principale de <a href="index.shtml">CBUS</a>.
+    
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

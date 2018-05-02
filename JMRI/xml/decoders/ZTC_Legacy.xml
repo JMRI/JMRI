@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Ian Birchenough(ian@birchenough.demon.co.uk)" version="2" lastUpdated="20060521"/>
+  <version author="Phil Grainger (phil.grainger@ca.com)" version="1" lastUpdated="20030807"/>
+  <!-- ZTC Legacy (Robin Palmer) decoders -->
+  <decoder>
+    <family name="Legacy" mfg="ZTC" lowVersionID="0" highVersionID="255">
+      <model model="ZTC202" numOuts="3">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="Violet"/>
+      </model>
+      <model model="ZTC203" numOuts="5">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="Violet"/>
+        <output name="4" label="Pink"/>
+        <output name="5" label="Brown"/>
+      </model>
+      <model model="ZTC211" numOuts="0"/>
+      <model model="ZTC211A" numOuts="0"/>
+      <model model="ZTC214" numOuts="0"/>
+      <model model="ZTC214A" numOuts="0"/>
+      <model model="ZTC215" numOuts="0"/>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="Range 0-255">
+        <decVal/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Accel" CV="3" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Accel</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable item="Decel" CV="4" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Decel</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable item="Vhigh" CV="5" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Vhigh</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Vmid" CV="6" comment="Range 1-13">
+        <decVal min="0" max="13"/>
+        <label>Vmid</label>
+        <comment>Range 1-13</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable item="Total PWM Period" CV="9" default="215">
+        <decVal/>
+        <label>Total PWM Period</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+      </variable>
+      <variable item=" Analog (DC) Operation " CV="12" comment="DC Conversion Active?" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Operate on DCC only">
+            <choice>Operate on DCC only</choice>
+          </enumChoice>
+          <enumChoice choice="Operate on DCC and DC">
+            <choice>Operate on DCC and DC</choice>
+          </enumChoice>
+        </enumVal>
+        <label> Analog (DC) Operation </label>
+        <comment>DC Conversion Active?</comment>
+      </variable>
+      <variable CV="25" item="Vmid Step" comment="Range 0-13">
+        <decVal max="13"/>
+        <label>Vmid Step</label>
+        <comment>Range 0-13</comment>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="49" comment="Zero-1 Address" item="Zero-1 Address">
+        <shortAddressVal/>
+        <label>Zero-1 Address</label>
+        <comment>Zero-1 Address</comment>
+      </variable>
+      <variable item="Kick Start Power Level" CV="55" comment="Range 0-255" default="63">
+        <decVal max="255"/>
+        <label>Kick Start Power Level</label>
+        <label xml:lang="it">Forza Avviamento (volt)</label>
+        <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
+        <label xml:lang="de">Kick Start</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Directional Headlights" CV="61" minOut="2" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Headlights are directional and operate automatically">
+            <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
+            <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F4-Retro)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
+      </variable>
+      <variable item="Kick Start" CV="65" comment="Range 0-63">
+        <decVal max="63"/>
+        <label>Kick Start</label>
+        <comment>Range 0-63</comment>
+      </variable>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="F1 controls output 3" minOut="3" default="1"/>
+      <constant item="F2 controls output 4" minOut="4" default="1"/>
+      <constant item="F3 controls output 5" minOut="5" default="1"/>
+      <constant item="F2 controls output 6" minOut="6" default="1"/>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Kick Start Power Level" format="hslider" label="Kick Start Power Level">
+        <label>Kick Start Power Level</label>
+      </display>
+      <display item="Kick Start Power Level" label="Kick Start Power Level">
+        <label>Kick Start Power Level</label>
+      </display>
+      <display item="Vmid Step" format="hslider" label="Vmid Step">
+        <label>Vmid Step</label>
+      </display>
+      <display item="Vmid Step" label="Vmid Step">
+        <label>Vmid Step</label>
+      </display>
+      <display item="Zero-1 Address" label="Zero-1 Address">
+        <label>Zero-1 Address</label>
+      </display>
+    </column>
+    <name>ZTC</name>
+  </pane>
+</decoder-config>

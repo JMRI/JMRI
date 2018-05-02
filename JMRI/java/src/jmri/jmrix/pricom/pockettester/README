@@ -1,0 +1,5 @@
+This directory contains the JMRI support code for the PRICOM
+packet monitor.  It's somewhat out of place in jmrix, as it
+doesn't really implement any of the jmri interfaces, but it
+has to go somewhere...
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<nodes
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
+>
+    <name>DecoderPro</name>
+    <node name="New Loco">
+        <name xml:lang="it">Nuova Loco</name>
+        <name xml:lang="da">Nyt Loko</name>
+        <name xml:lang="de">Neue Lok</name>
+        <name xml:lang="fr">Nouvelle Loco</name>
+		<name xml:lang="ca">Nova Locomotora</name>
+        <name xml:lang="cs">Nová lokomotiva</name>
+        <name xml:lang="nl">Nieuwe Loc</name>
+        <icon>resources/icons/misc/gui3/NewLocoButton.png</icon>
+        <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
+    </node>
+
+    <node name="Identify">
+        <name xml:lang="it">Identifica</name>
+        <name xml:lang="da">Identificer</name>
+        <name xml:lang="de">Identifiziere</name>
+        <name xml:lang="fr">Identifier</name>
+		<name xml:lang="ca">Identifica</name>
+        <name xml:lang="cs">Rozpoznat</name>
+        <name xml:lang="nl">Identificeer</name>
+        <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
+        <current>identifyloco</current>
+    </node>
+    <node name="Help">
+        <name xml:lang="it">Aiuto</name>
+        <name xml:lang="da">Hjælp</name>
+        <name xml:lang="de">Hilfe</name>
+        <name xml:lang="fr">Aide</name>
+		<name xml:lang="ca">Ajuda</name>
+        <name xml:lang="cs">Nápověda</name>
+        <name xml:lang="nl">Help</name>
+        <icon>resources/icons/misc/gui3/help-browser.png</icon>
+        <help>package.apps.gui3.dp3.DecoderPro3</help>
+    </node>
+</nodes>
+

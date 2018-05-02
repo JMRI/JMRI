@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1" lastUpdated="20140914"/>
+  <decoder>
+    <family name="Function decoders" mfg="QElectronics GmbH" type="mobile" comment="Mobile function decoders">
+      <model model="F0-4+" numOuts="4" numFns="14" productID="function-4plus" comment="Mobile Function Decoder with light effects and sequence &amp; function generator - 4 outputs">
+        <versionCV lowVersionID="8" highVersionID="8"/>
+        <output name="1" label="A0"/>
+        <output name="2" label="A1"/>
+        <output name="3" label="A2"/>
+        <output name="4" label="A3"/>
+			</model>
+			<model model="F0-8+" numOuts="8" numFns="14" productID="function-8plus" comment="Mobile Function Decoder with light effects and sequence &amp; function generator - 8 outputs">
+        <versionCV lowVersionID="8" highVersionID="8"/>
+        <output name="1" label="A0"/>
+        <output name="2" label="A1"/>
+        <output name="3" label="A2"/>
+        <output name="4" label="A3"/>
+        <output name="5" label="A4"/>
+        <output name="6" label="A5"/>
+        <output name="7" label="A6"/>
+        <output name="8" label="A7"/>
+			</model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/address1-function.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/addresses.xml"/>
+
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/mfgVersionId.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/analogModeFunction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+
+			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv21.22.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv28bidirectional.xml"/>
+
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29analog.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29bidirectional.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv29decodertype.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionmapF.xml"/>
+
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv56.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv57.58.60decoderConfig.xml"/>
+
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/lights.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionOutputProperties.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/lightEffects.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/modesFplus.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/addLocoAddresses.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/sequenceGenerator.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/functionGenerator.xml"/>
+
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/qDecoderInfo.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/qdecoder/cv64-67debugCVs.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Clears over-current events" CV="8" default="7"/>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Fast Reset to Mode 1" CV="7" default="1"/>
+			<factReset label="Fast Reset to Mode 2" CV="7" default="2"/>
+    </resets>
+  </decoder>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAddressesModes.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneLocoAddresses.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneLights.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneAdvanced.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneSequenceGenerator.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneFunctionGenerator.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderInfo.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/qdecoder/paneqDecoderDebug.xml"/>
+</decoder-config>

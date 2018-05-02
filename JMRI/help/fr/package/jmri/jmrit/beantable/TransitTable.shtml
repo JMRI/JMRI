@@ -1,0 +1,321 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec 2032-10-12-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Transit Table Help</title>
+  <meta name="author" content="Dave Duchamp">
+  <meta name="keywords" content="JMRI help Transit Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Transits et le Tableau de Transit</h1>
+
+      <h2>Qu'est-ce qu'un Transit?</h2>
+
+      <p><b>Transit</b> est un groupe de deux <b><a href=
+      "SectionTable.shtml">Sections</a></b> ou plus
+      connect&eacute;es qui d&eacute;crit un itin&eacute;raire d'un
+      train circulant dans une direction donn&eacute;e autour d'un
+      r&eacute;seau. Une section peut &ecirc;tre dans des Transits
+      multiples, et peut-&ecirc;tre dans un Transit
+      administr&eacute; &agrave; plusieurs reprises. Les Sections
+      sont conserv&eacute;es dans l'ordre - la premi&egrave;re
+      Section est reli&eacute;e &agrave; la seconde, la seconde est
+      reli&eacute;e &agrave; la troisi&egrave;me, etc. Cela
+      signifie qu'une Section dans un Transit doit &ecirc;tre
+      connect&eacute;e &agrave; la Section avant que celle-ci (s'il
+      en existe une) et &agrave; la Section apr&egrave;s elle(s'il
+      y a une). L'ordre des Sections d&eacute;termine le sens du
+      d&eacute;placement dans le Transit. Les Train voyagent depuis
+      les Sections avec des num&eacute;ros de s&eacute;quence plus
+      bas vers les Sections avec des num&eacute;ros de
+      s&eacute;quence sup&eacute;rieures. Normalement les Transits
+      seront d&eacute;finis pour les voies principales, et parfois
+      pour des voie de triage, des coulisses.</p>
+
+      <p>Dans les zones de Transit sp&eacute;cifi&eacute;es par
+      l'utilisateur, des Sections de <i>substitution</i> peuvent
+      &ecirc;tre d&eacute;sign&eacute;es. Par exemple, pour se
+      d&eacute;placer entre les "2nd" et "4&egrave;me" Sections
+      dans un transit, il peut y avoir de multiples "3&egrave;me"
+      Sections, n'importe laquelle pourrait &ecirc;tre
+      utilis&eacute;e pour voyager entre la 2e et la 4&egrave;me
+      Section. Les Sections Alternatives pr&eacute;voient des voies
+      de passages et des voies d'&eacute;vitements. Les Transits
+      &eacute;galement pr&eacute;voient des boucles de
+      retournement. Pour fournir des va-et-vient. Par exemple pour
+      les tramways, une option est pr&eacute;vue dans le Dispatcher
+      pour inverser automatiquement la direction de la course
+      gr&acirc;ce &agrave; un Transit lorsque le train arrive
+      &agrave; la fin de son Transit, et ex&eacute;cute le train en
+      sens inverse pour le d&eacute;but de son Transit.</p>
+
+      <p>Les Transits acceptent &agrave; la fois des trains en
+      manuel et automatique. Quand un train fonctionne en mode
+      automatique, le Transit pr&eacute;voit l'activation
+      d'<b>Actions</b> quand un train arrive dans une Section
+      d&eacute;sign&eacute;e dans le Transit. Une Action peut
+      &ecirc;tre initi&eacute;e par un certain nombre
+      d'&eacute;v&eacute;nements, Par exemple, lorsque le train
+      entre dans une Section, ou quand le train s'arr&ecirc;te. Une
+      vari&eacute;t&eacute; d'actions sont possibles, comme une
+      pause pour le train pour un nombre de minutes d'horloge
+      rapide (un arr&ecirc;t de la station) d&eacute;termin&eacute;
+      par l'utilisateur, revenant en mode manuel pour une
+      man&oelig;uvre locale, ou d&eacute;clencher le klaxon sur un
+      d&eacute;codeur sonore.</p>
+
+      <h2>Comment les Transits sont activ&eacute;s et
+      utilis&eacute;s?</h2>
+
+      <p>Les Transits sont des objets statiques. Ils
+      pr&eacute;cisent les itin&eacute;raires &agrave; suivre pour
+      les trains autour du r&eacute;seau. Les Transits ne font pas
+      rouler les trains, ou ne garde pas trace des trains en
+      marche. Un Transit devient partie int&eacute;grante du
+      processus de la marche du train quand il est
+      <i>activ&eacute;</i> en &eacute;tant attribu&eacute; &agrave;
+      un Train <b>Actif</b>. Les Transits sont enregistr&eacute;s
+      en tant que partie d'un fichier de panneau/configuration , et
+      ont seulement besoin d'&ecirc;tre mis en place une fois, et
+      peuvent &ecirc;tre r&eacute;utilis&eacute;s. Les Trains
+      Actifs, au contraire sont dynamiques et transitoires. Les
+      Trains Actifs ne sont pas sauvegard&eacute;s sur le disque,
+      et doivent &ecirc;tre mis en place &agrave; chaque fois
+      qu'ils sont utilis&eacute;s.</p>
+
+      <p>Les Transits sont <i>Activ&eacute;</i> dans la
+      fen&ecirc;tre <a href=
+      "../dispatcher/DispatcherFrame.shtml">Dispatcher</a>, o
+      &ugrave; le Transit est li&eacute; &agrave; un Train pour
+      cr&eacute;er un Train Actif. Quand un Train Actif est
+      cr&eacute;&eacute;, un Transit est s&eacute;lectionn&eacute;,
+      un Train est s&eacute;lectionn&eacute;, et un Canton de
+      d&eacute;part (la localisation du train au canton de
+      d&eacute;part) et un Canton de fin (localisation du train
+      lorsque le trajet est termin&eacute;) sont
+      sp&eacute;cifi&eacute;s, tout au long avec des options. Ce
+      processus aboutit &agrave; un Train <b>Actif</b>, qui peut
+      ensuite &ecirc;tre exp&eacute;di&eacute;. Un Transit peut
+      &ecirc;tre utilis&eacute; par un seul Train Actif &agrave; la
+      fois. Quand un Train Actif est termin&eacute;, son transit
+      est <i>D&eacute;sactiv&eacute;</i>, et peut &ecirc;tre
+      r&eacute;utilis&eacute; pour un nouveau Train Actif.</p>
+
+      <p>Un train peut partir d'un Canton en dehors du Transit,
+      mais connect&eacute; &agrave; un Canton au sein du Transit,
+      ou un train peut commencer &agrave; partir d'un Canton au
+      sein d'une Section dans le Transit. Un Train se
+      d&eacute;place &agrave; travers un Transit dans un seul sens
+      - d&eacute;fini par l'ordre dans lequel les sections sont
+      incluses dans le Transit. Les Trains passent d'une Section
+      avec un num&eacute;ro de s&eacute;quence bas vers une Section
+      avec un plus grand num&eacute;ro de s&eacute;quence. La seule
+      exception &agrave; cela est l'option de va-et-vient qui
+      permet un train de circuler en sens inverse par le biais de
+      son transit vers le d&eacute;but du Transit.</p>
+
+      <p>Quand un Train Actif est initi&eacute;, une demande
+      d'<i>allocation</i> est plac&eacute;e pour une Section de
+      d&eacute;part. Si la Section est libre, la Section sera
+      <i>allou&eacute;e</i> pour le Train. <i>Allocation</i>
+      signifie que la Section se voit attribuer le Train Actif, et
+      le Train est autoris&eacute; par le r&eacute;partiteur a
+      poursuivre &agrave; la fin de cette Section.</p>
+
+      <p>Quand un Train Actif est cr&eacute;&eacute;, il peut
+      &ecirc;tre activ&eacute; pour le trajet par un
+      op&eacute;rateur &agrave; l'aide d'un r&eacute;gulateur, ou
+      automatiquement par un op&eacute;rateur <i>virtuel</i>.La
+      r&eacute;partition se compose de l'<i>allocation</i> des
+      Sections, une par une, pour le Train Actif. L'envoi
+      r&eacute;el peut &ecirc;tre effectu&eacute; par un
+      r&eacute;partiteur assis &agrave; l'ordinateur
+      ex&eacute;cutant JMRI, ou semi-automatiquement par
+      l'ordinateur. Si une Section demand&eacute;e est actuellement
+      en utilisation, une demande d'affectation est plac&eacute;e
+      dans la file d'attente du r&eacute;partiteur. Quand une
+      Section est lib&eacute;r&eacute;e, la file d'attente est
+      scann&eacute;e pour le Train de la plus haute priorit&eacute;
+      qui en a fait la demande.</p>
+
+      <h2>Utilisation du Tableau Transit pour Configurer les
+      Transits</h2>
+
+      <p>Les Transits sont mis en place dans le Tableau Transit.
+      Lors de leur cr&eacute;ation, les Transits sont
+      ind&eacute;pendants des Trains qui les utilisent.</p>
+
+      <p>Tous les Transits qui existent actuellement peuvent
+      &ecirc;tre r&eacute;f&eacute;renc&eacute;s en utilisant
+      l'outil <b>Tableau Transit</b> sous <b>Tableaux</b> dans le
+      menu Outils de la plupart des Programmes JMRI. Il y a sept
+      colonnes dans le Tableau Transit:</p>
+
+      <ul>
+        <li><b>Nom Syst&egrave;me</b> - Le nom Syst&egrave;me est
+        affect&eacute; au Transit lors de sa cr&eacute;ation, et ne
+        peut pas &ecirc;tre chang&eacute;.</li>
+
+        <li><b>Nom utilisateur</b> - Si vous &ecirc;tes
+        int&eacute;ress&eacute;s &agrave; voir vos Transits porter
+        des noms lisibles vous pouvez cliquer dans la colonne " Nom
+        Utilisateur " et modifier ces informations comme vous
+        voulez.</li>
+
+        <li><b>&eacute;tat</b> - L'&eacute;tat d'un Transit indique
+        si une Section est <b>INACTIVE</b> (Disponible pour
+        l'activation et l'affectation &agrave; un Train), ou
+        <b>AFFECT&eacute;E</b> (li&eacute;e &agrave; un Train pour
+        former un Train Actif). L'&eacute;tat d'un Transit
+        nouvellement ajout&eacute; est toujours
+        <b>INACTIF</b>.</li>
+
+        <li><b>Commentaire</b> - Cette colonne est pour votre usage
+        pour enregistrer tout commentaire que vous voudrez
+        peut-&ecirc;tre utiliser pour garder trace de vos Transits.
+        Il est l&agrave; seulement pour information.</li>
+
+        <li>Cliquez sur le bouton<b>Supprimer</b> dans une ligne
+        sp&eacute;cifique pour supprimer le Transit dans cette
+        rang&eacute;e. Utilisez cette touche avec
+        pr&eacute;caution! Ne supprimez pas un Transit qui
+        fonctionne.</li>
+
+        <li>Cliquez sur le bouton <b>Modifier</b> dans une
+        rang&eacute;e pour afficher ou modifier les informations
+        saisies pour un Transit. Le Nom Syst&egrave;me ne peut pas
+        &ecirc;tre chang&eacute;. Le Nom Utilisateur peut
+        &ecirc;tre chang&eacute;, Les Sections peuvent &ecirc;tre
+        red&eacute;finies, etc. Un seul Transit peut &ecirc;tre
+        &eacute;dit&eacute; &agrave; la fois. Un Transit peut ne
+        pas &ecirc;tre &eacute;dit&eacute; si un autre est en cours
+        de cr&eacute;ation, ou si le Transit n'est pas dans
+        l'&eacute;tat INACTIFf</li>
+
+        <li>Cliquez sur le bouton <b>Dupliquer</b> dans une
+        rang&eacute;e pour ajouter un autre Transit identique
+        &agrave; celui-ci. Cliquer ce bouton est semblable &agrave;
+        cliquer sur le bouton <b>Ajouter ...</b> (voir ci-dessous),
+        sauf que l'information de ce Transit est copi&eacute;e dans
+        la fen&ecirc;tre Ajouter/Modifier Transit. Cette option
+        offre un moyen facile d'entrer dans de multiples copies
+        d'un Transit quand plusieurs Trains doivent suivre la
+        m&ecirc;me route au m&ecirc;me moment.</li>
+      </ul>
+
+      <p>Pour d&eacute;finir un nouveau Transit, cliquez sur le
+      <b><a href="TransitAddEdit.shtml">Ajouter ...</a></b> . Une
+      fen&ecirc;tre Ajouter/&eacute;diter Transit sera mise en
+      place qui vous permettra de d&eacute;signer les Sections dans
+      le nouveau Transit. (&eacute;videmment, les Sections doivent
+      &ecirc;tre d&eacute;finies avant que tout Transit puisse
+      &ecirc;tre cr&eacute;&eacute;.) Puisqu'un Transit ne peut
+      &ecirc;tre utilis&eacute; que par un seul Train Actif
+      &agrave; un moment, l'option Dupliquer (Voir ci-dessus) peut
+      faire gagner du temps lors de la cr&eacute;ation de multiples
+      copies du m&ecirc;me Transit.</p>
+
+      <h3>Utilisation de l'&eacute;diteur de mise en page pour
+      configurer les Transits</h3>Si vous utilisez l'&eacute;diteur
+      de R&eacute;seau afin de d&eacute;finir et de
+      g&eacute;n&eacute;rer la logique pour M&acirc;tsSignaux et
+      Sections, il est possible de cr&eacute;er un transit de base
+      depuis l'&eacute;diteur de r&eacute;seau. Pour ce faire,
+      faire appara&icirc;tre le menu contextuel (clic droit) d'un
+      M&acirc;t de Signal sur le panneau, si les choses ont
+      &eacute;t&eacute; mises en place correctement puis il y a la
+      possibilit&eacute; de cr&eacute;er <b>Transit depuis Ici</b>,
+      apr&egrave;s s&eacute;lection de cette option, vous pouvez
+      alors progresser le long de votre itin&eacute;raire et
+      s&eacute;lectionnez chaque face de M&acirc;tSignal, amener le
+      menu contextuel sur chaque et en s&eacute;lectionnant
+      <b>Ajouter au Transit</b>. Lorsque vous &ecirc;tes au
+      M&acirc;tSignal destination sur
+      &acirc;&euro;&lsaquo;&acirc;&euro;&lsaquo;votre
+      itin&eacute;raire S&eacute;lectionnez <b>Ajouter au transit
+      et Termin&eacute;</b>. S'il vous pla&icirc;t noter que vous
+      devrez enregistrer manuellement les transits sur le disque.
+
+      <h2>R&eacute;glages pour Fonctionner en Continu</h2>
+
+      <p>Le transit peut &ecirc;tre mis en place pour un
+      fonctionnement en continu, ce qui permet &agrave; un train
+      Actif de voyager &agrave; travers ses multiples temps de
+      transit sans fin et de se r&eacute;activ&eacute;. Son transit
+      fournit, est mis en place pour un fonctionnement en continu,
+      chaque fois qu'un train Actif ach&egrave;ve son voyage
+      &agrave; travers un Transit, le Train Actif
+      &eacute;ventuellement &ecirc;tre r&eacute;initialis&eacute;
+      automatiquement par le Dispatcher il est pr&ecirc;t &agrave;
+      fonctionner gr&acirc;ce &agrave; son nouveau Transit. Pour un
+      fonctionnement continu, un Tain Actif doit commencer et se
+      terminer dans la m&ecirc;me section, et doit &ecirc;tre
+      point&eacute; dans la m&ecirc;me direction lors du
+      d&eacute;marrage et lors de la fin. Pour qu'un Transit soit
+      capable d'un fonctionnement continu, la premi&egrave;re
+      section et la derni&egrave;re section doit &ecirc;tre la
+      m&ecirc;me, et les deux doivent &ecirc;tre mises en place
+      pour une circulatiion dans la m&ecirc;me direction. Cela
+      s'applique &agrave; &agrave; la fois &agrave; la circulation
+      manuelle des trains et &agrave; la circulation automatique
+      des trains. Pour avoirplus d'informations sur la
+      configuration de l'option fonctionnement continu, consultez
+      le fichier d'aide pour la fen&ecirc;tre. <a href=
+      "../dispatcher/NewTrain.shtml">Activez nouveau train</a></p>
+
+      <h2>Sp&eacute;cification des Actions pour un Fonctionnement
+      Automatique</h2>
+
+      <p>Les Transits supportent une vari&eacute;t&eacute;
+      d'<b>Actions</b> qui se produisent automatiquement quand un
+      train est en circulation &agrave; travers le Transit en mode
+      automatique. Une ou plusieurs <b>Actions</b> peuvent
+      &ecirc;tre sp&eacute;cifi&eacute;es avec chaque article dans
+      le Transit. Les <b>Action</b> sont d&eacute;clench&eacute;es
+      lorsque leurs Sections associ&eacute;es du transit sont
+      p&eacute;n&eacute;tr&eacute;es par le train en marche
+      automatiquement.</p>
+
+      <p>Chaque <b>Action</b> a deux parties: une partie
+      <i>Quand</i>, qui sp&eacute;cifie Lorsque l'<b>Action</b>
+      doit &ecirc;tre effectu&eacute;e, et une partie <i>Quoi</i>,
+      qui pr&eacute;cise la t&acirc;che qui doit &ecirc;tre
+      ex&eacute;cut&eacute;e. Une action couramment
+      utilis&eacute;e, par exemple, est "Lorsque le train
+      d&eacute;marre, allumer ses feux."Plus d'informations sur les
+      actions se trouve dans les actions H2&gt; Sauvegarde des
+      Transits sur disque</p>
+
+      <p>Utilisez l'objet Stocker dans le menu Fichier pour
+      enregistrer les informations de transit sur le disque. ces
+      informations sont enregistr&eacute;es avec la configuration
+      dans un fichier XML, ainsi qu' avec l'installation du panneau
+      de commande et &eacute;l&eacute;ments similaires. Pour
+      stocker vos panneaux dans le m&ecirc;me fichier
+      (recommand&eacute;), s&eacute;lectionnez <b>fichier de
+      configuration et Panneaux-&gt; Stocker-&gt; Stocker Fichier
+      ...</b> ou s&eacute;lectionnez <b>Panneaux-&gt; Stocker
+      Panneaux ...</b> dans la fen&ecirc;tre principale JMRI.</p>
+    </div>
+  </div>
+</body>
+</html>

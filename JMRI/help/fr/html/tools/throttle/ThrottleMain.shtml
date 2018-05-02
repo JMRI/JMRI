@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233; 2017-01-07-->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Throttle: Introduction</title>
+  <meta name="keywords" content=
+  "JMRI decoderpro dcc nmlaissezra throttle throttlepro">
+  <meta name="Description" content=
+  "Throttle documentation for JMRI project">
+  <meta name="Author" content="Paul Fraker (paul@frakers.com)">
+  <meta name="Language" content="fr">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+<h1>JMRI: Documentation R&#233;gulateurs</h1>
+
+<p>L'outil <b>R&#233;gulateur JMRI</b> est juste l'un des nombreux outils num&#233;riques ferroviaires 
+qui font partie du Projet <b>JMRI</b>. Il a la capacit&#233; de faire circuler une locomotive &#233;quip&#233;e de d&#233;codeur DCC
+ autour d'un r&#233;seau en utilisant un clavier et une souris d'ordinateur
+pour la commande au lieu d'un r&#233;gulateur &#224; main. Cet outil offre plusieurs 
+caract&#233;ristiques communes avec la plupart des r&#233;gulateurs manuels, y compris le
+capacit&#233; de commander les fonctions de lumi&#232;re et du son.</p>
+
+<h2>Aide R&#233;gulateur</h2>
+
+<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
+<ul>
+  <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur JMRI</a></li>
+  <li>Le <a href="BasicThrottleWindow.shtml">R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottleWindowMenus.shtml">Menus R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottleToolBar.shtml">Barre d'outil du panneau R&#233;gulateur</a></li>
+  <li>Le <a href="AdvancedThrottleControl.shtml">Commandes R&#233;gulateur</a></li>
+  <li>Le <a href="ThrottlesListWindow.shtml">Liste R&#233;gulateurs</a></li>
+  <li>Le <a href="ThrottlesPreferencesPane.shtml">Pr&#233;f&#233;rences R&#233;gulateur</a></li>
+</ul>
+
+
+    <p style="margin-left:0em">Voir aussi:<br>
+   </p>
+ </li>
+</ul>
+<ul>
+  <li>Les <a href="RostersMediaPane.shtml">Panneaux M&#233;dia et Fonction label dans Decoder Pro</a></li>
+  <li><a
+    href="../../../package/jmri/jmrit/scripting/Jynstruments.shtml">Jynstruments</a></li>
+  <li><a href="../../../package/jmri/jmrit/scripting/Jynstruments.shtml"></a><a
+    href="../../../package/jmri/jmrit/throttle/HowToJMRIOrientedThrottle.shtml">Comment construire un R&#233;gulateur orient&#233; JMRI</a>.</li>
+</ul>
+
+<hr>
+
+<p><a href="ThrottleChapter1.shtml">Aide R&#233;gulateurs pour JMRI v 1.x/2.x</a>
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

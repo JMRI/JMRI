@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; le 2013-09-20-->
+
+  <title>JMRI: xAP Support</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Support xAP</h1>XAP est un protocole domotique
+      populaire utilis&eacute; par les amateurs construisant
+      eux-m&ecirc;mes &agrave; travers par de grandes installations
+      professionnelles.
+
+      <p>Pour plus d'informations sur le protocole et les
+      &eacute;quipements disponibles, s'il vous pla&icirc;t voir
+      les <a href="http://www.xapautomation.org">page d'accueil
+      xAP</a> .</p>
+
+      <p>xAP ne doit pas &ecirc;tre confondu avec le xPA Lenz, qui
+      est un dispositif pour l'aide d'un t&eacute;l&eacute;phone
+      portable comme un r&eacute;gulateur pour un syst&egrave;me
+      Lenz DCC.</p>
+
+      <p>Le soutien JMRI pour xAP a commenc&eacute; avec un simple
+      <a href=
+      "http://jmri.org/jython/jython/xAPadapter.py">script</a>
+      disponible dans JMRI 2.9.5 et versions ult&eacute;rieures.
+      Finalement, un ensemble complet d'outils de JMRI xAP sera
+      disponibles directement au sein de l'ensemble des outils
+      JMRI.</p>
+
+      <p>Les appareils xAP qui fournissent soit "l'entr&eacute;e"
+      ou la "sortie" forme le <a href=
+      "http://www.xapautomation.org/index.php?title=Basic_Status_and_Control_Schema">
+      Statut de Base et de Contr&ocirc;le du Sch&eacute;ma</a>
+      (dispositifs BSC). "Entr&eacute;e" des appareils sont mis en
+      correspondance avec les capteurs JMRI, et "Sortie" des
+      appareils sont mis en correspondance vers des aiguillages
+      JMRI.</p>
+
+      <p>Lorsque JMRI voit un nouveau dispositif BSC, il
+      cr&eacute;e le Capteur ou l'Aiguillage n&eacute;cessaire. Le
+      nom de la source compl&egrave;te est utilis&eacute;e pour
+      cr&eacute;er le nom du syst&egrave;me, par exemple:</p>
+      <pre>
+<code>  EST: xPA: xAPBSC: mi4.homeseer.scafell.91: VIOMBoard.Input14GJDRFXEnable
+</code>
+</pre>Le xPA-d&eacute;finis Nom d&eacute;fini par l'utilisateur
+remplit le nom d'utilisateur JMRI, par exemple:
+      <pre>
+<code>  Entr&eacute;e 14 GJD RFX Activer
+</code>
+</pre>Vous pouvez modifier ult&eacute;rieurement le nom
+d'utilisateur JMRI pour tout ce que vous souhaitez via le tableau
+habituel, si d&eacute;sir&eacute;. 
+<!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<title>B&amp;O 1980 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+B&amp;O 1980 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the Chessie System 1980 rule book for the B&amp;O RR.  
+
+<p>
+<body>
+Chessie System's 1980 rule book listed separate signal rules sections for the three component road.
+Rules 281 through 292 applied to the C&amp;O, B-281 through B-292 applied to the B&amp;O, and W-281 through W-292 applied 
+to the Western Maryland.
+
+<p>
+The 1980 rules for the B&amp;O lacked a slow clear indication.  The slow clear indication had been present in the past and would be added back at some point in the following years.  The former slow clear indication was renamed slow approach slow and allowed for maximum authorized speed if enough distance permitted it before approaching the next signal.  
+
+<p>
+There are 4 types of CPL signals included in this definition.  Three mast sets and one dwarf.  The icons will display the necessary markers when needed eliminating the need to guess which ones are needed.  One can create there route in the layout editor and see how the physical signals need to be configured before buying parts.  Only the NJ International set has pre defined markers to match their pre-built #1214 signal.
+
+<P>
+
+For best results it is recommended you set up your layout on the layout editor, create the necessary blocks.  When setting up the bocks, set the speed of the block.  The signal system will use this speed to pick between the possible siganls aspects.
+
+<p>
+
+To use the CPL files you need to set up the signal as three heads.  The top 3 markers are the first head, the main disk is the second head, then the lower three markers comprise the third head.  The dwarf signal is set up the same way.  The permissive CPLs need two signal heads.  The top markers makeup the first head and the main disc make up the second head.  Permissive CPLs will not have lower markers.  The NJ International set needs two heads.  The top center marker is green, the left upper marker is yellow, and the bottom center marker is red.  The main disc makes up the second head.
+
+<p>
+I am not an expert on the B&amp;O semaphore signals.  These definitions come straight from the rule books and may have been used in conjunction with CPLs.  They lack a lot of the necessary aspects and indications to be a complete signal system on their own.
+
+  
+</body>
+
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CPL-High.xml">Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-Dwarf.xml">Color Position Light Dwarf Signals</a>
+<li><a href="appearance-CPL-High-permissive.xml">Permissive Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-High-NJInternational.xml">NJ International CPL Signal Item #1214</a>
+<li><a href="appearance-Semaphore-3Arm.xml">Tripple Arm Semaphore Mast Signals</a>
+<li><a href="appearance-Semaphore-2Arm.xml">Double Arm Semaphore Mast Signals</a>
+<li><a href="appearance-Semaphore-1Armwithmarker.xml">Single Arm Semaphore Mast Signals with Lower Marker</a>
+<li><a href="appearance-Semaphore-1Arm.xml">Single Arm Semaphore Mast Signals</a>
+<li><a href="appearance-Semaphore-1ArmDwarf.xml">Single Arm Semaphore Dwarf Signals</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

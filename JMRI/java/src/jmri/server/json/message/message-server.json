@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-message-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"message\"",
+    "properties": {
+        "message": {
+            "type": "string",
+            "description": "Unsolicited message"
+        },
+        "context": {
+            "type": ["object", "null"],
+            "description": "Context for message"
+        },
+        "type": {
+            "type": "string",
+            "description": "Type of message",
+            "enum": ["error", "info", "success", "warning"]
+        },
+        "locale": {
+            "type": "string",
+            "description": "Locale for message display"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["message", "context", "type", "locale"]
+}

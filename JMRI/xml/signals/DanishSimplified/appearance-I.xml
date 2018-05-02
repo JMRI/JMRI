@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
+
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2015-01-15</date>
+        <authorinitials>KJL</authorinitials>
+        <revremark>Initial Version</revremark>
+    </revision>
+  </revhistory>
+  
+  <aspecttable>DanishSimplified</aspecttable>
+
+  <name>Indkørsel Signal</name>
+  
+  <description>This uses a single head with one red, one yellow and two greens, lit as either red/yellow, yellow/green or green/green</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Kør igennem</aspectname>
+      <show>green</show>
+      
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/entry-clear.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/entry-clear.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Kør</aspectname>
+      <show>yellow</show>
+      
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/entry-go.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/entry-go.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/entry-stop.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/entry-stop.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Off</aspectname>
+      <show>dark</show>
+      
+      <imagelink type="large">../../../resources/icons/DanishSignals/Large/entry-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/DanishSignals/Aspects/entry-dark.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Off</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+  </specificappearances>
+  
+  <aspectMappings>
+   <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Kør</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Kør</advancedAspect>
+     <ourAspect>Kør igennem</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Kør igennem</advancedAspect>
+     <ourAspect>Kør igennem</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Off</advancedAspect>
+     <ourAspect>Stop</ourAspect>
+   </aspectMapping>
+  </aspectMappings>
+</appearancetable>  

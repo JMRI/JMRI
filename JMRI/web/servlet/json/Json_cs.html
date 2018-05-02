@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!-- %3$s is the railroad name -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-railroad="%3$s"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-railroad="%3$s"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is title from Servlet -->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/json-console.css">
+        <link rel="stylesheet" href="/css/user.css">
+
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/user.js"></script>
+        <script src="/js/json-console.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="container">
+
+                <div id="alert-websocket-connecting" class="alert alert-info alert-dismissable">Připojuji konsoli...</div>
+                <div id="error-alert" class="hidden alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <div></div>
+                </div>
+                <div id="alert-websocket-closed" class="hidden alert alert-danger alert-dismissable">
+                    Připojení uzavřeno.
+                </div>
+                <h1>JSON konsole</h1>
+                <div class="row">
+                    <div class="col-md-12" id="console"><pre></pre></div>
+                </div>
+                <form class="form-horizontal" role="form">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input id='command' class="form-control" type='text' placeholder="JSON protocol command">
+                        </div>
+                        <div class="col-md-1">
+                            <input id='sendCmd' class='form-control btn btn-primary' type='button' name='Send' value='Send'>
+                        </div>
+                        <div class="col-md-1">
+                            <input id='clearConsole' class='form-control btn' type='button' name='Clear' value='Clear'>
+                        </div>
+                    </div>
+                    <div class="checkbox">
+                        <label data-toggle="tooltip" title="Takes effect on next message and does not reformat existing messages.">
+                            <input id="pretty-print" type="checkbox"> Formátovaný výstup JSON 
+                        </label>
+                    </div>
+                </form>
+                <p>Toto je ukázka služby <a href="/help/en/html/web/JsonServlet.shtml" target="new">JSON WebSockets</a>.</p>
+                <p>Heartbeat signál není zobrazen v konsoli. Tlačítko odeslat se změní na světle modrou když je odesílán heartbeat a na zelenou na jednu vteřinu když je přijata odpověď.</p>
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <!-- Footer %4$s -->
+    </body>
+</html>

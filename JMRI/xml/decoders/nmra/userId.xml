@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-29</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German, corrected French</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2010-03-12</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2003-12-05</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original 0NMRA.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable item="User Id #1" CV="105" default="0">
+    <decVal max="255"/>
+        <label>User ID #1 (0-255)</label>
+        <label xml:lang="it">Id Utente #1 (0-255)</label>
+        <label xml:lang="fr">CV Utilisateur #1 (0-255)</label>
+        <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
+        <label xml:lang="cs">Uživatel ID #1 (0-255)</label>
+        <label xml:lang="nl">Gebruiker-CV #1 (0-255)</label>
+  </variable>
+  <variable item="User Id #2" CV="106" default="0">
+    <decVal max="255"/>
+        <label>User ID #2 (0-255)</label>
+        <label xml:lang="it">Id Utente #2 (0-255)</label>
+        <label xml:lang="fr">CV Utilisateur #2 (0-255)</label>
+        <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
+        <label xml:lang="cs">Uživatel ID #2 (0-255)</label>
+        <label xml:lang="nl">Gebruiker-CV #2 (0-255)</label>
+  </variable>
+</variables>

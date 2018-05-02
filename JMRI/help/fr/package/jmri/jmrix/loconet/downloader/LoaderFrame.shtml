@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-30-->
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Digitrax Downloader</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help digitrax downloader">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Digitrax T&Atilde;&copy;l&Atilde;&copy;chargeur de
+      Programme</h1>Certains produits peuvent avoir de nouveau
+      firmware (programmes internes) Digitrax
+      t&Atilde;&copy;l&Atilde;&copy;charg&Atilde;&copy;s pour eux.
+      Les mises &Atilde;  jour du firmware sont
+      r&Atilde;&copy;partis dans des fichiers". dmf" (Digitrax
+      Firmware Mangled). Ils contiennent &Atilde;  la fois le code
+      lui-m&Atilde;&ordf;me, et des informations de gestion
+      vari&Atilde;&copy;es pour s'assurer qu'il peut
+      &Atilde;&ordf;tre
+      t&Atilde;&copy;l&Atilde;&copy;charg&Atilde;&copy; dans le
+      mat&Atilde;&copy;riel qui l'attend.
+
+      <p>Notez que ce n'est pas le m&Atilde;&ordf;me que <a href=
+      "../soundloader/LoaderFrame.shtml">L'outil de
+      T&Atilde;&copy;l&Atilde;&copy;chargement</a>, qui est
+      utilis&Atilde;&copy; avec un PR2 ou PR3 pour charger des
+      projets solides dans un nouveau d&Atilde;&copy;codeur sonore
+      Digitrax.</p>
+
+      <p>Pour utiliser cet outil:</p>
+
+      <ul>
+        <li>Cliquez sur le bouton S&Atilde;&copy;lectionner et
+        s&Atilde;&copy;lectionnez le fichier. dmf vous souhaitez
+        t&Atilde;&copy;l&Atilde;&copy;charger.</li>
+
+        <li>Cliquez sur Lire le fichier pour lire le fichier dans
+        le programme et v&Atilde;&copy;rifier son contenu</li>
+
+        <li>Seulement si demand&Atilde;&copy; par Digitrax,
+        modifier les diff&Atilde;&copy;rentes valeurs dans Les
+        champs de contr&Atilde;&acute;le (ce n'est pas
+        n&Atilde;&copy;cessaire habituellement)</li>
+
+        <li>Cliquez sur T&Atilde;&copy;l&Atilde;&copy;charger pour
+        charger le firmware. Cela va prendre un peu de temps, de
+        sorte il ya la barre de progression sous les boutons.</li>
+
+        <li>Si d&Atilde;&copy;sir&Atilde;&copy;, cliquez sur
+        V&Atilde;&copy;rifier pour v&Atilde;&copy;rifier le
+        contenu. Cela prend aussi du temps tout.</li>
+      </ul>
+
+      <p>(Ceci est la page d'aide help/en/help
+      pagejmri/jmrix/loconet/downloader/LoaderFrame)</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

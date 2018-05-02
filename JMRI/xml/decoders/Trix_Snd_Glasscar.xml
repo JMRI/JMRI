@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- $Id$       -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Alain Le Marchand" version="2" lastUpdated="20150428"/>
+    <version author="Alain Carasso" version="1" lastUpdated="20141010" />
+    <!-- version 2 -  Full refactoring using xinclude files and existing items for display -->
+<decoder>
+    <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn">
+        <model show="no" model="Glasscar" replacementModel="Trix Sound HO Glasscar" replacementFamily="Trix_Sound_HO"/>
+        <model model="Trix Sound HO Glasscar" numFns="5" lowVersionID="7" highVersionID="7" formFactor="HO"  comment="Trix 22191 -  Baureihe ET 91 / 491 Gläserner Zug"></model>
+        <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Passengers Lights</functionlabel>
+            <functionlabel num="2" lockable="false">Announcement</functionlabel>
+            <functionlabel num="3" lockable="true">Horn</functionlabel>
+            <functionlabel num="4" lockable="false">ABV</functionlabel>
+            <functionlabel num="5" lockable="true">Dimming lights</functionlabel>
+        </functionlabels>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"></programming>
+    <variables>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+        <variable item="Vstart" CV="2" default="1">
+            <decVal max="255"/>
+            <label>Vstart</label>
+            <label xml:lang="it">Volt Partenza</label>
+            <label xml:lang="fr">V démarr.</label>
+            <label xml:lang="de">Anfahrspannung</label>
+            <tooltip>A value of 255 corresponds to 100%</tooltip>
+        </variable>
+        <variable CV="3" item="Accel" default="5">
+            <decVal max="255"/>
+            <label>Acceleration Rate</label>
+            <label xml:lang="it">Accellerazione</label>
+            <label xml:lang="fr">Accelération</label>
+            <label xml:lang="de">Anfahrverzögerung</label>
+            <tooltip>0-255</tooltip>
+        </variable>
+        <variable CV="4" item="Decel" default="3">
+            <decVal max="255"/>
+            <label>Deceleration Rate</label>
+            <label xml:lang="it">Decellerazione</label>
+            <label xml:lang="fr">Décélération</label>
+            <label xml:lang="de">Bremszeit</label>
+            <tooltip>0-255</tooltip>
+        </variable>
+        <variable CV="5" item="Vhigh" default="255">
+            <decVal max="255"/>
+            <label>Vhigh</label>
+            <label xml:lang="it">Volt Massimi (0-255):</label>
+            <label xml:lang="fr">Vmax</label>
+            <label xml:lang="de">Höchstgeschwindigkeit</label>
+        </variable>
+        <variable CV="7" item="Decoder Version" default="9" readOnly="yes">
+            <decVal/>
+            <label xml:lang="it">Versione Decoder: </label>
+            <label xml:lang="fr">Version décodeur: </label>
+            <label xml:lang="de">Decoder Version: </label>
+            <label>Manufacturer Version No: </label>
+        </variable>
+        <variable CV="8" item="Manufacturer" default="131" readOnly="yes">
+            <decVal/>
+            <label xml:lang="it">ID Costruttore: </label>
+            <label xml:lang="fr">ID constructeur: </label>
+            <label xml:lang="de">Hersteller ID: </label>
+            <label>Manufacturer ID: </label>
+            <tooltip>Read-Only, 131 = Trix</tooltip>
+        </variable>
+        <!-- CV 13-14 -->
+        <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F15.xml"/>
+        <!-- CV=19 -->
+        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+        <!-- CV 21-22 -->
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F15.xml"/>
+        <!-- CV 29 -->
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="de">Werkreset alle CVs</label>
+      </factReset>
+    </resets>
+</decoder>
+</decoder-config>

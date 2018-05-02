@@ -1,0 +1,100 @@
+<!-- an ANT build.xml file for JMRI XSLT -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010, 2015 -->
+
+<!-- This file is part of JMRI.                                             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<project name="JMRI" default="all" basedir=".">
+<!-- basedir="." means all paths are relative to the "java/help/en" subdir -->
+<!-- in the project.  We expect that lib et al will be present in -->
+<!-- .. from there -->
+
+  <description>
+  Provides build services for JMRI web pages from help/en metadata
+  </description>
+
+  <!-- set global properties for this build -->
+  <property name="target" value="."/>
+
+  <target name="init" description="create needed directories for en/help">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${target}"/>
+  </target>
+
+    <path id="class.path">
+        <pathelement location="jhelpdev.jar"/>
+        <pathelement location="jars/xmlenc.jar"/>
+        <pathelement location="jars/jhall.jar"/>
+        <pathelement location="jars/junit.jar"/>
+    </path>
+
+  <target name="jhelpdev" depends="init" 
+  			description="run batch jhelpdev">
+        <java classname="net.sourceforge.jhelpdev.JHelDevCmdLine" fork="yes">
+            <classpath refid="class.path"/>
+        </java>
+  </target>
+  
+  <target name="index" depends="init" 
+  			description="create an en/index page">
+    <xslt  basedir="${basedir}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="format.xsl"
+    		includes="JmriHelp_enIndex.xml"
+    	>
+        <xmlcatalog>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+                location="map_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                location="toc_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+                location="index_2_0.dtd"/>
+        </xmlcatalog>
+    </xslt>
+    <move file="JmriHelp_enIndex.html" tofile="webindex.shtml"/> 
+  </target>
+
+  <target name="TOC" depends="init" 
+  			description="create a en/TOC page">
+    <xslt  basedir="${basedir}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="format.xsl"
+    		includes="JmriHelp_enTOC.xml"
+    	>
+        <xmlcatalog>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+                location="map_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                location="toc_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+                location="index_2_0.dtd"/>
+        </xmlcatalog>
+	</xslt>
+    <move file="JmriHelp_enTOC.html" tofile="webtoc.shtml"/> 
+  </target>
+
+  <target name="all" depends="init, jhelpdev, index, TOC" 
+  			description="create all en/help pages" />
+ 
+</project>
+
+

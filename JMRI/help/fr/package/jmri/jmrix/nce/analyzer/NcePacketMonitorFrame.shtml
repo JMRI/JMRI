@@ -1,0 +1,390 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: NCE DCC Packet Analyzer</title>
+  <meta name="author" content="Dan Boudreau">
+  <meta name="keywords" content="JMRI Help DCC Analyzer">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Analyseur de paquets DCC
+      NCE</h1>S&Atilde;&copy;lectionnez le "port
+      s&Atilde;&copy;rie" et appuyer sur le bouton "Ouvrir" avant
+      d'utiliser les boutons radio. La vitesse de transmission est
+      fix&Atilde;&copy; &Atilde;  38.4Kbps. Appuyez sur le bouton
+      "Init" pour initialiser l'analyseur.
+
+      <p>La case "+ " vous permet de supprimer des paquets
+      identiques. Chaque fois que le programme d&Atilde;&copy;tecte
+      un paquet JMRI qui est identique au
+      pr&Atilde;&copy;c&Atilde;&copy;dent, il va remplacer le
+      paquet avec un caract&Atilde;&uml;re "+". Attention, le
+      Programme JMRI n'affichera que les paquets
+      supprim&Atilde;&copy;s (caract&Atilde;&uml;res "+" )
+      apr&Atilde;&uml;s avoir re&Atilde;&sect;u un paquet qui n'est
+      pas identique au pr&Atilde;&copy;c&Atilde;&copy;dent. Si il
+      ya peu d'activit&Atilde;&copy;, il est
+      recommand&Atilde;&copy; de ne pas utiliser la fonction
+      supprimer . De cette fa&Atilde;&sect;on, vous verrez
+      imm&Atilde;&copy;diatement tous les paquets
+      captur&Atilde;&copy;s par l'analyseur.</p>
+
+      <p>Utilisez les boutons radio pour configurer l'analyseur
+      &Atilde;  votre go&Atilde;&raquo;t. Notez que l'analyseur NCE
+      se souviendra de la configuration quand il est hors
+      tension.</p>
+
+      <p>L'aide suivante a &Atilde;&copy;t&Atilde;&copy;
+      copi&Atilde;&copy; de la Soci&Atilde;&copy;t&Atilde;&copy;
+      NCE avec leur autorisation.</p>Commandes
+
+      <p>:</p>
+
+      <p>V Affichage Paquets en mode 'verbeux'(capable
+      d'&Atilde;&ordf;tre interpr&Atilde;&copy;t&Atilde;&copy; par
+      l'homme)<br>
+      H Afficher les paquets sous forme d'octets
+      hexad&Atilde;&copy;cimaux<br>
+      H0 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 0 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H1 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 1 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H2 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 2 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H3 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 3 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H4 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 4 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H5 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 5 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H6 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 6 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)<br>
+      H7 R&Atilde;&copy;glez le mode d'affichage
+      hexad&Atilde;&copy;cimal 7 (voir le tableau d'affichage
+      hexad&Atilde;&copy;cimal)</p>
+
+      <p>A+ Afficher tous les paquets accessoires<br>
+      A- Ne pas afficher les paquets accessoires<br>
+      I + Afficher tous les paquets inactif<br>
+      I-Ne pas afficher les paquets inactif<br>
+      L + Afficher tous les paquets locomotives<br>
+      L Ne pas afficher les paquets de locomotive<br>
+      R + Afficher tous les paquets de
+      r&Atilde;&copy;initialisation<br>
+      R-Ne pas afficher les paquets de
+      r&Atilde;&copy;initialisation<br>
+      S + Afficher tous les paquets signaux<br>
+      S-Ne pas afficher les paquets signaux<br>
+      ? Afficher la liste des commandes prises en charge</p>
+
+      <p>L'analyseur se souvient du dernier mode d'affichage
+      apr&Atilde;&uml;s mise sous tension.</p>
+
+      <h2>Affiche mode hexad&Atilde;&copy;cimal:</h2><b>H0 mode
+      (compatible avec l'analyseur ICC ):</b><br>
+      Affiche les paquets en mode hexad&Atilde;&copy;cimal
+      pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par un
+      caract&Atilde;&uml;re indiquant combien de bits de
+      d&Atilde;&copy;part dans le paquet pr&Atilde;&copy;ambule. Il
+      n'y a pas d'espaces entre le caract&Atilde;&uml;res ou
+      octets.<br>
+      Exemple: $ 03686B<br>
+      Description: 14 bits de d&Atilde;&copy;part avec trois
+      paquets d'octets suivants avec des octets de 0x03, 0x68, 0x6B
+
+      <p><b>Mode H1:</b><br>
+      M&Atilde;&ordf;me que H0 mode sauf les espaces qui
+      d&Atilde;&copy;limiteront les caract&Atilde;&uml;res du
+      pr&Atilde;&copy;ambule et chaque paire de
+      caract&Atilde;&uml;res hexad&Atilde;&copy;cimaux.<br>
+      Exemple: $ 03 68 6B<br>
+      14 bits de d&Atilde;&copy;part avec trois paquets d'octets
+      suivants avec des octets 0x03, 0x68, 0x6B</p>
+
+      <p><b>Mode H2:</b><br>
+      Affiche les paquets en mode hexad&Atilde;&copy;cimal sans
+      aucune indication du nombre de bits de pr&Atilde;&copy;ambule
+      . Il n'y a pas d'espaces entre les caract&Atilde;&uml;res ou
+      octets.<br>
+      Exemple:<br>
+      03686B Trois paquets d'octets suivants avec des octets 0x03,
+      0x68, 0x6B</p>
+
+      <p><b>Mode H3 :</b><br>
+      "" Identique au mode H2, sauf que les espaces
+      d&Atilde;&copy;limiteront chaque paire de
+      caract&Atilde;&uml;res hexad&Atilde;&copy;cimaux<br>
+      Exemple: 03 68 6B<br>
+      Trois paquets d'octets suivants avec des octets 0x03, 0x68,
+      0x6B</p>
+
+      <p><b>Mode H4 :</b><br>
+      Affiche les paquets en mode hexad&Atilde;&copy;cimal
+      pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par Pxx
+      o&Atilde;&sup1; xx indique combien de bits de
+      pr&Atilde;&copy;ambule (en hexad&Atilde;&copy;cimal). Il n'y
+      a pas d'espaces entre les caract&Atilde;&uml;res ou
+      octets.<br>
+      Exemple: P0E03686B<br>
+      14 bits de d&Atilde;&copy;part avec trois paquets d'octets
+      suivants avec les octets 0x03, 0x68, 0x6B</p>
+
+      <p><b>Mode H5 :</b><br>
+      Identique au mode H4, sauf les espaces qui
+      d&Atilde;&copy;limitent les caract&Atilde;&uml;res de
+      pr&Atilde;&copy;ambules et chaque paire des
+      caract&Atilde;&uml;res hexad&Atilde;&copy;cimaux<br>
+      Exemple: P0E 03 68 6B<br>
+      14 bits de d&Atilde;&copy;part avec trois paquets d'octets
+      suivants avec les octets 0x03, 0x68, 0x6B</p>
+
+      <p><b>Mode H6 :</b><br>
+      Affiche les paquets en mode hexad&Atilde;&copy;cimal sans
+      aucune indication du nombre de pr&Atilde;&copy;ambule bits,
+      mais pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par la
+      lettre P. Il n'y a pas d'espaces entre les
+      caract&Atilde;&uml;res ou octets.<br>
+      Exemple: P03686B<br>
+      Trois paquets d'octets suivants avec les octets 0x03, 0x68,
+      0x6B &lt;/ P&gt;</p>
+
+      <p><b>Mode H7 :</b><br>
+      Identique au mode H6, sauf les espaces qui
+      d&Atilde;&copy;limitent chaque paire de
+      caract&Atilde;&uml;res hexad&Atilde;&copy;cimaux<br>
+      Exemple: P 03 68 6B<br>
+      Trois paquets d'octets suivants des octets 0x03, 0x68, 0x6B 
+      <!--#include virtual ="/Footer" --></p>
+
+      <h2>Affichage mode verbeux:</h2>Les Modes d'affichage Verbeux
+      sont destin&Atilde;&copy;s &Atilde;  permettre aux humains
+      d'interpr&Atilde;&copy;ter les paquets contenu. L'affichage
+      est cryptique mais compr&Atilde;&copy;hensible. Sauf
+      indication contraire, tous les nombre sont
+      affich&Atilde;&copy;s en d&Atilde;&copy;cimal. Tout paquet
+      qui n'est pas compris par l'analyseur sera
+      affich&Atilde;&copy; en hexad&Atilde;&copy;cimal
+
+      <p>Les paquets de r&Atilde;&copy;initialisations seront
+      affich&Atilde;&copy;s comme:
+      &Acirc;&laquo;RESET&Acirc;&raquo;</p>
+
+      <p>Les paquets Inactifs sont affich&Atilde;&copy;s comme
+      suit: "IDLE"</p>
+
+      <p><b>Les Format de paquets de vitesse de la locomotive:
+      L1234 S123F</b><br>
+      Une adresse courte de loco est affich&Atilde;&copy; avec 3
+      chiffres (par exemple: L003) et une adresse longue est
+      affich&Atilde;&copy;e avec 4 chiffres (par exemple:
+      L1234).<br>
+      Les commandes de vitesse 14/28 crans sont
+      affich&Atilde;&copy;es avec 2 chiffres (S08) et 128 les
+      commandes de vitesse 128 crans sont affich&Atilde;&copy;es
+      avec trois chiffres (S123). Le dernier caract&Atilde;&uml;re
+      affich&Atilde;&copy; est la direction. F pour l'avant et R
+      pour arri&Atilde;&uml;re.<br>
+      Les paquets d'arr&Atilde;&ordf;t d'urgence sont
+      affich&Atilde;&copy;s comme tels:. L1234 ESTOP</p>
+
+      <p><b>Format pour les de fonctions des locomotives 1 paquet:
+      L1234 FL1234</b><br>
+      Adresses courtes et longues de locomotive sont sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Les num&Atilde;&copy;ros de fonction, si
+      Off, sont indiqu&Atilde;&copy;s par un tiret (-). Si On les
+      num&Atilde;&copy;ros de fonctions sont indiqu&Atilde;&copy;es
+      par L pour F0 et 1-4 pour F1-F4.</p>
+
+      <p>Exemple : L1234 F - 32 signifie les fonctions 2 et 3 sont
+      On et les fonctions 0,1 et 4 sont Off.</p>
+
+      <p><b>Format pour les fonction des locomotives, groupes de 2
+      paquets: L1234 F8765</b><br>
+      Les adresses courtes ou longues de locomotive sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Les num&Atilde;&copy;ros de fonction, si
+      Off, sont indiqu&Atilde;&copy;s par un tiret (-). Si On les
+      num&Atilde;&copy;ros de fonctions sont indiqu&Atilde;&copy;s
+      par 5-8 pour F5-F8.</p>Exemple
+
+      <p>: L1234-6-F8 signifie les fonctions de 8 et 6 sont On et
+      les fonctions 5 et 7 sont Off.</p>
+
+      <p b="">Format pour les fonctions de locomotives, groupeMode
+      H1&lt; de 3 paquets: L1234 FCBA9<br>
+      Les adresses courtes ou longues de locomotives sont sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Les num&Atilde;&copy;ros de fonction, si
+      Off, sont indiqu&Atilde;&copy;s par un tiret (-). Si On les
+      num&Atilde;&copy;ros de fonctions sont indiqu&Atilde;&copy;s
+      par 9, A, B ou C pour F9-F12.</p>
+
+      <p>Exemple : L1234 CF-A-signifie la fonction 12 et 10 sont On
+      et les fonctions 9 et 11 sont Off.</p>
+
+      <p><b>Format pour les fonctions des locomotives, groupe de 4
+      paquets: L1234, FKJIHGFED</b><br>
+      Les adresses courtes ou longues de locomotives sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Les num&Atilde;&copy;ros de fonction, si
+      Off, sont indiqu&Atilde;&copy;s par un tiret (-). Si les
+      num&Atilde;&copy;ros de fonctions sont indiqu&Atilde;&copy;es
+      par D, E, F, G, H, I, J, K pour les F13-F20.</p>
+
+      <p>Exemple : L1234 F ---- GE-signifie que les fonctions 14 et
+      16 sont On</p>
+
+      <p><b>Format pour les fonctions des locomotives, groupe de 5
+      paquets: L1234 FSRQPONML</b><br>
+      Les adresses courtes ou longues de locomotives sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Les num&Atilde;&copy;ros de fonction, si
+      Off, sont indiqu&Atilde;&copy;s par un tiret (-). Si On les
+      num&Atilde;&copy;ros de fonctions sont indiqu&Atilde;&copy;s
+      par L, M, N, O, P, Q, R et S, T pour F21-F28.</p>Exemple
+
+      <p>:. L1234 F ---- OM-signifie fonctions 22 et 24 sont On</p>
+
+      <p><b>Format pour les locomotives OPS forme longue
+      &Atilde;&copy;criture d'octets: L1234 CV0044 = 123</b><br>
+      Adresses de locomotive &Atilde;  court et long sont sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Le num&Atilde;&copy;ro de CV dans
+      l'exemple ci-dessus est de 44 (toujours affich&Atilde;&copy;e
+      avec 4 chiffres) et la valeur pour le CV est de 123 (toujours
+      affich&Atilde;&copy;e avec 3 chiffres).</p>
+
+      <p><b>Format pour locomotives OPS forme longue
+      &Atilde;&copy;criture de bits: L1234 CV0044 b3=1</b><br>
+      Les adresses courtes et longues de locomotive sont sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Le num&Atilde;&copy;ro de CV dans
+      l'exemple ci-dessus est de 44 (toujours affich&Atilde;&copy;e
+      avec 4 chiffres) et le bit 3 doit &Atilde;&ordf;tre
+      programm&Atilde;&copy;e &Atilde;  une 1.</p>
+
+      <p><b>Format pour locomotives OPS forme longue de
+      v&Atilde;&copy;rifier octet: L1234 FPO VFY</b><br>
+      Les adresses courtes et longues de locomotive sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. La co"""mmande n'est pas
+      compl&Atilde;&uml;tement d&Atilde;&copy;cod&Atilde;&copy; par
+      l' analyseur</p>
+
+      <p><b>Format pour locomotives OPS forme courte
+      &Atilde;&copy;criture d'octets: L1234 CV23=123</b><br>
+      Les adresses courtes et longues de locomotive sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Le num&Atilde;&copy;ro de CV dans
+      l'exemple ci-dessus est de 23 (seulement CV23 ou CV24 peuvent
+      &Atilde;&ordf;tre programm&Atilde;&copy;s avec la forme
+      courte) et la valeur du CV est 123 (toujours
+      affich&Atilde;&copy;s avec 3 chiffres). Si l'analyseur ne
+      comprend pas le num&Atilde;&copy;ro CV, il affichera L1234
+      FPO?</p>
+
+      <p><b>Format des paquets de contr&Atilde;&acute;le de
+      configuration de couplage : L1234 CON = 123R</b><br>
+      Les adresses courtes et longues de locomotive sont
+      indiqu&Atilde;&copy;es par 3 ou 4 chiffres comme dans les
+      paquets de vitesse. Dans l'exemple ci-dessus CV19 (adresse de
+      couplage) sera mis &Atilde;  123 avec la direction de
+      circulation en sens inverse.</p>
+
+      <p><b>Format pour le contr&Atilde;&acute;le de l'accessoire
+      (sorties par paires): A1234N</b><br>
+      L'adresse d'accessoires est toujours affich&Atilde;&copy;e
+      avec 4 chiffres. "N" ou "R" suit pour indiquer
+      d&Atilde;&copy;vi&Atilde;&copy;e (On) ou direct (Off) pour la
+      position de l'aiguillage.</p>
+
+      <p><b>Format pour accessoire OPS &Atilde;&copy;criture
+      d'octets (legacy Ops mode): A1234 * CV0513 = 123</b><br>
+      L'adresse d'accessoires est toujours affich&Atilde;&copy;e
+      avec 4 chiffres. Le num&Atilde;&copy;ro CV dans l'exemple
+      ci-dessus est de 513 (toujours affich&Atilde;&copy;e avec 4
+      chiffres) et la valeur pour le CV est de 123. La distinction
+      entre mode legacy et les nouveaux modes (voir ci-dessous) est
+      l'ast&Atilde;&copy;risque (*) entre l'adresse et les
+      accessoires l'adresse de CV pour le mode legacy.</p>
+
+      <p><b>Format pour OPS accessoire OPS en &Atilde;&copy;criture
+      d'octets ( Ops nouveau mode ): A1234 CV0513 = 123</b><br>
+      L'adresse d'accessoires est toujours affich&Atilde;&copy;e
+      avec 4 chiffres. Le num&Atilde;&copy;ro CV dans l'exemple
+      ci-dessus est de 513 (toujours affich&Atilde;&copy;e avec 4
+      chiffres) et le valeur pour le CV est de 123. Seule la
+      portion d'octets &Atilde;  &Atilde;&copy;crire de cette
+      commande est d&Atilde;&copy;cod&Atilde;&copy; par
+      l'analyseur. La distinction entre le mode legacy (voir
+      ci-dessus) et le nouveau mode est l'ast&Atilde;&copy;risque
+      (*) entre l'adresse d'accessoires et la'Adresse CV mode
+      legacy</p>
+
+      <p><b>Format pour le signal ( adresses accessoire
+      "&Atilde;&copy;tendue") contr&Atilde;&acute;le: S1234
+      2F</b><br>
+      L'adresse du signal est toujours affich&Atilde;&copy; avec
+      quatre chiffres suivis par les octet aspect du signal
+      affich&Atilde;&copy; en hexad&Atilde;&copy;cimal.</p>
+
+      <p><b>Format pour signal OPS en &Atilde;&copy;criture octets:
+      S1234 CV0513 = 123</b><br>
+      L'adresse du signal est toujours affich&Atilde;&copy; avec
+      quatre chiffres. Le num&Atilde;&copy;ro du CV l'exemple
+      ci-dessus est de 513 (toujours affich&Atilde;&copy;e avec 4
+      chiffres) et la valeur pour le CV est de 123. Seule la
+      portion d'octets &Atilde;  &Atilde;&copy;crire pour cette
+      commande est d&Atilde;&copy;cod&Atilde;&copy;e par
+      l'analyseur. La distinction entre le mode legacy (voir
+      ci-dessus) et le nouveau mode est l'ast&Atilde;&copy;risque
+      (*) entre l'adresse d'accessoires et l' adresse CV mode
+      legacy</p>
+
+      <p><b>Format pour le signal ( adresses accessoire
+      "&Atilde;&copy;tendue") contr&Atilde;&acute;le: S1234
+      2F</b><br>
+      L'adresse du signal est toujours affich&Atilde;&copy;e avec
+      quatre chiffres suivis par les octet aspect du signal
+      affich&Atilde;&copy;s en hexad&Atilde;&copy;cimal.</p>
+
+      <p><b>Format pour signal OPS pour l'&Atilde;&copy;criture
+      d'octets: S1234 CV0513 = 123</b><br>
+      L'adresse du signal est toujours affich&Atilde;&copy;e avec
+      quatre chiffres. Le num&Atilde;&copy;ro de CV dans l'exemple
+      ci-dessus est de 513 (toujours affich&Atilde;&copy; avec 4
+      chiffres) et la valeur pour le CV est de 123. Seule la
+      portion d'octets &Atilde;  &Atilde;&copy;crire de cette
+      commande est d&Atilde;&copy;cod&Atilde;&copy;e par
+      l'analyseur.</p>
+    </div>
+  </div>
+</body>
+</html>

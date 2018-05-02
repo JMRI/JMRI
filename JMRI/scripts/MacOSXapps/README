@@ -1,0 +1,5 @@
+
+This directory holds the macOS "application bundle" templates for JMRI.
+
+An application bundle is a directory in the Unix sense, though the macOS Finder
+treats it as a single file.

@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>7</minor>
+    <test>1</test>
+    <modifier>.1ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="IS0" inverted="false" userName="Init">
+      <systemName>IS0</systemName>
+      <userName>Init</userName>
+    </sensor>
+    <sensor systemName="IS1" inverted="false" userName="ShowRectangle">
+      <systemName>IS1</systemName>
+      <userName>ShowRectangle</userName>
+    </sensor>
+    <sensor systemName="IS2" inverted="false" userName="ShowRoundRect">
+      <systemName>IS2</systemName>
+      <userName>ShowRoundRect</userName>
+    </sensor>
+    <sensor systemName="IS3" inverted="false" userName="ShowPolygon">
+      <systemName>IS3</systemName>
+      <userName>ShowPolygon</userName>
+    </sensor>
+    <sensor systemName="IS4" inverted="false" userName="ShowCircle">
+      <systemName>IS4</systemName>
+      <userName>ShowCircle</userName>
+    </sensor>
+    <sensor systemName="IS5" inverted="false" userName="ShowEllipse">
+      <systemName>IS5</systemName>
+      <userName>ShowEllipse</userName>
+    </sensor>
+    <sensor systemName="IS6" inverted="false" userName="ShowPolyline">
+      <systemName>IS6</systemName>
+      <userName>ShowPolyline</userName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="4:52 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix systemName="INIT" userName="Initialize" enabled="yes">
+      <systemName>INIT</systemName>
+      <userName>Initialize</userName>
+      <logixConditional systemName="INITC1" order="0" />
+    </logix>
+    <logix systemName="RTXINITIALIZER" enabled="yes">
+      <systemName>RTXINITIALIZER</systemName>
+      <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+    </logix>
+    <logix systemName="SYS" userName="System Logix" enabled="yes">
+      <systemName>SYS</systemName>
+      <userName>System Logix</userName>
+      <logixConditional systemName="SYS_SGC_HELPBUTTONS" order="0" />
+      <logixConditional systemName="SYS_SGC_HELP GROUP" order="1" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="INITC1" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>INITC1</systemName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Init" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="ShowRectangle" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ShowRoundRect" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ShowPolygon" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ShowCircle" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ShowEllipse" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ShowPolyline" data="4" delay="0" string="" />
+    </conditional>
+    <conditional systemName="RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>RTXINITIALIZER1T</systemName>
+      <userName>Route 1C </userName>
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="Init" data="2" delay="0" string="" />
+    </conditional>
+    <conditional systemName="SYS_SGC_HELP GROUP" userName="Sensor Group Help Group" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>SYS_SGC_HELP GROUP</systemName>
+      <userName>Sensor Group Help Group</userName>
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS0" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS2" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS3" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS4" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS5" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS6" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="IS0" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS2" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS5" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS6" data="4" delay="0" string="" />
+    </conditional>
+    <conditional systemName="SYS_SGC_HELPBUTTONS" userName="Sensor Group HelpButtons" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>SYS_SGC_HELPBUTTONS</systemName>
+      <userName>Sensor Group HelpButtons</userName>
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS2" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS3" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS4" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS5" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS6" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS2" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS5" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="IS6" data="4" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Feb 23 11:35:51 PST 2013" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Help Panel" x="934" y="47" height="453" width="337" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <sensoricon sensor="ShowRectangle" x="93" y="78" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ShowRectangle (IS1)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <sensoricon sensor="ShowRoundRect" x="93" y="113" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ShowRoundrect (IS2)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <sensoricon sensor="ShowPolygon" x="93" y="147" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ShowPolygon (IS3)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <sensoricon sensor="ShowCircle" x="93" y="188" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ShowCircle (IS4)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <sensoricon sensor="ShowEllipse" x="93" y="225" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ShowEllipse (IS5)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <positionablelabel x="127" y="81" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Change Rectangle Level" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="127" y="119" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Show Round Rectangle" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="127" y="156" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Show Polygon" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="127" y="192" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Show Circle" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="127" y="227" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Show Ellipse" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="ShowPolyline" x="93" y="263" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ShowPolyline (IS6)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <sensoricon sensor="Init" x="23" y="46" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Init (IS0)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/amber-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="LargeJewel" />
+    </sensoricon>
+    <positionablelabel x="127" y="266" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Show Polyline" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="59" y="48" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Initialize to Operating View" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="6" y="9" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Hints and Aids to run the Operating View" size="14" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Operating View" x="195" y="47" height="628" width="1062" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <positionableRoundRect x="35" y="11" level="10" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="false" lineWidth="7" controlSensor="ShowRoundRect" hideOnSensor="true" changeLevelOnSensor="10" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRoundRectXml">
+      <toolTip>Graphic</toolTip>
+      <lineColor red="51" green="204" blue="0" alpha="255" />
+      <fillColor red="0" green="204" blue="255" alpha="127" />
+      <size width="75" height="150" cornerRadius="40" />
+    </positionableRoundRect>
+    <positionableEllipse x="331" y="250" level="10" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="false" lineWidth="8" controlSensor="ShowEllipse" hideOnSensor="true" changeLevelOnSensor="10" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableEllipseXml">
+      <toolTip>Graphic</toolTip>
+      <lineColor red="204" green="0" blue="204" alpha="255" />
+      <fillColor red="255" green="255" blue="255" alpha="0" />
+      <size width="200" height="100" />
+    </positionableEllipse>
+    <positionablePolygon x="827" y="47" level="10" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="false" lineWidth="6" controlSensor="ShowPolygon" hideOnSensor="true" changeLevelOnSensor="10" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionablePolygonXml">
+      <toolTip>Eastbound Passenger Route</toolTip>
+      <lineColor red="255" green="51" blue="51" alpha="255" />
+      <fillColor red="204" green="0" blue="204" alpha="59" />
+      <path>
+        <vertex type="0" idx0="65.0" idx1="0.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="152.0" idx1="48.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="150.0" idx1="134.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="70.0" idx1="183.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="0.0" idx1="120.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="95.0" idx1="108.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="67.0" idx1="2.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+      </path>
+    </positionablePolygon>
+    <positionablePolygon x="40" y="385" level="10" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="false" lineWidth="4" controlSensor="ShowPolyline" hideOnSensor="true" changeLevelOnSensor="10" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionablePolygonXml">
+      <toolTip>Westbound Passenger Route</toolTip>
+      <lineColor red="0" green="153" blue="0" alpha="255" />
+      <fillColor red="255" green="255" blue="255" alpha="0" />
+      <path>
+        <vertex type="0" idx0="0.0" idx1="49.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="127.0" idx1="92.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="153.0" idx1="46.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="263.0" idx1="55.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="355.0" idx1="90.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="413.0" idx1="0.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="482.0" idx1="52.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+        <vertex type="1" idx0="588.0" idx1="21.0" idx2="0.0" idx3="0.0" idx4="0.0" idx5="0.0" />
+      </path>
+    </positionablePolygon>
+    <positionablelabel x="503" y="75" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="30" text="Operating View" size="24" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="400" y="45" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="30" text="Filled with all the stuff you might have for a tower" size="16" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="775" y="333" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Click on the clock to show Button Panel" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <fastclock x="824" y="351" scale="0.75" color="Black" link="frame:Help Panel" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml" />
+    <sensoricon sensor="Init" x="876" y="509" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Init (IS0)</tooltip>
+      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/USS/sensor/red-off.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="GreenJewel" />
+    </sensoricon>
+    <positionablelabel x="857" y="493" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Clear Help" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <linkinglabel x="638" y="407" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Icon</tooltip>
+      <icon url="program:resources/PanelPro.gif" degrees="0" scale="0.75">
+        <rotation>0</rotation>
+      </icon>
+      <url>url:http://jmri.org/</url>
+    </linkinglabel>
+    <linkinglabel x="491" y="466" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Google" size="16" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="0" greenBack="204" blueBack="204" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="204" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Text Label</tooltip>
+      <url>url:http://www.google.com/</url>
+    </linkinglabel>
+    <positionableCircle x="104" y="212" level="4" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="false" editable="false" lineWidth="25" controlSensor="IS4" hideOnSensor="true" changeLevelOnSensor="5" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableCircleXml">
+      <lineColor red="0" green="102" blue="204" alpha="117" />
+      <fillColor red="255" green="102" blue="0" alpha="145" />
+      <size radius="140" />
+    </positionableCircle>
+    <positionableRectangle x="371" y="107" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="30" lineWidth="2" controlSensor="ShowRectangle" hideOnSensor="false" changeLevelOnSensor="8" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRectangleXml">
+      <toolTip>Shapes can hide or expose text</toolTip>
+      <lineColor red="204" green="153" blue="0" alpha="188" />
+      <fillColor red="255" green="255" blue="51" alpha="255" />
+      <size width="395" height="56" />
+    </positionableRectangle>
+  </paneleditor>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Fri Dec 30 16:52:23 PST 2016</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Dec 30 16:52:32 PST 2016</date>
+      <filename>/C:/JmriPanels/shapes.xml</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Dec 30 16:52:53 PST 2016</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.7.1ish-201612290057-SVD-Rff87d26 on Fri Dec 30 16:52:53 PST 2016 $Id$-->
+</layout-config>

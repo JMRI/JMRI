@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+
+  <title>JMRI: RPS Icon</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Ic&ocirc;ne RPS</h1>RPS est un syst&egrave;me
+      permettant de mesurer les positions du mat&eacute;riel
+      roulant sur votre r&eacute;seau. Plus d'informations sur RPS
+      est disponible sur la <a href=
+      "../../../../html/hardware/rps/index.shtml">page principale
+      d'aide sur RPS</a>. Les ic&ocirc;nes Reporter RPS se
+      d&eacute;place sur le TCO pour montrer o&ugrave;
+      l'&eacute;quipement correspondant se trouve sur le
+      r&eacute;seau.
+
+      <p><img align="right" height="45" width="45" src=
+      "../../../../images/bangdesk.gif" alt="Cute image de work">
+      <em>Cette page est encore en construction, mais le support de
+      l'ic&ocirc;ne RPS lui-m&ecirc;me est d&eacute;j&agrave;
+      pr&eacute;sent dans JMRI. Allez-y et essayez-le!</em></p>
+
+      <p>Les ic&ocirc;nes RPS sont un moyen de mettre des
+      ic&ocirc;nes sur un <a href="PanelEditor.shtml">TCO</a> qui
+      vont se d&eacute;placer quand le syst&egrave;me RPS trouve
+      l'emplacement d' un &eacute;metteur associ&eacute;.</p>
+
+      <h2>Ajouter une Ic&ocirc;ne RPS sur un
+      TCO</h2>Habituellement, chaque ic&ocirc;ne repr&eacute;sente
+      un &eacute;metteur RPS, donc une locomotive. Actuellement,
+      vous devez ajouter une Ic&ocirc;ne pour chaque
+      &eacute;quipement &eacute;quip&eacute; RPS que vous souhaitez
+      suivre. Bien que ce soit couteux, il vous donne un
+      contr&ocirc;le tr&egrave;s fin sur les positions des
+      &eacute;metteur qui sont sont affich&eacute;es et comment
+      elles sont pr&eacute;sent&eacute;es. <em>Cette Section
+      demande encore beaucoup de travail</em>
+
+      <p>Cliquez sur "Ajouter rapport RPS " sur <a href=
+      "PanelEditor.shtml">l'&Eacute;diteur de TCO</a>. Une
+      ic&ocirc;ne RPS appara&icirc;tra sur le TCO &agrave; son
+      emplacement par d&eacute;faut, mais &ccedil;a ne marchera pas
+      encore jusqu'&agrave; ce qu'elle soit calibr&eacute;e.</p>
+
+      <p>Faites un clic droit ou option-clic sur l'ic&ocirc;ne pour
+      voir le menu contextuel, o&ugrave; vous pouvez calibrer
+      l'ic&ocirc;ne.</p>
+
+      <h3>Calibration d'une Ic&ocirc;ne RPS</h3>Lorsque vous
+      &eacute;talonnez une ic&ocirc;ne RPS, vous sp&eacute;cifiez
+      comment des lieux RPS mesur&eacute;s correspondent &agrave;
+      des positions sur le TCO.
+
+      <p>Les &eacute;tapes sont les suivantes:</p>
+
+      <ul>
+        <li>Arr&ecirc;ter le syst&egrave;me de scrutation RPS,
+        alors les objets ne vont plus se d&eacute;placer .</li>
+
+        <li>Ajouter l'ic&ocirc;ne au panneau.</li>
+
+        <li>Faites glisser l'ic&ocirc;ne jusqu'&agrave; ce qu'elle
+        soit sur la position qui correspond &agrave; l'origine de
+        votre installation 0,0 RPS.</li>
+
+        <li>Faites un clic droit ou option-clic sur l'ic&ocirc;ne
+        pour obtenir le menu contextuel, et s&eacute;lectionnez
+        "D&eacute;finir Origine&raquo;.</li>
+
+        <li>D&eacute;placer la locomotive r&eacute;elle &agrave; un
+        autre point sur le r&eacute;seau , et commencer
+        l'interrogation du syst&egrave;me RPS &agrave; nouveau.
+        Obtenez une bonne mesure de la position. Arr&ecirc;ter le
+        syst&egrave;me RPS.</li>
+
+        <li>Faites glisser l'ic&ocirc;ne &agrave; l'endroit
+        o&ugrave; vous voulez qu'elle soit sur le TCO lorsque
+        l'&eacute;metteur est &agrave; cet endroit.</li>
+
+        <li>Depuis le menu contextuel de l'ic&ocirc;ne,
+        s&eacute;lectionnez "D&eacute;finir emplacement
+        actuel&raquo;.</li>
+
+        <li>Obtenir &agrave; nouveau le menu contextuel. Il ne
+        devrait plus dire "Non calibr&eacute;", et devrait
+        plut&ocirc;t vous montrer la position actuelle.</li>
+      </ul>
+
+      <p>Ne pas oublier de sauvegarder votre TCO! <a id="popup"
+      name="popup"></a></p>
+
+      <h2><a id="popup" name="popup">Menu Contextuel</a></h2><a id=
+      "popup" name="popup">Le menu contextuel de l'ic&ocirc;ne RPS
+      contient:</a>
+
+      <dl>
+        <dt>Lecture position RPS</dt>
+
+        <dd>Ceci est juste un titre, la s&eacute;lectionner ne fait
+        rien</dd>
+
+        <dt>Rotation</dt>
+
+        <dd>Tourne l'ic&ocirc;ne affich&eacute;e, en
+        incr&eacute;ments de 90 degr&eacute;s. Notez que ce n'est
+        pas une rotation d&ugrave; au syst&egrave;me de
+        coordonn&eacute;es RPS, mais simplement de la
+        pr&eacute;sentation de l'ic&ocirc;ne.</dd>
+
+        <dt>Afficher ID</dt>
+
+        <dd>Quand elle est coch&eacute;e, la cha&icirc;ne
+        d'identification sera affich&eacute; en plus de
+        l'ic&ocirc;ne.</dd>
+
+        <dt>D&eacute;finir l'origine</dt>
+
+        <dd>D&eacute;finit la position d'affichage actuelle de
+        l'ic&ocirc;ne comme la position 0,0 du syst&egrave;me RPS.
+        Cela doit &ecirc;tre fait en tant que premi&egrave;re
+        &eacute;tape de l'&eacute;talonnage.</dd>
+
+        <dt>D&eacute;finir la Situation actuelle</dt>
+
+        <dd>Modifications de l'&eacute;talonnage de telle sorte que
+        sa position sur le TCO et la mesure RPS soit en accord.
+        Pour l'utiliser, v&eacute;rifiez d'abord que le
+        syst&egrave;me RPS a fait une bonne mesure de la position
+        des &eacute;metteurs, alors faites glisser l'ic&ocirc;ne
+        &agrave; l'endroit o&ugrave; elle devrait appara&icirc;tre
+        sur l'&eacute;cran, et enfin choisissez "Situation
+        actuelle" dans le menu contextuel. Dans l'avenir, lorsque
+        le syst&egrave;me RPS mesures au m&ecirc;me endroit,
+        l'ic&ocirc;ne appara&icirc;tra dans cette position.</dd>
+
+        <dt>Pas &eacute;talonn&eacute;</dt>
+
+        <dd>Un message d'&eacute;tat, pas un contr&ocirc;le, cela
+        apparait quand l'ic&ocirc;ne n'a pas &eacute;t&eacute;
+        &eacute;talonn&eacute;e. Le calibrage assure correctement
+        la position de l'ic&ocirc;ne sur l'&eacute;cran
+        refl&eacute;tant l'emplacement que RPS a
+        mesur&eacute;.</dd>
+
+        <dt>A (x), (y)</dt>
+
+        <dd>Une fois l'ic&ocirc;ne calibr&eacute;e, le menu
+        contextuel affiche la mesure RPS du positionnement le plus
+        r&eacute;cent</dd>
+
+        <dt>Afficher ID</dt>
+
+        <dd>Si elle est coch&eacute;e, l'ic&ocirc;ne aura des
+        informations ID affich&eacute;es &agrave; cot&eacute;
+        d'elle.</dd>
+
+        <dt>D&eacute;finir le filtre</dt>
+
+        <dd>Ouvre une fen&ecirc;tre qui vous permet d'entrer une
+        valeur de filtre pour cette ic&ocirc;ne.</dd>
+
+        <dt>D&eacute;sactiver</dt>
+
+        <dd>Contr&ocirc;les si oui ou non l'ic&ocirc;ne peut
+        &ecirc;tre d&eacute;plac&eacute;e autour manuellement.</dd>
+
+        <dt>Retirer</dt>
+
+        <dd>Supprime l'ic&ocirc;ne RPS du TCO. Il s'agit d'une
+        suppression d&eacute;finitive.</dd>
+
+        <dt>Aide</dt>
+
+        <dd>Affiche cette page</dd>
+      </dl><a id="filter" name="filter"></a>
+
+      <h2>Filtrage et Plusieurs Locomotives</h2>Nous essayons
+      toujours de trouver la meilleure fa&ccedil;on de configurer
+      plusieurs ic&ocirc;nes sur un TCO. Une ic&ocirc;ne unique,
+      sans r&eacute;glages sp&eacute;ciaux, sera sautillante sur le
+      TCO quand les lectures entrent en jeu. Elle ira &agrave; la
+      position d'une lecture, puis passera directement &agrave; la
+      position de la prochaine lecture, qui pourrait provenir d'un
+      autre &eacute;metteur de locomotive.
+
+      <p>Si vous voulez avoir plusieurs ic&ocirc;nes, chacune
+      montrant la position d'une seul locomotive, vous pouvez
+      configurer des filtres sur chaque ic&ocirc;ne.</p>
+
+      <ul>
+        <li>Ajouter une ic&ocirc;ne au panneau de RPS</li>
+
+        <li>Ouvrez le menu contextuel sur l'ic&ocirc;ne et
+        s&eacute;lectionnez "D&eacute;finir le filtre".</li>
+
+        <li>Cela ouvrira une petite fen&ecirc;tre dans laquelle
+        vous pouvez saisir la valeur de l'ID de la locomotive que
+        vous voulez que cette ic&ocirc;ne suive. Une fois que vous
+        avez fait cela, l'ic&ocirc;ne ne se d&eacute;placera
+        qu'&agrave; la position mesur&eacute;e de cette
+        locomotive.</li>
+      </ul>
+
+      <p>Cette m&eacute;thode est un peu fastidieuse, surtout si
+      vous avez une liste importante, puisque vous aurez &agrave;
+      le faire manuellement pour chaque locomotive. Et vous les
+      aurez toutes &agrave; calibrer. (Une bonne fa&ccedil;on de
+      faire est de copier les lignes d&eacute;finissant une
+      ic&ocirc;ne dans le fichier de TCO, en effet faites un tas de
+      duplicata des ic&ocirc;nes calibr&eacute;es, puis
+      d&eacute;finissez les filtres, voir ci-dessous). Mais il a
+      l'avantage que vous pouvez contr&ocirc;ler exactement quelles
+      locomotives sera afficher et celles qui ne le seront pas.
+      Cette m&eacute;thode permet &eacute;galement de joindre des
+      images <a href="#custicon">personnalis&eacute;es</a> (par
+      exemple une image d'une locomotive sp&eacute;cifique)
+      &agrave; l'ic&ocirc;ne sp&eacute;cifique qui
+      repr&eacute;sente chaque ID.</p>
+
+      <h2><a id="custom" name="custom">Personnalisation</a></h2>
+
+      <h3><a id="custom" name="custom">Position de
+      D&eacute;part</a></h3><a id="custom" name="custom">Lorsque
+      vous ouvrez le TCO, les ic&ocirc;nes sont remise &agrave; la
+      m&ecirc;me position sur l'&eacute;cran qu'elles occupaient
+      lorsque le TCO a &eacute;t&eacute; sauvegard&eacute; dans le
+      fichier.</a>
+
+      <p>Vous pouvez l'utiliser pour par exemple mettre les
+      ic&ocirc;nes hors de la voie. Elles restent dans cette
+      position jusqu'&agrave; ce qu'une lecture valide les
+      d&eacute;place, donc Vous pouvez l'utiliser pour "parquer"
+      les locomotives qui ne sont pas sur la bonne voie hors de la
+      partie active du TCO.</p>
+
+      <h3><a id="custicon" name="custicon">Afficher une Ic&ocirc;ne
+      Personnalis&eacute;e</a></h3><a id="custicon" name=
+      "custicon">Bien qu'il n'y ait pas encore d'interface
+      graphique pour &ccedil;a (&ccedil;a vient!), vous pouvez
+      modifier l'ic&ocirc;ne d'un &eacute;metteur qui est suivi par
+      le syst&egrave;me RPS afin qu'il affiche par exemple une
+      petite image de la locomotive. Pour ce faire, vous allez
+      &eacute;diter le fichier de d&eacute;finition de panneau
+      directement. (Il ya plus d'informations sur le Format XML,
+      que nous utilisons</a> <a href=
+      "../../../../html/apps/DecoderPro/IntroXML.shtml">ici</a>)
+      Les &eacute;tapes sont les suivantes:
+
+      <ul>
+        <li>Cr&eacute;er une ic&ocirc;ne sur l'&eacute;diteur de
+        TCO, et sauver le TCO dans un fichier.</li>
+
+        <li>Faites une copie de sauvegarde du fichier, au cas
+        o&ugrave; quelque chose tourne mal.</li>
+
+        <li>A l'aide d'un &eacute;diteur de texte, ouvrez le
+        fichier pour le modifier.</li>
+
+        <li>Trouvez la ligne qui d&eacute;finit l'ic&ocirc;ne. Il
+        contiendra la cha&icirc;ne "RpsPositionIconXml&raquo;,
+        ainsi une approche est de rechercher cela. Il va ressembler
+        &agrave; (il sera probablement sur une seule ligne):
+          <pre style="font-family: monospace;">
+    &lt;Sensoricon x = "95" y = "150" level = "10"
+            actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
+            error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
+            rotate = "0" forcecontroloff = "false" momentary = "false"
+            sxscale = "11.849106591612951" syscale = "-11,889381744148094"
+            sxorigin = "41" syorigin = "768"
+            class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</pre>
+        </li>
+
+        <li>Pour que l'ic&ocirc;ne suive d'un &eacute;metteur
+        sp&eacute;cifique, entrez l'ID de l'&eacute;metteur en tant
+        qu'attribut "filtre". Par exemple, pour suivre
+        l'&eacute;metteur 5510, modifiez la ligne:
+          <pre style="font-family: monospace;">
+    &lt;Sensoricon filter = "5510" x = "95" y = "150" level = "10"
+            actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
+            error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
+            rotate = "0" forcecontroloff = "false" momentary = "false" s
+            xscale = "11.849106591612951" syscale = "-11,889381744148094"
+            sxorigin = "41" syorigin = "768"
+            class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</pre>
+        </li>
+
+        <li>Les attributs "actif" et "erreur" sont les ic&ocirc;nes
+        &agrave; afficher lorsque le syst&egrave;me obtiennent des
+        r&eacute;sultats fiables et n'obtiennent pas de bonnes
+        lectures, respectivement. Vous pouvez modifier celle ci
+        &agrave; l'emplacement de n'importe quel fichier
+        d'ic&ocirc;ne que vous souhaitez. Par exemple, vous pouvez
+        les changer pour une photo (petite) de la locomotive, ou
+        pour une image avec le num&eacute;ro du train.</li>
+      </ul>Une belle interface graphique pour faire cela est
+      &agrave; venir, mais elle n'est pas encore l&agrave;. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

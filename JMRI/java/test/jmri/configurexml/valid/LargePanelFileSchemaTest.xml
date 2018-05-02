@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.jmri.org/xml/XSLT/panelfile.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="LT25" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT27" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT28" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT30" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT31" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT32" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT33" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT36" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT37" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT38" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT39" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT40" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT41" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT42" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT43" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT44" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT45" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT46" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT89" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT90" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT92" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT1" userName="Titusville - West Staging" feedback="MONITORING" inverted="false" automate="Default">
+      <comment>Manual</comment>
+    </turnout>
+    <turnout systemName="LT10" userName="Ashland Team Track" feedback="MONITORING" inverted="false" automate="Default">
+      <comment>Manual</comment>
+    </turnout>
+    <turnout systemName="LT11" userName="Indiantown Gap Military Track" feedback="MONITORING" inverted="false" automate="Default">
+      <comment>Manual</comment>
+    </turnout>
+    <turnout systemName="LT1163" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT135" userName="Philadelphia Dbl Crossover" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT17" userName="Reading _ Hamburg vs Loco Service" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT18" userName="Reading - Hamburg Alternate vs Main" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT185" userName="North Phila Industries tracks 1-2 vs 3-4" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT186" userName="North Phila Industries tracks 1 vs 2" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT187" userName="North Phila Industries tracks 2 vs 4" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT188" userName="Phila Yard Branch 2 North vs Track 4" feedback="MONITORING" inverted="false" automate="Default">
+      <comment />
+    </turnout>
+    <turnout systemName="LT189" userName="Phila Yard Branch 2 South vs Track 1" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT19" userName="Reading Mainline vs Yard and Phila Docks" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT190" userName="Phila Yard Branch 3 Tracks 2 vs 3" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT191" userName="Phila Yard Branch Track 6-7 vs 5" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT192" userName="Phila Yard Branch Track 6 vs 7" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT197" userName="Scranton Main vs Wye" feedback="MONITORING" inverted="false" automate="Default">
+      <comment />
+    </turnout>
+    <turnout systemName="LT198" userName="Philadelphia  Wye to Scranton or Williamsport" feedback="MONITORING" inverted="false" automate="Default">
+      <comment />
+    </turnout>
+    <turnout systemName="LT199" userName="Williamsport Bypass vs Wye" feedback="MONITORING" inverted="false" automate="Default">
+      <comment>Williamsport Lumber Siding</comment>
+    </turnout>
+    <turnout systemName="LT2" userName="Titusville Interchange" feedback="MONITORING" inverted="false" automate="Default">
+      <comment>Manual</comment>
+    </turnout>
+    <turnout systemName="LT34" userName="Pottsville-Reading Main vs Alternate" feedback="MONITORING" inverted="false" automate="Default">
+      <comment />
+    </turnout>
+    <turnout systemName="LT348" userName="Wye merge Williamsport (345-2-348)" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT349" userName="Harrisburg - Hershey (349-1-349)" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT35" userName="Frackville Main vs Hazleton" feedback="MONITORING" inverted="false" automate="Default">
+      <comment />
+    </turnout>
+    <turnout systemName="LT350" userName="Harrisburg - Hershey (349-1-350)" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT93" userName="Punxsutawney -Titusville Main vs Alternate" feedback="MONITORING" inverted="false" automate="Default">
+      <comment />
+    </turnout>
+  </turnouts>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS1" inverted="false" userName="Scranton Team Track">
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor systemName="LS10" inverted="false" userName="Sunbury - Harrisburg">
+      <comment>SE8c #2</comment>
+    </sensor>
+    <sensor systemName="LS11" inverted="false" userName="Sunbury Coal Track">
+      <comment>SE8c #2</comment>
+    </sensor>
+    <sensor systemName="LS12" inverted="false" userName="spare s12">
+      <comment>SE8c #2</comment>
+    </sensor>
+    <sensor systemName="LS38" inverted="false" userName="Indiantown Gap Team Track">
+      <comment>SE8c #5</comment>
+    </sensor>
+    <sensor systemName="LS39" inverted="false" userName="Indiantown Gap Main">
+      <comment>SE8c #5</comment>
+    </sensor>
+    <sensor systemName="LS4" inverted="false" userName="Frack-Potts Team Track">
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor systemName="LS40" inverted="false" userName="Ashland - Shamokin - Indiantown Gap">
+      <comment>SE8c #5</comment>
+    </sensor>
+    <sensor systemName="LS5" inverted="false" userName="Tunkhannock Mainline">
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor systemName="LS6" inverted="false" userName="New Castle - Hazleton">
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor systemName="LS7" inverted="false" userName="Frackville - Girardville">
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor systemName="LS8" inverted="false" userName="Frackville Mainline">
+      <comment>SE8c #1</comment>
+    </sensor>
+    <sensor systemName="LS9" inverted="false" userName="Yeagerstown Switchback">
+      <comment>SE8c #2</comment>
+    </sensor>
+  </sensors>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="ISCLOCKRUNNING" inverted="false" />
+  </sensors>
+  <reporters class="jmri.jmrix.loconet.configurexml.LnReporterManagerXml">
+    <reporter systemName="LR273" userName="Driftwood - Williamsport - Wye Alternate">
+      <comment>18-A BOD LS288   Section 33</comment>
+    </reporter>
+    <reporter systemName="LR275" userName="Driftwood - Williamsport Main">
+      <comment>18-B BOD LS287   Section 33</comment>
+    </reporter>
+    <reporter systemName="LR277" userName="Ashland Alternate">
+      <comment>18-C BOD LS286   Section 33</comment>
+    </reporter>
+    <reporter systemName="LR279" userName="Big Mine Run - Ashland Main">
+      <comment>18-D BOD LS285   Section 33</comment>
+    </reporter>
+    <reporter systemName="LR289" userName="Frackville - Hazleton">
+      <comment>19-A BOD LS301 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR291" userName="Scranton Mainline">
+      <comment>19-B BOD LS302 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR293" userName="Pottsville-Hamburg Mainline">
+      <comment>19-C BOD LS303 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR295" userName="Hamburg Alternate">
+      <comment>19-D BOD LS304 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR297" userName="Girardville Mainline">
+      <comment>19-E BOD LS297 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR299" userName="Girardville Alternate">
+      <comment>19-F BOD LS298 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR301" userName="Moosic Alternate">
+      <comment>19-G BOD LS299 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR303" userName="Moosic Mainline">
+      <comment>19-H BOD LS302 Section 34</comment>
+    </reporter>
+    <reporter systemName="LR305" userName="Philadelphia-Reading Main">
+      <comment>20-A BOD LS306 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR307" userName="Philadelphia - Allentown Alternate">
+      <comment>20-B BOD LS311 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR309" userName="Philadelphia Waterfront Branch">
+      <comment>20-C BOD LS309 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR311" userName="Allentown - Hamburg Alternate">
+      <comment>20-D BOD LS312 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR313" userName="Allentown - Hamburg Main">
+      <comment>20-E BOD LS308 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR315" userName="Reading Outbound Track">
+      <comment>20-F BOD LS315 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR317" userName="Phila Yard Outbound Track">
+      <comment>20-G BOD LS320 Section 35</comment>
+    </reporter>
+    <reporter systemName="LR319" userName="Phila Yard Throat">
+      <comment>20-H BOD LS320 Section 35</comment>
+    </reporter>
+  </reporters>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM1" userName="IMB_Phila Yard Departure Track" />
+    <memory systemName="IM10" userName="IMB_Titusville Interchange" />
+    <memory systemName="IM11" userName="IMB_Girardville Coal" />
+    <memory systemName="IM12" userName="IMB_Yeagerstown_SwtchBk" />
+    <memory systemName="IM13" userName="IMB_Sunbury Coal" />
+    <memory systemName="IM14" userName="IMB_Ashland Team Track" />
+    <memory systemName="IM15" userName="IMB_Scranton Team Track" />
+    <memory systemName="IM16" userName="IMB_Drake Oil Co" />
+    <memory systemName="IM17" userName="IMB_Indiantown Gap Team Track" />
+    <memory systemName="IM18" userName="IMB_Williamsport Lumber" />
+    <memory systemName="IM19" userName="IMB_Phila Oil - Gas Port" />
+    <memory systemName="IM2" userName="IMB_Titusville - Driftwood" />
+    <memory systemName="IM20" userName="IMB_Delaware River Waterfront" />
+    <memory systemName="IM21" userName="IMB_Philadelphia Container Port" />
+    <memory systemName="IM74" userName="IMB_Nanticoke - Tamaqua - Hazleton" />
+    <memory systemName="IM8" userName="IMB_Moosic Mainline" />
+    <memory systemName="IM9" userName="IMB_Philadelphia Yard" />
+    <memory systemName="IMCURRENTTIME" value="8:00 AM" />
+  </memories>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jul 03 08:00:00 EDT 2006" rate="16.0" run="no" master="yes" sync="no" correct="no" display="no" startstopped="yes" startsettime="yes" startclockoption="0" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <block systemName="IB1" />
+    <block systemName="IB10" />
+    <block systemName="IB70" />
+    <block systemName="IB71" />
+    <block systemName="IB72" />
+    <block systemName="IB73" />
+    <block systemName="IB74" />
+    <block systemName="IB8" />
+    <block systemName="IB9" />
+    <block systemName="IB1" userName="Phila Yard Departure Track" length="0.0" curve="0">
+      <comment>memory id?</comment>
+      <sensor systemName="LS319" />
+      <path todir="64" fromdir="128" block="IB48" />
+    </block>
+    <block systemName="IB10" userName="Titusville Interchange" length="0.0" curve="0">
+      <sensor systemName="LS19" />
+      <path todir="64" fromdir="128" block="IB63" />
+    </block>
+    <block systemName="IB70" userName="McCormick Siding" length="0.0" curve="0">
+      <sensor systemName="LS292" />
+      <path todir="128" fromdir="64" block="IB48" />
+    </block>
+    <block systemName="IB71" userName="Scranton - Phila Wye" length="0.0" curve="0">
+      <sensor systemName="LS30" />
+      <path todir="64" fromdir="128" block="IB26" />
+      <path todir="128" fromdir="64" block="IB73" />
+    </block>
+    <block systemName="IB72" userName="Williamsport - Phila Wye" length="0.0" curve="0">
+      <sensor systemName="LS31" />
+      <path todir="128" fromdir="64" block="IB4" />
+      <path todir="80" fromdir="160" block="IB73" />
+    </block>
+    <block systemName="IB73" userName="Phila - Dock Wye" length="0.0" curve="0">
+      <sensor systemName="LS32" />
+      <path todir="64" fromdir="128" block="IB71" />
+      <path todir="160" fromdir="80" block="IB72" />
+    </block>
+    <block systemName="IB74" userName="Nanticoke - Tamaqua - Hazleton" length="0.0" curve="0">
+      <sensor systemName="LS23" />
+      <path todir="128" fromdir="64" block="IB68" />
+      <path todir="64" fromdir="128" block="IB27" />
+    </block>
+    <block systemName="IB8" userName="Moosic Mainline" length="0.0" curve="0">
+      <sensor systemName="LS300" />
+      <path todir="64" fromdir="128" block="IB26" />
+      <path todir="128" fromdir="64" block="IB68" />
+    </block>
+    <block systemName="IB9" userName="Philadelphia Yard" length="0.0" curve="0">
+      <sensor systemName="LS320" />
+      <path todir="128" fromdir="64" block="IB48" />
+    </block>
+  </blocks>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY01" userName="Staging West">
+      <blockentry sName="IB57" order="0" />
+      <entrypoint fromblock="IB63" toblock="IB57" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY02" userName="Moosic - Staging">
+      <blockentry sName="IB63" order="0" />
+      <entrypoint fromblock="IB7" toblock="IB63" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB57" toblock="IB63" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB5" toblock="IB63" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB6" toblock="IB63" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY26" userName="Hamburg - Pottsville">
+      <blockentry sName="IB51" order="0" />
+      <entrypoint fromblock="IB50" toblock="IB51" direction="4" fixed="no" fromblockdirection="North, West" />
+      <entrypoint fromblock="IB52" toblock="IB51" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY27" userName="Reading Mainline">
+      <blockentry sName="IB33" order="0" />
+      <entrypoint fromblock="IB43" toblock="IB33" direction="4" fixed="no" fromblockdirection="North, East" />
+      <entrypoint fromblock="IB60" toblock="IB33" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB45" toblock="IB33" direction="8" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB62" toblock="IB33" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY3" userName="Driftwod - Williamsport Main">
+      <blockentry sName="IB3" order="0" />
+      <entrypoint fromblock="IB66" toblock="IB3" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB2" toblock="IB3" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY3-2" userName="Williamsport - La Ponte Main">
+      <blockentry sName="IB66" order="0" />
+      <entrypoint fromblock="IB25" toblock="IB66" direction="4" fixed="no" fromblockdirection="South" />
+    </section>
+    <section systemName="IY3A" userName="Driftwod - Williamsport Alternate">
+      <blockentry sName="IB4" order="0" />
+      <entrypoint fromblock="IB67" toblock="IB4" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB2" toblock="IB4" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY3A-2" userName="Williamsport - La Ponte Alternate">
+      <blockentry sName="IB67" order="0" />
+      <entrypoint fromblock="IB25" toblock="IB67" direction="4" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB4" toblock="IB67" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY9" userName="Wilkes Barre - Sunbury">
+      <blockentry sName="IB28" order="0" />
+      <entrypoint fromblock="IB16" toblock="IB28" direction="4" fixed="no" fromblockdirection="South" />
+      <entrypoint fromblock="IB6" toblock="IB28" direction="4" fixed="no" fromblockdirection="South, East" />
+      <entrypoint fromblock="IB29" toblock="IB28" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ3" userName="West Staging to Pottsville">
+      <transitsection sectionname="IY2" sequence="1" direction="4" alternate="no" />
+      <transitsection sectionname="IY3" sequence="2" direction="4" alternate="no" />
+      <transitsection sectionname="IY3A" sequence="2" direction="4" alternate="yes" />
+      <transitsection sectionname="IY4" sequence="3" direction="4" alternate="no" />
+      <transitsection sectionname="IY5" sequence="4" direction="4" alternate="no" />
+      <transitsection sectionname="IY6" sequence="5" direction="4" alternate="no" />
+      <transitsection sectionname="IY6B" sequence="5" direction="4" alternate="yes" />
+      <transitsection sectionname="IY7" sequence="6" direction="4" alternate="no" />
+      <transitsection sectionname="IY8" sequence="7" direction="4" alternate="no" />
+      <transitsection sectionname="IY9" sequence="8" direction="4" alternate="no" />
+      <transitsection sectionname="IY10" sequence="9" direction="4" alternate="no" />
+      <transitsection sectionname="IY11" sequence="10" direction="4" alternate="no" />
+      <transitsection sectionname="IY23A" sequence="24" direction="4" alternate="no" />
+      <transitsection sectionname="IY24" sequence="24" direction="4" alternate="yes" />
+      <transitsection sectionname="IY25A" sequence="25" direction="4" alternate="no" />
+    </transit>
+  </transits>
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH321" userName="W to E:Big Mine Run - &gt; Yeagerstown (321-1)">
+      <turnout systemName="321" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH323" userName="W to E:Big Mine Run - &gt; Ashland (321-2)">
+      <turnout systemName="323" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH325" userName="E to W:Ashland - Big Mine Run (325-1)">
+      <turnout systemName="325" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH327" userName="E to W:Ashland - Big Mine Run (325-2)">
+      <turnout systemName="327" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH395" userName="E to W:Scranton Main+Bypass West (393-2)">
+      <turnout systemName="395" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH397" userName="W to E:Tunkhannock - Scranton East  (397-1)">
+      <turnout systemName="397" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH399" userName="W to E:Tunkhannock - Scranton East  (397-2)">
+      <turnout systemName="399" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH401" userName="E to W:Frackville - Hazleton (401-1)">
+      <turnout systemName="401" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH403" userName="E to W:Nanticoke - Hazleton (401-2)">
+      <turnout systemName="403" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH405" userName="W to E:Hazleton - Frackville (405-1)">
+      <turnout systemName="405" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH407" userName="W to E:Hazleton - Nanticoke (405-2)">
+      <turnout systemName="407" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH409" userName="E to W:Frackville - Pottsville Main (409-1)">
+      <turnout systemName="409" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH411" userName="E to W:Frackville - Pottsville Bypass (409-2)">
+      <turnout systemName="411" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH413" userName="W to E:Pottsville - Frackville Main (413-1)">
+      <comment>Pottsville - Frackville Main + Bypass</comment>
+      <turnout systemName="413" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH415" userName="W to E:Pottsville - Frackville Bypass (413-2)">
+      <turnout systemName="415" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH417" userName="E to W:Punxsutawney -Titusville Xover (417-1)">
+      <turnout systemName="417" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH419" userName="E to W:Bloomsburg -Titusville Xover (417-2)">
+      <turnout systemName="419" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH421" userName="W to E:Titusville - Punxsutawney Xover (421-1)">
+      <turnout systemName="421" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH423" userName="W to E:Wilkes Barre - Punxsutawney Xover (421-2)">
+      <turnout systemName="423" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH425" userName="E to W:Big Mine Run - Girardville Main (425-1)">
+      <turnout systemName="425" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH427" userName="E to W:Big Mine Run - Girardville Bypass (425-2)">
+      <turnout systemName="427" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH429" userName="W to E:Girardville Main - Big Mine Run (429-1)">
+      <turnout systemName="429" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH431" userName="W to E:Girardville Bypass - Big Mine Run (429-2)">
+      <turnout systemName="431" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH433" userName="W to E:Frackville - Girardville Main (433-1)">
+      <turnout systemName="433" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH435" userName="W to E:Frackville Main vs Team (433-2)">
+      <turnout systemName="435" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH437" userName="E to W:Girardville Main - Frackville (437-1)">
+      <turnout systemName="437" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH439" userName="E to W:Girardville Bypass - Frackville (437-2)">
+      <turnout systemName="439" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH441" userName="E to W:Titusville - Staging West Xover (441-1)">
+      <turnout systemName="441" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH443" userName="E to W:Wilkes Barre - Staging + Moosic Xover (441-2)">
+      <turnout systemName="443" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH445" userName="W to E:Staging  - Titusville + Wilkes Xover (445-1)">
+      <turnout systemName="445" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH447" userName="W to E:Moosic - Wilkes-Barre Xover (445-2)">
+      <turnout systemName="447" />
+    </signalhead>
+  </signalheads>
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" userName="Phila Yard Departure Track" occupancysensor="LS319" occupiedsense="2" trackcolor="blue" occupiedcolor="green" memory="IMB_Phila Yard Departure Track" />
+    <layoutblock systemName="ILB10" userName="Williamsport Lumber" occupiedsense="2" trackcolor="blue" occupiedcolor="blue" memory="IMB_Williamsport Lumber" />
+    <layoutblock systemName="ILB11" userName="Phila Oil - Gas Port" occupancysensor="LS36" occupiedsense="2" trackcolor="blue" occupiedcolor="red" memory="IMB_Phila Oil - Gas Port" />
+    <layoutblock systemName="ILB18" userName="Wilkes Barre - Moosic" occupancysensor="LS21" occupiedsense="2" trackcolor="blue" occupiedcolor="red" memory="IMB_Wilkes Barre - Moosic" />
+    <layoutblock systemName="ILB19" userName="Titusville Mainline" occupancysensor="LS17" occupiedsense="2" trackcolor="blue" occupiedcolor="red" memory="IMB_Titusville Mainline" />
+  </layoutblocks>
+  <audio class="jmri.jmrit.audio.configurexml.DefaultAudioManagerXml" > <!-- distanceattenuated="yes" -->
+    <audiobuffer systemName="IAB1">
+      <url>program:resources/sounds/Crossing.wav</url>
+    </audiobuffer>
+    <audiolistener systemName="IAL$" userName="Default Audio Listener">
+      <position x="0.0" y="0.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <orientation atX="0.0" atY="1.0" atZ="0.0" upX="0.0" upY="0.0" upZ="1.0" />
+      <gain>1.0</gain>
+      <metersperunit>1.0</metersperunit>
+    </audiolistener>
+    <audiosource systemName="IAS1">
+      <position x="-20.0" y="10.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB1</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="1000" out="1000" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+    <audiosource systemName="IAS2">
+      <position x="-23.406054" y="0.0" z="0.0" />
+      <velocity x="-1.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB1</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.1</pitch>
+      <distances ref="1.0" />
+      <loops min="3" max="6" />
+      <fadetimes in="1000" out="1000" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+  </audio>
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="E to W:Phila - Lancaster Main+Dock Xover (457-2)" mode="2" watchedturnout="LT27" watchedsignal1="LH339" watchedsignal2="LH339" watchedsensor2="LS305" watchedsensor2alt="LS35" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS305</sensorname>
+      <sensorname>LS35</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Phila - Lancaster Main+Dock Xover (457-1)" mode="3" watchedturnout="LT27" watchedsignal1="LH339" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS35</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Frackville - Hazleton West (357-2)" mode="4" watchedturnout="LT35" watchedsignal1="lh409" watchedsignal2="lh403" watchedsensor1="ls3" watchedsensor2="ls301" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Staging West (357-1)" mode="3" watchedturnout="LT1" watchedsignal1="lh445" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls22</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Arrival+Departure - Philadelphia Yard (449-2)" mode="3" watchedturnout="LT30" watchedsignal1="LH467" watchedsignal1alt="LH465" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS318</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Scranton - Moosic East (353-2)" mode="4" watchedturnout="LT90" watchedsignal1="lh447" watchedsignal2="lh445" watchedsignal2alt="lh357" watchedsensor1="ls300" watchedsensor1alt="ls21" watchedsensor2="ls299" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Scranton - Moosic East (353-1)" mode="2" watchedturnout="LT90" watchedsignal1="lh445" watchedsignal1alt="lh357" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls299</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Indiantown Gap-Lancaster (349-2)" mode="4" watchedturnout="LT41" watchedsignal1="lh463" watchedsignal2="lh405" watchedsensor1="ls305" watchedsensor1alt="ls309" watchedsensor2="ls34" watchedsensor2alt="ls6" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls35</sensorname>
+      <sensorname>ls37</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Arrival+Departure - Philadelphia Yard (449-1)" mode="2" watchedturnout="LT30" watchedsignal1="LH467" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS318</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Moosic - Wilkes-Barre Xover (445-2)" mode="2" watchedturnout="LT92" watchedsignal1="lh423" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls18</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Staging  - Titusville + Wilkes Xover (445-1)" mode="4" watchedturnout="LT92" watchedsignal1="lh421" watchedsignal2="lh423" watchedsensor1="ls15" watchedsensor2="ls14" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls17</sensorname>
+      <sensorname>ls18</sensorname>
+      <comment>east fm west staging to titusville or bypass</comment>
+    </signalelement>
+    <signalelement signal="W to E:Harrisburg - Hershey (349-1)" mode="2" watchedturnout="LT41" watchedsignal1="lh485" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls34</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Wilkes Barre - Staging + Moosic Xover (441-2)" mode="4" watchedturnout="LT92" watchedsensor1="LS300" watchedsensor2="LS23" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS21</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Wye merge Williamsport (345-2)" mode="4" watchedturnout="LT199" watchedsignal2="LH331" watchedsensor2="LS288" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Titusville - Staging West Xover (441-1)" mode="2" watchedturnout="LT92" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS22</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Wye merge Williamsport (345-1)" mode="2" watchedturnout="LT199" watchedsignal1="LH331" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS288</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Williamsport - Scranton (341-2)" mode="3" watchedturnout="LT43" watchedsignal1="lh397" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls33</sensorname>
+      <sensorname>ls5</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:La Ponte - Red Rock (341-1)" mode="2" watchedturnout="LT43" watchedsignal1="lh397" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls33</sensorname>
+      <sensorname>ls5</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Girardville Bypass - Frackville (437-2)" mode="3" watchedturnout="LT37" watchedsignal1="LH403" watchedsignal1alt="LH409" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS7</sensorname>
+      <sensorname>LS8</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Girardville Main - Frackville (437-1)" mode="2" watchedturnout="LT37" watchedsignal1="LH403" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS7</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Frackville Main vs Team (433-2)" mode="3" watchedturnout="LT36" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Phila Dntwn Sidings - Loop East (497-2)" mode="2" watchedturnout="LT25" watchedsignal1="LH449" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS317</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Hershey - Harrisburg (337-2)" mode="2" watchedturnout="LT41" watchedsignal1="LH327" watchedsignal1alt="LH325" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS39</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Frackville - Girardville Main (433-1)" mode="4" watchedturnout="LT37" watchedsignal1="lh431" watchedsignal2="lh429" watchedsensor1="ls298" watchedsensor2="ls297" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Phila North - Loop East (497-1)" mode="3" watchedturnout="LT25" watchedsignal1="LH449" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS317</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Hershey - Harrisburg (337-1)" mode="4" watchedturnout="LT41" watchedsignal1="LH419" watchedsignal2="LH377" watchedsensor1="LS10" watchedsensor1alt="LS14" watchedsensor2="LS39" watchedsensor2alt="LS40" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Girardville Bypass - Big Mine Run (429-2)" mode="3" watchedturnout="LT38" watchedsignal1="lh321" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls13</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Allentown - Philadelphia (493-2)" mode="2" watchedturnout="LT32" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Ashland - Shamokin (333-2)" mode="3" watchedturnout="LT42" watchedsignal1="lh351" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls40</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Tunkhannock - Scranton East  (397-2)" mode="2" watchedturnout="LT89" watchedsensor1="LS302" watchedsensor2="LS2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Allentown - Reading Main (493-1)" mode="4" watchedturnout="LT32" watchedsignal1="LH479" watchedsignal2="LH489" watchedsensor1="LS311" watchedsensor2="LS307" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Ashland - Shamokin (333-1)" mode="2" watchedturnout="LT42" watchedsignal1="lh351" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls40</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Tunkhannock - Scranton East  (397-1)" mode="4" watchedturnout="LT89" watchedsignal1="lh389" watchedsignal2="lh391" watchedsensor1="ls2" watchedsensor2="ls302" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Allentown - Reading Bypass (489-2)" mode="3" watchedturnout="LT18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Driftwood - Punxsutawney (329-2)" mode="3" watchedturnout="LT45" watchedsignal1="LH417" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS15</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Scranton Main+Bypass West (393-2)" mode="3" watchedturnout="LT89" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS5</sensorname>
+      <sensorname>LS33</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Scranton Main+Bypass West (393-1)" mode="2" watchedturnout="LT89" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS5</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Scranton Main-Bypass Crossover (389-2)" mode="2" watchedturnout="LT90" watchedsignal1="lh395" watchedsignal2="lh445" watchedsensor1="ls18" watchedsensor2="ls17" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls302</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Girardville Main - Big Mine Run (429-1)" mode="2" watchedturnout="LT38" watchedsignal1="lh321" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls13</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Big Mine Run - Girardville Bypass (425-2)" mode="2" watchedturnout="LT38" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Big Mine Run - Girardville Main (425-1)" mode="4" watchedturnout="LT38" watchedsignal1="LH439" watchedsignal2="LH437" watchedsensor1="LS297" watchedsensor2="LS298" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Allentown - Reading Main (489-1)" mode="2" watchedturnout="LT18" watchedsignal1="LH459" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS306</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Driftwood - Punxsutawney (329-1)" mode="2" watchedturnout="LT45" watchedsignal1="LH417" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS15</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Wilkes Barre - Punxsutawney Xover (421-2)" mode="4" watchedturnout="LT93" watchedsignal1="lh375" watchedsignal2="lh369" watchedsensor1="ls14" watchedsensor2="ls15" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Reverse - New Castle (485-2)" mode="2" watchedturnout="LT44" watchedsignal1="LH405" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS6</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Ashland - Big Mine Run (325-2)" mode="2" watchedturnout="LT40" watchedsignal1="LH425" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS13</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Titusville - Punxsutawney Xover (421-1)" mode="2" watchedturnout="LT93" watchedsignal1="lh369" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls15</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Hershey - New Castle (485-1)" mode="3" watchedturnout="LT44" watchedsignal1="LH405" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS6</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Ashland - Big Mine Run (325-1)" mode="3" watchedturnout="LT40" watchedsignal1="LH425" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS13</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Scranton Main-Bypass Crossover (389-1)" mode="4" watchedturnout="LT90" watchedsignal1="lh393" watchedsignal2="lh395" watchedsensor1="ls2" watchedsensor2="ls302" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Hamburg- Reading Main (481-1)" mode="2" watchedturnout="LT17" watchedsignal1="LH491" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Big Mine Run - &gt; Ashland (321-2)" mode="2" watchedturnout="LT39" watchedsignal1="lh333" watchedsignal1alt="lh335" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls9</sensorname>
+      <sensorname>ls285</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Hazleton - Frackville (385-1)" mode="3" watchedturnout="LT35" watchedsignal1="lh413" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls8</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Loco Svc - Reading Main (481-2)" mode="3" watchedturnout="LT17" watchedsignal1="LH491" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Big Mine Run - &gt; Yeagerstown (321-1)" mode="4" watchedturnout="LT40" watchedsignal1="lh333" watchedsignal2="lh335" watchedsensor1="ls285" watchedsensor2="ls286" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Pottsville - Frackville (385-2)" mode="2" watchedturnout="LT35" watchedsignal1="LH413" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS8</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:La Ponte - Williamsburg West (381-2)" mode="1" watchedsignal1="lh331" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls288</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:La Ponte - Williamsburg West (381-1)" mode="1" watchedsignal1="lh329" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls287</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Bloomsburg -Titusville Xover (417-2)" mode="2" watchedturnout="LT93" watchedsignal1="LH443" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS18</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Punxsutawney -Titusville Xover (417-1)" mode="4" watchedturnout="LT93" watchedsignal1="lh441" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls17</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Phila  - Allentown (509-2)" mode="2" watchedturnout="LT32" watchedsignal1="LH413" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS314</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Pottsville - Frackville Bypass (413-2)" mode="3" watchedturnout="LT34" watchedsignal1="LH385" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS3</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Phila dbl Xover - Lancaster (477-2)" mode="2" watchedturnout="LT135" watchedsignal1="LH459" watchedsignal1alt="LH469" watchedsignal2="LH469" watchedsensor1="LS310" watchedsensor2="LS318" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Pottsville - Frackville Main (413-1)" mode="2" watchedturnout="LT34" watchedsignal1="LH385" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS3</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Phila dbl Xover - Yard+Rev (477-1)" mode="4" watchedturnout="LT135" watchedsignal1="LH469" watchedsignal2="LH471" watchedsensor1="LS317" watchedsensor2="LS310" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Frackville - Pottsville Bypass (409-2)" mode="4" watchedturnout="LT34" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Phila dbl Xover - Allentown (473-2)" mode="2" watchedturnout="LT135" watchedsignal1="LH511" watchedsignal1alt="LH499" watchedsignal2="LH499" watchedsensor1="LS311" watchedsensor2="LS318" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Shamokin - Ashland West (377-2)" mode="2" watchedturnout="LT42" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Phila dbl Xover - North (473-1)" mode="4" watchedturnout="LT135" watchedsignal1="LH499" watchedsignal2="LH511" watchedsensor1="LS318" watchedsensor2="LS311" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Shamokin - Ashland West (377-1)" mode="4" watchedturnout="LT42" watchedsignal1="LH327" watchedsignal2="LH325" watchedsensor1="LS285" watchedsensor2="LS286" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Phila SW - Arrival (469-2)" mode="4" watchedturnout="LT28" watchedsignal1="LH487" watchedsignal2="LH459" watchedsensor1="LS29" watchedsensor2="LS305" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Sunbury - Harrisburg East (373-2)" mode="2" watchedturnout="LT46" watchedsignal1="LH349" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS10</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Sunbury - Harrisburg East (373-1)" mode="3" watchedturnout="LT46" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Punxsutawney - Driftwood East (369-2)" mode="2" watchedturnout="LT45" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Reading  - Allentown (509-1)" mode="3" watchedturnout="LT32" watchedsignal1="LH413" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS314</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Phila Main - Reading Main (505-1)" mode="2" watchedturnout="LT19" watchedsignal1="LH509" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>ls307</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Docks;Reading Yard to Reading Main (505-2)" mode="3" watchedturnout="LT19" watchedsignal1="LH509" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS293</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Frackville - Pottsville Main (409-1)" mode="4" watchedturnout="LT34" watchedsignal1="LH493" watchedsignal2="LH481" watchedsensor1="LS307" watchedsensor1alt="LS311" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS303</sensorname>
+      <sensorname>LS304</sensorname>
+      <sensorname>LS312</sensorname>
+      <sensorname>LS308</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Phila SW - Yard (469-1)" mode="4" watchedturnout="LT31" watchedsignal1="LH501" watchedsensor1="LS317" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS317</sensorname>
+      <sensorname>LS320</sensorname>
+      <sensorname>LS319</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Nanticoke - Hazleton (401-2)" mode="3" watchedturnout="LT33" watchedsignal1="LH337" watchedsignal1alt="LH461" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS6</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="E to W:Frackville - Hazleton (401-1)" mode="2" watchedturnout="LT33" watchedsignal1="LH337" watchedsignal1alt="LH461" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensorname>LS6</sensorname>
+      <sensorname>LS34</sensorname>
+      <comment />
+    </signalelement>
+    <signalelement signal="W to E:Rev  - Phila Downtown (461-2)" mode="4" watchedturnout="LT27" watchedsignal1="lh507" watchedsignal2="lh505" watchedsensor1="ls306" watchedsensor1alt="ls305" watchedsensor2="ls309" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <comment />
+    </signalelement>
+  </signalelements>
+  <LayoutEditor class="jmri.jmrit.display.configurexml.LayoutEditorXml" name="My Layout" x="792" y="-1" height="716" width="1277" windowheight="768" windowwidth="1280" panelheight="716" panelwidth="1277" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="3" defaulttrackcolor="blue" defaulttextcolor="black" turnoutbx="17.0" turnoutcx="14.0" turnoutwid="7.0" xoverlong="32.0" xoverhwid="12.0" xovershort="11.0">
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="18" y="27" level="5" text="Titusville" size="14" style="0" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="315" y="63" level="5" text="Nanticoke" size="14" style="0" red="51" green="51" blue="51" />
+    <sensoricon sensor="LS10" x="687" y="575" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS14" x="106" y="272" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="128" y="415" level="5" text="Yeagerstown" size="14" style="0" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="1037" y="47" level="5" text="To Wye" size="11" style="1" red="128" green="128" blue="128" />
+    <sensoricon sensor="LS2" x="765" y="4" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS6" x="969" y="81" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="1063" y="609" level="5" text="To Wye" size="11" style="1" red="128" green="128" blue="128" />
+    <sensoricon sensor="LS305" x="806" y="400" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS311" x="710" y="209" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="1141" y="435" level="5" text="Hershey" size="14" style="0" red="51" green="51" blue="51" />
+    <sensoricon sensor="LS312" x="906" y="174" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS33" x="1232" y="149" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <reportericon reporter="LR275" x="444" y="651" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <reportericon reporter="LR315" x="387" y="192" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="809" y="118" level="5" text="Pottsville" size="14" style="0" red="51" green="51" blue="51" />
+    <sensoricon sensor="LS34" x="1157" y="402" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="7" y="6" level="5" text="INTERCHANGE" size="8" style="3" red="128" green="128" blue="128" />
+    <sensoricon sensor="LS283" x="1161" y="619" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <signalheadicon signalhead="LH431" x="205" y="151" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH433" x="479" y="112" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH445" x="197" y="20" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <sensoricon sensor="LS15" x="26" y="381" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="69" y="301" level="5" text="3% Grade" size="12" style="1" red="255" green="0" blue="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="923" y="293" level="5" text="Phila Yard" size="11" style="0" red="128" green="128" blue="128" />
+    <reportericon reporter="LR317" x="778" y="365" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <reportericon reporter="LR319" x="741" y="320" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="389" y="405" level="5" text="Dock Siding" size="12" style="0" red="128" green="128" blue="128" />
+    <signalheadicon signalhead="LH463" x="853" y="400" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH495" x="1009" y="225" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="205" y="509" level="5" text="Coal" size="8" style="3" red="0" green="255" blue="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="271" y="194" level="5" text="Departure Track" size="12" style="0" red="128" green="128" blue="128" />
+    <sensoricon sensor="LS296" x="365" y="224" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS308" x="365" y="247" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS314" x="1096" y="196" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <signalheadicon signalhead="LH383" x="898" y="625" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH379" x="346" y="515" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <sensoricon sensor="LS292" x="788" y="223" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS29" x="1110" y="358" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="true" showtooltip="false" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="0" y="0" level="1" icon="preference:Resources/Background/White_Bkgnd_1300wide_tunnels5.GIF" rotate="0" />
+    <signalheadicon signalhead="LH415" x="762" y="127" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH413" x="753" y="103" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH435" x="509" y="131" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <layoutturnout ident="TO1" turnoutname="LT33" blockname="Newcastle - Hazleton" type="2" connectaname="T115" connectbname="T24" connectcname="T28" signala1name="LH405" signala2name="LH407" signalb1name="LH401" signalc1name="LH403" continuing="2" disabled="no" xcen="740.0" ycen="84.0" xb="720.0" yb="84.0" xc="713.0" yc="105.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO19" turnoutname="LT32" blockname="Allentown - Hamburg Main" type="1" connectaname="T14" connectbname="T137" connectcname="T72" continuing="2" disabled="no" xcen="982.0" ycen="215.0" xb="950.0" yb="217.0" xc="963.0" yc="206.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T2" blockname="Titusville - Driftwood" connect1name="A2" type1="1" connect2name="A3" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T23" blockname="Lancaster - Philadelphia Main" connect1name="TO51" type1="5" connect2name="A71" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T53" blockname="Lancaster - Indiantown Gap" connect1name="A71" type1="1" connect2name="A21" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="1" x="37.0" y="60.0" connect1name="T36" connect2name="T91" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A9" type="1" x="1194.0" y="392.0" connect1name="T11" connect2name="T21" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A71" type="1" x="916.0" y="416.0" connect1name="T23" connect2name="T53" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <LayoutEditor class="jmri.jmrit.display.configurexml.LayoutEditorXml" name="Dispatcher Dual Two" x="0" y="0" height="680" width="1260" windowheight="753" windowwidth="1280" panelheight="680" panelwidth="1260" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="yes" snaponmove="no" antialiasing="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="3" defaulttrackcolor="white" defaulttextcolor="white" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0">
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="284" y="157" level="5" text="Hershey" size="12" style="0" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="602" y="19" level="5" text="Team Track" size="12" style="0" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="3" y="84" level="5" text="Bloomsburg" size="12" style="0" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="3" y="33" level="5" text="Drake Oil" size="12" style="0" red="255" green="255" blue="255" />
+    <sensoricon sensor="LS20" x="30" y="50" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS14" x="82" y="104" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS7" x="1213" y="423" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS18" x="0" y="64" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" hidden="yes" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="332" y="360" level="5" text="Locomotive" size="12" style="0" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="341" y="372" level="5" text="Service" size="12" style="0" red="255" green="255" blue="255" />
+    <signalheadicon signalhead="LH373" x="74" y="64" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH375" x="77" y="87" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH325" x="1061" y="83" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH363" x="29" y="525" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <reportericon reporter="LR289" x="600" y="489" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <reportericon reporter="LR289" x="562" y="122" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <reportericon reporter="LR277" x="1109" y="98" level="5" text="&lt;blank&gt;" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.LayoutReporterIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="true" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="20" y="190" level="3" icon="file:Plates\base-plates\turnout\turnout.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="1166" y="415" level="5" text="8" size="12" style="1" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="1172" y="687" level="5" text="8" size="12" style="1" red="255" green="255" blue="255" />
+    <layoutturnout ident="TO2" turnoutname="LT41" blockname="Indiantown Gap Main" blockbname="Lancaster - Indiantown Gap" blockcname="Hershey - New Castle" blockdname="Sunbury - Harrisburg" type="5" connectaname="T3" connectbname="T4" connectcname="T5" connectdname="T2" continuing="2" disabled="no" xcen="264.0" ycen="137.0" xb="278.1984945621624" yb="124.62809710996663" xc="308.9880065917969" yc="146.32264709472656" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO4" turnoutname="LT44" blockname="Newcastle - Hazleton" type="2" connectaname="T7" connectbname="T6" connectcname="T5" continuing="2" disabled="no" xcen="391.0" ycen="140.0" xb="364.0" yb="130.0" xc="371.0" yc="149.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO6" turnoutname="LT18" blockname="Reading Mainline" type="2" connectaname="T38" connectbname="T39" connectcname="T45" continuing="2" disabled="no" xcen="130.0" ycen="418.0" xb="150.0" yb="418.0" xc="150.0" yc="398.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO7" turnoutname="LT3" blockname="Bloomsburg - Sunbury" type="1" connectbname="T37" connectcname="T31" continuing="2" disabled="no" xcen="57.0" ycen="78.0" xb="37.0" yb="78.0" xc="37.0" yc="68.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T2" blockname="Sunbury - Harrisburg" connect1name="A2" type1="1" connect2name="TO2" type2="5" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T54" blockname="Phila - New Castle Reverse" connect1name="A5" type1="1" connect2name="A32" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A2" type="1" x="199.0" y="151.0" connect1name="T33" connect2name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="180.0" y="60.0" connect1name="T3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id$-->
+</layout-config>
+
+

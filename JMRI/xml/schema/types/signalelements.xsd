@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+    <xs:complexType name="SignalElementManagerType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of a BlockBossLogic implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.jmrit.blockboss.configurexml.BlockBossLogicXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        
+        <xs:element name="signalelement" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sensorname" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="systemNameType" />
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="systemNameType">
+                    <xs:annotation><xs:documentation>
+                      This was obsoleted, name now lives in element content
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+            <xs:attribute name="signal" type="beanNameType"/>
+            <xs:attribute name="mode" type="xs:integer"/>
+            <xs:attribute name="watchedturnout" type="beanNameType"/>
+            <xs:attribute name="watchedsignal1" type="beanNameType"/>
+            <xs:attribute name="watchedsignal1alt" type="beanNameType"/>
+            <xs:attribute name="watchedsignal2" type="beanNameType"/>
+            <xs:attribute name="watchedsignal2alt" type="beanNameType"/>
+            <xs:attribute name="watchedsensor1" type="beanNameType"/>
+            <xs:attribute name="watchedsensor1alt" type="beanNameType"/>
+            <xs:attribute name="watchedsensor2" type="beanNameType"/>
+            <xs:attribute name="watchedsensor2alt" type="beanNameType"/>
+            <xs:attribute name="approachsensor1" type="beanNameType"/>
+            <xs:attribute name="limitspeed1" type="xs:boolean"/>
+            <xs:attribute name="limitspeed2" type="xs:boolean"/>
+            <xs:attribute name="restrictingspeed1" type="xs:boolean"/>
+            <xs:attribute name="restrictingspeed2" type="xs:boolean"/>
+            <xs:attribute name="useflashyellow" type="xs:boolean"/>
+            <xs:attribute name="distantsignal" type="xs:boolean"/>
+          </xs:complexType>
+        </xs:element>
+            
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,12 @@
+This is the README file for the jmrix.easydcc.networkdriver package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. 
+jmrix.easydcc.networkdriver defines classes for interfacing to an EasyDcc
+command station via a telnet connection.
+
+
+
+
+
+	
+	

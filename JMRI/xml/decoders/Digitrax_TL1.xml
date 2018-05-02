@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2004, 2005, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Howard G. Penny" version="1" lastUpdated="20051108"/>
+  <version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080412"/>
+  <version author="Marc N Fournier forfoum@videotron.ca" version="3" lastUpdated="20170503"/>
+  <!-- Version 1 - Initial release                                    		-->
+  <!-- Version 2 - 													  		-->
+  <!-- Version 3 - Added Decoder Lock pane, Correct output port errors		-->
+  <decoder>
+    <family name="Function Only, with transponding" mfg="Digitrax">
+      <model model="TL1" lowVersionID="250"/>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="250">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="129">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+	  <variable CV="16" item="Decoder Lock Type" default="0">
+        <enumVal>
+          <enumChoice choice="0 - Unlocked">
+            <choice>0 - Unlocked</choice>
+            <choice xml:lang="it">0 - Non Bloccato</choice>
+          </enumChoice>
+          <enumChoice choice="1 - Motor">
+            <choice>1 - Motor</choice>
+            <choice xml:lang="it">1 - Motore</choice>
+          </enumChoice>
+          <enumChoice choice="2 - Sound">
+            <choice>2 - Sound</choice>
+            <choice xml:lang="it">2 - Suono</choice>
+          </enumChoice>
+          <enumChoice choice="3 - Function (1)">
+            <choice>3 - Function (1)</choice>
+            <choice xml:lang="it">3 - Funzione(1)</choice>
+          </enumChoice>
+          <enumChoice choice="4 - Function (2)">
+            <choice>4 - Function (2)</choice>
+            <choice xml:lang="it">4 - Funzione(2)</choice>
+          </enumChoice>
+          <enumChoice choice="5 - Function (3)">
+            <choice>5 - Function (3)</choice>
+            <choice xml:lang="it">5 - Funzione(3)</choice>
+          </enumChoice>
+          <enumChoice choice="6 - User Defined">
+            <choice>6 - User Defined</choice>
+            <choice xml:lang="it">6 - definita dall'utente</choice>
+          </enumChoice>
+          <enumChoice choice="7 - User Defined">
+            <choice>7 - User Defined</choice>
+            <choice xml:lang="it">7 - definita dall'utente</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Decoder Lock Type</label>
+        <label xml:lang="it">Tipo Blocco decoder</label>
+      </variable>	  
+      <variable CV="49" mask="XXXXXVVV" item="Effect Generated">
+        <enumVal>
+          <enumChoice choice="Normal on/off">
+            <choice>Normal on/off</choice>
+            <choice xml:lang="it">On-Off Normale</choice>
+          </enumChoice>
+          <enumChoice choice="Simulated FRED">
+            <choice>Simulated FRED</choice>
+            <choice xml:lang="it">FRED Simulato (Fine treno)</choice>
+          </enumChoice>
+          <enumChoice choice="Simulated Mars light">
+            <choice>Simulated Mars light</choice>
+            <choice xml:lang="it">Luci Mars Simulate</choice>
+          </enumChoice>
+          <enumChoice choice="Slow Strobe">
+            <choice>Slow Strobe</choice>
+            <choice xml:lang="it">Strobe lento</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse">
+            <choice>Single pulse</choice>
+            <choice xml:lang="it">SIngolo impulso</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse">
+            <choice>Double pulse</choice>
+            <choice xml:lang="it">Doppio impulso</choice>
+          </enumChoice>
+          <enumChoice choice="Medium pulse">
+            <choice>Medium pulse</choice>
+            <choice xml:lang="it">Impulso Medio</choice>
+          </enumChoice>
+          <enumChoice choice="Mostly on blinking off">
+            <choice>Mostly on blinking off</choice>
+            <choice xml:lang="it">On Accesa Off lampeggio</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effect Generated</label>
+        <label xml:lang="it">Effetti generati</label>
+      </variable>
+	   <variable CV="54" mask="XVXXXXXX" item="Decoder Lock" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Decoder Lock</label>
+        <label xml:lang="it">Blocco decoder</label>
+      </variable>
+      <variable CV="61" mask="XXXXXXXV" item="F0 use">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Use F0 for function control</label>
+        <label xml:lang="it">Usa F0 per controllo funzioni</label>
+      </variable>
+      <variable CV="61" mask="XXXXXXVX" item="Transpond" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Digitrax Transponding</label>
+        <label xml:lang="it">Tranponding Digitrax</label>
+      </variable>
+      <variable CV="62" mask="XXXXXVVV" item="Effect Rate" tooltip="0 is slowest- max 7">
+        <enumVal>
+          <enumChoice choice="0 slowest">
+            <choice>0 slowest</choice>
+            <choice xml:lang="it">0 lentissimo</choice>
+          </enumChoice>
+          <enumChoice choice="1">
+            <choice>1</choice>
+          </enumChoice>
+          <enumChoice choice="2">
+            <choice>2</choice>
+          </enumChoice>
+          <enumChoice choice="3">
+            <choice>3</choice>
+          </enumChoice>
+          <enumChoice choice="4">
+            <choice>4</choice>
+          </enumChoice>
+          <enumChoice choice="5">
+            <choice>5</choice>
+          </enumChoice>
+          <enumChoice choice="6">
+            <choice>6</choice>
+          </enumChoice>
+          <enumChoice choice="7 fastest">
+            <choice>7 fastest</choice>
+            <choice xml:lang="it">7 velocissimo</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Effect Rate</label>
+      </variable>
+      <variable CV="64" mask="XXXXXXVV" item="ControlFn">
+        <enumVal>
+          <enumChoice choice="F0 or F1">
+            <choice>F0 or F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4">
+            <choice>F4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function controlling output</label>
+        <label xml:lang="it">Funzioni per controllare uscita</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label>Reset All CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Transpond"/>
+      <display item="ControlFn"/>
+      <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0 or F1' is not selected above"/>
+      <display item="Effect Generated"/>
+      <display item="Effect Rate"/>
+    </column>
+    <name>Function Output</name>
+    <name xml:lang="it">Uscita Funzione</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Decoder Lock" format="radiobuttons"/>
+      <display item="Decoder Lock Type"/>
+    </column>
+    <name>Decoder Lock</name>
+    <name xml:lang="it">Blocco Decoder</name>
+  </pane>
+</decoder-config>

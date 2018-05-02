@@ -1,0 +1,300 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Dispatcher Options Help</title>
+  <meta name="author" content="Dave Duchamp">
+  <meta name="keywords" content="JMRI help Dispatcher Options">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Dispatcher Options</h1>
+
+      <h2>Introduction</h2>
+
+      <p>The <b>Dispatcher Options</b> pane provides for tailoring
+      <b><a href="Dispatcher.shtml">Dispatcher</a></b>
+      according to user needs and preferences. The <b>Options</b>
+      menu provides access to these options and to
+      another choice for saving Dispatcher Options to disk for later use.
+      Both are described below.</p>
+
+      <h2>Using Dispatcher Options</h2>
+      <img src="images/OptionsWindow.png" height="649" width="606"
+           style="float:right;margin:2em;">
+
+      <p>Selecting <b>Dispatcher Options...</b> in the <b>Options</b>
+      menu of the Dispatcher window brings up the pane shown at
+      right.</p>
+
+      <p>This window shows options currently set for
+      Dispatcher. To change Dispatcher Options, change to the
+      desired option configuration, and click the <b>Apply</b>
+      button. All options are set to the selections in the Dispatcher Options
+      pane, and the pane disappears. To close this pane without changing
+      any options, click <b>Cancel</b>.<br>
+      The available options are:</p>
+
+      <ul>
+        <li>
+          <p>Check <b>Use connectivity from Layout Editor
+          panel:</b> and select a Layout Editor panel (if there's
+          more than one panel), if you have a Layout Editor panel
+          that fully describes your layout, including blocks and
+          turnouts, and would like Dispatcher to make use of this
+          connectivity. Uncheck this item if no Layout Editor panel
+          with full connectivity is available. If this item is
+          checked, Dispatcher will automatically check if turnouts
+          are set correctly when allocating a Section, and will
+          inform the dispatcher if the turnouts are not set
+          correctly. This item must be checked if Dispatcher is to
+          set turnouts when a Section is allocated (see below), and
+          if trains are to be run automatically.</p>
+          <p>Select the type of Signaling control that is use on
+          the panel from the drop down:</p>
+
+          <ul>
+            <li><b>Signal Heads/SSL</b> - Uses (traditional)
+            Signal Heads and Simple Signal Logic</li>
+
+            <li><b>Signal Masts/SML</b> - Uses (more advanced) Signal
+            Masts and associated Signal Mast Logic</li>
+          </ul>
+        </li>
+
+        <li>
+          <p>Select one of these three options for Dispatcher to
+          select Trains from when creating Active Trains:</p>
+        </li>
+
+        <li style="list-style: none">
+          <ul>
+            <li><b>Trains from Roster</b> - Dispatcher will list
+            all trains in the JMRI Roster that are not currently in
+            Active Trains.</li>
+
+            <li><b>Trains from Operations</b> - Dispatcher will list
+            all trains available from Operations that are not in
+            Active Trains.</li>
+
+            <li><b>Trains from User Entry</b> - Dispatcher will
+            replace the train selection box in the <b><a href=
+            "NewTrain.shtml">Activate New Train</a></b> window with
+            two entry fields allowing the user to enter a train
+            name and a dcc Address.</li>
+          </ul>
+        </li>
+
+        <li>
+          <p>Check <b>Layout has block detection hardware</b> if
+          block occupancy detection is available from the layout.
+          Uncheck if the layout does not have block occupancy
+          detection, or if Dispatcher should not make use of block
+          occupancy detection. Block detection hardware is required
+          for automatic running of trains.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Automatically allocate Sections to Active
+          Trains</b> to activate automated allocation. Uncheck to
+          deactivate automated allocation. This item is equivalent
+          to the <b>Auto Allocate</b> option check box in
+          Dispatcher's window above the <b>Allocated Sections</b>
+          table. It is also equivalent to <b>Auto Allocate</b> in
+          Dispatcher's <b>Options</b> menu. Checking it here, then
+          saving Dispatcher Options (see below) will select Auto
+          Allocate and Auto Release when Dispatcher is started.
+          <b>Note: The current version of Dispatcher provides
+          limited support for automated allocation of Sections</b>.
+          Support will be enhanced in future versions.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Automatically set turnouts when a Section is
+          allocated</b> to activate automatic setting of turnouts.
+          Uncheck to deactivate automatic setting of turnouts. This
+          item is equivalent to <b>Auto Set Turnouts</b> in
+          Dispatcher's <b>Options</b> menu. This item requires that
+          <b>Use connectivity from Layout Editor panel</b> be
+          checked (see above). Turnouts will not be set unless the
+          Section to be allocated is free and unoccupied, except
+          for the first Section of an Active Train that starts in
+          the Transit. If turnouts cannot be set, the dispatcher
+          will be warned. When setting turnouts, Dispatcher only
+          issues commands to set turnouts; it does not wait for
+          turnouts to actually change. This item is required for
+          automatic running of trains.<br>
+          Note that signals dependent on those turnouts will not
+          change until the turnout is changed, so Dispatcher may
+          (indirectly) wait for turnouts to align.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Trust Known State of Turnouts?</b> to
+          suppress sending of turnout commands if the known state
+          already matches the desired state. This can be used where
+          reliable turnout feedback is in place.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Use short Active Train names</b> to use the
+          train name as the Active Train name in tables and
+          selection boxes where Active Trains are referenced.
+          Uncheck to use the full Active Train name in those
+          locations.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Place train name in starting Block</b> to
+          request that Dispatcher set the "value" of the starting
+          Block to the train name when creating a new Active Train.
+          Uncheck to suppress setting the starting Block value to
+          the train name. This feature is designed to facilitate
+          Train Tracking in Layout Editor panels.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Use alternate color for allocated Blocks</b>
+          to use the Layout Editor alternate unoccupied color for
+          allocated Blocks in Layout Editor panels. This option is
+          designed to make it easier for the dispatcher to see
+          which Sections have been allocated.</p>
+        </li>
+
+        <li>
+          <p>Check <b>Place train name in allocated Blocks</b> to
+          place the name of the Active Train to which a Section is
+          allocated as the value of Blocks of the Allocated
+          Section. This feature, coupled with the above alternate
+          color option, makes it easy for the dispatcher to see
+          which Allocated Section is allocated to which Active
+          Train when viewing a Layout Editor panel.</p>
+        </li>
+
+        <li>
+          <p>Select layout scale in the <b>Layout Scale</b>
+          selection box. The selected scale is used to convert
+          Block length as used in automatic running of trains.</p>
+        </li>
+
+        <li>
+          <p>Select the preferred <b>Units</b>, either <b>Scale
+          Feet</b> or <b>Scale Meters</b> for referencing train
+          length and block length in Dispatcher.</p>
+        </li>
+
+        <li>
+          <p><b>Minimum Throttle Interval</b> is used to manage
+          throttle traffic, by sending throttle commands no more
+          often than this value. Increasing this value reduces
+          traffic on your DCC bus, but will affect "smoothness" of
+          speed changes.</p>
+        </li>
+
+        <li>
+          <span class="since">since 4.3.7</span>
+          <p><b>Time to Fully Ramp</b> is used to calculate the
+          Ramping values. Specifically, it is how long (in
+          milliseconds) it would take to go from 0&#37; to 100&#37;.
+          Increasing this value causes ramping operations to take
+          longer.</p>
+        </li>
+
+        <li>
+          <span class="since">since 3.4</span>
+          <p>Check the <b>Open Dispatcher with Panel</b> to open up
+          the Dispatcher window when the panel file is loaded.
+          Please note that this option is saved when the panel file
+          itself and is saved and not when the "Save Options" is
+          selected.</p>
+        </li>
+      </ul>
+
+      <p><b>Important Note: Remember to save your Options</b> (see
+      below). If new Dispatcher Options are not saved, they revert
+      to the previous values the next time Dispatcher is run.</p>
+
+      <h2>Using the Options Menu</h2>
+
+      <p>The <b>Options</b> menu is used to access, edit, and save
+      Dispatcher options. Items in this menu and their use are
+      explained below:</p>
+
+      <ul>
+        <li>
+          <p><b>Auto Allocate</b> - This check box is used to turn
+          automated allocation functions on (checked) or off
+          (unchecked). This item is equivalent to the <b>Auto
+          Allocate</b> option check box in Dispatcher's window
+          above the <b>Allocated Sections</b> table. It is also is
+          equivalent to an item in the <b>Options Window</b>.
+          Automated dispatching may be turned on or off at any
+          time. The item is repeated here for convenience of the
+          dispatcher. <b>Note: Automated allocation of Sections has
+          limited support in the current version of
+          Dispatcher.</b></p>
+        </li>
+
+        <li>
+          <p><b>Auto Set Turnouts</b> - This check box is used to
+          turn on (checked) or off (unchecked) automatic setting of
+          turnouts when Sections are allocated. This item is
+          equivalent to an item in the Options Window. Automatic
+          setting of turnouts may be turned on or off at any time,
+          except for automatically running Active Trains. The item
+          is repeated here for the convenience of the
+          dispatcher.</p>
+        </li>
+
+        <li>
+          <p><b>Options Window...</b> - Selecting this item brings
+          up the Options Window described above.</p>
+        </li>
+
+        <li>
+          <p><b>Save Options...</b> - Selecting this item saves
+            Dispatcher Options to disk.</p></li>
+      </ul>
+
+      <a id="saveoptions" name="saveoptions"></a>
+      <h2>Saving Dispatcher Options</h2>
+
+          <p>To save the Dispatcher settings currently in effect into
+          a small XML file (<i>dispatcheroptions.xml</i>) in the user's
+          preferences directory, select <b>Save Options...</b> from the
+          <b>Options</b> menu. This is the same location where
+          JMRI preference files are saved. When Dispatcher is
+          started, if a file named "<i>dispatcheroptions.xml</i>"
+          is found in the user's preference directory, that file is
+          read, and Dispatcher options are set accordingly. If the
+          file is not present when Dispatcher is started, default
+          options are used. <b>Note: Dispatcher Options are not
+          saved automatically.</b> Saving Dispatcher Options is
+          optional. Selecting this menu item is the only way to
+          save Dispatcher Options.</p>
+
+      <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

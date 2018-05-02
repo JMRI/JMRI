@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-31</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German, corrected French</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2012-12-26</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2003-12-05</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original 0NMRA.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable item="Forward Trim" CV="66" comment="Range 0-255">
+    <decVal/>
+    <label>Forward Trim</label>
+    <label xml:lang="cs">Korekce rychlosti vpřed</label>
+    <label xml:lang="it">Correzione Velocità in avanti</label>
+    <label xml:lang="fr">Correction vitesse avant</label>
+    <label xml:lang="de">Vorwärts Trimm</label>
+    <label xml:lang="nl">Trim Vooruit</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <comment xml:lang="fr">Valeur 0-255</comment>
+    <comment xml:lang="de">Wert 0-255</comment>
+    <comment xml:lang="nl">Waarde van 0-255</comment>
+  </variable>
+</variables>

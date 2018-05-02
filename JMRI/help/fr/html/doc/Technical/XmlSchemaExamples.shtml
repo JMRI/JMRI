@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updatedated by Blorec Herv&#233;  2013-09-09-->
+
+<html lang="fr">
+<head>
+    <title>
+ 	JMRI: Xml Schema Examples
+    </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI technical code xml schema usage">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: XML Exemples de Sch&eacute;ma</h1>Cette page
+      contient des exemples de divers fragments Examples de Schema
+      XML que vous pourriez trouver utiles. Pour une analyse de
+      l'utilisation JMRI de Schema, XML, y compris des infos sur
+      les modes de pr&eacute;f&eacute;rence et de l'organisation,
+      voir <a href="XmlSchema.shtml">une autre page</a> .
+
+      <h2>El&eacute;ment avec juste le contenu du texte, pas
+      d'attributs</h2>
+      <pre style="font-family: monospace;">
+
+&lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
+</pre>Cela ne veut pas pr&eacute;ciser les frappe. Si vous
+souhaitez par exemple faire respecter les entier:
+      <pre style="font-family: monospace;">
+
+&lt;xs:element name="someIntThing" &gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base="xs:int" /&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+
+      <h2>El&eacute;ment avec seulement des attributs, pas de
+      contenu</h2>Forme privil&eacute;gi&eacute;es Store Venitien:
+      <pre style="font-family: monospace;">
+
+&lt;xs:element name="sample" type="SampleType" 
+    minOccurs="0" maxOccurs="unbounded" /&gt;
+
+&lt;xs:complexType name="SampleType"&gt;
+  &lt;xs:attribute name="foo" /&gt;
+  &lt;xs:attribute name="bar" /&gt;
+&lt;/xs:complexType&gt;
+</pre>Peut aussi &ecirc;tre combin&eacute; si vous pensez qu'il est
+peu probable qu'il soit utilis&eacute; ailleur:
+      <pre style="font-family: monospace;">
+
+&lt;xs:element name="sample" 
+    minOccurs="0" maxOccurs="unbounded" /&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:attribute name="foo" /&gt;
+    &lt;xs:attribute name="bar" /&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+
+      <h2>El&eacute;ment avec du contenu texte et des
+      attributs</h2>
+      <pre style="font-family: monospace;">
+
+&lt;xs:element name="someIntThing" &gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base="xs:int"&gt;
+        &lt;xs:attribute name="someInt" type="xs:int"/&gt;
+        &lt;xs:attribute name="someText" type="xs:string"/&gt;
+      &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre>
+
+      <h2>Limiter un attribut pour certaines valeurs</h2>Si vous
+      voulez faire cela, &ccedil;a vaut la peine de d&eacute;finir
+      un type g&eacute;n&eacute;ral qui peux &ecirc;tre
+      r&eacute;utilis&eacute;. Ceux-ci sont en
+      xml/schema/types/general.xsd.
+      <pre style="font-family: monospace;">
+
+&lt;xs:simpleType name="yesNoType"&gt;
+  &lt;xs:annotation&gt;
+    &lt;xs:documentation&gt;
+      General definition of string that's either "yes" or "no".
+    &lt;/xs:documentation&gt;
+  &lt;/xs:annotation&gt;
+  &lt;xs:restriction base="xs:token"&gt;
+    &lt;xs:enumeration value="yes"/&gt;
+    &lt;xs:enumeration value="no"/&gt;
+  &lt;/xs:restriction&gt;
+&lt;/xs:simpleType&gt;
+</pre>Puis le mettre sur un attribut est simple:
+      <pre style="font-family: monospace;">
+
+&lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
+</pre>
+
+      <h2>El&eacute;ment avec le contenu du texte restreint</h2>Pas
+      un attribut, un &eacute;l&eacute;ment:
+      <pre style="font-family: monospace;">
+&lt;xs:element name="relation"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="ge"/&gt;
+      &lt;xs:enumeration value="lt"/&gt;
+      &lt;xs:enumeration value="eq"/&gt;
+      &lt;xs:enumeration value="ne"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre>
+
+      <h2>Groupes d'Attribut</h2>Des groupes d'attributs sont bons
+      pour repr&eacute;senter un ensemble d'attributs lus et
+      &eacute;crits ainsi que par une routine de service commune.
+      Exemple de d&eacute;finition:
+      <pre style="font-family: monospace;">
+&lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
+  &lt;xs:annotation&gt;
+    &lt;xs:documentation&gt;
+      Define the XML stucture for storing common PositionableLabel child attributes
+    &lt;/xs:documentation&gt;
+    &lt;xs:appinfo&gt;
+      jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
+    &lt;/xs:appinfo&gt;
+  &lt;/xs:annotation&gt;
+  &lt;xs:attribute name="x" type="xs:int" use="required" /&gt;
+  &lt;xs:attribute name="y" type="xs:int" use="required" /&gt;
+  &lt;xs:attribute name="level" type="xs:int" /&gt;
+  &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
+&lt;/xs:attributeGroup&gt;
+</pre>par exemple l'utilisation, dans certains type plus tard:
+      <pre style="font-family: monospace;">
+&lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
+</pre><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

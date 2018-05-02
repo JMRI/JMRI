@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <turnout systemName="LT17" feedback="MONITORING" />
+    <turnout systemName="LT18" feedback="MONITORING" />
+    <turnout systemName="LT20" feedback="MONITORING" />
+    <turnout systemName="LT21" feedback="MONITORING" />
+    <turnout systemName="LT22" feedback="MONITORING" />
+    <turnout systemName="LT23" feedback="MONITORING" />
+    <turnout systemName="LT24" feedback="MONITORING" />
+    <turnout systemName="LT25" feedback="MONITORING" />
+    <turnout systemName="LT26" feedback="MONITORING" />
+    <turnout systemName="LT27" feedback="MONITORING" />
+    <turnout systemName="LT28" feedback="MONITORING" />
+    <turnout systemName="LT29" feedback="MONITORING" />
+    <turnout systemName="LT30" feedback="MONITORING" />
+    <turnout systemName="LT31" feedback="MONITORING" />
+    <turnout systemName="LT32" feedback="MONITORING" />
+    <turnout systemName="LT33" feedback="MONITORING" />
+    <turnout systemName="LT34" feedback="MONITORING" />
+    <turnout systemName="LT35" feedback="MONITORING" />
+  </turnouts>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH20H">
+      <turnout systemName="LT20" />
+      <turnout systemName="LT21" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH20L">
+      <turnout systemName="LT22" />
+      <turnout systemName="LT23" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH24H">
+      <turnout systemName="LT24" />
+      <turnout systemName="LT25" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH24L">
+      <turnout systemName="LT26" />
+      <turnout systemName="LT27" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH28H">
+      <turnout systemName="LT28" />
+      <turnout systemName="LT29" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH28L">
+      <turnout systemName="LT30" />
+      <turnout systemName="LT31" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH32H">
+      <turnout systemName="LT32" />
+      <turnout systemName="LT33" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH32L">
+      <turnout systemName="LT34" />
+      <turnout systemName="LT35" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH50" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH51" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH52" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH53" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH54" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH55" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH56" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH57" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH58" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH59" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH60" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="VH61" />
+  </signalheads>
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="IH20L" mode="3" watchedturnout="LT17" watchedsignal1="VH55" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH20H" mode="2" watchedturnout="LT17" watchedsignal1="VH50" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH32L" mode="2" watchedturnout="LT18" watchedsignal1="VH53" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH32H" mode="2" watchedturnout="LT18" watchedsignal1="VH59" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH59" mode="2" watchedturnout="LT17" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH58" mode="2" watchedturnout="LT18" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH57" mode="3" watchedturnout="LT18" watchedsignal1="VH53" watchedsignal1alt="VH59" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH24L" mode="2" watchedturnout="LT17" watchedsignal1="VH52" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH56" mode="3" watchedturnout="LT18" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH55" mode="3" watchedturnout="LT17" watchedsignal1="VH52" watchedsignal1alt="VH58" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH54" mode="3" watchedturnout="LT17" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH53" mode="3" watchedturnout="LT17" watchedsignal1="VH54" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH24H" mode="2" watchedturnout="LT17" watchedsignal1="VH58" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH52" mode="3" watchedturnout="LT18" watchedsignal1="VH56" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH51" mode="2" watchedturnout="LT17" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH50" mode="2" watchedturnout="LT18" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH28L" mode="3" watchedturnout="LT18" watchedsignal1="VH57" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="IH28H" mode="2" watchedturnout="LT18" watchedsignal1="VH51" useflashyellow="false" distantsignal="true" />
+    <signalelement signal="VH61" mode="3" watchedturnout="LT17" watchedsignal1="VH58" useflashyellow="false" distantsignal="true" />
+  </signalelements>
+  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Crossover Example" x="217" y="22" height="453" width="431" editable="yes" positionable="yes" controlling="yes" hide="no">
+    <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="5" y="5" level="3" icon="program:resources/icons/misc/crossover.gif" rotate="0" />
+    <turnouticon turnout="LT17" x="310" y="119" closed="program:resources/icons/cornwall/TurnoutClosedR.gif" thrown="program:resources/icons/cornwall/TurnoutThrownR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT17" x="243" y="52" closed="program:resources/icons/cornwall/TurnoutClosedR.gif" thrown="program:resources/icons/cornwall/TurnoutThrownR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT18" x="181" y="52" closed="program:resources/icons/cornwall/TurnoutClosedL.gif" thrown="program:resources/icons/cornwall/TurnoutThrownL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT18" x="114" y="119" closed="program:resources/icons/cornwall/TurnoutClosedL.gif" thrown="program:resources/icons/cornwall/TurnoutThrownL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <signalheadicon signalhead="IH20H" x="345" y="112" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH20L" x="359" y="112" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH24H" x="341" y="41" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH24L" x="356" y="41" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH28H" x="67" y="141" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH28L" x="54" y="141" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH32H" x="67" y="69" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH32L" x="53" y="69" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="5" y="205" level="3" icon="program:resources/icons/misc/crossover.gif" rotate="0" />
+    <turnouticon turnout="LT17" x="310" y="319" closed="program:resources/icons/cornwall/TurnoutClosedR.gif" thrown="program:resources/icons/cornwall/TurnoutThrownR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT17" x="243" y="252" closed="program:resources/icons/cornwall/TurnoutClosedR.gif" thrown="program:resources/icons/cornwall/TurnoutThrownR.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT18" x="181" y="252" closed="program:resources/icons/cornwall/TurnoutClosedL.gif" thrown="program:resources/icons/cornwall/TurnoutThrownL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT18" x="114" y="319" closed="program:resources/icons/cornwall/TurnoutClosedL.gif" thrown="program:resources/icons/cornwall/TurnoutThrownL.gif" unknown="program:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="program:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <signalheadicon signalhead="IH20H" x="345" y="312" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH20L" x="359" y="312" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH24H" x="341" y="241" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH24L" x="356" y="241" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH28H" x="67" y="341" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH28L" x="54" y="341" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH32H" x="67" y="269" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="IH32L" x="53" y="269" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH50" x="215" y="316" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH51" x="215" y="338" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH54" x="261" y="283" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="1" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="1" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="1" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="1" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH55" x="303" y="280" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="3" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="3" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="3" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="3" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH56" x="123" y="282" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="1" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="1" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="1" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="1" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH57" x="169" y="290" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="3" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="3" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="3" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="3" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH58" x="208" y="241" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH52" x="224" y="241" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="0" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="0" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="0" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH59" x="210" y="265" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+    <signalheadicon signalhead="VH53" x="197" y="265" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" >
+      <red url="program:resources/icons/smallschematics/bordersearchlights/left-red-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <yellow url="program:resources/icons/smallschematics/bordersearchlights/left-yellow-high.gif" rotate="2" degrees="0" scale="1.0" />
+      <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" rotate="2" degrees="0" scale="1.0" />
+      <green url="program:resources/icons/smallschematics/bordersearchlights/left-green-high.gif" rotate="2" degrees="0" scale="1.0" />
+    </signalheadicon>
+  </paneleditor>
+</layout-config>
+

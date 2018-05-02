@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file for QSi V8 files -->
+<!-- Steam whistle selections -->
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Native Whistle" value="1"/>
+  <enumChoice choice="Lukenheimer 3 Chime"/>
+  <enumChoice choice="Sata Fe LFM 192 6 Chime"/>
+  <enumChoice choice="PRR 3 Chime"/>
+  <enumChoice choice="NYC 6 Chime"/>
+  <enumChoice choice="PRR Banshee Single Chime"/>
+  <enumChoice choice="NW Single Chime"/>
+  <enumChoice choice="NH 3 Chime"/>
+  <enumChoice choice="PRR 3 Chime #2"/>
+  <enumChoice choice="DRGW 4 Chime"/>
+  <enumChoice choice="LN 3 Chime"/>
+  <enumChoice choice="SP 3 Chime"/>
+  <enumChoice choice="Santa Fe LFM 191 5 Chime"/>
+  <enumChoice choice="GCER 5 Chime"/>
+  <enumChoice choice="SP 6 Chime"/>
+  <enumChoice choice="Hancock 3 Chime"/>
+  <enumChoice choice="CN 4 Chime"/>
+  <enumChoice choice="NW Single Chime #2"/>
+  <enumChoice choice="LNER A4 3 Chime (British)"/>
+  <enumChoice choice="NYC 5 Chime"/>
+  <enumChoice choice="NYC 6 Chime #2"/>
+  <enumChoice choice="SAR AD60 Whistle"/>
+  <enumChoice choice="Peanut Single Chime"/>
+  <enumChoice choice="BO Single Chime "/>
+  <enumChoice choice="Nathan 5 Chime"/>
+  <enumChoice choice="PRR Banshee Single Chime #2"/>
+  <enumChoice choice="NSW C35 Class"/>
+  <enumChoice choice="NSW C38 Class"/>
+  <enumChoice choice="Hancock 4700 Air"/>
+  <enumChoice choice="Hancock 4710 Air"/>
+  <enumChoice choice="Hancock 3 Chime Air"/>
+  <enumChoice choice="Unknown Single Chime"/>
+  <enumChoice choice="WABCo E1 (horn)"/>
+</enumVal>

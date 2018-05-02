@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Automatic Speed Step Detection" format="checkbox">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Marklin delta Mode" layout="left" format="checkbox">
+      </display>
+    <display item="Marklin second address" layout="left" format="checkbox">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="LGB function button mode" layout="left" format="checkbox">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Zimo manual function" layout="left" format="checkbox">
+      </display>
+    <display item="Function Key Toggle Mode" layout="left">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Marklin Brake Mode" format="checkbox">
+      </display>
+    <display item="Zimo Brake Mode" format="checkbox">
+      </display>
+    <display item="Lenz Brake Mode" format="checkbox">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="AC Analogue Mode" format="checkbox">
+      </display>
+    <display item="DC Analogue Mode" format="checkbox">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Store Direction" format="checkbox">
+      </display>
+    <display item="Store Function State" format="checkbox">
+      </display>
+    <display item="Store Current Speed Setting" format="checkbox">
+      </display>
+    <display item="Start Again with Acceleration Ramp" format="checkbox">
+      </display>
+    <display item="Deactivate Load Dependent Sound" format="checkbox">
+      </display>
+  </column>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>                                                  Range 4 - 64</text>
+      <text xml:lang="it">                                                  Valori 4 - 64</text>
+      <text xml:lang="fr">                                                  Valeure 4 - 64</text>
+      <text xml:lang="de">                                                  Werte 4 - 64</text>
+    </label>
+    <display item="Blinking Rate">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>                                                  Range 0 - 127</text>
+      <text xml:lang="it">                                                  Valori 0 - 127</text>
+      <text xml:lang="fr">                                                  Valeure 0 - 127</text>
+      <text xml:lang="de">                                                  Werte 0 - 127</text>
+    </label>
+    <display item="DCstart">
+      </display>
+    <display item="DCmax">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ACstart">
+      </display>
+    <display item="ACmax">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Minimum Distance of Steam Puff">
+      </display>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Steam Shift Cycle Time for One" format="hslider">
+      </display>
+    <display item="Steam Shift Cycle Earliest Start Position" format="hslider">
+      </display>
+    <display item="Steam Shift Cycle Latest Start Position" format="hslider">
+      </display>
+  </column>
+  <name>ESU Extra</name>
+</pane>

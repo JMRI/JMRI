@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; le 2013-09-06-->
+
+  <title>JMRI: System Properties</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Propri&eacute;t&eacute;s du
+      Syst&egrave;me</h1>Cette page liste les
+      propri&eacute;t&eacute;s du syst&egrave;me que JMRI utilise.
+
+      <h2>Propri&eacute;t&eacute;s Syst&egrave;me
+      d'Exploitation</h2>
+
+      <dl>
+        <dt>os.name</dt>
+
+        <dd>
+          La plupart de JMRI est ind&eacute;pendant du
+          syst&egrave;me, mais dans quelques endroits nous
+          fournissons le code sp&eacute;cifique au syst&egrave;me
+          pour personnaliser l'exp&eacute;rience de l'utilisateur.
+          C'est la propri&eacute;t&eacute; que nous utilisons pour
+          dire quel type de syst&egrave;me d'exploitation est en
+          cours d'utilisation.
+
+          <p>Par exemple, on localise le <a href=
+          "../../apps/DecoderPro/Files.shtml#location">r&eacute;pertoire
+          pr&eacute;f&eacute;rences</a> dans des lieux
+          diff&eacute;rents selon le type de syst&egrave;me.</p>
+        </dd>
+
+        <dt>user.dir</dt>
+
+        <dd>Java d&eacute;finit celui-ci pour &ecirc;tre le
+        r&eacute;pertoire dans lequel JMRI est
+        ex&eacute;cut&eacute;. JMRI l'utilise pour trouver bon
+        nombre de ses dossiers; cette propri&eacute;t&eacute; ne
+        devrait pas &ecirc;tre chang&eacute; par
+        l'utilisateur!</dd>
+
+        <dt>user.home</dt>
+
+        <dd>Java d&eacute;finit celui-ci comme le r&eacute;pertoire
+        "home" de l'utilisateur actuel. JMRI l'utilise, sur
+        certains syst&egrave;mes, pour localiser les emplacements
+        par d&eacute;faut pour le r&eacute;pertoire des
+        pr&eacute;f&eacute;rences.</dd>
+
+        <dt>gnu.io.rxtx.SerialPorts</dt>
+
+        <dd>
+          La biblioth&egrave;que de communication RXTX utilise
+          cette option pour sp&eacute;cifier les ports
+          suppl&eacute;mentaires &agrave; utiliser. Si vous avez
+          par exemple un adaptateur USB vers un adaptateur
+          s&eacute;rie qui ne s'affiche pas dans les bo&icirc;tes
+          du s&eacute;lecteur de pr&eacute;f&eacute;rences,
+          attribuer son nom &agrave; cette propri&eacute;t&eacute;.
+
+          <p>-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0</p>
+
+          <p>Les scripts de d&eacute;marrage Linux le fera si vous
+          avez d&eacute;fini la variable d'environnement
+          JMRI_SERIAL_PORT.</p>
+        </dd>
+      </dl>
+
+      <h3>Propri&eacute;t&eacute;s JMRI</h3>
+
+      <dl>
+        <dt>jmri.prefsdir</dt>
+
+        <dd>En d&eacute;finissant cette propri&eacute;t&eacute;,
+        vous pouvez d&eacute;finir explicitement o&ugrave; JMRI
+        doit chercher le r&eacute;pertoire de
+        pr&eacute;f&eacute;rence.</dd>
+
+        <dt>jmri.inset.height</dt>
+
+        <dd>
+          Si elle est d&eacute;finie, fournit une valeur minimum
+          d'encart pour la hauteur de la fen&ecirc;tres JMRI.
+          L'encart est l'espace allou&eacute; pour les
+          d&eacute;corations en haut et en bas de l'&eacute;cran.
+          Mettez lui un nombre entier positif N pour s'assurer que
+          les fen&ecirc;tres JMRI seront ouvertes avec N pixels
+          disponibles en haut et/ou en bas.
+
+          <p>-Djmri.inset.height=45</p>
+        </dd>
+
+        <dt>jmri.inset.width</dt>
+
+        <dd>Si elle est d&eacute;finie, fournit une valeur minimum
+        d'encart pour la largeur de fen&ecirc;tres JMRI. L'encart
+        est l'espace allou&eacute; pour les d&eacute;corations sur
+        les c&ocirc;t&eacute;s de l'&eacute;cran. Mettez lui un
+        nombre entier positif N pour s'assurer que les
+        fen&ecirc;tres JMRI seront ouvertes avec N pixels
+        disponibles sur les c&ocirc;t&eacute;s</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

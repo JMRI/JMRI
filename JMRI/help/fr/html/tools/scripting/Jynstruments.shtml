@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- Updated  by Blorec Herv&#233; 2013-09-26-->
+
+  <title>JMRI: Jynstruments</title><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Jynstruments</h1>JMRI offre une belle fa&ccedil;on
+      d'int&eacute;grer des scripts Jython dans l'application Java
+      JMRI en particulier en visant &agrave; &eacute;tendre et
+      &agrave; personnaliser l'interface graphique.
+
+      <p>Cela s'appelle un Jynstrument. C'est un paquet de code
+      Jython et autres ressources. Le code d&eacute;finit un objet
+      Jython d&eacute;coulant de la Classe Jynstrument Java
+      (elle-m&ecirc;me d&eacute;rivant de JPanel). Cet objet sera
+      instanci&eacute; par le code instrument&eacute; JMRI
+      lui-m&ecirc;me et est ensuite d&eacute;clench&eacute;e par un
+      &eacute;v&eacute;nement.</p>
+
+      <p><a href=
+      "images/throttleWindowJynstrumented.png"><img style=
+      "border: 0px solid ; width: 369px; height: 215px;" alt=
+      "Fully Jysntrumented Throttle Window" src=
+      "images/throttleWindowJynstrumented.png"></a> Jetez un oeil
+      &agrave; la page du <a href="http://jmri.org/jython">dossier
+      Jython</a> dans votre arborescence des sources, il y a un
+      <a href="http://jmri.org/jython/Jynstruments/">dossier
+      Jynstruments</a> avec un <a href=
+      "http://jmri.org/jython/Jynstruments/README">README</a> et un
+      <a href=
+      "http://jmri.org/jython/Jynstruments/ThrottleFrame/Light.jyn">
+      ThrottleFrame/Light.jyn</a> qui doit &ecirc;tre essay&eacute;
+      sur la fen&ecirc;tre R&eacute;gulateur JMRI. L'image &agrave;
+      droite les affiche dans une utilisation (les boutons de
+      diamant).<br>
+      Dans le dossier Jython, vous trouverez &eacute;galement un
+      simple <a href=
+      "http://jmri.org/jython/Jynstruments/Test.jyn">Test.jyn</a>
+      &agrave; des fins de tests<br></p>
+
+      <p>Voir ThrottleFrame.java pour savoir comment rendre le code
+      instrumentable; plus de d&eacute;tails sont dans le fichier
+      README.</p>
+
+      <p>L'utilisation est assez simple, drag +d&eacute;posez le
+      dossier Light.jyn sur une Fen&ecirc;tre R&eacute;gulateur
+      JMRI (le contenu de la fen&ecirc;tre elle-m&ecirc;me, la
+      barre d'outils est instrumentable aussi, mais n' acceptera
+      pas le Lights.jyn).<br></p>
+
+      <p>Une fois que le Jynstrument est d&eacute;marr&eacute;,
+      l'interface sera mise &agrave; jour, un menu
+      propri&eacute;t&eacute; Jynstrument est accessible par un
+      clic droit sur le Jynstrument ou de ses bords. A partir de ce
+      menu, vous pouvez supprimer Jynstrument, ou afficher sa
+      Sortie.<br></p>
+
+      <p><img style="width: 355px; height: 216px;" src=
+      "images/mainWindowJynstrumentContextMenu.png" alt=
+      "mainWindowJynstrumentContextMenu.png"></p>
+
+      <p>Voir le contenu de l'Jynstrument lui-m&ecirc;me
+      (commentaires dans le fichier .py) pour des informations
+      sp&eacute;cifiques &agrave; leur sujet.<br></p>
+
+      <p>Plusieurs &eacute;l&eacute;ments JMRI sont Jynstrumentable
+      aujourd'hui:<br></p>
+
+      <ul>
+        <li>La fen&ecirc;tre principale JMRI o&ugrave; vous pouvez
+        ajouter des <a href=
+        "http://jmri.org/jython/Jynstruments/Launchers/">lanceurs</a>
+        . Il y a un script Jython nomm&eacute;
+        JynstrumentMainFrame.py dans le dossier de script par
+        d&eacute;faut Jython JMRI qui montre comment charger ces
+        lanceurs &agrave; partir d'un Script Jython JMRI ordinaire
+        , alors vous pouvez s&eacute;lectionner ce script pour
+        &ecirc;tre ex&eacute;cut&eacute; automatiquement au
+        d&eacute;marrage de JMRI (depuis les
+        pr&eacute;f&eacute;rences JMRI) afin d'avoir une
+        fen&ecirc;tre principale JMRI personnalis&eacute;e comme
+        vous le souhaitez.</li>
+
+        <li style="list-style: none">La</li>
+
+        <li><a href=
+        "../throttle/BasicThrottleWindow.shtml">Fen&ecirc;tre JMRI
+        R&eacute;gulateur</a> o&ugrave; vous pouvez ajouter
+        Jynstruments <a href=
+        "http://jmri.org/jython/Jynstruments/ThrottleFrame/">pour
+        enrichir l'exp&eacute;rience de r&eacute;gulateur
+        courant</a> (fonctions sp&eacute;ciales, l'e-stop, les
+        directions ... et m&ecirc;me celui qui affiche la
+        vid&eacute;o &agrave; partir d'un
+        p&eacute;riph&eacute;rique de capture vid&eacute;o, comme
+        une webcam Bluetooth mont&eacute;e sur un train).
+        N'h&eacute;sitez pas &agrave; &eacute;crire vos propres
+        fonctions sp&eacute;ciales Jynstruments, c'est ce &agrave;
+        quoi Jynstrument est destin&eacute;.<br></li>
+
+        <li>La <a href=
+        "../throttle/ThrottleToolBar.shtml">fen&ecirc;tres barre
+        d'outils r&eacute;gulateur JMRI</a> qui permet de
+        Jynstruments qui <a href="pilote">pilote tous les
+        R&eacute;gulateurs de cette fen&ecirc;tre</a> (en
+        particulier avec les contr&ocirc;leurs
+        sp&eacute;ciaux)<br></li>
+      </ul>
+    </div><!--#include virtual="/Footer" -->
+  </div>
+</body>
+</html>

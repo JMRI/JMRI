@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- Schema for JMRI I/O support. Not for use before JMRI 2.9.1             -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://jmri.org/xml/schema/docbook/xml.xsd"/>
+
+  <xs:annotation>
+    <xs:documentation>
+      General types used across many JMRI XML Schema.
+      Leading-capital-letter names are Complex types for e.g. elements,
+      leading-lowercase are simple types for e.g. attributes and simple elements
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:complexType name="NamedBeanType">
+    <xs:sequence>
+      <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="properties" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="property" minOccurs="1" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="key" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="class" type="classType" use="optional" />
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="value" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="class" type="classType" use="required" />
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="systemName" type="systemNameType">
+        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="userName" type="userNameType">
+        <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="PreservedTextType">
+    <xs:annotation>
+        <xs:documentation>
+          Element (perhaps in an I18N language) with user-provided text where
+          whitespace must be preserved.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xml:space" default="preserve" />
+        <xs:attribute ref="xml:lang"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:simpleType name="systemNameType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of "systemName" attribute type.
+          Centralized so we can later enforce naming, linking, etc.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+        <!-- "[A-Z]([0-9]*)[A-Z].*" is more correct, but fails lots of short signal head names -->
+        <!-- type letter pattern can also be constrained: ABCHLMOPRSTX but also Y? -->
+        <!-- the following is "at least two characters" -->
+             <xs:pattern value="..*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="userNameType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of "userName" attribute type.
+          Centralized so we can later enforce naming, linking, etc.
+          Zero length content not allowed, see also nullUserNameType
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="nullUserNameType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of "userName" attribute type
+          that can contain zero-length content.
+          Centralized so we can later enforce naming, linking, etc.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="beanNameType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of a name, either a 
+          system or user name (non-null).
+          Centralized so we can later enforce naming, linking, etc.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:union memberTypes="userNameType systemNameType"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="turnoutStateType">
+    <xs:annotation>
+        <xs:documentation>
+          Provide possible states of turnouts for e.g. attributes
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="closed"/>
+      <xs:enumeration value="thrown"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="scrollableType">
+    <xs:annotation>
+        <xs:documentation>
+          Provide possible types of scrolling for a window
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="horizontal"/>
+      <xs:enumeration value="vertical"/>
+      <xs:enumeration value="both"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="screenColorType"> 
+    <xs:union>
+       <xs:simpleType>
+          <xs:annotation>
+             <xs:documentation>
+                 Allow hex strings for screen colors starting with version 4.9.6
+             </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+             <xs:pattern value="#[0-9A-Fa-f]{6}"/>
+          </xs:restriction>
+       </xs:simpleType>
+       <xs:simpleType>
+          <xs:annotation>
+             <xs:documentation>
+                Provide possible colors for screen use, not for signals.
+                Lower case values historically were encoded in 
+                jmri.util.ColorUtil, but are now encoded in 
+                jmri.NamedBeanBundle.properties.  Some code in jmri.jmrit
+                has used upper case first letters, so those are included
+                just in case the values appear in files.
+             </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:token">
+             <xs:enumeration value="Black"/>
+             <xs:enumeration value="DarkGray"/>
+             <xs:enumeration value="Gray"/>
+             <xs:enumeration value="LightGray"/>
+             <xs:enumeration value="White"/>
+             <xs:enumeration value="Red"/>
+             <xs:enumeration value="Pink"/>
+             <xs:enumeration value="Orange"/>
+             <xs:enumeration value="Yellow"/>
+             <xs:enumeration value="Green"/>
+             <xs:enumeration value="Blue"/>
+             <xs:enumeration value="Magenta"/>
+             <xs:enumeration value="Cyan"/>
+             <xs:enumeration value="black"/>
+             <xs:enumeration value="darkgray"/>
+             <xs:enumeration value="darkGray"/>
+             <xs:enumeration value="gray"/>
+             <xs:enumeration value="lightgray"/>
+             <xs:enumeration value="lightGray"/>
+             <xs:enumeration value="white"/>
+             <xs:enumeration value="red"/>
+             <xs:enumeration value="pink"/>
+             <xs:enumeration value="orange"/>
+             <xs:enumeration value="yellow"/>
+             <xs:enumeration value="green"/>
+             <xs:enumeration value="blue"/>
+             <xs:enumeration value="magenta"/>
+             <xs:enumeration value="cyan"/>
+          </xs:restriction>
+       </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
+  <xs:simpleType name="classType">
+    <xs:annotation>
+        <xs:documentation>
+          Valid Java class name format
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="[a-zA-Z0-9.]*[a-z]"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="jmriClassType">
+    <xs:annotation>
+        <xs:documentation>
+          Only valid class names for ConfigureXml access
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="jmri.[a-zA-Z0-9.]*[a-z]"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="urlType">
+    <xs:annotation>
+        <xs:documentation>
+          Only valid URLs for resource access. 
+          Checks for a valid prefix, then a pathname without an invalid filename character.
+          A: through Z: accepted for Windows.
+          Any HTTP(S) URL should be accepted.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+        <!-- accepts, but should not, the greater than and less than characters in file names -->
+      <xs:pattern value="((resource:|program:|preference:|settings:|home:|profile:|file:|scripts:|[a-zA-Z]:|/)(/|\\|[^\\/?*:;{}]+)+|https?://.+/?.*)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="cvNameType">
+    <xs:annotation>
+        <xs:documentation>
+          CV names can currently be numbers n or the n.n, n.n.n etc indexed forms.
+          As a special case, when there's more than one group, the 1st can be alpha numeric to indicate the type
+          of formatting, e.g. "T2CV.12.34" for TCS.
+          
+          Commas, hyphens, dollar signs and quotes (single or double) need to remain 
+          reserved away from CV names to permit later grouping of CV names
+          in other contexts.
+          Spaces are reserved because they're just plain confusing.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="([0-9]*)|(([0-9]*\.)*[0-9]*)|[a-zA-Z0-9]*\.(([0-9]*\.)*[0-9]*)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="yesNoType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "yes" or "no".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="yesNoMaybeType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "yes", "no" or "maybe".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+      <xs:enumeration value="maybe"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="yesNoDefaultType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "yes", "no" or "default".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+      <xs:enumeration value="default"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="trueFalseType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "true" or "false".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="signalColorType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's a valid signal color
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="lunar"/>
+      <xs:enumeration value="flashgreen"/>
+      <xs:enumeration value="flashyellow"/>
+      <xs:enumeration value="flashred"/>
+      <xs:enumeration value="flashlunar"/>
+      <xs:enumeration value="dark"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="commentType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of "comment" element found in many others.
+          This a comment that's loaded to and from the program, not
+          documentation of the instance file.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="no" /> <!-- not yet centralized -->
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  
+  <xs:simpleType name="familyModelNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Exclude vertical bar "|",
+            used as a separator in replacementFamily and replacementModel
+            suggestion lists.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="[^|]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  
+</xs:schema>

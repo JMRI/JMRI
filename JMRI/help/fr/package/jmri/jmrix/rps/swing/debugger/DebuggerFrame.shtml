@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Translated  by Blorec Hervé le 2011-10-27-->
+
+  <title>JMRI: RPS Debugger</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: D&Atilde;&copy;boggeur RPS</h1><a href=
+      "../../../../../../html/hardware/rps/images/Debugger.jpg"><img src="../../../../../../html/hardware/rps/images/Debugger.jpg"
+      height="262" width="168" alt="RPS Receiver Control window"
+      align="right"></a><br>
+      La fen&Atilde;&ordf;tre du d&Atilde;&copy;bogueur vous permet
+      de chercher de l'information pendant qu'elle se
+      d&Atilde;&copy;place &Atilde;  travers le <a href=
+      "../../../../../../html/hardware/rps/index.shtml">syst&Atilde;&uml;me
+      RPS</a>.
+
+      <p>La partie sup&Atilde;&copy;rieure gauche affiche la valeur
+      du temps de chaque r&Atilde;&copy;cepteur actif chaque fois
+      qu'une lecture est prise.</p>
+
+      <p>Si une position a &Atilde;&copy;t&Atilde;&copy;
+      calcul&Atilde;&copy;e avec succ&Atilde;&uml;s &Atilde; 
+      plusieurs reprises, la valeur "r&Atilde;&copy;sultante" est
+      affich&Atilde;&copy;e pour chaque r&Atilde;&copy;cepteur.
+      Ceci est la diff&Atilde;&copy;rence entre le temps
+      mesur&Atilde;&copy; et le temps que le syst&Atilde;&uml;me
+      RPS a attendu pour mesurer si la locomotive
+      &Atilde;&copy;tait vraiment dans cette position. Les Valeur
+      typique sont d'environ plus ou moins 100, correspondant
+      &Atilde;  environ un pouce de pr&Atilde;&copy;cision. Si un
+      ou deux r&Atilde;&copy;cepteurs ont des valeurs
+      r&Atilde;&copy;siduelles beaucoup plus grandes, il y a peut
+      &Atilde;&ordf;tre un probl&Atilde;&uml;me avec les lectures
+      de ces r&Atilde;&copy;cepteur avec l'&Atilde;&copy;metteur
+      &Atilde;  son emplacement actuel.</p>
+
+      <p>La section inf&Atilde;&copy;rieure de la
+      fen&Atilde;&ordf;tre affiche la position
+      calcul&Atilde;&copy;e &Atilde;  partir de chaque lecture.
+      Ci-dessous les positions calcul&Atilde;&copy;es est le code
+      de retour du calcul. Une valeur positive est
+      consid&Atilde;&copy;r&Atilde;&copy;e comme un
+      r&Atilde;&copy;sultat OK, et une valeur nulle ou
+      n&Atilde;&copy;gative indique un certain type d'erreur.</p>
+
+      <p>Il est &Atilde;&copy;galement possible de taper des
+      valeurs dans les champs et demander au syst&Atilde;&uml;me de
+      les traiter comme si elles &Atilde;&copy;taient
+      entr&Atilde;&copy;es. La bo&Atilde;&reg;te de
+      s&Atilde;&copy;lection et bouton en bas sont comment vous
+      faites cela.</p>
+
+      <p>Le menu "Fichier" comprend un
+      &Atilde;&copy;l&Atilde;&copy;ment "D&Atilde;&copy;marrer
+      Export CSV ..." qui peut &Atilde;&ordf;tre
+      utilis&Atilde;&copy; pour copier l'entr&Atilde;&copy;e brutes
+      du syst&Atilde;&uml;me RPS dans un fichier. Une fois que vous
+      avez s&Atilde;&copy;lectionnez cette option, il vous est
+      pr&Atilde;&copy;sent&Atilde;&copy; un dialogue pour
+      s&Atilde;&copy;lectionner le Nom de fichier de sortie. Si
+      vous s&Atilde;&copy;lectionnez le nom d'un fichier qui existe
+      d&Atilde;&copy;j&Atilde; , il sera retir&Atilde;&copy; avant
+      le d&Atilde;&copy;but de l'export. Chaque entr&Atilde;&copy;e
+      RPS lorsque vous s&Atilde;&copy;lectionnez un nom de fichier
+      sera &Atilde;&copy;crit dans ce fichier, et le choix du menu
+      va changer pour &Acirc;&laquo;Arr&Atilde;&ordf;ter
+      l'exportation CSV ...". S&Atilde;&copy;lectionnez ce choix de
+      menu pour arr&Atilde;&ordf;ter l'enregistrement et assurer
+      que les derni&Atilde;&uml;res lignes ont
+      &Atilde;&copy;t&Atilde;&copy; &Atilde;&copy;crites.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

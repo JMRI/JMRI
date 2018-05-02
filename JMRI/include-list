@@ -1,0 +1,8 @@
+# List of files to include when rsync'ing this directory
+# to a web sie.  This allows exclusion of every other
+# file from delete, e.g. in other repositories
+help
+jython
+resources
+web
+xml

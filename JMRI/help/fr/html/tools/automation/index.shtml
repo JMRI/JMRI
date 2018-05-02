@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen, John Plocher 2008 -->
+  <!-- $Id$ -->
+  <!-- Translated by Herv&#233; Blorec 2013-09-25 -->
+
+  <title>JMRI: Layout Automation</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI Automatisation R&eacute;seau</h2>L'application JMRI
+      fournit un grand nombre de fa&ccedil;ons d'automatiser votre
+      r&eacute;seeau, allant du simple remplissage de formulaires
+      &agrave; des scripts &agrave; part enti&egrave;re et des
+      capacit&eacute;s de programmation. Il s'agit notamment de:
+
+      <dl>
+        <dt><a href="../signaling/index.shtml">Logique
+        Signal</a></dt>
+
+        <dd>JMRI fournit une logique int&eacute;gr&eacute;e de
+        signalisation qui peut &ecirc;tre utilis&eacute;e pour
+        conduire vos t&ecirc;te signal dans de nombreuses
+        applications.</dd>
+
+        <dt><a href="../Routes.shtml">Itin&eacute;raires</a></dt>
+
+<DT><A  HREF="../signaling/index.shtml">Signalisation</A>
+<DD> JMRI fournit une logique de signalisation de simple &#224; r&#233;aliste qui peut &#234;tre utilis&#233;e pour
+conduire vos signaux dans de nombreuses applications.
+
+        <dt><a href="../Logix.shtml">Logix</a></dt>
+
+        <dd>Utilisant JMRI Logix, vous pouvez sp&eacute;cifier les
+        actions &agrave; r&eacute;aliser quand diverses conditions
+        se produisent sur le r&eacute;seau.</dd>
+
+        <dt><a href="../scripting/index.shtml">&eacute;criture de
+        Scripts</a></dt>
+
+        <dd>JMRI fournit un outil de script tr&egrave;s puissant.
+        Bas&eacute; sur un v&eacute;ritable langage de
+        programmation, il vous donne acc&egrave;s &agrave; toutes
+        les fonctionnalit&eacute;s JMRI.</dd>
+
+        <dt><a href="viaJava.shtml">&eacute;crire votre propre code
+        en Java</a></dt>
+
+        <dd>Les biblioth&egrave;ques JMRI simplifient grandement
+        l'&eacute;criture d'un programme pour que votre
+        r&eacute;seau fasse exactement ce que vous voulez.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

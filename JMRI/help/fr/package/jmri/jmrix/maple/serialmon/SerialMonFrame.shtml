@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-30-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Monitor Maple Traffic</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help monitor cmri traffic message packet"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <h2>Moniteur Trafic Maple</h2>
+
+  <p>Cette fen&Atilde;&ordf;tre vous permet de surveiller les
+  communications entre vos panneaux Maple et votre ordinateur, vous
+  pouvez donc voir ce qui se passe quand JMRI envoie des
+  informations et re&Atilde;&sect;oit des informations de votre
+  syst&Atilde;&uml;me Maple. Vous pouvez enregistrer ces
+  informations dans un fichier journal &Atilde;  des fins de
+  d&Atilde;&copy;pannage.</p>
+
+  <p><b>Renseignements G&Atilde;&copy;n&Atilde;&copy;raux:</b> sur
+  Maple, les bits bobine dans le HMI Maple sont
+  utilis&Atilde;&copy;es pour communiquer avec JMRI. Dans cette
+  mise en &Aring;"uvre de Maple vers JMRI, tous les panneaux
+  utilisent le m&Atilde;&ordf;me espace d'adressage et ont
+  exactement la m&Atilde;&ordf;me nombre de bits d'affectations
+  d'entr&Atilde;&copy;e et de sortie. Les 1000 premiers bits bobine
+  sont r&Atilde;&copy;serv&Atilde;&copy;s pour la configuration de
+  Capteurs. Les Capteurs sont appel&Atilde;&copy;s
+  &Acirc;&laquo;bits d'entr&Atilde;&copy;e&Acirc;&raquo; et sont
+  utilis&Atilde;&copy;s pour d&Atilde;&copy;finir les Capteurs JMRI
+  selon les bits d'&Atilde;&copy;tat dans vos panneaux HMI Maple.
+  Par cons&Atilde;&copy;quent, les capteurs passent les
+  informations &Atilde;  partir des panneaux HMI
+  configur&Atilde;&copy;s pour JMRI. Le 8000 bits suivants sont
+  r&Atilde;&copy;serv&Atilde;&copy;s pour l'affectation en tant que
+  "Bits de sortie&Acirc;&raquo; et sont utilis&Atilde;&copy;s pour
+  envoyer les param&Atilde;&uml;tres actuels d'aiguillages et de
+  lumi&Atilde;&uml;res pour les panneaux Maple.</p>Maple communique
+  par sondages. Chaque panneau est interrog&Atilde;&copy;
+  s&Atilde;&copy;par&Atilde;&copy;ment, et le
+  r&Atilde;&copy;sultats des sondages sont lus ensemble pour
+  param&Atilde;&uml;trer les capteurs. Par cons&Atilde;&copy;quent,
+  si un capteur est ACTIF (Maple "1") dans n'importe quel panneau,
+  il est mis ACTIf. Si un capteur est INACTIf (Maple
+  &Acirc;&laquo;0&Acirc;&raquo;) dans tous les panneaux
+  configur&Atilde;&copy;, puis il est mis INACTIf. Les panneaux
+  sont interrog&Atilde;&copy;s dans l'ordre o&Atilde;&sup1; ils
+  sont configur&Atilde;&copy;s. <b>Remarque:</b> La commande de
+  sondage Maple permet uniquement de lire un maximum de 99 bits
+  &Atilde;  chaque commande sondage, de sorte si plus de 99 bits
+  d'entr&Atilde;&copy;e sont configur&Atilde;&copy;s, vous verrez
+  des commandes sondage multiples pour chaque panneau.
+
+  <p>Apr&Atilde;&uml;s que tous les panneaux aient
+  &Atilde;&copy;t&Atilde;&copy; interrog&Atilde;&copy;s, le statut
+  des bits de sortie est envoy&Atilde;&copy; au panneaux. Les bits
+  de sortie sont envoy&Atilde;&copy;s en mode
+  &Acirc;&laquo;diffusion&Acirc;&raquo; de sorte que tous les
+  panneaux peuvent recevoir le bits &Atilde;  la fois. Le Mode de
+  diffusion est indiqu&Atilde;&copy; par une Adresse Station HMI de
+  "0". Les bits de sortie commence par l'adresse HMI de bit bobine
+  de "1001". Tous les bits de sorties configur&Atilde;&copy;s sont
+  envoy&Atilde;&copy;s, ind&Atilde;&copy;pendamment de si le bit
+  est affect&Atilde;&copy; ou non. <b>Remarque:</b> La commande
+  Maple d'&Atilde;&copy;criture ne permet qu'une
+  &Atilde;&copy;criture maximum de 99 bits avec chaque transmission
+  de commandes, donc si plus de 99 bits de sortie sont
+  configur&Atilde;&copy;s, vous verrez des commandes de
+  transmission multiples, avec les adresses
+  incr&Atilde;&copy;ment&Atilde;&copy;es de 99 apr&Atilde;&uml;s
+  chaque transmission.</p>
+
+  <p>Pour plus d'informations sur les diff&Atilde;&copy;rentes
+  commandes et les options en bas de cette fen&Atilde;&ordf;tre,
+  s'il vous pla&Atilde;&reg;t voir la <a href=
+  "../../AbstractMonFrame.shtml">page Fen&Atilde;&ordf;tre Moniteur
+  de Communications</a>.</p>
+  <!--#include virtual="/Footer" -->
+</body>
+</html>

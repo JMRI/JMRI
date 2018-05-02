@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Updated by Herv&#233; Blorec 2013-10-12-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Adding Signal Masts</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Signal Mast Add">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Ajout M&acirc;ts de signaux</h1><a href=
+      "SignalMastAdd.png"><img src="SignalMastAdd.png" align=
+      "right" width="208" height="85" hspace="0" vspace="0" alt=
+      "Simple Signal Logic panel figure "></a>
+
+      <p>Les M&acirc;ts de signalisation sont construits sur la
+      base de diff&eacute;rents syst&egrave;mes de signalisation et
+      les m&acirc;ts pris en charge dans les syst&egrave;mes.</p>
+
+      <p>Dans la fen&ecirc;tre Ajout, vous devez d'abord
+      s&eacute;lectionner le syst&egrave;me de signalisation
+      prototypique surlequel le m&acirc;t doit &ecirc;tre
+      bas&eacute;, suivi par le m&acirc;t &agrave;
+      l'int&eacute;rieur de ce syst&egrave;me.</p>
+
+      <p>Le m&acirc;t peut alors &ecirc;tre construit de trois
+      fa&ccedil;ons diff&eacute;rentes selon le mat&eacute;riel
+      utilis&eacute;.</p>
+
+      <ul>
+        <li>T&ecirc;tes Signal</li>
+
+        <li style="list-style: none">Les T&ecirc;tes Signal
+        individuelles sont utilis&eacute;es pour repr&eacute;senter
+        chaque t&ecirc;te de signal sur le m&acirc;t. La t&ecirc;te
+        de signal sera en accord avec la gestion des mutation de
+        l'aspect suivant l'&eacute;tat du m&acirc;t de
+        signalisation. Si chaque t&ecirc;te de signal qui a
+        &eacute;t&eacute; configur&eacute;e sur le m&acirc;t, une
+        liste d&eacute;roulante appara&icirc;t pour vous pour
+        choisir la t&ecirc;te de signal qui va commander la
+        t&ecirc;te de ce m&acirc;t.</li>
+
+        <li>L'aiguillage Pilot&eacute;</li>
+
+        <li style="list-style: none">C'est pour du mat&eacute;riel
+        sp&eacute;cifique qui permet de commander tout l'aspect
+        d'un m&acirc;t de signalisation bas&eacute; sur la position
+        d'un aiguillage. Ce qui sera &agrave; r&eacute;gler ici
+        d&eacute;pendra du mat&eacute;riel utilis&eacute;.</li>
+
+        <li>virtuel &lt; /li&gt; Ce m&acirc;t ne commande pas
+        directement tout le mat&eacute;riel relatif &agrave; un
+        m&acirc;t de signalisation. Son utilisation est
+        id&eacute;al pour o&ugrave; un m&acirc;t physique ne serait
+        pas pr&eacute;sent sur le chemin de fer, comme un heurtoir,
+        ou &agrave; marquer la fin d'une section de signalisation
+        de la voie et le d&eacute;but du territoire sans
+        information. <!--#include virtual="/Footer" --></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

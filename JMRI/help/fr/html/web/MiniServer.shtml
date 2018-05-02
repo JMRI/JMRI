@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-23-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Mini Serveur Web</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Mini Serveur Web</h1>Le mini serveur web JMRI est
+      cens&eacute; &ecirc;tre un moyen rapide et facile pour les
+      mod&eacute;listes ferroviaires, pas de ma&icirc;trise du Web,
+      pour obtenir une connexion Internet pour JMRI et fonctionner.
+      Si vous voulez vraiment avoir un serveur web puissant, vous
+      feriez mieux de t&eacute;l&eacute;charger une copie de
+      <a href="http://httpd.apache.org/">Apache</a> et <a href=
+      "http://tomcat.apache.org/">Tomcat</a> et d'apprendre
+      &agrave; configurer ceux-ci, plut&ocirc;t que d'essayer
+      d'obtenir beaucoup plus de performances hors du serveur mini
+      web JMRI. Mais si vous devez le reconfigurer, cette page
+      fournit des informations suppl&eacute;mentaires.
+
+      <h2>Configuration</h2>Plusieurs fichiers de
+      propri&eacute;t&eacute;s configurent le mini serveur web JMRI
+      et ses fonctionnalit&eacute;s par d&eacute;faut.
+
+      <dl>
+        <dt>JMRI/web/miniserver/Services.properties</dt>
+
+        <dd>Ce fichier fournit une cartographie &agrave; partir
+        d'URL aux servlets qui les manipulent. C'est tr&egrave;s
+        utile pour contr&ocirc;ler l'acc&egrave;s aux FileServlet
+        (qui sert le contenu de fichiers locaux), et cartographie
+        de l'URL qui correspond aux panneaux JMRI via le <a href=
+        "FrameServlet.shtml">FrameServlet</a>.</dd>
+
+        <dt>JMRI/web/miniserver/Html.properties</dt>
+
+        <dd>fournit le texte "boiler plate" pour les
+        r&eacute;ponses HTTP et certaines R&eacute;ponses
+        HTML.</dd>
+
+        <dt>
+        JMRI/web/miniserver/servlet/fileservlet/FileServletPaths.properties</dt>
+
+        <dd>Cartes URL pr&eacute;sent&eacute;e &agrave; la
+        FileServlet pour localisation dans le syst&egrave;me de
+        fichiers. Ce servlet est un peu sp&eacute;cifiques-JMRI, en
+        ce qu'il connait l'emplacement du r&eacute;pertoire courant
+        pr&eacute;f&eacute;rences JMRI, voir le commentaire
+        &agrave; l'avant du dossier.</dd>
+
+        <dt>
+        JMRI/web/miniserver/servlet/fileservlet/FileServletTypes.properties</dt>
+
+        <dd>Indique le type MIME &agrave; retourner pour un fichier
+        bas&eacute; sur le suffixe du fichier.</dd>
+      </dl>
+
+      <h2>S&eacute;curit&eacute;</h2>Par d&eacute;faut, JMRI permet
+      seulement un acc&egrave;s limit&eacute; &agrave; votre
+      ordinateur. Seuls les fichiers qui sont situ&eacute;s dans le
+      r&eacute;pertoire de distribution JMRI ou le
+      r&eacute;pertoire pr&eacute;f&eacute;rences JMRI seront
+      fournis en r&eacute;ponse &agrave; une demandes. Ce n'est pas
+      une s&eacute;curit&eacute; &eacute;tanche , cependant, et
+      vous devriez faire attention &agrave; ne pas mettre du
+      contenu important dans ces r&eacute;pertoires ou de lien vers
+      d'autres parties de votre ordinateur. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

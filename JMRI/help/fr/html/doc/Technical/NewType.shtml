@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233;  2013-09-08-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Adding A New Data Type</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical type add">
+  <!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Ajouter un Nouveau Type de Donn&eacute;es</h1>
+
+      <div class="para">
+        <p>Cette page d&eacute;crit les &eacute;tapes pour ajouter
+        un nouvelle donn&eacute;e-types, par exemple, Aiguillage,
+        &agrave; JMRI.</p>
+
+        <p>Elle utilise comme exemple l'ajout du type Rapport en
+        Juillet 2004. Rapport est un nouveau type de NamededBean
+        utilis&eacute; pour apporter des informations complexes en
+        retour du r&eacute;seau ferr&eacute; .</p>
+      </div>
+
+      <div class="list">
+        <p>Nous listons les fichiers qui sont modifi&eacute;s et
+        cr&eacute;&eacute;s dans l' ordre dans lequel ils ont
+        &eacute;t&eacute; fait dans ce cas, des ordres
+        diff&eacute;rents peuvent aussi travailler, et vous ne
+        pourriez pas avoir besoin de faire tout cela.</p>
+
+        <p>Dans ce cas particulier, notre premi&egrave;re mise en
+        oeuvre est un seul syst&egrave;me mat&eacute;riel
+        (LocoNet). Cela influe sur la fa&ccedil;on dont nous avons
+        ordonn&eacute; cela, et r&eacute;duit la
+        n&eacute;cessit&eacute; d'avoir des tests unitaires en
+        place au d&eacute;but. En travaillant &agrave; travers la
+        premi&egrave;re impl&eacute;mentation de LocoNet , nous
+        pourrions avoir une meilleure id&eacute;e de savoir si
+        l'interface Reporter propos&eacute;e a fait ce qui
+        &eacute;tait n&eacute;cessaire. Si vous cr&eacute;ez un
+        nouveau type que plusieurs syst&egrave;me auront besoin
+        dans un premier temps, vous devez &eacute;galement
+        cr&eacute;er des tests unitaires au d&eacute;but du
+        processus pour encoder ce que vous pensez &ecirc;tre le
+        comportement commun.</p>
+
+        <p>. En g&eacute;n&eacute;ral, les nouvelles classes et
+        interfaces d&eacute;finies ci-dessous peuvent plus
+        facilement &ecirc;tre faites en copiant un mod&egrave;le
+        existant. Dans ce cas, on copie le fichier "* Turnout*"
+        pour correspondre &agrave; un fichier "*Reporter*".</p>
+
+        <dl>
+          <dd>
+            <h3>Definir le Nouveau Type et son Gestionnaire</h3>
+          </dd>
+
+          <dt>Reporter (Rapport)</dt>
+
+          <dd>
+            <p>Cette interface d&eacute;finit les
+            propri&eacute;t&eacute;s n&eacute;cessaires. Il doit
+            h&eacute;riter de NamedBean, vous pouvez ajouter des
+            accessoires nouveaux comme vous le souhaitez.</p>
+          </dd>
+
+          <dt>ReporterManager</dt>
+
+          <dd>
+            <p>Cette interface fournit des m&eacute;thodes pour
+            obtenir un objet Rapport soit seulement &agrave; partir
+            du nom du syst&egrave;me (de pr&eacute;f&eacute;rence)
+            ou avec des param&egrave;tres
+            suppl&eacute;mentaires</p>
+          </dd>
+
+          <dd>
+            <p>A ce stade, assurez-vous que vous pouvez
+            compiler.</p>
+          </dd>
+
+          <dt>doc/technical/Names.shtml</dt>
+
+          <dd>
+            <p>mise &agrave; jour de la discussion de la
+            d&eacute;nomination pour inclure la lettre-type dans
+            votre nouveau type. Pendant que vous y &ecirc;tes
+            mettez &agrave; jour les pages de d&eacute;nomination
+            sp&eacute;cifiques au syst&egrave;me en fonction des
+            besoins. .</p>
+          </dd>
+
+          <dt>AbstractReporter</dt>
+
+          <dd>
+            <p>Il s'agit d'une application de base.</p>
+          </dd>
+
+          <dt>AbstractReporterManager</dt>
+
+          <dd>
+            <p>Application de base; choses qui est utile &agrave;
+            toutes les applications sp&eacute;cifiques au
+            syst&egrave;me</p>
+          </dd>
+
+          <dd>
+            <p>A ce stade, assurez-vous que vous pouvez
+            compiler.</p>
+          </dd>
+
+          <dt>managers.ProxyReporterManager</dt>
+
+          <dd>
+            <p>Ces traitements ayant plus d'un syst&egrave;me
+            fournissant des objets Rapport. Il prend soit aucune ou
+            plusieurs r&eacute;alisation ReporterManager, et et
+            achemine les demandes d'acc&egrave;s au bon Rapport
+            .</p>
+          </dd>
+
+          <dt>InstanceManager</dt>
+
+          <dd>
+            <p>Il existe plusieurs fa&ccedil;ons historiques
+            d'installer des choses dans l'InstanceManager. La
+            proc&eacute;dure actuelle est d'utiliser des "proxies"
+            pour permettre l'utilisation de multiples
+            syst&egrave;mes de r&eacute;seaux ferr&eacute;s, donc
+            s'il vous pla&icirc;t copier l'Aiguillage en tant que
+            mod&egrave;le.</p>
+          </dd>
+
+          <dd>
+            <p>A ce stade, assurez-vous que vous pouvez
+            compiler.</p>
+
+            <h3>Fournir la Premi&egrave;re r&eacute;alisation
+            sp&eacute;cifique syst&egrave;me</h3>
+          </dd>
+
+          <dt>jmrix.loconet.LnReporterManager</dt>
+
+          <dd>
+            <p>Cette classe &eacute;coute l'activit&eacute;
+            indiquant un nouveau Rapport sp&eacute;cifique-LocoNet
+            , et appelle &agrave; en cr&eacute;er un si
+            n&eacute;cessaire. Autrement, elle fournit la bonne
+            lettre sp&eacute;cifique au syst&egrave;me ('L' par
+            exemple), ce n'est juste qu'une une copie directe.</p>
+          </dd>
+
+          <dt>jmrix.loconet/LnReporter</dt>
+
+          <dd>
+            <p>Convertit les message sp&eacute;cifiques dans le
+            Rapport actions et en rapport. Tout le reste de la
+            substance est juste pour mettre cela en place.</p>
+          </dd>
+
+          <dd>
+            <p>A ce stade, assurez - vous que vous pouvez compiler.
+            Rien ne se passera lorsque vous ex&eacute;cutez
+            jusqu'&agrave; la prochaine &eacute;tape.</p>
+          </dd>
+
+          <dt>jmrix.loconet.LnPortController</dt>
+
+          <dd>
+            <p>ici (ou peut-&ecirc;tre ailleurs dans un autre
+            syst&egrave;me), vous cr&eacute;er une instance de la
+            classe ReporterManager correcte au d&eacute;marrage du
+            syst&egrave;me et l'installer dans l'
+            InstanceManager.</p>
+          </dd>
+
+          <dd>
+            <h3>Ajouter &agrave; la Charge des Scripts</h3>
+          </dd>
+
+          <dt>jython/jmri_defaults.py</dt>
+
+          <dd>
+            <p>Ajouter une nouvelle variable pour donner un
+            acc&egrave;s facile au nouveau gestionnaire.</p>
+          </dd>
+
+          <dt>doc/technical/Jython.shtml</dt>
+
+          <dd>
+            <p>Mise &agrave; jour de celle-ci pour se
+            r&eacute;f&eacute;rer &agrave; la nouvelle variable
+            Jython (Il peut y avoir d'autres pages web aussi!)</p>
+          </dd>
+
+          <dd>
+            <p>A ce stade, vous devriez &ecirc;tre en mesure de
+            compiler et d'ex&eacute;cuter tester le nouveau code de
+            la ligne de commande jython</p>
+
+            <h3>Ajouter un Nouveau Tableau d'Outils d'Acc&egrave;s
+            (en option</h3>
+          </dd>
+
+          <dt>jmrit.beantable.ReporterTableAction</dt>
+
+          <dd>
+            <p>Cr&eacute;ez un nouveau "tableau" pour regarder
+            celui-ci en action.</p>
+
+            <p>Dans ce cas particulier, le code a d&ucirc;
+            &ecirc;tre un peu modifi&eacute; (au lieu d'&ecirc;tre
+            simplement copi&eacute;) parce qu'un Rapport n'a pas
+            vraiment eu moyen de supporter les "clic pour
+            changer"</p>
+          </dd>
+
+          <dt>jmrit/beantable/BeanTableBundle.properties</dt>
+
+          <dd>
+            <p>Ajouter des cha&icirc;nes pour les
+            propri&eacute;t&eacute;s nouvelles que vous avez
+            d&eacute;finies &agrave; l'&eacute;tape
+            pr&eacute;c&eacute;dente. Vous pouvez &eacute;galement
+            traduire celles-ci dans les autres
+            propri&eacute;t&eacute;s des fichiers lorsque cela est
+            possible.</p>
+          </dd>
+
+          <dt>jmrit.ToolsMenu</dt>
+
+          <dd>
+            <p>Ajoutez la nouvelle classe ReporterTableAction au
+            menu.</p>
+          </dd>
+
+          <dt>jmrit/JmritToolsBundle.properties</dt>
+
+          <dd>
+            <p>Ajouter des cha&icirc;nes pour la nouvelle
+            propri&eacute;t&eacute; que vous avez d&eacute;fini
+            &agrave; l'&eacute;tape pr&eacute;c&eacute;dente. Vous
+            pouvez &eacute;galement traduire celle dans les autres
+            propri&eacute;t&eacute;s des fichiers lorsque cela est
+            possible.</p>
+          </dd>
+
+          <dd>
+            <p>A ce stade, vous devriez &ecirc;tre en mesure de
+            compiler et d'ex&eacute;cuter le test du nouveau
+            tableau.</p>
+
+            <h3>Donner de la Persistance aux Types Objets et au
+            Gestionnaire</h3>
+          </dd>
+
+          <dt>configxml.AbstractReporterManagerConfigXML</dt>
+
+          <dd>
+            <p>Charger et enregistrer la date de configuration des
+            applications ReporterManager</p>
+          </dd>
+
+          <dt>jmrix.loconet.configurexml.LnReporterManagerXml</dt>
+
+          <dd>
+            <p>Charger et stocker l'info
+            sp&eacute;cifique-syst&egrave;me Gestionnaire Rapport
+            LocoNet</p>
+          </dd>
+
+          <dt>xml/DTD/layout-config.dtd</dt>
+
+          <dd>
+            <p>Ajouter de nouveaux &eacute;l&eacute;ments et
+            attributs XML &agrave; la DTD</p>
+          </dd>
+
+          <dd>
+            <h3>Donner une Classe d'Affichage Ic&ocirc;ne
+            Aappropri&eacute;e (facultatif)</h3>
+          </dd>
+
+          <dt>jmrit.display.ReporterIcon</dt>
+
+          <dd>
+            <p>discussion</p>
+          </dd>
+
+          <dt>jmrit.display.configxml.ReporterIconXml</dt>
+
+          <dd>
+            <p>discussion</p>
+          </dd>
+
+          <dt>xml/DTD/layout-config.dtd</dt>
+
+          <dd>
+            <p>discussion</p>
+          </dd>
+
+          <dd>
+            <h3>Compl&egrave;ter la Documentation</h3>
+          </dd>
+
+          <dt>ant javadoc</dt>
+
+          <dd>
+            <p>Cr&eacute;er des Javadocs, et r&eacute;soudre les
+            &eacute;ventuels nouveaux probl&egrave;mes (ou
+            anciens).</p>
+          </dd>
+        </dl>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

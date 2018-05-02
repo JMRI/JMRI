@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec 2013-10-11-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Adding/Editing LRoutes</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help LRoute Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1><a name="Adding/Editing LItin&eacute;raires"></a>
+      Ajout/Edition LItin&eacute;raire</h1>
+
+      <p>Il y a quatre onglets pour ajouter et &eacute;diter
+      LItin&eacute;raires: Onglet</p>
+
+      <h3>1. LItin&eacute;raire Basique</h3>
+
+      <p>La premi&egrave;re chose que vous devez faire lors de la
+      cr&eacute;ation d'un itin&eacute;raire est de le nommer. Dans
+      la case "Nom syst&egrave;me", entrez un nom unique pour votre
+      LItin&eacute;raire. Le pr&eacute;fixe "RTX" sera
+      ajout&eacute; au nom syst&egrave;me, Vous pouvez
+      &eacute;ventuellement entrer un nom plus descriptif dans la
+      case ''Nom Uilisateur ".</p>
+
+      <dl>
+        <dt>Type d'Itin&eacute;raire</dt>
+
+        <dt>Logix</dt>
+
+        <dd>Les boutons radio sous les descriptions d'onglet
+        r&egrave;glent le mode de d&eacute;clenchement pour les
+        variables "v&eacute;to" de commande (voir ci-dessous pour
+        une explication de v&eacute;to). Pour &eacute;muler le
+        comportement des itin&eacute;raires (par opposition
+        &agrave; LItin&eacute;raires) s&eacute;lectionner les
+        <b>Anciennes</b> options. (Les Itin&eacute;raires standard
+        ne se d&eacute;clenchent pas lorsque la condition de
+        v&eacute;to est retir&eacute;e.) Si vous voulez que le
+        L-Itin&eacute;raire se d&eacute;clenche lorsque la
+        condition de v&eacute;to est supprim&eacute;e,
+        s&eacute;lectionnez les <b>Nouvelles</b> options.</dd>
+      </dl>Les boutons situ&eacute;s au bas du Tableau
+      LItin&eacute;raire
+
+      <dl>
+        <dt>Ajouter Itin&eacute;raire</dt>
+
+        <dd>Appuyez sur ce bouton pour ajouter un nouvel
+        Itin&eacute;raire Logix.</dd>
+
+        <dt>Annuler</dt>
+
+        <dd>Appuyez sur ce bouton pour annuler
+        l'&eacute;dition.</dd>
+      </dl>Onglet
+
+      <h3>2. Actions (sortie)</h3>
+
+      <p>Cet onglet contient une liste de s&eacute;lection de tous
+      les capteurs, les aiguillages, les lumi&egrave;res et signaux
+      qui ont &eacute;t&eacute; cr&eacute;&eacute;s. Cochez la case
+      dans la colonne <b>Inclure</b> pour s&eacute;lectionner le
+      p&eacute;riph&eacute;rique que vous souhaitez inclure dans le
+      L-Itin&eacute;raire. Ensuite choisissez l'action que vous
+      voulez que l'appareil r&eacute;alise lorsque le
+      L-Itin&eacute;raire est d&eacute;clench&eacute; &agrave;
+      partir du menu d&eacute;roulant dans la colonne <b>Obtenir
+      Action</b>.</p>
+
+      <p>Les boutons radio vous permettent de limiter l'affichage
+      des p&eacute;riph&eacute;riques &agrave; seulement ceux que
+      vous avez s&eacute;lectionn&eacute;s.</p>Onglet
+
+      <h3>3. D&eacute;clencheurs/Commandes (entr&eacute;e)</h3>
+
+      <p>Cet onglet contient une liste de s&eacute;lection de tous
+      les capteurs, aiguillages, lumi&egrave;res et signaux qui ont
+      &eacute;t&eacute; cr&eacute;&eacute;s. Cochez la case dans la
+      colonne <b>Inclure</b> pour s&eacute;lectionner l'appareil
+      que vous souhaitez utiliser pour la commande du
+      L-Itin&eacute;raire. Ensuite, choisissez l'&eacute;tat que
+      vous voulez que le p&eacute;riph&eacute;rique &agrave;
+      utiliser prenne pour d&eacute;clencher le L-Itin&eacute;raire
+      dans le menu d&eacute;roulant dans la colonne <b>Etat
+      D&eacute;clencheur</b>.</p>
+
+      <p>Les P&eacute;riph&eacute;riques s&eacute;lectionn&eacute;s
+      avec des &eacute;tats "non- v&eacute;to" sont
+      regroup&eacute;s comme une clause "OR". Les
+      D&eacute;clencheurs s&eacute;lectionn&eacute;s avec un Etat
+      "v&eacute;to" sont regroup&eacute;s comme une clause "ET".
+      Autrement dit, lorsque tout &eacute;tat de "Non- veto"
+      devient vrai, le L-Itin&eacute;raire est capable de se
+      d&eacute;clencher. Toutefois, si l'un des &eacute;tats
+      "Veto",est vrai,le L-Itin&eacute;raire ne d&eacute;clenchera
+      pas.</p>
+
+      <p>sur l'onglet 1, le <b>Nouveau</b> type d'itin&eacute;raire
+      Logix sera mis &agrave; la logique ci-dessus en un seul Logix
+      condition. Si <b>l'Ancienne</b> option est
+      s&eacute;lectionn&eacute;e, chaque d&eacute;clenchement d'un
+      &eacute;tat "non- veto" est mis dans une condition
+      s&eacute;par&eacute;e. Le comportement de cette option est
+      que le L- itin&eacute;raire sera d&eacute;clench&eacute;
+      &agrave; chaque fois qu'un de ces &eacute;tats d'appareil
+      devient vrai - m&ecirc;me si l'expression logique dans son
+      ensemble est d&eacute;j&agrave; vrai. Une autre
+      diff&eacute;rence quand <b>l'Ancienne</b> option est
+      sp&eacute;cifi&eacute;e, c'est que les variables de
+      "v&eacute;to" ne sont pas activ&eacute;es pour le
+      d&eacute;clenchement. Cela signifie que les actions ne sont
+      pas d&eacute;clench&eacute;es lorsque les v&eacute;tos sont
+      supprim&eacute;s. Utilisez la <b>Nouvelle</b> option si vous
+      voulez que les actions se d&eacute;clenchent lorsque les
+      v&eacute;tos sont supprim&eacute;s. En r&eacute;sum&eacute;,
+      <b>l'Ancienne</b> option &eacute;mule un itin&eacute;raire
+      standard et la <b>Nouvelle</b> option a le comportement d'une
+      Condition Standart Logix. Les variations sur ces
+      comportements peuvent &ecirc;tre r&eacute;gl&eacute;es avec
+      des modifications suppl&eacute;mentaires dans le tableau
+      Logix.</p>
+
+      <p>Notez que certaines variables de commandle avec "sur le
+      changement", d&eacute;clare avoir besoin d'une Condition
+      Logix s&eacute;par&eacute;e pour les actions pour
+      d&eacute;clencher L-Itin&eacute;raire &agrave; chaque
+      changement d'&eacute;tat de ces variables.</p>
+
+      <p>Les boutons radio vous permettent de limiter l'affichage
+      des p&eacute;riph&eacute;riques &agrave; seulement ceux que
+      vous avez s&eacute;lectionn&eacute;s.</p>Onglet
+
+      <h3>4. Alignement/Verrous/ Etc.</h3>
+
+      <p>Cet onglet contient une liste de s&eacute;lection des
+      capteurs qui ont &eacute;t&eacute; cr&eacute;&eacute;s.
+      Cochez la case dans la colonne <b>Inclure</b> pour
+      s&eacute;lectionner un capteur que vous souhaitez utiliser
+      pour indiquer l'ach&egrave;vement des actions
+      L-Itin&eacute;raire. Ensuite, choisissez le type d'action que
+      vous voulez que le capteur commande &agrave; partir du menu
+      d&eacute;roulant dans la colonne <b>Alignement</b>. Vous
+      pouvez choisir d'avoir le capteur indiqu&eacute; dans type
+      particulier (capteur,aiguillage, de la lumi&egrave;re, le
+      t&ecirc;te de signal, ou tous)</p>
+
+      <p>Les boutons radio vous permettent de limiter l'affichage
+      des p&eacute;riph&eacute;riques &agrave; seulement ceux que
+      vous avez s&eacute;lectionn&eacute;.</p>
+
+      <p>Un fichier son peut &ecirc;tre inscrit pour jouer lorsque
+      le L-Itin&eacute;raire est d&eacute;clench&eacute;. De
+      m&ecirc;me un fichier script peut &ecirc;tre
+      ex&eacute;cut&eacute; lorsque le L-Itin&eacute;raire est
+      d&eacute;clench&eacute;.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

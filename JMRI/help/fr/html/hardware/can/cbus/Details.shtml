@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+<!-- UpDated  by Blorec Herv&#233;  2017-01-16-->
+<title>JMRI Hardware Support - CBUS - Tech Details</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+<div id="mainContent">
+
+<h1>Structure Mat&#233;riel:  CBUS - D&#233;tails Support Technique</h1>
+
+<em>Le support sur cette page est en &#233;volution rapide, le
+code r&#233;el pourrait &#233;tre en avance ou en retard sur la documentation
+un jour donn&#233;.</em><p>
+
+Cette page d&#233;crit les d&#233;tails techniques dde la prise en charge JMRI pour
+<a href="index.shtml"> CBUS </a>
+ Voir aussi les pages sur le
+<A href="../index.shtml"> soutien g&#233;n&#233;ral JMRI pour CAN </a>.
+<p>
+
+<h2>Adaptateurs CAN</h2>
+
+L'approche g&#233;n&#233;rale JMRI est de prendre en charge le plus grand nombre de
+combinaisons de mat&#233;riel possibles. En soutenant le plus 
+grand nombre possible de personnes et leurs mat&#233;riels, nous
+pouvons cr&#233;er une communaut&#233; grandissante de d&#233;veloppeurs, donc plus de
+code.
+
+<P>
+Dans le cadre de la pr&#233;sente, la prise en charge JMRI CAN est con&#231;ue pour
+utiliser autant de types d'adaptateur CAN que possible..
+
+<P>
+Le MERG CAN-RS peut faire "l'&#233;num&#233;ration " pour CBUS, mais
+de nombreux autres adaptateurs ne peuvent pas &#233;tre utilis&#233;s
+en raison de leur latence intrins&#232;que.
+Leurs r&#233;ponses lentes les rend effectivement invisibles.
+
+<P>
+Par cons&#233;quent, Mike Bolton, l'un des d&#233;veloppeurs du CBUS
+a sugg&#233;r&#233; que JMRI utilise un ID CBUS de 126. Actuellement, c'est une valeur fixe.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<p>Retour &#224; la page  <a href="index.shtml">Aide Principale CBUS</a>
+<p>Lire aussi la  <a href="../index.shtml">prise en charge g&#233;n&#233;rale de CAN dans JMRI</a>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

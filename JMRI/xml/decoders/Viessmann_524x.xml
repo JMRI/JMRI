@@ -1,0 +1,917 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Alain Le Marchand" version="1" lastUpdated="20160305"/>
+	<!-- Version 1 (Alain Le Marchand) Initial version
+					Added 5240, 5241, 5244 and 5245		-->
+	<!-- Note: decoders 5242 and 5243 are Tams Elektronik LG-30-D decoders sold branded as Viessmann.
+		 They are using Tams manufacturer numbers, and therefore are programmed using Tams decoder definition  -->
+<decoder>
+    <family name="Multi-Protocol Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="1" highVersionID="255" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom, SUSI interface">
+      <model model="5240" numOuts="2" numFns="14" maxMotorCurrent="0.5A (peak 0.8A)" formFactor="N" connector="unspecified" productID="5240" comment="N-Scale, wired">
+        <output name="1" label="AUX1|White" connection="wire" maxcurrent="300mA">
+          <label xml:lang="de">AUX1|Weiss</label>
+	    </output>
+        <output name="2" label="AUX2|Yellow" connection="wire" maxcurrent="300mA">
+          <label xml:lang="de">AUX2|Gelb</label>
+	    </output>
+        <output name="5" label="Shunting|Mode">
+          <label xml:lang="de">Rangier-|modus</label>
+        </output>
+        <size length="11.5" width="9.5" height="2.6" units="mm"/>
+      </model>
+      <model model="5241" numOuts="2" numFns="14" maxMotorCurrent="0.5A (peak 0.8A)" formFactor="N" connector="NEM651" productID="5241" comment="N-Scale, with NEM 651 plug">
+        <output name="1" label="AUX1|White" connection="plug" maxcurrent="300mA">
+          <label xml:lang="de">AUX1|Weiss</label>
+	    </output>
+        <output name="2" label="AUX2|Yellow" connection="plug" maxcurrent="300mA">
+          <label xml:lang="de">AUX2|Gelb</label>
+	    </output>
+        <output name="5" label="Shunting|Mode">
+          <label xml:lang="de">Rangier-|modus</label>
+        </output>
+        <size length="11.5" width="9.5" height="2.6" units="mm"/>
+      </model>
+      <model model="5244" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak 1.8A)" formFactor="HO" connector="unspecified" productID="5244" comment="HO-Scale, wired">
+        <output name="1" label="AUX1|White" connection="wire" maxcurrent="500mA">
+          <label xml:lang="de">AUX1|Weiss</label>
+	    </output>
+        <output name="2" label="AUX2|Yellow" connection="wire" maxcurrent="500mA">
+          <label xml:lang="de">AUX2|Gelb</label>
+	    </output>
+        <output name="3" label="AUX3|Green" connection="wire" maxcurrent="500mA">
+          <label xml:lang="de">AUX3|Grün</label>
+	    </output>
+        <output name="4" label="AUX4| " connection="wire" maxcurrent="500mA">
+          <label xml:lang="de">AUX4| </label>
+	    </output>
+        <output name="5" label="Shunting|Mode">
+          <label xml:lang="de">Rangier-|modus</label>
+        </output>
+        <size length="25" width="15.4" height="3.3" units="mm"/>
+      </model>
+	  <model model="5245" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak 1.8A)" formFactor="HO" connector="NEM652" productID="5245" comment="HO-Scale, with NEM 652 plug">
+        <output name="1" label="AUX1|White" connection="plug" maxcurrent="500mA">
+          <label xml:lang="de">AUX1|Weiss</label>
+	    </output>
+        <output name="2" label="AUX2|Yellow" connection="plug" maxcurrent="500mA">
+          <label xml:lang="de">AUX2|Gelb</label>
+	    </output>
+        <output name="3" label="AUX3|Green" connection="plug" maxcurrent="500mA">
+          <label xml:lang="de">AUX3|Grün</label>
+	    </output>
+        <output name="4" label="AUX4| " connection="wire" maxcurrent="500mA">
+          <label xml:lang="de">AUX4| </label>
+	    </output>
+        <output name="5" label="Shunting|Mode">
+          <label xml:lang="de">Rangier-|modus</label>
+        </output>
+        <size length="25" width="15.4" height="3.3" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight</functionlabel>
+        <functionlabel num="4" lockable="true">Shunting Mode</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+	  <variable item="Vstart" CV="2" default="1">
+		<decVal max="63"/>
+		<label>Vstart</label>
+		<label xml:lang="it">Volt Partenza</label>
+		<label xml:lang="fr">V démarr.</label>
+		<label xml:lang="de">Anfahrspannung</label>
+		<tooltip>&lt;html&gt;Range 0-63.&lt;br&gt; A value of 1 means ca. 1/1000 of the maximal voltage,&lt;br&gt; to allow a slow speed at speed step 1.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Werte 0-63.&lt;br&gt; Wert 1 ist ca. 1/1000 der Maximalspannung,&lt;br&gt; um eine sehr langsame Fahrt bei Fahrstufe 1 erlauben zu können&lt;/html&gt;</tooltip>
+	  </variable>
+	  <variable CV="3" item="Accel" default="8">
+		<decVal max="63"/>
+		<label xml:lang="it">Accellerazione (0-63)</label>
+		<label xml:lang="fr">Accelération (0-63)</label>
+		<label xml:lang="de">Anfahrverzögerung (0-63)</label>
+		<label>Acceleration Rate</label>
+		<tooltip>&lt;html&gt;Range 0-63.&lt;br&gt; Time between min. and max. speed steps &lt;br&gt;= value of ca. CV 3 x 0.9 sec.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Werte 0-63.&lt;br&gt; Zeit zw. min. und max. Fahrstufe &lt;br&gt;= Wert von ca. CV 3 x 0,9 sec.&lt;/html&gt;</tooltip>
+	  </variable>
+	  <variable CV="4" item="Decel" default="6">
+		<decVal max="63"/>
+		<label>Deceleration Rate</label>
+		<label xml:lang="it">Decellerazione (0-63)</label>
+		<label xml:lang="fr">Décélération (0-63)</label>
+		<label xml:lang="de">Bremszeit (0-63)</label>
+		<tooltip>&lt;html&gt;Range 0-63.&lt;br&gt; Time between min. and max. speed steps &lt;br&gt;= value of ca. CV 4 x 0.9 sec.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Werte 0-63.&lt;br&gt; Zeit zw. min. und max. Fahrstufe &lt;br&gt;= Wert von ca. CV 4 x 0,9 sec.&lt;/html&gt;</tooltip>
+	  </variable>
+	  <variable item="Vhigh" CV="5" default="255">
+		<decVal max="255"/>
+		<label>Vhigh</label>
+		<label xml:lang="it">Volt Massimi</label>
+		<label xml:lang="fr">Vmax</label>
+		<label xml:lang="de">Höchstgeschwindigkeit</label>
+	  </variable>
+	  <variable item="Vmid" CV="6" default="110">
+		<decVal max="255"/>
+		<label>Vmid</label>
+		<label xml:lang="it">Volt Intermedi</label>
+		<label xml:lang="fr">Vmoy</label>
+		<label xml:lang="de">Mittengeschwindigkeit</label>
+	  </variable>
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="1">
+        <decVal/>
+        <label>Manufacturer Version No: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="109">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="11" item="Packet Time-out Value" default="100">
+        <decVal/>
+        <label>Packet Time Out</label>
+        <label xml:lang="de">Zwangsbremsung</label>
+		<tooltip>&lt;html&gt;Contains the maximum time period (in 0.1 sec.) that the decoder&lt;br&gt;will maintain its speed without receiving a valid packet addressed to it.&lt;br&gt;Enter zero to disable.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Autom. Halt bei Signalausfall von der Digitalzentrale.&lt;br&gt;Berechnung: Wert x 0,1 = Zeit [sec] bis Stop-Auslösung.&lt;br&gt;Wert 0 deaktiviert dieses Feature.&lt;/html&gt;</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+	  <!-- Decoder automatic stopping configuration -->
+	  <variable CV="27" mask="XXXVXXXX" item="Braking Reverse" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Braking with D.C. in reverse direction</label>
+		<label xml:lang="de">Bremsen bei Gleichspg. in Gegenrichtung</label>
+		<tooltip>Decoder automatic stopping configuration. Set both indicators to off for no braking in D.C.</tooltip>
+		<tooltip xml:lang="de">Bremsverhalten bei Gleichspannung. Stellen Sie beide Indikatoren auf Aus für keine Bremsung Gleichspg.</tooltip>
+	  </variable>
+	  <variable CV="27" mask="XXVXXXXX" item="Braking Actual">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Braking with D.C. in actual direction</label>
+		<label xml:lang="de">Bremsen bei Gleichspg. in Fahrtrichtung</label>
+		<tooltip>Decoder automatic stopping configuration. Set both indicators to off for no braking in D.C.</tooltip>
+		<tooltip xml:lang="de">Bremsverhalten bei Gleichspannung. Stellen Sie beide Indikatoren auf Aus für keine Bremsung Gleichspg.</tooltip>
+	  </variable>
+	  <!-- RailCom -->
+      <variable item="RailCom broadcast" CV="28" mask="XXXXXXXV" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom address broadcast</label>
+        <label xml:lang="de">RailCom Adressbroadcast</label>
+      </variable>
+      <variable item="RailCom data transmission" CV="28" mask="XXXXXXVX" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Acknowledge and PoM</label>
+        <label xml:lang="de">RailCom Quittung und POM</label>
+      </variable>
+	  <!-- CV29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+	  <!-- RailCom -->
+      <variable item="RailCom" CV="29" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom</label>
+        <label xml:lang="de">RailCom</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+	  <!-- Error information -->
+      <variable item="Short circuit supervision 1" CV="30" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Overtemperature</label>
+        <label xml:lang="de">Abgeschaltet wegen Überhitzung</label>
+		<tooltip>Only writable with the value “0”</tooltip>
+		<tooltip xml:lang="de">Nur lesbar oder auf 0 zurücksetzbar</tooltip>
+      </variable>
+      <variable item="Short circuit supervision 2" CV="30" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Motor Short-circuit</label>
+        <label xml:lang="de">Motor Kurzschluss</label>
+		<tooltip>Only writable with the value “0”</tooltip>
+		<tooltip xml:lang="de">Nur lesbar oder auf 0 zurücksetzbar</tooltip>
+      </variable>
+      <variable item="Short circuit supervision 3" CV="30" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Overload on the function outputs</label>
+        <label xml:lang="de">Überlastung an Funktionsausgängen</label>
+		<tooltip>Only writable with the value “0”</tooltip>
+		<tooltip xml:lang="de">Nur lesbar oder auf 0 zurücksetzbar</tooltip>
+      </variable>
+
+      <!-- Include function mapping -->
+	  <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" minFn="1" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(f) controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" minFn="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(f) controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3" minFn="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(f) controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4" minFn="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(f) controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="2" minFn="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(f) controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" minFn="2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(r) controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" minFn="2" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(r) controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3" minFn="2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(r) controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4" minFn="2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(r) controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="2" minFn="2">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>FL(r) controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="3">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F1 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="3">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F1 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="3" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F1 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="3">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F1 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="2" minFn="3">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F1 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F2 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F2 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F2 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="4" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F2 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="2" minFn="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F2 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="5">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F3 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="5">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F3 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="5">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F3 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="5">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F3 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="2" minFn="5">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F3 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F4 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F4 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F4 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F4 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F4 controls output 5" CV="38" mask="XXXVXXXX" minOut="2" minFn="6" default="1">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F4 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F5 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F5 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F5 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F5 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F5 controls output 5" CV="39" mask="XXXVXXXX" minOut="2" minFn="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F5 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F6 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F6 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F6 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F6 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F6 controls output 5" CV="40" mask="XXXVXXXX" minOut="2" minFn="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F6 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="9">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F7 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="9">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F7 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="9">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F7 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="9">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F7 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F7 controls output 5" CV="41" mask="XXXVXXXX" minOut="2" minFn="9">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F7 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="10">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F8 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="10">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F8 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="10">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F8 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="10">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F8 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F8 controls output 5" CV="42" mask="XXXVXXXX" minOut="2" minFn="10">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F8 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="11">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F9 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="11">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F9 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="11">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F9 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="11">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F9 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F9 controls output 5" CV="43" mask="XXXVXXXX" minOut="2" minFn="11">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F9 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="12">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F10 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="12">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F10 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="12">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F10 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="12">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F10 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F10 controls output 5" CV="44" mask="XXXVXXXX" minOut="2" minFn="12">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F10 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="13">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F11 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="13">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F11 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="13">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F11 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="13">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F11 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F11 controls output 5" CV="45" mask="XXXVXXXX" minOut="2" minFn="13">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F11 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+	  <variable item="F12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="14">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F12 controls output 1</label> <!-- AUX1 = Headlights -->
+	  </variable>
+	  <variable item="F12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="14">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F12 controls output 2</label> <!-- AUX2 = Backup lights -->
+	  </variable>
+	  <variable item="F12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="14">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F12 controls output 3</label> <!-- AUX3 -->
+	  </variable>
+	  <variable item="F12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="14">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F12 controls output 4</label> <!-- AUX4 -->
+	  </variable>
+	  <variable item="F12 controls output 5" CV="46" mask="XXXVXXXX" minOut="2" minFn="14">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>F12 controls output 5</label> <!-- Shunting Mode -->
+	  </variable>
+      <!-- End function mapping -->
+	  <!-- Control settings-->
+      <variable item="Power Failure" CV="47" mask="XXXXXXXV">
+		<enumVal>
+		  <enumChoice choice="Immediately">
+			<choice>Resume speed immediately</choice>
+			<choice xml:lang="de">Letzte Geschwindigk. sofort aufnehmen</choice>
+		  </enumChoice>
+		  <enumChoice choice="Gradually">
+			<choice>Accelerating gradually</choice>
+			<choice xml:lang="de">Beschleunigungsrampe verwenden</choice>
+		  </enumChoice>
+		</enumVal>
+        <label>Behaviour after power failure</label>
+        <label xml:lang="de">Verhalten nach Stromunterbrechung</label>
+      </variable>
+      <variable item="Direction Switch" CV="47" mask="XXXXXXVX">
+		<enumVal>
+		  <enumChoice choice="Gradually">
+			<choice>Gradual halting on dir. switch</choice>
+			<choice xml:lang="de">Kein Nothalt bei Richtungswechsel</choice>
+		  </enumChoice>
+		  <enumChoice choice="Emergency">
+			<choice>Emergency stop on dir. switch</choice>
+			<choice xml:lang="de">Nothalt bei Richtungswechsel</choice>
+		  </enumChoice>
+		</enumVal>
+        <label>Behaviour after direction switch</label>
+        <label xml:lang="de">Verhalten bei Richtungswechsel</label>
+      </variable>
+      <!-- Motor Control -->
+      <variable item="Load Control" CV="47" mask="XXXXXVXX" include="5240,5241">
+		<enumVal>
+		  <enumChoice choice="Off">
+			<choice>Off</choice>
+			<choice xml:lang="de">Aus</choice>
+		  </enumChoice>
+		  <enumChoice choice="On">
+			<choice>On</choice>
+			<choice xml:lang="de">Ein</choice>
+		  </enumChoice>
+		</enumVal>
+        <label>Load-reg. at the highest speed steps</label>
+        <label xml:lang="de">Regelung bei höchsten Fahrstufen</label>
+        <tooltip>Without load-regulation at the highest speed steps the motor has more output power</tooltip>
+        <tooltip xml:lang="de">Ohne Regelung bei den höchsten Fahrstufen steht eine höhere Motorleistung zur Verfügung</tooltip>
+      </variable>
+      <!-- Protocol selection -->
+	  <variable item="Digital format" CV="48" comment="DCC or Motorola" default="0" mask="XXXXXXXV">
+		<enumVal>
+		  <enumChoice choice="DCC">
+				<choice>DCC</choice>
+		  </enumChoice>
+		  <enumChoice choice="Motorola">
+				<choice>Motorola</choice>
+		  </enumChoice>
+		</enumVal>
+		<label>Preferred protocol</label>
+		<label xml:lang="de">Vorzusgprotokoll</label>
+	  </variable>
+      <variable item="Protocol switch" CV="49" default="50">
+        <decVal min="0" max="255"/>
+        <label>Time until switching protocols</label>
+        <label xml:lang="de">Wartezeit bei Protokollwechsel</label>
+        <tooltip>&lt;html&gt;If the decoder is no longer addressed in its actual digital protocol for a time period,&lt;br&gt; it tries the alternative, by switching between DCC and MM.&lt;br&gt; The time is 0.1 seconds x CV 49 (e. g. a value of 20 means 2 seconds).&lt;br&gt; If the decoder is not addressed even in the alternative protocol, it stops.&lt;br&gt; A value of 0 means this function is not active, and the decoder does not switch protocols while in operation.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn der Decoder nicht mehr unter seinem bisherigen Protokoll adressiert wird,&lt;br&gt; dann versucht er das alternative Protokoll.&lt;br&gt; Er kann während des Betriebs zwischen DCC und MM umschalten.&lt;br&gt; Die Zeit ist 0.1 Sekunden x CV (Bsp.: Wert 20 = 2 Sek.)&lt;br&gt; Wenn der Decoder eine Adresse auch im alternativen Protokoll nicht findet, dann wird er gestoppt.&lt;br&gt; Wert 0 bedeutet, dass diese Funktion nicht aktiv ist und der Decoder während des Betriebs das Protokoll nicht wechselt.&lt;/html&gt;</tooltip>
+      </variable>
+      <!-- Motor Control -->
+      <variable item="EMF Static Config" CV="51" default="120">
+        <decVal max="255"/>
+        <label>Motor regulation P Constant</label>
+        <label xml:lang="de">Motorregelung P-Konstante</label>
+      </variable>
+	  <variable item="EMF Dynamic Config" CV="52" default="100">
+        <decVal max="255"/>
+        <label>Motor regulation I Constant</label>
+        <label xml:lang="de">Motorregelung I-Konstante</label>
+      </variable>
+      <variable item="EMF Droop Config" CV="53" default="50">
+        <decVal max="255"/>
+        <label>Motor regulation D Constant</label>
+        <label xml:lang="de">Motorregelung D-Konstante</label>
+      </variable>
+	  <variable item="EMF Option 1" CV="54" default="25">
+        <decVal max="255"/>
+        <label>Motor control: measurement gap</label>
+        <label xml:lang="de">Lastregelung Messlücke Motor</label>
+        <tooltip>&lt;html&gt;Indicates a time period in 50μs steps when the motor voltage&lt;br&gt; is turned off before the measurements begin.&lt;br&gt; Larger values (depending on CV 55) result in smaller measurement noise,&lt;br&gt; but result in less total energy.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Bestimmt die Zeit in 50 μs Schritten, wie lange die Motorspannung&lt;br&gt; abgeschaltet sein muss, bevor die EMK-Messung erfolgt.&lt;br&gt; Größere Werte (relativ zu CV 55) führen zu besserem Verhalten bei Motoren&lt;br&gt; mit vielen Störungen, aber liefern insgesamt weniger Energie.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="EMF Option 2" CV="55" default="5">
+        <decVal max="255"/>
+        <label>Motor control: period</label>
+        <label xml:lang="de">Lastregelung Periode</label>
+        <tooltip>&lt;html&gt;Length of motor control cycle in ms.&lt;br&gt; Smaller values can result in finer slow movement&lt;br&gt; especially for smaller motors or motors with very small flywheels,&lt;br&gt; but might result in louder movement.&lt;br&gt; Motors with bigger flywheels can work well with somewhat larger values.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Regelgeschwindigkeit in ms.&lt;br&gt; Kleine Werte führen zu besseren Langsamfahreigenschaften&lt;br&gt; insbesondere bei kleinen Motoren oder Motoren mit sehr wenig Schwungmasse,&lt;br&gt; können aber bei einigen Motoren zu erhöhter Geräuschentwicklung führen.&lt;br&gt; Motoren mit großer Schwungmasse können in der Regel größere Werte haben.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="EMF Option 3" CV="56" include="5240,5241">
+        <decVal max="5"/>
+        <label>Power increase at high speed steps</label>
+        <label xml:lang="de">Leistungserhöhung bei Fahrstufen</label>
+        <tooltip>&lt;html&gt;Adjustment of the possible increase in power at the highest speed steps.&lt;br&gt; 0=no increase, 5=max increase.&lt;br&gt; If the loco does not run smooth at high speed steps&lt;br&gt; you have to reduce the value.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Einstellung für die Leisungserhöhung bei den höchsten Fahrstufen.&lt;br&gt; 0=keine Erhöhung, 5=maximale Erhöhung.&lt;br&gt; Falls ein hoher Wert zum Ruckeln der Lok bei hoher Geschwindigkeit führt,&lt;br&gt; muss er wieder verkleinert werden.&lt;/html&gt;</tooltip>
+      </variable>
+	  <!-- Lights Dimming -->
+      <variable item="Function F0F option 1" CV="57" default="15" minOut="1">
+        <decVal max="15"/>
+        <label>Dimming AUX 1</label>
+        <label xml:lang="de">Dimmen für AUX 1</label>
+        <tooltip>&lt;html&gt;Reduces the voltage on the function output.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 15 der maximalen Spannung.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Function F0R option 1" CV="58" default="15" minOut="2">
+        <decVal max="15"/>
+        <label>Dimming AUX 2</label>
+        <label xml:lang="de">Dimmen für AUX 2</label>
+        <tooltip>&lt;html&gt;Reduces the voltage on the function output.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 15 der maximalen Spannung.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Function 1 option 1" CV="59" default="15" minOut="3">
+        <decVal max="15"/>
+        <label>Dimming AUX 3</label>
+        <label xml:lang="de">Dimmen für AUX 3</label>
+        <tooltip>&lt;html&gt;Reduces the voltage on the function output.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 15 der maximalen Spannung.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Function 2 option 1" CV="60" default="15" minOut="4">
+        <decVal max="15"/>
+        <label>Dimming AUX 4</label>
+        <label xml:lang="de">Dimmen für AUX 4</label>
+        <tooltip>&lt;html&gt;Reduces the voltage on the function output.&lt;br&gt; A value of “0” corresponds to the smallest,&lt;br&gt; a value of “15” to the maximal voltage.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 15 der maximalen Spannung.&lt;/html&gt;</tooltip>
+      </variable>
+      <!-- Speed Table -->
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+        <label xml:lang="de">Geschwindigkeitskennlinie</label>
+      </variable>
+	  <!-- User variables -->
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+	  <!-- Speed in analogue mode -->
+      <variable item="Analog Vhigh" CV="114" default="100">
+        <decVal max="100"/>
+        <label>Speed in Analog Mode</label>
+        <label xml:lang="de">Geschwindigkeit im Analogbetrieb</label>
+        <tooltip>Percentage of the motor voltage in analog mode.</tooltip>
+		<tooltip xml:lang="de">Prozentanteil der Motorspannung im Analogbetrieb.</tooltip>
+      </variable>
+	  <!-- Uncoupling -->
+      <variable item="Uncoupler direction AUX1" CV="117"  mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler direction. AUX 1</label>
+        <label xml:lang="de">Entkupplerfunkt. Fahrtricht. AUX1</label>
+        <tooltip>&lt;html&gt;Uncoupling depending on direction.&lt;br&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Entkuppeln je nach Fahrtrichtung.&lt;br&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler direction AUX2" CV="117"  mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler direction. AUX 2</label>
+        <label xml:lang="de">Entkupplerfunkt. Fahrtricht. AUX2</label>
+        <tooltip>&lt;html&gt;Uncoupling depending on direction.&lt;br&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Entkuppeln je nach Fahrtrichtung.&lt;br&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler direction AUX3" CV="117"  mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler direction. AUX 3</label>
+        <label xml:lang="de">Entkupplerfunkt. Fahrtricht. AUX3</label>
+        <tooltip>&lt;html&gt;Uncoupling depending on direction.&lt;br&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Entkuppeln je nach Fahrtrichtung.&lt;br&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+	  <variable item="Uncoupler direction AUX4" CV="117"  mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler direction. AUX 4</label>
+        <label xml:lang="de">Entkupplerfunkt. Fahrtricht. AUX4</label>
+        <tooltip>&lt;html&gt;Uncoupling depending on direction.&lt;br&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Entkuppeln je nach Fahrtrichtung.&lt;br&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler rear AUX1" CV="118"  mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler rear AUX 1</label>
+        <label xml:lang="de">Entkupplerfunkt. hinten AUX1</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler rear AUX2" CV="118"  mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler rear AUX 2</label>
+        <label xml:lang="de">Entkupplerfunkt. hinten AUX2</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler rear AUX3" CV="118"  mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler rear AUX 3</label>
+        <label xml:lang="de">Entkupplerfunkt. hinten AUX3</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+	  <variable item="Uncoupler rear AUX4" CV="118"  mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler rear AUX 4</label>
+        <label xml:lang="de">Entkupplerfunkt. hinten AUX4</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler front AUX1" CV="119"  mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler front AUX 1</label>
+        <label xml:lang="de">Entkupplerfunkt. vorne AUX1</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler front AUX2" CV="119"  mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler front AUX 2</label>
+        <label xml:lang="de">Entkupplerfunkt. vorne AUX2</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Uncoupler front AUX3" CV="119"  mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler front AUX 3</label>
+        <label xml:lang="de">Entkupplerfunkt. vorne AUX3</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+	  <variable item="Uncoupler front AUX4" CV="119"  mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Uncoupler front AUX 4</label>
+        <label xml:lang="de">Entkupplerfunkt. vorne AUX4</label>
+        <tooltip>&lt;html&gt;If an uncoupler is set, the decoder output is set to maximum voltage to open the coupling,&lt;br&gt; and after a time period (defined in CV 124 resp. 126)&lt;br&gt; the output is set to the dimmed state.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Wenn eine Entkupplerfunktionalität aktiv ist,&lt;br&gt; wird der Funktionsausgang erst die maximale Spannung liefern&lt;br&gt; um die Kupplung loszubrechen&lt;br&gt; und nach der in CV 124 bzw. 126 eingestellten Zeitdauer&lt;br&gt; fällt die Ausgangsspannung zurück auf den Wert,&lt;br&gt; der bei der Dimmung (CV 57, 58) des Ausgangs eingestellt wurde.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Travel time to coupler" CV="120" default="20">
+        <decVal max="255"/>
+        <label>Travel time in direction of coupler</label>
+        <label xml:lang="de">Fahrzeit in Richtung Kupplung</label>
+        <tooltip>&lt;html&gt;Time for the locomotive movement in 0.1 seconds.&lt;br&gt; In the event an uncoupling function is activated,&lt;br&gt; the locomotive first moves in the direction of the coupling&lt;br&gt; to reduce the tension, activates the uncoupler, drives away, halts,&lt;br&gt; and deactivates the uncoupler.&lt;br&gt; It is recommended to set the corresponding function button&lt;br&gt; to “impulse” on the digital station.&lt;br&gt; If these values are set to zero,&lt;br&gt; the movements of the locomotive are not performed.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Fahrzeit der Lokomotive in 0,1 Sekunden.&lt;br&gt; Wenn Werte ungleich Null eingetragen sind,&lt;br&gt; fährt die Lokomotive im Fall einer Entkupplung erst in Richtung Kupplung&lt;br&gt; um sie zu entspannen, und nach Aktivieren des Entkupplers in die Gegenrichtung,&lt;br&gt; hält an, und deaktiviert den Entkuppler.&lt;br&gt; Dafür ist es empfehlenswert, den Funktionstaster an der Zentrale&lt;br&gt; auf „Momenttaste“ zu stellen.&lt;br&gt; Wenn diese Werte auf Null stehen,&lt;br&gt; ist die oben beschriebene Funktionalität deaktiviert.&lt;/html&gt;</tooltip>
+      </variable>
+      <variable item="Travel time away coupler" CV="121" default="120">
+        <decVal max="255"/>
+        <label>Travel time in opposite direction</label>
+        <label xml:lang="de">Fahrzeit in Gegenrichtung</label>
+        <tooltip>&lt;html&gt;Time for the locomotive movement in 0.1 seconds.&lt;br&gt; In the event an uncoupling function is activated,&lt;br&gt; the locomotive first moves in the direction of the coupling&lt;br&gt; to reduce the tension, activates the uncoupler, drives away, halts,&lt;br&gt; and deactivates the uncoupler.&lt;br&gt; It is recommended to set the corresponding function button&lt;br&gt; to “impulse” on the digital station.&lt;br&gt; If these values are set to zero,&lt;br&gt; the movements of the locomotive are not performed.&lt;/html&gt;</tooltip>
+		<tooltip xml:lang="de">&lt;html&gt;Fahrzeit der Lokomotive in 0,1 Sekunden.&lt;br&gt; Wenn Werte ungleich Null eingetragen sind,&lt;br&gt; fährt die Lokomotive im Fall einer Entkupplung erst in Richtung Kupplung&lt;br&gt; um sie zu entspannen, und nach Aktivieren des Entkupplers in die Gegenrichtung,&lt;br&gt; hält an, und deaktiviert den Entkuppler.&lt;br&gt; Dafür ist es empfehlenswert, den Funktionstaster an der Zentrale&lt;br&gt; auf „Momenttaste“ zu stellen.&lt;br&gt; Wenn diese Werte auf Null stehen,&lt;br&gt; ist die oben beschriebene Funktionalität deaktiviert.&lt;/html&gt;</tooltip>
+      </variable>
+	  <variable item="Uncoupling motor speed" CV="122" default="6">
+        <decVal max="255"/>
+        <label>Uncoupling motor speed</label>
+        <label xml:lang="de">Motorgeschwindigkeit bei Entkuppeln</label>
+        <tooltip>Values are calculated as in the case of CV 2.</tooltip>
+		<tooltip xml:lang="de">Wertebereich siehe CV 2</tooltip>
+      </variable>
+	  <!-- Lights Dimming -->
+      <variable item="Function F0F option 2" CV="123" default="0" minOut="1">
+        <decVal max="255"/>
+        <label>Blinking period AUX 1</label>
+        <label xml:lang="de">Blinkperiode für AUX 1</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+      <variable item="Function F0F option 3" CV="124" default="0" minOut="1">
+        <decVal max="255"/>
+        <label>Blinking on time AUX 1</label>
+        <label xml:lang="de">Einschaltzeit für AUX 1</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+      <variable item="Function F0R option 2" CV="125" default="0" minOut="2">
+        <decVal max="255"/>
+        <label>Blinking period AUX 2</label>
+        <label xml:lang="de">Blinkperiode für AUX 2</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+      <variable item="Function F0R option 3" CV="126" default="0" minOut="2">
+        <decVal max="255"/>
+        <label>Blinking on time AUX 2</label>
+        <label xml:lang="de">Einschaltzeit für AUX 2</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+	  <variable item="Function 1 option 2" CV="127" default="0" minOut="3">
+        <decVal max="255"/>
+        <label>Blinking period AUX 3</label>
+        <label xml:lang="de">Blinkperiode für AUX 3</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+      <variable item="Function 1 option 3" CV="128" default="0" minOut="3">
+        <decVal max="255"/>
+        <label>Blinking on time AUX 3</label>
+        <label xml:lang="de">Einschaltzeit für AUX 3</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+	  <variable item="Function 2 option 2" CV="129" default="0" minOut="4">
+        <decVal max="255"/>
+        <label>Blinking period AUX 4</label>
+        <label xml:lang="de">Blinkperiode für AUX 4</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+      <variable item="Function 2 option 3" CV="130" default="0" minOut="4">
+        <decVal max="255"/>
+        <label>Blinking on time AUX 4</label>
+        <label xml:lang="de">Einschaltzeit für AUX 4</label>
+        <tooltip>In 50 ms steps</tooltip>
+		<tooltip xml:lang="de">In 50 ms Schritten</tooltip>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="de">Setzt alle Werte auf Auslieferungszustand zurück</label>
+      </factReset>
+      <factReset label="Reset All CVs except address, CV29 and speed table" CV="8" default="9">
+         <label xml:lang="de">Setzt alle Werte außer Lokadresse, CV 29 und Fahrstufentabelle auf Auslieferungszustand zurück</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+	  <separator/>
+	  <label>
+	    <text>Protocol</text>
+	    <text xml:lang="de">Protokoll</text>
+	  </label>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="RailCom" format="checkbox"/>
+	  <display item="RailCom broadcast"/>
+	  <display item="RailCom data transmission"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Digital format"/>
+	  <display item="Protocol switch"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <separator/>
+	  <label>
+	    <text>Control settings</text>
+	    <text xml:lang="de">Fahrverhalten</text>
+	  </label>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Power Failure"/>
+	  <display item="Direction Switch"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <separator/>
+	  <label>
+	    <text>Decoder automatic stopping configuration</text>
+	    <text xml:lang="de">Bremsverhalten bei Gleichspannung</text>
+	  </label>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Braking Reverse"/>
+	  <display item="Braking Actual"/>
+	</column>
+	<column>
+	  <separator/>
+	  <label>
+	    <text>Uncoupling</text>
+	    <text xml:lang="de">Entkuppeln</text>
+	  </label>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Uncoupler direction AUX1" format="checkbox"/>
+	  <display item="Uncoupler rear AUX1" format="checkbox"/>
+	  <display item="Uncoupler front AUX1" format="checkbox"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Uncoupler direction AUX2" format="checkbox"/>
+	  <display item="Uncoupler rear AUX2" format="checkbox"/>
+	  <display item="Uncoupler front AUX2" format="checkbox"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Uncoupler direction AUX3" format="checkbox"/>
+	  <display item="Uncoupler rear AUX3" format="checkbox"/>
+	  <display item="Uncoupler front AUX3" format="checkbox"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Uncoupler direction AUX4" format="checkbox"/>
+	  <display item="Uncoupler rear AUX4" format="checkbox"/>
+	  <display item="Uncoupler front AUX4" format="checkbox"/>
+	  <label>
+	    <text> </text>
+	  </label>
+	  <display item="Travel time to coupler"/>
+	  <display item="Travel time away coupler"/>
+	  <display item="Uncoupling motor speed"/>
+	</column>
+	<column>
+	  <separator/>
+	  <label>
+		<text>Error Information</text>
+		<text xml:lang="de">Fehler-Information</text>
+	  </label>
+	  <label>
+		<text> </text>
+	  </label>
+	  <display item="Short circuit supervision 1" format="checkbox"/>
+	  <display item="Short circuit supervision 2" format="checkbox"/>
+	  <display item="Short circuit supervision 3" format="checkbox"/>
+
+	</column>
+	<name>Viessmann</name>
+  </pane>
+</decoder-config>

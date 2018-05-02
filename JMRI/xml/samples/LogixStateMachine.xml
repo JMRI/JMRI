@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+  </turnouts>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+  </turnouts>
+  <lights class="jmri.jmrix.loconet.configurexml.LnLightManagerXml" />
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml" />
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="IS1" />
+    <sensor systemName="IS2" />
+  </sensors>
+  <reporters class="jmri.jmrix.loconet.configurexml.LnReporterManagerXml" />
+  <logixs class="jmri.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IX1" enabled="yes">
+      <logixConditional systemName="IX1C1" order="0" />
+      <logixConditional systemName="IX1C3" order="1" />
+      <logixConditional systemName="IX1C4" order="2" />
+      <logixConditional systemName="IX1C6" order="3" />
+      <logixConditional systemName="IX1C5" order="4" />
+    </logix>
+  </logixs>
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml" />
+  <memories class="jmri.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM1"/>
+  </memories>
+  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX1C1" userName="Invalid state">
+      <conditionalStateVariable operator="2" type="9" systemName="IM1" dataString="1" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="3" type="9" systemName="IM1" dataString="2" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="3" type="9" systemName="IM1" dataString="3" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="12" systemName="IM1" data="0" string="1" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX1C3" userName="IS1 Act 1 -&gt; 2">
+      <conditionalStateVariable operator="4" type="9" systemName="IM1" dataString="1" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="1" systemName="IS1" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="12" systemName="IM1" data="0" string="2" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX1C4" userName="IS2 Act 2 -&gt; 3">
+      <conditionalStateVariable operator="4" type="9" systemName="IM1" dataString="2" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="1" systemName="IS2" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="12" systemName="IM1" data="0" string="3" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX1C5" userName="IS1 InAct 2 -&gt; 1">
+      <conditionalStateVariable operator="4" type="9" systemName="IM1" dataString="2" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="IS1" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="12" systemName="IM1" data="0" string="1" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX1C6" userName="IS2 Inact 3 -&gt; 2">
+      <conditionalStateVariable operator="4" type="9" systemName="IM1" dataString="3" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="IS2" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="12" systemName="IM1" data="0" string="2" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+  </conditionals>
+  <!--Written by JMRI version 1.7.6-B1 on Mon Apr 16 13:59:08 PDT 2007 $Id$-->
+</layout-config>
+

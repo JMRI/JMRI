@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Set Signals at Block Boundary Help</title>
+  <meta name="author" content="Dave Duchamp">
+  <meta name="keywords" content="JMRI help Layout Editor Tool">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>D&eacute;finir des Signaux aux Limites de Canton</h1>
+
+      <h2>Introduction</h2>
+
+      <p>Cet outil fournit une proc&eacute;dure automatis&eacute;e
+      pour l'attribution des signaux &agrave; une fronti&egrave;re
+      de canton qui n'est pas associ&eacute;e &agrave; un
+      aiguillage ou un croisement. Cela se produit lorsqu'un
+      tron&ccedil;on de voie en provenance de cantons
+      diff&eacute;rents rejoignent un point d'ancrage. Si
+      demand&eacute;, cet outil va placer l'ic&ocirc;ne du signal
+      sur le TCO &agrave; la limite des canton
+      sp&eacute;cifi&eacute;s, et sera mis en place une Logique
+      Simple Signal pour les signaux sp&eacute;cifi&eacute;s. Avant
+      d'acc&eacute;der &agrave; cet outil, les cantons doivent
+      &ecirc;tre d&eacute;finies pour les r&eacute;gions de la voie
+      signal&eacute;e sur le TCO, et les signaux requis doivent
+      &ecirc;tre dans le tableau Signal. Cet outil ne fonctionne
+      correctement que lorsque la voie &agrave; travers le point
+      d'ancrage est verticale ou horizontale (ou essentiellement
+      verticale ou horizontale), alors le trac&eacute; de votre TCO
+      est en accord.</p>
+
+      <p>Lorsque cet &eacute;l&eacute;ment est
+      s&eacute;lectionn&eacute;, une bo&icirc;te de dialogue est
+      affich&eacute;e pour l'entr&eacute;e des noms des deux
+      cantons dont la limite doit &ecirc;tre signal&eacute;e, et
+      pour l'entr&eacute;e des noms (syst&egrave;me ou utilisateur)
+      d'un ou deux signaux pour &ecirc;tre affect&eacute;s &agrave;
+      la fronti&egrave;re du canton. Pour chaque signal, des cases
+      &agrave; cocher sont disponibles pour s&eacute;lection si une
+      ic&ocirc;ne doit &ecirc;tre plac&eacute;e sur le TCO, et si
+      une Logique Simple Signal doit &ecirc;tre cr&eacute;&eacute;e
+      pour le signal. Peu importe si les ic&ocirc;nes sont
+      plac&eacute;es ou si la logique est cr&eacute;&eacute;e,
+      l'&eacute;diteur de TCO va enregistrer que les entr&eacute;es
+      signaux sont affect&eacute;es &agrave; la limite de canton
+      sp&eacute;cifi&eacute;.</p>
+
+      <h2>La boite de Dialogue de Configuration des Signaux aux
+      Limites du Canton</h2>
+
+      <p>Dans les deux premiers champs nom du canton, entrez les
+      noms des deux cantons qui se rejoignent &agrave; la limite du
+      canton. Si l'outil ne peut pas trouver de cantons avec ces
+      noms sur le TCO, il en r&eacute;sultera un message d'erreur.
+      Aussi, si les deux cantons ne se joignent pas &agrave; un
+      point d'ancrage sur le TCO, un message d'erreur en
+      r&eacute;sultera.</p>
+
+      <p>Les noms des Signaux (soit syst&egrave;me ou utilisateur)
+      sont entr&eacute;s dans la section suivante. Au moins un nom
+      de signal doit &ecirc;tre inscrit. Si les signaux &agrave;
+      cet limite de canton ont &eacute;t&eacute; saisis
+      pr&eacute;c&eacute;demment, cliquez <b>Obtenir Sauvegarde</b>
+      pour r&eacute;cup&eacute;rer les noms des signaux
+      pr&eacute;c&eacute;demment saisis. L'entr&eacute;e
+      sup&eacute;rieure, <b>Limite Est (ou Sud)</b> , est le signal
+      vu par un train allant vers l'Est (ou le sud si la voie est
+      &agrave; la verticale). "Est-" se r&eacute;f&egrave;re
+      &agrave; un train allant de gauche &agrave; droite <i>sur le
+      TCO</i> au niveau du canton fronti&egrave;re. De m&ecirc;me,
+      "au sud" se r&eacute;f&egrave;re &agrave; un train allant du
+      haut vers le en bas <i>sur le TCO</i>. De m&ecirc;me,
+      l'entr&eacute;e du second signal, <b>Limite Ouest (ou
+      nord)</b>, c'est pour un signal vu par un train vers l'ouest,
+      (Ou Limite Nord). Parce que les ic&ocirc;nes de signal sont
+      correctes pour des voie horizontales ou verticales, vous
+      devez configurer votre TCO de sorte que les cantons
+      fronti&egrave;res apparaissent sur une voie qui est presque
+      horizontale ou presque &agrave; la verticale. &lt;/ P&gt;</p>
+
+      <p>Remarque: S'il y avait un signal
+      pr&eacute;c&eacute;demment attribu&eacute; &agrave; l'une des
+      deux positions, et vous entrez un <i>autre</i> signal dans le
+      m&ecirc;me lieu, le signal remplacera le signal
+      pr&eacute;c&eacute;dent, et l'ic&ocirc;ne du signal
+      pr&eacute;c&eacute;dent (s'il y en a une) sera
+      supprim&eacute;e &agrave; partir du TCO.</p>
+
+      <p>Cochez <b>Ajouter l'ic&ocirc;ne du signal au TCO</b> pour
+      demander que l'ic&ocirc;ne d'un signal soit plac&eacute;e sur
+      le TCO &agrave; la limite de canton. Cet outil peut seulement
+      placer une ic&ocirc;ne de signal sur la voie qui est presque
+      &agrave; la verticale ou presque horizontale. Si ce n'est pas
+      le cas, un message est imprim&eacute;, et vous devez placer
+      le signal manuellement en utilisant l'ic&ocirc;ne de la barre
+      d'outils &eacute;diteur de TCO. Peu importe, le nom du signal
+      qui est affect&eacute; &agrave; la limite de canton.</p>
+
+      <p>Cochez <b>Configurer Logique</b> pour demander que l'outil
+      mette en place une Logique Simple Signal pour un signal.
+      L'outil permettra de cr&eacute;er la logique et de remplir
+      automatiquement les entr&eacute;es avec les informations
+      disponibles. Si l'outil ne poss&egrave;de pas assez
+      d'informations disponibles pour configurer la logique, un
+      message en r&eacute;sultera, et vous aurez &agrave; revenir
+      plus tard apr&egrave;s que plusieurs signaux aient
+      &eacute;t&eacute; assign&eacute;s aux aiguillages et aux
+      limites de canton sur le TCO.</p>
+
+      <h2>Notes</h2>
+
+      <p>Lors de la configuration logique, cet outil va suivre la
+      voie dans le canton jusqu'&agrave; ce qu'il trouve un signal
+      &agrave; la fin du canton loin de la limite du canton
+      signal&eacute;. Si votre r&eacute;seau contient des sections
+      qui sont signal&eacute;es et des sections qui ne le sont pas,
+      pour obtenir que cet outil mette en place une logique
+      correctement, vous pourriez avoir &agrave; placer un signal
+      virtuel (un signal qui ne correspond pas &agrave; un signal
+      r&eacute;el sur le r&eacute;seau) non signal&eacute; la fin
+      du canton qui relie un tron&ccedil;on de voie qui est
+      signal&eacute; avec une voie qui n'est pas signal&eacute;e.
+      Si un canton se termine par un Heurtoir, aucun signal n'est
+      requis &agrave; la fin.</p>
+
+      <p>Si un canton a un aiguillage interne (l'aiguillage et les
+      tron&ccedil;ons de voie &agrave; sa pointe et les les deux
+      voies D&eacute;vi&eacute;e et Directe font partie du canton
+      ), le programme va attendre les signaux de cet aiguillage,
+      m&ecirc;me si ce n'est pas &agrave; la fin du canton.
+      Cependant, parfois l'utilisateur peut ne pas vouloir signaler
+      un aiguillage rarement utilis&eacute; dans un canton. En
+      suivant la voie &agrave; travers un canton, le programme va
+      sauter l'aiguillage interne non signal&eacute; si <b>Passer
+      Aiguillage Interne Non Signal&eacute;</b> est coch&eacute;
+      dans le menu <b>Outils</b> de l'&eacute;diteur de TCO. Il
+      avertira toujours, de ce qu'il fait. <b>Utilisez cette option
+      avec prudence.</b> Il n'y a pas de signal de protection
+      contre un aiguillage ignor&eacute; mal r&eacute;gl&eacute;,
+      si un aiguillage interne non signal&eacute; n'est pas
+      r&eacute;gl&eacute;e correctement, un d&eacute;raillement des
+      trains pourraient en r&eacute;sulter.</p>
+
+      <p>Cet outil met en place trois aspects de signalisation. Si
+      vous avez une situation particuli&egrave;re &agrave; un
+      signal, ou bien vous voulez quatre aspect de signalisation ou
+      un aspect d'approche, vous devrez modifier les informations
+      entr&eacute;es par l'outil. Le dialogue de Simple Logique
+      Signal peut &ecirc;tre consult&eacute; &agrave; partir du
+      menu contextuel de l'ic&ocirc;ne de signal. Si votre
+      situation particuli&egrave;re ne peut pas &ecirc;tre
+      manipul&eacute;e par une logique simple signal, vous drevez
+      vous reporte &agrave; Logix pour adapter le signal logique
+      &agrave; vos besoins.</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

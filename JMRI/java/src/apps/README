@@ -1,0 +1,14 @@
+This is the README file for the jmri.apps package.
+
+The jmri Java package defines the JMRI interfaces. 
+
+The jmri.apps package contains directories for various applications.  This
+structuring is intended to reduce dependencies between and within the jmri.*
+and jmrix.* components.
+
+Defined applications:
+
+	DecoderPro: 	A standalone decoder programmer
+
+	
+	

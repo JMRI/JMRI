@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+
+  <title>JMRI: Scripting</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI: Scripting</h2>
+      
+      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html">
+        Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI,
+        however, beyond JavaScript and Python are not directly supported in the default installation.
+        If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to
+        the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml">documented for your operating system</a>
+        (different operating systems have different launchers that are configured differently).</p>
+
+      <p>The following pages discuss scripting JMRI using the Jython version of Python:</p>
+
+      <ol>
+        <li><a href="Start.shtml">Getting started with simple scripts</a></li>
+
+        <li><a href="Python.shtml">The language itself</a></li>
+
+        <li><a href="Examples.shtml">Examples</a></li>
+
+        <li><a href="FAQ.shtml">Frequently asked questions</a></li>
+
+        <li><a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a></li>
+      </ol>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

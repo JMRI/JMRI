@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2003-2008 -->
+<!-- $Id$ -->
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 --> 
+<title>JMRI: DecoderPro Symbolic Programmer</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<h1>JMRI: Guide Utilisateur DecoderPro </h1>
+<p>Actuellement pour JMRI version 4.2</p>
+
+<h2>Introduction au Programmateur Symbolique JMRI</h2>
+
+<p>Les d&#233;codeurs DCC modernes sont des b&#234;tes compliqu&#233;es &#224; programmer. L'id&#233;e simple
+de "mettre l'adresse dans CV01" ne s'adaptent pas bien lorsque vous programmer des fonctions complexes 
+en utilisant des combinaisons de mod&#232;les de bits. Une interface plus conviviale est 
+n&#233;cessaire. Il existe des programmes qui offrent de meilleures fa&#231;ons de programmer des 
+d&#233;codeurs sp&#233;cifiques. Malheureusement, elles sont limit&#233;es &#224; certains types 
+d'ordinateurs, et que seuls leurs auteurs puissent les personnaliser pour les nouveaux types
+de d&#233;codeurs.</p>
+
+<p>Le programmateur symbolique DecoderPro est destin&#233; &#224; am&#233;liorer la situation. Il est 
+configur&#233; en utilisant des fichiers texte, de sorte qu'il peut &#234;tre adapt&#233; aux types de d&#233;codeur 
+suppl&#233;mentaires facilement. Il communique avec les d&#233;codeurs en utilisant l'interface de programmation JMRI, 
+de sorte qu'il peut fonctionner sur n'importe quel mat&#233;riel informatique et Mat&#233;riel R&#233;seau qui supporte JMRI.
+Il est disponible gratuitement en t&#233;l&#233;chargement. Et puisque le 
+code est disponible via l'open source &#224; <a href="../../doc/Technical/getgitcode.shtml">GitHub</a>, si vous voulez l'am&#233;liorer, 
+vous pouvez le faire.</p>
+
+<p>Le
+<a href="./Tour.shtml">Tour Rapide</a> introduit &#224; DecoderPro et 
+comment vous pouvez l'utiliser. 
+<p>
+DecoderPro est aussi couvert dans Joe Fugate's 
+<a href="http://trainmasters.tv/videos/3-4-siskiyou-line-dcc-programming-decoderpro" target="_new">TrainMasters.TV video library, part 
+3.4<a/>, car il montre comment il utilise DP sur son r&#233;seau Siskiyou Line.</a>
+
+<h2>De quoi avez-vous besoin pour utiliser DecoderPro</h2>
+
+DecoderPro fonctionne sur Windows, Linux, Macintosh ( MacOs 8.6
+ &#224; 9.2 OS X ). Il fonctionne probablement aussi avec la plupart des 
+syst&#233;mes d'exploitations modernes qui ont Java disponible; contactez nous 
+pour de l'aide si vous souhaitez l'essayer sur un autre syst&#232;me. Vous avez besoin
+d'avoir un port s&#233;rie ou un port USB disponible, soit sur lordinateur lui-m&#234;me ou soit par un 
+<a href="../../hardware/USBtoSerial.shtml">adaptateur USB</a>.
+Pour plus d'information, svp voir les
+<a href="../../setup/index.shtml">pages de Configuration</a>.</p>
+
+<p>Vous pouvez aussi avoir besoin d'une connexion &#224; votre syst&#232;me DCC.
+Pour plus d'information, svp voir les
+<a href="../../hardware/index.shtml">pages mat&#233;riel DCC</a>.</p>
+
+<a name="guide">
+<h2>Guide Utilisateur DecoderPro</h2></a>
+
+<dl class="toc">
+<dt><a href="./Roster.shtml">Travailler avec l'Inventaire</a></dt>
+<dt><a href="./MoreInfo.shtml">Comment Fonctionne DecoderPro</a></dt>
+<dt><a href="./Files.shtml">Fichiers de Configuration</a></dt>
+<dt><a href="./FAQ.shtml">FAQ DecoderPro</a></dt>
+<dt><a href="./Install.shtml">Installation</a></dt>
+</dl>
+<p>
+Se R&#233;f&#233;rer au 
+<a href="../../../manual/DecoderPro3/index.shtml">Manuel DecoderPro </a>
+pour plus d'information sur comment utiliser DecoderPro.
+
+<h3>Guide Avanc&#233;</h3>
+<dl class="toc">
+<dt><a href="./IntroXML.shtml">Introduction aux fichiers XML</a></dt>
+<dt><a href="./CreateDecoder.shtml">Cr&#233;er votre propre d&#233;finition de d&#233;codeur</a></dt>
+<dt><a href="./Programmer.shtml">Cr&#233;er un d&#233;finition de programmateur personnalis&#233;e</a></dt>
+<dt><a href="./RosterFile.shtml">Comment l'Inventaire est stock&#233;; Actualisation manuelle</a></dt>
+<dt><a href="./LocoFile.shtml">Fichiers Locomotive ( Inventaire )</a></dt>
+<dt><a href="./Debug.shtml">D&#233;bogage</a></dt>
+<dt><a href="./NetworkFiles.shtml">Partage d'Inventaires entre Ordinateurs</a></dt>
+<dt><a href="./FileUpdate.shtml">Actualisation de D&#233;finitions de D&#233;codeur</a></dt>
+</dl>
+
+
+<h2>Information d&#233;codeur</h2>
+<p>
+Le projet JMRI a compil&#233; un grand nombre d'informations sur les d&#233;codeurs de nombreux fabricants, nous les laissons librement 
+disponible sous plusieurs formes. 
+Pour en savoir plus, consultez les
+<a href="http://jmri.org/xml/XSLT/">informations sur la page d&#233;codeur</a>.
+
+<!--#include virtual="/Footer" -->
+</div><!-- closes #mainContent-->
+</div><!-- closes #mBody-->
+</body>
+</html>

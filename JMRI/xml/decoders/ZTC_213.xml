@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="3" lastUpdated="20111203"/>
+  <version author="Ian Birchenough(ian@birchenough.demon.co.uk)" version="2" lastUpdated="20062105"/>
+  <version author="Phil Grainger (phil.grainger@ca.com)" version="1" lastUpdated="20030805"/>
+  <!--   version 3 Added factory reset.-->
+  <!-- ZTC 213 and 213A decoders -->
+  <decoder>
+    <family name="ZTC213/213A" mfg="ZTC" lowVersionID="0" highVersionID="255">
+      <model model="ZTC213" numOuts="2">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+      </model>
+      <model model="ZTC213A" numOuts="2">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+      </model>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="Range 0-255">
+        <decVal/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Accel" CV="3" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Accel</label>
+        <label xml:lang="it">Accellerazione (0-15)</label>
+        <label xml:lang="fr">Accelération (0-15)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-15)</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable item="Decel" CV="4" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Decel</label>
+        <label xml:lang="it">Decellerazione (0-15)</label>
+        <label xml:lang="fr">Décélération (0-15)</label>
+        <label xml:lang="de">Bremszeit (0-15)</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable item="Vhigh" CV="5" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Vhigh</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Vmid" CV="6" comment="Range 1-13">
+        <decVal min="0" max="13"/>
+        <label>Vmid</label>
+        <comment>Range 1-13</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable item=" Analog (DC) Operation " CV="12" comment="DC Conversion Active?" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Operate on DCC only">
+            <choice>Operate on DCC only</choice>
+          </enumChoice>
+          <enumChoice choice="Operate on DCC and DC">
+            <choice>Operate on DCC and DC</choice>
+          </enumChoice>
+        </enumVal>
+        <label> Analog (DC) Operation </label>
+        <comment>DC Conversion Active?</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Headlights are directional and operate automatically">
+            <choice>Headlights are directional and operate automatically</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights are independently controlled (F0-Front, F4-Rear)">
+            <choice>Headlights are independently controlled (F0-Front, F4-Rear)</choice>
+            <choice xml:lang="it">Luci di testa controllate indipendentemente (F0-Avanti, F4-Retro)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

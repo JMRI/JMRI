@@ -1,0 +1,6 @@
+SymbolicProg is a JMRI package for programming decoders symbolically.
+
+It uses decoder definitions from the "xml" part of the JMRI project.
+
+
+The JMRI web page is located at http://jmri.org/

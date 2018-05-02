@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+  <xs:complexType name="ConnectionType">
+    <xs:annotation>
+        <xs:documentation>
+          Defines a layout connection configuration.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="yes">jmri.jmrix.**.configurexml.ConnectionConfigXml</jmri:usingclass>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+    <xs:element name="options" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="option" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+              <xs:sequence>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element> 
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="node" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="name" type="xs:string" use = "required"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element> 
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use = "required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="commandStationPreferences" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="addTurnoutToCS" type="yesNoType"/>
+          <xs:attribute name="addTurnoutToJMRI" type="yesNoType"/>
+          <xs:attribute name="removeTurnoutFromCS" type="yesNoType"/>
+          <xs:attribute name="removeTurnoutFromJMRI" type="yesNoType"/>
+          <xs:attribute name="addSensorToCS" type="yesNoType"/>
+          <xs:attribute name="addSensorToJMRI" type="yesNoType"/>
+          <xs:attribute name="removeSensorFromCS" type="yesNoType"/>
+          <xs:attribute name="removeSensorFromJMRI" type="yesNoType"/>
+          <xs:attribute name="addLocoToCS" type="yesNoType"/>
+          <xs:attribute name="addLocoToJMRI" type="yesNoType"/>
+          <xs:attribute name="removeLocoFromJMRI" type="yesNoType"/>
+          <xs:attribute name="removeAdhocLocoFromCS" type="yesNoType"/>
+          <xs:attribute name="defaultCSProtocol" type="xs:token"/>
+          <xs:attribute name="defaultCSLocoDescription" type="xs:string"/>
+          <xs:attribute name="locoMaster" type="xs:string"/>
+          <xs:attribute name="ecosRosterAttribute" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="port" type="xs:string"/>
+    <xs:attribute name="speed" type="xs:string"/>
+    <xs:attribute name="address" type="xs:string"/>
+    <xs:attribute name="option1" type="xs:string"/>
+    <xs:attribute name="option2" type="xs:string"/>
+    <xs:attribute name="option3" type="xs:string"/>
+    <xs:attribute name="option4" type="xs:string"/>
+    <xs:attribute name="manufacturer" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:string"/>
+    <xs:attribute name="userName" type="xs:string"/>
+    <xs:attribute name="systemPrefix" type="xs:string"/>
+    <xs:attribute name="class" type="classType" use="required"/>
+  </xs:complexType>
+
+</xs:schema>

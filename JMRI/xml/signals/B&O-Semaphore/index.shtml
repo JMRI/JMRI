@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<title>JMRI: B&O-Semaphore Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: B&O-Semaphore Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the 1969 B&O rules.
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+This signal system just contains B&O semaphore masts but will work in conjunction with the position light masts of the B&O-2009 system if required. This is a speed signaling system therefore speeds will need to be set on blocks or turnouts (either will do) to ensure that the correct aspects are displayed. As per the prototype no account is taken of turnout position when assessing the aspect to be displayed.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-bumper.xml">Buffer stop that always indicates stop for attaching to buffer stops</a>
+<li><a href="appearance-dwarf.xml">Single arm dwarf signalmast</a>
+<li><a href="appearance-single.xml">Single arm block signal mast</a>
+<li><a href="appearance-double.xml">Double arm absolute signal mast</a>
+<li><a href="appearance-triple.xml">Triple arm absolute signal mast</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

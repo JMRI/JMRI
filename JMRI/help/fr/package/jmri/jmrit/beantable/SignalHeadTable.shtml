@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Updated by Herv&#233; Blorec  2017-11-15-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Signal Head Table Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Signal Head Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Le Tableau T&ecirc;te de Signal</h1><a href=
+      "images/SigHeadTable.png"><img src=
+      "images/SigHeadTable.png" align=
+      "right" height="119" width="312" hspace="0" vspace=" 0" alt=""></a>
+
+      <p>Toutes les t&ecirc;tes de signal que JMRI conna&icirc;t
+      peuvent &ecirc;tre r&eacute;f&eacute;renc&eacute;es en
+      utilisant l'outil "Tableau T&ecirc;te de Signal" dans le menu
+      Outils de la plupart des programmes JMRI. Il y a huit
+      colonnes dans le tableau:</p>
+
+      <ul>
+        <li>Le nom syst&egrave;me qui est affect&eacute; &agrave;
+        la t&ecirc;te de signal lors de sa cr&eacute;ation, et ne
+        peut pas &ecirc;tre chang&eacute;.</li>
+
+        <li>Si vous &ecirc;tes int&eacute;ress&eacute; pour avoir
+        un nom plus parlant pour votre t&ecirc;te de signal , vous
+        pouvez cliquer dans la colonne "Nom Utilisateur" et
+        modifier les informations comme vous voulez.</li>
+
+        <li>Quand les t&ecirc;tes de signal changent, pour une
+        raison quelconque, l'apparence courante se montre dans la
+        colonne "&eacute;tat" du Tableau. Vous pouvez
+        &eacute;galement cliquer sur le bouton d'apparence pour
+        faire d&eacute;filer les apparences disponibles: rouge,
+        jaune, vert, rouge clignotant, clignotant jaune, vert
+        clignotant, et &eacute;teinte. Certaines t&ecirc;tes de
+        signal peuvent aussi avoir l'apparence lunaire et
+        clignotant lunaire disponibles.</li>
+
+        <li>La colonne "Commentaire" est pour votre usage pour
+        enregistrer tout commentaire que vous voudrez
+        peut-&ecirc;tre pour vous aider &agrave; garder une trace
+        de vos t&ecirc;tes de signal. Il est pour information
+        seulement.</li>
+
+        <li>Cliquez sur le bouton "Supprimer" dans une ligne
+        sp&eacute;cifique pour supprimer la t&ecirc;te de signal.
+        Soyez s&ucirc;r d'enlever d'abord l'ic&ocirc;ne t&ecirc;te
+        de signal associ&eacute; &agrave; cette t&ecirc;te de
+        signal, toute logique simple signal associ&eacute;e, et
+        toutes les r&eacute;f&eacute;rences &agrave; cette
+        t&ecirc;te de signal. Utilisez cette touche avec
+        pr&eacute;caution!</li>
+
+        <li>La case la colonne "Allum&eacute;" de vous permet de
+        contr&ocirc;ler si la t&ecirc;te de signal sur le
+        r&eacute;seau est allum&eacute;e(coch&eacute;e) ou reste
+        teinte (non coch&eacute;e).</li>
+
+        <li>La case &agrave; cocher dans la colonne "Tenue" indique
+        le "lieu" propri&eacute;t&eacute; de la t&ecirc;te de
+        signal et vous permet de le changer. Cette
+        propri&eacute;t&eacute; est par exemple utilis&eacute; par
+        la logique du pupitre CTC* pour dire "Ne changez pas cette
+        t&ecirc;te signal du rouge, m&ecirc;me s'il serait prudent
+        de le faire, parce que je veux retenir un train ici ".</li>
+
+        <li>Cliquez sur le bouton "&eacute;diter" dans une
+        rang&eacute;e pour afficher ou modifier les informations
+        facultatives pour une t&ecirc;te de signal. Notes: Nom
+        syst&egrave;me et le type ne peuvent pas &ecirc;tre
+        chang&eacute;s. Un seul t&ecirc;te de signal peut
+        &ecirc;tre &eacute;dit&eacute;e &agrave; la fois.</li>
+      </ul>
+
+      <p>Pour d&eacute;finir une nouvelle t&ecirc;te de signal,
+      cliquez sur le bouton <a href="SignalAddEdit.shtml">Ajouter
+      ..."</a>. Il vous sera demandera le type (sortie triple;
+      Double sortie; SE8c; etc), et toutes les informations de
+      configuration n&eacute;cessaire.</p>
+
+      <p>Utilisez l'option Conserver dans le menu Fichier pour
+      enregistrer les informations de signal sur le disque. Ces
+      informations sont enregistr&eacute;es avec la configuration
+      dans un fichier XML, avec l'installation du panneau de
+      commande et des choses similaires. Pour stocker vos panneaux
+      dans le m&ecirc;me fichier (recommand&eacute;),
+      s&eacute;lectionnez <b>Fichier&gt; Stocker&gt; Stocker
+      Configuration &gt; et les panneaux dans le Fichier ...</b> ou
+      s&eacute;lectionnez <b>Panneaux&gt; Stocker panneaux ...</b>
+      dans la fen&ecirc;tre principale JMRI.</p>
+
+      <p>Pour plus d'informations sur la cr&eacute;ation et
+      l'affichage des panneaux, y compris la mani&egrave;re de
+      montrer des signaux sur vos panneaux, s'il vous pla&icirc;t
+      voir les <a href=
+      "../../../../html/apps/PanelPro/Panels.shtml">pages
+      Panneaux</a>.</p>
+
+      <p>*CTC commande centralis&eacute;e manuelle </p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec  2013-10-13-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Le Tableau Aiguillage</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Turnout Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Le Tableau Aiguillage</h1>
+
+      <p>Ce Tableau contient une liste de tous les aiguillages
+      existant pour ce panneau. Depuis ce tableau, vous pouvez
+      changer l'&eacute;tat d'un des aiguillage, changer le mode de
+      r&eacute;tro-signalisation, entrez descapteurs de
+      r&eacute;tro-signalisation, l'inverser, le verrouiller, et le
+      supprimer.</p>
+
+      <h2>Colonnes du Tableau Aiguillage</h2>
+
+      <dl>
+        <dt>Nom Syst&egrave;me</dt>
+
+        <dd>Le Nom Syst&egrave;me ne peut pas &ecirc;tre
+        chang&eacute; une fois entr&eacute; dans le tableau. Le
+        bouton "Ajouter" situ&eacute; dans le coin inf&eacute;rieur
+        gauche du Tableau vous permet d'ajouter une nouvel
+        aiguillage dans le tableau. Le Nom Syst&egrave;me est
+        automatiquement g&eacute;n&eacute;r&eacute; lors de
+        l'utilisation du bouton "Ajouter".<br>
+        Voir <a href=
+        "../../../../html/doc/Technical/Names.shtml">Noms</a> pour
+        plus d'info sur le format.</dd>
+
+        <dt>Nom Utilisateur</dt>
+
+        <dd>Vous pouvez saisir directement ou modifier le champ
+        "Nom Utilisateur" pour un aiguillage existants. Ceci peut
+        &ecirc;tre tout vous ce que souhaitez pour d&eacute;crire
+        l'aiguillage.</dd>
+
+        <dt>Cmd</dt>
+
+        <dd>Appuyer sur le bouton "Cmd" va changer l'&eacute;tat
+        d'un aiguillage existant.</dd>
+
+        <dt>Supprimer</dt>
+
+        <dd>
+          Appuyer sur le bouton "Supprimer" supprimera l'aiguillage
+          du tableau.
+
+          <p>Notez que cela ne supprime pas l'aiguillage de tous
+          les fichiers que vous avez sauvegard&eacute;s qui le
+          contiennent. Si vous chargez un de ces fichiers,
+          peut-&ecirc;tre lorsque vous red&eacute;marrez le
+          programme, l'aiguillage va r&eacute;appara&icirc;tre.
+          Vous devez utiliser l'une des options "Stocker dans
+          Fichier" dans le menu "Fichier" pour enregistrer de
+          nouvelles versions de tous les fichiers qui contiennent
+          cet aiguillage.</p>
+        </dd>
+
+        <dt>Inverser</dt>
+
+        <dd>Quand elle est coch&eacute;e, la commande d'aiguillage
+        et le statut de et vers le r&eacute;seau sont
+        invers&eacute;s. Par exemple, un aiguillage invers&eacute;
+        signifie que lorsque JMRI envoie une commande "DIRECT"
+        &agrave; l'aiguillage, il devient un "D&eacute;VI&eacute;"
+        sur le r&eacute;seau. Les aiguillages qui ne peuvent pas
+        &ecirc;tre invers&eacute;s sont gris&eacute; et ne peuvent
+        pas &ecirc;tre coch&eacute;s</dd>
+
+        <dt>Verrouiller</dt>
+
+        <dd>Quand elle est coch&eacute;e, l'aiguillage est
+        verrouill&eacute;. Il y a deux types de verrouillages
+        support&eacute;s par JMRI, verrouillage de pupitre et
+        verrouillage de bouton-poussoirs. Quand un aiguillage est
+        verrouill&eacute;, les commandes de l'aiguillage se fait
+        uniquement &agrave; partir de JMRI qui va d&eacute;placer
+        l'aiguillage. Les pupitres et/ou boutons-poussoirs sur le
+        tableau de commande sont d&eacute;sactiv&eacute;s. Vous
+        pouvez d&eacute;cider s&eacute;lectivement si vous voulez
+        "Les deux" pupitres et boutons-poussoirs
+        verrouill&eacute;s, "Les pupitres uniquement", ou "Boutons
+        seulement". Cliquez sur laboite "Montrer les informations
+        de verrouillage" sur le bord inf&eacute;rieur du Tableau
+        pour les options de verrouillage. Tous les d&eacute;codeurs
+        stationnaires ne supportent pas le verrouillage des
+        bouton-poussoirs, et tous les syst&egrave;mes ne supportent
+        pas le verrouillage du pupitre. Les aiguillages qui ne
+        peuvent pas &ecirc;tre verrouill&eacute;s ont leurs boites
+        gris&eacute;es et ne peuvent pas &ecirc;tre coch&eacute;s.
+        Voir <a href="#Turnout%20lock%20feature">fonction de
+        verrouillage Aiguillage</a> ci-dessous.</dd>
+
+        <dt>R&eacute;tro signalisation</dt>
+
+        <dd>Cela montre l'&eacute;tat connu de l'aiguillage.</dd>
+
+        <dt>Mode</dt>
+
+        <dd>La liste d&eacute;roulante des bo&icirc;tes vous
+        permettent de s&eacute;lectionner la m&eacute;thode d'
+        op&eacute;ration pour un aiguillage. Voir <a href=
+        "#Turnout%20Feedback">R&eacute;tro Signalisation
+        Aiguillage</a> ci-dessous.</dd>
+
+        <dt>Capteur 1</dt>
+
+        <dd>Affiche le nom syst&egrave;me du Capteur en option qui
+        offre la R&eacute;tro Signalisation pour un des aiguillage.
+        Vous pouvez aussi directement entrer ou changer le nom
+        syst&egrave;me du Capteur 1 pour un aiguillage.</dd>
+
+        <dt>Capteur 2</dt>
+
+        <dd>Affiche le nom syst&egrave;me du Capteur en option qui
+        offre la R&eacute;tro Signalisation pour un aiguillage.
+        Vous pouvez aussi directement entrer ou changer le nom
+        syst&egrave;me du Capteur 2 pour un aiguillage.</dd>
+
+        <dt>Automatiser</dt>
+
+        <dd>Indique si une des m&eacute;thodes sp&eacute;cifiques
+        de tentatives a &eacute;t&eacute; configur&eacute;e pour
+        cette aiguillage. Voir la section sur <a href=
+        "#automation">l'Automatisation Aiguillage</a>
+        ci-dessous.</dd>
+
+        <dt><a name="Lock Mode"></a> Mode de Verrouillage</dt>
+
+        <dd>Affiche les verrouillages, le cas
+        &eacute;ch&eacute;ant, qui sont actifs pour cet aiguillage.
+        "Les deux" signifie que les pupitres et les boutons seront
+        verrouill&eacute;s si le verrou est actif. "Les pupitres
+        seulement" signifie que les pupitres seront
+        verrouill&eacute;s, mais que les poussoirs continueront
+        &agrave; travailler lorsque le verrouillage est actif. Et
+        "Boutons seulement" signifie que les poussoirs seront
+        verrouill&eacute;s, mais les pupitres vont continuer
+        &agrave; travailler lorsque le verrouillage est actif.
+        Remarque, quand JMRI verrouille un bouton-poussoir
+        d'aiguillage, il le fait en envoyant une commande de
+        verrouillage pour le d&eacute;codeur d' aiguillage en
+        inscrivant une commande de verrouillage dans un CV. Vous
+        devez d&eacute;verrouiller l'aiguillage avant
+        d'arr&ecirc;ter le programme JMRI si vous voulez restaurer
+        le fonctionnement des boutons poussoirs. Le verrouillage
+        cesse automatiquement pour le pupitre lorsque le programme
+        JMRI est arr&ecirc;t&eacute;. Pour plus d'informations
+        &agrave; ce sujet, <a href=
+        "#%20Turnout%20lock%20feature">voir ci-dessous</a></dd>
+
+        <dt><a name="decodercol" id=
+        "decodercol">D&eacute;codeur</a></dt>
+
+        <dd>
+          Lorsque vous utilisez la fonction de verrouillage, le
+          programme a besoin de savoir quel type de d&eacute;codeur
+          DCC est utilis&eacute; de sorte qu'il puisse le manipuler
+          correctement. Si vous n'utilisez pas la fonction de
+          verrouillage, ne vous emb&ecirc;tez pas avec ce domaine;
+          JMRI est capable de commander tout type de
+          d&eacute;codeur d'accessoires pour revenir en
+          arri&egrave;re etc.
+
+          <p>Actuellement, le programme ne supporte que le mode de
+          verrouillage des NCE r&eacute;vision C et les
+          d&eacute;codeurs d'accessoires CVP. Les D&eacute;codeurs
+          CVP supportent les op&eacute;ration avec un ou deux
+          bouton-poussoir . S&eacute;lectionnez le nombre de
+          boutons utilis&eacute;s pour exploiter ces aiguillages
+          sp&eacute;cifiques. CVP_AD4_1B signifie un bouton, et
+          CVP_AD4_2B signifie deux boutons. Nous vous recommandons
+          d'entrer les quatre aiguillages CVP par d&eacute;codeur
+          dans Le Tableauaiguillage, m&ecirc;me si vous n'en
+          verrouillez qu'un. Vous n'avez pas besoin de
+          sp&eacute;cifier le nombre de boutons poussoirs pour les
+          NCE. Malheureusement, les d&eacute;codeurs d'accessoires
+          NCE r&eacute;visions A et B ne supportent pas les
+          verrouillage de bouton-poussoirs.</p>
+        </dd>
+
+        <dt><a name="speeds" id="speeds">Vitesse Droit et
+        D&eacute;vi&eacute;</a></dt>
+
+        <dd>
+          La vitesse Droit et D&eacute;vi&eacute; est
+          utilis&eacute; avec certains outils d'automatisation et
+          de logique, pour aider &agrave; d&eacute;terminer la
+          vitesse &agrave; laquelle un train peut &ecirc;tre
+          r&eacute;gl&eacute; par l'aiguillage quand il est
+          r&eacute;gl&eacute; &agrave; diff&eacute;rents
+          &eacute;tats. Il est &eacute;galement utilis&eacute; par
+          la logique de m&acirc;t de signal pour d&eacute;terminer
+          quel aspect doit &ecirc;tre affich&eacute; sur un
+          m&acirc;t de signalisation.
+
+          <p>Dans la liste d&eacute;roulante, vous sont
+          pr&eacute;sent&eacute;s un ensemble de vitesses fixes qui
+          ont &eacute;t&eacute; pr&eacute;d&eacute;finies dans le
+          fichier signalSpeed.xml, en plus d'une vitesse globale et
+          Utiliser les options de vitesse du canton.<br>
+          En outre, il est &eacute;galement possible d'entrer une
+          valeur num&eacute;rique pour repr&eacute;senter une
+          vitesse.</p>
+
+          <p>La valeur globale est d&eacute;finie par les option de
+          menu <b>Vitesses</b>.</p>
+
+          <p>Lorsque "Utiliser la vitesse du Canton" est
+          s&eacute;lectionn&eacute; ceci en effet indique &agrave;
+          l'outil d'automatisation d'ignorer le param&eacute;trage
+          de la vitesse &agrave; travers cet aiguillage, l'outil
+          doit alors seulement envisager des vitesses qui sont
+          fix&eacute;es sur les cantons.</p>
+        </dd>
+      </dl>
+
+      <h3>Tableau de Commande Aiguillage</h3>Il y a quelques
+      boutons et cases &agrave; cocher en bas du Tableau Aiguillage
+      qui commande son fonctionnement.
+
+      <dl>
+        <dt>Ajouter</dt>
+
+        <dd>Appuyer sur ce bouton ouvre une fen&ecirc;tre o&ugrave;
+        vous pouvez <a href="TurnoutAddEdit.shtml">Ajouter de
+        Nouveaux Aiguillages</a>.</dd>
+
+        <dt>Montrer Informations R&eacute;tro Signalisation</dt>
+
+        <dd>Quand elle est coch&eacute;e, les colonnes optionnelles
+        des r&eacute;tro Signalisation sont
+        repr&eacute;sent&eacute;es.</dd>
+
+        <dt>Montrer Information Verrouillage</dt>
+
+        <dd>Quand elle est coch&eacute;e, les colonnes optionnelles
+        de verrouillage sont repr&eacute;sent&eacute;es.</dd>
+
+        <dt>Tentative Automatique</dt>
+
+        <dd>Quand elle est coch&eacute;e, permet d'automatiser le
+        r&eacute;glage globale par d&eacute;faut pour les
+        aiguillages. Actuellement, le global par d&eacute;faut ne
+        provoque pas de tentatives pour les aiguillages. Voir la
+        section sur l'<a href="#automation">Automatisation des
+        Aiguillages</a> ci-dessous pour plus d'informations.</dd>
+      </dl>
+
+      <h3><a name="Turnout Feedback"></a> R&eacute;tro
+      Signalisations Aiguillages</h3>
+
+      <p>Les Mod&eacute;listes veulent des choses
+      diff&eacute;rentes quand il s'agit de connaitre le statut de
+      l'aiguillage sur leur r&eacute;seau. Certaines sont
+      tr&egrave;s heureux de pouvoir dire "Je lui ai dit de se
+      d&eacute;placer, c'est assez bon pour moi". Ces personnes ne
+      s'inqui&egrave;tent pas de savoir si un aiguillage sur leur
+      r&eacute;seau s'est d&eacute;plac&eacute; quand ils le lui
+      ont dit . Ces personnes peuvent simplement ignorer cette
+      page, et laissez les param&egrave;tres par JMRI &agrave; leur
+      r&eacute;glage par d&eacute;faut.</p>
+
+      <p>Mais certains mod&eacute;listes veulent avoir une
+      meilleure information sur les &eacute;tat des aiguillages sur
+      leur r&eacute;seau, et ainsi utiliser une certaine forme de
+      "R&eacute;tro Signalisation " pour indiquer la position de
+      l'aiguillage. Cela pourrait &ecirc;tre aussi compliqu&eacute;
+      que deux micro-contacts ajust&eacute;s afin de se fermer
+      lorsque l'aiguillage est correctement plac&eacute; dans
+      n'importe laquelle des positions. Ou ce pourrait &ecirc;tre
+      quelque chose de plus simple.</p>
+
+      <p>Dans le programme JMRI, l'objet Aiguillage fait
+      conna&icirc;tre deux &eacute;tats diff&eacute;rents:
+      &eacute;tat "Command&eacute;" et &eacute;tat "connu" .
+      L'&eacute;tat command&eacute; est "C'est ce qui &eacute;tait
+      demand&eacute; en dernier". L'&eacute;tat connu est "Ceci est
+      ce qui se passe sur le r&eacute;seau autant que je le sache
+      ".</p>
+
+      <p>Construit dans les syst&egrave;mes NCE, LocoNet XPressNet
+      mais sont limit&eacute;es en capacit&eacute; pour surveiller
+      ce qui se passe sur le r&eacute;seau. Cela permet &agrave;
+      JMRI de capturer les messages ou d'interroger le
+      syst&egrave;me concernant l'&eacute;tat de Changement de
+      l'aiguillage. Tous les autres protocoles utilisent
+      normalement une logique "vous lui avez dit de changer, de
+      sorte qu'il l'a fait". En d'autres termes, quand quelque
+      chose dans le code (l' Outil aiguillage ou un script)
+      commande un changement d'&eacute;tat de droit &agrave;
+      d&eacute;vi&eacute;, 'information par d&eacute;faut est
+      &agrave; la fois pour l'&eacute;tat ordonn&eacute; et
+      l'&eacute;tat connu pour le changement &agrave;
+      "D&eacute;vi&eacute;".</p>
+
+      <p>Mais il est &eacute;galement possible de commander cela
+      plus en d&eacute;tail si vous avez c&acirc;bl&eacute; votre
+      r&eacute;seau pour le lui permettre.</p>
+
+      <p>Toute la question de la R&eacute;tro Signalisation de
+      l'aiguillage est alors: "Comment pouvons nous configurer le
+      programme pour comprendre l'&eacute;tat connu correctement,
+      &eacute;tant donn&eacute; mon mat&eacute;riel install&eacute;
+      ? "</p>
+
+      <p>Dans le tableau aiguillage (Outils-&gt; Tables-&gt;
+      Aiguillages) cliquez sur la bo&icirc;te en bas &agrave;
+      gauche qui est &eacute;tiquet&eacute;e "Montrer Retours
+      Informations ". Maintenant agrandir la fen&ecirc;tre du
+      Tableau Aiguillage et vous trouverez quatre colonnes
+      associ&eacute;es avec R&eacute;tro Signalisation:</p>
+
+      <dl>
+        <dt>"R&eacute;tro Signalisations"</dt>
+
+        <dd>C'est "l'&eacute;tat connu". Vous ne pouvez pas le
+        changer, mais cette colonne vous montre ce que le programme
+        pense qu'il est.</dd>
+
+        <dt>"Mode"</dt>
+
+        <dd>C'est la m&eacute;thode utilis&eacute;e par cette
+        r&eacute;tro signalisation aiguillage. (Vous pouvez la
+        changer pour chaque aiguillage individuellement, mais il
+        faut noter que les changements ne prendront effet
+        qu'&agrave; partir du moment o&ugrave; vous aurez
+        cliqu&eacute; ailleurs, et vous pourriez avoir besoin
+        d'ajouter certains noms de capteur dans la colonne suivante
+        (s))</dd>
+
+        <dt>"Capteur 1", "Capteur 2"</dt>
+
+        <dd>Ceci d&eacute;fini les capteurs n&eacute;cessaires
+        &agrave; certains types de r&eacute;actions. Vous pouvez
+        taper un num&eacute;ro de capteur, le nom syst&egrave;me ou
+        nom utilisateur ici; le programme va changer pour le nom
+        syst&egrave;me dont il a besoin.</dd>
+      </dl>
+
+      <p>Les modes R&eacute;tro-Signalisations disponibles
+      sont:</p>
+
+      <dl>
+        <dt>DROIT</dt>
+
+        <dd>La valeur par d&eacute;faut dans de nombreux cas. Quand
+        quelque chose dit &agrave; l'aiguillage de changer, c'est
+        imm&eacute;diatement suppos&eacute; qu'il l'a fait.</dd>
+
+        <dt>UN CAPTEUR</dt>
+
+        <dd>L'aiguillage montre le capteur d&eacute;fini par la
+        colonne "Capteur 1" , qui est probablement reli&eacute;
+        &agrave; un micro contact sur l'aiguillage ou similaires.
+        Lorsque le capteur est actif, l'aiguillage est connu pour
+        &ecirc;tre dans la position "D&eacute;vi&eacute;" .
+        Lorsqu'il est inactif, l'aiguillage est connu pour
+        &ecirc;tre dans la position "Droit".</dd>
+
+        <dt>DEUX CAPTEURS</dt>
+
+        <dd>L'aiguillage montres les deux capteurs d&eacute;finis
+        par les colonnes "Capteur 1" et "Capteur 2" , qui sont
+        probablement deux micro-contacts accroch&eacute;s &agrave;
+        chaque extr&eacute;mit&eacute; de la barre de de commande
+        de l'aiguillage. Lorsque le capteur 1 est actif,
+        l'aiguillage est connu pour &ecirc;tre d&eacute;vi&eacute;.
+        Lorsque le capteur 2 est actif, l'aiguillage est connu pour
+        &ecirc;tre droit(normal).</dd>
+
+        <dt>SUIVI</dt>
+
+        <dd>Option par d&eacute;faut des aiguillages LocoNet (et
+        probablement XpressNet bient&ocirc;t), et disponible pour
+        des NCE. Lorsqu'elle est s&eacute;lectionn&eacute;e, le
+        r&eacute;seau est surveill&eacute; par des messages sur
+        l'&eacute;tat de l'aiguillage. Ce mode est disponible
+        uniquement pour certains syst&egrave;mes, &agrave; savoir
+        que certains syst&egrave;mes ne peuvent pas faire le suivi
+        correctement, et n'ont pas ce choix.</dd>
+
+        <dt>INDIRECTES</dt>
+
+        <dd>Actuellement uniquement disponible pour les aiguillages
+        LocoNet, celui-ci informe le programme que l'aiguillage est
+        pilot&eacute; par un DS54 Digitrax avec un micro-contact
+        attach&eacute; &agrave; la t&ecirc;te de commutation. Pour
+        plus d'informations, consultez les page d'exemples <a href=
+        "../../../../html/hardware/loconet/DS54.shtml">DS54</a>
+        .</dd>
+
+        <dt>EXACT</dt>
+
+        <dd>Actuellement uniquement disponible pour les aiguillages
+        LocoNet, celle-ci informe le programme que l'aiguillage est
+        pilot&eacute; par une DS54 Digitrax avec deux
+        micro-contacts li&eacute;s &agrave; l'interrupteur et aux
+        fils. Pour de plus amples informations, consultez la page
+        d'exemples sur le site JMRI <a href=
+        "../../../../html/hardware/loconet/DS54.shtml">DS54</a>.</dd>
+      </dl>
+
+      <h3><a name="automation" id="automation"></a> Automatisation
+      de l'Aiguillage'</h3>JMRI peut regarder un aiguillage et
+      automatiser certaines op&eacute;rations. Cela a
+      &eacute;t&eacute; initialement ajout&eacute; pour traiter le
+      cas des "Habituellement, je dois cliquez sur cette aiguillage
+      &agrave; quelques reprises pour l'amener &agrave; basculer
+      D&eacute;vi&eacute;", mais il peut &ecirc;tre utilis&eacute;
+      pour d'autres choses aussi.
+
+      <p>Les trois formes sont:</p>
+
+      <dl>
+        <dt>Pas de R&eacute;tro Signalisations</dt>
+
+        <dd>Celle-ci r&eacute;p&egrave;te simplement les messages
+        un nombre fixe de fois, avec un retard entre les deux.</dd>
+
+        <dd>Capteur</dd>
+
+        <dt>Celle-ci r&eacute;p&egrave;te les messages, avec un
+        d&eacute;lai entre les deux, jusqu'&agrave; ce que le
+        retour du capteur indique que l'aiguillage s'est
+        d&eacute;plac&eacute; ou qu'une limite sur le nombre de
+        tentatives soit atteinte.</dt>
+
+        <dt>Brute</dt>
+
+        <dd>Celle- ci envoie des paquets DCC bruts pour commander
+        &agrave; l'aiguillage bouge-toi, au lieu de travailler
+        &agrave; travers les habituels m&eacute;canismes pour le
+        syst&egrave;me sp&eacute;cifique. Ce mode est con&ccedil;u
+        comme une fa&ccedil;on de contourner certains types
+        d'incompatibilit&eacute; entre les composants de DCC.
+        (Note: Ceci n'est pas disponible avec le SUIVI R&eacute;tro
+        Signalisations, parce qu'il s'appuie sur le syst&egrave;me
+        de messages sp&eacute;cifiques qui ne sont pas
+        utilis&eacute;s dans ce mode. Il n'est &eacute;galement pas
+        disponible pour les syst&egrave;mes qui ne disposent pas
+        d'une station de commande DCC pour envoyer les messages
+        bruts)</dd>
+      </dl>
+
+      <p>Normalement, les aiguillages d&eacute;vient seulement une
+      fois, qui est le r&eacute;glage "Off" sous la rubrique
+      "Automatiser". Vous pouvez d&eacute;finir un aiguillage pour
+      utiliser "Pas de R&eacute;tro Signalisations" en
+      automatisation en le s&eacute;lectionnant dans la colonne
+      Automatiser pour l'aiguillage individuel. S'il y a des
+      capteurs de R&eacute;tro Signalisation d&eacute;finis, vous
+      pouvez &eacute;galement s&eacute;lectionner la m&eacute;thode
+      "capteur" l&agrave;.</p>
+
+      <p>Vous pouvez personnaliser l'automatisation en
+      s&eacute;lectionnant "Modifier ..." pour un aiguillage
+      individuel.</p>
+
+      <p>Il est &eacute;galement possible de d&eacute;finir des
+      globales par d&eacute;faut, et certains aiguillages utilisent
+      ceux-ci. Voir la section menu "Automatiser" pour modifier ces
+      param&egrave;tres par d&eacute;faut.</p>
+
+      <h3><a name="Turnout lock feature"></a> Aiguillage Fonction
+      de Verrouillage</h3>
+
+      <p>La fonction de verrouillage des aiguillages vous permet de
+      d&eacute;sactiver de mani&egrave;re s&eacute;lective des
+      accessoire (aiguillages) command&eacute;s &agrave; partir de
+      pupitres et/ou des boutons poussoirs c&acirc;bl&eacute;s
+      localement. Le verrouillage peut &ecirc;tre
+      r&eacute;gl&eacute; set (verrouill&eacute;) ou unset
+      (d&eacute;verrouill&eacute;) &agrave; partir d'un case dans
+      Le Tableau Aiguillage, &agrave; partir d'un itin&eacute;raire
+      <a href="itin%C3%A9raireAddEdit.shtml#lock"></a> ou de Logix,
+      ou &agrave; partir de scripts.</p>
+
+      <h4>Verrouillage Pupitre</h4>Pour ce faire le verrouillage de
+      pupitre JMRI fonctionne avec le syst&egrave;me DCC pour
+      emp&ecirc;cher les op&eacute;rateurs de changer la position
+      d'un aiguillage verrouill&eacute;. JMRI ne peut le faire
+      qu'avec certains syst&egrave;mes DCC. Pour ce faire, le
+      programme surveille l'Adresse accessoire JMRI de l'aiguillage
+      et si elle d&eacute;tecte une commande de changement depuis
+      un pupitre, JMRI annule la commande en envoyant
+      imm&eacute;diatement la commande inverse &agrave;
+      l'aiguillage.
+
+      <p>Pour utiliser cette fonction avec un poste de commandement
+      NCE, vous devez s&eacute;lectionner le SUIVI comme mode de
+      R&eacute;tro Signalisation pour l'aiguillage et la station de
+      commande NCE doit disposer de l'EPROM 2007 ou plus
+      r&eacute;cent.</p>
+
+      <h4>Verrouillage Poussoir</h4>JMRI peut aussi fonctionner
+      avec certains types de d&eacute;codeurs d'accessoires DCC
+      pour verrouiller leurs boutons c&acirc;bl&eacute;s
+      localement. Pour ce faire, JMRI envoie des commandes DCC au
+      d&eacute;codeur. Ces commandes sont sp&eacute;cifique au type
+      de d&eacute;codeur, de sorte que le programme &agrave; besoin
+      de savoir quel type de d&eacute;codeur accessoire fonctionne
+      sur chaque aiguillage verrouillable . (Il n'existe pas de
+      norme industrielle pour le verrouillage/messages, &agrave; la
+      diff&eacute;rence des messages pour d&eacute;placer
+      l'aiguillage en avant et en arri&egrave;re, nous devons donc
+      cr&eacute;er les bons messages personnalis&eacute;s pour
+      chaque type) Les diff&eacute;rents types sont
+      s&eacute;lectionn&eacute; dans la <a href=
+      "#decodercol">"colonne D&eacute;codeur"</a> du
+      TableauAiguillage.
+
+      <h4>Verrouillage Itin&eacute;raires</h4>Pour vous aider
+      &agrave; s&eacute;lectionner un ensemble d'appareils de voie
+      &agrave; verrouiller, un itin&eacute;raire peut &ecirc;tre
+      verrouill&eacute;. Tous les aiguillages qui sont
+      supervis&eacute;s par le programme JMRI et qui sont inclus
+      dans l'itin&eacute;raire seront verrouill&eacute;s. Voir la
+      <a href="RouteTable.shtml">page Itin&eacute;raire</a> pour
+      plus d'informations &agrave; ce sujet. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

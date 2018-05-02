@@ -1,0 +1,1560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Phil Grainger phil.grainger@ca.com" version="1" lastUpdated="20031027"/>
+  <!-- Created from version 5 of the 1x2 file -->
+  <decoder>
+    <family name="ZTC 415" mfg="ZTC" lowVersionID="49" highVersionID="49">
+      <model model="ZTC 415" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z">
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.55" width="0.36" height="0.13" units="inches"/>
+      </model>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+        <decVal/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>A value of 255 corresponds to 100%</comment>
+      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <variable CV="5" item="Vhigh">
+        <decVal/>
+        <label>Max Volts</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="6" item="Vmid">
+        <decVal/>
+        <label>Mid Volts</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
+        <decVal/>
+        <label>Motor Drive Frequency</label>
+        <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
+        <comment>00 is fastest, 255 is slowest</comment>
+      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 1 Override</label>
+      </variable>
+      <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 2 Override</label>
+      </variable>
+      <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 3 Override</label>
+      </variable>
+      <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 4 Override</label>
+      </variable>
+      <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 5 Override</label>
+      </variable>
+      <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 6 Override</label>
+      </variable>
+      <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 7 Override</label>
+      </variable>
+      <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 8 Override</label>
+      </variable>
+      <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 0 Override</label>
+      </variable>
+      <!--
+		<variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable label="Advanced Consist Function 10 Override" CV="22" mask="XXVXXXXX" item="Consist Address Active For F10" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable label="Advanced Consist Function 11 Override" CV="22" mask="XVXXXXXX" item="Consist Address Active For F11" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable label="Advanced Consist Function 12 Override" CV="22" mask="VXXXXXXX" item="Consist Address Active For F12" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+-->
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Forward light F0F effect generated</label>
+      </variable>
+      <variable CV="49" mask="VVVVXXXX" item="Function F0F behavior">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Forward light F0F behavior</label>
+      </variable>
+      <variable CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse light F0R effect generated</label>
+      </variable>
+      <variable CV="50" mask="VVVVXXXX" item="Function F0R behavior">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse light F0R behavior</label>
+      </variable>
+      <variable item="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 1 effect generated</label>
+      </variable>
+      <variable item="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 1 behavior</label>
+      </variable>
+      <variable item="Function 2 effect generated" CV="52" mask="XXXXVVVV" minOut="4">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 2 effect generated</label>
+      </variable>
+      <variable item="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 2 behavior</label>
+      </variable>
+      <variable item="Function 3 effect generated" CV="113" mask="XXXXVVVV" minOut="5">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 3 effect generated</label>
+      </variable>
+      <variable item="Function 3 behavior" CV="113" mask="VVVVXXXX" minOut="5">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 3 behavior</label>
+      </variable>
+      <variable item="Function 4 effect generated" CV="114" mask="XXXXVVVV" minOut="6">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 4 effect generated</label>
+      </variable>
+      <variable item="Function 4 behavior" CV="114" mask="VVVVXXXX" minOut="6">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 4 behavior</label>
+      </variable>
+      <variable item="Function 5 effect generated" CV="115" mask="XXXXVVVV" minOut="7">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 5 effect generated</label>
+      </variable>
+      <variable item="Function 5 behavior" CV="115" mask="VVVVXXXX" minOut="7">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 5 behavior</label>
+      </variable>
+      <variable item="Function 6 effect generated" CV="116" mask="XXXXVVVV" minOut="8">
+        <enumVal>
+          <enumChoice choice="Normal function of lead">
+            <choice>Normal function of lead</choice>
+          </enumChoice>
+          <enumChoice choice="Random flicker">
+            <choice>Random flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Flashing head light">
+            <choice>Flashing head light</choice>
+          </enumChoice>
+          <enumChoice choice="Single pulse strobe">
+            <choice>Single pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double pulse strobe">
+            <choice>Double pulse strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Rotary beacon simulation">
+            <choice>Rotary beacon simulation</choice>
+          </enumChoice>
+          <enumChoice choice="Gyralite">
+            <choice>Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17 dimmable headlight">
+            <choice>Rule 17 dimmable headlight</choice>
+          </enumChoice>
+          <enumChoice choice="FRED end of train light">
+            <choice>FRED end of train light</choice>
+          </enumChoice>
+          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
+            <choice>Right ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
+            <choice>Left ditch light; when F2 on, flashes alternately</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0C)">
+            <choice>Reserved (0x0C)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0D)">
+            <choice>Reserved (0x0D)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0E)">
+            <choice>Reserved (0x0E)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x0F)">
+            <choice>Reserved (0x0F)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 6 effect generated</label>
+      </variable>
+      <variable item="Function 6 behavior" CV="116" mask="VVVVXXXX" minOut="8">
+        <enumVal>
+          <enumChoice choice="Forward direction, ON with function ON, phase A">
+            <choice>Forward direction, ON with function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with function ON, phase B">
+            <choice>Reverse direction, ON with function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase A">
+            <choice>Non directional, ON with function ON, effect phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Non directional, ON with function ON, effect phase B">
+            <choice>Non directional, ON with function ON, effect phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
+            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
+            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
+            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x8)">
+            <choice>Reserved (0x8)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x9)">
+            <choice>Reserved (0x9)</choice>
+          </enumChoice>
+          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
+            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
+            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xC)">
+            <choice>Reserved (0xC)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0xD)">
+            <choice>Reserved (0xD)</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
+            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
+          </enumChoice>
+          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
+            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function 6 behavior</label>
+      </variable>
+      <variable CV="55" default="128" item="EMF Static Config" comment="Factory default is 128, no effect until droop (CV57) set">
+        <decVal/>
+        <label>Static compensation for speed stabilization</label>
+        <comment>Factory default is 128, no effect until droop (CV57) set</comment>
+      </variable>
+      <variable CV="56" default="48" item="EMF Dynamic Config" comment="Factory default is 48, no effect until droop (CV57) set">
+        <decVal/>
+        <label>Dynamic compensation for speed stabilization</label>
+        <comment>Factory default is 48, no effect until droop (CV57) set</comment>
+      </variable>
+      <variable CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
+        <decVal max="15"/>
+        <label>Solo operation droop compensation for speed stabilization</label>
+        <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
+      </variable>
+      <variable item="Advanced consist droop compensation for speed stabilization" CV="57" mask="VVVVXXXX" default="0" comment="0 is compenstation off, 15 is full on, typical value is 5">
+        <decVal max="15"/>
+        <label>Advanced consist droop compensation for speed stabilization</label>
+        <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
+      </variable>
+      <variable item="Speed Compensation Control" CV="61" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="F5 has no effect on speed compensation">
+            <choice>F5 has no effect on speed compensation</choice>
+          </enumChoice>
+          <enumChoice choice="F5 On disables speed compensation">
+            <choice>F5 On disables speed compensation</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Compensation Control</label>
+      </variable>
+      <variable CV="61" mask="XXXXXXVX" item="Advanced Ack">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Digitrax Transponding</label>
+      </variable>
+      <variable item="Split field motor" CV="61" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="Normal DC motor">
+            <choice>Normal DC motor</choice>
+          </enumChoice>
+          <enumChoice choice="Split field/AC motor">
+            <choice>Split field/AC motor</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Split field motor</label>
+      </variable>
+      <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Normal headlight operation">
+            <choice>Normal headlight operation</choice>
+            <choice xml:lang="it">Luci di testa direzionali e automatiche</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse light lead controlled by F4">
+            <choice>Reverse light lead controlled by F4</choice>
+            <choice xml:lang="it">Luci di testa controllate da F4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Directional Headlights</label>
+        <label xml:lang="it">Luci di testa direzionali</label>
+      </variable>
+      <variable item="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Vstart/Vmid/Vfull in 128 step mode</label>
+      </variable>
+      <variable item="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Short-circuit protection</label>
+        <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
+      </variable>
+      <variable CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
+        <decVal max="15"/>
+        <label>Lamp keep-alive voltage</label>
+        <comment>0 is no keep-alive, use with LEDs</comment>
+      </variable>
+      <variable CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
+        <decVal max="15"/>
+        <label>FX rate adjust</label>
+        <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+      </variable>
+      <variable CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+        <decVal/>
+        <label>Ditch light hold-over time</label>
+        <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
+      </variable>
+      <variable item="Switching speed enabled by F6" CV="54" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Switching speed enabled by F6</label>
+      </variable>
+      <variable item="Torque compensation" CV="54" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Torque compensation</label>
+      </variable>
+      <variable item="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
+<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Decoder Lock Feature</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+         <label>Speed Table</label>
+        <label xml:lang="fr">Speed Table(fr)</label>
+        <label xml:lang="it">Tabella Velocità</label>
+      </variable>
+      <!-- Define the Function-Output mapping based on NMRA definitions -->
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 5</label>
+      </variable>
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 6</label>
+      </variable>
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 7</label>
+      </variable>
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 8</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 3</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 4</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 5</label>
+      </variable>
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 6</label>
+      </variable>
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 7</label>
+      </variable>
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 8</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 4</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 5</label>
+      </variable>
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 6</label>
+      </variable>
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 7</label>
+      </variable>
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 8</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 4</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 5</label>
+      </variable>
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 6</label>
+      </variable>
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 7</label>
+      </variable>
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 8</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 4</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 5</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 6</label>
+      </variable>
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 7</label>
+      </variable>
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 8</label>
+      </variable>
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 4</label>
+      </variable>
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 5</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 6</label>
+      </variable>
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 7</label>
+      </variable>
+      <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 8</label>
+      </variable>
+      <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 9</label>
+      </variable>
+      <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 10</label>
+      </variable>
+      <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 11</label>
+      </variable>
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 4</label>
+      </variable>
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 5</label>
+      </variable>
+      <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 6</label>
+      </variable>
+      <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 7</label>
+      </variable>
+      <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 8</label>
+      </variable>
+      <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 9</label>
+      </variable>
+      <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 10</label>
+      </variable>
+      <variable item="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 11</label>
+      </variable>
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 4</label>
+      </variable>
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 5</label>
+      </variable>
+      <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 6</label>
+      </variable>
+      <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 7</label>
+      </variable>
+      <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 8</label>
+      </variable>
+      <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 9</label>
+      </variable>
+      <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 10</label>
+      </variable>
+      <variable item="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 11</label>
+      </variable>
+      <variable item="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 4</label>
+      </variable>
+      <variable item="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 5</label>
+      </variable>
+      <variable item="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 6</label>
+      </variable>
+      <variable item="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 7</label>
+      </variable>
+      <variable item="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 8</label>
+      </variable>
+      <variable item="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 9</label>
+      </variable>
+      <variable item="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 10</label>
+      </variable>
+      <variable item="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 11</label>
+      </variable>
+      <variable item="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 4</label>
+      </variable>
+      <variable item="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 5</label>
+      </variable>
+      <variable item="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 6</label>
+      </variable>
+      <variable item="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 7</label>
+      </variable>
+      <variable item="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 8</label>
+      </variable>
+      <variable item="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 9</label>
+      </variable>
+      <variable item="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 10</label>
+      </variable>
+      <variable item="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 11</label>
+      </variable>
+      <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 7</label>
+      </variable>
+      <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 8</label>
+      </variable>
+      <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 9</label>
+      </variable>
+      <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 10</label>
+      </variable>
+      <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 11</label>
+      </variable>
+      <variable item="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 12</label>
+      </variable>
+      <variable item="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 13</label>
+      </variable>
+      <variable item="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 14</label>
+      </variable>
+      <variable item="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 7</label>
+      </variable>
+      <variable item="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 8</label>
+      </variable>
+      <variable item="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 9</label>
+      </variable>
+      <variable item="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 10</label>
+      </variable>
+      <variable item="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 11</label>
+      </variable>
+      <variable item="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 12</label>
+      </variable>
+      <variable item="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 13</label>
+      </variable>
+      <variable item="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 14</label>
+      </variable>
+      <variable item="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 7</label>
+      </variable>
+      <variable item="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 8</label>
+      </variable>
+      <variable item="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 9</label>
+      </variable>
+      <variable item="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 10</label>
+      </variable>
+      <variable item="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 11</label>
+      </variable>
+      <variable item="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 12</label>
+      </variable>
+      <variable item="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 13</label>
+      </variable>
+      <variable item="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 14</label>
+      </variable>
+      <variable item="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 7</label>
+      </variable>
+      <variable item="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 8</label>
+      </variable>
+      <variable item="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 9</label>
+      </variable>
+      <variable item="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 10</label>
+      </variable>
+      <variable item="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 11</label>
+      </variable>
+      <variable item="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 12</label>
+      </variable>
+      <variable item="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 13</label>
+      </variable>
+      <variable item="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 14</label>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Advanced consist droop compensation for speed stabilization"/>
+      <display item="Speed Compensation Control"/>
+      <display item="Transponding"/>
+      <display item="Split field motor"/>
+      <display item="Vstart/Vmid/Vfull in 128 step mode"/>
+      <display item="Short-circuit protection"/>
+      <display item="Switching speed enabled by F6"/>
+      <display item="Torque compensation"/>
+      <display item="Decoder Lock Feature"/>
+      <display item="Decoder Lock ID number"/>
+    </column>
+    <name>Digitrax</name>
+  </pane>
+</decoder-config>

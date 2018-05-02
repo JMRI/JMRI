@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; Blorec 2013-09-25-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Setup Fast Clock</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Setup Fast Clock">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>Configuration Horloge Rapide</h2>JMRI fournit deux types
+      d'horloge rapide:
+
+      <ul>
+        <li>Interne - l'horloge des ordinateurs fournit les
+        informations en temps</li>
+
+        <li>Externe - le syst&egrave;me DCC fournit des
+        informations en temps</li>
+      </ul>Cette page d'aide d&eacute;crit la structure globale. Il
+      y a des pages distinctes pour <a href=
+      "LocoNetClock.shtml">horloges LocoNet</a> et <a href=
+      "../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">
+      horloges NCE</a>. Pour l'instant, nous n'avons pas
+      d'interfaces pour des horloges dans les autres
+      syst&egrave;mes DCC.
+
+      <p>Il y a deux parties diff&eacute;rentes &agrave;
+      consid&eacute;rer: Une "base de temps" fournit la base d'
+      informations en temps, tandis que un ou plusieurs
+      &eacute;crans vous montrent ce qui se passe.</p>
+
+      <p>Pour cr&eacute;er une base de temps, utilisez
+      l'&eacute;l&eacute;ment " <a href=
+      "../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">
+      Installation Rapide Horloge</a>" dans le sous-menu "Horloges"
+      sous le menu "Outils". Cela vous donne une fen&ecirc;tre
+      o&ugrave; vous pouvez:</p>
+
+      <ul>
+        <li>S&eacute;lectionnez la source de base de temps &agrave;
+        contr&ocirc;ler (typiquement, il s'agit de l'horloge
+        interne de l'ordinateur)</li>
+
+        <li>R&eacute;gler la vitesse &agrave; laquelle l'horloge
+        tourne</li>
+
+        <li>R&eacute;glez l'heure</li>
+
+        <li>D&eacute;marrer et arr&ecirc;ter l'horloge</li>
+      </ul>Une fois que vous avez cr&eacute;&eacute; une base de
+      temps en la configurant dans cette fen&ecirc;tre, vous pouvez
+      ouvrir des horloges qui s'afficheront sur votre &eacute;cran.
+      Actuellement, JMRI a trois types disponibles:
+
+      <ul>
+        <li>Horloge analogique - l'horloge traditionnelle
+        circulaire avec les aiguilles. Vous pouvez la
+        redimensionner en faisant glisser les bords de la
+        fen&ecirc;tre. Il y a aussi un bouton pause/marche.</li>
+
+        <li>Horloge Nixie - une horloge num&eacute;rique qui
+        ressemble &agrave; des anciens tubes de style Nixie</li>
+
+        <li>Horloge Panneau- vous pouvez &eacute;galement
+        int&eacute;grer une horloge dans un TCO (au lieu d'une
+        fen&ecirc;tre s&eacute;par&eacute;e) de l'&eacute;diteur de
+        panneau.</li>
+      </ul>
+
+      <p>Lorsque l'horloge est en marche, JMRI cr&eacute;e un
+      capteur interne et une variable en m&eacute;moire que vous
+      pouvez utiliser pour contr&ocirc;ler et acc&eacute;der
+      &agrave; l'horloge. Le capteur ISCLOCKRUNNING contr&ocirc;le
+      si l'horloge est en marche (ACTIVE) ou arr&ecirc;t&eacute;e
+      (INACTIVE). La m&eacute;moire contient IMCURRENTTIME l'heure
+      actuelle de l'horloge rapide, et peut &ecirc;tre facilement
+      accessible &agrave; partir de Logix et de scripts.</p>
+
+      <p>Chronom&eacute;trage heureux!</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

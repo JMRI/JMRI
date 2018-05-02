@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE throttle-config SYSTEM "throttle-config.dtd">
+<throttle-config>
+  <ThrottleFrame title="Throttle">
+    <window x="1516" y="29" width="400" height="375" />
+    <ControlPanel displaySpeedSlider="0" speedMode="1" trackSlider="false" trackSliderMinInterval="200">
+      <window x="0" y="0" width="84" height="353" />
+    </ControlPanel>
+    <FunctionPanel>
+      <window x="84" y="0" width="316" height="210" />
+      <FunctionButton id="0" text="Headlight" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="1" text="Bell" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="2" text="Horn" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="3" text="F3" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="4" text="F4" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="5" text="F5" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="6" text="F6" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="7" text="F7" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="8" text="F8" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="9" text="F9" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="10" text="F10" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="11" text="F11" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="12" text="F12" isLockable="true" isVisible="true" fontSize="12" />
+    </FunctionPanel>
+    <AddressPanel>
+      <window x="84" y="210" width="316" height="143" />
+      <locoaddress>
+        <dcclocoaddress number="4802" longaddress="yes" />
+      </locoaddress>
+    </AddressPanel>
+  </ThrottleFrame>
+  <ThrottleFrame title="Throttle">
+    <window x="1518" y="409" width="400" height="375" />
+    <ControlPanel displaySpeedSlider="0" speedMode="1" trackSlider="false" trackSliderMinInterval="200">
+      <window x="0" y="0" width="84" height="353" />
+    </ControlPanel>
+    <FunctionPanel>
+      <window x="84" y="0" width="316" height="210" />
+      <FunctionButton id="0" text="Headlight" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="1" text="Bell" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="2" text="Horn" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="3" text="F3" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="4" text="F4" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="5" text="F5" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="6" text="F6" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="7" text="F7" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="8" text="F8" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="9" text="F9" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="10" text="F10" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="11" text="F11" isLockable="true" isVisible="true" fontSize="12" />
+      <FunctionButton id="12" text="F12" isLockable="true" isVisible="true" fontSize="12" />
+    </FunctionPanel>
+    <AddressPanel>
+      <window x="84" y="210" width="316" height="143" />
+      <locoaddress>
+        <dcclocoaddress number="164" longaddress="yes" />
+      </locoaddress>
+    </AddressPanel>
+  </ThrottleFrame>
+</throttle-config>
+

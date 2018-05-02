@@ -1,0 +1,398 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-11-2--> 
+
+<html lang="fr">
+<head>
+ <title>
+      JMRI: Configure Acela Nodes
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help configure grapevine node">
+
+<!-- Style -->
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Bienvenue sur les Pages d'aide Acela
+</H1>
+Ceci est la page d'aide  help/en/package/jmri/jmrix/Acela/nodeconfig/NodeConfigFrame 
+<p>
+Merci d'avoir lu ceci, j'espère que les quelques minutes que vous consacrerez à la lecture vous épargneront des heures sur la route.
+<p>
+Si vous ne l''avez pas déjà fait, s'il vous plaît n'oubliez pas de lire davantage dans JMRI le support matériel sur <a href="../../../../../html/hardware/acela/index.shtml"> Acela </a> et le <a href="../../../../../html/hardware/acela/Names.shtml"> système Noms CTI Acela </a>. </p>
+<H2>Fichiers de configuration 
+</H2>
+Juste pour être parfaitement clair, DecoderPro, PanelPro et SoundPro sont tous des environnements graphiques différents ou des interfaces utilisateur pour le même programme JMRI.
+<p>
+Vous pouvez faire quelque chose avec n'importe lequel de ces trois programmes, l'interface utilisateur a juste été adapté dans une tentative de rendre plus facile pour vous de pouvoir faire ce que vous voulez :
+<ul>
+<li>Programme Décodeurs utilisant DecoderPro
+<li> Contrôlez votre réseau en utilisant PanelPro
+</Ul>
+<p>
+La seule différence est que chaque configurateur graphique à sa propre version de votre configuration.
+<p>
+L'avantage est que vous pouvez configurer chaque configurateur pour avoir une configuration unique.
+<p>
+L'inconvénient est que vous pouvez avoir besoin de mettre en place votre configuration plus d'une fois (ou copier-coller d'une configuration à l'autre), si vous souhaitez utiliser un autre configurateur graphique soyez certain qu'il contienne la même configuration.
+
+<H2> Sauvegardez vos fichiers de configuration
+</H2>
+ Tout est dit, chaque configurateur a un seul fichier de configuration (exemple pour DecoderPro c'est: DecoderProConfig2.xml).
+<p>
+Donc, si vous effectuez une modification et sauvegarder votre fichier de configuration (en appuyant sur le bouton Enregistrer de la fenêtre Préférences), vous écrivez un nouveau fichier de configuration et l'ancien sera perdu à jamais.
+<p>
+C'est bien beau jusqu'à ce que vous réalisiez que vous n'étiez pas connecté au réseau et venez de perdre votre configuration personnalisée CTI Acela(voir ci-dessous).
+<p>
+    Donc, à nouveau, faites des copies de sauvegarde de vos fichiers de configuration (c'est à dire DecoderProConfig2.xml, PanelProConfig2.xml) souvent et de les stocker dans un endroit sûr.
+
+<H2> Connexion à votre système CTI Acela
+</H2>
+Il est fortement recommandé que vous laissez le logiciel JMRI découvrir votre réseau CTI Acela pour vous.
+<p>
+À cette fin, les boutons Ajouter et Supprimer ont été désactivés pour le moment.
+<p>
+    Vous pouvez aller avancer et modifier votre fichier de préférences par exemple DecoderProConfig2.xml ou PanelProConfig2.xml) si vous voulez vraiment changer les choses manuellement.<p>
+    Il vous est recommandé de configurez votre réseau CTI Acela en trois étapes: établir votre connexion, la découverte de votre réseau CTI Acela , puis personnaliser votre configuration.
+<h3>Établir la Connexion
+</h3>
+Avec le système CTI Acela allumé et connecté à votre ordinateur, lancez JMRI (DecoderPro ou PanelPro).
+<p>
+Depuis le menu principal, sélectionnez <Éditer> puis sélectionnez <Préférences>.
+<p>
+Dans les page de préférences, sélectionnez Acela pour qu'il soit la connexion principale ou comme l'une des connexions auxiliaires. Habituellement, Acela sera l'une de vos connexions auxiliaires, car il ne peut pas réellement faire fonctionner les trains. Pour le reste de cette documentation, il sera supposé que vous avez sélectionné CTI Acela comme une connexion auxiliaire.
+<p>
+Vous devez alors sélectionner le port série correct. Assurez-vous que vous obtenez ce droit. Si ce n'est une connexion auxiliaire, le port série est probablement quelque chose comme COM4 ou COM5 (et probablement pas COM3).
+<p>
+Appuyez sur le bouton <Sauvegarder>. Le programme JMRI prendra fin.
+<p>
+    Si vous regardez votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml selon le programme que vous avez exécuté), vous devriez voir une entrée de connexion avec le port série spécifié.
+    Il va ressembler à (à noter la seconde ligne "port de connexion"):
+<p>
+&lt?xml version="1.0" encoding="UTF-8"?>
+<p>
+&lt?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
+<p>
+&lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
+<p>
+&lt; layout-config>
+<p>
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+<p>
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+<p>
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+<p>
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+<p>
+  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
+<p>
+&lt;/layout-config>
+<h3>Laissez JMRI découvrir votre configuration réseau CTI Acela
+</H3>
+Redémarrez JMRI (DecoderPro ou PanelPro). Si vous avez spécifié le bon port série à l'étape précédente, alors le logiciel JMRI doitt se connecter au réseau CTI Acela, réinitialiser le nœud Acela puis interroger le réseau CTI Acela  et découvrir quels modules (un module JMRI s'appelle un nœud) vous avez et dans quel ordre.
+<p>
+JMRI va créer un noeud pour chaque module qu'il trouve.
+<p>
+Vous pouvez voir ce qu'il trouve une fois de plus en allant  dans le menu préférences (menu principal, puis menu Edition, puis Préférences) et à nouveau en cliquant sur la case Afficher les préférences avancées pour voir les connexions auxiliaires.
+<p>
+Maintenant sélectionnez l'option "Configurer les Nœuds" et vous devriez voir le panneau de configuration Nœuds Acela.
+<p>
+La première section est intitulée Les nœuds dans le réseau et il affichera un symbole à deux lettres pour chaque nœud CTI Acela qui a été trouvé.
+<p>
+A ce stade, vous devriez fermer cette fenêtre et une fois de plus utiliser le bouton "Sauvegarder" sur l'écran Préférences.
+<p>
+    Si vous regardez maintenant à votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml selon le programme que vous avez exécuté) en plus de l'entrée de connexion avec le port série spécifié pour le réseau CTI Acela, vous devriez voir la description de noeud pour chaque nœud CTI Acela qui a été trouvé.
+<p>
+Il ressemblera à (notez les lignes après le second "port de connexion" ligne):
+<p>
+&lt?xml version="1.0" encoding="UTF-8"?>
+<p>
+&lt?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
+<p>
+&lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
+<p>
+&lt; layout-config>
+<p>
+  &lt; connection port="COM5" speed="57,600 baud" option1="" option2="DCS100 (Chief)" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml" />
+<p>
+  &lt; gui LAFclass="Metal" class="jmri.configurexml.GuiLafConfigPaneXml" LocaleLanguage="en" LocaleCountry="CA" LocaleVariant="" />
+<p>
+  &lt; programmer defaultFile="Basic" verifyBeforeWrite="no" class="jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml" />
+<p>
+  &lt; connection port="COM4" speed="9,600 bps" option1="" option2="" class="jmri.jmrix.acela.serialdriver.configurexml.ConnectionConfigXml" />
+<p>
+    &lt; node name="0">
+<p>
+      &lt; parameter name="nodetype">AC&lt;/parameter>
+<p>
+    &lt;/node>
+<p>
+    &lt; node name="1">
+<p>
+      &lt; parameter name="nodetype">TB&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype0">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity0">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold0">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype1">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity1">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold1">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype2">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity2">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold2">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype3">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity3">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold3">4&lt;/parameter>
+<p>
+      &lt; parameter name="outputwired0">NO&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit0">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputwired1">NO&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit1">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputwired2">NO&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit2">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputwired3">NO&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit3">OFF&lt;/parameter>
+<p>
+    &lt;/node>
+<p>
+    &lt; node name="2">
+<p>
+      &lt; parameter name="nodetype">WM&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype0">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity0">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold0">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype1">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity1">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold1">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype2">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity2">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold2">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype3">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity3">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold3">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype4">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity4">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold4">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype5">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity5">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold5">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype6">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity6">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold6">4&lt;/parameter>
+<p>
+      &lt; parameter name="sensortype7">CG&lt;/parameter>
+<p>
+      &lt; parameter name="sensorpolarity7">INV&lt;/parameter>
+<p>
+      &lt; parameter name="sensorthreshold7">4&lt;/parameter>
+<p>
+    &lt;/node>
+<p>
+    &lt; node name="3">
+<p>
+      &lt; parameter name="nodetype">YM&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit0">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit1">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit2">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit3">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit4">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit5">ACT&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit6">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit7">ACT&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit8">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit9">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit10">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit11">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit12">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit13">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit14">OFF&lt;/parameter>
+<p>
+      &lt; parameter name="outputinit15">OFF&lt;/parameter>
+<p>
+    &lt;/node>
+<p>
+  &lt;/connection>
+<p>
+  &lt!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$-->
+<p>
+&lt;/layout-config>
+<p>
+
+Vous pouvez toujours revenir à cet état par l'effacement de votre fichier de configuration et répéter ces deux étapes.
+
+<p>
+Vous pouvez maintenant personnaliser votre configuration.
+<H2> Personnaliser votre configuration</H2>
+Il existe quatre types de nœuds Acela CTI:
+<ul>
+<li> le nœud Acela lui-même (rien à configurer)
+<li>modules de capteurs  où vous pouvez configurer chaque circuit du capteur:
+<ul>
+<li>type de capteur 
+<li>la polarité du capteur 
+<li>seuil des capteurs 
+</ul>
+<li>modules de sortie  basés sur les relais où vous pouvez configurer chaque circuit de sortie:
+<ul>
+<li> câblé comme normalement ouvert ou normalement fermé
+<li> état initial (Actif ou Inactif)
+</ul>
+<li>modules de sortie  basés sur des transistors où vous pouvez configurer chaque circuit de sortie:
+<ul>
+<li> état initial (Actif ou Inactif)
+</ul>
+</ul>
+<h3> Capteurs Configuration</h3>
+Un circuit de capteur est généralement utilisé suivant une des quatre façons:
+<ul> <li>
+<li> Fitre de Bruit (par défaut CTI)
+<ul>
+<li> Il suffit d'appliquer un filtre à réjection de bruit à haute fréquence
+<li> Destiné pour des solutions personnalisées
+</ul>
+<li> Commutateur anti-rebond
+<ul>
+<li> En plus d' <li>appliquer un filtre à réjection de bruit à haute fréquence, aussi appliquer un filtre raide anti-rebond 
+<li> Destiné à l'utilisation avec des commutateurs Reed magnétiques ou  interrupteurs Manuel à Bouton-Poussoir.
+</ul>
+<li>Gap voiture
+<ul>
+<li> En pl <li>us d'appliquer un filtre à réjection de bruit à haute fréquence, également appliquer un filtre anti-rebond.
+<li> Destiné à l'utilisation de capteurs infrarouge ou photoélectrique.
+</ul>
+<li> voie sale
+<ul>
+<li> En plus d'appliquer un filtre de bruit à haute fréquence de rejet, également appliquer un filtrevoie sale.
+<li> Destiné à l'utilisation de capteurs de détection de courant.
+</ul> <li>
+</ul>
+Un circuit de capteur peut être configuré dans un des deux polarités:
+
+</ul>
+</ul>
+Un circuit de capteur peut être configuré dans un des deux polarités:
+<ul>
+<li> polarité normale
+<ul>
+<li> vrai  <li>est vrai et le faux est faux.
+</Ul>
+<li>Inversion de polarité 
+<ul>
+<li> vrai est faux et faux est vrai.
+<li> Destiné à l'utilisation de capteurs infrarouge ou photoélectrique où normalement le circuit est fermé, mais le passage d'une machine ou d'un wagon fera l'ouverture du circuit.
+</Ul>
+</Ul> <li>
+De plus, le filtre du bruit à haute fréquence a un seuil de réjectiont qui peut être programmé avec une valeur de 0 à 31.
+Des valeurs élevées correspondent à un filtrage plus lourd
+<p>
+Par défaut, JMRI initialise tous les circuits du capteur à l'intervalle de voiture, Inversion de polarité, et un seuil de 4. Cela semble fonctionner plutôt bien pour le CTI qui a fourni des trousses de capteur infra-rouge.
+<p>
+    N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml) dans un endroit sûr.
+<h3> Configuration des sorties</H3>
+Si un circuit de sortie est contrôlé par un relais, le relais peut être câblé dans l'une des trois façons suivantes:
+<ul>
+<li> Normalement ouvert
+<ul>
+<li> Si aucun pouvoir de contrôle n'est appliqué au relais, puis le circuit entre la borne commune et le terminal normalement ouvert sera ouvert, qui est, il va se comporter comme si un interrupteur est Off.
+<li>Lorsque qu'il est câblé de cette manière, le relais fonctionnent comme les transistors dans un de autre modules Acela (CTI)  (exemple un aiguilleur).
+<li> Le circuit pourrait simplement commuter une lumière allumée ou éteinte, ou il pourrait passer quelque chose de courant plus élevées telles que l'énergie la bonne voie pour un canton (par exemple, dans le cas d'une voie de coulisse  qui stocke des wagons de passagers allumées, ou des Machines).
+</Ul>
+<li> Normalement fermé
+<ul>
+<li> Si aucune commande n'est appliqué au relais, alors le circuit entre la borne commune et le terminal normalement fermé sera fermé, , il va se comporter comme si un interrupteur est On.
+<li>Lorsq <li>ue  câblé de cette manière le circuit de sortie fonctionnera à l'opposé de la normale - c'est-à-dire sur Off et On va dire hors tension.
+<li> Ceci est utile si vous voulez que le circuit se comporte comme si le relais n'est pas là lorsque le module n'a pas d'alimentation ou n'a pas été initialisé.
+<li>Cela pourrait être interrupteur d'alimentation hors voie si on le souhaite, mais par défaut pour ce cas aucune  commande n'a été appliquée au module CTI (c'est à dire queles unités de la CTI ne sont pas sous tension ou non initialisées).
+</Ul>
+<li> Comme un routeur
+<ul> <li>
+<li>Lorsque  câblé de cette manière le signal est connecté à la borne commune et ensuite une voie possible est reliée à la borne NO et la deuxième voie possible est connectée à la borne NC.
+<li> Ceci est utile si vous voulez que le relais qui  achemine disent DCC actuellement pour le rail (par exemple, via le terminal NC) ou l'itinéraire dit au mode de programmation en cours sur le rail (par exemple, via la borne NO).
+<li> Une autre utilisation serait de contrôler une machine Tortoise de Commutation par une routine  de tension + ou- pour caler le moteur .
+<li> Lorsque utilisées dans ce mode, réglez la valeur par défaut à normalement ouvert ou normalement fermé selon la façon dont vous voulez que le circuit de fonctionne si aucune commande n'a été appliqué au module CTI (c'est à dire les unités de la CTI ne sont pas sous tension ou non initialisées) 
+</ul>
+</ul>
+Le circuit de sortie peut aussi avoir une configuration état initiale ou configuration par défaut:
+<ul>
+<l <li>i>Normalement  Off
+<ul>
+<li> A l'initialisation, le circuit de sortie sera désactivé.
+</ul>
+<li>Normalement On (ou Actif)
+<ul>
+<li>A l'initialisation, le circuit de sortie sera activé.
+<li> Ceci est utile si vous voulez commuter l'alimentation du transmetteur à LED Infrarouge.
+<li> les câbler grâce à un circuit de sortie CTI Acela qui est par défaut normalement Ouvert et normalement On, on peut s'assurer que la LED (qui ne peut normalement pas être vu) est seulement On au moment où le réseau CTI Acela est allumé et initialisé.
+</ul>
+</ul>
+
+N'oubliez pas de sauvegarder votre nouvelle configuration en utilisant le bouton Enregistrer dans la fenêtre Préférences. Aussi n'oubliez pas d'enregistrer une copie de votre fichier de configuration (c'est à dire DecoderProConfig2.xml ou PanelProConfig2.xml) dans un endroit sûr.
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translated by Blorec Herv&#233; le 2013-10-07-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Acc&egrave;s Web</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="viewport" content="width = device-width">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Acc&egrave;s Web</h1>JMRI peut fournir un
+      acc&egrave;s Internet &agrave; votre r&eacute;seau miniature.
+
+      <p>La m&eacute;thode de base a &eacute;t&eacute;
+      d&eacute;velopp&eacute;e par Konrad Froetzheim et ses
+      coll&egrave;gues au d&eacute;but des ann&eacute;es 1990 pour
+      leur "Internet Model Railroad". Un serveur web standard
+      communique avec le navigateur web normal de l'utilisateur
+      acceptant les requ&ecirc;tes HTTP de la mani&egrave;re
+      habituelle.</p>
+
+      <p>Par exemple, l'utilisateur peut avoir son navigateur qui
+      demande le contenu actuel d'un trame JMRI (fen&ecirc;tre),
+      qui est retourn&eacute; au navigateur comme une image
+      &agrave; afficher. L'utilisateur peut cliquer sur l'image
+      d'un panneau JMRI, qui provoque le navigateur de demander un
+      clic &agrave; la m&ecirc;me position sur ce panneau JMRI.
+      JMRI agit sur ce clic, et renvoie &eacute;galement une image
+      du panneau mis &agrave; jour. Ainsi les applications client
+      trl que <a href="http://withrottle.com" target=
+      "_new">WiThrottle</a> et <a href=
+      "http://enginedriver.rrclubs.org" target=
+      "_new">EngineDriver</a> peuvent utiliser le serveur web JMRI
+      pour fournir des capacit&eacute;s additionnelles telles que
+      l'acc&egrave;s au panneau et aux ic&ocirc;nes figurant sur la
+      liste. <a id="Start" name="Start"></a></p>
+
+      <h2>D&eacute;marrage de l'Acc&egrave;s Web</h2>JMRI Web
+      Access est inclus dans les t&eacute;l&eacute;chargements JMRI
+      habituels. Pour l'utiliser, vous avez juste &agrave; le
+      d&eacute;marrer.
+
+      <p>Avant de tenter d'utiliser l'acc&egrave;s Internet, s'il
+      vous pla&icirc;t assurez-vous que la configuration de base de
+      votre application JMRI est active. V&eacute;rifiez que vous
+      pouvez communiquer correctement avec et faire fonctionner
+      votre r&eacute;seau.</p>
+
+      <p>Pour commencer l'acc&egrave;s au Web &agrave; partir des
+      menus, s&eacute;lectionnez "D&eacute;marrer le Mini Serveur
+      Web " sous la rubrique "Debogage" du menu.</p>
+
+      <p>Ensuite, v&eacute;rifiez la connexion.</p>
+
+      <p>Si vous utilisez un navigateur web Bonjour/Zeroconf
+      activ&eacute;, comme Safari vous devriez voir un site web
+      "Mon Chemin de Fer JMRI" dans l'onglet "Bonjour". Les
+      utilisateurs de Chrome et FireFox peuvent activer la
+      caract&eacute;tistique avec le <a href="http://dnssd.me"
+      target="_new">plug-in DNSSD</a> pour obtenir la page
+      d'accueil du serveur Web JMRI.</p>
+
+      <p>Ensuite, faisons en sorte que vous pouvez acc&eacute;der
+      aux fonctions JMRI. Dans le menu Outils, s&eacute;lectionnez
+      JMRI "Commande Alimentation", qui devrait ouvrir une nouvelle
+      fen&ecirc;tre. Puis cliquez sur <a href=
+      "http://localhost:12080/panel/Power%20Control.html">ce
+      lien</a> ou entrez l'URL</p>
+      <pre style="font-family: monospace;">
+
+http://localhost:12080/frame/Power%20Control.html
+</pre>Cela devrait afficher la fen&ecirc;tre de Commande
+Alimentation de votre navigateur Web. (Remarque: "localhost" est un
+alias pour votre ordinateur, si vous souhaitez acc&eacute;der
+&agrave; l'ordinateur ex&eacute;cutant JMRI depuis un autre
+ordinateur, remplacer "localhost" avec l'adresse IP affich&eacute;e
+sur l'&eacute;cran principal, par exemple,
+      <pre style="font-family: monospace;">
+
+http://192.168.1.7:12080/frame/Power%20Control.html
+</pre>ou quelque chose de similaire) Si tout fonctionne, vous
+devriez voir la fen&ecirc;tre Commande Alimentation sur votre
+&eacute;cran navigateur. Cliquez sur le bouton "On" pour alimenter
+le r&eacute;seau . <a id="Configure" name="Configure"></a>
+
+      <h2>Configuration</h2>Vous pouvez utiliser les " <a href=
+      "../../package/apps/TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>"
+      pour dire &agrave; JMRI de d&eacute;marrer le serveur
+      &agrave; chaque fois que vous d&eacute;marrez le programme.
+
+      <p>Pour ce faire, ouvrez la fen&ecirc;tre
+      Pr&eacute;f&eacute;rences, s&eacute;lectionnez l'onglet
+      "D&eacute;marrage", puis cliquez sur "Ajouter action". Dans
+      la nouvelle bo&icirc;te de s&eacute;lections qui
+      appara&icirc;t, s&eacute;lectionnez "D&eacute;marrer Serveur
+      Web". N'oubliez pas de sauvegarder vos changements!</p>
+
+      <h2>Pr&eacute;f&eacute;rences Serveur Web</h2>Il y a un
+      certain nombre de param&egrave;tres li&eacute;s au Serveur
+      Web que vous pouvez modifier dans les
+      Pr&eacute;f&eacute;rences Serveur Web (voir image &agrave;
+      droite, cliquez pour agrandir) Le port par d&eacute;faut
+      MiniServer est 12080, mais cela peut &ecirc;tre
+      modifi&eacute; &agrave; l'aide de la bo&icirc;te de dialogue
+      Pr&eacute;f&eacute;rences MiniServer. <a id="URLs" name=
+      "URLs"></a>
+
+      <h2>Acc&egrave;s aux URLs</h2>Vous pouvez cr&eacute;er vos
+      propres pages Web en utilisant n'importe quel outil que vous
+      souhaitez. Pour acc&eacute;der &agrave; JMRI depuis ces
+      pages, vous avez besoin de conna&icirc;tre les URL correctes
+      pour demander les services que vous souhaitez. Plusieurs
+      exemples sont li&eacute;s depuis l'index.html (Page d'accueil
+      su Serveur Web JMRI)
+
+      <h2>Ouvrir Acc&egrave;s Fen&ecirc;tre (Image)</h2>Pour
+      afficher toutes les fen&ecirc;tres JMRI
+      <em>d&eacute;j&agrave; ouverte</em> comme une image
+      <b>clicable</b> qui est p&eacute;riodiquement
+      rafra&icirc;chie, utiliser un URL comme:
+      <pre style="font-family: monospace;">
+<a href=
+"http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a> 
+</pre>
+      <pre style="font-family: monospace;">
+<a href=
+"http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a>
+</pre>
+      <pre style="font-family: monospace;">
+<a href=
+"http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a>
+</pre>
+
+      <p>Notez le titre du cadre dans l'URL, suivi de ". html".
+      Remplacez les espaces dans le titre par "% 20".</p>Pour la
+      liste courante, g&eacute;n&eacute;rant dynamiquement des
+      fen&ecirc;tres disponibles, utilisez cet URL:
+      <pre style="font-family: monospace;">
+<a href=
+"http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a>
+</pre>
+
+      <p><em>Note:</em> R&eacute;gler par d&eacute;faut comme
+      d&eacute;lai de rafra&icirc;chissement, des cadres non
+      autoris&eacute;s et l'utilisation ajax dans les
+      Pr&eacute;f&eacute;rences du serveur Web.</p>Vous pouvez
+      remplacer les valeurs par d&eacute;faut pour des pages
+      individuelles en utilisant les param&egrave;tresms suivants
+      dans votre URL:
+
+      <div>
+        <ul>
+          <li><b>plain</b> (cacher les liens en bas de page)</li>
+
+          <li><b>protect</b> (prot&eacute;ger le cadre des clics de
+          l'utilisateur, ex: image en lecture seule, mais avec
+          rafra&icirc;chissement)</li>
+
+          <li><b>ajax</b> (utiliser ajax pour les mises &agrave;
+          jour)</li>
+
+          <li style="list-style: none">Example, montrant sans lien,
+          proteg&eacute;, utilisant ajax pour rafra&icirc;chir
+          toutes les 12 secondes:
+            <pre style="font-family: monospace;">
+<a href=
+"http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&amp;plain=true&amp;protect=true&amp;retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&amp;plain=true&amp;protect=true&amp;retry=12</a>
+</pre>Vous pouvez aussi appeler le <b>WebThrottle</b> directement:
+            <pre>
+<code><a href="http://localhost:12080/web/webThrottle.html" target=
+"_blank"> http://localhost:12080/web/webThrottle.html </a>
+</code>
+</pre>Voir page de d&eacute;marrage <b>serveur web JMRI</b> pour
+plus d'informations ou passer &agrave; la page d'aide: <b>
+            WebThrottle</b>
+            <pre>
+<code><a href=
+"/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml</a>
+</code>
+</pre>
+
+            <h2>Pour afficher un fichier local</h2>Un fichier HTML
+            local (page web), fichier texte ou graphique peut
+            &ecirc;tre affich&eacute; avec l'URL appropri&eacute;.
+
+            <p>Les fichiers dans votre r&eacute;pertoire des
+            pr&eacute;f&eacute;rences JMRI peuvent &ecirc;tre
+            accessible via un URL qui commence par "prefs":</p>
+            <pre>
+<code><a href=
+"http://localhost:12080/prefs"> http://localhost:12080/prefs </a>
+</code>
+</pre>
+
+            <p>Les fichiers dans certains r&eacute;pertoires dans
+            le r&eacute;pertoire du programme JMRI peuvent
+            &ecirc;tre accessible via un URL qui commence par
+            "dist":</p>
+            <pre>
+<code><a href=
+"http://localhost:12080/dist/help/en/webindex.shtml">http://localhost:12080/dist/help/en/webindex.shtml</a>
+</code>
+</pre>fera r&eacute;f&eacute;rence &agrave; l'index du
+syst&egrave;me d'aide, tandis que
+            <pre>
+<code><a href=
+"http://localhost:12080/dist/resources/logo.gif">http://localhost:12080/dist/resources/logo.gif</a>
+</code>
+</pre>va charger un graphique &agrave; partir du r&eacute;pertoire
+des ressources logo JMRI. "dist / web" et "dist / xml" travaille
+aussi comme pr&eacute;fixes.
+
+            <h2>Affichage des fichiers du panneau
+            format&eacute;</h2>Les "fichiers de panneau" que JMRI
+            utilise pour stocker la configuration et les
+            informations d'affichage peuvent &ecirc;tre
+            affich&eacute;s dans une forme pratique par un
+            navigateur Web. Le serveur web JMRI fonctionne avec
+            votre navigateur pour faire ce formatage. Vous pouvez
+            ensuite visualiser, imprimer, enregistrer, etc le
+            fichier au format. Par exemple, pour afficher
+            "myFile.xml" &agrave; partir du r&eacute;pertoire JMRI
+            pr&eacute;f&eacute;rences, utilisez
+            <pre>
+<code><a href=
+"http://localhost:12080/prefs/MyFile.xml"> http://localhost:12080/prefs/MyFile.xml </a>
+</code>
+</pre>
+
+            <h3>Pour afficher une liste format&eacute;e
+            JMRI</h3>Pour obtenir une vue joliment format&eacute;
+            de votre liste JMRI simplement aller &agrave;:
+            <pre style="font-family: monospace;">
+
+<a href=
+"http://localhost:12080/roster?format=xml"> http://localhost:12080/roster?format=xml </a>
+</pre>Notez que ceci est votre fichier roster.xml qui s'affiche
+uniquement en utilisant une transformation XSLT.
+
+            <h2><a name="security" id=
+            "security">s&eacute;curit&eacute;</a></h2>
+
+            <p>Par d&eacute;faut, JMRI permet uniquement un
+            acc&egrave;s limit&eacute; &agrave; votre ordinateur.
+            Seuls les fichiers qui se trouvent dans le
+            r&eacute;pertoire de distribution JMRI ou le
+            r&eacute;pertoire JMRI preferences seront fournis en
+            r&eacute;ponse &agrave; des demandes. Ce n'est pas la
+            s&eacute;curit&eacute; &eacute;tanche &agrave; tout,
+            cependant, et vous devriez faire attention &agrave; ne
+            pas mettre un contenu important dans ces
+            r&eacute;pertoires ou les lier &agrave; d'autres
+            parties de votre ordinateur.</p>
+            <!--#include virtual="/Footer" -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

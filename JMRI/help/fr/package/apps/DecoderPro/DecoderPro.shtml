@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!--Updated by Herv&#233; Blorec 2013-10-08-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Fen&ecirc;tre Principale DecoderPro</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help preferences">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Fen&ecirc;tre Principale DecoderPro</h1>La
+      fen&ecirc;tre principale DecoderPro vous donne acc&egrave;s
+      &agrave; toutes les capacit&eacute;s de JMRI. Pour plus
+      d'informations sur DecoderPro lui-m&ecirc;me, s'il vous
+      pla&icirc;t voir <a href="../../../manual/index.shtml">le
+      manuel en ligne DecoderPro</a>.
+
+      <p>Aide sur les menus sp&eacute;cifiques:</p>
+
+      <ul>
+        <li>Modifier - (<a href=
+        "../TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>)</li>
+
+        <li><a href=
+        "../../jmri/jmrit/ToolsMenu.shtml">Outils</a></li>
+
+        <li><a href=
+        "../../../html/apps/DecoderPro/Roster.shtml#menu">Liste</a></li>
+
+        <li><a href=
+        "../../jmri/jmrit/display/PanelMenuHelp.shtml">Panneaux</a></li>
+
+        <li>(Le menu sp&eacute;cifique &agrave; votre connexion au
+        r&eacute;seau appara&icirc;t ici)</li>
+
+        <li><a href=
+        "../../../package/jmri/jmrit/DebugMenu.shtml">Debogage</a></li>
+
+        <li>Fen&ecirc;tre
+
+          <ul>
+            <li>Affiche les fen&ecirc;tres actuellement
+            disponibles</li>
+
+            <li>Minimiser - r&eacute;duire la fen&ecirc;tre
+            actuelle, elle se cache.</li>
+          </ul>
+        </li>
+
+        <li>Aide
+
+          <ul>
+            <li>Aide Fen&ecirc;tre - Ouvre une page d'aide
+            sp&eacute;cifique &agrave; la fen&ecirc;tre courante.
+            Pour la fen&ecirc;tre principale, c'est cette
+            page.</li>
+
+            <li>Aide G&eacute;n&eacute;rale - Ouvre la page d'aide
+            principale JMRI.</li>
+
+            <li>Licence - Affiche la licence JMRI.</li>
+
+            <li>Localisations - Montre o&ugrave; les
+            r&eacute;pertoires programm JMRI et les
+            pr&eacute;f&eacute;rences sont situ&eacute;s</li>
+
+            <li>Contexte - Affiche des informations sur votre
+            configuration de JMRI qui pourraient &ecirc;tre utiles
+            quand quelqu'un essaie d'aider &agrave; r&eacute;soudre
+            un probl&egrave;me.</li>
+
+            <li>T&eacute;l&eacute;charger Infos D&eacute;bogage -
+            Ouvre une fen&ecirc;tre de t&eacute;l&eacute;chargement
+            d'infos de d&eacute;bogage.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <p>Les boutons de cette fen&ecirc;tre sont des raccourcis
+      vers les programmateurs de d&eacute;codeur. Plus un lien vers
+      l'aide &agrave; l'&eacute;criture dans un Programmateur
+      Symbolique DecoderPro et un bouton Quitter qui termine le
+      programme JMRI.</p>
+
+      <p>Ceci est la page d'aide
+      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

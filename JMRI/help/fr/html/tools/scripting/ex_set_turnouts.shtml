@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233;  2013-09-26-->
+
+  <title>JMRI: Scripting Example - Setting Turnouts</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI: Scripts pour Aller ...<br>
+      R&eacute;glage de l'&eacute;tat par D&eacute;faut des
+      Aiguillages</h2>de la
+
+      <div class="section">
+        <p>(Exemple contribu&eacute; par Jerry Britton)</p>
+
+        <p>Mon r&eacute;seau, le <a href=
+        "http://jbritton.pennsyrr.com/" target="new">Pennsylvania
+        Railroad R&eacute;gion de l'Est</a> , pr&eacute;sente
+        d&eacute;j&agrave; plus d'une centaine d'aiguillages, avec
+        davantage &agrave; l'avenir. A ce jour et pour un avenir
+        proche, les ade laiguillages ne fournissent pas de
+        r&eacute;troaction, c'est une d&eacute;pense que je ne suis
+        pas pr&ecirc;t &agrave; assumer.</p>
+
+        <p>J'ai d&eacute;velopp&eacute; des <a href=
+        "http://jbritton.pennsyrr.com/control_pan%20href%20jels.ws4d"
+        target="new">panneaux PanelPro</a> pour une paire de
+        dispatcheurs &agrave; utiliser pour le contr&ocirc;le du
+        r&eacute;seau. PanelPro interroge les commandes aiguillages
+        via LocoNet (Digitrax syst&egrave;me). Les Aiguillages sont
+        actionn&eacute;s par des moteurs d'aiguilles Tortoise qui
+        sont contr&ocirc;l&eacute;s par des d&eacute;codeurs
+        stationnaires SwitchIt NCE qui surveillent LocoNet pour les
+        commandes.</p>
+
+        <p>Le probl&egrave;me est, que sans d&eacute;tection sur
+        les aiguillages eux-m&ecirc;mes, chaque fois que PanelPro
+        est ouvert pour la premi&egrave;re fois, tous les
+        aiguillages montrent un &eacute;tat "?", ce qui signifie
+        que PanelPro ne connait pas leur &eacute;tat actuel.</p>
+
+        <p>Jusqu'&agrave; maintenant, j'ai investi une somme
+        consid&eacute;rable de temps &agrave; cliquer manuellement
+        sur le r&eacute;glage de tous et pour d&eacute;finir pour
+        l'&eacute;tat de chaque aiguillage,et le mettre dans
+        l'&eacute;tat d&eacute;sir&eacute;. J'ai
+        sugg&eacute;r&eacute; que le champ &eacute;tat par
+        d&eacute;faut soit ajout&eacute; &agrave; la table
+        Aiguillage - et peut-&ecirc;tre que nous le verrons que
+        dans le futur - mais pour l'instant mon besoin peut
+        &ecirc;tre satisfait par l'interm&eacute;diaire d'un
+        script. Peut-&ecirc;tre vous en avez besoin d'un, il peut
+        r&eacute;pondre aussi &agrave; vos besoins.</p>
+
+        <p>La raison de cette page web est que je suis un cheminot
+        mod&eacute;liste qui utilise JMRI. Notre &eacute;quipe de
+        programmation tr&egrave;s talentueuse est compos&eacute;e
+        de programmeurs qui sont aussi des mod&eacute;listes
+        ferroviaires. Quand j'ai demand&eacute;: "Comment Je peux
+        faire...", j'ai re&ccedil;u des informations beaucoup plus
+        que n&eacute;cessaires ou souhait&eacute;es. Je n'ai aucun
+        int&eacute;r&ecirc;t &agrave; devenir un programmeur ou
+        d'apprendre exactement comment il "fonctionne". J'ai juste
+        un besoin que je voudrais voir remplit avec un minimum
+        d'effort. Il a &eacute;t&eacute; un exemple classique de
+        demander l'heure et d'&ecirc;tre instruit comment
+        construire une montre!</p>
+      </div>
+
+      <div class="section">
+        <h2>Le script</h2>
+        <pre>
+class setStartup(jmri.jmrit.automat.AbstractAutomaton):
+   def init(self):
+     return
+    def handle(self):
+     self.waitMsec (10000) # temps est en millisecondes
+     turnouts.provideTurnout ("1"). setState (DIRECT)
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("17"). setState (DIRECT) 
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("9"). setState (DIRECT) &agrave; l'utiliser
+     self.waitMsec (1000)
+     Fausse d&eacute;claration # tout est fait, ne pas r&eacute;p&eacute;ter
+setStartup (). start () # cr&eacute;ation d'une d'elles, et de lancer son ex&eacute;cution 
+</pre>
+      </div>
+
+      <div class="section">
+        <h2>Faire usage de l'&eacute;criture</h2>
+
+        <p>Vous devriez "copier" et "coller" l'exemple de ce script
+        dans un nouveau document texte. Soyez s&ucirc;r que le
+        fichier est effectivement enregistr&eacute; comme un
+        document texte g&eacute;n&eacute;rique, et non quelque
+        chose comme un fichier Microsoft Word. Le suffixe du
+        fichier doit &ecirc;tre ".Py" pour Python, le langage de
+        commande utilis&eacute; par JMRI.</p>
+
+        <p>Enregistrer le fichier o&ugrave; JMRI peut
+        acc&eacute;der. J'ai sauver le mien dans le m&ecirc;me
+        r&eacute;pertoire que mes fichiers PanelPro.</p>
+
+        <p>Il est TR&egrave;S IMPORTANT que vous conserviez le
+        formatage du script de la mani&egrave;re dont il est fait -
+        avec des onglets principaux. Le langage Python utilise des
+        onglets dans le cadre de sa structure de commande.de la</p>
+
+        <p>Cette premi&egrave;re partie du script que vous devriez
+        inclure "telle quelle". Aucune modification n'est
+        n&eacute;cessaire:</p>
+        <pre>
+
+  Class setStartup(jmri.jmrit.automat.AbstractAutomaton):
+  def init (self): 
+     return
+   def handle(self):
+     self.waitMsec (10000) # temps est en millisecondes
+  
+</pre>
+
+        <p>La partie suivante du script est ce que vous devez
+        modifier pour votre propre usage. Voici les commandes pour
+        d&eacute;finir l'&eacute;tat de trois aiguillages, chacun
+        constitu&eacute; de deux lignes.</p>
+
+        <p>La premi&egrave;re ligne comprend un certain nombre de
+        citations qui est le nombre de d'aiguillage
+        (d&eacute;codeur ID) auquel vous souhaitez envoyer la
+        commande. L'&eacute;tat entre parenth&egrave;ses &agrave;
+        la fin de la ligne (DIRECTS ou D&eacute;VI&eacute;S) est la
+        position que vous voulez pour l'aiguillage.</p>
+
+        <p>La deuxi&egrave;me ligne ajoute un d&eacute;lai entre
+        les commandes, en millisecondes. Si vous avez beaucoup
+        d'aiguillages &agrave; d&eacute;finir, votre alimentation
+        ne serait probablement pas capable de g&eacute;rer toutes
+        les commandes d&eacute;vi&eacute;s &agrave; la fois. Ce
+        d&eacute;lai permet aux activations d'&ecirc;tre
+        &eacute;tal&eacute;es dans le temps. Des dizaines
+        d'appareils de voie peut &ecirc;tre r&eacute;gl&eacute;s
+        sur une p&eacute;riode de une minute ou deux.</p>
+
+        <p>"coller" plusieurs instances de ces deux commandes en
+        ligne dans votre script comme d&eacute;sir&eacute;. Vous
+        pouvez &eacute;galement ajouter des lignes de commentaires
+        (commen&ccedil;ant par un "#") afin de documenter des
+        sections de votre mise en page.</p>
+        <pre>
+      turnouts.provideTurnout ("1"). setState (DIRECT)
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("17"). setState (DIRECT)
+     self.waitMsec (1000)turnouts.provideTurnout ("1"). setState (DIRECT)
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("17"). setState (DIRECT)
+     self.waitMsec (1000)
+</pre>
+
+        <p>La partie la fermeture du script devrait aussi
+        &ecirc;tre laiss&eacute; "en l'&eacute;tat":</p>
+        <pre>
+      return False        # tout est fait, ne pas r&eacute;p&eacute;ter
+setStartup (). start ()    # cr&eacute;ation de l'une d'elles, et  lancer son ex&eacute;cution 
+</pre>
+        <pre>
+
+
+</pre>
+      </div>
+
+      <div class="section">
+        <h2>mise enoeuvre du script</h2>
+
+        <p>Avec une alimentation sur la voie, vous pouvez
+        ex&eacute;cuter le script en s&eacute;lectionnant
+        Ex&eacute;cuter le script &agrave; partir du menu du
+        PanelPro JMRI. Il y aura un d&eacute;lai avant
+        l'ex&eacute;cution du script, mais alors vous verrez vos
+        aiguillage d&eacute;vier un par un.</p>
+
+        <p>Vous pouvez &eacute;galement s&eacute;lectionner le
+        script &agrave; ex&eacute;cuter automatiquement lorsque
+        PanelPro est lanc&eacute; en s&eacute;lectionnant le
+        fichier de script dans les pr&eacute;f&eacute;rences
+        avanc&eacute;es. Soyez s&ucirc;r de l'alimentation
+        disponible avant de lancer PanelPro dans ce cas.</p>
+      </div>
+
+      <div class="section">
+        Cr&eacute;dit
+
+        <h2>A Qui est D&ucirc; le Cr&eacute;dit</h2>
+
+        <p>Ma louange sans fin va &agrave; tous les
+        d&eacute;veloppeurs qui fournissent la communaut&eacute;
+        JMRI des mod&eacute;lisme ferroviaire. Toutefois, dans le
+        cas rencontr&eacute; avec mon besoin de mise en &eacute;tat
+        par d&eacute;faut d'aiguillages, je tiens &agrave; exprimer
+        ma gratitude &agrave; "breezlys" de la communaut&eacute;
+        JMRI Forum; il a fourni l'exemple de script que, je pense
+        qu'il a interpr&eacute;t&eacute; et modifi&eacute; &agrave;
+        partir des exemples de scripts JMRI.</p>
+
+        <p>- Page r&eacute;dig&eacute;e par Jerry Britton, Mars
+        2006.</p>
+      </div><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

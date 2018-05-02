@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+    <xs:complexType name="EntryExitPairType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of the Entry Exit implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.jmrit.signalling.configurexml.EntryExitPairsXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="cleardown" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="dispatcherintegration" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="colourwhilesetting" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
+        <xs:element name="settingTimer" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
+        <xs:element name="logicDelay" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+        <!-- code in EntryExitPairsXml that writes the following is distinct from usual panel code -->
+        <xs:element name="layoutPanel" type="EntryExitPanelType" minOccurs="0" maxOccurs="unbounded" />
+
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="EntryExitPanelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one SignalMast Logic implementation.
+          Generally dealt with by the manager implemenation
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastLogicManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="source" type="EntryExitSourceType" minOccurs="1" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="EntryExitSourceType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one SignalMast Logic implementation.
+          Generally dealt with by the manager implemenation
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastLogicManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="destination" type ="EntryExitDestinationType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="type" type="xs:string" use="required" />
+      <xs:attribute name="item" type="beanNameType" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="EntryExitDestinationType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one SignalMast Logic implementation.
+          Generally dealt with by the manager implemenation
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultSignalMastLogicManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+
+      </xs:sequence>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="signalMast"/>
+            <xs:enumeration value="sensor"/>
+            <xs:enumeration value="signalHead"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="item" type="beanNameType" use="required" />
+      <xs:attribute name="uniDirection" type="yesNoType" />
+      <xs:attribute name="enabled" type="yesNoType" />
+      <xs:attribute name="nxType">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="turnoutsetting"/>
+            <xs:enumeration value="signalmastlogic"/>
+            <xs:enumeration value="fullinterlocking"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="uniqueid" type="xs:string" use="required" />
+    </xs:complexType>
+
+</xs:schema>

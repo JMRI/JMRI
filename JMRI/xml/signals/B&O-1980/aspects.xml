@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>B&amp;O 1980</name>
+  <date>1980</date>
+  <reference>As described in the Chessie System 1980 Rule Book.</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Greg</firstname>
+        <surname>McCartney</surname>
+      </personname>
+      <email>gpmccartney@gmail.com</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-07-28</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  
+  <aspects>
+  
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule B-281</rule>
+      <indication>Proceed</indication>
+      <reference>Page 128</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>15</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule B-282</rule>
+      <indication>Proceed approaching next signal at not exceeding limited speed.</indication>
+      <reference>Page 129</reference>
+      <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule B-282-A</rule>
+      <indication>Proceed approaching next signal at not exceeding medium speed.</indication>
+      <reference>Page 129</reference>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>12</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Limited Clear</name>
+      <rule>Rule B-283</rule>
+      <indication>Limited speed through crossovers, turnouts, sidings, interlocking limits and over power switches: then proceed at maximum authorized speed.</indication>
+      <reference>Page 130</reference>
+      <comment>Signal is identical to Medium Clear except for the addition of a triangle flag on signal mast</comment>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule B-283-A</rule>
+      <indication>Medium speed through crossovers, turnouts, sidings, interlocking limits and over power switches: then proceed at maximum authorized speed.</indication>
+      <reference>Page 130</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>11</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Medium Approach Medium</name>
+      <rule>Rule B-283-B</rule>
+      <indication>Proceed at not exceeding medium speed approaching next signal at not exceeding medium speed.</indication>
+      <reference>Page 131</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Medium Approach Slow</name>
+      <rule>Rule B-283-C</rule>
+      <indication>Proceed at not exceeding medium speed approaching next signal at not exceeding slow speed.</indication>
+      <reference>Page 131</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule B-284</rule>
+      <indication>Proceed approaching next signal at slow speed. Train or engine exceeding medium speed when indication is seen must take action at once to reduce to medium speed or slower, if necessary.</indication>
+      <reference>Page 132</reference>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule B-285</rule>
+      <indication>Proceed prepared to stop at next signal. Train or engine exceeding medium speed when indication is seen must take action at once to reduce to medium speed or slower, if necessary.</indication>
+      <reference>Page 133</reference>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule B-286</rule>
+      <indication>Proceed at not exceeding medium speed prepared to stop at next signal.</indication>
+      <reference>Page 134</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Slow Approach Slow</name>
+      <rule>Rule B-287</rule>
+      <indication>Slow speed through crossovers, turnouts, sidings, interlocking limits, and over power switches.  Train or engine may then proceed at maximum authorized speed, if conditions permit, but must approach the next signal at not exceeding slow speed.</indication>
+      <reference>Page 135</reference>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule B-288</rule>
+      <indication>Slow speedthrough crossovers, turnouts, sidings, interlocking limits, and over power switches; then proceed at not exceeding medium speed prepared to stop at the next signal.</indication>
+      <reference>Page 136</reference>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule B-290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 137</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule B-291</rule>
+      <indication>Stop; then proceed at restricted speed.</indication>
+      <reference>Page 138</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+	
+    <aspect>
+      <name>Stop and Proceed Medium</name>
+      <rule>Rule B-291-medium</rule>
+      <indication>Stop; then proceed at restricted speed on medium speed route.</indication>
+      <reference>Page 138</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance.  Only example I have seen of this aspect was on the Ohio River Subdivsion in a non CTC area.  The only other aspect available on the mast was Restricting.</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Diverging</route>
+    </aspect>
+	
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule B-292</rule>
+      <indication>Stop</indication>
+      <reference>Page 140</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+	
+  </aspects>
+  
+  <appearancefiles>
+    <appearancefile href="appearance-CPL-High.xml"/>
+	<appearancefile href="appearance-CPL-High-permissive.xml"/>
+	<appearancefile href="appearance-CPL-Dwarf.xml"/>
+	<appearancefile href="appearance-Semaphore-3Arm.xml"/>
+	<appearancefile href="appearance-Semaphore-2Arm.xml"/>
+	<appearancefile href="appearance-Semaphore-1Arm.xml"/>
+	<appearancefile href="appearance-Semaphore-1Armwithmarker.xml"/>
+	<appearancefile href="appearance-Semaphore-1ArmDwarf.xml"/>
+	<appearancefile href="appearance-CPL-High-NJInternational.xml"/>
+  </appearancefiles>
+</aspecttable>

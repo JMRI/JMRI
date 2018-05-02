@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John McAleely john@mcaleely.com" version="1" lastUpdated="20080502"/>
+  <!-- The funtion only decoder only supports writing its address" -->
+  <decoder>
+    <family name="Digital" mfg="Hornby">
+      <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer"/>
+    </family>
+    <programming direct="no" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable CV="1" comment="Short address" item="Short Address" default="03" writeOnly="yes" inOptions="unmotored">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <comment>Short address</comment>
+      </variable>
+      <variable CV="8" infoOnly="yes" item="Manufacturer" default="48">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+    </variables>
+  </decoder>
+</decoder-config>

@@ -1,0 +1,65 @@
+language: java
+
+addons:
+  apt:
+    packages:
+    - graphviz
+    - libalut0
+    - dbus-x11
+    - tidy
+  firefox: latest
+  chrome: stable
+
+before_install:
+  # ensure no unwanted defaults are set
+  # see https://github.com/travis-ci/travis-ci/issues/4613#issuecomment-181845546
+  - export MAVEN_SKIP_RC="true"
+  # set Linux to use JDK 8, accept defaults on macOS
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] ; then jdk_switcher use "oraclejdk8" ; fi
+  # install graphviz on macOS
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install graphviz ; fi
+
+install:
+  - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+before_script:
+  # setup a display on linux ( the sleep gives xvfb some time to start )
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; sleep 3 ; fi
+  # silence errors from firefox about dbus.
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]]; then dbus-launch ; fi
+
+script:
+  travis_wait 40 ./scripts/travis.sh
+
+cache:
+  directories:
+  - $HOME/.m2
+
+os:
+  - linux
+#  - osx # temporarilly disabled -- its more complex than originally anticipated to do conditional matrixes based on PR/push differentiation
+
+sudo: required
+
+env:
+  global:
+  # false to silence most maven output; true to catch tests that do not complete
+  - PRINT_SUMMARY=false
+  - MAVEN_OPTS=-Xmx1536m
+  # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
+  - RUN_ORDER=filesystem
+  matrix:
+  - HEADLESS=true STATIC=true
+  - HEADLESS=true STATIC=false
+  - HEADLESS=false STATIC=false
+
+matrix:
+  exclude:
+  - os: osx
+    env: HEADLESS=true STATIC=true
+  - os: osx
+    env: HEADLESS=true STATIC=false
+
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi

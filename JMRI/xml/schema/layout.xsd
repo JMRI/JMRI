@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Not in Venetian blind form                                       -->
+<!-- 'operation' element not complete                                 -->
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<!-- 
+Top Level Elements not brought over from DTD 
+
+securityelements - thought to be obsolete
+aspectgenerator - thought to be obsolete
+
+application - obsolete container element for gui/connection/programmer
+preferences - never fully defined in DTD
+signals - obsolete, EMPTY, never used
+
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+    <xs:annotation>
+        <xs:documentation>
+          This is the schema representing panel files, including
+          both the panels themselves and configuration information.
+          <p/>
+          This version of the schema is for files created by JMRI
+          version 2.9.5 and before. 
+          This version is no longer being updated,
+          having been superceded by the 
+          layout.2.9.6.xsd file.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="yes" />  <!-- too many to list -->
+        </xs:appinfo>
+    </xs:annotation>
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/connection.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/routes.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/warrants.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/logix.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/editors.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+
+  <xs:element name="layout-config">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+
+        <xs:element name="jmriversion" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Automatically added to contain JMRI version writing the file
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.configurexml.ConfigXmlManager</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="major" type="xs:int" minOccurs="1" maxOccurs="1" />
+                <xs:element name="minor" type="xs:int" minOccurs="1" maxOccurs="1" />
+                <xs:element name="test" type="xs:int" minOccurs="0" maxOccurs="1" />
+                <xs:element name="modifier" type="xs:string" minOccurs="0" maxOccurs="1" />
+              </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="gui" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines options for the GUI configuration
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.configurexml.GuiLafConfigPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="LAFclass" type="xs:string"/>
+                <xs:attribute name="class" type="classType" use="required" />
+                <xs:attribute name="LocaleLanguage" type="xs:string"/>
+                <xs:attribute name="LocaleCountry" type="xs:string"/>
+                <xs:attribute name="LocaleVariant" type="xs:string"/>
+                <xs:attribute name="nonStandardMouseEvent" type="yesNoType"/>
+            </xs:complexType>
+        </xs:element>
+            
+        <xs:element name="programmer" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines DecoderPro configuration options
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="class" type="classType" use="required"/>
+                <xs:attribute name="verifyBeforeWrite" type="yesNoType" default="no"/>
+                <xs:attribute name="showEmptyPanes" type="yesNoType" default="yes" />
+                <xs:attribute name="showCvNumbers" type="yesNoType" default="no" />
+                <xs:attribute name="defaultFile" type="xs:string" default="Basic.xml"/>
+            </xs:complexType>
+        </xs:element>
+      
+        <xs:element name="roster" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines DecoderPro roster applications re location, default owner
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.jmrit.roster.configurexml.RosterConfigPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="class" type="classType" use="required"/>
+                <xs:attribute name="directory" type="xs:string" />
+                <xs:attribute name="ownerDefault" type="xs:string" />
+            </xs:complexType>
+        </xs:element>
+      
+        <xs:element name="perform" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines things to do when the file is loaded (usually when the app starts up, as this is in config file)
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.PerformActionModelXml</jmri:usingclass>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.CreateButtonModelXml</jmri:usingclass>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.PerformFileModelXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="class" type="classType" use="required"/>
+                <xs:attribute name="type" default="Action">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                      <xs:enumeration value="Action"/>
+                      <xs:enumeration value="ScriptFile"/>
+                      <xs:enumeration value="XmlFile"/>
+                      <xs:enumeration value="Button"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="connection"   type="ConnectionType" minOccurs="0" maxOccurs="unbounded" />
+      
+        <xs:element name="turnouts"     type="TurnoutManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="sensors"      type="SensorManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="lights"       type="LightManagerType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:key name="lightSystemName">
+            <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./light"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="lightUserName">
+            <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./light"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+        </xs:element>
+
+        <xs:element name="reporters"    type="ReporterManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memories"     type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memorys"      type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" /> <!-- deprecated older spelling -->
+
+        <xs:element name="blocks"       type="BlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="oblocks"      type="OBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="sections"     type="SectionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="transits"     type="TransitManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="timebase"     type="TimebaseType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" >
+        </xs:element>
+
+        <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded">
+          <xs:key name="signalMastSystemName">
+            <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalmast"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="signalMastUserName">
+            <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalmast"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+        </xs:element>
+
+        <xs:element name="signalgroups" type="SignalGroupManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutblocks" type="LayoutBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded">
+          <xs:key name="signalElementName">
+            <xs:annotation><xs:documentation>Insist that at most one appear for each signal</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalelement"/> 
+            <xs:field xpath="@signal"/>           
+          </xs:key>
+        </xs:element>
+
+        <xs:element name="audio"        type="AudioManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="routes"       type="RouteManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixs"       type="LogixManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="conditionals" type="ConditionalManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
+
+        
+      </xs:sequence>
+    </xs:complexType>
+
+          <xs:key name="turnoutSystemName">
+            <xs:annotation><xs:documentation>Insist that each turnout system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./turnouts/turnout"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="turnoutUserName">
+            <xs:annotation><xs:documentation>Insist that each turnout user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./turnouts/turnout"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+          <xs:key name="turnoutName">
+            <xs:annotation><xs:documentation>Insist that all turnout user and system names are unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./turnouts/turnout | ./turnouts/turnout"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+
+          <xs:key name="sensorSystemName">
+            <xs:annotation><xs:documentation>Insist that each sensor system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./sensors/sensor"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="sensorUserName">
+            <xs:annotation><xs:documentation>Insist that each sensor user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./sensors/sensor"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+          <xs:unique name="sensorName">
+            <xs:annotation><xs:documentation>Insist that all sensor user and system names are unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./sensors/sensor"/> 
+            <xs:field xpath="@systemName | @userName"/>           
+          </xs:unique>
+
+          <xs:key name="signalHeadSystemName">
+            <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalheads/signalhead"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Switching modes for + (plus) decoders   -->
+  <!-- Potentiometer -->
+  <enumChoice choice="[140]" value="140">
+    <choice>[140] Potentiometer 0</choice>
+    <choice xml:lang="de">[140] Potentiometer 0</choice>
+  </enumChoice>
+  <enumChoice choice="[141]" value="141">
+    <choice>[141] Potentiometer 1</choice>
+    <choice xml:lang="de">[141] Potentiometer 1</choice>
+  </enumChoice>
+  <enumChoice choice="[142]" value="142">
+    <choice>[142] Potentiometer 2</choice>
+    <choice xml:lang="de">[142] Potentiometer 2</choice>
+  </enumChoice>
+  <enumChoice choice="[143]" value="143">
+    <choice>[143] Potentiometer 3</choice>
+    <choice xml:lang="de">[143] Potentiometer 3</choice>
+  </enumChoice>
+  <enumChoice choice="[144]" value="144">
+    <choice>[144] Potentiometer 4</choice>
+    <choice xml:lang="de">[144] Potentiometer 4</choice>
+  </enumChoice>
+  <enumChoice choice="[145]" value="145">
+    <choice>[145] Potentiometer 5</choice>
+    <choice xml:lang="de">[145] Potentiometer 5</choice>
+  </enumChoice>
+  <enumChoice choice="[146]" value="146">
+    <choice>[146] Potentiometer 6</choice>
+    <choice xml:lang="de">[146] Potentiometer 6</choice>
+  </enumChoice>
+  <enumChoice choice="[147]" value="147">
+    <choice>[147] Potentiometer 7</choice>
+    <choice xml:lang="de">[147] Potentiometer 7</choice>
+  </enumChoice>
+  <enumChoice choice="[148]" value="148">
+    <choice>[148] Potentiometer 8</choice>
+    <choice xml:lang="de">[148] Potentiometer 8</choice>
+  </enumChoice>
+  <enumChoice choice="[149]" value="149">
+    <choice>[149] Potentiometer 9</choice>
+    <choice xml:lang="de">[149] Potentiometer 9</choice>
+  </enumChoice>
+  <!-- taster-schaltmodi / key switch modes	 -->
+  <enumChoice choice="[221]" value="221">
+    <choice>[221] Switch (signal main addr.)</choice>
+    <choice xml:lang="de">[221] Schalter (Haupt adr. Signal)</choice>
+  </enumChoice>
+  <enumChoice choice="[222]" value="222">
+    <choice>[222] Switch (signal 2nd addr.)</choice>
+    <choice xml:lang="de">[222] Schalter 2. adr. Signal)</choice>
+  </enumChoice>
+  <enumChoice choice="[223]" value="223">
+    <choice>[223] Switch (signal 3rd addr.)</choice>
+    <choice xml:lang="de">[223] Schalter 3. adr. Signal)</choice>
+  </enumChoice>
+  <enumChoice choice="[224]" value="224">
+    <choice>[224] Key switch (without LED)</choice>
+    <choice xml:lang="de">[224] Taster (ohne LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[225]" value="225">
+    <choice>[225] Key switch (with LED)</choice>
+    <choice xml:lang="de">[225] Taster (mit LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[226]" value="226">
+    <choice>[226] Sig. switch main addr. (w/o LED)</choice>
+    <choice xml:lang="de">[226] Signalb.-tast. Hp. Adr. (ohne LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[227]" value="227">
+    <choice>[227] Sig. switch main addr. (w. LED)</choice>
+    <choice xml:lang="de">[227] Signalb.-tast. Hp. Adr. (mit LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[228]" value="228">
+    <choice>[228] Sig. switch 2nd addr. (w/o LED)</choice>
+    <choice xml:lang="de">[228] Signalb.-tast. 2. Adr. (ohne LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[229]" value="229">
+    <choice>[229] Sig. switch 2nd addr. (w. LED)</choice>
+    <choice xml:lang="de">[229] Signalb.-tast. 2. Adr. (mit LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[230]" value="230">
+    <choice>[230] Sig. switch 3rd addr. (w/o LED)</choice>
+    <choice xml:lang="de">[230] Signalb.-tast. 3. Adr. (ohne LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[231]" value="231">
+    <choice>[231] Sig. switch 3rd addr. (w. LED)</choice>
+    <choice xml:lang="de">[231] Signalb.-tast. 3. Adr. (mit LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[232]" value="232">
+    <choice>[232] Sig. key switch (w/o LED)</choice>
+    <choice xml:lang="de">[232] Signalb.-tast. (ohne LED)</choice>
+  </enumChoice>
+  <enumChoice choice="[233]" value="233">
+    <choice>[233] Sig. key switch (w. LED)</choice>
+    <choice xml:lang="de">[233] Signalb.-tast. (mit LED)</choice>
+  </enumChoice>
+</enumChoiceGroup>
+
+
+
+
+
+

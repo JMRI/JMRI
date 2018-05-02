@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
+        <email>gpmccartney@gmail.com</email>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-01-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Initial version of the the NW color light, search light, and semaphore signals.</revremark>
+    </revision>
+	
+	<revision>
+        <revnumber>1.1</revnumber>
+        <date>2018-02-09</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Corrected the Wabash signals with a top lunar marker.</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>N&amp;W 1981</aspecttable>
+  <name>Wabash Search Light With Lunar Marker</name>
+  <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
+  <description>Appearances for N&amp;W two arm color light, search light, and semaphore absolute mast signals.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>lunar</show>
+      <show>green</show>
+      <reference>Page 62</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-high-absolute/rule-283.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach Diverging</aspectname>
+      <show>lunar</show>
+      <show>flashyellow</show>
+      <reference>Page 62</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-high-absolute/rule-283-B.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>lunar</show>
+      <show>yellow</show>
+      <reference>Page 64</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-high-absolute/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop and Stay</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <reference>Page 66</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/Wab-SL-2-high-absolute/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances>
+
+    <danger>
+      <aspect>Stop and Stay</aspect>
+    </danger>
+
+    <held>
+      <aspect>Stop and Stay</aspect>
+    </held>
+
+  </specificappearances>
+
+  <aspectMappings>
+
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging</advancedAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Stay</advancedAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+
+</appearancetable>

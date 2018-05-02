@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2008 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="2" lastUpdated="20090725"/>
+  <version author="John McAleely (john@mcaleely.com)" version="1" lastUpdated="20080618"/>
+  <!-- Version 1 - Based on other Bachmann decoder files created to support UK 1fn model, 36-551-->
+  <!-- Version 2 - Changed model name to match others and cleaned up xml formatting (Peter Ulvestad) -->
+  <decoder>
+    <family name="E-Z Command decoders" mfg="Bachmann Trains">
+      <model model="1 function decoder (36-551)" numOuts="2" numFns="1" lowVersionID="10">
+		</model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="10" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable item="Acceleration momentum" CV="3" default="1" comment="Range 1-255">
+        <decVal min="1" max="255"/>
+        <label>Acceleration momentum</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable item="Deceleration momentum" CV="4" default="1" comment="Range 1-255">
+        <decVal min="1" max="255"/>
+        <label>Deceleration momentum</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <!-- CV=19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+      <variable CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior">
+        <decVal min="0" max="255"/>
+        <label>Headlight Dimming intensity</label>
+        <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
+      </variable>
+      <!-- User private ID CV's are not documented by Bachamann, but appear to work -->
+      <variable CV="105" item="User Id #1">
+        <decVal/>
+        <label>User Private ID #1</label>
+      </variable>
+      <variable CV="106" item="User Id #2">
+        <decVal/>
+        <label>User Private ID #2</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

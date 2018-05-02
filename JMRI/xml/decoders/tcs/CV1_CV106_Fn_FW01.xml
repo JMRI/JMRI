@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV7-8.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV13_Fn.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV21_Fn.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-54_Fn.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV59-60_Fn.xml"/>
+  <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NotusedEnabled.xml"/>
+    <label>Headlight Dim When Stopped</label>
+    <label xml:lang="it">Luci frontali smorzate quando fermo</label>
+  </variable>
+  <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NotusedEnabled.xml"/>
+    <label>Opposite Headlight Dim</label>
+    <label xml:lang="it">Smorzamento Luci Opposte</label>
+  </variable>
+  <variable CV="62" default="60" item="Function 2 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
+    <decVal/>
+    <label>Momentary Pulse</label>
+    <label xml:lang="it">Impulso Momentaneo</label>
+    <tooltip xml:lang="it">1 secondo = 60 a 4 secondi = 255</tooltip>
+  </variable>
+  <variable CV="63" default="10" item="Global lighting option 3" tooltip="1 second = about 12">
+    <decVal/>
+    <label>Ditch Light Blink Holdover Time</label>
+    <label xml:lang="it">Tempo Lampeggio Luci Ditch</label>
+    <tooltip xml:lang="it">1 secondo = circa 12</tooltip>
+  </variable>
+  <variable CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+    <decVal/>
+    <label>Dimming Brightness</label>
+    <label xml:lang="it">Luminosità smorzata</label>
+    <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+</variables>

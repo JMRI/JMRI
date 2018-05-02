@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010                -->
+
+<!-- Not in Venetian blind form                                       -->
+<!-- Much, much work to be done                                       -->
+
+<!-- 
+Top Level Elements not brought over from DTD 
+
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+    <xs:annotation>
+        <xs:documentation>
+          This is the schema representing Virtual Sound Decoder configuration files,
+	  which are contained within the VSD archive files.
+	  VSD files serve as the content (including source audio) for the VSD
+	  software.
+          <p/>
+          This version of the schema is for files created by JMRI
+          version 2.13.2 and later.  
+          It is the current development version.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="yes" />  <!-- too many to list -->
+        </xs:appinfo>
+    </xs:annotation>
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/connection.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/userpreferences.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmastlogics.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/routes-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/warrants-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/logix-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/editors.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+
+
+  <xs:element name="vsdecoder-config">
+    <xs:complexType>
+      <xs:sequence>
+	<!-- (optional) JMRI version information -->
+	<xs:element name="jmriversion" minOccurs="0" maxOccurs="unbounded">
+	  <xs:annotation>
+	    <xs:documentation>
+	      Automatically added to contain JMRI version writing the file
+	    </xs:documentation>
+	    <xs:appinfo>
+	      <jmri:usingclass configurexml="yes">jmri.configurexml.ConfigXmlManager</jmri:usingclass>
+	    </xs:appinfo>
+	  </xs:annotation>
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="major" type="xs:int" minOccurs="1" maxOccurs="1" />
+	      <xs:element name="minor" type="xs:int" minOccurs="1" maxOccurs="1" />
+	      <xs:element name="test" type="xs:int" minOccurs="0" maxOccurs="1" />
+	      <xs:element name="modifier" type="xs:string" minOccurs="0" maxOccurs="1" />
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element> <!-- JMRI version info -->
+
+	<xs:element name="profile" minOccurs="1" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:sequence>
+	    
+	      <xs:element name="default" minOccurs="0" maxOccurs="1">
+		<xs:complexType/>
+	      </xs:element> <!-- default -->
+
+	      <xs:element name="sound-event" type="sound-event-element" minOccurs="0" maxOccurs="unbounded"/>
+	      <xs:element name="sound" type="sound-element" minOccurs="0" maxOccurs="unbounded"/>
+	    </xs:sequence>
+
+	    <xs:attribute name="name" type="xs:string" use="required"/>
+
+	  </xs:complexType>
+	</xs:element> <!-- profile -->
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> <!-- vsdecoder-config -->
+  
+  <!-- group defining the contents of a Sound element type"configurable" -->
+  <xs:complexType name="sound-event-element">
+    <xs:sequence>
+    
+      <xs:element name="trigger" type="trigger-element" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+    <xs:attribute name="buttontype" type="xs:string" use="required">
+      <xs:simpleType>
+	<xs:restriction base="xs:string">
+	  <xs:enumeration value="MOMENTARY"/>
+	  <xs:enumeration value="TOGGLE"/>
+	  <xs:enumeration value="ENGINE"/>
+	</xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    
+  </xs:complexType>
+
+  <xs:complexType name="sound-element">
+    <xs:choice>
+      <!-- either configurable-sound -->
+      <xs:sequence>
+	<xs:element name="start-file" type="xs:string"/>
+	<xs:element name="mid-file" type="xs:string"/>
+	<xs:element name="end-file" type="xs:string"/>
+	<xs:element name="short-file" type="xs:string"/>
+	<xs:element name="start-sound-duration" type="xs:integer"/>
+	<xs:element name="gain" type="xs:float"/>
+      </xs:sequence>
+
+      <!-- or engine-sound -->
+      <xs:sequence>
+	<xs:element name="fade-in-time" type="xs:string" minOccurs="0" maxOccurs="1" />
+	<xs:element name="fade-out-time" type="xs:string" minOccurs="0" maxOccurs="1" />
+	<xs:element name="idle-notch" type="xs:integer" minOccurs="0" maxOccurs="1" />
+	<xs:element name="start-sound">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="shutdown-sound">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="notch-up-sound" minOccurs="0" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="notches" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+	<xs:element name="notch-sound" minOccurs="0" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="notch" type="xs:integer"/>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="notch-transition" minOccurs="0" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="prev-notch" type="xs:integer"/>
+	      <xs:element name="next-notch" type="xs:integer"/>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+      </xs:sequence>
+      
+      <!-- or Steam sound -->
+      <xs:sequence>
+	<xs:element name="top-speed" type="xs:integer"/>
+	<xs:element name="driver-diameter" type="xs:integer"/>
+	<xs:element name="cylinders" type="xs:integer"/>
+	<xs:element name="rpm-steps" type="xs:integer"/>
+	<xs:element name="rpm-step" minOccurs="1" maxOccurs="unbounded">6	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="min-rpm" type="xs:integer"/>
+	      <xs:element name="max-rpm" type="xs:integer"/>
+	      <xs:element name="gain" type="xs:float"/>
+	      <xs:element name="use-chuff-gen" minOccurs="0" maxOccurs="1"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+      </xs:sequence>
+
+    </xs:choice>
+    
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="xs:string" use="required">
+      <xs:simpleType>
+	<xs:restriction base="xs:string">
+	  <xs:enumeration value="configurable"/>
+	  <xs:enumeration value="diesel"/>
+	  <xs:enumeration value="steam"/>
+	</xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType> <!-- sound-element -->
+
+  <xs:complexType name="trigger-element">
+    <xs:sequence>
+      <xs:element name="event-name" type="xs:string"/>
+      <xs:element name="target-name" type="xs:string"/>
+      <xs:element name="match" type="xs:string"/>
+      <xs:element name="action" type="xs:string">
+	<xs:simpleType>
+	  <xs:restriction base="xs:string">
+	    <xs:enumeration value="PLAY"/>
+	    <xs:enumeration value="LOOP"/>
+	    <xs:enumeration value="STOP"/>
+	    <xs:enumeration value="FADEIN"/>
+	    <xs:enumeration value="FADEOUT"/>
+	    <xs:enumeration value="NOTCH"/>
+	    <xs:enumeration value="NOTHING"/>
+	  </xs:restriction>
+	</xs:simpleType>
+      </xs:element>
+      <!-- compare-type used only for FLOAT, INT type Triggers -->
+      <!-- need to figure out how to restrict that -->
+      <!-- and require it where needed -->
+      <xs:element name="compare-type" type="xs:string">
+	<xs:simpleType>
+	  <xs:restriction base="xs:string">
+	    <xs:enumeration value="EQ"/>
+	    <xs:enumeration value="GT"/>
+	    <xs:enumeration value="LT"/>
+	    <xs:enumeration value="GTE"/>
+	    <xs:enumeration value="LTE"/>
+	  </xs:restriction>
+	</xs:simpleType>
+      </xs:element>
+      
+    </xs:sequence>
+
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="xs:string" use="required">
+      <xs:simpleType>
+	<xs:restriction base="xs:string">
+	  <xs:enumeration value="BOOL"/>
+	  <xs:enumeration value="BUTTON"/>
+	  <xs:enumeration value="FLOAT"/>
+	  <xs:enumeration value="INT"/>
+	  <xs:enumeration value="NOTCH"/>
+	</xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+      
+</xs:schema>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-11-01-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 -->
+
+  <title>JMRI: Panels Menu</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Menu Panneaux</h1>Le menu "Panneaux" JMRi contient
+      les &eacute;l&eacute;ments suivants:
+
+      <ul>
+        <li>Nouveau Panneau...: S&eacute;lectionnez cette option
+        pour cr&eacute;er un nouveau panneau soit dans les deux'
+        <a href="PanelEditor.shtml">&Eacute;diteur de panneau</a>
+        ou <a href="LayoutEditor.shtml">&Eacute;diteur de
+        R&eacute;seau</a> .</li>
+
+        <li>Chargement de Panneau...: Charge un fichier
+        Sauvegard&eacute; pr&eacute;c&eacute;demment avec le choix
+        ci-dessous "Sauvegarder Panneaux...&raquo;. Si le fichier
+        contient &Eacute;diteur de Panneaux ou l'&Eacute;diteur de
+        R&eacute;seau, ils seront ajout&eacute;s &agrave; tout ce
+        qui existe d&eacute;j&agrave; dans le programme.</li>
+
+        <li>Sauvegarder Panneaux...: Sauvegarde la configuration
+        actuelle du programme vers un fichier, incluant tous les
+        &Eacute;diteur de Panneau actuel et les &Eacute;diteurs de
+        R&eacute;seau et de Configuration. Utilisez "Montrer
+        Panneau " ci-dessous pour voir la liste
+        compl&egrave;te.</li>
+
+        <li>Afficher l'historique : Affiche un historique de tous
+        les fichiers charg&eacute;s dans le programme en cours, et
+        comment ils ont &eacute;t&eacute; sauvegard&eacute;s
+        &agrave; partir des ex&eacute;cutions
+        pr&eacute;c&eacute;dentes du programme, avec ce qui a
+        &eacute;t&eacute; charg&eacute; dans ceux ci, et ainsi de
+        suite. Enregistre seulement les informations depuis JMRI
+        2.9.3 et versions ult&eacute;rieures.</li>
+
+        <li>Montrer Panneau : Affiche la liste des TCO et/ou des
+        panneaux des &Eacute;diteurs de Panneau actuellement dans
+        le programme, et vous permet d'apporter l'un &agrave;
+        l'avant en le s&eacute;lectionnant.</li>
+
+        <li>Ex&eacute;cuter le script...: S&eacute;lectionner et
+        ex&eacute;cuter un <a href=
+        "../../../../html/tools/scripting/index.shtml">fichier de
+        script</a>.</li>
+
+        <li>Moniteur de Lien: Ouvre une <a href=
+        "../automat/monitor/AutomatTableFrame.shtml">fen&ecirc;tre
+        affichant le lien courant en cours d'ex&eacute;cution</a> ,
+        qui comprend l'ex&eacute;cution de scripts long.</li>
+
+        <li>Script de Sortie : Ouvre la fen&ecirc;tre de Script de
+        Sortie. Tous les messages &agrave; partir de scripts
+        appara&icirc;tront ici.</li>
+
+        <li>Script d'Entr&eacute;e: Ouvre une fen&ecirc;tre de
+        Script d'Entr&eacute;e. Vous pouvez taper directement les
+        commandes de script ici.</li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

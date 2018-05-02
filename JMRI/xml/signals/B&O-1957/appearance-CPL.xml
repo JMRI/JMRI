@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <email>dick@rr-cirkits.com</email>
+    </author>    
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>1.01</revnumber>
+        <date>2010-01-17</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Typo Corrections</revremark>
+    </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2011-06-17</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
+    <revision>
+         <revnumber>1.2</revnumber>
+        <date>2011-12-06</date>
+        <authorinitials>KC</authorinitials>
+        <revremark>Normalize all aspect names to not have hyphens</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>B&amp;O 1957</aspecttable>
+  <name>Color Position Light signal</name>
+  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+  <description>Appearances for a Color Position Light signal</description>
+  
+  <appearances>
+
+   <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Clear</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-283.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Approach Slow</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-283B.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Slow</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-284.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium Approach</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow Clear</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-288.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Permissive</aspectname>
+      <show>green</show>
+      <show>lunar</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <comment>Normal speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-289.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Permissive Medium</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for medium speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-289-medium.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-290.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <comment>Normal speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-291.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Stop and Proceed Medium</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for medium speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-291-medium.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Slow Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings>
+  
+</appearancetable>  

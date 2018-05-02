@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>2</major>
+    <minor>99</minor>
+    <test>4</test>
+    <modifier>.4</modifier>
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="IS1" inverted="false" userName="NX down approach">
+      <systemName>IS1</systemName>
+      <userName>NX down approach</userName>
+    </sensor>
+    <sensor systemName="IS111" inverted="false" userName="down-appr-sens">
+      <systemName>IS111</systemName>
+      <userName>down-appr-sens</userName>
+    </sensor>
+    <sensor systemName="IS112" inverted="false" userName="up-junc-appr-sens">
+      <systemName>IS112</systemName>
+      <userName>up-junc-appr-sens</userName>
+    </sensor>
+    <sensor systemName="IS113" inverted="false" userName="up-fiddle-yard">
+      <systemName>IS113</systemName>
+      <userName>up-fiddle-yard</userName>
+    </sensor>
+    <sensor systemName="IS114" inverted="false" userName="down-fiddle-yard">
+      <systemName>IS114</systemName>
+      <userName>down-fiddle-yard</userName>
+    </sensor>
+    <sensor systemName="IS115" inverted="false" userName="up-platform">
+      <systemName>IS115</systemName>
+      <userName>up-platform</userName>
+    </sensor>
+    <sensor systemName="IS116" inverted="false" userName="down-plat-sens">
+      <systemName>IS116</systemName>
+      <userName>down-plat-sens</userName>
+    </sensor>
+    <sensor systemName="IS2" inverted="false" userName="NX down plat">
+      <systemName>IS2</systemName>
+      <userName>NX down plat</userName>
+    </sensor>
+    <sensor systemName="IS20" inverted="false" userName="up-out-sens">
+      <systemName>IS20</systemName>
+      <userName>up-out-sens</userName>
+    </sensor>
+    <sensor systemName="IS202" inverted="false" userName="facing bay lock">
+      <systemName>IS202</systemName>
+      <userName>facing bay lock</userName>
+    </sensor>
+    <sensor systemName="IS21" inverted="false" userName="bay-sens">
+      <systemName>IS21</systemName>
+      <userName>bay-sens</userName>
+    </sensor>
+    <sensor systemName="IS22" inverted="false" userName="junc-sens">
+      <systemName>IS22</systemName>
+      <userName>junc-sens</userName>
+    </sensor>
+    <sensor systemName="IS3" inverted="false" userName="NX Bay Mast">
+      <systemName>IS3</systemName>
+      <userName>NX Bay Mast</userName>
+    </sensor>
+    <sensor systemName="IS4" inverted="false" userName="NX Bay Buffer">
+      <systemName>IS4</systemName>
+      <userName>NX Bay Buffer</userName>
+    </sensor>
+    <sensor systemName="IS5" inverted="false" userName="NX Up Plat">
+      <systemName>IS5</systemName>
+      <userName>NX Up Plat</userName>
+    </sensor>
+    <sensor systemName="IS6" inverted="false" userName="NX Up Outter">
+      <systemName>IS6</systemName>
+      <userName>NX Up Outter</userName>
+    </sensor>
+    <sensor systemName="IS99" inverted="false" userName="release call on">
+      <systemName>IS99</systemName>
+      <userName>release call on</userName>
+      <comment>manual panel</comment>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="IT1" userName="bay-plat" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1</systemName>
+      <userName>bay-plat</userName>
+    </turnout>
+    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout systemName="IT21" feedback="DIRECT" inverted="true" automate="Default">
+      <systemName>IT21</systemName>
+      <comment>SignalHead:ih21:Green</comment>
+    </turnout>
+    <turnout systemName="IT22" feedback="DIRECT" inverted="true" automate="Default">
+      <systemName>IT22</systemName>
+      <comment>SignalHead:ih21:Yellow</comment>
+    </turnout>
+    <turnout systemName="IT23" feedback="DIRECT" inverted="true" automate="Default">
+      <systemName>IT23</systemName>
+      <comment>SignalHead:ih21:Red</comment>
+    </turnout>
+    <turnout systemName="IT3" userName="cross-over" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT3</systemName>
+      <userName>cross-over</userName>
+    </turnout>
+    <turnout systemName="IT31" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT31</systemName>
+    </turnout>
+    <turnout systemName="IT32" feedback="DIRECT" inverted="true" automate="Default">
+      <systemName>IT32</systemName>
+    </turnout>
+    <turnout systemName="IT33" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT33</systemName>
+      <comment>SignalHead:ih33:Lunar:Dark</comment>
+    </turnout>
+    <turnout systemName="IT34" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT34</systemName>
+      <comment>SignalHead:ih33:Dark:Lunar</comment>
+    </turnout>
+    <turnout systemName="IT41" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT41</systemName>
+      <comment>SignalHead:ih41:Green</comment>
+    </turnout>
+    <turnout systemName="IT42" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT42</systemName>
+      <comment>SignalHead:ih41:Yellow</comment>
+    </turnout>
+    <turnout systemName="IT43" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT43</systemName>
+      <comment>SignalHead:ih41:Red</comment>
+    </turnout>
+    <turnout systemName="IT51" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT51</systemName>
+      <comment>SignalHead:ih51:Green</comment>
+    </turnout>
+    <turnout systemName="IT52" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT52</systemName>
+      <comment>SignalHead:ih51:Yellow</comment>
+    </turnout>
+    <turnout systemName="IT53" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT53</systemName>
+      <comment>SignalHead:ih51:Red</comment>
+    </turnout>
+    <turnout systemName="IT61" feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT61</systemName>
+      <comment>SignalHead:ih61:Green</comment>
+    </turnout>
+    <turnout systemName="IT62" feedback="DIRECT" inverted="true" automate="Default">
+      <systemName>IT62</systemName>
+      <comment>SignalHead:ih61:Red</comment>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="10:36 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="ih121" userName="upfiddleleft">
+      <systemName>ih121</systemName>
+      <userName>upfiddleleft</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="ih122" userName="downfiddleright">
+      <systemName>ih122</systemName>
+      <userName>downfiddleright</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="ih21" userName="bay">
+      <systemName>ih21</systemName>
+      <userName>bay</userName>
+      <turnoutname defines="green">IT21</turnoutname>
+      <turnoutname defines="yellow">IT22</turnoutname>
+      <turnoutname defines="red">IT23</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="ih31" userName="down appr">
+      <systemName>ih31</systemName>
+      <userName>down appr</userName>
+      <turnoutname defines="green">IT32</turnoutname>
+      <turnoutname defines="red">IT31</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml" systemName="ih33" userName="call on">
+      <systemName>ih33</systemName>
+      <userName>call on</userName>
+      <appearance defines="thrown">dark</appearance>
+      <appearance defines="closed">lunar</appearance>
+      <turnoutname defines="aspect">IT34</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml" systemName="ih34" userName="feather">
+      <systemName>ih34</systemName>
+      <userName>feather</userName>
+      <appearance defines="thrown">dark</appearance>
+      <appearance defines="closed">yellow</appearance>
+      <turnoutname defines="aspect">IT33</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="ih41" userName="down plat">
+      <systemName>ih41</systemName>
+      <userName>down plat</userName>
+      <turnoutname defines="green">IT41</turnoutname>
+      <turnoutname defines="yellow">IT42</turnoutname>
+      <turnoutname defines="red">IT43</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="ih51" userName="up plat">
+      <systemName>ih51</systemName>
+      <userName>up plat</userName>
+      <turnoutname defines="green">IT51</turnoutname>
+      <turnoutname defines="yellow">IT52</turnoutname>
+      <turnoutname defines="red">IT53</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="ih61" userName="up outer">
+      <systemName>ih61</systemName>
+      <userName>up outer</userName>
+      <turnoutname defines="green">IT61</turnoutname>
+      <turnoutname defines="red">IT62</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="ih71" userName="buffer stop head">
+      <systemName>ih71</systemName>
+      <userName>buffer stop head</userName>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="buffer stop mast">
+      <systemName>IF$shsm:BR-2003:2-h(buffer stop head)</systemName>
+      <userName>buffer stop mast</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="down fiddle">
+      <systemName>IF$shsm:BR-2003:2-h(downfiddleleft)</systemName>
+      <userName>down fiddle</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="up fiddle">
+      <systemName>IF$shsm:BR-2003:2-h(upfiddleleft)</systemName>
+      <userName>up fiddle</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="bay mast">
+      <systemName>IF$shsm:BR-2003:3(bay)</systemName>
+      <userName>bay mast</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="down plat mast">
+      <systemName>IF$shsm:BR-2003:3(down plat)</systemName>
+      <userName>down plat mast</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="up outer mast">
+      <systemName>IF$shsm:BR-2003:3(up outer)</systemName>
+      <userName>up outer mast</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="up plat mast">
+      <systemName>IF$shsm:BR-2003:3(up plat)</systemName>
+      <userName>up plat mast</userName>
+    </signalmast>
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml" userName="down appr mast">
+      <systemName>IF$shsm:BR-2003:3-c(down appr)(call on)</systemName>
+      <userName>down appr mast</userName>
+    </signalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+      <userName>down-appr</userName>
+    </block>
+    <block systemName="IB10">
+      <systemName>IB10</systemName>
+      <userName>up-plat</userName>
+    </block>
+    <block systemName="IB11">
+      <systemName>IB11</systemName>
+      <userName>down-entry</userName>
+    </block>
+    <block systemName="IB12">
+      <systemName>IB12</systemName>
+      <userName>upfy1</userName>
+    </block>
+    <block systemName="IB13">
+      <systemName>IB13</systemName>
+      <userName>dnfy1</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>junction</userName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+      <userName>up-junc-entry</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>up-exit</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>bay</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>down plat</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>up fiddle yard</userName>
+    </block>
+    <block systemName="IB8">
+      <systemName>IB8</systemName>
+      <userName>down fiddle yard</userName>
+    </block>
+    <block systemName="IB9">
+      <systemName>IB9</systemName>
+      <userName>up plat</userName>
+    </block>
+    <block systemName="IB1" length="0.0" curve="0" userName="down-appr">
+      <systemName>IB1</systemName>
+      <userName>down-appr</userName>
+      <permissive>no</permissive>
+      <occupancysensor>down-appr-sens</occupancysensor>
+      <path todir="64" fromdir="128" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB11" />
+    </block>
+    <block systemName="IB10" length="0.0" curve="0" userName="up-plat">
+      <systemName>IB10</systemName>
+      <userName>up-plat</userName>
+      <permissive>no</permissive>
+      <occupancysensor>up-junc-appr-sens</occupancysensor>
+      <path todir="128" fromdir="64" block="IB4">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB9">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB11" length="0.0" curve="0" userName="down-entry">
+      <systemName>IB11</systemName>
+      <userName>down-entry</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB1" />
+    </block>
+    <block systemName="IB12" length="0.0" curve="0" userName="upfy1">
+      <systemName>IB12</systemName>
+      <userName>upfy1</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB7" />
+    </block>
+    <block systemName="IB13" length="0.0" curve="0" userName="dnfy1">
+      <systemName>IB13</systemName>
+      <userName>dnfy1</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB8" />
+    </block>
+    <block systemName="IB2" length="0.0" curve="0" userName="junction">
+      <systemName>IB2</systemName>
+      <userName>junction</userName>
+      <permissive>no</permissive>
+      <occupancysensor>junc-sens</occupancysensor>
+      <path todir="128" fromdir="64" block="IB1">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB4">
+        <beansetting setting="4">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB6">
+        <beansetting setting="2">
+          <turnout systemName="bay-plat" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB5">
+        <beansetting setting="4">
+          <turnout systemName="bay-plat" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB3" length="0.0" curve="0" userName="up-junc-entry">
+      <systemName>IB3</systemName>
+      <userName>up-junc-entry</userName>
+      <permissive>no</permissive>
+      <occupancysensor>up-junc-appr-sens</occupancysensor>
+      <path todir="64" fromdir="128" block="IB9">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB4" length="0.0" curve="0" userName="up-exit">
+      <systemName>IB4</systemName>
+      <userName>up-exit</userName>
+      <permissive>no</permissive>
+      <occupancysensor>up-out-sens</occupancysensor>
+      <path todir="64" fromdir="128" block="IB2">
+        <beansetting setting="4">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB7" />
+      <path todir="64" fromdir="128" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="cross-over" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB5" length="0.0" curve="0" userName="bay">
+      <systemName>IB5</systemName>
+      <userName>bay</userName>
+      <permissive>yes</permissive>
+      <occupancysensor>bay-sens</occupancysensor>
+      <path todir="128" fromdir="64" block="IB2" />
+    </block>
+    <block systemName="IB6" length="0.0" curve="0" userName="down plat">
+      <systemName>IB6</systemName>
+      <userName>down plat</userName>
+      <permissive>no</permissive>
+      <occupancysensor>down-plat-sens</occupancysensor>
+      <path todir="128" fromdir="64" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="bay-plat" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB8" />
+    </block>
+    <block systemName="IB7" length="0.0" curve="0" userName="up fiddle yard">
+      <systemName>IB7</systemName>
+      <userName>up fiddle yard</userName>
+      <permissive>no</permissive>
+      <occupancysensor>up-fiddle-yard</occupancysensor>
+      <path todir="64" fromdir="128" block="IB4" />
+      <path todir="128" fromdir="64" block="IB12" />
+    </block>
+    <block systemName="IB8" length="0.0" curve="0" userName="down fiddle yard">
+      <systemName>IB8</systemName>
+      <userName>down fiddle yard</userName>
+      <permissive>no</permissive>
+      <occupancysensor>down-fiddle-yard</occupancysensor>
+      <path todir="128" fromdir="64" block="IB6" />
+      <path todir="64" fromdir="128" block="IB13" />
+    </block>
+    <block systemName="IB9" length="0.0" curve="0" userName="up plat">
+      <systemName>IB9</systemName>
+      <userName>up plat</userName>
+      <permissive>no</permissive>
+      <occupancysensor>up-platform</occupancysensor>
+      <path todir="128" fromdir="64" block="IB10" />
+    </block>
+  </blocks>
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" blockrouting="yes">
+    <layoutblock systemName="ILB1" userName="down-appr" occupancysensor="down-appr-sens" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>down-appr</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB10" userName="down-entry" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="black">
+      <systemName>ILB10</systemName>
+      <userName>down-entry</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB11" userName="upfy1" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black">
+      <systemName>ILB11</systemName>
+      <userName>upfy1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB12" userName="dnfy1" occupiedsense="2" trackcolor="black" occupiedcolor="black" extracolor="black">
+      <systemName>ILB12</systemName>
+      <userName>dnfy1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" userName="junction" occupancysensor="junc-sens" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>junction</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" userName="up-plat" occupancysensor="up-junc-appr-sens" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>up-plat</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" userName="up-exit" occupancysensor="up-out-sens" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>up-exit</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" userName="bay" occupancysensor="bay-sens" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>bay</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" userName="down plat" occupancysensor="down-plat-sens" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>down plat</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" userName="up fiddle yard" occupancysensor="up-fiddle-yard" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black">
+      <systemName>ILB7</systemName>
+      <userName>up fiddle yard</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB8" userName="down fiddle yard" occupancysensor="down-fiddle-yard" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="black">
+      <systemName>ILB8</systemName>
+      <userName>down fiddle yard</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB9" userName="up plat" occupancysensor="up-platform" occupiedsense="2" trackcolor="lightGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB9</systemName>
+      <userName>up plat</userName>
+    </layoutblock>
+  </layoutblocks>
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route systemName="IR:AUTO:0004" userName="crossover closed" controlTurnout="cross-over" controlTurnoutState="CLOSED" addedDelay="50">
+      <systemName>IR:AUTO:0004</systemName>
+      <userName>crossover closed</userName>
+      <routeOutputTurnout systemName="IT2" state="CLOSED" />
+    </route>
+    <route systemName="IR:AUTO:0005" userName="crossover thrown" controlTurnout="cross-over" controlTurnoutState="THROWN" addedDelay="50">
+      <systemName>IR:AUTO:0005</systemName>
+      <userName>crossover thrown</userName>
+      <routeOutputTurnout systemName="IT2" state="THROWN" />
+    </route>
+  </routes>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic>
+      <sourceSignalMast>up outer mast</sourceSignalMast>
+      <destinationMast>
+        <destinationSignalMast>up fiddle</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic>
+      <sourceSignalMast>down plat mast</sourceSignalMast>
+      <destinationMast>
+        <destinationSignalMast>down fiddle</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IX:AUTO:0001" userName="facing bay lock" enabled="yes">
+      <systemName>IX:AUTO:0001</systemName>
+      <userName>facing bay lock</userName>
+      <logixConditional systemName="IX:AUTO:0001C1" order="0" />
+    </logix>
+    <logix systemName="IX:AUTO:0002" userName="Feather" enabled="yes">
+      <systemName>IX:AUTO:0002</systemName>
+      <userName>Feather</userName>
+      <logixConditional systemName="IX:AUTO:0002C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0002C2" order="1" />
+    </logix>
+    <logix systemName="IX:AUTO:0003" userName="calling on manual" enabled="yes">
+      <systemName>IX:AUTO:0003</systemName>
+      <userName>calling on manual</userName>
+      <logixConditional systemName="IX:AUTO:0003C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0003C2" order="1" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:AUTO:0001C1" userName="facing bay change" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0001C1</systemName>
+      <userName>facing bay change</userName>
+      <conditionalStateVariable operator="4" negated="no" type="3" systemName="bay-plat" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="3" type="9" systemName="facing bay lock" data="2" delay="0" string="" />
+      <conditionalAction option="3" type="10" systemName="facing bay lock" data="4" delay="1" string="1" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0002C1" userName="feather lit" antecedent="(R1 or R3) and R2" logicType="3" triggerOnChange="yes">
+      <systemName>IX:AUTO:0002C1</systemName>
+      <userName>feather lit</userName>
+      <conditionalStateVariable operator="4" negated="no" type="30" systemName="down appr mast" dataString="Caution" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="3" systemName="bay-plat" dataString="" num1="0" num2="0" triggersCalc="no" />
+      <conditionalStateVariable operator="1" negated="no" type="30" systemName="down appr mast" dataString="Off" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="3" systemName="feather" data="4" delay="0" string="Yellow" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0002C2" userName="feather dark" antecedent="R1 and R2" logicType="2" triggerOnChange="yes">
+      <systemName>IX:AUTO:0002C2</systemName>
+      <userName>feather dark</userName>
+      <conditionalStateVariable operator="4" negated="no" type="4" systemName="bay-plat" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="30" systemName="down appr mast" dataString="Danger" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="3" systemName="feather" data="0" delay="0" string="Dark" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0003C1" userName="hold down appr mast" antecedent="R1 and R2" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C1</systemName>
+      <userName>hold down appr mast</userName>
+      <conditionalStateVariable operator="4" negated="no" type="3" systemName="bay-plat" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="bay-sens" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="39" systemName="down appr mast" data="-1" delay="0" string="" />
+      <conditionalAction option="2" type="40" systemName="down appr mast" data="-1" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0003C2" userName="release using button" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C2</systemName>
+      <userName>release using button</userName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="release call on" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="40" systemName="down appr mast" data="-1" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Sep 29 21:54:22 BST 2011" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Interlock Demo" x="309" y="22" height="680" width="1260" windowheight="424" windowwidth="922" panelheight="680" panelwidth="1260" sliders="yes" scrollable="both" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="yes" snaponadd="yes" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="yes" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaulttextcolor="black" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" redBackground="64" greenBackground="64" blueBackground="64">
+    <signalmasticon signalmast="bay mast" x="260" y="25" level="9" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="false" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>bay mast (IF$shsm:BR-2003:3(bay))</toolTip>
+    </signalmasticon>
+    <signalmasticon signalmast="down appr mast" x="123" y="39" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" clickmode="2" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>down appr mast (IF$shsm:BR-2003:3-c(down appr)(call on))</toolTip>
+    </signalmasticon>
+    <signalmasticon signalmast="down plat mast" x="360" y="44" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" clickmode="2" litmode="false" degrees="180" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>down plat mast (IF$shsm:BR-2003:3(down plat))</toolTip>
+    </signalmasticon>
+    <signalmasticon signalmast="up outer mast" x="72" y="86" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" clickmode="2" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>up outer mast (IF$shsm:BR-2003:3(up outer))</toolTip>
+    </signalmasticon>
+    <signalmasticon signalmast="up plat mast" x="203" y="86" level="9" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="false" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>up plat mast (IF$shsm:BR-2003:3(up plat))</toolTip>
+    </signalmasticon>
+    <signalheadicon signalhead="feather" x="134" y="34" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="false" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <toolTip>feather</toolTip>
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalmasticon signalmast="down fiddle" x="393" y="40" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="false" clickmode="0" litmode="false" degrees="90" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>down fiddle (IF$shsm:BR-2003:2-h(downfiddleleft))</toolTip>
+    </signalmasticon>
+    <signalmasticon signalmast="up fiddle" x="46" y="84" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="false" clickmode="0" litmode="false" degrees="-90" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <toolTip>up fiddle (IF$shsm:BR-2003:2-h(upfiddleleft))</toolTip>
+    </signalmasticon>
+    <sensoricon sensor="down-appr-sens" x="140" y="55" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>down-appr-sens (IS111)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="up-junc-appr-sens" x="184" y="75" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>up-junc-appr-sens (IS112)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="up-platform" x="285" y="75" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>up-platform (IS115)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="down-plat-sens" x="316" y="55" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>down-plat-sens (IS116)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX down approach" x="108" y="42" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>NX down approach (IS1)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX Bay Mast" x="280" y="26" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>NX Bay Mast (IS3)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX Bay Buffer" x="361" y="35" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>NX Bay Buffer (IS4)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX down plat" x="343" y="46" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>NX down plat (IS2)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX Up Plat" x="224" y="87" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>NX Up Plat (IS5)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="NX Up Outter" x="94" y="88" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <toolTip>NX Up Outter (IS6)</toolTip>
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="-90" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <layoutturnout ident="TO3" turnoutname="bay-plat" blockname="junction" type="2" connectaname="T4" connectbname="T5" connectcname="T3" continuing="2" disabled="no" disableWhenOccupied="no" xcen="240.0" ycen="60.0" xb="260.0" yb="60.0" xc="255.0" yc="46.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO4" turnoutname="cross-over" blockname="down-appr" blockbname="junction" blockcname="up-plat" blockdname="up-exit" type="6" connectaname="T2" connectbname="T4" connectcname="T10" connectdname="T13" continuing="2" disabled="no" disableWhenOccupied="no" xcen="170.0" ycen="70.0" xb="200.0" yb="60.0" xc="180.0" yc="80.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T4" blockname="junction" connect1name="TO4" type1="3" connect2name="TO3" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="down plat" connect1name="TO3" type1="3" connect2name="A3" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="down fiddle yard" connect1name="A3" type1="1" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" connect1name="A2" type1="1" connect2name="A5" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="up-exit" connect1name="TO4" type1="5" connect2name="A8" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T14" blockname="up fiddle yard" connect1name="A8" type1="1" connect2name="A10" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T15" connect1name="A7" type1="1" connect2name="A9" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T1" blockname="down-entry" connect1name="A7" type1="1" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="down-appr" connect1name="A1" type1="1" connect2name="TO4" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="junction" connect1name="TO3" type1="4" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="bay" connect1name="A6" type1="1" connect2name="EB1" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="up-plat" connect1name="TO4" type1="4" connect2name="A11" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="up plat" connect1name="A11" type1="1" connect2name="A2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="dnfy1" connect1name="A4" type1="1" connect2name="A13" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T12" blockname="upfy1" connect1name="A10" type1="1" connect2name="A12" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A2" type="1" x="380.0" y="80.0" connect1name="T11" connect2name="T8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="380.0" y="60.0" connect1name="T5" connect2name="T6" eastboundsignalmast="down plat mast" eastboundsensor="NX down plat" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="400.0" y="60.0" connect1name="T6" connect2name="T7" eastboundsignalmast="down fiddle" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="420.0" y="80.0" connect1name="T8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="2" x="360.0" y="40.0" connect1name="T9" eastboundsignalmast="buffer stop mast" eastboundsensor="NX Bay Buffer" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A7" type="1" x="70.0" y="60.0" connect1name="T1" connect2name="T15" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A8" type="1" x="70.0" y="80.0" connect1name="T13" connect2name="T14" westboundsignalmast="up outer mast" westboundsensor="NX Up Outter" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A9" type="1" x="40.0" y="60.0" connect1name="T15" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A10" type="1" x="50.0" y="80.0" connect1name="T14" connect2name="T12" westboundsignalmast="up fiddle" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="1" x="130.0" y="60.0" connect1name="T1" connect2name="T2" eastboundsignalmast="down appr mast" eastboundsensor="NX down approach" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="1" x="260.0" y="40.0" connect1name="T3" connect2name="T9" westboundsignalmast="bay mast" westboundsensor="NX Bay Mast" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A11" type="1" x="200.0" y="80.0" connect1name="T10" connect2name="T11" westboundsignalmast="up plat mast" westboundsensor="NX Up Plat" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A12" type="1" x="40.0" y="80.0" connect1name="T12" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A13" type="1" x="420.0" y="60.0" connect1name="T7" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Mar 07 10:35:21 GMT 2012</date>
+      <filename>PanelPro version 20120307-1035-603557949 starts under Java 1.6.0_27 at Wed Mar 07 10:35:20 GMT 2012</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Mar 07 10:35:21 GMT 2012</date>
+      <filename>UserPrefsPanelProConfig2.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Mar 07 10:35:22 GMT 2012</date>
+      <filename>PanelProConfig2.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Mar 07 10:35:50 GMT 2012</date>
+      <filename>Interlock Demo 1.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed Mar 07 10:28:18 GMT 2012</date>
+          <filename>PanelPro version 20120307-1028-603557949 starts under Java 1.6.0_27 at Wed Mar 07 10:28:18 GMT 2012</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed Mar 07 10:28:18 GMT 2012</date>
+          <filename>UserPrefsPanelProConfig2.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed Mar 07 10:28:19 GMT 2012</date>
+          <filename>PanelProConfig2.xml</filename>
+        </operation>
+        <operation>
+          <type>Load with errors</type>
+          <date>Wed Mar 07 10:28:29 GMT 2012</date>
+          <filename>Interlock Demo 1.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Mon Mar 05 12:10:56 GMT 2012</date>
+              <filename>PanelPro version 20120305-1210-603557949 starts under Java 1.6.0_27 at Mon Mar 05 12:10:55 GMT 2012</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Mon Mar 05 12:10:56 GMT 2012</date>
+              <filename>UserPrefsPanelProConfig2.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Mon Mar 05 12:10:57 GMT 2012</date>
+              <filename>PanelProConfig2.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Mon Mar 05 12:11:34 GMT 2012</date>
+              <filename>Interlock Demo 1.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Thu Mar 01 12:20:54 GMT 2012</date>
+                  <filename>PanelPro version 20120301-1220-603557949 starts under Java 1.6.0_27 at Thu Mar 01 12:20:54 GMT 2012</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Thu Mar 01 12:20:54 GMT 2012</date>
+                  <filename>UserPrefsPanelProConfig2.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Thu Mar 01 12:20:55 GMT 2012</date>
+                  <filename>PanelProConfig2.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Thu Mar 01 12:21:12 GMT 2012</date>
+                  <filename>Demo Signal 7a.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Sat Oct 29 21:25:58 BST 2011</date>
+                      <filename>DecoderPro version r18958 starts under Java 1.6.0_29 at Sat Oct 29 21:25:58 BST 2011</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Sat Oct 29 21:25:58 BST 2011</date>
+                      <filename>UserPrefsloconetsim</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Sat Oct 29 21:26:01 BST 2011</date>
+                      <filename>loconetsim</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Sat Oct 29 21:26:19 BST 2011</date>
+                      <filename>Demo Signal 7.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Sat Oct 22 16:56:46 BST 2011</date>
+                          <filename>DecoderPro version 2.13.3-r18880 starts under Java 1.6.0_26 at Sat Oct 22 16:56:46 BST 2011</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sat Oct 22 16:56:47 BST 2011</date>
+                          <filename>UserPrefsDecoderProConfig2.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sat Oct 22 16:56:51 BST 2011</date>
+                          <filename>DecoderProConfig2.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sat Oct 22 16:57:03 BST 2011</date>
+                          <filename>Demo Signal 7.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Sat Oct 22 17:01:26 BST 2011</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Sat Oct 29 22:06:02 BST 2011</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Thu Mar 01 12:50:43 GMT 2012</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Mon Mar 05 12:11:55 GMT 2012</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed Mar 07 10:28:54 GMT 2012</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Mar 07 10:36:29 GMT 2012</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 20120307-1035-603557949 on Wed Mar 07 10:36:29 GMT 2012 $Id: XmlFile.java 18985 2011-10-31 05:24:36Z rhwood $-->
+</layout-config>
+

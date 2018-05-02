@@ -1,0 +1,25 @@
+@startuml
+
+package jmri.jmrix {}
+package jmrix.loconet {}
+package loconet.locobuffer {}
+package loconet.pr3 {}
+
+package jmrix.nce {}
+package nce.serialdriver {}
+package nce.usbdriver {}
+package nce.simulator {}
+package nce.networkdriver {}
+
+jmri.jmrix +-- jmrix.nce
+jmri.jmrix +-- jmrix.loconet
+
+jmrix.loconet +-- loconet.locobuffer
+jmrix.loconet +-- loconet.pr3
+
+jmrix.nce +-- nce.serialdriver
+jmrix.nce +-- nce.usbdriver 
+jmrix.nce +-- nce.simulator
+jmrix.nce +-- nce.networkdriver
+
+@enduml

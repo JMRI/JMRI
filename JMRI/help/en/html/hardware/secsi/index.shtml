@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - TracTronics SECSI System</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>Hardware Support: TracTronics SECSI System</h1>JMRI can
+      connect to TracTronics SECSI system Nodes. <a name=
+      "limitations" id="limitations"></a>
+
+      <h2>Limitations</h2>
+
+      <p><strong>As of 2016 TracTronics SECSI is no longer online
+      nor found in Google</strong> <a name="connecting" id=
+      "connecting"></a></p>
+
+      <h2>Connecting</h2>
+
+      <h3>Naming</h3>
+
+      <p>The system letter is "V", so for example the first Sensor
+      on node 5 would be "VS5001".</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                         cmosEng07@yahoo.com                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Chris Bradshaw" version="1" lastUpdated="20120131"/>
+  <decoder>
+    <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201">
+      <model model="LC201" numOuts="5" numFns="5">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Brown" connection="wire"/>
+        <size length="1.0" width="0.8" height="0.2" units="inches"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="1" comment="Range 1-255">
+        <decVal/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable item="Accel" CV="3" default="5" comment="Range 1-255">
+        <decVal/>
+        <label>Accel</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable item="Decel" CV="4" default="5" comment="Range 1-255">
+        <decVal/>
+        <label>Decel</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable CV="5" item="Vhigh">
+        <decVal/>
+        <label>Maximum Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="6" item="Vmid">
+        <decVal/>
+        <label>Midpoint Voltage</label>
+        <label xml:lang="it">Volts intermedi (0-255)</label>
+        <label xml:lang="de">Vmittel (0-255)</label>
+      </variable>
+      <variable CV="7" default="201" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="45" comment="ANE - 45">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <comment>ANE - 45</comment>
+      </variable>
+      <variable CV="19" mask="XVVVVVVV" item="Consist Address" comment="Range 0-127 as per doco">
+        <decVal/>
+        <label>Consist Address</label>
+      </variable>
+      <variable item="Consist Direction" CV="19" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="Normal - Assumed - No Doco">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Direction</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <!-- Define the fixed Function-Output mapping -->
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(f) controls output 3</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(r) controls output 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(f) controls output 4</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(r) controls output 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(f) controls output 5</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>FL(r) controls output 5</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F1 controls output 3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F1 controls output 4</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F1 controls output 5</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F2 controls output 3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F2 controls output 4</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F2 controls output 5</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F3 controls output 3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="1" default="0">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F3 controls output 4</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+        <label>F3 controls output 5</label>
+      </variable>
+      <variable item="FOF is Light on" CV="49" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="0">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Light on</label>
+      </variable>
+      <variable item="FOF is Strobe" CV="49" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Strobe</label>
+      </variable>
+      <variable item="FOF is MARS Light" CV="49" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is MARS Light</label>
+      </variable>
+      <variable item="FOF is Reverse Direction" CV="49" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Reverse Direction</label>
+      </variable>
+      <variable item="FOF is Forward Direction" CV="49" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Forward Direction</label>
+      </variable>
+      <variable item="FOF is 1/4 Sec Flashing Phase A" CV="49" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase A</label>
+      </variable>
+      <variable item="FOF is 1/4 Sec Flashing Phase B" CV="49" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase B</label>
+      </variable>
+      <variable item="FOF is Warning light" CV="49" mask="XVVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="69">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Warning light</label>
+      </variable>
+      <variable item="FOF is Firebox" CV="49" mask="XXVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="36">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Firebox</label>
+      </variable>
+      <variable item="FOF is 1/2 Sec Flashing" CV="49" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/2 Sec Flashing</label>
+      </variable>
+      <variable item="FOR is Light on" CV="50" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="0">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Light on</label>
+      </variable>
+      <variable item="FOR is Strobe" CV="50" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Strobe</label>
+      </variable>
+      <variable item="FOR is MARS Light" CV="50" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is MARS Light</label>
+      </variable>
+      <variable item="FOR is Reverse Direction" CV="50" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Reverse Direction</label>
+      </variable>
+      <variable item="FOR is Forward Direction" CV="50" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Forward Direction</label>
+      </variable>
+      <variable item="FOR is 1/4 Sec Flashing Phase A" CV="50" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase A</label>
+      </variable>
+      <variable item="FOR is 1/4 Sec Flashing Phase B" CV="50" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase B</label>
+      </variable>
+      <variable item="FOR is Warning light" CV="50" mask="XVVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="69">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Warning light</label>
+      </variable>
+      <variable item="FOR is Firebox" CV="50" mask="XXVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="36">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Firebox</label>
+      </variable>
+      <variable item="FOR is 1/2 Sec Flashing" CV="50" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/2 Sec Flashing</label>
+      </variable>
+      <variable item="F1 is Light on" CV="51" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="0">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Light on</label>
+      </variable>
+      <variable item="F1 is Strobe" CV="51" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Strobe</label>
+      </variable>
+      <variable item="F1 is MARS Light" CV="51" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is MARS Light</label>
+      </variable>
+      <variable item="F1 is Reverse Direction" CV="51" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Reverse Direction</label>
+      </variable>
+      <variable item="F1 is Forward Direction" CV="51" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Forward Direction</label>
+      </variable>
+      <variable item="F1 is 1/4 Sec Flashing Phase A" CV="51" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase A</label>
+      </variable>
+      <variable item="F1 is 1/4 Sec Flashing Phase B" CV="51" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase B</label>
+      </variable>
+      <variable item="F1 is Warning light" CV="51" mask="XVVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="69">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Warning light</label>
+      </variable>
+      <variable item="F1 is Firebox" CV="51" mask="XXVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="36">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Firebox</label>
+      </variable>
+      <variable item="F1 is 1/2 Sec Flashing" CV="51" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/2 Sec Flashing</label>
+      </variable>
+      <variable item="F2 is Light on" CV="52" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="0">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Light on</label>
+      </variable>
+      <variable item="F2 is Strobe" CV="52" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Strobe</label>
+      </variable>
+      <variable item="F2 is MARS Light" CV="52" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is MARS Light</label>
+      </variable>
+      <variable item="F2 is Reverse Direction" CV="52" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Reverse Direction</label>
+      </variable>
+      <variable item="F2 is Forward Direction" CV="52" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Forward Direction</label>
+      </variable>
+      <variable item="F2 is 1/4 Sec Flashing Phase A" CV="52" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase A</label>
+      </variable>
+      <variable item="F2 is 1/4 Sec Flashing Phase B" CV="52" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase B</label>
+      </variable>
+      <variable item="F2 is Warning light" CV="52" mask="XVVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="69">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Warning light</label>
+      </variable>
+      <variable item="F2 is Firebox" CV="52" mask="XXVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="36">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Firebox</label>
+      </variable>
+      <variable item="F2 is 1/2 Sec Flashing" CV="52" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/2 Sec Flashing</label>
+      </variable>
+      <variable item="F3 is Light on" CV="53" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="0">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Light on</label>
+      </variable>
+      <variable item="F3 is Strobe" CV="53" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Strobe</label>
+      </variable>
+      <variable item="F3 is MARS Light" CV="53" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is MARS Light</label>
+      </variable>
+      <variable item="F3 is Reverse Direction" CV="53" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Reverse Direction</label>
+      </variable>
+      <variable item="F3 is Forward Direction" CV="53" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is Forward Direction</label>
+      </variable>
+      <variable item="F3 is 1/4 Sec Flashing Phase A" CV="53" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase A</label>
+      </variable>
+      <variable item="F3 is 1/4 Sec Flashing Phase B" CV="53" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/4 Sec Flashing Phase B</label>
+      </variable>
+      <variable item="F3 is Warning light" CV="53" mask="XVVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="69">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Warning light</label>
+      </variable>
+      <variable item="F3 is Firebox" CV="53" mask="XXVVVVVV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="36">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is Firebox</label>
+      </variable>
+      <variable item="F3 is 1/2 Sec Flashing" CV="53" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0F is 1/2 Sec Flashing</label>
+      </variable>
+      <variable item="FL Bit Location" CV="29" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="Bit 4 in Speed and Direction instructions control">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Bit 4 in Function Group One instruction controls">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F0F is 1/2 Sec Flashing</label>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <name>ANE</name>
+    <column>
+      <display item="FOF is Light on" format="checkbox"/>
+      <display item="FOF is Strobe" format="checkbox"/>
+      <display item="FOF is MARS Light" format="checkbox"/>
+      <display item="FOF is Reverse Direction" format="checkbox"/>
+      <display item="FOF is Forward Direction" format="checkbox"/>
+      <display item="FOF is 1/4 Sec Flashing Phase A" format="checkbox"/>
+      <display item="FOF is 1/4 Sec Flashing Phase B" format="checkbox"/>
+      <display item="FOF is Warning light" format="checkbox"/>
+      <display item="FOF is Firebox" format="checkbox"/>
+      <display item="FOF is 1/2 Sec Flashing" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="FOR is Light on" format="checkbox"/>
+      <display item="FOR is Strobe" format="checkbox"/>
+      <display item="FOR is MARS Light" format="checkbox"/>
+      <display item="FOR is Reverse Direction" format="checkbox"/>
+      <display item="FOR is Forward Direction" format="checkbox"/>
+      <display item="FOR is 1/4 Sec Flashing Phase A" format="checkbox"/>
+      <display item="FOR is 1/4 Sec Flashing Phase B" format="checkbox"/>
+      <display item="FOR is Warning light" format="checkbox"/>
+      <display item="FOR is Firebox" format="checkbox"/>
+      <display item="FOR is 1/2 Sec Flashing" format="checkbox"/>
+    </column>
+    <column>
+      <display item="F1 is Light on" format="checkbox"/>
+      <display item="F1 is Strobe" format="checkbox"/>
+      <display item="F1 is MARS Light" format="checkbox"/>
+      <display item="F1 is Reverse Direction" format="checkbox"/>
+      <display item="F1 is Forward Direction" format="checkbox"/>
+      <display item="F1 is 1/4 Sec Flashing Phase A" format="checkbox"/>
+      <display item="F1 is 1/4 Sec Flashing Phase B" format="checkbox"/>
+      <display item="F1 is Warning light" format="checkbox"/>
+      <display item="F1 is Firebox" format="checkbox"/>
+      <display item="F1 is 1/2 Sec Flashing" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="F2 is Light on" format="checkbox"/>
+      <display item="F2 is Strobe" format="checkbox"/>
+      <display item="F2 is MARS Light" format="checkbox"/>
+      <display item="F2 is Reverse Direction" format="checkbox"/>
+      <display item="F2 is Forward Direction" format="checkbox"/>
+      <display item="F2 is 1/4 Sec Flashing Phase A" format="checkbox"/>
+      <display item="F2 is 1/4 Sec Flashing Phase B" format="checkbox"/>
+      <display item="F2 is Warning light" format="checkbox"/>
+      <display item="F2 is Firebox" format="checkbox"/>
+      <display item="F2 is 1/2 Sec Flashing" format="checkbox"/>
+    </column>
+    <column>
+      <display item="F3 is Light on" format="checkbox"/>
+      <display item="F3 is Strobe" format="checkbox"/>
+      <display item="F3 is MARS Light" format="checkbox"/>
+      <display item="F3 is Reverse Direction" format="checkbox"/>
+      <display item="F3 is Forward Direction" format="checkbox"/>
+      <display item="F3 is 1/4 Sec Flashing Phase A" format="checkbox"/>
+      <display item="F3 is 1/4 Sec Flashing Phase B" format="checkbox"/>
+      <display item="F3 is Warning light" format="checkbox"/>
+      <display item="F3 is Firebox" format="checkbox"/>
+      <display item="F3 is 1/2 Sec Flashing" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="XX is Light on" format="checkbox"/>
+      <display item="XX is Strobe" format="checkbox"/>
+      <display item="XX is MARS Light" format="checkbox"/>
+      <display item="XX is Reverse Direction" format="checkbox"/>
+      <display item="XX is Forward Direction" format="checkbox"/>
+      <display item="XX is 1/4 Sec Flashing Phase A" format="checkbox"/>
+      <display item="XX is 1/4 Sec Flashing Phase B" format="checkbox"/>
+      <display item="XX is Warning light" format="checkbox"/>
+      <display item="XX is Firebox" format="checkbox"/>
+      <display item="XX is 1/2 Sec Flashing" format="checkbox"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="FL Bit Location"/>
+    </column>
+  </pane>
+</decoder-config>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="-">
+    <choice xml:lang="fr">-</choice>
+    <choice xml:lang="de">-</choice>
+  </enumChoice>
+  <enumChoice choice="F1"/>
+  <enumChoice choice="F2"/>
+  <enumChoice choice="F3"/>
+  <enumChoice choice="F4"/>
+  <enumChoice choice="F5"/>
+  <enumChoice choice="F6"/>
+  <enumChoice choice="F7"/>
+  <enumChoice choice="F8"/>
+  <enumChoice choice="F9"/>
+  <enumChoice choice="F10"/>
+  <enumChoice choice="F11"/>
+  <enumChoice choice="F12"/>
+  <enumChoice choice="F13"/>
+  <enumChoice choice="F14"/>
+  <enumChoice choice="F15"/>
+  <enumChoice choice="F16"/>
+  <enumChoice choice="F17"/>
+  <enumChoice choice="F18"/>
+  <enumChoice choice="F19"/>
+  <enumChoice choice="F20"/>
+  <enumChoice choice="F21"/>
+  <enumChoice choice="F22"/>
+  <enumChoice choice="F23"/>
+  <enumChoice choice="F24"/>
+  <enumChoice choice="F25"/>
+  <enumChoice choice="F26"/>
+  <enumChoice choice="F27"/>
+  <enumChoice choice="F28"/>
+  <enumChoice choice="F0"/>
+  <enumChoice choice="Driving sound">
+    <choice xml:lang="Son de marche">-</choice>
+    <choice xml:lang="Fahrgeräusch">-</choice>
+  </enumChoice>
+  <enumChoice choice="Background sound">
+    <choice xml:lang="Son annexee">-</choice>
+    <choice xml:lang="Nebengeräusch">-</choice>
+  </enumChoice>
+  <enumChoice choice="Gear shifting sound">
+    <choice xml:lang="Son boite de vitesse">-</choice>
+    <choice xml:lang="Schaltgeräusch">-</choice>
+  </enumChoice>
+  <enumChoice choice="Brake sound">
+    <choice xml:lang="Son freinage">-</choice>
+    <choice xml:lang="Bremsgeräusch">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 3">
+    <choice xml:lang="Son 3">-</choice>
+    <choice xml:lang="Soundablauf 3">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 4">
+    <choice xml:lang="Son 4">-</choice>
+    <choice xml:lang="Soundablauf 4">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 5">
+    <choice xml:lang="Son 5">-</choice>
+    <choice xml:lang="Soundablauf 5">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 6">
+    <choice xml:lang="Son 6">-</choice>
+    <choice xml:lang="Soundablauf 6">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 7">
+    <choice xml:lang="Son 7">-</choice>
+    <choice xml:lang="Soundablauf 7">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 8">
+    <choice xml:lang="Son 8">-</choice>
+    <choice xml:lang="Soundablauf 8">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 9">
+    <choice xml:lang="Son 9">-</choice>
+    <choice xml:lang="Soundablauf 9">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 10">
+    <choice xml:lang="Son 10">-</choice>
+    <choice xml:lang="Soundablauf 10">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 11">
+    <choice xml:lang="Son 11">-</choice>
+    <choice xml:lang="Soundablauf 11">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 12">
+    <choice xml:lang="Son 12">-</choice>
+    <choice xml:lang="Soundablauf 12">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 13">
+    <choice xml:lang="Son 13">-</choice>
+    <choice xml:lang="Soundablauf 13">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 14">
+    <choice xml:lang="Son 14">-</choice>
+    <choice xml:lang="Soundablauf 14">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 15">
+    <choice xml:lang="Son 15">-</choice>
+    <choice xml:lang="Soundablauf 15">-</choice>
+  </enumChoice>
+  <enumChoice choice="Sound container 16">
+    <choice xml:lang="Son 16">-</choice>
+    <choice xml:lang="Soundablauf 16">-</choice>
+  </enumChoice>
+</enumVal>

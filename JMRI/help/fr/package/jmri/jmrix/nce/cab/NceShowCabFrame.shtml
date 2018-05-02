@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Edit NCE Macro</title>
+  <meta name="author" content="Dan Boudreau">
+  <meta name="keywords" content="JMRI Help NCE Show Cabs">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Montrer Cabines NCE</h1>
+
+      <p>Cet outil fournit une liste des Cabs* NCE
+      connect&Atilde;&copy;es &Atilde;  votre centrale de commande
+      NCE. Jusqu'&Atilde;  63 commandes Cabs peuvent
+      &Atilde;&ordf;tre connect&Atilde;&copy;es, les types de Cabs
+      sont ProCab, Cab04, USB, et l'AIU. L'outil fournit
+      &Atilde;&copy;galement l'adresse de chaque Cab de locomotive
+      active, la vitesse, Num&Atilde;&copy;ro de couplage, et
+      quelles fonctions de la locomotive sont actives.</p>
+
+      <p>Le moniteur va lire les informations de la Cab actuelle
+      lorsque l'outil est d'abord
+      s&Atilde;&copy;lectionn&Atilde;&copy;. la liste sera mise
+      &Atilde;  jour lorsque le bouton "Rafraichir" est
+      press&Atilde;&copy; ou si une adresse de Cab est
+      purg&Atilde;&copy;e.</p>
+
+      <p>Pour aider &Atilde;  g&Atilde;&copy;rer les Cabs sur les
+      r&Atilde;&copy;seaux tr&Atilde;&uml;s grand,
+      l'&Atilde;&copy;cran affiche la derni&Atilde;&uml;re fois
+      qu'une Cab a &Atilde;&copy;t&Atilde;&copy;
+      consid&Atilde;&copy;r&Atilde;&copy;e comme active et que des
+      param&Atilde;&uml;tres ont chang&Atilde;&copy;s.
+      L'utilisation de ceci vous permet d'entrer l'ID de la Cab et
+      utiliser le bouton "Purger" pour marquer l'adresse de Cab
+      en-activit&Atilde;&copy;. Cela devrait am&Atilde;&copy;liorer
+      le temps de r&Atilde;&copy;ponse de la frappe sur les
+      commande Cabs restantes que les centrales de commande
+      n'auront pas &Atilde;  temporiser en attendant une
+      r&Atilde;&copy;ponse de l'adresse de la Cab
+      purg&Atilde;&copy;e. *commande manuelle</p>
+    </div>
+  </div>
+</body>
+</html>

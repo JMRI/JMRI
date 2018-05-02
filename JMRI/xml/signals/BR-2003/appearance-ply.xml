@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-18</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Initial Version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2010-02-02</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Change Stop Aspect to On &amp; proceed at Caution to Off</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2011-08-04</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Addition of Specific Appearances and aspect mapping</revremark>
+    </revision> 
+    <revision>
+        <revnumber>1.3</revnumber>
+        <date>2012-06-15</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Addition of Aspect Mapping</revremark>
+    </revision>
+  </revhistory>
+  
+  <aspecttable>BR</aspecttable>
+
+  <name>Position Light Signal Yellow/White</name>
+  
+  <description>This uses a single head to control the appearance
+  The signal is used where a set of points can be set to either go up to a shunt neck or siding, or out onto the main running line.  
+  If the signal is displaying Yellow/White or two Yellows then this means STOP if the points are set out onto the main line. If the points
+  are set to the shunt neck or siding then movements are allowed to pass.
+  When two white lights at 45degrees are showing, this authorises the driver to proceed at caution towards the next stop signal.
+  </description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Off</aspectname>
+      <show>lunar</show>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLOff.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLOff.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>On</aspectname>
+      <show>yellow</show>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLYOn.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLYOn.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>On</aspect>
+    </danger>
+    <permissive>
+      <aspect>Off</aspect>
+    </permissive>
+    <held>
+      <aspect>On</aspect>
+    </held>
+  </specificappearances>
+  
+    <aspectMappings>
+   <aspectMapping>
+     <advancedAspect>Danger</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+  
+   <aspectMapping>
+     <advancedAspect>Caution</advancedAspect>
+      <ourAspect>On</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Preliminary Caution</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Proceed</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Flash Caution</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Flash Preliminary Caution</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>Off</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+   
+   <aspectMapping>
+     <advancedAspect>On</advancedAspect>
+     <ourAspect>On</ourAspect>
+   </aspectMapping>
+  </aspectMappings>
+</appearancetable>  

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-24</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+  <!-- Switching modes for motors and switches (for Z2-8+)  -->
+   <enumChoice choice="[20]" value="20">
+		<choice>[20] Switch (magnetic) 1/4 sec.</choice>
+		<choice xml:lang="de">[20] Weiche (magnetish) 1/4 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[21]" value="21">
+		<choice>[21] Switch (magnetic) 1/2 sec.</choice>
+		<choice xml:lang="de">[21] Weiche (magnetish) 1/2 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[22]" value="22">
+		<choice>[22] Switch (magnetic) 1 sec.</choice>
+		<choice xml:lang="de">[22] Weiche (magnetish) 1 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[23]" value="23">
+		<choice>[23] Switch (magnetic) 2 sec.</choice>
+		<choice xml:lang="de">[23] Weiche (magnetish) 2 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[24]" value="24">
+		<choice>[24] DCC switch off (magnetic)</choice>
+		<choice xml:lang="de">[24] DCC schaltbetrieb (magnetish)</choice>
+  </enumChoice>
+  <enumChoice choice="[25]" value="25">
+		<choice>[25] Switch (relay) 1/4 sec.</choice>
+		<choice xml:lang="de">[25] Weiche (Relais) 1/4 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[26]" value="26">
+		<choice>[26] Switch (relay) 1/2 sec.</choice>
+		<choice xml:lang="de">[26] Weiche (Relais) 1/2 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[27]" value="27">
+		<choice>[27] Switch (relay) 1 sec.</choice>
+		<choice xml:lang="de">[27] Weiche (Relais) 1 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[28]" value="28">
+		<choice>[28] Switch (relay) 2 sec.</choice>
+		<choice xml:lang="de">[28] Weiche (Relais) 2 sec.</choice>
+  </enumChoice>
+  <enumChoice choice="[29]" value="29">
+		<choice>[29] DCC switch off (relay)</choice>
+		<choice xml:lang="de">[29] DCC schaltbetrieb (Relais)</choice>
+  </enumChoice>
+  <enumChoice choice="[31]" value="31">
+		<choice>[31] 1 contact Motor</choice>
+		<choice xml:lang="de">[31] 1 Motorkontakt</choice>
+  </enumChoice>
+  <enumChoice choice="[32]" value="32">
+		<choice>[32] 2 contacts Motor</choice>
+		<choice xml:lang="de">[32] 2 Motorkontakte</choice>
+  </enumChoice>
+</enumChoiceGroup>

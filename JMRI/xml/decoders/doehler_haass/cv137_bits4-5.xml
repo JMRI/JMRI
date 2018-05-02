@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-12-14</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>advanced function</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="137" mask="XXXVXXXX" tooltip="bit4" item="Extended mapping">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Extended mapping</label>
+    <label xml:lang="de">Erweiterte Funktionszuordnung</label>
+    <label xml:lang="ca">Mapejat estès</label>
+  </variable>
+  <variable item="SUSI ouptuts mapping" CV="137" mask="XXVXXXXX">
+    <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+     <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <enumChoice choice="AUX3">
+        <choice>AUX3 and AUX4 on ZCLK and ZDAT</choice>
+        <choice xml:lang="de">AUX3 und AUX4 an ZCLK und ZDAT</choice>
+        <choice xml:lang="de">AUX3 i AUX4 s'usen com a ZCLK i ZDAT</choice>
+      </enumChoice>
+      <enumChoice choice="AUX5">
+        <choice>AUX5 and AUX6 on ZCLK and ZDAT</choice>
+        <choice xml:lang="de">AUX5 und AUX6 an ZCLK und ZDAT</choice>
+        <choice xml:lang="ca">AUX5 i AUX6 s'usen com a ZCLK i ZDAT</choice>
+      </enumChoice>
+     </enumChoiceGroup>
+    </enumVal>
+    <label>AUX on SUSI</label>
+    <label xml:lang="de">AUX an SUSI</label>
+    <label xml:lang="ca">AUX en SUSI</label>
+    <tooltip>bit5</tooltip>
+    <tooltip xml:lang="de">Nur gültig, wenn CV137/Bit 0=1 und Bit 4=1</tooltip>
+  </variable>
+</variables>

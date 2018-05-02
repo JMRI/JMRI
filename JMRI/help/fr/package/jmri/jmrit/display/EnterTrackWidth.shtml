@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-1023-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Set Track Width Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Layout Editor Track">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>R&eacute;glage Largeur Voie</h1>La bo&icirc;te de
+      dialogue R&eacute;glage Largeur de Voie permet de changer les
+      largeurs des deux types de voies utilis&eacute;s dans les
+      sch&eacute;mas de voies dans le TCO. La voie peut &ecirc;tre
+      d&eacute;sign&eacute;e comme <i>voie principale</i> ou
+      <i>voie d'&eacute;vitement</i> lors de la cr&eacute;ation ou
+      de l'&eacute;dition de Segments de Voie. Les parties de type
+      de voie d'aiguillage et de croisement sont d&eacute;duits
+      &agrave; partir du type des Tron&ccedil;ons de Voie
+      connect&eacute;s. Toutes les voies sont initialement <i>voie
+      d'&eacute;vitement</i> par d&eacute;faut. La
+      sp&eacute;cification du type <i>voie principale</i> pour des
+      segments sp&eacute;cifiques de la voie est une option que
+      vous pouvez ou non choisir d'en profiter.
+
+      <p>Chaque type de voie peut &ecirc;tre dessin&eacute; en
+      utilisant une largeur de voie diff&eacute;rente. La
+      modification de la largeur d'un type de voie modifie les
+      largeurs de toutes les voies de ce type dans le sch&eacute;ma
+      de voie.</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

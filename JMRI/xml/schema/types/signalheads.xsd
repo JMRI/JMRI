@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+    <xs:complexType name="SignalHeadManagerType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of a SignalHeadManager implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.managers.configurexml.AbstractSignalHeadManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="signalhead" type="SignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
+        <xs:element name="dccsignalhead" type="DccSignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="SignalHeadType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one SignalHead implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.LsDecSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.MergSD2SignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.QuadOutputSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.SE8cSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.TripleTurnoutSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.VirtualSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrix.acela.configurexml.AcelaSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrix.grapevine.configurexml.SerialSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.SingleTurnoutSignalHeadXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+
+        <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+
+        <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          Deprecated in JMRI 2.7.7 in favor of turnoutname element
+          </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="systemName" type="systemNameType" use="required" />
+            <xs:attribute name="userName" type="userNameType" />
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="turnoutname" minOccurs="0" maxOccurs="unbounded" >
+          <xs:complexType >
+            <xs:simpleContent>
+              <xs:annotation><xs:documentation>
+              Define the XML stucture for storing the contents a NamedBeanHandle&lt;Turnout&gt;
+              Handled inside other adapter classes at this point, so no xs:appinfo element here.                
+              </xs:documentation></xs:annotation>
+              <xs:extension base="xs:string">
+                <xs:attribute name="defines"  use="required">
+                  <xs:annotation><xs:documentation>Specifies which color the turnout drives</xs:documentation></xs:annotation>
+                    <xs:simpleType><xs:union>
+                      <xs:simpleType>
+                        <xs:restriction base="signalColorType"/>
+                      </xs:simpleType>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="low"/>
+                          <xs:enumeration value="high"/>
+                          <xs:enumeration value="input1"/>
+                          <xs:enumeration value="input2"/>
+                          <xs:enumeration value="aspect"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:union></xs:simpleType>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
+          <xs:complexType> 
+            <xs:simpleContent>
+              <xs:annotation><xs:documentation>
+              Define the XML stucture for storing the contents a Signal Appearance;
+              for a given state on a single output signal
+              </xs:documentation>
+              <xs:appinfo>
+                <jmri:usingclass configurexml="true">jmri.managers.configurexml.SingleTurnoutSignalHeadXml</jmri:usingclass>
+              </xs:appinfo>
+              </xs:annotation>
+              <xs:extension base="signalColorType">
+                <xs:attribute name="defines" type="turnoutStateType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the appearance which is associated with the turnout state</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="systemName" type="systemNameType" use="required" />
+      <xs:attribute name="userName" type="nullUserNameType" />
+      <xs:attribute name="home" type="yesNoType" />
+      <xs:attribute name="aspects" type="xs:integer" />
+    </xs:complexType>
+
+    <xs:complexType name="DccSignalHeadType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one DccSignalHead implementation.
+          Obsolete/deprecated in 2.7.7, but around for until files are rewritten
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DccSignalHeadXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="systemName" type="systemNameType" use="required" />
+      <xs:attribute name="userName" type="nullUserNameType" />
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file panes for QSi V7 files -->
+<!-- version 2 - Add minor version to top of pane -->
+<!-- version 3 - Add support for V8 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Multi Auto Lights</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <display item="CV56.254.6"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text>Multiple Automatic Lights #1</text>
+        </label>
+        <display item="CV55.136.0 70" format="checkbox"/>
+        <display item="CV55.136.0 73" format="checkbox"/>
+        <display item="CV55.136.0 76" format="checkbox"/>
+        <display item="CV55.136.0 80" format="checkbox"/>
+        <display item="CV55.136.0 84" format="checkbox"/>
+        <display item="CV55.136.0 88" format="checkbox"/>
+        <display item="CV55.136.0 92" format="checkbox"/>
+        <display item="CV55.136.0 96" format="checkbox"/>
+        <display item="CV55.136.1 100" format="checkbox"/>
+        <display item="CV55.136.1 102" format="checkbox"/>
+        <display item="CV55.136.1 104" format="checkbox"/>
+        <display item="CV55.136.1 106" format="checkbox"/>
+        <display item="CV55.136.1 109" format="checkbox"/>
+        <display item="CV55.136.1 112" format="checkbox"/>
+        <display item="CV55.136.2 116" format="checkbox"/>
+        <display item="CV55.136.2 118" format="checkbox"/>
+        <display item="CV55.136.2 122" format="checkbox"/>
+        <display item="CV55.136.2 120" format="checkbox"/>
+        <display item="CV55.136.2 121" format="checkbox"/>
+      </column>
+      <column>
+        <label>
+          <text>  #2</text>
+        </label>
+        <display item="CV55.137.0 70" format="checkbox" label=""/>
+        <display item="CV55.137.0 73" format="checkbox" label=""/>
+        <display item="CV55.137.0 76" format="checkbox" label=""/>
+        <display item="CV55.137.0 80" format="checkbox" label=""/>
+        <display item="CV55.137.0 84" format="checkbox" label=""/>
+        <display item="CV55.137.0 88" format="checkbox" label=""/>
+        <display item="CV55.137.0 92" format="checkbox" label=""/>
+        <display item="CV55.137.0 96" format="checkbox" label=""/>
+        <display item="CV55.137.1 100" format="checkbox" label=""/>
+        <display item="CV55.137.1 102" format="checkbox" label=""/>
+        <display item="CV55.137.1 104" format="checkbox" label=""/>
+        <display item="CV55.137.1 106" format="checkbox" label=""/>
+        <display item="CV55.137.1 109" format="checkbox" label=""/>
+        <display item="CV55.137.1 112" format="checkbox" label=""/>
+        <display item="CV55.137.2 116" format="checkbox" label=""/>
+        <display item="CV55.137.2 118" format="checkbox" label=""/>
+        <display item="CV55.137.2 122" format="checkbox" label=""/>
+        <display item="CV55.137.2 120" format="checkbox" label=""/>
+        <display item="CV55.137.2 121" format="checkbox" label=""/>
+      </column>
+      <column>
+        <label>
+          <text>  #3</text>
+        </label>
+        <display item="CV55.138.0 70" format="checkbox" label=""/>
+        <display item="CV55.138.0 73" format="checkbox" label=""/>
+        <display item="CV55.138.0 76" format="checkbox" label=""/>
+        <display item="CV55.138.0 80" format="checkbox" label=""/>
+        <display item="CV55.138.0 84" format="checkbox" label=""/>
+        <display item="CV55.138.0 88" format="checkbox" label=""/>
+        <display item="CV55.138.0 92" format="checkbox" label=""/>
+        <display item="CV55.138.0 96" format="checkbox" label=""/>
+        <display item="CV55.138.1 100" format="checkbox" label=""/>
+        <display item="CV55.138.1 102" format="checkbox" label=""/>
+        <display item="CV55.138.1 104" format="checkbox" label=""/>
+        <display item="CV55.138.1 106" format="checkbox" label=""/>
+        <display item="CV55.138.1 109" format="checkbox" label=""/>
+        <display item="CV55.138.1 112" format="checkbox" label=""/>
+        <display item="CV55.138.2 116" format="checkbox" label=""/>
+        <display item="CV55.138.2 118" format="checkbox" label=""/>
+        <display item="CV55.138.2 122" format="checkbox" label=""/>
+        <display item="CV55.138.2 120" format="checkbox" label=""/>
+        <display item="CV55.138.2 121" format="checkbox" label=""/>
+      </column>
+    </row>
+  </column>
+</pane>

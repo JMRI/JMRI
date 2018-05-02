@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Updated by Blorec Herv&#233; le 2011-01-09-->
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta content="text/html; charset=iso-8859-1" http-equiv="content-type" ><title>Throttle Window Menus</title>
+      <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
+	<meta name="Description" content="Throttle documentation for JMRI project" >
+	<meta name="Keywords" content="JMRI" >
+	<meta name="author" content="Lionel Jeanson" >
+	<meta name="language" content="fr" >
+    <!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
+<link rel="icon" href="/images/jmri.ico" type="image/png" >
+<link rel="home" title="Home" href="/" ><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+    <div id="mBody">
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Menus Fen&#234;tre R&#233;gulateur</h1>
+<h2><a name="FileMenu">Fichier menu</a></h2>
+
+<img src="images/ThrottlesMenu3.png" alt="" ><br >
+<h3>Charger un r&#233;gulateur</h3>
+
+Cette entr&#233;e de menu  permet de charger une configuration de la fen&#234;tre r&#233;gulateur dans la
+Fen&#234;tre de r&#233;gulateur actuel, elle va charger des propri&#233;t&#233;s de fen&#234;tres int&#233;rieures et de
+Jynstruments le cas &#233;ch&#233;ant.
+
+<h3>Sauver le R&#233;gulateur Actuel</h3>
+
+Cette entr&#233;e de menu permet de sauvegarder la configuration actuelle de la fen&#234;tre R&#233;gulateur, elle va sauvegarder les propri&#233;t&#233;s de fen&#234;tres int&#233;rieures et de
+Jynstruments le cas &#233;ch&#233;ant
+Quand une entr&#233;e d'inventaire est s&#233;lectionn&#233;e, cette entr&#233;e de menu est automatiquement
+activ&#233;e, elle va cr&#233;er en utilisant (ou mettant &#224; jour) un fichier par d&#233;faut pour le R&#233;gulateur
+dans l'entr&#233;e de liste dans &lt; JMRI Preferences Folder&gt;/throttle/XYZ.xml
+o&#249; XYZ est l'ID Liste. <br>
+<br>
+Notez que lorsque l'enregistrement d'un R&#233;gulateur qui est celui par d&#233;faut pour une liste
+personnalisation d'entr&#233;e, des boutons ne seront pas sauvegard&#233;s dans ce dossier, ils doivent &#234;tre
+export&#233;s vers l'entr&#233;e liste (dans le menu Edition, voir ci-dessous). <br>
+<br>
+
+<h3>Enregistrer R&#233;gulateur actuel comme ...</h3>
+
+Permet de sauvegarder la configuration de la Fen&#234;tre R&#233;gulateur actuelle  en utilisant n'importe quel nom de fichier et de chemin, si ce nom n'est pas celui par d&#233;faut pour une entr&#233;e Liste, puis, la personnalisation des
+Boutons de fonction seront enregistr&#233;es dans ce fichier.
+
+<h2><a name="EditMenu">Modifier le menu </a> </h2>
+
+<img src="images/ThrottlesMenu1.png" alt=""> <br>
+
+<h3> Propri&#233;t&#233;s du Cadre</h3>
+
+<img src="images/ThrottleWindowPreferences.png" alt="ThrottleWindowPreferences.png"> <br>
+Permet d'&#233;diter les propri&#233;t&#233;s de la fen&#234;tre actuelle du R&#233;gulateur, en particulier le
+Titre de la fen&#234;tre:
+<ul>
+   <li> Adresse - Affichage automatique de l'adresse de toutes les locomotive s&#233;lectionn&#233;es. C'est par
+   d&#233;faut.</li>
+   <li>texte  - Afficher le texte que vous entrez dans le champ situ&#233; en haut de cette fen&#234;tre</li>
+   <li>Texte puis Adresse - Afficher le texte que vous avez entr&#233;, suivi de l'adresse s&#233;lectionn&#233;e</li>
+   <li>Adresse puis Texte - Affichage de l'adresse s&#233;lectionn&#233;e, suivie par le texte que vous avez entr&#233;</li>
+   <li> Identifiant - Affichage de l'identifiant de la locomotive dans la liste s&#233;lectionn&#233;e</li>
+</ul>
+
+Notez que si vous entrez du texte, il ne sera pas visible, sauf si le mode du milieu parmi les trois modes est s&#233;lectionn&#233;. <br>
+
+<h3> boutons<a name="EditMenu"> fonction de r&#233;initialisation </a> </h3>
+
+    R&#233;initialiser le contenu de fonction par d&#233;faut des boutons et r&#233;initialiser leur
+    visibilit&#233;. <br> <br>
+Si une liste est s&#233;lectionn&#233;e, le contenu par d&#233;faut du bouton sera charg&#233; depuis l'entr&#233;e liste; encore plus, si la pr&#233;f&#233;rence correspondante est activ&#233;e, le bouton non d&#233;fini est l'entr&#233;e liste qui sera cach&#233;e.
+
+    <h3>Exportation du r&#233;gulateur personnalis&#233; actuel vers la Liste</h3>
+Poussez la fen&#234;tre du r&#233;gulateur personnalis&#233; vers la Liste en particulier la personnalisation des
+    Fonction Boutons. Voir <a href="RostersMediaPane.shtml">volet Fonctions &#233;tiquettes</a> .
+
+<h2><a name="ViewMenu">  Menu Affichage </a> </h2>
+
+<img src="images/ThrottlesMenu2.png" alt=""> <br>
+La premi&#232;re partie du menu " Vue " affiche un petit menu de
+3 articles &#8212; par d&#233;faut, chacun avec une coche pr&#233;c&#233;dant l'article. Ceux-ci
+correspondent &#224; 3 sous-fen&#234;tres (Groupe d'adresses, Panneau de fonction, Panneau de contr&#244;le
+) qui font partie de la fen&#234;tre du r&#233;gulateur.
+<p> Comme chaque
+sous-fen&#234;tre a des bouton de r&#233;duction et de fermeture, si l'on ferme par
+erreur, cette option de menu vous permet de restaurer la fen&#234;tre.</p>
+
+<p>Une autre fa&#231;on d'utiliser cette option, c'est quand l'utilisation des fonctions du
+r&#233;gulateur
+pour les d&#233;codeurs qui ne sont <u> pas </u> associ&#233;s &#224; une machine (comme une 
+voiture voyageur allum&#233;e ou fourgon de queue ou une unit&#233; de Fred). Dans ces cas, l'&#233;cran 
+peut &#234;tre sauv&#233; en &#233;tant en mesure de d&#233;sactiver (ou fermer) le
+Panneau de Commande. Soyez un peu cr&#233;atif avec le redimensionnement de la fen&#234;tre, et vous
+pourrez avoir plusieurs de ces fen&#234;tres de r&#233;gulateur dans la m&#234;me r&#233;gion comme un
+un fen&#234;tre unique compl&#232;te de r&#233;gulateurs.</p>
+
+<h3> Voir tous les boutons de fonction -! Fonctionnalit&#233; d&#233;m&#233;nag&#233; &#224;
+    "Bouton R&#233;initialisation" entr&#233;e dans menu "Edition" </h3>
+
+<h3>Obtenez tous les composants de r&#233;gulateur dans les limites actuelles</h3>
+
+Assurez-vous que toutes les fen&#234;tres int&#233;rieures du R&#233;gulateur actuel sont &#224; l'int&#233;rieur des limites de la Fen&#234;tre du R&#233;gulateur. <br>
+
+<!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

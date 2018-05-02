@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translated  by Blorec Herv&#233; le 2013-09-14-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: Connecting an MS100 to
+  LocoNet&reg;</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  &reg; <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Guide Mat&eacute;riel JMRI: Connecter un MS100 &agrave;
+      LocoNet&reg;</h1>
+
+      <p>La MS100 de Digitrax vous permet de connecter de nombreux
+      types d'ordinateurs &agrave; un LocoNet&reg;. &lt;/ p&gt;</p>
+
+      <p>Malheureusement, la MS100 est d'une conception un peu
+      ancienne, et ne peut pas fournir une connexion
+      enti&egrave;rement fiable &agrave; LocoNet.</p>
+
+      <ul>
+        <li>Votre ordinateur peut ne pas &ecirc;tre en mesure de se
+        connecter via le MS100.</li>
+
+        <li>M&ecirc;me si le MS100 permet une connexion, vous
+        &ecirc;tes susceptibles de rencontrer des erreurs
+        intermittentes difficiles &agrave; diagnostiquer .</li>
+
+        <li>M&ecirc;me si vous obtenez que le MS100 travaille une
+        fois, il peut &eacute;chouer de fa&ccedil;on permanente en
+        raison d'une mise &agrave; jour du syst&egrave;me
+        d'exploitation de l'ordinateur.</li>
+
+        <li>Si vous avez des probl&egrave;mes avec un MS100, il
+        peut pas n'y avoir personne pour vous aider.</li>
+      </ul>Nous recommandons vivement que les nouvelles
+      configurations n'utilisent pas le MS100, et les plans
+      existants des utilisateurs pour la conversion &agrave; une
+      meilleure solution avant qu'il ne devienne n&eacute;cessaire.
+
+      <p>La <a href="LocoBufferUSB.shtml">LocoBuffer USB</a> est
+      actuellement le moyen le plus fiable pour connecter un
+      ordinateur &agrave; un LocoNet. Elle est produite par la
+      soci&eacute;t&eacute; de Dick Bronson <a href=
+      "http://www.rr-cirkits.com">RR-CirKits</a> , bas&eacute;e en
+      partie sur la conception LocoBuffer originale.</p>
+
+      <p>Dans le mode MS100, le programme tente d'ouvrir le port
+      &agrave; 16600 bauds, le taux LocoNet. Si cela &eacute;choue,
+      il tente d'ouvrir le port &agrave; 16457 bauds, ce qui est un
+      taux standard qui est assez proche pour travailler. Si cela
+      &eacute;choue aussi, Ils ne seront pas en mesure de parler au
+      LocoNet &agrave; travers la MS100.</p>
+
+      <p>Parce qu'aucun de ces taux n'est disponibles, la <b>MS100
+      ne peut pas &ecirc;tre utilis&eacute;e avec Mac OS X, Windows
+      7 ou la plupart des machines Windows Vista</b>.</p>
+
+      <p>Parce que nous ne pouvons pas &ecirc;tre s&ucirc;r que
+      votre ordinateur sera en mesure de parler &agrave; un MS100
+      sans l'essayer, vous devriez tester ceci avant de
+      d&eacute;penser de l'argent sur la MS100. Pour ce faire:</p>
+
+      <ul>
+        <li>D&eacute;marrez le programme.</li>
+
+        <li>D&eacute;finir les pr&eacute;f&eacute;rences pour MS100
+        et votre port s&eacute;rie. Vous n'avez pas besoin d'avoir
+        quelque chose de connect&eacute;, mais ne
+        s&eacute;lectionnez pas le port que vous finiriez par
+        utiliser.</li>
+
+        <li>Enregistrer les pr&eacute;f&eacute;rences.</li>
+
+        <li>Quitter le programme et le red&eacute;marrer pour que
+        les pr&eacute;f&eacute;rences prennent effet.</li>
+      </ul>
+
+      <p>Si vous obtenez une bo&icirc;te de dialogue disant
+      "Impossible de d&eacute;finir la vitesse de transmission
+      ...", alors vous ne serez pas en mesure d'utiliser votre
+      ordinateur avec un MS100. Vous devrez utiliser une
+      LocoBuffer.</p>
+
+      <h3>Linux triche pour R&eacute;gler la vitesse de
+      transmission</h3>Certains utilisateurs ont rapport&eacute; un
+      succ&egrave;s en utilisant des commandes Linux pour
+      r&eacute;gler directement la vitesse de transmission alors
+      que le programme est en marche. Pour ce faire:
+
+      <ul>
+        <li>D&eacute;marrer DecoderPro, et attendre jusqu'&agrave;
+        ce que vous voyez le message d'erreur que le taux de
+        transmission pourrait ne pas &ecirc;tre
+        r&eacute;gl&eacute;.</li>
+
+        <li>Ex&eacute;cutez les commandes suivantes &agrave; partir
+        de la ligne de commande Linux:
+          <pre>
+setserial /dev/ttyS0 divisor 7
+setserial /dev/ttyS0 spd_cust
+ stty speed 38400 &lt; dev/ttyS0
+</pre>
+        </li>
+
+        <li>Puis cliquez sur "OK" et continuer.</li>
+      </ul>Ceci a &eacute;t&eacute; rapport&eacute; pour travailler
+      &agrave; la fois avec RH9 et FC3.
+
+      <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
+      <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <hr class="hide">
+    </div>
+  </div><!--#include virtual="/Footer" -->
+</body>
+</html>

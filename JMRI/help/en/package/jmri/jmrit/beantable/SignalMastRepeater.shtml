@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Signal Masts Repeater</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Kevin Dickerson">
+  <meta name="keywords" content="JMRI help Signal Mast Repeater">
+  <!--#include virtual="/Style" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Signal Mast Repeater</h1>
+
+      <p>The Signal Mast Repeater tool allows you to configure one
+      Signal Mast to follow the state of another, or for both
+      Signal Masts to update each others state.<br>
+      For this to work, both Signal Masts must be of the same
+      Signal System and Mast Type.<br>
+      When a Master mast is selected from the list at the bottom of
+      the screen the Slave list will be populated with the
+      corresponding Signal Masts of the same system and type. If
+      there are no valid masts then the option to select the Slave
+      will remain disabled.</p>
+
+      <p>In the main table it is possible to select which direction
+      the updates will take place, either Master to Slave, Slave To
+      Master or Bothway. You can also disable/enable the Repeater
+      along with deleting it from this screen.</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

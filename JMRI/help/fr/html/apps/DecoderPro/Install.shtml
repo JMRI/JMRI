@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
+
+  <title>JMRI: T&eacute;l&eacute;chargement et installation
+  DP</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: T&eacute;l&eacute;chargement et installation
+      DecoderPro</h1>
+
+      <p>DecoderPro est distribu&eacute; dans le cadre des
+      t&eacute;l&eacute;chargements libres de JMRI. Les
+      &eacute;tapes &agrave; suivre pour ce travail sont:</p>
+
+      <dl>
+        <dt class="left">Assurez-vous que DecoderPro peut
+        s'ex&eacute;cuter sur votre ordinateur</dt>
+
+        <dd class="first">Le logiciel DecoderPro fonctionne sur
+        Windows, Linux et Mac OS X. Il pourra probablement aussi
+        travailler sur d'autres syst&egrave;mes d'exploitation
+        modernes qui ont Java d'installer; nous contacter pour vous
+        aider si vous souhaitez l'essayer sur un autre
+        syst&egrave;me. Vous avez besoin d'avoir un port
+        s&eacute;rie disponible, soit sur l'ordinateur
+        lui-m&ecirc;me, ou via un <a href=
+        "../../hardware/USBtoSerial.shtml">adaptateur USB</a>.</dd>
+
+        <dt class="left">Assurez-vous que JMRI fonctionne avec
+        votre syst&egrave;me DCC</dt>
+
+        <dd class="first">La <a href=
+        "../../hardware/index.shtml">page mat&eacute;riel</a>
+        dresse la liste des syst&egrave;mes DCC compatibles avec
+        DecoderPro, avec les limitations connue.</dd>
+
+        <dt class="left">T&eacute;l&eacute;chargez et installez
+        JMRI</dt>
+
+        <dd class="first">
+          La <a href="http://jmri.org/download/index.shtml">page de
+          t&eacute;l&eacute;chargement</a> sur le site Web
+          principal JMRI fournit des liens pour
+          t&eacute;l&eacute;charger les diff&eacute;rentes versions
+          JMRI, ainsi que des liens pour les notes, etc Nous vous
+          recommandons fortement d'abord de
+          t&eacute;l&eacute;charger et d'installer la version de
+          production la plus r&eacute;cente et assurez-vous que
+          cela fonctionne, avant d'essayer quelques-unes des
+          versions de d&eacute;veloppement plus r&eacute;centes.
+
+          <p>Notez qu'il existe diff&eacute;rents
+          t&eacute;l&eacute;chargements pour les diff&eacute;rents
+          types d'ordinateur (Macintosh, Windows, etc), et les
+          proc&eacute;dures de l'installation du programme
+          diff&egrave;rent. Vous trouverez tout cela sur la page de
+          t&eacute;l&eacute;chargement.</p>
+        </dd>
+
+        <dt class="left">D&eacute;marrer et configurer le
+        programme</dt>
+
+        <dd class="first">Les instructions d'installation obtenues
+        par la <a href="http://jmri.org/download/index.shtml">page
+        de t&eacute;l&eacute;chargement</a> vous auront dit comment
+        d&eacute;marrer le programme et le configurer. Lorsque
+        c'est fait, vous devriez avoir une installation
+        fonctionnelle DecoderPro.</dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Nigel</firstname><surname>Cliffe</surname></personname>
+
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2013-04-30</date>
+        <authorinitials>NC</authorinitials>
+        <revremark>Initial Version.  Not linked to Layout Editor automatic routing, so to control Feather use manually constructed 
+				 Logix associated with turnout settings.
+		           The Feather was intended for use with Signal Accessory Decoders such as the Harman SC1. </revremark>
+    </revision>
+    
+  </revhistory>
+  
+  <aspecttable>BR</aspecttable>
+
+  <name>Feather</name>
+  
+  <description>Intended for use with Signal Accessory Decoders, eg. Harman SC1</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Zero</aspectname>
+      <show>dark</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/blank.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/blank.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>One</aspectname>
+      <show>red</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position1.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position1.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Two</aspectname>
+      <show>yellow</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position2.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position2.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Three</aspectname>
+      <show>green</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position3.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position3.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Four</aspectname>
+      <show>flashred</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position4.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position4.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Five</aspectname>
+      <show>flashyellow</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position5.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position5.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Six</aspectname>
+      <show>flashgreen</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/position6.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/position6.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+  
+  </specificappearances>
+  
+</appearancetable>  

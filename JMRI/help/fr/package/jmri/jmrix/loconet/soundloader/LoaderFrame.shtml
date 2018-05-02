@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<!-- Translated  by Blorec Hervé le 2011-11-1-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Sound Loader</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help loconet sound loader">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Chargeur de Son</h1>Les d&Atilde;&copy;codeurs sonores
+      Digitrax sont charg&Atilde;&copy;s avec des "projets sons",
+      stock&Atilde;&copy;s dans des fichiers "Sound Project" (.spj)
+      . Ceux-ci contiennent un certain nombre de "fragments
+      sonores" au format .wav, ainsi que quelques informations de
+      contr&Atilde;&acute;le suppl&Atilde;&copy;mentaires.
+
+      <p>L'outil d&Atilde;&copy;codeur
+      T&Atilde;&copy;l&Atilde;&copy;chargeur Son vous permet de
+      charger un nouveau fichier .spj en un d&Atilde;&copy;codeur
+      de son Digitrax via une interface PR2 ou PR3 Digitrax. Si
+      vous utilisez un PR3, il doit &Atilde;&ordf;tre mis en mode
+      "Programmateur", avant d'essayer de
+      t&Atilde;&copy;l&Atilde;&copy;charger, consultez la <a href=
+      "../../../../../html/hardware/loconet/PR3.shtml">page
+      principale PR3</a>.</p>
+
+      <p>Digitrax fournit des exemples de fichiers projets sonores
+      dans son site Web de D&Atilde;&copy;pot sonore <a href=
+      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
+      Vous pouvez &Atilde;&copy;galement trouver l&Atilde;  des
+      liens vers la documentation et des outils
+      suppl&Atilde;&copy;mentaires.</p>
+
+      <p>JMRI fournit &Atilde;&copy;galement des outils pour
+      <a href="EditorFrame.shtml">&Atilde;&copy;dition de fichiers
+      de projet sonores</a> pour inclure de nouveaux sons et
+      m&Atilde;&ordf;me &Atilde;  <a href=
+      "/../../sdfeditor/EditorFrame.shtml">changer la logique
+      son</a></p>
+
+      <h2>Utiliser le
+      t&Atilde;&copy;l&Atilde;&copy;chargeur</h2>Lorsque vous
+      s&Atilde;&copy;lectionnez d'abord l'outil
+      T&Atilde;&copy;l&Atilde;&copy;chargeur des Sons, il ouvre une
+      fen&Atilde;&ordf;tre avec la plupart des
+      contr&Atilde;&acute;les
+      d&Atilde;&copy;sactiv&Atilde;&copy;s:<br>
+      <a href="LoaderPane.gif"><img width="236" height="118" src=
+      "LoaderPane.gif" alt=
+      "Initial &Atilde;&copy;diteur Image"></a><br>
+      (Cliquez sur une image sur cette page pour voir une version
+      agrandie)
+
+      <p>La ligne d'&Atilde;&copy;tat au bas vous guidera &Atilde; 
+      travers les &Atilde;&copy;tapes n&Atilde;&copy;cessaires.</p>
+
+      <ol>
+        <li>D'abord, cliquez sur
+        &Acirc;&laquo;S&Atilde;&copy;lect&Acirc;&raquo; et
+        choisissez le fichier .spj que vous souhaitez
+        t&Atilde;&copy;l&Atilde;&copy;charger.</li>
+
+        <li>Ensuite, cliquez sur "Lire" pour lire le fichier (ce
+        qui est une &Atilde;&copy;tape distincte de sorte que vous
+        pouvez simplement cliquer sur "Lire" plusieurs fois si vous
+        &Atilde;&ordf;tes en &Atilde;&copy;dition et sauvegarder
+        les nouvelles versions du fichier).
+
+          <p>Si tout est OK, le fichier sera lu dans le programme
+          et v&Atilde;&copy;rifi&Atilde;&copy;, une
+          cha&Atilde;&reg;ne de version du fichier sera
+          affich&Atilde;&copy; et le bouton
+          "T&Atilde;&copy;l&Atilde;&copy;charger" sera
+          activ&Atilde;&copy;.</p>
+
+          <p><a href="LoaderPaneReady.gif"><img width="236" height=
+          "118" src="LoaderPaneReady.gif" alt=
+          " &Atilde;&copy;diteur Image Initiale"></a><br></p>
+        </li>
+
+        <li>Cliquez sur "T&Atilde;&copy;l&Atilde;&copy;charger"
+        pour commencer le processus de
+        t&Atilde;&copy;l&Atilde;&copy;chargement. Il va prendre un
+        peu tout. Les progr&Atilde;&uml;s sont d&Atilde;&copy;crits
+        dans la ligne de statut:
+
+          <dl>
+            <dt>"t&Atilde;&copy;l&Atilde;&copy;chargement de
+            d&Atilde;&copy;part; Effacement Flash"</dt>
+
+            <dd>La premi&Atilde;&uml;re &Atilde;&copy;tape consiste
+            &Atilde;  effacer la m&Atilde;&copy;moire des
+            d&Atilde;&copy;codeurs afin qu'il puisse prendre de
+            nouvelles donn&Atilde;&copy;es. Cela va prendre
+            jusqu'&Atilde;  environ 30 secondes, selon le
+            d&Atilde;&copy;codeur sp&Atilde;&copy;cifique.</dd>
+
+            <dt>"Envoi message d'initialisation"</dt>
+
+            <dd>Mettre en place le d&Atilde;&copy;codeur pour
+            accepter les donn&Atilde;&copy;es apr&Atilde;&uml;s
+            avoir &Atilde;&copy;t&Atilde;&copy;
+            effac&Atilde;&copy;. Cela ne devrait prendre qu'une
+            fraction de seconde.</dd>
+
+            <dt>"Envoyer des donn&Atilde;&copy;es
+            SDF&Acirc;&raquo;</dt>
+
+            <dd>Chargez les donn&Atilde;&copy;es de
+            d&Atilde;&copy;finition sonore dans le
+            d&Atilde;&copy;codeur, ce qui ne devrait prendre que
+            quelques secondes</dd>
+
+            <dt>&Acirc;&laquo;Envoyer des donn&Atilde;&copy;es
+            WAV"</dt>
+
+            <dd>Les donn&Atilde;&copy;es audio sont en cours de
+            t&Atilde;&copy;l&Atilde;&copy;chargement. Quand chaque
+            bloc est envoy&Atilde;&copy;, vous recevrez un avis de
+            mise &Atilde;  jour: "Envoyez bloc de
+            donn&Atilde;&copy;es WAV 1", puis 2, puis 3, etc</dd>
+
+            <dt>"Termin&Atilde;&copy;"</dt>
+
+            <dd>Le t&Atilde;&copy;l&Atilde;&copy;chargement est
+            complet OK.</dd>
+          </dl>Si quelque chose se d&Atilde;&copy;roule mal, le
+          statut final sera
+          "T&Atilde;&copy;l&Atilde;&copy;chargement
+          avort&Atilde;&copy;&Acirc;&raquo;. La raison la plus
+          commune est que le PR2 ne pouvait pas traiter les
+          donn&Atilde;&copy;es qui lui ont
+          &Atilde;&copy;t&Atilde;&copy; envoy&Atilde;&copy;es, ce
+          qui est r&Atilde;&copy;pertori&Atilde;&copy; comme
+          &Acirc;&laquo;PR2 pas pr&Atilde;&ordf;t". Si cela se
+          produit &Atilde;  plusieurs reprises, assurez-vous que le
+          port s&Atilde;&copy;rie et que le c&Atilde;&cent;ble
+          utilis&Atilde;&copy; par PR2 pour le
+          contr&Atilde;&acute;le du lien est correctement
+          connect&Atilde;&copy;. Un contact intermittent peut
+          causer des probl&Atilde;&uml;mes .
+        </li>
+      </ol>
+
+      <p>Si vous avez plusieurs d&Atilde;&copy;codeurs &Atilde; 
+      charger avec le m&Atilde;&ordf;me dossier, vous pouvez
+      simplement les connectez chacun &Atilde;  leur tour &Atilde; 
+      l'interface PR2/PR3 et cliquez sur
+      "T&Atilde;&copy;l&Atilde;&copy;charger", il n'y a pas besoin
+      de recharger le fichier &Atilde;  chaque fois.</p>
+
+      <p>En outre, vous pouvez utiliser un <a href=
+      "../../../../../html/tools/throttle/ThrottleMain.shtml">R&Atilde;&copy;gulateur</a>
+      JMRI pour essayer vos nouveaux sons via le PR2. JMRI prend
+      soin de convertir les interfaces PR2/PR3 en
+      programmateur/chargeur avec une centrale de commande de
+      faible puissance pour faire rouler une locomotive .</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F1</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F1</label>
+        <label xml:lang="de">Analog Modus F1</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F1 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F2" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F2</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F2</label>
+        <label xml:lang="de">Analog Modus F2</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F2 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F3" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F3</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F3</label>
+        <label xml:lang="de">Analog Modus F3</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F3 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F4" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F4</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F4</label>
+        <label xml:lang="de">Analog Modus F4</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F4 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F5" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F5</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F5</label>
+       <label xml:lang="de">Analog Modus F5</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F5 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F6" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F6</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F6</label>
+        <label xml:lang="de">Analog Modus F6</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F6 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F7" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F7</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F7</label>
+        <label xml:lang="de">Analog Modus F7</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F7 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="13" item="Analog Mode Function Status - F8" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - F8</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F8</label>
+        <label xml:lang="de">Analog Modus F8</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F8 im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="14" item="Analog Mode Function Status - FL(f)" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - FL(f)</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - FL(f)</label>
+        <label xml:lang="de">Analog Modus Lvor</label>
+       <tooltip xml:lang="de">Zustand der Funktionen Lvor im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="14" item="Analog Mode Function Status - FL(r)" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - FL(r)</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - FL(r)</label>
+        <label xml:lang="de">Analog Modus Lrück</label>
+       <tooltip xml:lang="de">Zustand der Funktionen Lrück im Analogmodus.</tooltip>
+      </variable>
+      <variable CV="49" item="BEMF Active" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>BEMF Active</label>
+        <label xml:lang="fr">Comp.charge</label>
+        <label xml:lang="de">Lastregelung</label>
+      </variable>
+      <variable CV="49" item="Total PWM Period" mask="XXXXXXVX" default="1">
+        <enumVal>
+          <enumChoice choice="15 kHz">
+            <choice>15 kHz</choice>
+          </enumChoice>
+          <enumChoice choice="30 kHz">
+            <choice>30 kHz</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Total PWM Period</label>
+        <label xml:lang="fr">Fréquence moteur</label>
+        <label xml:lang="de">Motor PWM Frequenz</label>
+      </variable>
+      <variable CV="49" item="Marklin delta Mode" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Marklin delta Mode</label>
+        <label xml:lang="fr">Mode Marklin delta</label>
+        <label xml:lang="de">Märklin® Delta Modus</label>
+      </variable>
+      <variable CV="49" item="Marklin second address" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Marklin second address</label>
+        <label xml:lang="fr">seconde adresse Marklin</label>
+        <label xml:lang="de">Märklin® Folge Adressen</label>
+      </variable>
+      <variable CV="49" item="Automatic Speed Step Detection" mask="XXXVXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Automatic Speed Step Detection</label>
+        <label xml:lang="fr">Détection auto des crans de Vitesse</label>
+        <label xml:lang="de">Automatische Fahrstufenerkennung</label>
+      </variable>
+      <variable CV="49" item="LGB function button mode" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>LGB function button mode</label>
+        <label xml:lang="fr">Mode fonctions LGB</label>
+        <label xml:lang="de">LGB® Funktionstasten Modus</label>
+      </variable>
+      <variable CV="49" item="Zimo manual function" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Zimo manual function</label>
+        <label xml:lang="fr">Fonctions manuelles Zimo</label>
+        <label xml:lang="de">Zimo® Manual Funktion</label>
+      </variable>
+      <variable CV="50" mask="XXXXXXXV" default="1" item="AC Analogue Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>AC Analogue Mode</label>
+        <label xml:lang="fr">AC Mode analogique</label>
+        <label xml:lang="de">AC Analog Modus</label>
+      </variable>
+      <variable CV="50" mask="XXXXXXVX" default="1" item="DC Analogue Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>DC Analogue Mode</label>
+        <label xml:lang="fr">DC Mode analogique</label>
+        <label xml:lang="de">DC Analog Modus</label>
+      </variable>
+      <variable CV="51" mask="XXXXXXXV" default="1" item="Marklin Brake Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Marklin Brake Mode</label>
+        <label xml:lang="de">Märklin® Bremsmodus</label>
+      </variable>
+      <variable CV="51" mask="XXXXXXVX" default="1" item="Zimo Brake Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Zimo Brake Mode</label>
+        <label xml:lang="de">Zimo® Bremsmodus</label>
+      </variable>
+      <variable CV="51" mask="XXXXXVXX" default="0" item="Reserved Brake Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Resereved Brake Mode</label>
+        <label xml:lang="de">Reservierter Bremsmodus</label>
+      </variable>
+      <variable CV="51" mask="XXXXVXXX" default="0" item="Lenz Brake Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Lenz Brake Mode</label>
+        <label xml:lang="de">Lenz® Bremsmodus</label>
+      </variable>
+      <variable CV="53" default="50" item="Controlref">
+        <decVal max="80"/>
+        <label>Control Reference (BEMF volts at maximum speed){0-80}</label>
+        <label xml:lang="fr">Tension absolue (voltage à vitesse max){0-80}</label>
+        <label xml:lang="de">Regelungsreferenz</label>
+      </variable>
+      <variable CV="54" default="32" item="ParaK">
+        <decVal max="80"/>
+        <label>Load Control Parameter 'K' {0-80}</label>
+        <label xml:lang="fr">Lecture du paramètres 'K' {0-80}</label>
+        <label xml:lang="de">Lastregelung Param. K</label>
+      </variable>
+      <variable CV="55" default="24" item="ParaI">
+        <decVal max="80"/>
+        <label>Load Control Parameter 'I' {0-80}</label>
+        <label xml:lang="fr">Lecture du paramètres 'I' {0-80}</label>
+        <label xml:lang="de">Lastregelung Param. I</label>
+      </variable>
+      <variable CV="56" default="64" item="Range">
+        <decVal max="64"/>
+        <label>Operating Range of Load Control'</label>
+        <label xml:lang="fr">Portée de la compensation de charge</label>
+        <label xml:lang="de">Regelungseinfluß</label>
+      </variable>
+      <variable CV="57" default="0" item="Sound Group 1 Control">
+        <decVal max="127"/>
+        <label>Time between 2 chuffs @ speed step 1 (Range 0-127)</label>
+        <label xml:lang="fr">délais d'accélaration entre deux crans (0-127)</label>
+        <label xml:lang="de">Abstand zweier Dampfstöße bei Fahrstufe 1</label>
+      </variable>
+      <variable CV="58" default="0" item="Sound Group 1 Option 1">
+        <decVal max="127"/>
+        <label>Rate of decrease in time between 2 chuffs (Range 0-127)</label>
+        <label xml:lang="fr">Délai de freinage entre deux crans(Range 0-127)</label>
+        <label xml:lang="de">Abstand der Dampfstösse mit zunehmender Fahrstufe (Bereich 0-127)</label>
+      </variable>
+      <variable CV="59" default="32" item="Sound Group 1 Option 2">
+        <decVal max="64"/>
+        <label>Slow speed sound factor (Range 0-64)</label>
+        <label xml:lang="fr">Son en vitesse lente (0-64)</label>
+        <label xml:lang="de">Fahrgeräusch minimal</label>
+      </variable>
+      <variable CV="60" default="55" item="Sound Group 1 Option 3">
+        <decVal max="64"/>
+        <label>High speed sound factor (Range 0-64)</label>
+        <label xml:lang="fr">Son en vitesse rapide (Range 0-64)</label>
+        <label xml:lang="de">Fahrgeräusch maximal</label>
+      </variable>
+      <variable CV="61" default="30" item="Sound Group 2 Option 1" comment="Range 0-64">
+        <decVal/>
+        <label>Random Sound -Shortest Interval (Range 0-64</label>
+        <label xml:lang="fr">Son aléatoire -Interval court (0-64</label>
+        <label xml:lang="de">Zufallsound -Minimaler Abstand</label>
+        <comment>Range 0-64</comment>
+        <comment xml:lang="fr">Valeur 0-64</comment>
+        <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
+      </variable>
+      <variable CV="62" default="50" item="Sound Group 2 Option 2" comment="Range 0-64">
+        <decVal/>
+        <label>Random Sound -Longest Interva (Range 0-64)</label>
+        <label xml:lang="fr">Son aléatoire -Interval long (Range 0-64)</label>
+        <label xml:lang="de">Zufallsound -Maximaler Abstand</label>
+        <comment>Range 0-64</comment>
+        <comment xml:lang="fr">Valeur 0-64</comment>
+        <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
+      </variable>
+      <variable CV="64" default="7" item="Sound Group 2 Option 3" comment="Range 0-64">
+        <decVal/>
+        <label>Braking Sound threshold (Range 0-64)</label>
+        <label xml:lang="fr">Son début de freinange(0-64)</label>
+        <label xml:lang="de">Bremsgeräusch -Einschaltschwelle</label>
+        <comment>Range 0-64</comment>
+        <comment xml:lang="fr">Valeur 0-64</comment>
+      </variable>
+      <variable CV="67" item="Speed Table">
+        <speedTableVal/>
+        <label>Speed Table</label>
+        <label xml:lang="fr">Courbe de vitesse</label>
+        <label xml:lang="de">Geschwindigkeitstabelle</label>
+      </variable>
+      <variable CV="112" item="Blinking Rate" default="33">
+        <decVal min="4" max="64"/>
+        <label>Blinking Rate</label>
+        <label xml:lang="fr">Fréq de clignotement</label>
+        <label xml:lang="de">Blinkfrequenz</label>
+        <comment>Controls Blink Interval</comment>
+        <comment xml:lang="fr">Fréq de clignotement</comment>
+       <tooltip xml:lang="de">Immer ein Vielfaches von 65,536 ms</tooltip>
+      </variable>
+</variables>

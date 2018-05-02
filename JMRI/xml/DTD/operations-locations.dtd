@@ -1,0 +1,151 @@
+<!-- Defines XML documenting a location roster -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (options | locations | schedules)*>
+
+<!ELEMENT options (locationEditOptions)*>
+<!ELEMENT locationEditOptions EMPTY>
+
+<!ELEMENT locations (location)*>
+<!ELEMENT location (types | track)*>
+<!ELEMENT track (types | carLoads | carRoads | carShipLoads | dropIds | pickupIds | destinations | comments)*>
+
+<!ELEMENT destinations (destination)*>
+<!ELEMENT destination EMPTY>
+
+<!ELEMENT schedules (schedule)*>
+<!ELEMENT schedule (item)*>
+<!ELEMENT item EMPTY>
+
+<!ATTLIST location id				CDATA #REQUIRED>          
+<!ATTLIST location name				CDATA #IMPLIED>
+<!ATTLIST location ops				CDATA #IMPLIED>       
+<!ATTLIST location dir				CDATA #IMPLIED> 
+<!ATTLIST location carTypes			CDATA #IMPLIED> 
+<!ATTLIST location switchList		(true | false) "false">
+<!ATTLIST location switchListState	CDATA #IMPLIED>
+<!ATTLIST location printerName		CDATA #IMPLIED>
+<!ATTLIST location eastTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location eastTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location westTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location westTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location northTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location northTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location southTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location southTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location comment			CDATA #IMPLIED>
+<!ATTLIST location switchListComment CDATA #IMPLIED>
+<!ATTLIST location physicalLocation CDATA #IMPLIED>
+<!ATTLIST location idReader 		CDATA #IMPLIED>
+
+<!ATTLIST track id				CDATA #IMPLIED>          
+<!ATTLIST track name			CDATA #IMPLIED>
+<!ATTLIST track locType			CDATA #IMPLIED>       
+<!ATTLIST track dir				CDATA #IMPLIED> 
+<!ATTLIST track carTypes		CDATA #IMPLIED> 
+<!ATTLIST track carRoadOperation	CDATA #IMPLIED> 
+<!ATTLIST track carRoadOption	CDATA #IMPLIED> 
+<!ATTLIST track carRoads		CDATA #IMPLIED>
+<!ATTLIST track carLoadOption	CDATA #IMPLIED> 
+<!ATTLIST track carShipLoadOption	CDATA #IMPLIED> 
+<!ATTLIST track carLoads		CDATA #IMPLIED>
+<!ATTLIST track dropOption		CDATA #IMPLIED> 
+<!ATTLIST track dropIds			CDATA #IMPLIED> 
+<!ATTLIST track pickupOption	CDATA #IMPLIED>
+<!ATTLIST track pickupIds		CDATA #IMPLIED>  
+<!ATTLIST track length			CDATA #IMPLIED> 
+<!ATTLIST track moves			CDATA #IMPLIED> 
+<!ATTLIST track schedule		CDATA #IMPLIED> 
+<!ATTLIST track scheduleId		CDATA #IMPLIED> 
+<!ATTLIST track itemId			CDATA #IMPLIED> 
+<!ATTLIST track itemCount		CDATA #IMPLIED> 
+<!ATTLIST track factor			CDATA #IMPLIED>
+<!ATTLIST track scheduleMode	CDATA #IMPLIED>
+<!ATTLIST track loadOptions		CDATA #IMPLIED> 
+<!ATTLIST track order			CDATA #IMPLIED> 
+<!ATTLIST track alternative		CDATA #IMPLIED> 
+<!ATTLIST track pool			CDATA #IMPLIED>
+<!ATTLIST track minLength		CDATA #IMPLIED>
+<!ATTLIST track comment			CDATA #IMPLIED>
+<!ATTLIST track blockOptions	CDATA #IMPLIED>
+<!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
+<!ATTLIST track trackDestinationOption	CDATA #IMPLIED>
+<!ATTLIST track blockingOrder	CDATA #IMPLIED>
+<!ATTLIST track holdCustomLoads	(true | false) "false">
+<!ATTLIST track onlyCarWithFD	(true | false) "false">
+
+
+<!ATTLIST destination id			CDATA #REQUIRED>          
+<!ATTLIST destination name			CDATA #IMPLIED>
+
+<!ATTLIST both comment			CDATA #IMPLIED>
+<!ATTLIST pickup comment		CDATA #IMPLIED>
+<!ATTLIST setout comment		CDATA #IMPLIED>
+
+<!ATTLIST schedule id			CDATA #REQUIRED>      
+<!ATTLIST schedule name			CDATA #IMPLIED>
+<!ATTLIST schedule comment		CDATA #IMPLIED>
+
+<!ATTLIST item id				CDATA #REQUIRED>          
+<!ATTLIST item type				CDATA #IMPLIED>
+<!ATTLIST item road				CDATA #IMPLIED>
+<!ATTLIST item load				CDATA #IMPLIED>
+<!ATTLIST item ship				CDATA #IMPLIED>
+<!ATTLIST item sequenceId		CDATA #IMPLIED>
+<!ATTLIST item count			CDATA #IMPLIED>
+<!ATTLIST item destinationId	CDATA #IMPLIED>
+<!ATTLIST item destTrackId		CDATA #IMPLIED>
+<!ATTLIST item comment			CDATA #IMPLIED>
+<!ATTLIST item wait				CDATA #IMPLIED>
+<!ATTLIST item trainScheduleId	CDATA #IMPLIED>
+<!ATTLIST item pickupTrainScheduleId	CDATA #IMPLIED>
+<!ATTLIST item hits				CDATA #IMPLIED>
+<!ATTLIST item random			CDATA #IMPLIED>
+
+<!ATTLIST locationEditOptions x		CDATA #IMPLIED> 
+<!ATTLIST locationEditOptions y		CDATA #IMPLIED> 
+<!ATTLIST locationEditOptions height	CDATA #IMPLIED> 
+<!ATTLIST locationEditOptions width	CDATA #IMPLIED> 
+
+<!ELEMENT types (carType | locoType*)*>
+<!ELEMENT carType EMPTY>
+<!ATTLIST carType name				CDATA #IMPLIED> 
+<!ELEMENT locoType EMPTY>
+<!ATTLIST locoType name				CDATA #IMPLIED> 
+
+<!ELEMENT carLoads (carLoad*)*>
+<!ELEMENT carLoad EMPTY>
+<!ATTLIST carLoad name				CDATA #IMPLIED> 
+
+<!ELEMENT carShipLoads (carLoad*)*>
+<!ELEMENT carShipLoad EMPTY>
+
+<!ELEMENT carRoads (carRoad*)*>
+<!ELEMENT carRoad EMPTY>
+<!ATTLIST carRoad name				CDATA #IMPLIED>
+
+<!ELEMENT dropIds (dropId*)*>
+<!ELEMENT dropId EMPTY>
+<!ATTLIST dropId id					CDATA #IMPLIED> 
+
+<!ELEMENT pickupIds (pickupId*)*>
+<!ELEMENT pickupId EMPTY>
+<!ATTLIST pickupId id					CDATA #IMPLIED> 
+
+<!ELEMENT comments (track | both | pickup | setout)*>
+<!ELEMENT both EMPTY>
+<!ELEMENT pickup EMPTY>
+<!ELEMENT setout EMPTY>
+

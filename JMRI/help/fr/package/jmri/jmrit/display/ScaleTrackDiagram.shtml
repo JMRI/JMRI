@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!--  Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Scale/Translate Track Diagram Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Layout Editor Track">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>&Eacute;chelle/Translater diagramme de voie</h1>
+
+      <p>Le dialogue &Eacute;chelle/Translater diagramme de voie
+      fournit pour la r&eacute;duction et la translation d'un
+      diagramme de la voie dans un panneau cr&eacute;&eacute;
+      &agrave; l'aide de l'&Eacute;diteur de TCO.</p>
+
+      <p>Pour traduire votre diagramme de voie dans la
+      fen&ecirc;tre du panneau, saisissez le montant &agrave;
+      translater dans les directions <i>x</i> (horizontal) et
+      <i>y</i> (vertical). Les unit&eacute;s sont des pixels - les
+      m&ecirc;mes unit&eacute;s indiqu&eacute;es dans l'affichage
+      <i>x, y</i> de la position dans la barre d'outil de
+      l'&Eacute;diteur de TCO. Pour aucune translation dans les
+      deux sens entrez la valeur z&eacute;ro. Pour la translation
+      horizontale , entrez un nombre n&eacute;gatif pour
+      d&eacute;placer le diagramme de la voie vers la gauche du
+      nombre de pixels indiqu&eacute;, entrez un nombre positif
+      pour aller &agrave; droite. Pour la translation verticale,
+      entrez une nombre n&eacute;gatif pour d&eacute;placer le
+      diagramme de la voie vers le haut de ce nombre de pixels;
+      entrer un nombre positif pour d&eacute;placer le diagramme de
+      la voie vers le bas. Pour annuler une translation
+      pr&eacute;c&eacute;dente, il suffit d'entrer les m&ecirc;mes
+      chiffres avec des signes oppos&eacute;s.</p>
+
+      <p>Pour redimensionner votre diagramme de voie, entrez les
+      facteurs d'&eacute;chelle pour les directions verticale
+      (<i>y</i>) et/ou horizontale (<i>x</i>). T. Pour aucune
+      variation dans les deux sens, entrez 1,0 comme facteur
+      d'&eacute;chelle . Entrez un nombre inf&eacute;rieur &agrave;
+      1,0 afin de r&eacute;duire la taille du diagramme de la voie;
+      saisir un nombre sup&eacute;rieur &agrave; 1,0 pour augmenter
+      la taille du diagramme de la voie.</p>
+
+      <p><b>Remarques:</b></p>
+
+      <p>1. La translation est effectu&eacute;e avant la mise
+      &agrave; l'&eacute;chelle, entrez donc les unit&eacute;s de
+      translation appropri&eacute;e.</p>
+
+      <p>2.La mise &agrave; l'&eacute;chelle n'est pas parfaite.
+      Vous pouvez avoir besoin d'ajuster l'alignement de certains
+      &eacute;l&eacute;ments apr&egrave;s la mise &agrave;
+      l'&eacute;chelle de votre diagramme de la voie.</p>
+
+      <p>3.La mise &agrave; l'&eacute;chelle n'est pas facilement
+      r&eacute;versible, alors pensez &agrave; sauvegarder votre
+      panneau avant la mise &agrave; l'&eacute;chelle pour
+      permettre un retour facile &agrave; la taille
+      pr&eacute;c&eacute;dente, si vous n'aimez pas le panneau de
+      l'&eacute;chelle.</p>
+
+      <p>4. L'&Eacute;diteur de TCO assure le suivi des facteurs
+      d'&eacute;chelle que vous avez appliqu&eacute;. Lorsque vous
+      ajouter un nouvel aiguillage apr&egrave;s avoir mis &agrave;
+      l'&eacute;chelle, l'aiguillage sera cr&eacute;&eacute;
+      &agrave; la nouvelle &eacute;chelle.</p>
+
+      <p>5. Les positions des ic&ocirc;nes et des &eacute;tiquettes
+      ne sont pas translat&eacute;es ou r&eacute;duites. Seul le
+      dessin du diagramme de la voie est redimensionn&eacute; et
+      translat&eacute;.</p>
+
+      <p><b>Pour conserver vos modifications, s'il vous pla&icirc;t
+      n'oubliez pas d'enregistrer votre panneau!</b></p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

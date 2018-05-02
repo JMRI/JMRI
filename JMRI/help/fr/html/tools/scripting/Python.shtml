@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; 2013-09-26-->
+
+  <title>JMRI: The Python/Jython language</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI: Le langage Python/Jython</h2><a href=
+      "http://www.python.org">Python</a> est un langage de script
+      couramment utilis&eacute; qui est disponible sur de nombreux
+      types d'ordinateurs. Une variante bas&eacute;e sur Java,
+      appel&eacute; <a href="http://www.jython.org">Jython</a> , a
+      &eacute;t&eacute; int&eacute;gr&eacute; avec JMRI pour rendre
+      facile le contr&ocirc;le d'un chemin de fer miniature
+      &agrave; partir de la ligne de commande d'un ordinateur. Pour
+      nos besoins, les deux langages sont enti&egrave;rement
+      identiques.
+
+      <p>Si comme moi vous pr&eacute;f&eacute;rez lire le papier,
+      il y a beaucoup de livres disponibles sur Python.
+      Peut-&ecirc;tre l'un des meilleurs pour les d&eacute;butants
+      est <a href=
+      "http://www.oreilly.com/catalog/lpython2/">"Learning
+      Python"</a> publi&eacute; par O'Reilly. Il contient plus que
+      ce que que vous devez vraiment savoir, cependant.</p>
+
+      <p>Le <a href="http://www.jython.org">site jython.org</a> a
+      quelques informations d'introduction, m&ecirc;me si leur
+      <a href="http://www.python.org/doc/tut/tut.html">tutoriel</a>
+      (lien cass&eacute; le 19/01/2012) passe trop de temps sur les
+      d&eacute;tails d'ing&eacute;nierie au d&eacute;but. Vous
+      pouvez sauter &agrave; la partie <a href=
+      "http://www.python.org/doc/tut/node5.html">sur la langue
+      elle-m&ecirc;me</a> .(lien cass&eacute; le 19/01/2012)</p>
+
+      <p>Les non-programmeurs pourraient vouloir commencer avec
+      quelques-unes des ressources r&eacute;pertori&eacute;es
+      <a href="http://www.python.org/moin/BeginnersGuide">pour
+      eux</a> sur le site de python.</p>
+
+      <p>Si vous &ecirc;tes int&eacute;ress&eacute;s par les
+      techniques sous-jacentes du langage, IBM developerWorks a
+      deux bons articles <a href=
+      "http://www-106.ibm.com/developerworks/java/library/j-jython.html">
+      ici</a> et <a href=
+      "http://www-106.ibm.com/developerworks/java/library/j-alj07064/">
+      ici</a> . Ils ont aussi un tutoriel int&eacute;ressant
+      <a href=
+      "http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">
+      ici</a> , m&ecirc;me si vous avez besoin de vous enregistrer
+      avec votre adresse email pour y acc&eacute;der.</p>
+
+      <p>Regarder les exemples du r&eacute;pertoire "jython" de la
+      distribution JMRI pourrait aussi vous aider.</p>
+
+      <h3>Les choses que quelqu'un devrait vous indiquer</h3>La
+      seule chose la plus bizarre sur Python est l'indentation des
+      questions. Au lieu d'utiliser les caract&egrave;res {et} pour
+      indiquer le d&eacute;but et la fin d'un bloc ou d'une
+      fonction, c'est fait avec l'indentation en Python. Bien
+      s&ucirc;r,comme dans un C le langage populaire en
+      g&eacute;n&eacute;ral l'indentation est faite n'importe
+      o&ugrave;, mais il faut un peu d'habitude pour que vous
+      <em>arriviez</em> &agrave; le faire en Python.
+
+      <p>Par exemple, cela est une erreur de syntaxe:</p>
+      <pre>
+    A = 15
+        print a
+    b = 21
+   
+</pre>parce que ces d&eacute;clarations, bien que logiquement
+regroup&eacute;s au m&ecirc;me niveau dans le programme, ne sont
+pas indent&eacute;es de la m&ecirc;me mani&egrave;re. Cela sonne
+comme une douleur au d&eacute;but, mais vous vous habituerez
+rapidement &agrave; elle. Ensuite, il rend les choses comme suit
+assez facile &agrave; lire, sans avoir &agrave; s'inqui&eacute;ter
+de savoir o&ugrave; l'{et }aller:
+      <pre>
+         if now == -1):
+                 done = 1
+         else:
+                 done = 0
+         print done
+  
+</pre>Si vous obtenez un message &agrave; propos de "Syntax error",
+regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
+votre indentation n'est pas align&eacute;e. 
+<!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

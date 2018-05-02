@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+    <xs:complexType name="SectionPropertyType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a single property within a sections element's properties element.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.configurexml.SectionManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="key" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="class" type="classType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the implementing Java class</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="value" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="class" type="classType" use="required">
+                  <xs:annotation><xs:documentation>Specifies the implementing Java class</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="SectionManagerType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of a SectionManager implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.configurexml.SectionManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        
+        <xs:element name="section" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="comment" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="fsensorname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="rsensorname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="fstopsensorname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="rstopsensorname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="blockentry" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="sName" type="xs:string" />
+                  <xs:attribute name="order" type="xs:integer" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="entrypoint" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="fromblock" type="xs:string" />
+                  <xs:attribute name="toblock" type="xs:string" />
+                  <xs:attribute name="direction" type="xs:integer" />
+                  <xs:attribute name="fixed" type="xs:string" /> <!-- yes/no -->
+                  <xs:attribute name="fromblockdirection" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="properties" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="property" type="SignalMastPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="systemName" type="systemNameType">
+                <xs:annotation><xs:documentation>May be Deprecated after 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="userName" type="userNameType">
+                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="fsensorname" type="xs:string">
+                <xs:annotation><xs:documentation>Will be Deprecated after 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="rsensorname" type="xs:string">
+                <xs:annotation><xs:documentation>Will be Deprecated after 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="fstopsensorname" type="xs:string">
+                <xs:annotation><xs:documentation>Will be Deprecated after 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="rstopsensorname" type="xs:string">
+                <xs:annotation><xs:documentation>Will be Deprecated after 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="creationtype" default="userdefined">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="userdefined"/>
+                  <xs:enumeration value="signalmastlogic"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+            
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

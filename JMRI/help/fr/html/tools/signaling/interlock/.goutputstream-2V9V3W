@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Kevin Dickerson 2011 -->
+<!-- $Id: Interlocking.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Translated by Blorec Herv&#233; 2013-09-27 -->
+<title>JMRI: Interlocking</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="/help/en/html/tools/signaling/Sidebar" -->
+<div id="mainContent">
+<h1>Entr&#233;e Sortie Enclenchement </h1>
+Ce bref tutoriel est destin&#233; &#224; expliquer comment les Entr&#233;e Sortie et Enclenchement sont d&#233;finis et fonctionnent dans JMRI. C'est bas&#233; sur la <a href="http://www.jmri.org/community/clinics/UK2011/">normalisation logique M&#226;t </a> qui s'est tenue au Royaume-Uni et fait suite &#224; cela.
+<p>
+Le fichier panneau pour ce tutoriel a &#233;t&#233; fait &#224; partir de la section  "Logix et Formes" du tutoriel m&#226;t signal, la seule diff&#233;rence, est que la logique m&#226;t signal a &#233;t&#233; enlev&#233;e de tous les m&#226;ts de signalisation en dehors des "M&#226;t up externe" et "M&#226;t platforme bas", quand ceux-ci sont utilis&#233;s pour repr&#233;senter des signaux dans les zones contr&#244;l&#233;es automatiquement.
+<p>
+En compl&#233;ment le fichier &#224; &#233;t&#233; modifi&#233; pour utiliser les Capteurs et Aiguillages Internes seulement, lui permettant ainsi d'&#234;tre ouvert avec n'importe quel syst&#232;me configur&#233; dans les pr&#233;f&#233;rences.
+<p>
+Comme condition pr&#233;alable &#224; l' <a href="http://www.jmri.org/community/clinics/UK2011/">exemple</a>la Logique M&#226;t Signal devrait &#234;tre suivie avant d'essayer celui-ci car il fournit la base sur la fa&#231;on de construire votre panneau pr&#234;t &#224; l'emploi avec la Logique du M&#226;t de signalisation et aussi de l'Enclenchement..
+<p>
+Le plan de voie pour cela est le m&#234;me que dans le signal de m&#226;t logique et pourrait &#234;tre consid&#233;r&#233; comme un sc&#233;nario typique o&#249; les signaux Approche Bas, Platform Haut et Bay seraient sous le contr&#244;le de l'aiguilleur, tandis que la Platforme haut ext&#233;rieur et vers le bas serait automatiquement contr&#244;l&#233;e..
+<p><img src="images/interlocklayoutoverview.png" width="830" height="278"> </p>
+<p>
+Le fichier panneau  pour ce tutoriel peut &#234;tre trouv&#233; <a href="Interlock Demo 1.xml">ici</a>
+<p>
+Les boutons NX travaille tous par paires et doiventt &#234;tre s&#233;lectionn&#233;s dans le bon ordre, aussi il n'est pas possible de jouer &#224; saute-mouton sur un bouton NX pour d&#233;finir un itin&#233;raire entre deux boutons non adjacents. Exemplesi vous avez les boutons A-B-C Il n'est pas possible de d&#233;finir un itin&#233;raire de A - C, l'ordre de s&#233;lection devra &#234;tre A - B B - C
+
+<h2>D&#233;marrer l'&#233;diteur de r&#233;seau</h2>
+Dans le tutoriel Logique M&#226;t Signal chaque canton &#233;tait configur&#233; avec une couleur diff&#233;rente pour montrer s'il &#233;tait occup&#233; ou non- occup&#233; (<a href="http://www.jmri.org/community/clinics/UK2011/layout_editor.shtml">Construire un R&#233;seau</a>). De plus il est possible d'assigner une couleur alternative pour chaque canton.  Lors de l'utilisation de l'Enclenchement Total, cette couleur alternative est utilis&#233;e pour surligner les itin&#233;raires qui ont &#233;t&#233; d&#233;finis, quand un canton utilise la couleur alternative il pr&#233;vient aussi les autres itin&#233;raires devant utilser ce canton.
+<p>
+Les eNtr&#233;e sortie (NX) utilisent des capteurs pour chaque emplacement NX , associ&#233;s typiquement &#224; un signal ou un Heutoir ou une z&#244;ne d'arr&#234;t, ces capteurs agiraient de la m&#234;me fa&#231;on qu'un bouton sur un panneau physique, le r&#233;glage de la touche active pour d&#233;marrer la s&#233;lection avec la valeur courante d'un second capteur compl&#233;tant l'itin&#233;raire ou la s&#233;lection de chemin. Si un capteur correspondant n'est pas trouv&#233; dans les 10 secondes alors le capteur initial sera r&#233;initialis&#233; &#224; inactif.
+<p>
+Un capteur a besoin d'&#234;tre configur&#233; pour chaque emplacement NX. À titre de suggestion pour aider &#224; garder une trace des choses pr&#233;fixer le nom d'utilisateur avec "NX" suivi par le signal associ&#233;. Ainsi, par exemple si le capteur NX est associ&#233; au signal "Down appr", puis faire l'identifiant du capteur" NX Down appr".
+<p>
+Une fois les capteurs cr&#233;&#233;s, ils peuvent &#234;tre associ&#233;s et positionn&#233;s &#224; leurs emplacement sur l'&#233;diteur de r&#233;seau, de la m&#234;me fa&#231;on que les m&#226;ts de signalisation ont &#233;t&#233; r&#233;alis&#233;des dans la partie 6 de l'exemple de la logique du m&#226;t signal m&#226;t clinique logique du signal.  Faire appara&#238;tre le menu contextuel (clic droit) sur la limite de canton et s&#233;lectionnez "Set Capteurs",&#224; partir de la fen&#234;tre suivante ,
+<p>
+<img src="images/assignsensors.png" width="331" height="539">
+<p>
+Rappelez-vous que le canton dont le capteur est affect&#233; d&#233;terminera le sens de la marche, si le capteur est affect&#233; &#224; un canton incorrect, il ne sera pas d&#233;tect&#233; et les enclenchements ne fonctionneront pas.<br>
+TLe fichier panneau avec les capterus d&#233;j&#224; affect&#233;s peut &#234;tre trouv&#233; <a href="Interlock Demo 2.xml">ici</a>
+<h2>Cr&#233;ation des R&#232;gles NX.</h2>
+Ouvrez la fen&#234;tre d'Entr&#233;e Sortie, qui peut &#234;tre trouv&#233;e dans l'option outils de l'&#233;diteur de r&#233;seau. Cela fera appara&#238;tre une fen&#234;tre comme celle-ci.
+<p>
+<img src="images/emptyentryexitwindow.png" width="790" height="244">
+<p>
+cette fen&#234;tre vous permet de voir quelles paires NX ont &#233;t&#233; cr&#233;&#233;es et l'&#233;tat de chaque paire. De cette fen&#234;tre, nous pouvons obtenir que le syst&#232;me g&#233;n&#232;re automatiquement les paires ou nous pouvons les d&#233;finir manuellement.
+<ol><li>S&#233;lectionnez le fichier de panneau de l'&#233;diteur de R&#233;seau  o&#249; vous souhaitez cr&#233;er les NX</li>
+<li>Si vous allez cr&#233;er la paire manuellement puis s&#233;lectionnez les points d'Entr&#233;e et de Sortie depuis les listes respectives, ou les laisser tels quels..</li>
+<li>S&#233;lectionnez le type d'enclenchement que vous allez utilisert.</li>
+    <ul><li><b>D&#233;finir Aiguillage Seulement</b> - Ceci d&#233;finira seulement les aiguillages &#224; leur &#233;tat correcte entre les capteurs NX .</li>
+    <li><b>D&#233;finir Aiguillages et M&#226;t Signal</b> - Ceci fera comme dessus, mais g&#233;n&#232;rera aussi la logique M&#226;t Signal en m&#234;me temps</li>
+    <li><b>Enclenchement Complet</b> - Ceci fera tout comme au-dessus et aussi verrouille le chemin et &#233;vite un autre accident &#233;tant s&#233;lectionn&#233;</li></ul>
+</ol>
+
+<h2>D&#233;finir Aiguillage Seulement</h2>
+Si pour commencer  vous s&#233;lectionnez "D&#233;finir Aiguillage Seulement" et appuyez sur "G&#233;n&#233;rer automatiquement les Paires Entr&#233;e Sortie ", il finira par g&#233;n&#233;rer une liste de quatre paires comme suit:
+<p>
+<img src="images/populatedentryexitwindow.png" width="790" height="315">
+<p>
+Les quatre chemins g&#233;n&#233;r&#233;s sont tous des paires valides bas&#233;essur la direction des trajets. Pour le NX &#224; r&#233;gler vous devez d'abord s&#233;lectionner le capteur d'Entr&#233;e, suivi par le capteur de Sortie. S'ils sont s&#233;lectionn&#233;s dans l'ordre inverse le chemin ne sera pas d&#233;fini.
+<p>
+Vous pouvez voir que si vous devez d&#233;finir un itin&#233;raire &#224; partir de l'appr vers le z&#244;ne d'arr&#234;t Bay, Les aiguillages ont leurs configuration automatique. Les capteurs seront &#233;galement clignotant alors que l'itin&#233;raire se met en place
+<p>
+Si vous d&#233;finnissez un itin&#233;raire du "M&#226;t Bay" vers le "up appr", Les aiguillages seront encore d&#233;finis automatiquement.
+<p>
+<img src="images/interlockturnout.png" width="498" height="229">
+<p>
+Avec le type enclenchement Aiguillage Seulement, comme aucune autre logique ou  verrouillage ne se fait, il est possible d'autoriser le verrouillage &#224; mettre en place, peu importe lequel inverse les boutons NX s&#233;lectionn&#233;s .
+Cela peut &#234;tre fait en s&#233;lectionnant le drapeau "Both Way" dans le tableau contre une entr&#233;e. Vous pouvez ensuite d&#233;finir le chemin en sens inverse, par exemple "NX Up Outer" &#224; "NX M&#226;t Bay ".
+<p>
+En compl&#233;ment de ceci avec un "Aiguillage Seulement" d&#233;fini, vous pouvez &#233;galement cr&#233;er des paires NX qui vont dans le sens normal de d&#233;placement, par exemple de " M&#226;t Bay" &#224; "Down Appr".
+<h2>Aiguillages et M&#226;ts Signal</h2>
+Si "D&#233;finir aiguillages et M&#226;ts Signal" est s&#233;lectionn&#233;, puis  "G&#233;n&#233;rer automatiquement" est enfonc&#233;e, les quatre m&#234;mes verrouillages seront g&#233;n&#233;r&#233;s avec le type NX mis pour "Signal Mast". <p>
+Cette fois, lorsque vous d&#233;finissez l'itin&#233;raire entre deux capteurs NX, il r&#232;glera les aiguillages et si les M&#226;ts Signal  sont plac&#233;s au m&#234;me endroit, il configure &#233;galement la logique du M&#226;t de signal &#224; la source.
+<p>
+<img src="images/interlocksigmast.png" width="498" height="229">
+<p>
+La logique M&#226;t Signal, appara&#238;tra dans le tableau logique M&#226;t Signal, cette logique n'est pas enregistr&#233;e lorsque le fichier de panneau est enregistr&#233;.
+<p>
+Si vous d&#233;finissez un itin&#233;raire &#224; partir depuis "down appr" dans la z&#244;ne d'arr&#234;t, vous verrez que les aiguillages se pr&#233;parent et le signal passe &#224; l'&#233;tat correct. Si vous modifiez ensuite l'&#233;tat de l'aiguillage ou de canton sur le chemin, vous verrez que la source M&#226;t signal source changera pour l'&#233;tat appropri&#233;.
+<p>
+<h2>Enclenchement Complet</h2>
+Si "Full Interlock" est s&#233;lectionn&#233;, puis le bouton "G&#233;n&#233;rate Auto" press&#233;, encore une fois vous finiriez avec les quatre verrouillages comme avant.
+<h3> M&#226;ts signal</h3>
+Quand un verrouillage int&#233;gral est configur&#233; et il y a des m&#226;ts de signalisation plac&#233;s &#224; des emplacements NX, on placera le m&#226;t de signalisation &#224; l'emplacement de la source dans un &#233;tat 

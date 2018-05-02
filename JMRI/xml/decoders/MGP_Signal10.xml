@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/MGP_Signal10.xsl"?>
+
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+  <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
+  
+  <decoder>
+    <family name="Signal10" mfg="MGP" type="stationary" comment="Signal10, a LocoNet decoder for railway signals">
+      <model model="Signal10" lowVersionID="1">
+			</model>
+    </family>
+    <programming direct="no" paged="no" register="no" ops="no">
+        <mode>LOCONETSV2MODE</mode>
+    </programming>
+    <variables>
+      <variable CV="2" item="Decoder Version" readOnly="yes" >
+        <decVal/>
+        <label>Manufacturer Version No.</label>
+	  </variable>	  
+      <variable CV="3" item="Serial Number" readOnly="yes" >
+		<splitVal highCV="4" upperMask="XXXXVVVV"/>
+        <label>Decoder serial number</label>
+      </variable>
+      <variable CV="7" item="Manufacturer" readOnly="yes" >
+        <decVal/>
+        <label>Manufacturer Id</label>
+      </variable>
+      <variable CV="8" item="Developer Id" readOnly="yes" >
+        <decVal/>
+        <label>Developer Id</label>
+      </variable>
+      <variable CV="9" item="Product Id" readOnly="yes" >
+        <decVal/>
+        <label>Product Id</label>
+      </variable>
+
+	  <variable CV="21" item="Short Address" default="1">
+		<splitVal highCV="22" upperMask="XXXXXVVV"/>
+		<label>Long Address</label>
+	  </variable>	  
+
+<!--
+      <variable item="Signal Addressing Mode" CV="23" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="Full" value="0"/>
+          <enumChoice choice="Smart" value="1"/>
+        </enumVal>
+        <label>Signal Addressing Mode</label>
+      </variable>
+-->
+      <variable item="Switch feedback for signal" CV="23" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+        <label>Switch feedback for signal</label>
+      </variable>
+      <variable item="Flash LED at startup" CV="23" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="No" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+        <label>Flash LED at startup</label>
+      </variable>
+
+<!--
+<SV svNumber="23" type="bits" start='7' length='1' name="Add SE delay" rw="1" advanced="1" minversion="3">
+		<values>
+			<v name="No - Normal" value='0'/>
+			<v name="Yes" value='1'/>
+		</values>
+	</SV>
+-->	  
+      <variable item="Add SE delay" CV="23" mask="VXXXXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <enumVal>
+          <enumChoice choice="No - Normal" value="0"/>
+          <enumChoice choice="Yes" value="1"/>
+        </enumVal>
+      </variable>
+
+<!-- <SV type="int2" name="Direction address 1" svNumber="24" minValue='0' maxValue='2048' rw="1"/> --> 
+<!-- <SV type="int2" name="Direction address 2" svNumber="26" minValue='0' maxValue='2048' rw="1"/> --> 
+<!-- <SV type="int2" name="Direction address 3" svNumber="28" minValue='0' maxValue='2048' rw="1"/> -->
+	  <variable CV="24" item="Direction address 1" default="1">
+		<splitVal highCV="25" upperMask="XXXXVVVV"/>
+		<label>Direction address 1</label>
+	  </variable>	  
+	  <variable CV="26" item="Direction address 2" default="1">
+		<splitVal highCV="27" upperMask="XXXXVVVV"/>
+		<label>Direction address 2</label>
+	  </variable>	  
+	  <variable CV="28" item="Direction address 3" default="1">
+		<splitVal highCV="29" upperMask="XXXXVVVV"/>
+		<label>Direction address 3</label>
+	  </variable>	  
+	  
+
+<!-- <SV type="bits"  start='0' length='4' name="Std Fast1 blink frequency" svNumber="83" minValue='1' rw="1" minversion="2"/> --> 
+<!-- <SV type="bits"  start='4' length='4' name="Std Fast2 blink frequency" svNumber="83" minValue='1' rw="1" minversion="2"/>  -->
+      <variable item="Std Fast1 blink frequency" CV="83" mask="XXXXVVVV">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
+		<decVal min="1"/>
+        <label>Std Fast1 blink frequency</label>
+      </variable>
+      <variable item="Std Fast2 blink frequency" CV="83" mask="VVVVXXXX">
+		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
+        <decVal min="1"/>
+        <label>Std Fast2 blink frequency</label>
+      </variable>
+	  
+<!-- <SV type="int1" name="Std Hsi blink frequency" svNumber="84" minValue='1' rw="1"/>  -->
+      <variable CV="84" item="Std Hsi blink frequency" >
+        <decVal min="1"/>
+        <label>Std Hsi blink frequency</label>
+      </variable>
+<!-- <SV type="int1" name="Std LED intensity" svNumber="85" minValue='1' rw="1"/>   -->
+      <variable CV="85" item="Std LED intensity" >
+        <decVal min="1"/>
+        <label>Std LED intensity</label>
+      </variable>
+<!-- <SV type="int1" name="LED Test Sequence" svNumber="38" rw="1" maxValue='64' minversion="3"/> -->
+      <variable CV="38" item="LED Test Sequence" >
+  		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
+        <decVal max="64"/>
+      </variable>
+	  
+<!--
+	<array svNumber="86" name="Intensity bank " tip="" startIndex='1' length='3' rw='1'>
+		<SV offset="0" type="int1" name="Green" rw="1"/>
+		<SV offset="1" type="int1" name="Red" rw="1"/>
+		<SV offset="2" type="int1" name="White" rw="1"/>
+		<SV offset="3" type="int1" name="Yellow" rw="1"/>
+	</array>
+-->	  
+      <variable CV="86" item="Intensity bank 1, Green" ><decVal/></variable>
+      <variable CV="87" item="Intensity bank 1, Red" ><decVal/></variable>
+      <variable CV="88" item="Intensity bank 1, White" ><decVal/></variable>
+      <variable CV="89" item="Intensity bank 1, Yellow" ><decVal/></variable>
+
+      <variable CV="90" item="Intensity bank 2, Green" ><decVal/></variable>
+      <variable CV="91" item="Intensity bank 2, Red" ><decVal/></variable>
+      <variable CV="92" item="Intensity bank 2, White" ><decVal/></variable>
+      <variable CV="93" item="Intensity bank 2, Yellow" ><decVal/></variable>
+
+      <variable CV="94" item="Intensity bank 3, Green" ><decVal/></variable>
+      <variable CV="95" item="Intensity bank 3, Red" ><decVal/></variable>
+      <variable CV="96" item="Intensity bank 3, White" ><decVal/></variable>
+      <variable CV="97" item="Intensity bank 3, Yellow" ><decVal/></variable>
+
+
+	
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- <group name="Sensor input"> -->	  
+
+	<!-- <SV svNumber="30" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address" rw="1"/> -->
+	<variable CV="30" item="Sensor Start Address" default="1">
+        <decVal min="1" max="4070"/>
+	</variable>	  
+	<!-- <SV svNumber="32" type="bits" start='0' length='5' name="Number of used sensors" maxValue='16' rw="1"/> -->
+	<variable item="Number of used sensors" CV="32" mask="XXXVVVVV">
+        <decVal max="16"/>
+	</variable>
+	<!-- <SV svNumber="32" type="bits" start='5' length='1' name="Sensor, Value for occupied state" rw="1" minVersion='1'> -->
+	<variable item="Sensor, Value for occupied state" CV="32" mask="XXVXXXXX">
+		<enumVal>
+			<enumChoice choice="NORMAL, occupied at LOW" value="1"/>
+			<enumChoice choice="Occupied at HIGH" value="0"/>
+		</enumVal>
+	</variable>
+<!--	<SV svNumber="32" type="bits" start='6' length='1' name="Sensor unconnected state" rw="1" minVersion='1'> -->
+	<variable item="Sensor unconnected state" CV="32" mask="XVXXXXXX">
+		<enumVal>
+			<enumChoice choice="NORMAL, always high" value="0"/>
+			<enumChoice choice="undefined, floating state" value="1"/>
+		</enumVal>
+	</variable>
+	<!-- <SV svNumber="34" type="int2" name="Sensor filter Pre (ms)" rw="1"/> -->
+	<variable CV="34" item="Sensor filter Pre (ms)" default="1">
+		<splitVal highCV="35" upperMask="VVVVVVVV"/>
+	</variable>	  
+	<!-- <SV svNumber="36" type="int2" name="Sensor filter Succ (ms)" rw="1"/> -->
+	<variable CV="36" item="Sensor filter Succ (ms)" default="1">
+		<splitVal highCV="37" upperMask="VVVVVVVV"/>
+	</variable>	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+  
+    </variables>
+  </decoder>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+  
+  <pane>
+    <name>General decoder info</name>
+    <column>
+      <label>
+        <text>Address to decoder AND to first signal</text>
+      </label>
+      <display item="Short Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Decoder Version" label="Software Version"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Developer Id" label="Developer Id"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Product Id" label="Product Id"/>
+      <label>
+        <text> </text>
+      </label>
+<!--
+	  <row>
+        <column>
+          <display item="CDU Recharge Time"/>
+        </column>
+        <column>
+          <display item="CDU Recharge Time" format="hslider" label=""/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Output State Memory"/>
+-->
+    </column>
+  </pane>
+  <pane>
+    <name>Signal general info</name>
+    <column>
+      <label>
+        <text>Address to first signal (and to the decoder)</text>
+      </label>
+      <display item="Short Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Signal Addressing Mode"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Switch feedback for signal"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Flash LED at startup"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Add SE delay"/>
+
+	  <label>
+        <text> </text>
+      </label>
+      <display item="LED Test Sequence"/>
+      <label>
+        <text> </text>
+      </label>
+	  
+      <display item="Std Hsi blink frequency"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Std Fast1 blink frequency"/>
+      <display item="Std Fast2 blink frequency"/>
+      <label>
+        <text> </text>
+      </label>
+      <label><text>Direction Control</text></label>
+      <display item="Direction address 1"/>
+      <display item="Direction address 2"/>
+      <display item="Direction address 3"/>
+    </column>
+
+    <column>
+      <label>
+        <text>  </text>
+      </label>
+	  
+      <display item="Std LED intensity"/>
+      <label>
+        <text> </text>
+     </label>
+      <label><text>Intensity bank 1</text></label>
+	<display item="Intensity bank 1, Green" label="Green"/>
+	<display item="Intensity bank 1, Red" label="Red"/>
+	<display item="Intensity bank 1, White" label="White"/>
+	<display item="Intensity bank 1, Yellow" label="Yellow"/>
+      <label>
+        <text> </text>
+     </label>
+      <label><text>Intensity bank 2</text></label>
+	<display item="Intensity bank 2, Green" label="Green"/>
+	<display item="Intensity bank 2, Red" label="Red"/>
+	<display item="Intensity bank 2, White" label="White"/>
+	<display item="Intensity bank 2, Yellow" label="Yellow"/>
+      <label>
+        <text> </text>
+     </label>
+      <label><text>Intensity bank 3</text></label>
+	<display item="Intensity bank 3, Green" label="Green"/>
+	<display item="Intensity bank 3, Red" label="Red"/>
+	<display item="Intensity bank 3, White" label="White"/>
+	<display item="Intensity bank 3, Yellow" label="Yellow"/>
+
+    </column>
+
+<!--	  
+      <variable item="Std Fast1 blink frequency" CV="83" mask="XXXXVVVV">
+        <decVal min="1"/>
+        <label>Std Fast1 blink frequency</label>
+      </variable>
+      <variable item="Std Fast2 blink frequency" CV="83" mask="VVVVXXXX">
+        <decVal min="1"/>
+        <label>Std Fast2 blink frequency</label>
+      </variable>
+	-->	
+  </pane>
+  
+<!-- <group name="Sensor input"> -->	  
+	<pane>
+		<name>Sensor input</name>
+		<column>
+			<display item="Sensor Start Address"/>
+			<display item="Number of used sensors"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Sensor, Value for occupied state"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Sensor unconnected state"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Sensor filter Pre (ms)"/>
+			<display item="Sensor filter Succ (ms)"/>
+		</column>
+	</pane>
+  
+  	<pane>
+        <name>SignalsPane</name>
+    </pane>
+  	<pane>
+        <name>ExtraRulesPane</name>
+    </pane>
+  	<pane>
+        <name>RepeatSignalPane</name>
+    </pane>
+  	<pane>
+        <name>TriggerRulePane</name>
+    </pane>
+<!--
+  	<pane>
+        <name>TestPane</name>
+    </pane>
+-->
+
+</decoder-config>

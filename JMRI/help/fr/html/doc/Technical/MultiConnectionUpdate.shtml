@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Translated by Herv&#233; Blorec 2013-09-07 -->
+
+  <title>JMRI: Mise &agrave; jour de Multi-connexions</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Mise &agrave; jour de Multi-connexions</h1>Cette
+      page est une liste de conseils pour adapter les
+      syst&egrave;mes (sous-r&eacute;pertoires jmri.jmrix) vers le
+      nouveau format multi-syst&egrave;me. C'est clairement un
+      travail en cours!
+
+      <p>Fondamentalement, vous devez obtenir toutes les variables
+      statiques et les ()m&eacute;thodes en instance hors du code.
+      A leur place, vous mettrez des r&eacute;f&eacute;rences
+      &agrave; des proc&eacute;dures sp&eacute;cifiques d'un objet
+      SystemConnectionMemo qui porte les r&eacute;f&eacute;rences
+      qui ont l'habitude d'&ecirc;tre statiques.</p>
+
+      <p>Dans le m&ecirc;me temps, nous faisons la mise &agrave;
+      jour du mod&egrave;le Swing, et un couple d'autres nettoyages
+      mineurs sur le code.</p>
+
+      <h2>Dans le r&eacute;pertoire du syst&egrave;me
+      principal</h2>Cr&eacute;er une sous-classe sp&eacute;cifique
+      de SystemConnectionMemo. Ce qui finira par faire tout
+      l'initialisation gestionnaire, et transporter des
+      r&eacute;f&eacute;rences d'objet qui servent &agrave; faire
+      par exemple des variables.
+
+      <p>Ajouter toute ces choses</p>
+
+      <h3>Pour chaque m&eacute;thode de connexion (par exemple
+      chaque sous-r&eacute;pertoire)</h3>.
+
+      <p>Modifier la classe ConnectionConfig pour prendre et
+      enregistrer une r&eacute;f&eacute;rence &agrave; un objet
+      SerialPortAdapter, et le retourner depuis la m&eacute;thode
+      getAdapter(). Aussi enlevez la m&eacute;tode() en instance et
+      sa mise en &Aring;"uvre.</p>
+      <pre style="font-family: monospace;">
+    protected void setIntrucsstance() { 
+        if (adapter == null) {
+            adapter = new PR3Adapter();
+        }
+    }
+</pre>
+
+      <p>Modifier la classe d'adaptateur (exemple: PR3Adapter) pour
+      &eacute;liminer l'exemple () et sa mise en &Aring;"uvre.</p>
+
+      <p>La classe configurexml/ConnectionConfigXml doit avoir une
+      proc&eacute;dure ajout&eacute;e:</p>
+      <pre style="font-family: monospace;">
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+</pre>Nous devrions sans doute le remanier plus tard, mais ceci est
+la forme actuelle pour veiller &agrave; ce que la bonne classe
+ConnectionConfig soit utilis&eacute;e. Nous le laissons
+inchang&eacute; pour le moment pour &eacute;viter la concurrence
+avec les serial/network refactoring
+
+      <p>Aussi, changez ceci</p>
+      <pre style="font-family: monospace;">
+    protected void getInstance() {
+         adapter= new PR3Adapter();
+        }
+</pre>pour ceci:
+      <pre style="font-family: monospace;">
+    protected void getInstance() {
+        adapter = new LnHexFilePort();
+    }
+</pre>
+
+      <p>Modifier la classe d'adaptateur (par exemple PR3Adapter)
+      pour enlever l'exemple() de proc&eacute;dure et son
+      application.</p>
+
+      <p>La classe configurexml / ConnectionConfigXml a besoin
+      d'avoir une proc&eacute;dure ajout&eacute;e:</p>
+      <pre style="font-family: monospace;">
+
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+</pre>
+
+      <h3>Gestionnaire et Composants JavaBeans</h3>Pour chaque
+      gestionnaire et combinaison de Composants JavaBeans, vous
+      devez les mettre &agrave; jour pour ne plus utiliser une
+      instance () de m&eacute;thode pour acc&eacute;der au
+      TrafficController. Passer le SystemConnectionMemo au
+      gestionnaire pour la dur&eacute;e de construction est une
+      approche recommand&eacute;e, puis, si besoin est en passant
+      par les Composants JavaBeans nouvellement
+      cr&eacute;&eacute;s. Qui passe la cha&icirc;ne de
+      pr&eacute;fixe, nom d'utilisateur pour la connexion, etc.
+
+      <p>Le gestionnaire doit &eacute;galement utiliser le
+      pr&eacute;fixe du syst&egrave;me au lieu d'une seule lettre
+      syst&egrave;me fix&eacute;e. En utilisant par exemple ".
+      startsWith (getSystemPrefix () +"T")" est une bonne approche.
+      Ne pas juste v&eacute;rifier que le nom commence par le
+      pr&eacute;fixe parce par exemple "L" et "L2" ne sont pas
+      univoques.</p>
+
+      <h3>Menu</h3>Cr&eacute;er un sous-r&eacute;pertoire swing,
+      s'il n'existe pas d&eacute;j&agrave;.
+
+      <p>Placez l&agrave; le code pour faire le menu , en cas de
+      besoin quitter une sous-classe derri&egrave;re la migration.
+      (voir jmri.jmrix.loconet.LocoNetMenu et
+      jmri.jmrix.loconet.swing.LocoNetMenu pour un
+      mod&egrave;le)</p>
+
+      <p>Cr&eacute;er une classe de fabrique ComponentFactory dans
+      le souspaquet swing qui peut par exemple cr&eacute;er le
+      menu, et, &eacute;ventuellement, les arbres, etc</p>
+
+      <p>Modifier jmri.jmrix.ActiveSystemsMenu pour &eacute;liminer
+      la classe, la cr&eacute;ation de menu est automatique
+      &agrave; partir de maintenant. ((Chaque fois que vous
+      cr&eacute;er et enregistrer un * SystemConnectionMemo, vous
+      enregistrez aussi le ComponentFactory)</p>
+
+      <h3>Pour garder les actions de d&eacute;marrage
+      actives</h3>(Nous allons bient&ocirc;t refaire ce code
+      bient&ocirc;t)
+
+      <p>Pour garder les choses en actions, il est
+      pr&eacute;f&eacute;rable de convertir les sous-classes
+      JmriPane. Temporairement, la connexion du syst&egrave;me est
+      alors cr&eacute;&eacute;z via l'utilisation de classes
+      internes, comme
+      jmri.jmrix.loconet.locomon.LocoMonPane$Default Cela demande
+      aux gens de r&eacute;initialiser leurs
+      pr&eacute;f&eacute;rences pour les actions de
+      d&eacute;marrage , boutons, etc Nous n'allons pas les faire
+      migrer pour pour eux.</p>
+        <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

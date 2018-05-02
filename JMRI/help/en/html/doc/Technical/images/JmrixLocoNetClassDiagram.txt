@@ -1,0 +1,41 @@
+@startuml
+
+package "jmri.jmrix" #DDDDDD {
+
+    interface PortAdapter
+    interface SerialPortAdapter
+    interface NetworkPortAdapter
+
+    PortAdapter <|-- SerialPortAdapter
+    PortAdapter <|-- NetworkPortAdapter
+
+    abstract class AbstractPortController
+    PortAdapter <|-- AbstractPortController
+
+    abstract class AbstractSerialPortController
+    abstract class AbstractNetworkPortController
+
+    AbstractPortController <|-- AbstractSerialPortController
+    AbstractPortController <|-- AbstractNetworkPortController
+
+    SerialPortAdapter <|-- AbstractSerialPortController
+    NetworkPortAdapter <|-- AbstractNetworkPortController
+
+}
+
+package "jmri.jmrix.loconet" #DDDDDD {
+
+    AbstractSerialPortController <|-- LnPortController
+    AbstractNetworkPortController <|-- LnNetworkPortController
+ 
+}
+
+package "jmri.jmrix.loconet.locobuffer" #DDDDDD {
+
+    LnPortController <|-- LocoBufferAdapter
+    SerialPortAdapter <|-- LocoBufferAdapter
+ 
+}
+
+
+@enduml

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>9</minor>
+    <test>2</test>
+    <modifier />
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="10:51 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Aug 02 11:26:40 PDT 2017" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Test TrainIcon" x="0" y="0" height="960" width="1900" windowheight="302" windowwidth="1392" panelheight="960" panelwidth="1900" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <positionablelabel x="100" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="A" fontname="Tahoma Bold" size="28" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="300" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="B" fontname="Tahoma Bold" size="28" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="500" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="C" fontname="Tahoma Bold" size="28" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="700" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="D" fontname="Tahoma Bold" size="28" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="900" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="E" fontname="Tahoma Bold" size="28" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <trainicon train="1" trainName="100" x="105" y="70" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="100" size="16" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" icon="yes" dockX="0" dockY="0" class="jmri.jmrit.operations.trains.configurexml.TrainIconXml">
+      <tooltip>A-E at Ayee next Beee</tooltip>
+      <icon url="program:resources/icons/markers/loco-green.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </trainicon>
+    <tracksegment ident="T1" connect1name="A1" type1="1" connect2name="A2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" connect1name="A2" type1="1" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" connect1name="A3" type1="1" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" connect1name="A4" type1="1" connect2name="A5" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="1" x="100.0" y="100.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="300.0" y="100.0" connect1name="T1" connect2name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="500.0" y="100.0" connect1name="T2" connect2name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="700.0" y="100.0" connect1name="T3" connect2name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="900.0" y="100.0" connect1name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Aug 13 22:50:55 PDT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Aug 13 22:51:06 PDT 2017</date>
+      <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Layout_Ops_Test/panels/Test%20TrainIcon%201.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Aug 13 20:11:08 PDT 2017</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Aug 13 20:11:20 PDT 2017</date>
+          <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Layout_Ops_Test/panels/Test%20TrainIcon%201.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Wed Aug 02 21:33:18 PDT 2017</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Wed Aug 02 21:33:21 PDT 2017</date>
+              <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Layout_Ops_Test/panels/Test%20TrainIcon%201.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Wed Aug 02 18:42:04 PDT 2017</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Wed Aug 02 18:42:10 PDT 2017</date>
+                  <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Layout_Ops_Test/panels/Test%20TrainIcon%201.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Wed Aug 02 12:56:41 PDT 2017</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed Aug 02 12:56:53 PDT 2017</date>
+                      <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Layout_Ops_Test/panels/Test%20TrainIcon%201.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Wed Aug 02 11:51:42 PDT 2017</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Wed Aug 02 11:51:53 PDT 2017</date>
+                          <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Layout_Ops_Test/panels/Test%20TrainIcon%201.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Wed Aug 02 11:52:58 PDT 2017</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Wed Aug 02 13:54:43 PDT 2017</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Wed Aug 02 18:51:13 PDT 2017</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Wed Aug 02 21:46:07 PDT 2017</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Aug 13 20:12:32 PDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Aug 13 22:51:59 PDT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.9.2+Rff24066 on Sun Aug 13 22:51:59 PDT 2017-->
+</layout-config>

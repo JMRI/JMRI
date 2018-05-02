@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Switching modes for + (plus) decoders   -->
+  <!-- zufalls-licht.-modi / random lights modes	 -->
+  <enumChoice choice="[100]" value="100">
+    <choice>[100] Random blinking light</choice>
+    <choice xml:lang="de">[100] Zufallsblinken</choice>
+  </enumChoice>
+  <enumChoice choice="[101]" value="101">
+    <choice>[101] Slightly unsteady blinking</choice>
+    <choice xml:lang="de">[101] leicht unregelmäßiges Blinken</choice>
+  </enumChoice>
+  <enumChoice choice="[102]" value="102">
+    <choice>[102] Photo flash</choice>
+    <choice xml:lang="de">[102] Foto-Blitzlicht</choice>
+  </enumChoice>
+  <enumChoice choice="[103]" value="103">
+    <choice>[103] Welder working periodicaly</choice>
+    <choice xml:lang="de">[103] periodisch arbeitender Schweißer</choice>
+  </enumChoice>
+  <enumChoice choice="[104]" value="104">
+    <choice>[104] Spark emitting light</choice>
+    <choice xml:lang="de">[104] fliegende Funken</choice>
+  </enumChoice>
+  <!-- zufällig und tageszeitabhängig geschaltetes licht / random daytime controlled lightning	 -->
+  <enumChoice choice="[105]" value="105">
+    <choice>[105] Living room lightning</choice>
+    <choice xml:lang="de">[105] Wohnzimmerbeleuchtung</choice>
+  </enumChoice>
+  <enumChoice choice="[106]" value="106">
+    <choice>[106] Staircase lightning</choice>
+    <choice xml:lang="de">[106] Treppenhausbeleuchtung</choice>
+  </enumChoice>
+  <enumChoice choice="[107]" value="107">
+    <choice>[107] Lavatory lightning</choice>
+    <choice xml:lang="de">[107] WC Beleuchtung</choice>
+  </enumChoice>
+  <enumChoice choice="[108]" value="108">
+    <choice>[108] Kitchen lightning</choice>
+    <choice xml:lang="de">[108] Küchenbeleuchtung</choice>
+  </enumChoice>
+</enumChoiceGroup>
+
+
+
+
+
+

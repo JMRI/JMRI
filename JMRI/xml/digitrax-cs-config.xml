@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE digitrax-cs-config SYSTEM "digitrax-cs-config.dtd">
+
+<digitrax-cs-config>
+
+  <command-station name="DCS50" >
+    <!-- OpSws and Settings that uniquely identify this Command Station -->
+    <identifier>
+      <opsw number="59" setting="closed"/>
+      <opsw number="60" setting="thrown"/>
+      <opsw number="61" setting="thrown"/>
+    </identifier>
+
+    <!-- Configureable Options for a DCS50 -->
+    <options>
+    </options>
+  </command-station>
+
+  <command-station name="DCS100" >
+    <!-- OpSws and Settings that uniquely identify this Command Station -->
+    <identifier>
+      <opsw number="59" setting="thrown"/>
+      <opsw number="60" setting="closed"/>
+      <opsw number="61" setting="closed"/>
+    </identifier>
+
+    <!-- Configureable Options for a DCS100 -->
+    <options>
+	<group name="Device" >
+	<name xml:lang="it">Modalità</name>
+        <option name="Use this Command Station as a" >
+        <name xml:lang="it">Usa questa Centrale come</name>
+          <choice name="Power Booster">
+          <name xml:lang="it">Booster</name>
+            <opsw number="5" setting="thrown"/>
+          </choice>
+          <choice name="Command Station">
+          <name xml:lang="it">Centrale</name>
+            <opsw number="5" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Booster Auto Reversing" >
+        <name xml:lang="it">Booster con Auto-Reverse</name>
+          <choice name="Disabled">
+            <opsw number="3" setting="thrown"/>
+          </choice>
+          <choice name="Enabled">
+            <opsw number="3" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Booster Short Circuit Shutdown after" >
+        <name xml:lang="it">Booster si Spegne per Corto Circuito dopo</name>
+          <choice name="125ms">
+            <opsw number="18" setting="thrown"/>
+          </choice>
+          <choice name="500ms">
+            <opsw number="18" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Number of Locomotive Slots" >
+        <name xml:lang="it">Numero Slots Locomotiva</name>
+          <choice name="22 (Big Boy Compatible">
+            <opsw number="44" setting="thrown"/>
+          </choice>
+          <choice name="120">
+            <opsw number="44" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Programming Track Brake Generator" >
+        <name xml:lang="it">Generatore Freni in Binario Programmazione</name>
+          <choice name="Disabled">
+            <opsw number="47" setting="thrown"/>
+          </choice>
+          <choice name="Enabled while not Programming">
+            <opsw number="47" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Restore Track Power to Prior State at Power Up" >
+        <name xml:lang="it">Ripristina Alim.Binari a stato precedente alla accensione</name>
+          <choice name="Disabled">
+            <opsw number="33" setting="thrown"/>
+          </choice>
+          <choice name="Enabled">
+            <opsw number="33" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Restore Track Power to Run State at Power Up" >
+        <name xml:lang="it">Ripristina Alim.Binari in Acceso alla accensione</name>
+          <choice name="Disabled">
+            <opsw number="34" setting="thrown"/>
+          </choice>
+          <choice name="Enabled">
+            <opsw number="34" setting="closed"/>
+          </choice>
+        </option>
+      </group>
+
+      <group name="Switches" >
+      <name xml:lang="it">Scambi</name>
+        <option name="Command Station Switch State Reply" >
+        <name xml:lang="it">Risposta Centralina a Stato Scambi</name>
+          <choice name="Enabled">
+            <opsw number="45" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="45" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Switch Routes" >
+          <name xml:lang="it">Percorso Scambi</name>
+          <choice name="Disabled">
+            <opsw number="26" setting="thrown"/>
+          </choice>
+          <choice name="Enabled">
+            <opsw number="26" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Meter Switch/Route Output Rate" >
+        <name xml:lang="it">Frequenza Misura Scambio/Percorso</name>
+          <choice name="Disabled">
+            <opsw number="31" setting="thrown"/>
+          </choice>
+          <choice name="Enabled">
+            <opsw number="31" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Command Station Execution of Switch Commands" >
+          <name xml:lang="it">Esecuzione comandi Scambi da centrale</name>
+          <choice name="Enabled">
+            <opsw number="27" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="27" setting="closed"/>
+          </choice>
+        </option>
+      </group>
+
+      <group name="LocoNet" >
+        <option name="Command Station Track Status Update" >
+          <name xml:lang="it">Aggiornamento Stato Binari da Centrale</name>
+          <choice name="Enabled">
+            <opsw number="43" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="43" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Interrogate DS54 States on Power Up" >
+          <name xml:lang="it">Interrogazione DS54 ad Accensione</name>
+          <choice name="Enabled">
+            <opsw number="28" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="28" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Command Station Valid LocoNet Message Received Clicks" >
+          <name xml:lang="it">Clicks ricevuti per messaggio Loconet Valido</name>
+          <choice name="Disabled">
+            <opsw number="41" setting="thrown"/>
+          </choice>
+          <choice name="Enabled">
+            <opsw number="41" setting="closed"/>
+          </choice>
+        </option>
+      </group>
+
+      <group name="Motorola Trinary" >
+        <name xml:lang="it">Motorola Trinario</name>
+        <option name="Motorola Trinary Loco Addresses" >
+          <choice name="Disabled">
+            <opsw number="12" setting="thrown"/>
+          </choice>
+          <choice name="1-80 Enabled (status edit to x1)">
+            <opsw number="12" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Motorola Trinary Switch Command Echo" >
+          <name xml:lang="it">Motorola Trinario Eco Comando Scambio</name>
+          <choice name="Disabled">
+            <opsw number="9" setting="thrown"/>
+            <opsw number="10" setting="thrown"/>
+          </choice>
+          <choice name="1-64">
+            <opsw number="9" setting="closed"/>
+            <opsw number="10" setting="thrown"/>
+          </choice>
+          <choice name="1-256">
+            <opsw number="9" setting="closed"/>
+            <opsw number="10" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Motorola Trinary Switchs 57-64 ON Period" >
+          <name xml:lang="it">Motorola Trinario Scambio periodo ON 57-64</name>
+          <choice name="Normal - Pulse">
+            <opsw number="11" setting="thrown"/>
+          </choice>
+          <choice name="Long - 1 second">
+            <opsw number="11" setting="closed"/>
+          </choice>
+        </option>
+      </group>
+
+      <group name="Locomotives" >
+        <option name="Global System Default Type for New Locos" >
+          <name xml:lang="it">Default Globale di Sistema per Tipo Nuova Loco</name>
+          <choice name="128 Step mode">
+            <opsw number="21" setting="thrown"/>
+            <opsw number="22" setting="thrown"/>
+            <opsw number="23" setting="thrown"/>
+          </choice>
+          <choice name="128 Step FX mode">
+            <opsw number="21" setting="thrown"/>
+            <opsw number="22" setting="thrown"/>
+            <opsw number="23" setting="closed"/>
+          </choice>
+          <choice name="Motorola Trinary">
+            <opsw number="21" setting="thrown"/>
+            <opsw number="22" setting="closed"/>
+            <opsw number="23" setting="thrown"/>
+          </choice>
+          <choice name="14 Step mode">
+            <opsw number="21" setting="closed"/>
+            <opsw number="22" setting="thrown"/>
+            <opsw number="23" setting="thrown"/>
+          </choice>
+          <choice name="28 Step mode">
+            <opsw number="21" setting="closed"/>
+            <opsw number="22" setting="closed"/>
+            <opsw number="23" setting="thrown"/>
+          </choice>
+          <choice name="28 Step FX mode">
+            <opsw number="21" setting="thrown"/>
+            <opsw number="22" setting="closed"/>
+            <opsw number="23" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Loco Aliasing" >
+          <name xml:lang="it">Distorsione campionamento Loco</name>
+          <choice name="Enabled">
+            <opsw number="25" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="25" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Decoder Assisted Consisting" >
+          <name xml:lang="it">Multi-trazione decoder assitita</name>
+          <choice name="Enabled">
+            <opsw number="17" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="17" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Automatic Loco Address Purging" >
+          <name xml:lang="it">Cancellazione Automatica indirizzo Loco</name>
+          <choice name="Disabled">
+            <opsw number="14" setting="closed"/>
+          </choice>
+          <choice name="200 seconds">
+            <opsw number="13" setting="thrown"/>
+            <opsw number="14" setting="thrown"/>
+          </choice>
+          <choice name="600 seconds">
+            <opsw number="13" setting="closed"/>
+            <opsw number="14" setting="thrown"/>
+          </choice>
+        </option>
+
+        <option name="Command Station Beeps for Loco Address Purging" >
+          <name xml:lang="it">Beep Centrale per cancellazione indirizzo Loco</name>
+          <choice name="Enabled">
+            <opsw number="42" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="42" setting="closed"/>
+          </choice>
+        </option>
+
+        <option name="Analog Loco Address 0" >
+          <name xml:lang="it">Indirizzo Loco Analogiche</name>
+          <choice name="Enabled">
+            <opsw number="20" setting="thrown"/>
+          </choice>
+          <choice name="Disabled">
+            <opsw number="20" setting="closed"/>
+          </choice>
+        </option>
+      </group>
+
+      <group name="Reset" >
+        <option name="Reset Memory" >
+        <name xml:lang="it">Reset Memoria</name>
+          <choice name="Don't Reset Memory">
+            <opsw number="36" setting="thrown"/>
+            <opsw number="37" setting="thrown"/>
+            <opsw number="38" setting="thrown"/>
+            <opsw number="39" setting="thrown"/>
+          </choice>
+          <choice name="Mobile Decoder/Consist Info">
+            <opsw number="36" setting="closed"/>
+          </choice>
+          <choice name="Switch Routes">
+            <opsw number="37" setting="closed"/>
+          </choice>
+          <choice name="Locomotice Roster">
+            <opsw number="38" setting="closed"/>
+          </choice>
+          <choice name="All">
+            <opsw number="39" setting="closed"/>
+          </choice>
+        </option>
+      </group>
+    </options>
+  </command-station>
+
+  <command-station name="DB150" >
+    <!-- OpSws and Settings that uniquely identify this Command Station -->
+    <identifier>
+      <opsw number="59" setting="thrown"/>
+      <opsw number="60" setting="thrown"/>
+      <opsw number="61" setting="closed"/>
+    </identifier>
+
+    <!-- Configureable Options for a DB150 -->
+    <options>
+    </options>
+  </command-station>
+</digitrax-cs-config>

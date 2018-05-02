@@ -1,0 +1,8 @@
+The jmri.jmrit.blockboss package provides a very simple
+signal logic for use in JMRI programs.
+
+The signal:
+  protects a block by going red if the block is occupied
+  protects a turnout by going red if the turnout is set against
+  protects a next signal by showing yellow if the signal is red
+

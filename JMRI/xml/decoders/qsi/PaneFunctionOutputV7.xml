@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file panes for QSi V7 files -->
+<!-- version 2 - Add minor version to top of pane -->
+<!-- version 3 - Add support for V8 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Output</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>JMRI 2.9.5 or later is required for QSI V7</text>
+        </label>
+        <label>
+          <text>JMRI 2.13.2 or later is required for QSI V8</text>
+        </label>
+        <label>
+          <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <display item="CV56.254.6"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="CV53.1.0"/>
+      </column>
+      <column>
+        <display item="CV53.1.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F0f</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.2.0"/>
+      </column>
+      <column>
+        <display item="CV53.2.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F0r</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.3.0"/>
+      </column>
+      <column>
+        <display item="CV53.3.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F1</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.4.0"/>
+      </column>
+      <column>
+        <display item="CV53.4.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F2</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.5.0"/>
+      </column>
+      <column>
+        <display item="CV53.5.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F3</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.6.0"/>
+      </column>
+      <column>
+        <display item="CV53.6.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F4</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.7.0"/>
+      </column>
+      <column>
+        <display item="CV53.7.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F5</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.8.0"/>
+      </column>
+      <column>
+        <display item="CV53.8.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F6</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.9.0"/>
+      </column>
+      <column>
+        <display item="CV53.9.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F7</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.10.0"/>
+      </column>
+      <column>
+        <display item="CV53.10.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F8</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.11.0"/>
+      </column>
+      <column>
+        <display item="CV53.11.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F9</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.12.0"/>
+      </column>
+      <column>
+        <display item="CV53.12.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F10</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.13.0"/>
+      </column>
+      <column>
+        <display item="CV53.13.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F11</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.14.0"/>
+      </column>
+      <column>
+        <display item="CV53.14.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F12</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.15.0"/>
+      </column>
+      <column>
+        <display item="CV53.15.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F13</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.16.0"/>
+      </column>
+      <column>
+        <display item="CV53.16.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F14</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.17.0"/>
+      </column>
+      <column>
+        <display item="CV53.17.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F15</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.18.0"/>
+      </column>
+      <column>
+        <display item="CV53.18.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F16</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.19.0"/>
+      </column>
+      <column>
+        <display item="CV53.19.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F17</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.20.0"/>
+      </column>
+      <column>
+        <display item="CV53.20.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F18</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.21.0"/>
+      </column>
+      <column>
+        <display item="CV53.21.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F19</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.22.0"/>
+      </column>
+      <column>
+        <display item="CV53.22.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F20</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.23.0"/>
+      </column>
+      <column>
+        <display item="CV53.23.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F21</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.24.0"/>
+      </column>
+      <column>
+        <display item="CV53.24.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F22</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.25.0"/>
+      </column>
+      <column>
+        <display item="CV53.25.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F23</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.26.0"/>
+      </column>
+      <column>
+        <display item="CV53.26.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F24</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.27.0"/>
+      </column>
+      <column>
+        <display item="CV53.27.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F25</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.28.0"/>
+      </column>
+      <column>
+        <display item="CV53.28.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F26</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.29.0"/>
+      </column>
+      <column>
+        <display item="CV53.29.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F27</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.30.0"/>
+      </column>
+      <column>
+        <display item="CV53.30.1"/>
+      </column>
+      <column>
+        <label>
+          <text> F28</text>
+        </label>
+      </column>
+    </row>
+  </column>
+</pane>

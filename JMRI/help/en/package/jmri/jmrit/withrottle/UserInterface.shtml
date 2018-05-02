@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: WiFi Throttle</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: WiFi Throttle</h1>This window controls the
+      connection between WiFi throttles, e.g. an iPhone, iPod
+      Touch, or Android Phone, and JMRI.
+
+      <p>It can be set to start automatically with the "<a href=
+      "../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>"
+      section in the "<a href=
+      "../../../apps/TabbedPreferences.shtml">JMRI
+      Preferences</a>".</p>
+
+      <p><a href=
+      "../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
+      for the WiFi throttles can be found in the JMRI Preferences
+      under the heading WiThrottle.</p>
+
+      <p>This utility broadcasts its connection information across
+      the local network, so it can be picked up by any device
+      looking for the service. This eliminates having to enter
+      connection information into the device. If the computer
+      running JMRI is protected by a software firewall, you may
+      need to disable the firewall to allow the WiFi throttle to
+      connect.</p>
+
+      <p>When using a WiFi throttle, if the computer enters sleep
+      mode, control will be lost. System preferences may need to be
+      adjusted to prevent the computer from putting itself to sleep
+      when it is inactive. <a href=
+      "http://enginedriver.mstevetodd.com"><img src=
+      "images/EngineDriverScreen.png" height="200" width="120"
+      align="right" style="margin:20px;" alt=
+      "EngineDriver for Android devices" title=
+      "EngineDriver for Android devices"></a> <a href=
+      "http://withrottle.com"><img src="images/WiT150x250.png"
+      height="250" width="150" align="right" alt=
+      "WiThrottle for Apple devices" title=
+      "WiThrottle for Apple devices"></a> <a href=
+      "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
+      <img src="images/DigiTrainsScreen.png" height="120" width=
+      "200" align="right" style="margin:20px;" alt=
+      "DigiTrains for Android devices" title=
+      "DigiTrains for Android devices"></a></p>
+
+      <p>To use your iPhone, iPad or iPod Touch with JMRI as a
+      throttle, you run the <a href=
+      "http://withrottle.com">WiThrottle</a> app on the iPhone or
+      iPod Touch. The basic application is available for free
+      download from the iTunes store.</p>
+
+      <p>To use your Android device with JMRI as a throttle, you
+      run the <a href="http://enginedriver.mstevetodd.com">Engine
+      Driver</a> program or <a href=
+      "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
+      Digitrains</a> on the Android device. These free apps are
+      available from the <a href=
+      "https://play.google.com/store/apps/details?id=jmri.enginedriver">
+      Google Play Store</a> or the <a href=
+      "http://enginedriver.mstevetodd.com">EngineDriver site</a></p>
+
+      <p>The protocol is described on a <a href=
+      "Protocol.shtml">separate page</a>. For more on JMRI
+      networking, see the <a href=
+      "../../../../html/doc/Technical/Networking.shtml">networking
+      technical page</a>.</p>
+
+      <p>You can also <a href=
+      "../webThrottle/webThrottle.shtml">use a web browser</a> in
+      your device to <a href="../webThrottle/webThrottle.shtml">run
+      trains</a> if for some reason you can't install an app on the
+      device.</p>
+
+      <h3>Function Labels</h3>Function labels can be customized for
+      each roster entry through JMRI, using the Labels &amp; Media
+      button. These labels will then be displayed in place of the
+      generic F1, F2... on the screen of the mobile device. The
+      labels can be added when a new roster entry is created, or by
+      editing an existing roster entry under the Function Labels
+      tab.
+
+      <h3>Routes &amp; Turnouts</h3>The app can control any
+      turnouts (and routes) that JMRI can control. NOTE:
+      EngineDriver only lists turnouts and routes which have User
+      Names.
+
+      <p>Additionally, you can limit what turnouts appear. In JMRI,
+      with the WiThrottle window active, there is a menu named
+      WiThrottle. It has an item titled "Filter Controls" that will
+      let you pick which turnouts to display or hide.</p>
+
+      <h3>Advanced Consisting</h3>There are now two options for how
+      Advanced (or Decoder Assisted) Consisting is handled. This
+      can be selected from the <a href=
+      "../../../apps/TabbedPreferences.shtml#WiThrottle">WiThrottle</a>
+      portion of JMRI Preferences.
+
+      <p>The default is <b>NMRA Format</b>. This will build a
+      consist using NMRA consisting commands. It does not use any
+      techniques specific to the connected DCC system. This allows
+      WiFi throttles to work in a DCC manufacturer independent way.
+      These consists may perform better for building and
+      controlling with WiFi devices.</p>
+
+      <p>The second option is <b>DCC Brand-Specific</b> which will
+      build consists in a manner where they will function as though
+      built using a throttle from the DCC manufacturer. This will
+      follow manufacturer specific features as to how consists are
+      built and controlled. These consists should perform better
+      when built with a WiFi device, but controlled by a throttle
+      from the DCC manufacturer of your system.</p>
+
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

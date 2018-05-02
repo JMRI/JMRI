@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>SLSF</name>
+  <date>1973</date>
+  <reference>As described in the July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+    </author>    
+    <author>
+        <personname><firstname>Paul</firstname><surname>Bender</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-12</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Adapted from 1937 NYCS</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2013-07-09</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add speed information</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed</indication>
+      <reference>Page 16</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed preparing to stop at second signal</indication>
+      <reference>Page 16</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+  
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed approaching next signal at limited speed.</indication>
+      <reference>Page 16</reference>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+ 
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed approaching next signal at medium speed</indication>
+      <reference>Page 16</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
+      <reference>Page 18</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed through turnout at prescribed speed</indication>
+      <reference>Page 18</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed through turnout at prescribed speed, prepared to stop at next signal except when entering a siding, then be goverened by rule 105 of the transportation department.</indication>
+      <reference>Page 18</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 18</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Grade</name>
+      <rule>Rule 289</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 18</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 290</rule>
+      <indication>Stop. then proceed in accordance with rule 510 R 510 (a) of the transportation department.</indication>
+      <reference>Page 18</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 291</rule>
+      <indication>Stop.</indication>
+      <reference>Page 20</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-SL-1-abs.xml"/>
+    <appearancefile href="appearance-SL-1-pbs.xml"/>
+    <appearancefile href="appearance-SL-1-grade.xml"/>
+    <appearancefile href="appearance-SL-2-abs.xml"/>
+    <appearancefile href="appearance-SL-2-pbs.xml"/>
+    <appearancefile href="appearance-SL-2-grade.xml"/>
+    <appearancefile href="appearance-SL-2-triangle.xml"/>
+    <appearancefile href="appearance-SL-3.xml"/>
+    <appearancefile href="appearance-SL-3-triangle.xml"/>
+  </appearancefiles>
+  
+</aspecttable>
+  

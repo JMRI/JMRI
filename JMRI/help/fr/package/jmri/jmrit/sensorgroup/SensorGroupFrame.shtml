@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-11-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Groupes Capteur</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Sensor Groups">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Groupes Capteur</h1>La fen&ecirc;tre de l'outil Groupe de
+      Capteur vous permet de d&eacute;finir des groupes de capteur,
+      un groupe de capteurs dont plus d'un ne peut pas &ecirc;tre
+      actif. Quand un membre du groupe devient actif, tous les
+      autres sont mis &agrave; l'&eacute;tat inactif.
+
+      <p>G&eacute;n&eacute;ralement, vous pouvez utiliser quelque
+      chose comme cela pour simuler un commutateur rotatif sur un
+      panneau de contr&ocirc;le r&eacute;el. Le commutateur
+      r&eacute;el serait d'activer une seule entr&eacute;e quand il
+      a &eacute;t&eacute; tourn&eacute; de position en position,
+      l'entr&eacute;e pr&eacute;c&eacute;dente deviendra inactive
+      quand l'interrupteur sera tourn&eacute; vers la position
+      suivante. Sur un panneau de commande PanelPro, chaque
+      position peut &ecirc;tre repr&eacute;sent&eacute;e par une
+      ic&ocirc;ne de capteur s&eacute;par&eacute;e sur laquelle
+      vous cliquez pour l'activer. Mettre ce jeu de capteurs dans
+      un groupe de capteurs ferait alors devenir le capteur de la
+      position pr&eacute;c&eacute;dente inactif lorsque vous avez
+      cliqu&eacute; pour modifier le commutateur rotatif
+      simul&eacute;.</p>
+
+      <p>Pour d&eacute;finir un groupe:</p>
+
+      <ul>
+        <li>Cochez la case "inclus" &agrave; c&ocirc;t&eacute; de
+        chaque capteur que vous voulez inclure dans le groupe. Vous
+        pouvez cliquer sur les titres au sommet de la colonnes pour
+        les trier si vous avez beaucoup de capteurs &agrave;
+        parcourir.</li>
+
+        <li>Mettez un nom de capteur unique au groupe dans la case
+        en bas. Pas de format particuli&egrave;rement requis, mais
+        il ne peut pas reproduire celui que vous avez
+        d&eacute;j&agrave; d&eacute;fini.</li>
+
+        <li>Cliquez sur ajouter/mise &agrave; jour</li>
+      </ul>
+
+      <p>Pour voir un groupe de capteurs que vous avez
+      d&eacute;j&agrave; d&eacute;fini, mettre son nom dans la Zone
+      Nom du groupe, et cliquez sur Afficher. Vous pouvez ensuite
+      modifier les cases pour ajouter ou supprimer des capteurs du
+      groupe, et cliquez sur Ajouter/Mettre &agrave; jour pour
+      faire vos modifications.</p>
+
+      <p>N'oubliez pas de sauvegarder vos modifications d'une
+      nouvelle configuration ou d'un fichier du panneau avant de
+      quitter le programme!</p>
+
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

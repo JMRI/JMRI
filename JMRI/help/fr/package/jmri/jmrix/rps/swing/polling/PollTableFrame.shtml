@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-25-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+
+  <title>JMRI: RPS Polling Control</title><!-- Style -->
+  <meta http-equiv=
+  "Content-Typ V&Atilde;&copy;rifiez la syntaxe du nom de fichier (dont le respect des minuscules/majuscules) ; V&Atilde;&copy;rifiez si le fichier n'a pas &Atilde;&copy;t&Atilde;&copy; d&Atilde;&copy;plac&Atilde;&copy;, renomm&Atilde;&copy; ou supprim&Atilde;&copy;.e"
+  content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Contr&Atilde;&acute;le de Scrutation
+      RPS</h1><a href=
+      "../../../../../../html/hardware/rps/images/PollControl.gif"><img src="../../../../../../%20html/hardware/RPS/images/PollControl.gif"
+      height=" 80" width=" 300" alt=
+      "S fen&Atilde;&ordf;tre R&Atilde;&copy;cepteur de Contr&Atilde;&acute;le RPS "
+      align=" right"></a><br>
+      La fen&Atilde;&ordf;tre de Contr&Atilde;&acute;le de
+      Scrutation RPS est l&Atilde;  o&Atilde;&sup1; vous dites au
+      <a href=
+      "../../../../../../html/hardware/rps/index.shtml">syst&Atilde;&uml;me
+      RPS</a> lesquelles de vos locomotives ont un
+      &Atilde;&copy;metteurs RPS install&Atilde;&copy;, et combien
+      de fois de ils ont parler avec eux.
+
+      <p>Lorsque vous ouvrez la fen&Atilde;&ordf;tre, vous devriez
+      voir votre alignement entier <a href=
+      "../../../../../../manual/Comp_Setup_Roster.shtml">de
+      locomotives</a> affich&Atilde;&copy;, un par ligne.</p>
+
+      <p>Si une locomotive a un &Atilde;&copy;metteur RPS
+      install&Atilde;&copy; et vous aimeriez que le
+      syst&Atilde;&uml;me permette de suivre sa position, cochez la
+      case dans le "sondage" de la colonne.</p>
+
+      <p>Pour contr&Atilde;&acute;ler ou le syst&Atilde;&uml;me
+      scrute dans son ensemble , cochez ou d&Atilde;&copy;cochez le
+      case "sondage" dans la section inf&Atilde;&copy;rieure de la
+      fen&Atilde;&ordf;tre.</p>
+
+      <p>Le tableau est compos&Atilde;&copy; de neuf colonnes:</p>
+
+      <ul>
+        <li>"Nom Liste&Acirc;&raquo; - C'est le nom
+        d&Atilde;&copy;codeur partir de la liste.</li>
+
+        <li>"ID" - Le nom que RPS utilise pour faire
+        r&Atilde;&copy;f&Atilde;&copy;rence &Atilde;  cet
+        &Atilde;&copy;metteur. Par d&Atilde;&copy;faut, c'est la
+        m&Atilde;&ordf;me chose que le nom de fichier, mais vous
+        pouvez le changer si vous le souhaitez.</li>
+
+        <li>"Adresse Locomotive &Acirc;&raquo; et
+        &Acirc;&laquo;Long&Acirc;&raquo; - L'adresse du
+        d&Atilde;&copy;codeur DCC. Le "Long" case sera
+        coch&Atilde;&copy;e si ce n'est une adresse
+        &Acirc;&laquo;long&Acirc;&raquo;
+        (&Acirc;&laquo;&Atilde;&copy;tendue&Acirc;&raquo;).</li>
+
+        <li>"Scrute" - Si le syst&Atilde;&uml;me RPS mesure cette
+        position?</li>
+
+        <li>" Derni&Atilde;&uml;r X", " Derni&Atilde;&uml;r Y",
+        "Derni&Atilde;&uml;r Z" - La position la plus
+        r&Atilde;&copy;cente mesur&Atilde;&copy;e pour cet
+        &Atilde;&copy;metteur.</li>
+
+        <li>"Last Time" - Le temps auquel la derni&Atilde;&uml;re
+        mesure a &Atilde;&copy;t&Atilde;&copy; prise.</li>
+      </ul>Il ya trois boutons radio qui contr&Atilde;&acute;lent
+      la fa&Atilde;&sect;on de vote se termine.
+
+      <dl>
+        <dt>Utilisez Sondage BSC</dt>
+
+        <dd>Quand elle est coch&Atilde;&copy;e, cela utilise un
+        &Acirc;&laquo;&Atilde;&permil;tat de Commande Binaire" pour
+        interroger le syst&Atilde;&uml;me RPS. Si votre RPS
+        &Atilde;&copy;metteurs le supporte, il est le
+        r&Atilde;&copy;glage recommand&Atilde;&copy;, sauf pour les
+        syst&Atilde;&uml;mes Lenz.</dd>
+
+        <dt>Usage de Sondage Direct</dt>
+
+        <dd>Quand elle est coch&Atilde;&copy;e, JMRI envoie des
+        commandes F2 directement sur la voie. Utilisez cette option
+        si votre &Atilde;&copy;metteurs RPS
+        n&Atilde;&copy;cessitent des sondages F2, et vous n'avez
+        pas un syst&Atilde;&uml;me DCC Lenz .</dd>
+
+        <dt>Utilisez Sondage R&Atilde;&copy;gulateur</dt>
+
+        <dd>Quand elle est coch&Atilde;&copy;e, JMRI simule un
+        r&Atilde;&copy;gulateur pour envoyer des sondages sur F2.
+        C'est actuellement exig&Atilde;&copy; pour les
+        syst&Atilde;&uml;mes de Lenz, et non
+        recommand&Atilde;&copy;e pour les autres.</dd>
+      </dl>
+
+      <p>La bo&Atilde;&reg;te intervalle contr&Atilde;&acute;le le
+      nombre de millisecondes entre les sondages. Cela ne devrait
+      pas &Atilde;&ordf;tre inf&Atilde;&copy;rieure &Atilde; 
+      environ 80. Si vous avez moins de 5 &Atilde;&copy;metteurs,
+      elle a mis &Atilde;  300 ou plus. Cette option sera
+      finalement retir&Atilde;&copy; dans une version
+      ult&Atilde;&copy;rieure JMRI, quand il devient
+      automatique.</p>
+
+      <p>Pour sauvegarder les valeurs de sorte qu'ils seront
+      utilis&Atilde;&copy;s automatiquement lorsque le programme
+      est commenc&Atilde;&copy; , cliquez sur "Stocker maintenant
+      les valeurs par d&Atilde;&copy;fauts".</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

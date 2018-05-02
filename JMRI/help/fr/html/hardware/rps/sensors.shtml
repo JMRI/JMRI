@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated  by Blorec Herv&#233;  2013-09-19-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: RPS Sensors</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI Guide Mat&eacute;riel: Capteurs RPS</h1>
+      <em>S'il
+      vous pla&icirc;t noter que le support de JMRI pour le RPS
+      s'am&eacute;liore rapidement. Cette page fait
+      r&eacute;f&eacute;rence &agrave; la plus r&eacute;cente
+      version d'essai JMRI. Si vous utilisez un syst&egrave;me RPS,
+      vous devez mettre &agrave; jour les versions de test par
+      celles qui <a href=
+      "http://jmri.org/download/index.shtml">sont
+      annonc&eacute;es</a>.</em>
+
+      <p>Le <a href=
+      "http://www.proto87.com/RPS-MR-position-detection-system.html">
+      Syst&egrave;me RPS</a> fournit une localisation absolue du
+      mat&eacute;riel roulant &eacute;quip&eacute;s du RPS.</p>
+
+      <p>JMRI peut utiliser pour d&eacute;finir un <a href=
+      "../../tools/Sensors.shtml">Capteur JMRI</a> quand un
+      &eacute;metteur RPS est dans une zone sp&eacute;cifique, qui
+      peut &agrave; son tour &ecirc;tre utilis&eacute; pour
+      contr&ocirc;ler d'autres fonctions JMRI telles que <a href=
+      "../../tools/Signals.shtml">Signaux</a>, <a href=
+      "../../tools/Routes.shtml">Itin&eacute;raires</a> et <a href=
+      "../../tools/Logix.shtml">Logix</a> .</p>
+
+      <p>Un capteur de RPS est associ&eacute; &agrave; une zone
+      d&eacute;limit&eacute;e par une s&eacute;rie de points et les
+      lignes entre eux.</p>
+
+      <h2>D&eacute;finir un capteur</h2>Il y a deux fa&ccedil;ons
+      de cr&eacute;er un Capteur RPS et de d&eacute;finir la zone
+      sur le r&eacute;seau miniature qu'il recouvre.
+
+      <h3>Par des coordonn&eacute;es</h3>Vous pouvez entrer une
+      s&eacute;rie de coordonn&eacute;es qui
+      &eacute;num&egrave;rent les coins de la r&eacute;gion
+      &agrave; couvrir. Par exemple, les points d&eacute;finissant
+      un carr&eacute; d'une unit&eacute; de c&ocirc;t&eacute;, sont
+      les suivants:
+      <pre>
+<code>  (0,0,0)
+  (1,0,0)
+  (1,1,0)
+  (0,1,0)
+</code>
+</pre>Si vous utilisez le bouton "Ajouter ..." du Tableau de
+Capteur pour cr&eacute;er un capteur avec le nom syst&egrave;me
+      <pre>
+<code>   RS (0,0,0); (1,0,0); (1,1,0); (0,1,0)
+</code>
+</pre>vous aurez un capteur RPS qui se montre "ACTIF" quand un
+&eacute;metteur est pr&eacute;sent dans cette zone, et "INACTIF"
+autrement.
+
+      <p>Le "R" signifie RPS syst&egrave;me, "S" signifie que vous
+      avez d&eacute;fini un Capteur, et le reste du nom
+      d&eacute;finit les coordonn&eacute;es des coins de la zone
+      &agrave; inclure dans le capteur. Chaque coin est
+      sp&eacute;cifi&eacute; par son X, Y et Z, tous
+      regroup&eacute;s avec des parenth&egrave;ses. Les coins
+      doivent &ecirc;tre s&eacute;par&eacute;s par des virgules,
+      voir l'exemple ci-dessus.</p>
+
+      <p>Une fois que vous avez d&eacute;fini votre capteur, vous
+      pouvez utiliser l' <a href=
+      "../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">
+      affichage du suivi</a> pour voir si c'est au bon endroit sur
+      votre r&eacute;seau.</p>
+
+      <h3>Utilisation de l'outil de suivi</h3>(A &eacute;crire,
+      pour l'instant voir la <a href=
+      "../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">
+      page d'aide de l'affichage du suivi</a>.)
+
+      <h2>Pour plus d'information</h2>Il y a plus d'informations
+      disponibles sur le <a href=
+      "http://www.proto87.com/RPS-MR-position-detection-system.html">
+      Site Web RPS</a> .
+
+      <p>Voir aussi la <a href="index.shtml">page principale JMRI
+      RPS</a> .</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile.xsl"?>
+<layout-config
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/layout.xsd"
+>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+    </operations>
+    <turnout systemName="LT128" userName="LowSouth" feedback="ONESENSOR" sensor1="LS288" inverted="false" automate="Sensor" />
+    <turnout systemName="LT129" userName="LowNorth" feedback="ONESENSOR" sensor1="LS287" inverted="false" automate="Sensor" />
+    <turnout systemName="LT130" userName="MasYardLoop" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT131" userName="MasLoopBack" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT257" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT258" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT259" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT260" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT261" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT262" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT263" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT264" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT265" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT266" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT267" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT268" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT269" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT270" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT271" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT272" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT273" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT274" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT275" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT276" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT277" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT278" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT279" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT280" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT289" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT290" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT291" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT292" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT293" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT294" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT295" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT296" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT297" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT298" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT299" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT300" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT301" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT3010" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT3011" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT3012" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT302" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT303" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT304" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT305" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT306" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT307" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT308" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT309" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT310" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT311" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT312" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT962" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT963" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT964" feedback="MONITORING" inverted="false" automate="Default" />
+  </turnouts>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+    </operations>
+    <turnout systemName="IT10" userName="SyrYardSouth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT19" userName="SyrNorth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT200" userName="RunClearTurnoutScript" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT201" userName="RunClearSensorsScript" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT21" userName="JctMain" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT31" userName="BoonSouth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT32" userName="BoonCrossSouth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT33" userName="BoonYard" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT35" userName="BoonCrossNorth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT41" userName="MidCross" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT43" userName="MidCrossA" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT45" userName="MidNorth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT54" userName="PtLySouth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT55" userName="PtLyNorth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT56" userName="PtLyNorth2" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT63" userName="LowJct" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT64" userName="LowYard" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT70" userName="GovCrossSouth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT71" userName="GovBranch" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT72" userName="GovCrossNorth" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT80" userName="MasCross" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="IT81" userName="MasSouth" feedback="DIRECT" inverted="false" automate="Default" />
+  </turnouts>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS17" inverted="false" userName="BoonSouthOS" />
+    <sensor systemName="LS18" inverted="false" userName="PtLySide" />
+    <sensor systemName="LS19" inverted="false" userName="PtLyMain" />
+    <sensor systemName="LS20" inverted="false" userName="PtLyNorthOS" />
+    <sensor systemName="LS21" inverted="false" userName="PtLyLow1" />
+    <sensor systemName="LS22" inverted="false" userName="PtLyLow2" />
+    <sensor systemName="LS23" inverted="false" userName="PtLyLow3" />
+    <sensor systemName="LS24" inverted="false" userName="LowSouthOS" />
+    <sensor systemName="LS25" inverted="false" userName="LowMain" />
+    <sensor systemName="LS26" inverted="false" userName="LowSide" />
+    <sensor systemName="LS27" inverted="false" userName="SyrNorthOS" />
+    <sensor systemName="LS28" inverted="false" userName="GovMain" />
+    <sensor systemName="LS281" inverted="false" />
+    <sensor systemName="LS282" inverted="false" />
+    <sensor systemName="LS283" inverted="false" />
+    <sensor systemName="LS284" inverted="false" />
+    <sensor systemName="LS285" inverted="false" />
+    <sensor systemName="LS286" inverted="false" />
+    <sensor systemName="LS287" inverted="true" userName="LowNorthFeedback" />
+    <sensor systemName="LS288" inverted="true" userName="LowSouthFeedback" />
+    <sensor systemName="LS289" inverted="false" />
+    <sensor systemName="LS29" inverted="false" />
+    <sensor systemName="LS290" inverted="false" />
+    <sensor systemName="LS291" inverted="false" />
+    <sensor systemName="LS292" inverted="false" />
+    <sensor systemName="LS293" inverted="false" />
+    <sensor systemName="LS294" inverted="false" />
+    <sensor systemName="LS295" inverted="false" />
+    <sensor systemName="LS296" inverted="false" />
+    <sensor systemName="LS297" inverted="false" />
+    <sensor systemName="LS298" inverted="false" />
+    <sensor systemName="LS299" inverted="false" />
+    <sensor systemName="LS30" inverted="false" />
+    <sensor systemName="LS300" inverted="false" />
+    <sensor systemName="LS301" inverted="false" />
+    <sensor systemName="LS302" inverted="false" />
+    <sensor systemName="LS303" inverted="false" />
+    <sensor systemName="LS304" inverted="false" />
+    <sensor systemName="LS305" inverted="false" />
+    <sensor systemName="LS306" inverted="false" />
+    <sensor systemName="LS307" inverted="false" />
+    <sensor systemName="LS308" inverted="false" />
+    <sensor systemName="LS309" inverted="false" />
+    <sensor systemName="LS31" inverted="false" />
+    <sensor systemName="LS310" inverted="false" />
+    <sensor systemName="LS311" inverted="false" />
+    <sensor systemName="LS312" inverted="false" />
+    <sensor systemName="LS313" inverted="false" />
+    <sensor systemName="LS314" inverted="false" />
+    <sensor systemName="LS315" inverted="false" />
+    <sensor systemName="LS316" inverted="false" />
+    <sensor systemName="LS317" inverted="false" />
+    <sensor systemName="LS318" inverted="false" />
+    <sensor systemName="LS319" inverted="false" />
+    <sensor systemName="LS32" inverted="false" userName="JctBoon2" />
+    <sensor systemName="LS320" inverted="false" />
+    <sensor systemName="LS33" inverted="false" userName="MasLoopT" />
+    <sensor systemName="LS34" inverted="false" userName="MasLoopTrack" />
+    <sensor systemName="LS35" inverted="false" userName="MasLoopD" />
+    <sensor systemName="LS36" inverted="false" userName="MasRevExtra" />
+    <sensor systemName="LS37" inverted="false" userName="MasYardLoopOS" />
+    <sensor systemName="LS38" inverted="false" userName="MasMainLoopX" />
+    <sensor systemName="LS39" inverted="false" userName="MasLoopBackOS" />
+    <sensor systemName="LS40" inverted="false" userName="SyrJct1" />
+    <sensor systemName="LS41" inverted="false" userName="PtLySouthOS" />
+    <sensor systemName="LS42" inverted="false" userName="SyrJct2" />
+    <sensor systemName="LS43" inverted="false" userName="JctOS" />
+    <sensor systemName="LS44" inverted="false" userName="JctBoon1" />
+    <sensor systemName="LS45" inverted="false" />
+    <sensor systemName="LS46" inverted="false" />
+    <sensor systemName="LS47" inverted="false" />
+    <sensor systemName="LS48" inverted="false" />
+  </sensors>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="IS1" inverted="false" userName="PtLyLowDirSouth" />
+    <sensor systemName="IS2" inverted="false" userName="PtLyLowDirNorth" />
+    <sensor systemName="IS3" inverted="false" userName="PowerControl" />
+    <sensor systemName="ISCLOCKRUNNING" inverted="false" />
+  </sensors>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jun 04 02:55:11 EDT 2007" rate="5.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="yes" startclockoption="0" />
+  <logixs class="jmri.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IX1" userName="PtLyLowAPB" enabled="yes">
+      <logixConditional systemName="IX1C2" order="0" />
+      <logixConditional systemName="IX1C3" order="1" />
+      <logixConditional systemName="IX1C1" order="2" />
+    </logix>
+    <logix systemName="IX2" userName="RunClearSensors" enabled="yes">
+      <logixConditional systemName="IX2C1" order="0" />
+    </logix>
+    <logix systemName="IX3" userName="RunClearTurnouts" enabled="yes">
+      <logixConditional systemName="IX3C1" order="0" />
+    </logix>
+    <logix systemName="IX4" userName="MasRevLoop" enabled="yes">
+      <logixConditional systemName="IX4C1" order="0" />
+      <logixConditional systemName="IX4C2" order="1" />
+    </logix>
+    <logix systemName="IX5" userName="Power" enabled="yes">
+      <logixConditional systemName="IX5C1" order="0" />
+    </logix>
+  </logixs>
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="JCTBOONNORTH1" userName="JctBoonNorth1" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="JCTBOONNORTH2" userName="JctBoonNorth2" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="JCTBOONNORTH3" userName="JctBoonNorth3" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="JCTBOONSOUTH1" userName="JctBoonSouth1" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="JCTBOONSOUTH2" userName="JctBoonSouth2" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="JCTBOONSOUTH3" userName="JctBoonSouth3" />
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="PTLYLOWNORTH1" userName="PtLyLowNorth1">
+      <turnout systemName="LT261" />
+      <turnout systemName="LT262" />
+      <turnout systemName="LT263" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="PTLYLOWNORTH2" userName="PtLyLowNorth2">
+      <turnout systemName="LT273" />
+      <turnout systemName="LT274" />
+      <turnout systemName="LT275" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="PTLYLOWNORTH3" userName="PtLyLowNorth3">
+      <turnout systemName="LT265" />
+      <turnout systemName="LT266" />
+      <turnout systemName="LT267" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="PTLYLOWNORTH4" userName="PtLyLowNorth4" />
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="PTLYLOWSOUTH1" userName="PtLyLowSouth1">
+      <turnout systemName="LT257" />
+      <turnout systemName="LT258" />
+      <turnout systemName="LT259" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="PTLYLOWSOUTH2" userName="PtLyLowSouth2">
+      <turnout systemName="LT269" />
+      <turnout systemName="LT270" />
+      <turnout systemName="LT271" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="PTLYLOWSOUTH3" userName="PtLyLowSouth3">
+      <turnout systemName="LT277" />
+      <turnout systemName="LT278" />
+      <turnout systemName="LT279" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="PTLYLOWSOUTH4" userName="PtLyLowSouth4" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="PTLYLOWSOUTH4A" userName="PtLyLowSouth4A" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="SYRJCTNORTH1" userName="SyrJctNorth1" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="SYRJCTNORTH2" userName="SyrJctNorth2" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="SYRJCTNORTH3" userName="SyrJctNorth3" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="SYRJCTSOUTH1" userName="SyrJctSouth1" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="SYRJCTSOUTH2" userName="SyrJctSouth2" />
+    <signalhead class="jmri.configurexml.VirtualSignalHeadXml" systemName="SYRJCTSOUTH3" userName="SyrJctSouth3" />
+  </signalheads>
+  <memories class="jmri.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM1" userName="ExitLoop" />
+    <memory systemName="IM2" userName="EnterLoop" />
+  </memories>
+  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX1C1" userName="PtLyLowDirClearLogix">
+      <conditionalStateVariable operator="4" type="2" systemName="PtLyNorthOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="PtLyLow1" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="PtLyLow2" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="PtLyLow3" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="LowSouthOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="9" systemName="PtLyLowDirSouth" data="4" string=" " />
+      <conditionalAction option="1" delay="0" type="9" systemName="PtLyLowDirNorth" data="4" string=" " />
+    </conditional>
+    <conditional systemName="IX1C2" userName="PtLyLowDirNorthLogix">
+      <conditionalStateVariable operator="4" type="2" systemName="PtLyLowDirSouth" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="PtLyLowDirNorth" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="1" systemName="PtLyNorthOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="9" systemName="PtLyLowDirNorth" data="2" string=" " />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX1C3" userName="PtLyLowDirSouthLogix">
+      <conditionalStateVariable operator="4" type="2" systemName="PtLyLowDirSouth" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="PtLyLowDirNorth" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="1" systemName="LowSouthOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="9" systemName="PtLyLowDirSouth" data="2" string=" " />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX2C1" userName="IX2C1">
+      <conditionalStateVariable operator="4" type="3" systemName="RunClearSensorsScript" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="16" systemName=" " data="0" string="C:\Documents and Settings\smrc\JMRI\ClearBlocks.py" />
+      <conditionalAction option="1" delay="0" type="2" systemName="RunClearSensorsScript" data="2" string=" " />
+    </conditional>
+    <conditional systemName="IX3C1" userName="RunScript">
+      <conditionalStateVariable operator="4" type="3" systemName="IT200" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="16" systemName=" " data="0" string="C:\Documents and Settings\smrc\JMRI\CloseTurnouts.py" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX4C1" userName="EnterLoop">
+      <conditionalStateVariable operator="4" type="3" systemName="MasLoopBack" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="1" systemName="MasYardLoopOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="3" systemName="MasYardLoop" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="MasMainLoopX" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="MasLoopBackOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="MasLoopT" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="MasLoopTrack" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="MasLoopD" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="2" systemName="MasLoopBack" data="2" string=" " />
+      <conditionalAction option="1" delay="0" type="12" systemName="EnterLoop" data="0" string="Entering" />
+    </conditional>
+    <conditional systemName="IX4C2" userName="ReturnLoop">
+      <conditionalStateVariable operator="4" type="2" systemName="MasLoopBackOS" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="2" systemName="MasMainLoopX" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="4" systemName="MasLoopBack" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" type="1" systemName="MasLoopD" dataString="N/A" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="2" systemName="MasLoopBack" data="4" string=" " />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+    <conditional systemName="IX5C1" userName="on">
+      <conditionalStateVariable operator="4" type="0" systemName="" dataString=" " num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" delay="0" type="16" systemName=" " data="0" string="" />
+      <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
+    </conditional>
+  </conditionals>
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="SYRJCTNORTH3" mode="4" watchedturnout="IT21" watchedsignal1="JCTBOONNORTH1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS43" />
+    </signalelement>
+    <signalelement signal="SYRJCTNORTH2" mode="1" watchedsignal1="SYRJCTNORTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS42" />
+    </signalelement>
+    <signalelement signal="SYRJCTNORTH1" mode="1" watchedsignal1="SYRJCTNORTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS40" />
+    </signalelement>
+    <signalelement signal="SYRJCTSOUTH3" mode="4" watchedturnout="IT19" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS27" />
+    </signalelement>
+    <signalelement signal="SYRJCTSOUTH2" mode="1" watchedsignal1="SYRJCTSOUTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS40" />
+    </signalelement>
+    <signalelement signal="SYRJCTSOUTH1" mode="1" watchedsignal1="SYRJCTSOUTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS42" />
+    </signalelement>
+    <signalelement signal="PTLYLOWNORTH4" mode="4" watchedturnout="LT128" watchedsensor1="LS25" watchedsensor2="LS26" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS24" />
+    </signalelement>
+    <signalelement signal="PTLYLOWNORTH3" mode="1" watchedsignal1="PTLYLOWNORTH4" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS23" />
+      <sensor systemName="IS1" />
+    </signalelement>
+    <signalelement signal="PTLYLOWNORTH2" mode="1" watchedsignal1="PTLYLOWNORTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS22" />
+      <sensor systemName="IS1" />
+    </signalelement>
+    <signalelement signal="PTLYLOWNORTH1" mode="1" watchedsignal1="PTLYLOWNORTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+      <sensor systemName="IS1" />
+    </signalelement>
+    <signalelement signal="PTLYLOWSOUTH4" mode="4" watchedturnout="IT55" watchedsensor1="LS19" watchedsensor2="LS18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS20" />
+      <sensor systemName="IS2" />
+    </signalelement>
+    <signalelement signal="PTLYLOWSOUTH3" mode="1" watchedsignal1="PTLYLOWSOUTH4" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+      <sensor systemName="IS2" />
+    </signalelement>
+    <signalelement signal="PTLYLOWSOUTH2" mode="1" watchedsignal1="PTLYLOWSOUTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS22" />
+      <sensor systemName="IS2" />
+    </signalelement>
+    <signalelement signal="PTLYLOWSOUTH1" mode="1" watchedsignal1="PTLYLOWSOUTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS23" />
+      <sensor systemName="IS2" />
+    </signalelement>
+    <signalelement signal="PTLYLOWSOUTH4A" mode="4" watchedturnout="IT55" watchedsensor1="LS18" watchedsensor2="LS19" limitspeed1="true" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS20" />
+    </signalelement>
+    <signalelement signal="JCTBOONNORTH3" mode="2" watchedturnout="IT70" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS17" />
+    </signalelement>
+    <signalelement signal="JCTBOONNORTH2" mode="1" watchedsignal1="JCTBOONNORTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS32" />
+    </signalelement>
+    <signalelement signal="JCTBOONNORTH1" mode="1" watchedsignal1="JCTBOONNORTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS44" />
+    </signalelement>
+    <signalelement signal="JCTBOONSOUTH3" mode="2" watchedturnout="IT21" watchedsignal1="SYRJCTSOUTH1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS43" />
+    </signalelement>
+    <signalelement signal="JCTBOONSOUTH2" mode="1" watchedsignal1="JCTBOONSOUTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS44" />
+    </signalelement>
+    <signalelement signal="JCTBOONSOUTH1" mode="1" watchedsignal1="JCTBOONSOUTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS32" />
+    </signalelement>
+  </signalelements>
+  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Syracuse &amp; St. Lawremce -39" x="5" y="14" height="868" width="1040" editable="yes" positionable="no" showcoordinates="no" controlling="yes" hide="yes" panelmenu="yes">
+    <sensoricon sensor="LS20" x="174" y="447" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS21" x="245" y="447" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS23" x="322" y="447" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS24" x="363" y="435" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS18" x="105" y="420" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS19" x="104" y="447" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS26" x="406" y="423" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS40" x="195" y="78" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS42" x="236" y="78" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS43" x="290" y="76" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS17" x="410" y="79" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS44" x="331" y="78" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS32" x="373" y="80" level="10" active="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="110" y="376" level="5" text="PORT LEYDEN" size="16" style="1" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="405" y="483" level="5" text="LOWVILLE" size="16" style="1" red="255" green="255" blue="255" />
+    <turnouticon turnout="IT54" x="48" y="420" level="7" closed="program:resources/icons/USS/track/turnout/left/east/os-l-e-closed.gif" thrown="program:resources/icons/USS/track/turnout/left/east/os-l-e-thrown.gif" unknown="program:resources/icons/USS/track/turnout/left/east/os-l-e-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/left/east/os-l-e-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="258" y="241" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="55" y="15" level="5" text="SYRACUSE" size="16" style="1" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="406" y="15" level="5" text="BOONVILLE" size="16" style="1" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="213" y="15" level="5" text="REMSEN" size="16" style="1" red="255" green="255" blue="255" />
+    <turnouticon turnout="IT71" x="581" y="420" level="7" closed="program:resources/icons/USS/track/turnout/left/east/os-l-e-closed.gif" thrown="program:resources/icons/USS/track/turnout/left/east/os-l-e-thrown.gif" unknown="program:resources/icons/USS/track/turnout/left/east/os-l-e-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/left/east/os-l-e-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="631" y="378" level="5" text="GOUVERNEUR" size="16" style="1" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="396" y="241" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="true" showtooltip="false" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="0" y="0" level="1" size="12" style="1" red="51" green="51" blue="51" icon="program:resources\icons\USS\background\uss-15-dual.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="864" y="380" level="5" text="MASSENA" size="16" style="1" red="255" green="255" blue="255" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="877" y="444" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="311" y="444" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="270" y="443" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="233" y="443" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="779" y="443" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="683" y="444" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="538" y="444" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="94" y="418" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="94" y="444" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="322" y="75" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="227" y="75" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="396" y="420" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="186" y="75" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="LT129" x="481" y="419" level="7" closed="program:resources/icons/USS/track/turnout/right/west/os-r-w-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/west/os-r-w-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/west/os-r-w-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/right/west/os-r-w-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT64" x="436" y="395" level="7" closed="program:resources/icons/USS/track/turnout/right/west/os-r-w-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/west/os-r-w-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/west/os-r-w-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/right/west/os-r-w-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT70" x="631" y="443" level="7" closed="program:resources/icons/USS/track/crossover/right/os-r-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/right/os-r-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/right/os-r-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/right/os-r-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT72" x="724" y="442" level="7" closed="program:resources/icons/USS/track/crossover/right/os-r-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/right/os-r-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/right/os-r-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/right/os-r-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="11" y="444" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT21" x="269" y="51" level="7" closed="program:resources/icons/USS/track/turnout/left/east/os-l-e-closed.gif" thrown="program:resources/icons/USS/track/turnout/left/east/os-l-e-thrown.gif" unknown="program:resources/icons/USS/track/turnout/left/east/os-l-e-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/left/east/os-l-e-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="363" y="76" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT70" x="404" y="52" level="7" closed="program:resources/icons/USS/track/crossover/right/os-r-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/right/os-r-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/right/os-r-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/right/os-r-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="507" y="76" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="506" y="101" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT41" x="654" y="74" level="7" closed="program:resources/icons/USS/track/crossover/double/os-dc-closed.gif" thrown="program:resources/icons/USS/track/crossover/double/os-dc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/double/os-dc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/double/os-dc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="553" y="76" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT10" x="552" y="99" level="7" closed="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/east/os-r-e-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/east/os-r-e-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/right/east/os-r-e-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="762" y="74" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT19" x="133" y="73" level="7" closed="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" thrown="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" unknown="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT43" x="707" y="50" level="7" closed="program:resources/icons/USS/track/crossover/left/os-l-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/left/os-l-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/left/os-l-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/left/os-l-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="94" y="74" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT81" x="917" y="444" level="7" closed="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/east/os-r-e-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/east/os-r-e-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/right/east/os-r-e-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT45" x="809" y="73" level="7" closed="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/east/os-r-e-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/east/os-r-e-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/right/east/os-r-e-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="608" y="99" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT72" x="603" y="51" level="7" closed="program:resources/icons/USS/track/crossover/right/os-r-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/right/os-r-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/right/os-r-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/right/os-r-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="431" y="107" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/b-45-short.gif" rotate="1" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="635" y="15" level="5" text="TANGLE" size="16" style="1" red="255" green="255" blue="255" />
+    <sensoricon sensor="LS22" x="280" y="447" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <turnouticon turnout="IT35" x="455" y="75" level="7" closed="program:resources/icons/USS/track/crossover/right/os-r-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/right/os-r-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/right/os-r-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/right/os-r-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT43" x="825" y="443" level="7" closed="program:resources/icons/USS/track/crossover/left/os-l-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/left/os-l-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/left/os-l-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/left/os-l-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT41" x="774" y="465" level="7" closed="program:resources/icons/USS/track/crossover/double/os-dc-closed.gif" thrown="program:resources/icons/USS/track/crossover/double/os-dc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/double/os-dc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/double/os-dc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <sensoricon sensor="LS25" x="431" y="443" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <signalheadicon signalhead="PTLYLOWNORTH1" x="220" y="464" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-high.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-high.gif" green="resources/icons/smallschematics/searchlights/left-green-high.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-high.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-high.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWNORTH2" x="252" y="461" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWNORTH3" x="291" y="462" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWNORTH4" x="324" y="462" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWSOUTH1" x="320" y="425" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-high.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-high.gif" green="resources/icons/smallschematics/searchlights/left-green-high.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-high.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-high.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWSOUTH2" x="285" y="425" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWSOUTH3" x="251" y="424" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="PTLYLOWSOUTH4" x="217" y="426" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="SYRJCTNORTH1" x="167" y="97" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-high.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-high.gif" green="resources/icons/smallschematics/searchlights/left-green-high.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-high.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-high.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="SYRJCTNORTH2" x="208" y="97" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="SYRJCTNORTH3" x="240" y="97" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="JCTBOONNORTH1" x="303" y="97" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-high.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-high.gif" green="resources/icons/smallschematics/searchlights/left-green-high.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-high.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-high.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="JCTBOONNORTH2" x="343" y="98" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="JCTBOONNORTH3" x="386" y="96" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="JCTBOONSOUTH1" x="380" y="62" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-high.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-high.gif" green="resources/icons/smallschematics/searchlights/left-green-high.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-high.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-high.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="JCTBOONSOUTH2" x="340" y="62" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="JCTBOONSOUTH3" x="300" y="62" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="SYRJCTSOUTH1" x="246" y="61" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-high.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-high.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-high.gif" green="resources/icons/smallschematics/searchlights/left-green-high.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-high.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-high.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="SYRJCTSOUTH2" x="207" y="61" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="SYRJCTSOUTH3" x="162" y="62" level="9" held="resources/icons/smallschematics/searchlights/left-held-marker.gif" dark="resources/icons/smallschematics/searchlights/left-dark-marker.gif" red="resources/icons/smallschematics/searchlights/left-red-marker.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-marker.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" green="resources/icons/smallschematics/searchlights/left-green-marker.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-marker.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="656" y="52" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="554" y="51" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="764" y="50" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="684" y="467" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="710" y="99" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="622" y="417" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <turnouticon turnout="IT55" x="134" y="420" level="7" closed="program:resources/icons/USS/track/turnout/right/west/os-r-w-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/west/os-r-w-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/west/os-r-w-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/right/west/os-r-w-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT56" x="180" y="419" level="7" closed="program:resources/icons/USS/track/turnout/right/west/os-r-w-closed.gif" thrown="program:resources/icons/USS/track/turnout/right/west/os-r-w-thrown.gif" unknown="program:resources/icons/USS/track/turnout/right/west/os-r-w-unknown.gif" inconsistent="program:resources/icons/USS/track/turnout/left/west/os-r-w-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT128" x="347" y="419" level="7" closed="program:resources/icons/USS/track/crossover/left/os-l-sc-closed.gif" thrown="program:resources/icons/USS/track/crossover/left/os-l-sc-thrown.gif" unknown="program:resources/icons/USS/track/crossover/left/os-l-sc-unknown.gif" inconsistent="program:resources/icons/USS/track/crossover/left/os-l-sc-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="true" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="402" y="441" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="436" y="441" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="94" y="99" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="859" y="74" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="858" y="98" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USS/track/block/block.gif" rotate="0" />
+    <sensoricon sensor="LS27" x="145" y="76" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="true" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="473" y="528" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USSpanels/Plates/switch.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="true" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="337" y="528" level="3" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/USSpanels/Plates/switch.gif" rotate="0" />
+    <turnouticon turnout="LT128" x="354" y="569" level="7" closed="program:resources/icons/USSpanels/Plates/lever-l.gif" thrown="program:resources/icons/USSpanels/Plates/lever-r.gif" unknown="program:resources/icons/USSpanels/Plates/lever-v-inactive.gif" inconsistent="program:resources/icons/USSpanels/Plates/lever-v-inactive.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT129" x="490" y="571" level="7" closed="program:resources/icons/USSpanels/Plates/lever-l.gif" thrown="program:resources/icons/USSpanels/Plates/lever-r.gif" unknown="program:resources/icons/USSpanels/Plates/lever-v-inactive.gif" inconsistent="program:resources/icons/USSpanels/Plates/lever-v-inactive.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT129" x="478" y="533" level="7" closed="program:resources/icons/USSpanels/Lamps/lamp-g.gif" thrown="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" unknown="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" inconsistent="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT129" x="509" y="533" level="7" closed="program:resources/icons/USSpanels/Lamps/lamp-dy.gif" thrown="program:resources/icons/USSpanels/Lamps/lamp-y.gif" unknown="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" inconsistent="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT128" x="371" y="533" level="7" closed="program:resources/icons/USSpanels/Lamps/lamp-dy.gif" thrown="program:resources/icons/USSpanels/Lamps/lamp-y.gif" unknown="program:resources/icons/USSpanels/Lamps/lamp-d.gif" inconsistent="program:resources/icons/USSpanels/Lamps/lamp-d.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT128" x="341" y="531" level="7" closed="program:resources/icons/USSpanels/Lamps/lamp-g.gif" thrown="program:resources/icons/USSpanels/Lamps/lamp-dg.gif" unknown="program:resources/icons/USSpanels/Lamps/lamp-d.gif" inconsistent="program:resources/icons/USSpanels/Lamps/lamp-d.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="IT200" x="93" y="680" level="7" closed="resources/icons/USS/plate/levers/code.gif" thrown="resources/icons/USS/plate/levers/code-press.gif" unknown="resources/icons/USS/plate/levers/code-unknown.gif" inconsistent="resources/icons/USS/plate/levers/code-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="45" y="657" level="5" text="Clear All Turnouts" size="14" style="1" red="255" green="255" blue="255" />
+    <turnouticon turnout="IT201" x="292" y="681" level="7" closed="resources/icons/USS/plate/levers/code.gif" thrown="resources/icons/USS/plate/levers/code-press.gif" unknown="resources/icons/USS/plate/levers/code-unknown.gif" inconsistent="resources/icons/USS/plate/levers/code-inconsistent.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="247" y="654" level="5" text="Clear All Sensors" size="14" style="1" red="255" green="255" blue="255" />
+    <sensoricon sensor="LS41" x="39" y="447" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS29" x="524" y="446" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS29" x="570" y="447" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS28" x="767" y="381" level="10" active="resources/icons/USSpanels/Lamps/lamp-y.gif" inactive="resources/icons/USSpanels/Lamps/lamp-dw.gif" unknown="resources/icons/USSpanels/Lamps/lamp-r.gif" inconsistent="resources/icons/USSpanels/Lamps/lamp-r.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS46" x="811" y="385" level="10" active="resources/icons/USSpanels/Lamps/lamp-y.gif" inactive="resources/icons/USSpanels/Lamps/lamp-dw.gif" unknown="resources/icons/USSpanels/Lamps/lamp-r.gif" inconsistent="resources/icons/USSpanels/Lamps/lamp-r.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS47" x="882" y="442" level="10" active="resources/icons/USSpanels/Lamps/lamp-y.gif" inactive="resources/icons/USSpanels/Lamps/lamp-dw.gif" unknown="resources/icons/USSpanels/Lamps/lamp-r.gif" inconsistent="resources/icons/USSpanels/Lamps/lamp-r.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS48" x="781" y="440" level="10" active="resources/icons/USSpanels/Lamps/lamp-y.gif" inactive="resources/icons/USSpanels/Lamps/lamp-dw.gif" unknown="resources/icons/USSpanels/Lamps/lamp-r.gif" inconsistent="resources/icons/USSpanels/Lamps/lamp-r.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="IS3" x="886" y="689" level="10" active="resources/icons/USSpanels/Lamps/lamp-g.gif" inactive="resources/icons/USSpanels/Lamps/lamp-dw.gif" unknown="resources/icons/USSpanels/Lamps/lamp-r.gif" inconsistent="resources/icons/USSpanels/Lamps/lamp-r.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="859" y="651" level="5" text="Power Control" size="12" style="1" red="255" green="255" blue="255" />
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Massena Loop - 36" x="947" y="81" height="328" width="333" editable="yes" positionable="no" showcoordinates="no" controlling="yes" hide="yes" panelmenu="yes">
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="163" y="90" level="3" size="12" style="1" red="51" green="51" blue="51" icon="resources/icons/USSpanels/TrackSegments/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="8" y="16" level="3" size="12" style="1" red="51" green="51" blue="51" icon="resources/icons/USSpanels/TrackSegments/block.gif" rotate="0" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="201" y="102" level="3" size="12" style="1" red="51" green="51" blue="51" icon="resources/icons/USSpanels/TrackSegments/block.gif" rotate="1" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="149" y="129" level="3" size="12" style="1" red="51" green="51" blue="51" icon="resources/icons/USSpanels/TrackSegments/block.gif" rotate="0" />
+    <turnouticon turnout="LT130" x="55" y="16" level="7" closed="resources/icons/USSpanels/TrackSegments/os-righthand-east-closed.gif" thrown="resources/icons/USSpanels/TrackSegments/os-righthand-east-thrown.gif" unknown="resources/icons/USSpanels/TrackSegments/os-righthand-east-unknown.gif" inconsistent="resources/icons/USSpanels/TrackSegments/os-righthand-east-error.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <sensoricon sensor="LS37" x="86" y="31" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS38" x="98" y="63" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS39" x="132" y="105" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS33" x="164" y="133" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS34" x="204" y="120" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS35" x="179" y="95" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/tracksegments/circuit-error.gif" inconsistent="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="95" y="47" level="3" size="12" style="1" red="51" green="51" blue="51" icon="resources/icons/USSpanels/TrackSegments/block.gif" rotate="1" />
+    <turnouticon turnout="LT131" x="108" y="81" level="7" closed="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-closed.gif" thrown="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-thrown.gif" unknown="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-unknown.gif" inconsistent="resources/icons/USSpanels/TrackSegments/os-lefthand-45-SE-error.gif" rotate="0" forcecontroloff="false" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+  </paneleditor>
+  <!--Written by JMRI version 2.5.1 on Sun Feb 08 19:00:28 EST 2009 $Id$-->
+</layout-config>
+

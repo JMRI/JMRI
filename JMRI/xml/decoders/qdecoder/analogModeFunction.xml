@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-18</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation from NMRA/analogModeFunction.xml v7</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+  <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F1</label>
+    <label xml:lang="fr">État de la fonction en analogique - F1</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F1</label>
+    <label>Analog Mode Function Status - F1</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F2</label>
+    <label xml:lang="fr">État de la fonction en analogique - F2</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F3</label>
+    <label>Analog Mode Function Status - F2</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F3</label>
+    <label xml:lang="fr">État de la fonction en analogique - F3</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F3</label>
+    <label>Analog Mode Function Status - F3</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F4</label>
+    <label xml:lang="fr">État de la fonction en analogique - F4</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F4</label>
+    <label>Analog Mode Function Status - F4</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F5</label>
+    <label xml:lang="fr">État de la fonction en analogique - F5</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F5</label>
+    <label>Analog Mode Function Status - F5</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F6</label>
+    <label xml:lang="fr">État de la fonction en analogique - F6</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F6</label>
+    <label>Analog Mode Function Status - F6</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F7</label>
+    <label xml:lang="fr">État de la fonction en analogique - F7</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F7</label>
+    <label>Analog Mode Function Status - F7</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F8</label>
+    <label xml:lang="fr">État de la fonction en analogique - F8</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F8</label>
+    <label>Analog Mode Function Status - F8</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F0(f)</label>
+    <label xml:lang="fr">État de la fonction en analogique - F0(f)</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F0(v)</label>
+    <label>Analog Mode Function Status - F0(f)</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F0(r)</label>
+    <label xml:lang="fr">État de la fonction en analogique - F0(r)</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F0(r)</label>
+    <label>Analog Mode Function Status - F0(r)</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F9</label>
+    <label xml:lang="fr">État de la fonction en analogique - F9</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F9</label>
+    <label>Analog Mode Function Status - F9</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F10</label>
+    <label xml:lang="fr">État de la fonction en analogique - F10</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F10</label>
+    <label>Analog Mode Function Status - F10</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F11</label>
+    <label xml:lang="fr">État de la fonction en analogique - F11</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F11</label>
+    <label>Analog Mode Function Status - F11</label>
+  </variable>
+  <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label xml:lang="it">Stato Funzioni in analogico - F12</label>
+    <label xml:lang="fr">État de la fonction en analogique - F12</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F12</label>
+    <label>Analog Mode Function Status - F12</label>
+  </variable>
+</variables>

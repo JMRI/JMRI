@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+ <variable CV="13" mask="XXXXXXXV" default="1" minOut="1" item="Analog Mode Function Status - FL(f)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Green</label>
+    <label xml:lang="it">Modo Analogico Verde</label>
+  </variable>
+  <variable CV="13" mask="XXXXXXVX" default="1" minOut="2" item="Analog Mode Function Status - FL(r)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Purple</label>
+    <label xml:lang="it">Modo Analogico Porpora</label>
+  </variable>
+  <variable CV="13" mask="XXXXXVXX" default="1" minOut="3" item="Analog Mode Function Status - F1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Brown</label>
+    <label xml:lang="it">Modo Analogico Marrone</label>
+  </variable>
+  <variable CV="13" mask="XXXXVXXX" default="1" minOut="4" item="Analog Mode Function Status - F2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog Mode Pick</label>
+    <label xml:lang="it">Modo Analogico Rosa</label>
+  </variable>
+</variables>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-31-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: SDF Trigger Conditions</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help Digitrax SDF Sound File Editor"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Conditions de d&Atilde;&copy;clenchement SDF</h1>Cette
+      page documente la signification des conditions de
+      d&Atilde;&copy;clenchement qui peuvent &Atilde;&ordf;tre
+      d&Atilde;&copy;finies dans une instruction de Digitrax SDF.
+
+      <dl>
+        <dt>TRIG_NEVER</dt>
+
+        <dd>Jamais d&Atilde;&copy;clench&Atilde;&copy;. Ceci peut
+        &Atilde;&ordf;tre utilis&Atilde;&copy; pour
+        d&Atilde;&copy;sactiver une partie d'un fichier SDF.</dd>
+
+        <dt>TRIG_MODE_CHNG</dt>
+
+        <dt>TRIG_MATH</dt>
+
+        <dd>TRIG_DISTANCE</dd>
+
+        <dt>TRIG_SPD_INC</dt>
+
+        <dd>se d&Atilde;&copy;clenche lorsque la vitesse du moteur
+        est augment&Atilde;&copy;e.</dd>
+
+        <dt>TRIG_SPD_DEC</dt>
+
+        <dd>se d&Atilde;&copy;clenche lorsque la vitesse du moteur
+        est r&Atilde;&copy;duite.</dd>
+
+        <dt>TRIG_CAM</dt>
+
+        <dd>d&Atilde;&copy;clencheurs soit sur la came actuelle
+        saisie, ou le m&Atilde;&copy;canisme de autochuff.</dd>
+
+        <dt>TRIG_NOT_TRIG</dt>
+
+        <dt>Fonction 0 On</dt>
+
+        <dd>se d&Atilde;&copy;clenche lorsque la fonction DCC 0 est
+        On.</dd>
+
+        <dt>Fonction 28 On</dt>
+
+        <dt>TRIG_DIRNOW_CHNG</dt>
+
+        <dd>se d&Atilde;&copy;clenche lorsque la direction du
+        moteur est chang&Atilde;&copy;e.</dd>
+
+        <dt>TRIG_MOVING</dt>
+
+        <dd>Si le moteur est en cours d'ex&Atilde;&copy;cution
+        &Atilde;  une vitesse non nulle. Fonction</dd>
+
+        <dd>TRIG_SND_ACTV11 11</dd>
+
+        <dt>TRIG_BSC0</dt>
+
+        <dd>se d&Atilde;&copy;clenche quand un
+        &Acirc;&laquo;changement de l'&Atilde;&copy;tat binaire" du
+        paquet DCC est re&Atilde;&sect;u pour BSC 0.</dd>
+
+        <dt>TRIG_BSC7</dt>
+
+        <dd>Trigger</dd>
+
+        <dd>TRIG_IN_0 lorsque la connexion d'entr&Atilde;&copy;e
+        devient active, habituellement utilis&Atilde;&copy; pour
+        une entr&Atilde;&copy;e chuff.</dd>
+
+        <dt>TRIG_IN_7</dt>
+
+        <dt>TRIG_NOTCH_CHNG</dt>
+
+        <dt>TRIG_TIME_16PPS</dt>
+
+        <dd>d&Atilde;&copy;clencheurs 16 fois par seconde.</dd>
+
+        <dt>TRIG_FACTORY_CVRESET</dt>
+
+        <dt>TRIG_OPSPROGWR_CV</dt>
+
+        <dd>se d&Atilde;&copy;clenche quand un CV est
+        &Atilde;&copy;crit en mode ops (sur la voie
+        principale).</dd>
+
+        <dt>TRIG_SCAT0</dt>
+
+        <dt>TRIG_SCAT7</dt>
+
+        <dt>T_SPD_MUTE</dt>
+
+        <dt>T_SPD_TURNON</dt>
+
+        <dt>T_SPD_IDLE</dt>
+
+        <dt>T_SPD_ACCEL1</dt>
+
+        <dt>T_SPD_ACC_CHNG</dt>
+
+        <dt>T_SPD_ACCEL2</dt>
+
+        <dt>T_SPD_IDLEXIT</dt>
+
+        <dt>T_SPD_RUN</dt>
+
+        <dt>T_SPD_DECEL1</dt>
+
+        <dt>T_SPD_DEC_CHNG</dt>
+
+        <dt>T_SPD_DECEL2</dt>
+
+        <dt>T_SPD_DEC_IDLE</dt>
+
+        <dt>T_SPD_TURNOFF</dt>
+
+        <dt>T_SPD_DEC_SP1</dt>
+
+        <dt>T_SPD_DEC_SP2</dt>
+
+        <dt>T_SPD_DIR_CHNG</dt>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

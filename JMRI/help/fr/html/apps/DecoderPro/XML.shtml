@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; le 2013-09-01-->
+
+  <title>JMRI: Decoder Information</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI: Information D&eacute;codeur</h1>Le projet JMRI a
+      rassembl&eacute; une grande quantit&eacute; d'informations
+      sur les D&eacute;codeurs DCC, il les met &agrave; la
+      disposition du public de plusieurs fa&ccedil;ons. Elles sont
+      d&eacute;crites sur cette page.
+
+      <h2>Acc&egrave;s &agrave; l'information via le web</h2>Les
+      pages Web sont automatiquement cr&eacute;&eacute;es &agrave;
+      partir des fichiers de configuration DecoderPro dans le cadre
+      de chaque version. Celles-ci contiennent:
+
+      <ul>
+        <li><a href=
+        "../../xml/XSLT/pages/DecoderId.html">Identification des
+        valeurs des CV du D&eacute;codeur</a> utilis&eacute;e par
+        DecoderPro pour identifier le fabricant et le type d'un
+        d&eacute;codeur inconnu.</li>
+
+        <li><a href="../../xml/XSLT/pages/decoderIndex.html">Index
+        des pages individuelles d&eacute;codeur</a> ,
+        &eacute;num&eacute;r&eacute;es par le fabricant. Cela
+        fournit une page sommaire des caract&eacute;ristiques et CV
+        contenu des d&eacute;codeurs.</li>
+
+        <li>La s&eacute;lection des listes de guides <a href=
+        "../../xml/XSLT/pages/SelectionGuide.html#size">la taille
+        d&eacute;codeur</a> , et par <a href=
+        "../../xml/XSLT/pages/SelectionGuide.html#electrical">Caract&eacute;ristiques
+        &eacute;lectriques des d&eacute;codeurs</a> .</li>
+
+        <li><a href=
+        "../../xml/XSLT/pages/CVSummary.html">R&eacute;sum&eacute;
+        combin&eacute; des CV pour tous les d&eacute;codeurs</a> .
+        Notez que c'est une <i>tr&egrave;s</i> grande page!</li>
+      </ul>
+
+      <h2>Informations dans un format variable
+      s&eacute;par&eacute;e par une virgule (CVS)</h2>Pour rendre
+      ces infos plus facile &agrave; importer dans un tableur ou un
+      autre programme, elles sont &eacute;galement disponibles sous
+      forme de fichiers Comma-Separated Variable (CSV). Fichiers
+      avec donn&eacute;es s&eacute;par&eacute;es par des virgules
+
+      <ul>
+        <li><a href="../../xml/XSLT/pages/decodersizes.csv">la
+        taille physique de chaque d&eacute;codeur
+        d&eacute;fini</a></li>
+
+        <li><a href="../../xml/XSLT/pages/cvsummary.csv">CVs
+        pr&eacute;sent dans chaque d&eacute;codeur</a></li>
+
+        <li><a href="../../xml/XSLT/pages/decoderpower.csv">limites
+        de puissance et connecteur par d&eacute;codeur</a></li>
+      </ul>
+
+      <h2>Fichiers XML</h2>La version d&eacute;finitive des
+      donn&eacute;es est dans des fichiers XML. Ceux-ci peuvent
+      &ecirc;tre obtenus aupr&egrave;s de toute distribution jmri,
+      ou via le Web &agrave; l'adresse <a href=
+      "http://jmri.org/xml">http://jmri.org/xml</a>. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

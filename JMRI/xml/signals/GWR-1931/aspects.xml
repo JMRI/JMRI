@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>GWR-1931</name>
+  <date>1931</date>
+  <reference>As found in various places on the internet</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-01-26</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial Release</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Proceed</name>
+      <indication>Next signal displaying proceed aspect</indication>
+      <description>Proceed</description>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+    <aspect>
+      <name>Diverging Proceed</name>
+      <indication>Next signal displaying proceed aspect</indication>
+      <description>Proceed via diverging route</description>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+    <aspect>
+      <name>Caution</name>
+      <indication>Proceed: be prepared to stop at the next signal</indication>
+      <description>Proceed with caution</description>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+    <aspect>
+      <name>Danger</name>
+      <indication>Stop</indication>
+      <description>Stop</description>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <indication>Not illuminated</indication>
+      <description>Stop</description>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="aspects" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-mast-3.xml" />
+    <appearancefile href="appearance-mast-2.xml" />
+    <appearancefile href="appearance-mast-2D.xml" />
+    <appearancefile href="appearance-bracket-3.xml" />
+    <appearancefile href="appearance-bracket-2.xml" />
+    <appearancefile href="appearance-bracket-2D.xml" />
+    <appearancefile href="appearance-doll-3.xml" />
+    <appearancefile href="appearance-doll-2.xml" />
+    <appearancefile href="appearance-doll-2D.xml" />
+    <appearancefile href="appearance-dwarf.xml" />
+  </appearancefiles>
+</aspecttable>

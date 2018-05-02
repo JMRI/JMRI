@@ -1,0 +1,204 @@
+<!-- Defines XML documenting a train roster -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (trains | options | schedules | automations)*>
+
+<!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
+| switchlistCreator)*>
+<!ELEMENT trainOptions EMPTY>
+<!ELEMENT rowColorOptions EMPTY>
+<!ELEMENT trainEditOptions EMPTY>
+<!ELEMENT trainScheduleOptions EMPTY>
+
+<!ATTLIST trainOptions buildReport		(true | false) "false">
+<!ATTLIST trainOptions printPreview 	(true | false) "false">
+<!ATTLIST trainOptions buildMessages 	(true | false) "true">
+<!ATTLIST trainOptions openFile		 	(true | false) "false">
+<!ATTLIST trainOptions runFile		 	(true | false) "false">
+<!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
+
+<!ATTLIST rowColorOptions rowColorManual		(true | false) "false">
+<!ATTLIST rowColorOptions rowColorBuidFailed 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorBuilt 		CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorTrainEnRoute 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorTerminated 	CDATA #IMPLIED>
+
+<!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>
+
+<!ELEMENT startUp EMPTY>
+<!ELEMENT shutDown EMPTY>
+<!ELEMENT build EMPTY>
+<!ELEMENT afterBuild EMPTY>
+<!ELEMENT move EMPTY>
+<!ELEMENT terminate EMPTY>
+
+<!ELEMENT trains (train)*>
+<!ELEMENT train (rowColor | route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
+
+<!ELEMENT rowColor EMPTY>
+<!ELEMENT route (skips)*>
+<!ELEMENT skips (location)*>
+<!ELEMENT location EMPTY>
+<!ELEMENT types (carType | locoType)*>
+<!ELEMENT carType EMPTY>
+<!ELEMENT locoType EMPTY>
+<!ELEMENT carLoads (carLoad)*>
+<!ELEMENT carLoad EMPTY>
+<!ELEMENT carRoads (carRoad)*>
+<!ELEMENT carRoad EMPTY>
+<!ELEMENT carOwners (carOwner)*>
+<!ELEMENT carOwner EMPTY>
+<!ELEMENT scripts (startUp | shutDown | build | afterBuild | move | terminate)*>
+
+<!ELEMENT railRoad EMPTY>
+<!ELEMENT manifestLogo EMPTY>
+
+<!ELEMENT manifestCreator (directory | runFile | commonFile)*>
+<!ELEMENT switchlistCreator (directory | runFile | commonFile)*>
+
+<!ELEMENT directory EMPTY>
+<!ATTLIST directory name				CDATA #IMPLIED>
+<!ELEMENT runFile EMPTY>
+<!ATTLIST runFile name					CDATA #IMPLIED>
+<!ELEMENT commonFile EMPTY>
+<!ATTLIST commonFile name				CDATA #IMPLIED>
+
+<!ELEMENT schedules (schedule)*>
+<!ELEMENT schedule EMPTY>
+
+<!ATTLIST train id					CDATA #REQUIRED>          
+<!ATTLIST train name				CDATA #IMPLIED>
+<!ATTLIST train description			CDATA #IMPLIED>       
+<!ATTLIST train route				CDATA #IMPLIED> 
+<!ATTLIST train routeId				CDATA #IMPLIED> 
+<!ATTLIST train carTypes			CDATA #IMPLIED> 
+<!ATTLIST train carRoadOperation	CDATA #IMPLIED>
+<!ATTLIST train carRoadOption		CDATA #IMPLIED>
+<!ATTLIST train carRoads			CDATA #IMPLIED>
+<!ATTLIST train carLoadOption		CDATA #IMPLIED>
+<!ATTLIST train carLoads			CDATA #IMPLIED>
+<!ATTLIST train carOwnerOption		CDATA #IMPLIED>
+<!ATTLIST train carOwners			CDATA #IMPLIED>
+<!ATTLIST train builtEndYear		CDATA #IMPLIED>
+<!ATTLIST train builtStartYear		CDATA #IMPLIED>
+<!ATTLIST train numberEngines		CDATA #IMPLIED> 
+<!ATTLIST train engineRoad			CDATA #IMPLIED>
+<!ATTLIST train engineType			CDATA #IMPLIED>
+<!ATTLIST train engineModel			CDATA #IMPLIED>
+<!ATTLIST train leadEngine			CDATA #IMPLIED>
+<!ATTLIST train requires			CDATA #IMPLIED>
+<!ATTLIST train cabooseRoad			CDATA #IMPLIED>
+<!ATTLIST train departHour			CDATA #IMPLIED>
+<!ATTLIST train departMinute		CDATA #IMPLIED>
+<!ATTLIST train buildNormal			(true | false) "false">
+<!ATTLIST train toTerminal			(true | false) "false">
+<!ATTLIST train allowReturn			(true | false) "false">
+<!ATTLIST train allowLocalMoves		(true | false) "true">
+<!ATTLIST train allowThroughCars	(true | false) "true">
+<!ATTLIST train built				(true | false) "false">
+<!ATTLIST train build				(true | false) "false">
+<!ATTLIST train buildFailed			(true | false) "false">
+<!ATTLIST train printed				(true | false) "false">
+<!ATTLIST train modified			(true | false) "false">
+<!ATTLIST train showTimes			(true | false) "true">
+<!ATTLIST train buildFailedMessage	CDATA #IMPLIED>
+<!ATTLIST train switchListStatus	CDATA #IMPLIED>
+<!ATTLIST train mrStatus                CDATA #IMPLIED>
+<!ATTLIST train status				CDATA #IMPLIED>
+<!ATTLIST train current				CDATA #IMPLIED>
+<!ATTLIST train departureTrack		CDATA #IMPLIED>
+<!ATTLIST train terminationTrack	CDATA #IMPLIED>
+<!ATTLIST train skip				CDATA #IMPLIED>
+<!ATTLIST train leg2Options			CDATA #IMPLIED>
+<!ATTLIST train leg3Options			CDATA #IMPLIED>
+<!ATTLIST train leg2Engines			CDATA #IMPLIED>
+<!ATTLIST train leg3Engines			CDATA #IMPLIED>
+<!ATTLIST train leg2Road			CDATA #IMPLIED>
+<!ATTLIST train leg3Road			CDATA #IMPLIED>
+<!ATTLIST train leg2Model			CDATA #IMPLIED>
+<!ATTLIST train leg3Model			CDATA #IMPLIED>
+<!ATTLIST train leg2CabooseRoad		CDATA #IMPLIED>
+<!ATTLIST train leg3CabooseRoad		CDATA #IMPLIED>
+<!ATTLIST train leg2Start			CDATA #IMPLIED>
+<!ATTLIST train leg3Start			CDATA #IMPLIED>
+<!ATTLIST train leg2End				CDATA #IMPLIED>
+<!ATTLIST train leg3End				CDATA #IMPLIED>
+<!ATTLIST train comment				CDATA #IMPLIED>
+<!ATTLIST train serviceAll			CDATA #IMPLIED>
+<!ATTLIST train sendCustomStaging	CDATA #IMPLIED>
+<!ATTLIST train buildConsist		CDATA #IMPLIED>
+<!ATTLIST train TerminationDate		CDATA #IMPLIED>
+<!ATTLIST train RequestedCars		CDATA #IMPLIED>
+<!ATTLIST train statusCode			CDATA #IMPLIED>
+<!ATTLIST train oldStatusCode			CDATA #IMPLIED>
+
+<!ATTLIST rowColor name				CDATA #IMPLIED>
+<!ATTLIST rowColor resetRowColor	CDATA #IMPLIED>
+<!ATTLIST carType name				CDATA #IMPLIED>
+<!ATTLIST locoType name				CDATA #IMPLIED>
+<!ATTLIST carLoad name				CDATA #IMPLIED>
+<!ATTLIST carRoad name				CDATA #IMPLIED>
+<!ATTLIST carOwner name				CDATA #IMPLIED>
+
+<!ATTLIST build name				CDATA #IMPLIED>
+<!ATTLIST afterBuild name			CDATA #IMPLIED>
+<!ATTLIST move name					CDATA #IMPLIED>
+<!ATTLIST terminate name			CDATA #IMPLIED>
+<!ATTLIST startUp name				CDATA #IMPLIED>
+<!ATTLIST shutDown name				CDATA #IMPLIED>
+
+<!ATTLIST railRoad name				CDATA #IMPLIED>
+<!ATTLIST manifestLogo name			CDATA #IMPLIED>
+
+<!ATTLIST schedule id				CDATA #REQUIRED>          
+<!ATTLIST schedule name				CDATA #IMPLIED>
+<!ATTLIST schedule comment			CDATA #IMPLIED>
+<!ATTLIST schedule trainIds			CDATA #IMPLIED>
+
+<!ATTLIST route id					CDATA #REQUIRED>          
+<!ATTLIST route name				CDATA #IMPLIED>
+
+<!ATTLIST location id				CDATA #REQUIRED>          
+<!ATTLIST location name				CDATA #IMPLIED>
+
+<!ELEMENT automations (automation)*>
+<!ELEMENT automation (item)*>
+<!ELEMENT item (messages)*>
+<!ELEMENT messages (messageOk | messageFail)*>
+<!ELEMENT messageOk EMPTY>
+<!ELEMENT messageFail EMPTY>
+
+
+<!ATTLIST automation id				CDATA #REQUIRED>
+<!ATTLIST automation name			CDATA #REQUIRED>
+<!ATTLIST automation comment		CDATA #REQUIRED>
+<!ATTLIST automation currentItem	CDATA #REQUIRED>
+
+<!ATTLIST item id					CDATA #REQUIRED>          
+<!ATTLIST item sequenceId			CDATA #IMPLIED>
+<!ATTLIST item name					CDATA #IMPLIED>
+<!ATTLIST item actionCode			CDATA #IMPLIED>
+<!ATTLIST item trainId				CDATA #IMPLIED>
+<!ATTLIST item routeLocationId		CDATA #IMPLIED>
+<!ATTLIST item automationId			CDATA #IMPLIED>
+<!ATTLIST item gotoAutomationId		CDATA #IMPLIED>
+<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
+<!ATTLIST item haltFail				(true | false) "true">
+<!ATTLIST item actionRan			(true | false) "false">
+<!ATTLIST item actionSuccessful		(true | false) "false">
+
+<!ATTLIST messageOk message			CDATA #IMPLIED>
+<!ATTLIST messageFail message		CDATA #IMPLIED>
+

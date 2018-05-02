@@ -1,0 +1,20 @@
+<!-- indexheader - This file is included at the top of the page   -->
+<!-- when the web index is displayed online.    -->
+<!-- Copyright 2016 JMRI, Bob Jacobsen  See COPYING file for info -->
+<!-- Translated by Blorec Hervé le 2012-01-23 -->
+
+<h1> JMRI Syst&egrave;me d'Aide: Index </h1>
+<p>
+Ceci est l'index pour le syst&egrave;me d'aide pour le programme JMRI.
+<p>
+Dans le programme, vous obtenez en s&eacute;lectionnant &laquo;Aide&raquo; l'une des fen&ecirc;tres des menus d'Aide. 
+Vous trouverez la Table des Mati&egrave;res et
+l'Index sur le c&ocirc;t&eacute; gauche de la fen&ecirc;tre d'aide.
+<p>
+La <a href="webtoc.shtml">Table des Mati&egrave;res</a> du syst&egrave;me d'aide
+est &eacute;galement disponible en ligne.
+<p>
+Cette page est g&eacute;n&eacute;r&eacute;e automatiquement dans le cadre du
+processus de construction. Pour plus d'informations, consultez la
+Page d&eacute;veloppeur <a href="http://jmri.org/help/fr/html/doc/Technical/Help.shtml"> sur le syst&egrave;me d'aide </a>.
+</p>

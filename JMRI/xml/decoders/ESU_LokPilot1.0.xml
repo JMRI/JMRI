@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <!--                                                                                                                                             -->
+    <!-- Old Multiprotocol decoder without function mapping 4 outputs, Slowspeed and BEMF-->
+    <!-- Version 1 based on an old ESU manual for Lokpilot delivered in January 2002-->
+    <version author="Alain CARASSO" version="1" lastUpdated="20171110"/>
+    <decoder>
+        <family name="ESU LokPilot 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21">
+            <model model="LokPilot V1.0" numOuts="4" numFns="6" nmraWarrant="yes">
+                <output name="1" label="Front Lights"/>
+                <output name="2" label="Back Lights"/>
+                <output name="3" label="Aux1"/>
+                <output name="4" label="Aux2"/>
+                <output name="5" label="Shunting"/>
+                <output name="6" label="Acc/Dec off"/>
+            </model>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+            <variable item="Vstart" CV="2" default="3" comment="A value of 63 corresponds to 100%">
+                <decVal max="63"/>
+                <label>Vstart</label>
+                <label xml:lang="it">Volt Partenza</label>
+                <label xml:lang="fr">V demarrage</label>
+                <label xml:lang="de">Startspannung</label>
+                <comment>A value of 63 corresponds to 100%</comment>
+            </variable>
+            <variable CV="3" default="4" item="Accel">
+                <decVal max="63"/>
+                <label>Acceleration</label>
+                <label xml:lang="it">Accellerazione (0-63)</label>
+                <label xml:lang="fr">Acceleration (0-63)</label>
+                <label xml:lang="de">Anfahrverzögerung (0-63)</label>
+            </variable>
+            <variable CV="4" default="3" item="Decel">
+                <decVal max="63"/>
+                <label>Deceleration</label>
+                <label xml:lang="it">Decellerazione (1-63)</label>
+                <label xml:lang="fr">Deceleration (1-63)</label>
+                <label xml:lang="de">Bremszeit (1-63)</label>
+            </variable>
+            <variable item="Vhigh" CV="5" default="63" comment="Range 1-63">
+                <decVal max="63"/>
+                <label>Vhigh</label>
+                <comment>Range 1-63</comment>
+            </variable>
+            <variable item="Vmid" CV="6" default="25" comment="Range 1-63">
+                <decVal max="63"/>
+                <label>Vmid</label>
+                <comment>Range 1-63</comment>
+            </variable>
+            <!--readOnly="yes" -->
+            <!-- CV 7-8 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+            <variable item="Manufacturer ID - Reset" CV="8" default="151">
+                <decVal/>
+                <label>Manufacturer ID - Reset</label>
+            </variable>
+            <!-- CV=29 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+
+            <variable item="EMF Static Config" CV="49" default="1" comment="Range 01-02">
+                <decVal min="1" max="2"/>
+                <label>BEMF Active</label>
+                <comment>Range 01-02</comment>
+            </variable>
+            <variable item="Marklin Delta Config" CV="50" default="02" comment="Range 01-02">
+                <decVal min="1" max="2"/>
+                <label>Marklin Delta Config</label>
+                <comment>Range 01-02</comment>
+            </variable>
+            <variable item="EMF Dynamic Config" CV="51" default="56" comment="Range 0-79">
+                <decVal min="0" max="79"/>
+                <label>Adjust EMK Voltage</label>
+                <comment>Range 0-79</comment>
+            </variable>
+            <variable item="EMF Droop Config" CV="52" default="32" comment="Range 0-79">
+                <decVal min="0" max="79"/>
+                <label>K Adjustment</label>
+                <comment>Range 0-79</comment>
+            </variable>
+            <variable item="EMF Feedback Cutout" CV="53" default="24" comment="Range 0-79">
+                <decVal min="0" max="79"/>
+                <label>I Adjustment</label>
+                <comment>Range 0-79</comment>
+            </variable>
+            <variable CV="54" default="16" item="Global lighting option" tooltip="Defines the brightness of the function outputs, range 0-16">
+                <decVal min="0" max="16"/>
+                <label>Global lighting option</label>
+            </variable>
+            <variable item="Analog Mode" CV="55" default="3" mask="XXXXXXVV">
+                <enumVal>
+                    <enumChoice choice="Off">
+                        <choice>Off</choice>
+                    </enumChoice>
+                    <enumChoice choice="AC Analog Mode">
+                        <choice>AC Analog Mode</choice>
+                    </enumChoice>
+                    <enumChoice choice="DC Analog Mode">
+                        <choice>DC Analog Mode</choice>
+                    </enumChoice>
+                    <enumChoice choice="AC+DC Analog Mode">
+                        <choice>AC+DC Analog Mode</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Analog Mode</label>
+            </variable>
+            <variable CV="56" default="3" item="Braking Mode" tooltip="MARKLIN: 1, ZIMO: 2, MARKLIN+ZIMO: 3, No braking: 4">
+                <decVal min="1" max="4"/>
+                <label>Braking Mode</label>
+            </variable>
+            <variable item="ESU Braking Mode" CV="57" default="0" comment="Range 0-63">
+                <decVal min="0" max="63"/>
+                <label>ESU Braking Mode</label>
+                <comment>Range 0-63</comment>
+            </variable>
+
+            <variable item="DCC Speedstep Detection" CV="64" default="1" mask="XXXXXXXV">
+                <enumVal>
+                    <enumChoice choice="Off">
+                        <choice>Off</choice>
+                    </enumChoice>
+                    <enumChoice choice="On">
+                        <choice>On</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>DCC Speedstep Detection</label>
+            </variable>
+            <variable item="ZIMO Manual Function" CV="64" default="1" mask="XXXXXXVX">
+                <enumVal>
+                    <enumChoice choice="New (MX2000)">
+                        <choice>New (MX2000)</choice>
+                    </enumChoice>
+                    <enumChoice choice="Old (MX1)">
+                        <choice>Old (MX1)</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>ZIMO Manual Function</label>
+            </variable>
+            <variable item="Emergency Stop" CV="64" default="0" mask="XXXXXVXX">
+                <enumVal>
+                    <enumChoice choice="On">
+                        <choice>On</choice>
+                    </enumChoice>
+                    <enumChoice choice="Off">
+                        <choice>Off</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Emergency Stop</label>
+            </variable>
+        </variables>
+    </decoder>
+    <pane>
+        <column>
+            <display item="ZIMO Manual Function"/>
+        </column>
+        <column>
+            <display item="Emergency Stop"/>
+        </column>
+        <column>
+            <display item="ESU Braking Mode"/>
+        </column>
+        <column>
+            <display item="Analog Mode"/>
+        </column>
+        <name>ESU</name>
+    </pane>
+</decoder-config>

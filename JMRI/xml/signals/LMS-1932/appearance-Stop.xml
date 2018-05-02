@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2014-03-05</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Corrected apearance of heads for clear</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>LMS-1932</aspecttable>
+  <name>Stop signal 1932-1937</name>
+  <reference>http://www.signalbox.org/signals/lmsspeed.htm</reference>
+  <description>Appearances for stop signal with two heads and three marker lamps</description>
+  <appearances>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Stop.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Clear.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Permissive</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Permissive.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Take Siding</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>green</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Siding.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Caution</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Caution.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Caution</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Adv-Caution.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Pre Caution</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Pre-Caution.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/LMS-1932/Stop/LMS-S-Dark.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Permissive</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop and proceed</advancedAspect>
+      <ourAspect>Stop</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Caution</advancedAspect>
+      <ourAspect>Pre Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Caution</advancedAspect>
+      <ourAspect>Pre Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Caution Left</advancedAspect>
+      <ourAspect>Pre Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Caution Right</advancedAspect>
+      <ourAspect>Pre Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Pre Caution</advancedAspect>
+      <ourAspect>Advance Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Pre Caution</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Caution</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear Left</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear Right</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear Left</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium Clear Right</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Medium Clear Left</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Medium Clear Right</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Permissive</advancedAspect>
+      <ourAspect>Caution</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Take Siding</advancedAspect>
+      <ourAspect>Caution</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

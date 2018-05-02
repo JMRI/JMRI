@@ -1,0 +1,520 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- UpDated by Blorec Herv&#233; le 2013-09-26 -->
+
+  <title>JMRI: Scripting Examples</title><!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI: Exemples de scripts</h2>
+
+      <p>Les distributions JMRI viennent avec un r&eacute;pertoire
+      jython qui contient quelques exemples. Cette page fournit une
+      br&egrave;ve description de chacun, copi&eacute; &agrave;
+      partir du commentaire dans les scripts eux-m&ecirc;mes.</p>
+
+      <p>Pour ex&eacute;cuter ces scripts, lancez DecoderPro ou
+      PanelPro (D&eacute;finir des pr&eacute;f&eacute;rences pour
+      "Simulateur LocoNet" pour s'ex&eacute;cuter sans se connecter
+      &agrave; un r&eacute;seau), puis sous Panneaux
+      s&eacute;lectionnez Ex&eacute;cuter le script. Maintenant,
+      trouver et s&eacute;lectionnez le fichier de script
+      souhait&eacute; dans le "jython" dossier du r&eacute;pertoire
+      du programme JMRI.</p>
+
+      <p>Pour parcourir l'ensemble le plus courant de scripts, s'il
+      vous pla&icirc;t voir le <a href=
+      "http://jmri.org/jython">r&eacute;pertoire jython</a> sur le
+      site Web JMRI.</p>
+
+      <p><a href=
+      "../../../../../jython/AD4OnOff.py">AD4OnOff.py</a></p>
+
+      <p>Exemple de script pour montrer comment mettre un bouton
+      sur l'&eacute;cran qui va activer ou d&eacute;sactiver la
+      commande locale des d&eacute;codeurs d'accessoires AD4. Ce
+      script a &eacute;t&eacute; remplac&eacute; par les
+      capacit&eacute;s de "verrouillage" de JMRI 1.9.3 et versions
+      ult&eacute;rieures. Vous pouvez directement demander que JMRI
+      verrouille/d&eacute;verrouille un aiguillage via le tableau
+      Aiguillage, Itin&eacute;raires et Logix</p>
+
+      <p><a href=
+      "../../../../../jython/AddButton.py">AddButton.py</a></p>
+
+      <p>Exemple de script pour ajouter un bouton &agrave; la
+      fen&ecirc;tre de l'application principale JMRI qui charge un
+      fichier de script</p>
+
+      <p><a href=
+      "../../../../../jython/AddButton.py">AlarmClock.py</a></p>
+
+      <p>Ceci est un exemple de script d'une sortie d'impulsion
+      bas&eacute;e sur une horloge rapide.</p>
+
+      <p><a href=
+      "../../../../../jython/AppleScript.py">AppleScript.py</a></p>
+
+      <p>Ceci est un exemple de script permettant d'invoquer une
+      AppleScript &agrave; partir JMRI sous Mac OS X.</p>
+
+      <p><a href=
+      "../../../../../jython/AutomatonExample.py">AutomatonExample.py</a></p>
+
+      <p>Ceci est un exemple de script pour un "Automat" JMRI dans
+      Python Il &eacute;coute deux capteurs, la course d'une
+      locomotive va-et-vient entre eux par des changements de
+      direction quand un capteur d&eacute;tecte la machine. Vous
+      avez besoin de r&eacute;gler la vitesse du moteur en
+      utilisant un r&eacute;gulateur.</p>
+
+      <p><a href=
+      "../../../../../jython/BackAndForth.py">BackAndForth.py</a></p>
+
+      <p>Ceci est un exemple de script pour un "Automat" JMRI dans
+      Python Il est bas&eacute; sur l'AutomatonExample. Il
+      &eacute;coute par deux capteurs, la course d'une locomotive
+      en va-et-vient entre eux par des changements de direction
+      quand un capteur d&eacute;tecte la machine.</p>
+
+      <p><a href=
+      "../../../../../jython/BackAndForthTimed.py">BackAndForthTimed.py</a></p>
+
+      <p>Ceci est un exemple de script pour un "Automat" JMRI dans
+      Python. Il est bas&eacute; sur l'AutomatonExample. Il fait
+      fonctionner une locomotive en sns inverse apr&egrave;s une
+      temporisation r&eacute;glable.</p>
+
+      <p><a href=
+      "../../../../../jython/CanExample.py">CanExample.py</a></p>
+
+      <p>Exemple de script pour montrer comment envoyer et recevoir
+      des Trames CAN</p>
+
+      <p><a href=
+      "../../../../../jython/ControlPanel.py">ControlPanel.py</a></p>
+
+      <p>Exemple de script pour montrer un ensemble de JButton qui
+      affiche/cache les fen&ecirc;tres panneau lorsque vous cliquez
+      dessus.</p>
+
+      <p>Lorsque ce script est ex&eacute;cut&eacute;, il trouve
+      tous les panneaux ouverts (soit pour PanelEditor ou
+      LayoutEditor) et cr&eacute;e une petite fen&ecirc;tre avec un
+      bouton pour chaque panneau. Les boutons sont
+      &eacute;tiquet&eacute;s avec les noms des panneaux, et il est
+      n&eacute;cessaire que ces noms soient uniques.</p>
+
+      <p><a href=
+      "../../../../../jython/DebounceSensor.py">DebounceSensor.py</a></p>
+
+      <p>Ce script g&egrave;re un capteur interne comme un Version
+      antirebond d'un autre capteur. Les retards pour On et pour
+      Off peuvent-&ecirc;tre sp&eacute;cifi&eacute;s.</p>
+
+      <p><a href=
+      "../../../../../jython/DecoderPro.py">DecoderPro.py</a></p>
+
+      <p>Code Python pour lancer une application DecoderPro,
+      compl&egrave;te avec barre de menu</p>
+
+      <p><a href=
+      "../../../../../jython/DisableOpsMode.py">DisableOpsMode.py</a></p>
+
+      <p>Exemple de script pour naviguer &agrave; travers
+      l'interface graphique et d&eacute;sactiver le bouton Mode Ops
+      sur la fen&ecirc;tre principale DecoderPro.</p>
+
+      <p><a href=
+      "../../../../../jython/InitTurnouts.py">InitTurnouts.py</a></p>
+
+      <p>Exemple de script montrant comment initialiser les
+      aiguillages bas&eacute;s sur l'&eacute;tat de leurs capteurs
+      d'entr&eacute;e (par exemple R&eacute;tro-signalisation)</p>
+
+      <p>Ceci est particuli&egrave;rement utile pour un
+      syst&egrave;me C/MRI, o&ugrave; les aiguillages doivent
+      &ecirc;tre fix&eacute;s &agrave; un &eacute;tat particulier
+      rapidement</p>
+
+      <p><a href=
+      "../../../../../jython/JButtonComplexExample.py">JButtonComplexExample.py</a></p>
+
+      <p>Exemple de script pour montrer une JFrame de saisie de
+      donn&eacute;es. L' cadre contient deux JTextFields, et un
+      bouton qui est inactif tant qu'aucune donn&eacute;e n'a
+      &eacute;t&eacute; saisie. Une fois activ&eacute;, le bouton
+      permet d'imprimer un petit message de diagnostic quand on
+      clique dessus. L'instruction print peut &ecirc;tre
+      modifi&eacute;e pour y inclure ce que d&eacute;sir&eacute;,
+      par exemple d&eacute;vier un aiguillage, programmer un CV,
+      etc</p>Ce script cr&eacute;e un panneau intitul&eacute; "
+      saisie des Donn&eacute;es" avec deux champs ou les
+      donn&eacute;es sont saisies. Le script attend que quelque
+      chose soit entr&eacute;e dans les deux champs et permet
+      ensuite "Entrer valeurs". Lorsque le bouton "Entrer valeurs"
+      est cliqu&eacute;, il provoque l'affichage des donn&eacute;es
+      s'affiche sur la console Java et le "Data Entry" du panneau
+      de dispara&icirc;tre. Pour voir sur la console Java, vous
+      devez ouvrir la console Java ou s&eacute;lectionnez "sortie
+      du script" du "Panneaux" du menu JMRI .
+
+      <p><a href=
+      "../../../../../jython/JButtonExample.py">JButtonExample.py</a></p>
+
+      <p>Exemple de script pour montrer un JButton qui imprime un
+      petit message lorsque vous cliquez dessus. L'instruction
+      print peut &ecirc;tre modifi&eacute;e pour inclure ce que
+      vous voulez, par exemple d&eacute;vier un aiguillage,
+      programmer un CV, etc</p>
+
+      <p><a href=
+      "../../../../../jython/jmri_defaults.py">jmri_defaults.py</a></p>
+
+      <p>Code Python pour d&eacute;finir des valeurs par
+      d&eacute;faut de JMRI qui suppose que JMRI ait
+      d&eacute;j&agrave; &eacute;t&eacute; initialis&eacute;, donc
+      &ccedil;a peut faire r&eacute;f&eacute;rence &agrave;
+      diff&eacute;rents gestionnaires, etc Ceci est seulement lu
+      une fois, lorsque la biblioth&egrave;que JMRI ex&eacute;cute
+      en premier un script, de sorte que les modifications ne
+      prendront effet qu'apr&egrave;s le red&eacute;marrage du
+      programme</p>
+
+      <p><a href=
+            "../../../../../jython/PanelPro.py">PanelPro.py</a></p>
+
+      <p>Code Python pour lancer une application PanelPro,
+          compl&egrave;te avec barre de menu</p>
+
+      <p><a href=
+      "../../../../../jython/ListenerExample.py">ListenerExample.py</a></p>
+
+      <p>Par exemple d'un &eacute;couteur
+      d'&eacute;v&eacute;nements pour une classe JMRI, dans ce cas,
+      un aiguillage.</p>
+
+      <p><a href=
+      "../../../../../jython/LnPowerButton.py">LnPowerButton.py</a></p>
+
+      <p>Exemple de script pour montrer un JButton qui envoie un
+      message LocoNet lorsqu'il est cliqu&eacute;. Dans ce cas, le
+      message LocoNet alterne entre "On" et "Off" pour un relais
+      PM4. Le relais particulier est adress&eacute; par le carte et
+      les variables de zone d&eacute;finies dans le code
+      ci-dessous. Notez que le message envoy&eacute; au PM4 a
+      fix&eacute; le contenu pour les trois (quatre) autres canaux
+      sur la carte. Est-ce que ceci cause un probl&egrave;me dans
+      le fonctionnement normal?\</p>
+
+      <p><a href=
+      "../../../../../jython/LnSendTool.py">LnSendTool.py</a></p>
+
+      <p>Ce script va envoyer la plupart des commandes loconet de
+      type messages. Il s'agit notamment de passer, les
+      r&eacute;tro-signalisations et les messages type de capteur.
+      Les paquets de signaux DCC peuvent &eacute;galement
+      &ecirc;tre envoy&eacute;s par loconet. Les messages sont
+      configur&eacute;s en utilisant les boutons radio et les
+      listes d&eacute;roulantes. Des portions de ce script sont
+      prises &agrave; partir de LnPowerButton.py par Bob
+      Jacobsen</p>
+
+      <p><a href=
+      "../../../../../jython/LocoTest.py">LocoTest.py</a></p>
+
+      <p>Script pour tester une locomotive et un d&eacute;codeur,
+      apr&egrave;s l'installation. Il saute un champ pour entrer
+      l'adresse de locomotive, et un bouton "Go" . En cliquant sur
+      le bouton, il s&eacute;quences gr&acirc;ce &agrave; une
+      s&eacute;rie d'op&eacute;rations: F0 on, F0 off, F1 on, F1
+      off</p>
+
+      <p><a href=
+      "../../../../../jython/MemorySiglet.py">MemorySiglet.py</a></p>
+
+      <p>Ceci est un exemple de script pour un "Siglet" JMRI dans
+      Python Il &eacute;coute un objet m&eacute;moire, et imprime
+      le nouvel &eacute;tat sur stdout</p>
+
+      <p><a href=
+      "../../../../../jython/NSelectorExample.py">NSelectorExample.py</a></p>
+
+      <p>Ceci est un exemple de script pour mettre un
+      S&eacute;lecteur "N-way" sur un panneau. Le panneau contient
+      des capteurs N (dans cet exemple num&eacute;rot&eacute;s 101,
+      102, 103). Quand un est cliqu&eacute; sur le panneau, les
+      autres sont oblig&eacute;s d'&ecirc;tre inactifs et le
+      programme d&eacute;finit les sorties de fa&ccedil;on
+      appropri&eacute;e (dans ce cadre le cas des aiguillages 101
+      et 102) pour N grand, ce serait mieux fait avec des tableaux
+      et des fermetures, mais pour N = 3 une approche directe est
+      la meilleure.</p>
+
+      <p><a href=
+      "../../../../../jython/NumberInput.py">NumberInput.py</a></p>
+
+      <p>Remplissez un m&eacute;moire avec un nombre &agrave; deux
+      chiffres, en utilisant 10 capteurs comme des entr&eacute;es
+      digitales</p>
+
+      <p><a href=
+      "../../../../../jython/OpsProgExample.py">OpsProgExample.py</a></p>
+
+      <p>Cet &eacute;chantillon Automate montres un capteur, et
+      ajuste le mouvement d'une locomotive en utilisant la
+      programmation ops mode lorsque l'&eacute;tat du capteur
+      change. Le capteur et le d&eacute;codeur sont non
+      modifiables, comme &ccedil;a c'est juste un exemple de la
+      fonction automate. L'ajout d'une interface graphique pour les
+      configurer serait directe. Les valeurs peuvent &ecirc;tre
+      transmises via le constructeur, ou le constructeur (qui peut
+      fonctionner dans n'importe quel lien requis) pourrait
+      invoquer un dialogue.</p>
+
+      <p><a href=
+            "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
+
+      <p>Connect JMRI turnouts to parallel port logic Maps internal
+      turnouts to specific values to be send to the parallel port.
+      Note that JMRI must be set up to have a valid turnout table;
+      if you're not using some other DCC connection, configure JMRI
+      to use LocoNet Simulator</p>
+
+      <p><a href=
+      "../../../../../jython/PM4Announce.py">PM4Announce.py</a></p>
+
+      <p>Essayez d'envoyer des octets sur un port
+      parall&egrave;le</p>
+
+      <p><a href=
+      "../../../../../../../ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
+
+      <p>Connectez des aiguillages JMRI aux ports parall&egrave;les
+      des Cartes logique des aiguillages internes pour des valeurs
+      sp&eacute;cifiques &agrave; envoyer sur le port
+      parall&egrave;le. Notez que JMRI doit &ecirc;tre mis en place
+      pour avoir un tableau de'aiguillage valide; si vous
+      n'utilisez pas plusieurs autres connexi</p>
+
+      <p><a href=
+      "../../../../../jython/PM4Announce.py">PM4Announce.py</a></p>
+
+      <p>Exemple de script pour faire une annonce quand une section
+      PM4 change d'&eacute;tat. Cela suppose que les sections PM4
+      font de courtes protections. S'ils font une inversion
+      automatique, vous pouvez changer le message d'annonce
+      ci-dessous. En outre, il suppose que seule une PM4 va changer
+      &agrave; la fois. Notez que l'&eacute;tat
+      pr&eacute;c&eacute;dent (variables oldStateN) n'est pas
+      maintenue par la carte, mais juste comme une seule copie. Si
+      vous voulez suivre l'&eacute;volution de plusieurs cartes,
+      cela doit devenir une structure plus complexe de
+      donn&eacute;es qui sont par exemple index&eacute;es par
+      carte. Notez &eacute;galement que si plusieurs sections
+      &agrave; la fois et que vous utilisez la commande "parler" ,
+      les annonces peuvent se chevaucher.</p>
+
+      <p><a href=
+      "../../../../../jython/PocketTesterExample.py">PocketTesterExample.py</a></p>
+
+      <p>Exemple d'un &eacute;couteur d'&eacute;v&eacute;nements
+      pour un PocketTester PRICOM</p>
+
+      <p><a href=
+      "../../../../../jython/PowerSensor.py">PowerSensor.py</a></p>
+
+      <p>Fournit un exemple d'&eacute;coute de la PowerManager, et
+      l'exploitation d'un capteur pour indiquer les changements. Le
+      num&eacute;ro du capteur utilis&eacute; pour indiquer
+      l'&eacute;tat de l'alimentation est cod&eacute; en dur
+      ci-dessous comme "100". Changer cela si vous souhaitez
+      utiliser certains autres capteurs.</p>
+
+      <p><a href=
+      "../../../../../jython/RailDriver.py">RailDriver.py</a></p>
+
+      <p>Connectez un pupitre RailDriver moderne
+      (p&eacute;riph&eacute;rique USB) pour un
+      r&eacute;gulateur.</p>
+
+      <p><a href=
+      "../../../../../jython/ReporterFontControl.py">ReporterFontControl.py</a></p>
+
+      <p>Script pour passer chaque panneau ouvert, descendre dans
+      la hi&eacute;rarchie d'objets et de rechercher tous les
+      objets ReporterIcon. Chaque ReporterIcon aura sa taille et sa
+      couleur d&eacute;finie tel que sp&eacute;cifi&eacute; au
+      d&eacute;but du script. En plus d'&ecirc;tre un outil utile
+      en soi, c'est un bon exemple de l'intensification &agrave;
+      travers la structure objet d'un panneau.</p>
+
+      <p><a href=
+      "../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a></p>
+
+      <p>Fournit un exemple de l'&eacute;coute d'un journaliste, et
+      mettre les modifications apport&eacute;es dans une
+      m&eacute;moire dans un format agr&eacute;able. Les noms
+      Journal et M&eacute;moire sont cod&eacute;es en dur dans
+      l'exemple pr&egrave;s du fond. Changer ceux-ci pour quelque
+      chose qui donne un sens pour votre r&eacute;seau en premier,
+      d&eacute;finir la classe auditeur. Cela obtient les messages
+      du journal, les utilise pour garder une trace des
+      d&eacute;codeurs dans un cantons, et &eacute;crit cette liste
+      dans une m&eacute;moire pour l'affichage.</p>
+
+      <p><a href=
+      "../../../../../jython/RobotThrottle.py">RobotThrottle.py</a></p>
+
+      <p>Ce script fait rouler une loco autour du r&eacute;seau,
+      contr&ocirc;le la vitesse en fonction des signaux et en
+      suivant les cantons.</p>
+
+      <p><a href=
+      "../../../../../jython/RosterLoop.py">RosterLoop.py</a></p>
+
+      <p>Exemple de script montrant comment parcourir en boucle le
+      fichier entr&eacute;es. Cet exemple ne fait qu'afficher le
+      nom, mais YOUCAN extrait ou utilise d'autres Infos aussi.</p>
+
+      <p><a href=
+      "../../../../../jython/RpsRaceTrack.py">RpsRaceTrack.py</a></p>
+
+      <p>Racetrack utilisant les mesure de position RPS donne loco1
+      plus rapide, loco2 est plus lente. Lorsque loco1 s'inscrit
+      dans dmin = 24 pouces de loco2, il sera: ralenti &agrave; 1/4
+      de sa vitesse et attendra 6 secondespour revenir &agrave; sa
+      vitesse originale et v&eacute;rifiez &agrave; nouveau. Ceci
+      est bas&eacute; sur le temps (v&eacute;rifier chaque 200msec
+      ), plut&ocirc;t que des mesure bas&eacute;es (auditeurs) pour
+      faciliter le d&eacute;bogage. Le changer plus tard sera
+      bon.</p>
+
+      <p><a href=
+      "../../../../../jython/SampleLnStats.py">SampleLnStats.py</a></p>
+
+      <p>Ceci est un script pour les &eacute;chantillons
+      statistiques LocoNet une fois par minute et les imprime</p>
+
+      <p><a href=
+      "../../../../../jython/SampleSound.py">SampleSound.py</a></p>
+
+      <p>Ceci est un exemple de script pour jouer un son dans un
+      script JMRI</p>
+
+      <p><a href=
+      "../../../../../jython/SensorLog.py">SensorLog.py</a></p>
+
+      <p>&eacute;coutez tous les capteurs, impression d'une ligne
+      quand ils changent d'&eacute;tat.</p>
+
+      <p><a href="../../../../../jython/Sensor-sound.py">capteur
+      sound.py</a></p>
+
+      <p>Attend que capteur sp&eacute;cifique (capteur n&deg;4),
+      joue un son de portail travers&eacute; quand le train entre
+      sur le cantons.</p>
+
+      <p><a href=
+      "../../../../../jython/SetTurnouts.py">SetTurnouts.py</a></p>
+
+      <p>Exemple de script montrant comment des aiguillages
+      multiples &agrave; des positions sp&eacute;cifiques, avec un
+      temps de retard entre eux, s&eacute;par&eacute;ment des
+      autres choses que le programme fait. En mettant les commandes
+      d'aiguillages dans une classe s&eacute;par&eacute;e , ils
+      vont fonctionner ind&eacute;pendamment, apr&egrave;s le
+      "start" op&eacute;ration</p>
+
+      <p><a href=
+      "../../../../../jython/ShutDownExample.py">ShutDownExample.py</a></p>
+
+      <p>Horaire de quelque chose qui se produit lorsque une
+      application JMRI se termine</p>
+
+      <p><a href=
+      "../../../../../jython/SigletExample.py">SigletExample.py</a></p>
+
+      <p>Ceci est un exemple de script pour un JMRI "Siglet" dans
+      Python. Il &eacute;coute les changements de deux capteurs et
+      un aiguillage, puis recalcule un aspect du signal sur la base
+      des valeurs</p>
+
+      <p><a href=
+      "../../../../../jython/ThrottleSound.py">ThrottleSound.py</a></p>
+
+      <p>Jouer un son lorsque la touche F3 est enfonc&eacute;e sur
+      la manette portable de poche et loco 1001
+      s&eacute;lectionn&eacute;e.</p>
+
+      <p><a href=
+      "../../../../../jython/TurnoutReset.py">TurnoutReset.py</a></p>
+
+      <p>R&eacute;initialiser un aiguillage &agrave; Direct
+      &agrave; chaque fois qu'il est cliqu&eacute;
+      D&eacute;vi&eacute; pourrait &ecirc;tre utilis&eacute; afin
+      que l'ic&ocirc;ne d'un aiguillage sur un TCO se trouve dans
+      une position, pr&ecirc;te &agrave; &ecirc;tre cliqu&eacute;e
+      et allumer un itin&eacute;raire. Le d&eacute;but du fichier
+      d&eacute;finit les codes n&eacute;cessaires. Il y a quelques
+      lignes pr&egrave;s du bas, vous devez modifier pour l'adapter
+      &agrave; votre r&eacute;seau particuli&egrave;re.</p>
+
+      <p><a href=
+      "../../../../../jython/TwoOutputTurnouts.py">TwoOutputTurnouts.py</a></p>
+
+      <p>Piloter un aiguillage depuis deux connexions CMRI.
+      Certains Utilisateurs CMRI connectent des aiguillages
+      &agrave; moteur lent entre les deux sorties CMRI, et puis
+      r&eacute;glez les sorties &agrave; des &eacute;tats
+      compl&eacute;mentaires (un actif, un inactif) pour conduire
+      la machine dans les deux directions. Ce script asservit un
+      2&egrave;me aiguillage au premier, de sorte que lorsque le
+      premier est command&eacute; &agrave; un &eacute;tat
+      particulier, le deuxi&egrave;me va &agrave; utiliser l'autre
+      &eacute;tat , modifier le script pour inclure vos aiguillages
+      vers le bas (voir l'exemple existant; vous devriez enlever
+      &ccedil;a) alors le s&eacute;lectionner comme un script
+      &agrave; ex&eacute;cuter au d&eacute;marrage des
+      "Pr&eacute;f&eacute;rences avanc&eacute;es" sur les la
+      fen&ecirc;tre Pr&eacute;f&eacute;rences, exemple: aiguillages
+      &agrave; deux connexions CMRI .</p>
+
+      <p><a href=
+      "../../../../../jython/USBThrottle.py">USBThrottle.py</a></p>
+
+      <p>utiliser un p&eacute;riph&eacute;rique USB comme un
+      r&eacute;gulateur</p>
+
+      <p><a href="../../../../../jython/JavaOne">Javaone</a></p>
+
+      <p>Ce r&eacute;pertoire contient les scripts qui ont d'abord
+      &eacute;t&eacute; cr&eacute;&eacute;s pour les tests JavaOne
+      du r&eacute;seau.</p>
+    </div><!--#include virtual="/Footer" -->
+  </div>
+</body>
+</html>

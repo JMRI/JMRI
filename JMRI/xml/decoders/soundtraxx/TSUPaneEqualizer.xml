@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new pane file for SoundTraxx Tsunami                       -->
+<!-- version 2 - Additional items for SoundTraxx Tsunami2                   -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <row>
+      <label>
+        <text>SEVEN BAND EQUALIZER</text>
+        <text xml:lang="it">EQUALIZZATORE A SETTE BANDE</text>
+      </label>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+        <row>
+          <display item="High-Pass Filter Cutoff Frequency" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="High-Pass Filter Cutoff Frequency" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+    <row>
+      <display item="Equalizer Control"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <row>
+          <display item="62 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="62 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="125 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="125 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="250 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="250 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="500 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="500 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="1K Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="1K Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="2K Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="2K Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="4K Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label>
+            <text> </text>
+          </label>
+          <display item="4K Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Equalizer</name>
+  <name xml:lang="it">Equalizzatore</name>
+</pane>

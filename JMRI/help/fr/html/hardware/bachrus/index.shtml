@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--Updated by Herv&#233; Blorec  2017-01-16-->
+<html lang="fr">
+<head>
+ <title>JMRI Hardware Support - Bachrus</title>
+    <meta name="author" content="Andrew Crosland">
+    <meta name="keywords" content="Bachrus java model railroad JMRI install windows">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>Guide Mat&eacute;riel JMRI: Bachrus</h2>
+
+<h1>Structure Mat&#233;riel: Bachrus</h1>
+
+    JMRI prend en charge le Bachrus MTS-DCC Speedometer pour train miniature, qui est un p&#233;riph&#233;rique d'entr&#233;e 
+			seulement, pour capturer les informations de vitesse &#224; partir d'un module de lecteur sur un 
+			banc d'essai Bachrus "Saddle" . 
+		
+		<p>
+<a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>	
+<h3>Bachrus MTS-DCC Model train Speedometer</h3>	
+		<p>Lorsque le Bachrus MTS-DCC est d&#233;fini comme une pr&#233;f&#233;rence de connexion de r&#233;seau, 
+		l'outil Console Speedo peut &#234;tre utilis&#233; pour afficher l'&#233;chelle de vitesse de circulation aux &#233;chelles 
+		de Z &#224; O et au-del&#224;.
+		</p>
+		<a href="images/dial.jpg">
+    <img src="images/dial.jpg"
+         width="336" height="373"
+         alt="Speedometer dial display" ></a><br>
+C&#244;t&#233; gauche du panneau Speedo
+		<p>
+		Lorsque le Bachrus MTS-DCC est d&#233;fini comme une connexion mise parall&#232;lement &#224; un syst&#232;me DCC,  
+		l'outil Speedo permet la mesure automatique du profil de vitesse d'une locomotive &#233;quip&#233;e d'un d&#233;codeur
+</p>
+		<a href="images/profile.jpg">
+    <img src="images/profile.jpg"
+         width="543" height="373"
+         alt="Speedometer speed profile graph" ></a><br>
+C&#244;t&#233; droit du panneau Speedo
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Plus d'informationo</h3>
+<p>Informations suppl&#233;mentaires sur les produitd de mesure de vitesse Bachrus sur le site web 
+<a href="http://www.bachrus.com/speedometer.php">Bachrus</a>.   
+      
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

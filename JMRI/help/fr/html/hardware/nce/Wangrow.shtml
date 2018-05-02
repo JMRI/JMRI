@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated  by Blorec Herv&#233;  2013-09-18-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: Wangrow System One</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "Wangrow System One java model railroad JMRI install">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>Guide Mat&eacute;riel JMRI: Syst&egrave;me Wangrow
+      One</h2>
+
+      <h3>Mat&eacute;riel Support&eacute;</h3>
+
+      <ul>
+        <li>Wangrow System One</li>
+      </ul>
+
+      <h3>Limitations</h3>
+
+      <p>Certaines centrales Wangrow ont un "circuit de
+      contr&ocirc;le analogique en option" . Dans ces dernieres,
+      les broches 5, 6 et 9 sont utilis&eacute;es avec un
+      convertisseur de tension analogique, tel qu'un
+      r&eacute;gulateur s&eacute;par&eacute;. Si vous avez un de
+      ces centrales un c&acirc;ble normal s&eacute;rie &agrave; 9
+      broches ne fonctionnera pas! Vous aurez besoin de faire un
+      c&acirc;ble personnalis&eacute; qui relie simplement les
+      broches " Envoyer donn&eacute;es(Dtx)", "Recevoir
+      donn&eacute;es(Rtx)"et" masse". Consultez votre manuel
+      Wangrow pour les d&eacute;tails.</p>
+
+      <h3>Congiguration</h3>
+
+      <ol>
+        <li>Pour connecter votre ordinateur &agrave; un
+        syst&egrave;me Wangrow, vous pouvez habituellement
+        connecter la centrale de commande au port s&eacute;rie de
+        l'ordinateur en utilisant un c&acirc;ble s&eacute;rie
+        &agrave; 9 broches.</li>
+
+        <li>Puis allez dans le panneau des
+        pr&eacute;f&eacute;rences d'un programme bas&eacute; sur
+        JMRI. Cela s'ouvre automatiquement la premi&egrave;re fois
+        qu'un programme est ex&eacute;cut&eacute;, ou vous pouvez
+        le s&eacute;lectionner dans le menu "&eacute;dition"</li>
+
+        <li>S&eacute;lectionnez "Wangrow" dans la bo&icirc;te de
+        s&eacute;lection en haut. Vous pouvez alors
+        s&eacute;lectionner le port s&eacute;rie appropri&eacute;
+        dans la seconde bo&icirc;te de s&eacute;lection.</li>
+
+        <li>La bo&icirc;te de s&eacute;lection des vitesse de
+        transmission sera fix&eacute;e &agrave; 9600 bauds.</li>
+
+        <li>La s&eacute;rie de boutons radio
+        &eacute;tiquet&eacute;s "style graphique" vous permet de
+        s&eacute;lectionner la fa&ccedil;on dont le programme va
+        apparaitre. "Metal" est l'apparence native Java chercher
+        disponible sur tous les types. D'autres choix peuvent
+        varier avec votre type d'ordinateur. "Motif", "Windows",
+        "MacOS" et "MacOS adaptative" apparence native sous Linux,
+        Windows, MacOS "Classic" et Mac OS X respectivement.</li>
+
+        <li>Dans la bo&icirc;te de s&eacute;lection en bas, vous
+        pouvez choisir l'option par d&eacute;faut du format de
+        programmateur. Vous pouvez le remplacer &agrave; chaque
+        fois que vous ouvrez le programmateur, ce n'est donc ici
+        juste que par commodit&eacute;.</li>
+
+        <li>Cliquez sur "Enregistrer". Il vous sera demand&eacute;
+        si vous voulez quitter le programme, cliquez sur
+        "Oui".</li>
+
+        <li>Red&eacute;marrez le programme. Vous devriez &ecirc;tre
+        op&eacute;rationnel.</li>
+      </ol><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

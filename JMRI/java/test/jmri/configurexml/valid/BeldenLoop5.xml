@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.jmri.org/xml/XSLT/panelfile.xsl"?>
+
+<layout-config
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/layout.xsd"
+>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="LT33" feedback="ONESENSOR" sensor1="LS33" inverted="false" automate="Default">
+      <comment>MP300</comment>
+    </turnout>
+    <turnout systemName="LT34" feedback="ONESENSOR" sensor1="LS34" inverted="false" automate="Default">
+      <comment>CP296</comment>
+    </turnout>
+    <turnout systemName="LT35" feedback="ONESENSOR" sensor1="LS35" inverted="false" automate="Default">
+      <comment>MP295</comment>
+    </turnout>
+    <turnout systemName="LT36" feedback="ONESENSOR" sensor1="LS36" inverted="true" automate="Default">
+      <comment>MP293</comment>
+    </turnout>
+    <turnout systemName="LT37" feedback="ONESENSOR" sensor1="LS37" inverted="false" automate="Default">
+      <comment>MP290</comment>
+    </turnout>
+    <turnout systemName="LT38" feedback="ONESENSOR" sensor1="LS38" inverted="false" automate="Default">
+      <comment>CP287</comment>
+    </turnout>
+    <turnout systemName="LT39" feedback="ONESENSOR" sensor1="LS39" inverted="false" automate="Default">
+      <comment>CP286</comment>
+    </turnout>
+    <turnout systemName="LT40" feedback="ONESENSOR" sensor1="LS40" inverted="false" automate="Default">
+      <comment>CP280</comment>
+    </turnout>
+    <turnout systemName="LT513" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT514" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT515" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT516" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT517" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT518" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT519" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT520" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT521" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT522" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT523" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT524" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT525" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT526" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT527" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT528" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT529" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT530" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT531" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT532" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT533" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT534" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT535" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT536" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT537" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT538" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT539" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT540" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT541" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT542" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT543" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT544" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT553" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT554" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT555" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT556" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT557" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT558" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT559" feedback="MONITORING" inverted="false" automate="Default" />
+    <turnout systemName="LT560" feedback="MONITORING" inverted="false" automate="Default" />
+  </turnouts>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="ITCP302" feedback="DIRECT" inverted="false" automate="Default">
+      <comment>CP302</comment>
+    </turnout>
+    <turnout systemName="ITMP279" feedback="DIRECT" inverted="false" automate="Default">
+      <comment>MP279</comment>
+    </turnout>
+  </turnouts>
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS17" inverted="false">
+      <comment>Belden Main</comment>
+    </sensor>
+    <sensor systemName="LS18" inverted="false">
+      <comment>Belden Side</comment>
+    </sensor>
+    <sensor systemName="LS19" inverted="false">
+      <comment>Belden Approach</comment>
+    </sensor>
+    <sensor systemName="LS20" inverted="false">
+      <comment>Belden Hidden</comment>
+    </sensor>
+    <sensor systemName="LS21" inverted="false">
+      <comment>Red Cliff Station</comment>
+    </sensor>
+    <sensor systemName="LS22" inverted="false">
+      <comment>Red Cliff Main</comment>
+    </sensor>
+    <sensor systemName="LS23" inverted="false">
+      <comment>Pass Tunnel</comment>
+    </sensor>
+    <sensor systemName="LS24" inverted="false">
+      <comment>Belden Return</comment>
+    </sensor>
+    <sensor systemName="LS25" inverted="false">
+      <comment>Liftbridge</comment>
+    </sensor>
+    <sensor systemName="LS26" inverted="false">
+      <comment>Tennessee Pass Main</comment>
+    </sensor>
+    <sensor systemName="LS27" inverted="false" />
+    <sensor systemName="LS28" inverted="false" />
+    <sensor systemName="LS29" inverted="false" />
+    <sensor systemName="LS30" inverted="false" />
+    <sensor systemName="LS31" inverted="false" />
+    <sensor systemName="LS32" inverted="false" />
+    <sensor systemName="LS33" inverted="false">
+      <comment>LT33 Feedback MP300</comment>
+    </sensor>
+    <sensor systemName="LS34" inverted="true">
+      <comment>LT34 Feedback CP296</comment>
+    </sensor>
+    <sensor systemName="LS35" inverted="false">
+      <comment>LT35 Feedback MP295</comment>
+    </sensor>
+    <sensor systemName="LS36" inverted="false">
+      <comment>LT36 Feedback MP293</comment>
+    </sensor>
+    <sensor systemName="LS37" inverted="false">
+      <comment>LT37 Feedback MP290</comment>
+    </sensor>
+    <sensor systemName="LS38" inverted="false">
+      <comment>LT38 Feedback CP287</comment>
+    </sensor>
+    <sensor systemName="LS39" inverted="true">
+      <comment>LT39 Feedback CP286</comment>
+    </sensor>
+    <sensor systemName="LS40" inverted="false">
+      <comment>LT40 Feedback CP280</comment>
+    </sensor>
+  </sensors>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <sensor systemName="ISCLOCKRUNNING" inverted="false" />
+    <sensor systemName="ISMP279STUB" inverted="false" />
+    <sensor systemName="ISMP280STUB" inverted="false" />
+    <sensor systemName="ISMP290STUB" inverted="false" />
+    <sensor systemName="ISMP295STUB" inverted="false" />
+    <sensor systemName="ISMP300STUB" inverted="false" />
+    <sensor systemName="ISMP302STUB" inverted="false" />
+    <sensor systemName="ISPM_021" inverted="false" />
+    <sensor systemName="ISPM_022" inverted="false" />
+    <sensor systemName="ISPM_023" inverted="false" />
+    <sensor systemName="ISPM_024" inverted="false" />
+    <sensor systemName="ISROUTE1" inverted="false" userName="Run Route1" />
+    <sensor systemName="ISROUTE2" inverted="false" userName="Run Route2" />
+    <sensor systemName="ISROUTE3" inverted="false" userName="Run Route3" />
+    <sensor systemName="ISSOUND1" inverted="false" userName="Sound1" />
+    <sensor systemName="ISSOUND2" inverted="false" userName="Sound2" />
+    <sensor systemName="ISSOUND3" inverted="false" userName="Sound3" />
+    <sensor systemName="ISSOUND4" inverted="false" userName="Sound4" />
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="6:06 PM" />
+    <memory systemName="IMLB17" />
+    <memory systemName="IMLB18" />
+    <memory systemName="IMLB19" />
+    <memory systemName="IMLB20" value="111" />
+    <memory systemName="IMLB21" />
+    <memory systemName="IMLB22" />
+    <memory systemName="IMLB23" />
+    <memory systemName="IMLB24" />
+    <memory systemName="IMLB25" />
+    <memory systemName="IMLB26" value=" " />
+    <memory systemName="IMLB27" />
+  </memories>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun May 31 16:14:05 EDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <sensors class="jmri.jmrix.powerline.configurexml.SerialSensorManagerXml">
+    <sensor systemName="PSB1" inverted="false" />
+    <sensor systemName="PSB2" inverted="false" />
+    <sensor systemName="PSD1" inverted="false" />
+    <sensor systemName="PSD2" inverted="false" />
+    <sensor systemName="PSK14" inverted="false" />
+    <sensor systemName="PSK16" inverted="false" />
+    <sensor systemName="PSK3" inverted="false" />
+    <sensor systemName="PSK7" inverted="false" />
+    <sensor systemName="PSK9" inverted="false" />
+  </sensors>
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHCP302C" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHCP302D" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHCP302TC" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHCP302TD" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT33C" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT33D" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT33TC" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT33TD" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT37C" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT37D" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT37TC" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHLT37TD" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP279C" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP279D" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP279TC" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP279TD" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285C" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285D" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285E" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285TC" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285TD" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285W" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP301E" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP301W" />
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH513" >
+      <turnout systemName="513" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH515">
+      <turnout systemName="515" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH517">
+      <turnout systemName="517" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH519">
+      <turnout systemName="519" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH521">
+      <turnout systemName="521" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH523">
+      <turnout systemName="523" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH525">
+      <turnout systemName="525" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH527">
+      <turnout systemName="527" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH529">
+      <turnout systemName="529" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH531">
+      <turnout systemName="531" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH533">
+      <turnout systemName="533" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH535">
+      <turnout systemName="535" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH537">
+      <turnout systemName="537" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH539">
+      <turnout systemName="539" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH541">
+      <turnout systemName="541" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH543">
+      <turnout systemName="543" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH545" >
+      <turnout systemName="545" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH547" >
+      <turnout systemName="547" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH549" >
+      <turnout systemName="549" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH551" >
+      <turnout systemName="551" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH553" >
+      <turnout systemName="553" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH555" >
+      <turnout systemName="555" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH557" >
+      <turnout systemName="557" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH559" >
+      <turnout systemName="559" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH561" >
+      <turnout systemName="561" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH563" >
+      <turnout systemName="563" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH565" >
+      <turnout systemName="565" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH567" >
+      <turnout systemName="567" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH569" >
+      <turnout systemName="569" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH571" >
+      <turnout systemName="571" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH573" >
+      <turnout systemName="573" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH575" >
+      <turnout systemName="575" />
+    </signalhead>
+  </signalheads>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <block systemName="IB1" />
+    <block systemName="IB10" />
+    <block systemName="IB11" />
+    <block systemName="IB12" />
+    <block systemName="IB13" />
+    <block systemName="IB14" />
+    <block systemName="IB15" />
+    <block systemName="IB16" />
+    <block systemName="IB17" />
+    <block systemName="IB18" />
+    <block systemName="IB2" />
+    <block systemName="IB3" />
+    <block systemName="IB4" />
+    <block systemName="IB5" />
+    <block systemName="IB6" />
+    <block systemName="IB7" />
+    <block systemName="IB8" />
+    <block systemName="IB9" />
+    <block systemName="IB1" userName="LB20" length="2921.0" curve="0">
+      <comment>Mainline hidden</comment>
+      <sensor systemName="LS20" />
+      <path todir="64" fromdir="128" block="IB2" />
+      <path todir="128" fromdir="64" block="IB10" />
+    </block>
+    <block systemName="IB10" userName="LB25" length="3302.0" curve="0">
+      <comment>Lift Bridge</comment>
+      <sensor systemName="LS25" />
+      <path todir="64" fromdir="128" block="IB1" />
+      <path todir="128" fromdir="64" block="IB14">
+        <beansetting setting="2">
+          <turnout systemName="ITCP302" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB9">
+        <beansetting setting="4">
+          <turnout systemName="ITCP302" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB11" userName="LB26" length="0.0" curve="0">
+      <sensor systemName="LS26" />
+      <path todir="128" fromdir="64" block="IB7" />
+      <path todir="64" fromdir="128" block="IB17" />
+    </block>
+    <block systemName="IB12" userName="LBMP295" length="0.0" curve="0">
+      <sensor systemName="ISMP295STUB" />
+      <path todir="128" fromdir="64" block="IB4" />
+    </block>
+    <block systemName="IB13" userName="LBMP300" length="0.0" curve="0">
+      <sensor systemName="ISMP300STUB" />
+      <path todir="64" fromdir="128" block="IB2" />
+    </block>
+    <block systemName="IB14" userName="LBMP302" length="0.0" curve="0">
+      <sensor systemName="ISMP302STUB" />
+      <path todir="64" fromdir="128" block="IB10" />
+    </block>
+    <block systemName="IB15" userName="LBMP290" length="0.0" curve="0">
+      <sensor systemName="ISMP290STUB" />
+      <path todir="64" fromdir="128" block="IB6" />
+    </block>
+    <block systemName="IB16" userName="LBMP280" length="0.0" curve="0">
+      <sensor systemName="ISMP280STUB" />
+      <path todir="128" fromdir="64" block="IB11" />
+    </block>
+    <block systemName="IB17" userName="LBMP279" length="0.0" curve="0">
+      <sensor systemName="ISMP279STUB" />
+      <path todir="128" fromdir="64" block="IB11" />
+    </block>
+    <block systemName="IB18" userName="LB27" length="863.6" curve="0">
+      <sensor systemName="LS27" />
+      <path todir="128" fromdir="64" block="IB4">
+        <beansetting setting="4">
+          <turnout systemName="LT38" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="LT39" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="LT38" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="LT39" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB6">
+        <beansetting setting="4">
+          <turnout systemName="LT39" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB7" />
+    </block>
+    <block systemName="IB2" userName="LB19" length="2159.0" curve="0">
+      <comment>Belden Approach</comment>
+      <sensor systemName="LS19" />
+      <path todir="128" fromdir="64" block="IB1">
+        <beansetting setting="2">
+          <turnout systemName="LT33" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB3">
+        <beansetting setting="2">
+          <turnout systemName="LT34" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB4">
+        <beansetting setting="4">
+          <turnout systemName="LT34" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB13">
+        <beansetting setting="4">
+          <turnout systemName="LT33" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB3" userName="LB17" length="3556.0" curve="0">
+      <comment>Belden Main</comment>
+      <sensor systemName="LS17" />
+      <path todir="128" fromdir="64" block="IB2" />
+      <path todir="64" fromdir="128" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="LT36" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB6">
+        <beansetting setting="4">
+          <turnout systemName="LT36" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB4" userName="LB18" length="5334.0" curve="0">
+      <sensor systemName="LS18" />
+      <path todir="128" fromdir="64" block="IB2" />
+      <path todir="64" fromdir="128" block="IB12">
+        <beansetting setting="4">
+          <turnout systemName="LT35" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB18">
+        <beansetting setting="2">
+          <turnout systemName="LT35" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB5" userName="LB22" length="2235.2" curve="0">
+      <sensor systemName="LS22" />
+      <path todir="128" fromdir="64" block="IB3" />
+      <path todir="64" fromdir="128" block="IB18" />
+    </block>
+    <block systemName="IB6" userName="LB21" length="2540.0" curve="0">
+      <comment>Red Cliff Station</comment>
+      <sensor systemName="LS21" />
+      <path todir="128" fromdir="64" block="IB3">
+        <beansetting setting="2">
+          <turnout systemName="LT37" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB15">
+        <beansetting setting="4">
+          <turnout systemName="LT37" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB18" />
+    </block>
+    <block systemName="IB7" userName="LB23" length="1016.0" curve="0">
+      <comment>The Pass</comment>
+      <sensor systemName="LS23" />
+      <path todir="64" fromdir="128" block="IB9">
+        <beansetting setting="4">
+          <turnout systemName="LT40" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB11">
+        <beansetting setting="2">
+          <turnout systemName="LT40" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB18" />
+    </block>
+    <block systemName="IB8"  length="0.0" curve="0">
+      <path todir="128" fromdir="64" block="IB7" />
+    </block>
+    <block systemName="IB9" userName="LB24" length="1727.2" curve="0">
+      <comment>Loopback</comment>
+      <sensor systemName="LS24" />
+      <path todir="128" fromdir="64" block="IB7" />
+      <path todir="64" fromdir="128" block="IB10" />
+    </block>
+  </blocks>
+  <logixs class="jmri.configurexml.DefaultLogixManagerXml">
+    <logix systemName="IX1" userName="ClickSound1" enabled="yes">
+      <logixConditional systemName="IX1C1" order="0" />
+      <logixConditional systemName="IX1C2" order="1" />
+    </logix>
+    <logix systemName="IX2" userName="ClickSound2" enabled="yes">
+      <logixConditional systemName="IX2C1" order="0" />
+      <logixConditional systemName="IX2C2" order="1" />
+    </logix>
+    <logix systemName="IX3" userName="ClickSound3" enabled="yes">
+      <logixConditional systemName="IX3C1" order="0" />
+      <logixConditional systemName="IX3C2" order="1" />
+    </logix>
+    <logix systemName="IX4" userName="ClickSound4" enabled="yes">
+      <logixConditional systemName="IX4C1" order="0" />
+      <logixConditional systemName="IX4C2" order="1" />
+    </logix>
+  </logixs>
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" userName="LB20" occupancysensor="LS20" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB20" />
+    <layoutblock systemName="ILB10" userName="LB25" occupancysensor="LS25" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB25" />
+    <layoutblock systemName="ILB11" userName="LBMP295" occupancysensor="ISMP295STUB" occupiedsense="2" trackcolor="black" occupiedcolor="red" />
+    <layoutblock systemName="ILB12" userName="LBMP300" occupancysensor="ISMP300STUB" occupiedsense="2" trackcolor="black" occupiedcolor="red" />
+    <layoutblock systemName="ILB13" userName="LBMP302" occupancysensor="ISMP302STUB" occupiedsense="2" trackcolor="black" occupiedcolor="black" />
+    <layoutblock systemName="ILB14" userName="LBMP290" occupancysensor="ISMP290STUB" occupiedsense="2" trackcolor="black" occupiedcolor="red" />
+    <layoutblock systemName="ILB15" userName="LB27" occupancysensor="LS27" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB27" />
+    <layoutblock systemName="ILB16" userName="LBMP279" occupancysensor="ISMP279STUB" occupiedsense="2" trackcolor="black" occupiedcolor="red" />
+    <layoutblock systemName="ILB2" userName="LB19" occupancysensor="LS19" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB19" />
+    <layoutblock systemName="ILB3" userName="LB17" occupancysensor="LS17" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB17" />
+    <layoutblock systemName="ILB4" userName="LB18" occupancysensor="LS18" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB18" />
+    <layoutblock systemName="ILB5" userName="LB22" occupancysensor="LS22" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB22" />
+    <layoutblock systemName="ILB6" userName="LB21" occupancysensor="LS21" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB21" />
+    <layoutblock systemName="ILB7" userName="LB23" occupancysensor="LS23" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB23" />
+    <layoutblock systemName="ILB8" userName="LB26" occupancysensor="LS26" occupiedsense="2" trackcolor="black" occupiedcolor="red" />
+    <layoutblock systemName="ILB9" userName="LB24" occupancysensor="LS24" occupiedsense="2" trackcolor="black" occupiedcolor="red" memory="IMLB24" />
+  </layoutblocks>
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <signalelement signal="IHCP302TD" mode="3" watchedturnout="ITCP302" watchedsignal1="LH559" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS24" />
+    </signalelement>
+    <signalelement signal="IHCP302TC" mode="2" watchedturnout="ITCP302" watchedsignal1="LH559" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="ISMP302STUB" />
+    </signalelement>
+    <signalelement signal="LH519" mode="3" watchedturnout="LT34" watchedsignal1="IHLT33TC" watchedsignal1alt="IHLT33TD" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS19" />
+    </signalelement>
+    <signalelement signal="IHLT33TD" mode="3" watchedturnout="LT33" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="ISMP300STUB" />
+    </signalelement>
+    <signalelement signal="IHLT33TC" mode="2" watchedturnout="LT33" watchedsignal1="IHMP301W" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS20" />
+    </signalelement>
+    <signalelement signal="LH517" mode="2" watchedturnout="LT34" watchedsignal1="IHLT33TC" watchedsignal1alt="IHLT33TD" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS19" />
+    </signalelement>
+    <signalelement signal="LH515" mode="3" watchedturnout="LT34" watchedsignal1="IHMP285TC" watchedsignal1alt="IHMP285TD" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS18" />
+      <comment />
+    </signalelement>
+    <signalelement signal="LH513" mode="2" watchedturnout="LT34" watchedsignal1="LH521" watchedsignal1alt="LH523" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS17" />
+      <comment />
+    </signalelement>
+    <signalelement signal="LH543" mode="3" watchedturnout="LT39" watchedsignal1="IHMP285E" watchedsignal1alt="LH555" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS27" />
+      <comment />
+    </signalelement>
+    <signalelement signal="LH541" mode="2" watchedturnout="LT39" watchedsignal1="IHMP285E" watchedsignal1alt="LH555" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS27" />
+      <comment />
+    </signalelement>
+    <signalelement signal="IHMP301W" mode="1" watchedsignal1="IHCP302TC" watchedsignal1alt="IHCP302TD" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS25" />
+    </signalelement>
+    <signalelement signal="IHMP285TD" mode="3" watchedturnout="LT35" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="ISMP295STUB" />
+    </signalelement>
+    <signalelement signal="IHMP285TC" mode="2" watchedturnout="LT35" watchedsignal1="LH535" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS18" />
+    </signalelement>
+    <signalelement signal="IHMP279TD" mode="3" watchedturnout="ITMP279" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="ISMP279STUB" />
+    </signalelement>
+    <signalelement signal="LH539" mode="3" watchedturnout="LT39" watchedsignal1="IHLT37TC" watchedsignal1alt="IHLT37TD" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+      <comment />
+    </signalelement>
+    <signalelement signal="IHMP279TC" mode="2" watchedturnout="ITMP279" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS26" />
+    </signalelement>
+    <signalelement signal="LH537" mode="2" watchedturnout="LT39" watchedsignal1="LH529" watchedsignal1alt="LH531" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+      <sensor systemName="LS27" />
+      <comment />
+    </signalelement>
+    <signalelement signal="IHMP301E" mode="1" watchedsignal1="IHLT33C" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS20" />
+    </signalelement>
+    <signalelement signal="LH535" mode="3" watchedturnout="LT38" watchedsignal1="LH541" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="true">
+      <sensor systemName="LS27" />
+      <comment />
+    </signalelement>
+    <signalelement signal="LH533" mode="2" watchedturnout="LT38" watchedsignal1="LH541" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+      <sensor systemName="LS27" />
+      <comment />
+    </signalelement>
+    <signalelement signal="IHLT37D" mode="3" watchedturnout="LT37" watchedsignal1="LH543" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+    </signalelement>
+    <signalelement signal="LH531" mode="3" watchedturnout="LT38" watchedsignal1="IHMP285C" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS18" />
+    </signalelement>
+    <signalelement signal="IHLT37C" mode="2" watchedturnout="LT37" watchedsignal1="LH543" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+    </signalelement>
+    <signalelement signal="IHLT37TD" mode="3" watchedturnout="LT37" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="ISMP290STUB" />
+    </signalelement>
+    <signalelement signal="IHMP285W" mode="1" watchedsignal1="LH537" watchedsignal1alt="LH539" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+      <sensor systemName="LS27" />
+      <comment />
+    </signalelement>
+    <signalelement signal="IHLT37TC" mode="2" watchedturnout="LT37" watchedsignal1="LH527" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+    </signalelement>
+    <signalelement signal="IHMP279D" mode="3" watchedturnout="ITMP279" watchedsignal1="LH557" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS26" />
+    </signalelement>
+    <signalelement signal="IHMP279C" mode="2" watchedturnout="ITMP279" watchedsignal1="LH557" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS26" />
+    </signalelement>
+    <signalelement signal="LH529" mode="2" watchedturnout="LT38" watchedsignal1="LH525" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS22" />
+    </signalelement>
+    <signalelement signal="LH527" mode="3" watchedturnout="LT36" watchedsignal1="LH517" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS17" />
+    </signalelement>
+    <signalelement signal="LH559" mode="3" watchedturnout="LT40" watchedsignal1="IHMP285W" watchedsignal1alt="LH539" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS23" />
+    </signalelement>
+    <signalelement signal="LH525" mode="2" watchedturnout="LT36" watchedsignal1="LH517" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS17" />
+    </signalelement>
+    <signalelement signal="LH557" mode="2" watchedturnout="LT40" watchedsignal1="IHMP285W" watchedsignal1alt="LH539" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS23" />
+    </signalelement>
+    <signalelement signal="IHMP285E" mode="1" watchedsignal1="LH553" watchedsignal1alt="LH555" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+      <sensor systemName="LS23" />
+      <comment />
+    </signalelement>
+    <signalelement signal="LH523" mode="3" watchedturnout="LT36" watchedsignal1="IHLT37C" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS21" />
+    </signalelement>
+    <signalelement signal="LH555" mode="3" watchedturnout="LT40" watchedsignal1="IHCP302D" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS24" />
+      <comment />
+    </signalelement>
+    <signalelement signal="IHLT33D" mode="3" watchedturnout="LT33" watchedsignal1="LH513" watchedsignal1alt="LH515" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS19" />
+    </signalelement>
+    <signalelement signal="IHLT33C" mode="2" watchedturnout="LT33" watchedsignal1="LH513" watchedsignal1alt="LH515" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS19" />
+    </signalelement>
+    <signalelement signal="IHMP285D" mode="3" watchedturnout="LT35" watchedsignal1="LH519" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS18" />
+    </signalelement>
+    <signalelement signal="LH521" mode="2" watchedturnout="LT36" watchedsignal1="LH533" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS22" />
+    </signalelement>
+    <signalelement signal="IHMP285C" mode="2" watchedturnout="LT35" watchedsignal1="LH519" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS18" />
+    </signalelement>
+    <signalelement signal="LH553" mode="2" watchedturnout="LT40" watchedsignal1="IHMP279TC" watchedsignal1alt="IHMP279TD" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS26" />
+    </signalelement>
+    <signalelement signal="IHCP302D" mode="3" watchedturnout="ITCP302" watchedsignal1="IHMP301E" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS25" />
+    </signalelement>
+    <signalelement signal="IHCP302C" mode="2" watchedturnout="ITCP302" watchedsignal1="IHMP301E" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS25" />
+    </signalelement>
+  </signalelements>
+  <routes class="jmri.configurexml.DefaultRouteManagerXml">
+    <route systemName="R1" userName="Turnouts Closed">
+      <routeOutputTurnout systemName="ITCP302" state="CLOSED" />
+      <routeOutputTurnout systemName="ITMP279" state="CLOSED" />
+      <routeOutputTurnout systemName="LT33" state="CLOSED" />
+      <routeOutputTurnout systemName="LT34" state="CLOSED" />
+      <routeOutputTurnout systemName="LT35" state="CLOSED" />
+      <routeOutputTurnout systemName="LT36" state="CLOSED" />
+      <routeOutputTurnout systemName="LT37" state="CLOSED" />
+      <routeOutputTurnout systemName="LT38" state="CLOSED" />
+      <routeOutputTurnout systemName="LT39" state="CLOSED" />
+      <routeOutputTurnout systemName="LT40" state="CLOSED" />
+      <routeSensor systemName="ISROUTE1" mode="onActive" />
+    </route>
+    <route systemName="R2" userName="Turnouts Thrown">
+      <routeOutputTurnout systemName="ITCP302" state="THROWN" />
+      <routeOutputTurnout systemName="ITMP279" state="THROWN" />
+      <routeOutputTurnout systemName="LT33" state="THROWN" />
+      <routeOutputTurnout systemName="LT34" state="THROWN" />
+      <routeOutputTurnout systemName="LT35" state="THROWN" />
+      <routeOutputTurnout systemName="LT36" state="THROWN" />
+      <routeOutputTurnout systemName="LT37" state="THROWN" />
+      <routeOutputTurnout systemName="LT38" state="THROWN" />
+      <routeOutputTurnout systemName="LT39" state="THROWN" />
+      <routeOutputTurnout systemName="LT40" state="THROWN" />
+      <routeSensor systemName="ISROUTE2" mode="onActive" />
+    </route>
+    <route systemName="R3" userName="Turnouts Correct">
+      <routeOutputTurnout systemName="ITCP302" state="THROWN" />
+      <routeOutputTurnout systemName="ITMP279" state="CLOSED" />
+      <routeOutputTurnout systemName="LT33" state="CLOSED" />
+      <routeOutputTurnout systemName="LT34" state="CLOSED" />
+      <routeOutputTurnout systemName="LT35" state="CLOSED" />
+      <routeOutputTurnout systemName="LT36" state="CLOSED" />
+      <routeOutputTurnout systemName="LT37" state="CLOSED" />
+      <routeOutputTurnout systemName="LT38" state="CLOSED" />
+      <routeOutputTurnout systemName="LT39" state="CLOSED" />
+      <routeOutputTurnout systemName="LT40" state="THROWN" />
+      <routeOutputSensor systemName="LS40" state="ACTIVE" />
+      <routeSensor systemName="ISROUTE3" mode="onActive" />
+    </route>
+  </routes>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY1" userName="Tp_Belden">
+      <blockentry sName="IB9" order="0" />
+      <blockentry sName="IB10" order="1" />
+      <blockentry sName="IB1" order="2" />
+      <blockentry sName="IB2" order="3" />
+      <entrypoint fromblock="IB3" toblock="IB2" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB4" toblock="IB2" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB7" toblock="IB9" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB14" toblock="IB10" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB13" toblock="IB2" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY2" userName="Belden_Main">
+      <blockentry sName="IB3" order="0" />
+      <entrypoint fromblock="IB5" toblock="IB3" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB6" toblock="IB3" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB2" toblock="IB3" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY3" userName="Belden_Side">
+      <blockentry sName="IB4" order="0" />
+      <entrypoint fromblock="IB12" toblock="IB4" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB18" toblock="IB4" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB2" toblock="IB4" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY4" userName="Red_Cliff_Station">
+      <blockentry sName="IB6" order="0" />
+      <entrypoint fromblock="IB18" toblock="IB6" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB3" toblock="IB6" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB15" toblock="IB6" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY5" userName="Red_Cliff_Main">
+      <blockentry sName="IB5" order="0" />
+      <entrypoint fromblock="IB18" toblock="IB5" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB3" toblock="IB5" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY6" userName="Tp_Tunnel">
+      <blockentry sName="IB18" order="0" />
+      <blockentry sName="IB7" order="1" />
+      <entrypoint fromblock="IB9" toblock="IB7" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB11" toblock="IB7" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB4" toblock="IB18" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB5" toblock="IB18" direction="8" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB6" toblock="IB18" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ1" userName="Red_Cliff_Station_Loop">
+      <transitsection sectionname="IY4" sequence="1" direction="8" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY6" sequence="2" direction="8" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY1" sequence="3" direction="8" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY2" sequence="4" direction="8" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY4" sequence="5" direction="8" action="4" data="5" alternate="no" />
+    </transit>
+    <transit systemName="IZ2" userName="Red_Cliff_Main_Loop">
+      <transitsection sectionname="IY5" sequence="1" direction="4" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY2" sequence="2" direction="4" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY1" sequence="3" direction="4" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY6" sequence="4" direction="4" action="2" data="5" alternate="no" />
+      <transitsection sectionname="IY5" sequence="5" direction="4" action="4" data="5" alternate="no" />
+    </transit>
+  </transits>
+  <audio class="jmri.jmrit.audio.configurexml.DefaultAudioManagerXml" distanceattenuated="yes">
+    <audiobuffer systemName="IAB2" userName="Bell">
+      <url>program:resources/sounds/Bell.wav</url>
+    </audiobuffer>
+    <audiolistener systemName="IAL$" userName="Default Audio Listener">
+      <position x="0.0" y="0.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <orientation atX="0.0" atY="1.0" atZ="0.0" upX="0.0" upY="0.0" upZ="1.0" />
+      <gain>1.0</gain>
+      <metersperunit>1.0</metersperunit>
+    </audiolistener>
+    <audiosource systemName="IAS1" userName="Sound1">
+      <position x="10.0" y="50.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB2</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="0" out="0" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+    <audiosource systemName="IAS2" userName="Sound2">
+      <position x="-10.0" y="50.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB2</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="0" out="0" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+    <audiosource systemName="IAS3" userName="Sound3">
+      <position x="10.0" y="10.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB2</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="0" out="0" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+    <audiosource systemName="IAS4" userName="Sound4">
+      <position x="-10.0" y="10.0" z="0.0" />
+      <velocity x="0.0" y="0.0" z="0.0" />
+      <assignedbuffer>IAB2</assignedbuffer>
+      <gain>1.0</gain>
+      <pitch>1.0</pitch>
+      <distances ref="1.0" />
+      <loops min="-1" max="-1" />
+      <fadetimes in="0" out="0" />
+      <dopplerfactor>1.0</dopplerfactor>
+    </audiosource>
+  </audio>
+  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX1C1" userName="C1On" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Sound1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS1" data="64" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX1C2" userName="C1Off" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="2" systemName="Sound1" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS1" data="65" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX2C1" userName="C2On" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Sound2" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS2" data="64" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX2C2" userName="C2Off" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="2" systemName="Sound2" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS2" data="65" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX3C1" userName="C3" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Sound3" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS3" data="64" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX3C2" userName="C3Off" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="2" systemName="Sound3" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS3" data="65" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX4C1" userName="C4On" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Sound4" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS4" data="64" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX4C2" userName="C4Off" antecedent="R1" logicType="1">
+      <conditionalStateVariable operator="4" negated="no" type="2" systemName="Sound4" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="29" systemName="IAS4" data="65" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <LayoutEditor class="jmri.jmrit.display.configurexml.LayoutEditorXml" name="BeldenLoop5" x="0" y="0" height="662" width="1013" windowheight="379" windowwidth="960" panelheight="662" panelwidth="1013" sliders="no" scrollable="none" editable="no" positionable="no" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="yes" snaponmove="yes" antialiasing="no" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0">
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="130" y="0" level="5" text="Liftbridge" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="80" y="30" level="5" text="CP302" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="160" y="30" level="5" text="MP301" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="230" y="30" level="5" text="MP300" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="340" y="30" level="5" text="CP296" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="400" y="30" level="5" text="MP295" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="470" y="30" level="5" text="MP293" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="550" y="30" level="5" text="MP290" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="590" y="30" level="5" text="CP287" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="650" y="30" level="5" text="CP286" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="760" y="30" level="5" text="CP280" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="210" y="0" level="5" text="Hidden Yard" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="380" y="0" level="5" text="Belden" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="540" y="0" level="5" text="Red Cliff" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="680" y="0" level="5" text="Tennessee Pass" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="800" y="0" level="5" text="Tennessee Pass Junction" size="11" style="1" red="51" green="51" blue="51" />
+    <signalheadicon signalhead="IHCP302TC" x="110" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHCP302TD" x="120" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHCP302C" x="60" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHCP302D" x="60" y="150" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP301E" x="150" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP301W" x="170" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH513" x="330" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH515" x="320" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH517" x="370" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH519" x="370" y="50" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP285TC" x="400" y="70" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP285TD" x="390" y="70" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP285C" x="440" y="50" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP285D" x="440" y="34" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH521" x="460" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH523" x="450" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH525" x="500" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH527" x="500" y="140" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH529" x="610" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH531" x="630" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH533" x="570" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH535" x="570" y="70" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH537" x="670" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH539" x="680" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH541" x="640" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH543" x="630" y="170" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH553" x="750" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH555" x="740" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH557" x="790" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="LH559" x="790" y="54" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT37TC" x="580" y="140" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT37TD" x="600" y="140" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT37C" x="560" y="140" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT37D" x="540" y="170" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="830" y="30" level="5" text="MP279" size="11" style="1" red="51" green="51" blue="51" />
+    <signalheadicon signalhead="IHMP279TC" x="830" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP279TD" x="820" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP279C" x="860" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP279D" x="870" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT33TC" x="260" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT33TD" x="270" y="90" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="0" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT33C" x="210" y="120" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="2" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHLT33D" x="210" y="80" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <memoryicon memory="IMLB19" x="300" y="130" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB20" x="200" y="130" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB25" x="140" y="130" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB24" x="830" y="80" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB23" x="700" y="130" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB18" x="470" y="80" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB17" x="410" y="130" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB21" x="590" y="170" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IMLB22" x="530" y="120" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="200" y="150" level="5" text="LB20" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="140" y="150" level="5" text="LB25" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="800" y="80" level="5" text="LB24" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="700" y="150" level="5" text="LB23" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="590" y="190" level="5" text="LB21" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="530" y="140" level="5" text="LB22" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="440" y="80" level="5" text="LB18" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="410" y="150" level="5" text="LB17" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="300" y="150" level="5" text="LB19" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="810" y="140" level="5" text="LB26" size="11" style="1" red="51" green="51" blue="51" />
+    <sensoricon sensor="ISROUTE1" x="790" y="220" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/GREENLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="ISROUTE2" x="790" y="250" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/GREENLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="ISROUTE3" x="790" y="280" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/GREENLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="750" y="220" level="5" text="Route1" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="750" y="250" level="5" text="Route2" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="750" y="280" level="5" text="Route3" size="11" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="610" y="60" level="5" text="LB27" size="11" style="1" red="51" green="51" blue="51" />
+    <memoryicon memory="IMLB27" x="640" y="60" level="5" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.LayoutMemoryIconXml" defaulticon="resources/icons/misc/X-red.gif" />
+    <sensoricon sensor="LS25" x="130" y="150" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS20" x="190" y="150" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS19" x="290" y="150" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS17" x="400" y="150" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS18" x="430" y="80" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS27" x="600" y="60" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS22" x="520" y="140" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS21" x="580" y="190" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS23" x="690" y="150" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS26" x="800" y="140" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS24" x="790" y="80" level="10" icon="yes" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" inactive="resources/icons/smallschematics/tracksegments/circuit-empty.gif" unknown="resources/icons/smallschematics/LEDs/flashred.gif" inconsistent="resources/icons/smallschematics/LEDs/flashred.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS39" x="650" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS38" x="590" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS37" x="550" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS40" x="760" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS36" x="470" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS35" x="400" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS34" x="340" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="LS33" x="230" y="20" level="10" icon="yes" active="resources/icons/smallschematics/LEDs/red.gif" inactive="resources/icons/smallschematics/LEDs/green.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/white.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <signalheadicon signalhead="IHMP285E" x="684" y="114" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <signalheadicon signalhead="IHMP285W" x="700" y="94" level="9" held="resources/icons/smallschematics/searchlights/left-held-short.gif" dark="resources/icons/smallschematics/searchlights/left-dark-short.gif" red="resources/icons/smallschematics/searchlights/left-red-short.gif" yellow="resources/icons/smallschematics/searchlights/left-yellow-short.gif" flashyellow="resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" green="resources/icons/smallschematics/searchlights/left-green-short.gif" flashred="resources/icons/smallschematics/searchlights/left-flashred-short.gif" flashgreen="resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" rotate="3" forcecontroloff="false" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml" />
+    <sensoricon sensor="ISSOUND1" x="440" y="220" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/AMBERLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="ISSOUND2" x="550" y="220" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/AMBERLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="ISSOUND3" x="440" y="270" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/AMBERLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <sensoricon sensor="ISSOUND4" x="550" y="270" level="10" icon="yes" active="resources/icons/mediumschematics/LEDs/AMBERLED.gif" inactive="resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resources/icons/mediumschematics/LEDs/REDLED.gif" inconsistent="resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.LayoutSensorIconXml" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="460" y="220" level="5" text="Sound 1" size="12" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="570" y="220" level="5" text="Sound 2" size="12" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="460" y="270" level="5" text="Sound 3" size="12" style="1" red="51" green="51" blue="51" />
+    <positionablelabel forcecontroloff="false" fixed="false" showtooltip="true" class="jmri.jmrit.display.configurexml.LayoutPositionableLabelXml" x="570" y="270" level="5" text="Sound 4" size="12" style="1" red="51" green="51" blue="51" />
+    <layoutturnout ident="TO1" turnoutname="ITCP302" blockname="LB25" type="2" connectaname="T1" connectbname="T3" connectcname="T19" signala1name="IHCP302TC" signala2name="IHCP302TD" signalb1name="IHCP302C" signalc1name="IHCP302D" continuing="2" disabled="no" xcen="100.0" ycen="110.0" xb="80.0" yb="110.0" xc="80.0" yc="140.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO2" turnoutname="LT33" blockname="LB19" type="1" connectaname="T4" connectbname="T2" connectcname="T21" signala1name="IHLT33TC" signala2name="IHLT33TD" signalb1name="IHLT33C" signalc1name="IHLT33D" continuing="2" disabled="no" xcen="250.0" ycen="110.0" xb="230.0" yb="110.0" xc="230.0" yc="80.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO3" turnoutname="LT34" blockname="LB19" type="2" connectaname="T4" connectbname="T6" connectcname="T5" signala1name="LH513" signala2name="LH515" signalb1name="LH517" signalc1name="LH519" continuing="2" disabled="no" xcen="350.0" ycen="110.0" xb="370.0" yb="110.0" xc="370.0" yc="70.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO4" turnoutname="LT35" blockname="LB18" type="2" connectaname="T5" connectbname="T7" connectcname="T20" signala1name="IHMP285TC" signala2name="IHMP285TD" signalb1name="IHMP285C" signalc1name="IHMP285D" continuing="2" disabled="no" xcen="420.0" ycen="70.0" xb="440.0" yb="70.0" xc="440.0" yc="50.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO5" turnoutname="LT36" blockname="LB17" type="1" connectaname="T6" connectbname="T8" connectcname="T9" signala1name="LH521" signala2name="LH523" signalb1name="LH525" signalc1name="LH527" continuing="2" disabled="no" xcen="480.0" ycen="110.0" xb="500.0" yb="110.0" xc="500.0" yc="160.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO6" turnoutname="LT37" blockname="LB21" type="2" connectaname="T10" connectbname="T9" connectcname="T23" signala1name="IHLT37TC" signala2name="IHLT37TD" signalb1name="IHLT37C" signalc1name="IHLT37D" continuing="2" disabled="no" xcen="570.0" ycen="160.0" xb="550.0" yb="160.0" xc="550.0" yc="190.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO7" turnoutname="LT38" blockname="LB27" type="1" connectaname="T11" connectbname="T8" connectcname="T7" signala1name="LH529" signala2name="LH531" signalb1name="LH533" signalc1name="LH535" continuing="2" disabled="no" xcen="610.0" ycen="110.0" xb="590.0" yb="110.0" xc="590.0" yc="70.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO8" turnoutname="LT39" blockname="LB27" type="2" connectaname="T27" connectbname="T11" connectcname="T10" signala1name="LH537" signala2name="LH539" signalb1name="LH541" signalc1name="LH543" continuing="2" disabled="no" xcen="670.0" ycen="110.0" xb="650.0" yb="110.0" xc="650.0" yc="160.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO9" turnoutname="LT40" blockname="LB23" type="2" connectaname="T12" connectbname="T14" connectcname="T13" signala1name="LH553" signala2name="LH555" signalb1name="LH557" signalc1name="LH559" continuing="2" disabled="no" xcen="770.0" ycen="110.0" xb="790.0" yb="110.0" xc="790.0" yc="70.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <layoutturnout ident="TO10" turnoutname="ITMP279" blockname="LB26" type="1" connectaname="T14" connectbname="T15" connectcname="T24" signala1name="IHMP279TC" signala2name="IHMP279TD" signalb1name="IHMP279C" signalc1name="IHMP279D" continuing="2" disabled="no" xcen="850.0" ycen="110.0" xb="870.0" yb="110.0" xc="870.0" yc="140.0" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+    <tracksegment ident="T1" blockname="LB25" connect1name="TO1" type1="2" connect2name="A1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="LB20" connect1name="A1" type1="1" connect2name="TO2" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="LBMP302" connect1name="TO1" type1="3" connect2name="A2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="LB19" connect1name="TO3" type1="2" connect2name="TO2" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="LB18" connect1name="TO3" type1="4" connect2name="TO4" type2="2" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="LB17" connect1name="TO3" type1="3" connect2name="TO5" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="LB18" connect1name="TO7" type1="4" connect2name="TO4" type2="3" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="LB22" connect1name="TO7" type1="3" connect2name="TO5" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="LB21" connect1name="TO6" type1="3" connect2name="TO5" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T10" blockname="LB21" connect1name="TO8" type1="4" connect2name="TO6" type2="2" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="LB27" connect1name="TO8" type1="3" connect2name="TO7" type2="2" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="LB24" connect1name="TO9" type1="4" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T14" blockname="LB26" connect1name="TO10" type1="2" connect2name="TO9" type2="3" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T15" blockname="LB26" connect1name="TO10" type1="3" connect2name="A4" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T16" blockname="LB24" connect1name="A3" type1="1" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="yes" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T17" blockname="LB24" connect1name="A5" type1="1" connect2name="A6" type2="1" dashed="no" mainline="yes" hidden="yes" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T18" blockname="LB24" connect1name="A6" type1="1" connect2name="A7" type2="1" dashed="no" mainline="yes" hidden="yes" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T20" blockname="LBMP295" connect1name="EB4" type1="1" connect2name="TO4" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T21" blockname="LBMP300" connect1name="EB2" type1="1" connect2name="TO2" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T23" blockname="LBMP290" connect1name="EB3" type1="1" connect2name="TO6" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T24" blockname="LBMP279" connect1name="EB5" type1="1" connect2name="TO10" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T25" blockname="LB26" connect1name="EB6" type1="1" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T19" blockname="LB24" connect1name="A8" type1="1" connect2name="TO1" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T22" blockname="LB24" connect1name="A7" type1="1" connect2name="A8" type2="1" dashed="no" mainline="no" hidden="yes" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T26" blockname="LBMP302" connect1name="EB1" type1="1" connect2name="A2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T12" blockname="LB23" connect1name="TO9" type1="2" connect2name="A9" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T27" blockname="LB27" connect1name="TO8" type1="2" connect2name="A9" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="1" x="170.0" y="110.0" connect1name="T1" connect2name="T2" eastboundsignal="IHMP301E" westboundsignal="IHMP301W" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="30.0" y="110.0" connect1name="T3" connect2name="T26" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="850.0" y="70.0" connect1name="T13" connect2name="T16" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="910.0" y="110.0" connect1name="T15" connect2name="T25" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="950.0" y="70.0" connect1name="T16" connect2name="T17" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="1" x="960.0" y="180.0" connect1name="T17" connect2name="T18" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A7" type="1" x="20.0" y="180.0" connect1name="T18" connect2name="T22" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="190.0" y="80.0" connect1name="T21" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="2" x="520.0" y="190.0" connect1name="T23" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="470.0" y="50.0" connect1name="T20" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="2" x="890.0" y="140.0" connect1name="T24" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="2" x="930.0" y="110.0" connect1name="T25" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A8" type="1" x="40.0" y="140.0" connect1name="T19" connect2name="T22" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="2" x="10.0" y="110.0" connect1name="T26" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A9" type="1" x="700.0" y="110.0" connect1name="T12" connect2name="T27" eastboundsignal="IHMP285E" westboundsignal="IHMP285W" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <!--Written by JMRI version 2.7.6 on Wed Oct 07 18:06:17 EDT 2009 $Id$-->
+</layout-config>
+

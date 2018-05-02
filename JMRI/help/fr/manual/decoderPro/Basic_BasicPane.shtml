@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+
+<title>Basic Programming</title>
+<!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-16 -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8>
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+<h1>Le Programmeur Basique</h1>
+<h2>Volet Basique</h2>
+
+<div align="right">
+  <p><a href="Basic_Start.shtml"> Pr&#233;c&#233;dent | </a><a href="Comp_Basic.shtml">Suivant </a></p>
+<p><a href="index.shtml">Retour &#225; l'Index.</a></p>
+</div>
+
+<hr>
+<p>Vous devez avoir not&#233; qu'en haut de la fen&#234;tre il y a deux onglets: <strong>Entr&#233;e Inventaire</strong> et <strong>Basique
+</strong>. Nous avons compl&#233;t&#233; le volet <strong>Entr&#233;e Inventaire</strong> de la fen&#234;tre Programme, maintenant, cliquez sur
+l'onglet <strong>Basique</strong> pour changer les volets pour continuer de programmer votre d&#233;codeurr. Le volet Basique sera 
+affich&#233; et sera semblable &#224; l'illustration suivante:Beaucoup de volets dans le programmeur contiennent des fonctions
+d&#233;pendantes du d&#233;codeur, de fait ce que vous voyez peut ne pas correspondres exactement avec ce que vous voyez ici. 
+Seules les variables que votre d&#233;codeur peut ex&#233;cuter sont montr&#233;es
+ici. </p>
+<div align="center"><img style="width: 636px; height: 556px;" src="images/Basic_Program.png" alt="Basic pane"></div>
+<p>Vous verrez trois options que vous pouvez changer, surlign&#233;es en jaune: </p>
+<ol> 
+<li>L'adresse du d&#233;codeur ( qui doit &#234;re unique parmi vos locomotives,
+&#224; moins que vous travaillez sous forme d'un ensemble ) souvent le num&#233;ro de la locomotive est utilis&#233;.</li>
+  <li>Deux boutons radio que vous pouvez basculer entre un adressage sur 2 digits ( un octet normal ) ou 4 digits
+(deux octets, &#233;tendu) </li>
+
+ <li> Exploitation Analogique (valide le d&#233;codeur pour fonctionner avec une tension r&#233;gul&#233;e DC/analogique <br>) </li>
+</ol>
+<p>Le surlignage jaune indique due ces options sont des r&#233;glages "possibles" et n'ont pas &#233;t&#233; 
+confirm&#233;s par le d&#233;codeur. 
+Les r&#233;glages qui ont &#233;t&#233; chang&#233;s par l'utilisateur et qui n'ont pas &#233;t&#233; 
+&#233;crites dans le d&#233;codeur apparaissent en orange. </p>
+<p>Code de Couleurs utilis&#233; dans les volets de programmation.</p>
+<dl>
+  <dt style="background: rgb(221, 221, 221) none repeat scroll 0%; color: orange; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">Modifi&#233;e</dt>
+  <dd>Vous avez chang&#233; cette valeur, ou contient une
+valeur par d&#233;faut fournie par le fichier d&#233;codeur. Celle-ci est montr&#233;e en orange, puisque la 
+ valeur diff&#232;re de celle qui est dans le d&#233;codeur.
+  </dd><dt style="background: rgb(221, 221, 221) none repeat scroll 0%; color: yellow; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">Depuis Fichier</dt>
+  <dd>Le champ contient les valeurs lues depuis un 
+fichier locomotive. Celles-ci sont montr&#233;es en jaune, puisque nous ne sommes pas 
+s&#251;r que le fichier corresponde aux contenus du d&#233;codeur.
+  </dd><dt style="background: rgb(221, 221, 221) none repeat scroll 0%; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">Lu</dt>
+  <dd>la valeur montr&#233;e a &#233;t&#233; lue depuis le d&#233;codeur.Celle-ci est montr&#233;e en blanc
+indiquant que la valeur est digne de confiance.
+  </dd><dt style="background: rgb(221, 221, 221) none repeat scroll 0%; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">Stock&#233;e</dt>
+  <dd>La valeur montr&#233;e a &#233;t&#233; &#233;crite dans le d&#233;codeur.
+    Celle- ci est montr&#233;e aussi en blanc.
+  </dd><dt style="background: rgb(221, 221, 221) none repeat scroll 0%; color: red; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">Inconnue</dt>
+  <dd>Si quelque chose ne va pas avec le processus de lecture ou d'&#233;criture,
+    nous pourrions avoir un r&#233;sultat compl&#232;tement indigne de confiance. Cela se traduit
+ par l'&#233;tat de la variable marqu&#233; comme INCONNU et montr&#233; en rouge
+</dd></dl>
+<p>Vous pourrez voir des exemples de<br>
+  ceci &#224; travers le manuel. </p>
+<a name="Read Data"></a>
+Pour lire les r&#233;glages actuels pour ces options ( et si votre syst&#232;me et
+le d&#233;codeur install&#233; permettent la relecture des valeurs du  d&#233;codeur, cliquez sur le <strong>
+<input name="button" id="button" value="Lecture feuille compl&#232;te" type=" button">
+</strong>. Les r&#233;glages individuels seront rouge alors qu'ils sont en train 
+d'&#234;tre lu (intelligent, hein?) et deviendront blanc une fois que les valeurs auront &#233;t&#233; lues aves succ&#232;s 
+depuis le d&#233;codeur. Encore une fois, Decoder Pro doit poser "Vingt questions" pour 
+obtenir cette information, et parfois m&#234;me doit demander &#224; une seconde fois.
+  <p>
+Soyez patient, sp&#233;cialement avec les vieux ordinateurs. Dans la partie la plus basse du
+panneau (o&#249; il est "en veille") vous verrez un compteur montrant exactement ce que DecoderPro fait,
+par exemple, le CV sp&#233;cifique en cours de lecture. </p>
+<p> De plus, les fonctions
+  <input name="button2" id="button2" value="Lire la feuille compl&#232;te" type="button"><strong> </strong>and <strong>
+  <input name="button3" id="button3" value="Lire toutes les feuilles" type="button">
+  </strong> sont d&#233;pendantes de votre Centrale de Commande. Si 
+  votre syst&#232;me n'a pas la possibilit&#233; de lire les CVs,  alors ces boutons ne seront pas
+ disponibles. </p>
+<p><a name="Enter/Edit data"></a>Si vous voulez changer l'adresse de
+la locomotive, tapez la nouvelle adresse. Pour valider ou non l'adressage 
+4 digits, s&#233;lectionnez le bouton radio d&#233;sir&#233;. .&nbsp; Assurez-vous que
+le type d'addresse soit en accord avec le nombre de caract&#232;res dans l'adresse. &nbsp;</p>
+<p>Pour valider l'Exploitation en Mode Analogique, s&#233;lectionnez l'entr&#233;e appropri&#233;e depuis la liste d&#233;roulante</p>
+<p> Quand vous avez fini, cliquez sur 
+  <input name="button4" id="button4" value="&#201;crire feuille compl&#232;te" type="button">
+pour &#233;crire les nouvelles valeurs dans le d&#233;codeur. </p>
+  <p><a name="Write Data"></a>Habituellement, l'&#233;criture 
+prend moins de temps que la lecture, parce que  la valeur peut &#234;tre
+envoy&#233;e directement. Quand l'op&#233;ration &#233;criture se r&#233;alise, les donn&#233;es changeront
+de jaune &#224; blanc. Si il y a des diffcul&#233;s d'&#233;criture dans le d&#233;codeur,
+les donn&#233;es deviendront rouges . Le logiciel va r&#233;essayer 
+automatiquement jusqu'&#224; ce que l'op&#233;ration d'&#233;criture soit r&#233;ussie. Dans certains cas, le
+syst&#232;me sera en &#8220;pause&#8221; apr&#232;s un certain nombre d'essais sans un 
+acquittement depuis le d&#233;codeur.&nbsp; Ceci ne signifie pas n&#233;cessairement que 
+la valeur n'a pas &#233;t&#233; &#233;crites, juste que le programme n'a pas
+recu de r&#233;ponse.&nbsp; Ceci peut &#234;tre d&#251; &#224; &nbsp;la
+locomotive qui se d&#233;place sur une voie sale et ainsi ne peut pas r&#233;pondre 
+par une pulsion, ou parce que la centrale de commande ou le d&#233;codeur ne peuvent pas 
+r&#233;pondre.&nbsp; Essayer de d&#233;placer la loco et de r&#233;essayer.&nbsp; Si c'est un probl&#232;me
+de relecture du d&#233;codeur ou de la centrale de commande, essayez la loco sur la ligne principale 
+et voyez si la programmation a r&#233;ussi. </p>
+  <p><a name="Save Data"></a>
+  Pour finir cette programmation "basique" d'un d&#233;codeur, cliquez une fois de plus sur l'onglet <strong>Entr&#233;e Inventaire</strong> , vous pouvez voir que le champ adresse est maintenant rempli, aussi vous pouvez maintenant cliquez sur <strong>
+  <input name="button5" id="button5" value="Sauver l'Inventaire" type="button">
+</strong>. Vos nouveau r&#233;glages de d&#233;codeur sont maintenant &#233;crit non seulement 
+  dans le d&#233;codeur, mais aussi sauv&#233;s dans un fichier de l'ordinateur d'o&#249; ils peuvent &#234;tre rappell&#233;s dans le futur. . </p>
+<a name="Do More"></a>
+Mais vous vous dites.."Je veux changer plus que ce qui est montr&#233; dans le volet
+d&#233;codeur basique." Bien&#8230; il y a d'autres programmeurs de 
+disponibles.&nbsp; Mais&#8230; premi&#232;rement nous devons regarder les diverses 
+options.&nbsp; Ici vous avez les fen&#234;tres d'options .&nbsp;  Pas de panique&#8230;. La plupart ne sont pas utilis&#233;s par l'utilisateur moyen.
+<p align="center"><img src="images/Basic_programmers.png" alt="Basic Programmers" height="341" width="568"><br>
+</p>
+<p><strong>Complet </strong>et Avanc&#233; sont les seuls autres programmes<strong>> que les <em>Utilisateur Normaux</em>" </strong> utiliseront toujours, parce que c'est, bien&#8230;<strong>Complet</strong> et l'<strong>Avance</strong> ajoute des fonctionnalit&#233;s qui sont facultatives..&nbsp; Pourquoi tous les autres?</p>
+<p>Tout d'abord &#233;liminer les programmeurs sp&#233;cifiques des Fabricant (&#224; moins que vous ayez un syst&#232;me <strong>Zimo</strong> ou <strong>ESU</strong> ).&nbsp; </p>
+<p>Nous pouvons aussi &#233;liminer les <strong>Tutoriaux</strong> et programmeurs<strong>Personnalis&#233;s</strong>. Ils ont &#233;t&#233; mis pour montrer que peuvent <strong> &#233;crire leur propre </ strong> programmeur ( pas vrai? )
+tous les moyens possibles pour recueillir des commentaires et avoir un point de d&#233;part commun dans le volet de l'inventaire. 
+Maintenant, si vous souhaitez poursuivre la r&#233;daction d'un programmeur personnalis&#233; aller sur le site web JMRI&reg;.</p>
+<p>si vous avez besoin d'un programmeur ayant des fonctions particuli&#232;res vous pouvez voir <strong>Exemple Club</strong> ou <strong>TrainShowBasic</strong>
+pour voir quels volets peuvent &#234;tre pris du Complet pour faire un programmeur
+ d'une complexit&#233; interm&#233;diaire dans un but pr&#233;cial.&nbsp; Encore,comment 
+le faire est le sujet pour un autre manuel.</p>
+<p>Et cela nous laisse avec les programmeurs <strong>Avanc&#233;s</strong> et <strong>Registres</strong>.&nbsp; Le programmeur
+ <strong>Adanc&#233;</strong>  un couple de fonctionnalit&#233;s sophistiqu&#233;es ajout&#233; en haut du programmeur <strong>Complet</strong> r et un nom &#233;tait n&#233;cessaire.&nbsp; Bien, pourquoi ne pas l'appeler <strong>Avanc&#233;</strong>? Nous couvrirons les fonctionnalit&#233;s suppl&#233;mentaires une fois que nous obtenons avec le <strong>Complet</strong>.<br>
+  Quoi au sujet du programmeur  <strong>Registre</strong>
+?&nbsp; Si vous avez un vieux d&#233;codeur ou un d'occasion qui
+se programme en utilisanrt seulement les registres, alors naturellement vous serez int&#234;ress&#233; par le <strong>Registre.</strong><br>
+SAlors maintenant, nous avons r&#233;duit nos "vrais" choix vers <strong> Avanc&#233; </</strong>, <strong>Basique</strong> et <strong>Complet</strong>. Puisque nous avons d&#233;j&#224; couvert <strong>Basique</strong>, nous allons explorer <a href="Comp_Setup_Roster.shtml">Programmeur Complet</a>! </p>
+
+<div align="right">
+  <p><a href="Basic_Start.shtml">Pr&#233;c&#233;dent | </a><a href="Comp_Basic.shtml">Suivant </a></p>
+<p><a href="index.shtml">Retour &#225; l'Index.</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

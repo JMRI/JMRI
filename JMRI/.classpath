@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" path="java/src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="java/test">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
+	<classpathentry excluding="**" kind="src" path="java/maven-template">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="target/generated-sources/jjtree">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="target/generated-sources/javacc">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="java/acceptancetest/step_definitions">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.7.jar"/>
+	<classpathentry kind="lib" path="lib/ecj.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/javacc.jar"/>
+	<classpathentry kind="lib" path="lib/javacsv.jar"/>
+	<classpathentry kind="lib" path="lib/jdom-2.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="lib/jhall.jar"/>
+	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
+	<classpathentry kind="lib" path="lib/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/joal.jar"/>
+	<classpathentry kind="lib" path="lib/jsr305.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="lib/jython-standalone-2.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="lib/openlcb.jar"/>
+	<classpathentry kind="lib" path="lib/jlfgr-1_0.jar"/>
+	<classpathentry kind="lib" path="lib/rscbundlecheck.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.25.jar"/>
+	<classpathentry kind="lib" path="lib/jul-to-slf4j-1.7.25.jar"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/UmlGraph-5.7.jar"/>
+	<classpathentry kind="lib" path="lib/vecmath-1.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/jna-4.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-platform-4.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/i18nchecker.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/bluecove-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-http-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-io-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-security-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-server-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-servlet-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-api-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-client-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-common-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-server-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/websocket-servlet-9.4.7.v20170914.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-service.jar"/>
+	<classpathentry kind="lib" path="lib/beansbinding-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/mockito-core-2.13.0.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-nodep-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.20.0-GA.jar"/>
+	<classpathentry kind="lib" path="lib/objenesis-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/byte-buddy-1.7.10.jar"/>
+	<classpathentry kind="lib" path="lib/purejavacomm-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jemmy-2.3.1.1-RELEASE802.jar"/>
+	<classpathentry kind="lib" path="lib/xbee-java-library-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-arm.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-x86.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-x86_64.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-osx-x86.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-osx-x86_64.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-windows-x86.jar"/>
+	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="lib/usb-api-1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/usb4java-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/usb4java-javax-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/org-openide-util-lookup-RELEASE82.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/cucumber-core-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-java-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-java8-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-junit-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-jvm-deps-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/cucumber-picocontainer-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin-4.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/gherkin-jvm-deps-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/picocontainer-2.15.jar"/>
+	<classpathentry kind="lib" path="lib/tag-expressions-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/typetools-0.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/webdrivermanager-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/mqtt-client-0.4.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

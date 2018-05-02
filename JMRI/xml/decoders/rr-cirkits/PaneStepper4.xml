@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Panes to show Output lines -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Stepper 4</name>
+  <qualifier>
+    <variableref>PB7 Type</variableref>
+    <relation>eq</relation>
+    <value>5</value>
+  </qualifier>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>&lt;html&gt;&lt;h1&gt;Stepper #4&lt;/h1&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="SA4 Wrap" tooltip="Use a number from 1-65535" label="Stepper Wrap Point">
+          </display>
+      </column>
+      <column>
+        <label>
+          <text>  The Stepper Wrap point is used for continuous stepper rotation. It is the total number of steps</text>
+        </label>
+        <label>
+          <text>  required to bring the stepper controlled device one full cycle. A setting of 0 is equal to no wrap.</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="SA4 Mode" tooltip="Selects the operating mode of the stepper" label="Stepper Mode">
+          </display>
+      </column>
+      <column>
+        <label>
+          <text>  4 Wire steppers operate in Bi-Polar mode. 5 Wire steppers operate in Unipolar mode.</text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="SA4 Scaler" tooltip="Selects the stepper multiplier" label="Step Scaler">
+          </display>
+      </column>
+      <column>
+        <label>
+          <text>  Selects the number of increments per step. (1-255)</text>
+        </label>
+      </column>
+    </row>
+  </column>
+</pane>

@@ -1,0 +1,6 @@
+These file fragments are intended to fail to
+check that the schema is still detecting specific 
+errors.
+
+Only one error per file, please, to make sure that
+we're catching them.

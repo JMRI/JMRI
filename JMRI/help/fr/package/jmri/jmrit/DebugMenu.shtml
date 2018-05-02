@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Translated  by Blorec Herv&#233; le 2011-11-3-->
+
+  <title>JMRI: Menu D&eacute;bogage</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Menu D&eacute;bogage</h1>Le menu JMRI
+      "D&eacute;boger" contient les &eacute;l&eacute;ments
+      suivants:
+
+      <ul>
+        <li>Moniteur Utilisation M&eacute;moire</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>Importer Fichier D&eacute;codeur</li>
+
+        <li>Importer URL D&eacute;codeur</li>
+
+        <li>Recr&eacute;ez Index des D&eacute;codeurs</li>
+
+        <li>Recr&eacute;ez Indice Liste</li>
+
+        <li>Mise &agrave; jour d&eacute;finitions des
+        d&eacute;codeurs</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>V&eacute;rifiez fichier XML</li>
+
+        <li>Valider un fichier XML</li>
+
+        <li>V&eacute;rifiez les Noms D&eacute;codeur</li>
+
+        <li>V&eacute;rifier les Noms Programmateur</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>Charger Logixs D&eacute;sactiv&eacute;s</li>
+
+        <li>Message Connexion</li>
+
+        <li>Afficher un Message de Connexion</li>
+
+        <li>Afficher les Cat&eacute;gories de Connexions</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>D&eacute;codeur Son Virtuel</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>PRICOM</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>Contr&ocirc;ler Entr&eacute;e USB</li>
+
+        <li>Visionneur Mat&eacute;riel USB</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li>R&eacute;gulateur RailDriver</li>
+      </ul>
+      <hr>
+
+      <ul>
+        <li><a href="../../../html/web/index.shtml">D&eacute;marrer
+        Mini Serveur Web</a></li>
+      </ul>
+
+      <p>Ceci est la page d'aide
+      help/en/package/jmri/jmrit.DebugMenu.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - MERG CBUS</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Hardware Support: MERG CBUS</h1>
+
+      <p><em>The support for MERG is rapidly evolving; the actual
+      code might be ahead or behind the documentation on any given
+      day.</em></p>
+
+      <ul class="snav">
+        <!-- TOC -->
+
+        <li><a href="#connecting">Connecting</a></li>
+
+        <li><a href="#tools">JMRI MERG CBUS Tools</a></li>
+
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
+
+      <h2>Connecting</h2>
+
+      <h3>CBUS Naming</h3>JMRI provides support for general JMRI
+      <a href="../../../tools/Sensors.shtml">Sensors</a>, <a href=
+      "../../../tools/Turnouts.shtml">Turnouts</a> and <a href=
+      "../../../tools/Lights.shtml">Lights</a> in terms of CBUS
+      "events".
+
+      <p>The <a href="../../../doc/Technical/Names.shtml">system
+      letter</a> for MERG CBUS connections is "M".</p>
+
+      <p>Details of CBUS Event and object names are described
+      below, with technical details on a <a href=
+      "Names.shtml">separate page</a>.</p>
+
+      <p>JMRI associates CBUS events with individual JMRI objects
+      (Sensors, Turnouts, Lights, etc.) via the JMRI System Names.
+      A System Name like "<code>MS+123;-345</code>" defines a
+      Sensor that follows the "123 ON" and "345 OFF" CBUS events to
+      change state. Depending on which CBUS event-IDs are used on a
+      particular layout, these system names can get very long, in
+       which case the "user names" become much more useful.</p>
+
+      <h3>Adding an item to the table</h3>
+      <p>When you add an item to one of the tables, many times you only
+      have to fill in the numbers to have JMRI construct
+      the complete system name.<br>
+      Here's a summary, split up for outputs (eg. Turnouts) and
+      inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>200018M07</td>
+          <td>listen to Events 18 .. 1F</td>
+          <td>MS200018M07</td>
+          <td>+ M + hex mask</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>X91012;X91019</td>
+          <td>hex CAN frame msg. Active; Inactive</td>
+          <td>MTX91012;X91019</td>
+          <td>hex ; hex</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18</td>
+          <td>event 18 On; 18 Off</td>
+          <td>MT18</td>
+          <td>integer</td>
+          <td>+18;-18</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18;21</td>
+          <td>event 18 On; 21 On</td>
+          <td>MT18;21</td>
+          <td>integer ; integer</td>
+          <td>+18;+21</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>+18;-21</td>
+          <td>event 18 On; 21 Off</td>
+          <td>MT+18;-21</td>
+          <td>idem signed</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>2000018</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MT200018</td>
+          <td>node + (5 digits)</td>
+          <td>N2E18</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>N2E18</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MTN2E18</td>
+          <td>N + number + E + number</td>
+          <td>2000018</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        </tbody></table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
+      <h3>Sensors</h3>
+
+      <p>CBUS messages coming into JMRI applications can be
+      accessed via JMRI Sensor objects. The Sensor's <a href=
+      "Names.shtml">System Name</a> determines which CBUS
+      message(s) it corresponds to. A Sensor is defined by two
+      events: The one that sets it ACTIVE, and the one that sets it
+      INACTIVE. If these are mapped to ON and OFF frames with the
+      same event ID number, respectively, only the event ID number
+      need be specified:<br>
+      <code>MS18</code><br>
+      The number is decimal.</p>
+
+      <p>To increase versatility, it's possible to use different
+      event ID numbers for the ACTIVE transition (by default, an ON
+      frame) and INACTIVE transition (by default, an OFF
+      frame):<br>
+      <code>MS18;21</code></p>
+
+      <p>The ON and OFF coding of CBUS is not entirely consistent
+      with the event model, and it may be useful to connect the
+      ACTIVE or INACTIVE transition of a JMRI Sensor to an OFF or
+      ON CBUS frame respectively. Leading "+" and "-" characters
+      can do this. For example,<br>
+      <code>MS-18;+21</code><br>
+      defines a sensor that goes ACTIVE when an OFF frame with ID
+      number 18 is received, and goes INACTIVE when an ON frame
+      with ID number 21 is received.</p>
+
+      <p>CBUS event numbers (usually) contain a node number in
+      their most-significant bytes. You can specify the node number
+      either by using a full 5 decimal digits for the event number
+      itself, preceded by the node number:<br>
+      <code>MS200018</code><br>
+      or by using the letters "N" and "E" to specify the separate
+      parts:<br>
+      <code>MSN2E18</code><br></p>
+
+      <p>You can mask off part of the CBUS packet, so any values in
+      the masked part will still match, using the "M" format
+      letter.<br>
+      <code>MS200018M07</code><br>
+      "M" indicates the start of a hexadecimal mask that will be
+      applied, where 1 bits in the mask will be zero bits in the
+      resulting value. In the example above, "18" through "1F" will
+      match. This is particularly useful for matching e.g. CBUS
+      short events, where parts of the packet include the node
+      number which should (usually) be ignored.</p>
+
+      <p>Finally, it's possible to connect a Sensor to arbitrary
+      CAN frames by specifying their data content as a hex string,
+      indicated by "X":<br>
+      <code>MSX9100000000000012;X9100000000000019</code><br>
+      This allows the Sensor to disregard any intrinsic meaning to
+      "ON" and "OFF" events, and allows it to respond to any frame
+      on the layout.</p>
+
+      <h4>Automatic Creation</h4>
+
+      <p>JMRI automatically attempts to create Sensor objects from
+      the traffic that it hears on the CBUS. When JMRI hears an ON
+      or OFF event on the CBUS, it creates a Sensor using the
+      corresponding event ID. This automatically-created sensor
+      defaults to the ON event setting the Sensor ACTIVE and the
+      OFF event setting INACTIVE.</p>
+
+      <p>Because events are not intrinsically associated with
+      specific hardware objects, and because people can use event
+      IDs in many ways, this doesn't do what's desired. When it
+      doesn't, you can manually create the proper Sensors using the
+      <a href=
+      "../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
+      Add...</a> button on the <a href=
+      "../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
+      Table</a>.</p>
+
+      <p>Note that there's a <a href=
+      "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
+      CBUS Event Capture Tool</a> that can help you create Turnouts
+      and Sensor names without having to directly work out the
+      System Names.</p>
+
+      <h3>Turnouts</h3>
+
+      <p>(To be written; the scheme is similar to Sensors
+      above, except JMRI is emitting the CBUS frames instead of
+      receiving them, and the type letter is "T" instead of "S",
+      e.g. <code>MT-18;+21</code>)</p>
+
+      <h3>Lights</h3>
+
+      <p>(To be written; the scheme is similar to Turnouts
+      above, except the type letter is "L" instead of "T", e.g.
+      <code>ML-18;+21</code>) <a name="tools" id="tools"></a></p>
+
+      <h2>JMRI MERG CBUS Tools</h2><img src=
+      "../images/MERG_Menu.png" alt="MERG menu" align="right"
+      height="134" width="188">
+
+      <p>The MERG menu contains 5 tools:</p>
+
+      <ul>
+        <li><a href=
+        "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+        Console</a></li>
+
+        <li><a href=
+        "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">
+        Send Frame</a></li>
+
+        <li><a href=
+        "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
+        Event Capture Tool</a></li>
+
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
+        Event Table</a></li>
+
+        <li><a href=
+        "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+        Node Config Tool</a></li>
+      </ul>
+      <a name="documentation" id="documentation"></a>
+      <h2>Documentation</h2>
+
+      <h3>JMRI Help</h3>
+      <ul>
+        <li><a href="Names.shtml">Naming of CBUS inputs and outputs</a></li>
+
+        <li><a href="Details.shtml">Technical details of CBUS
+        Support</a></li>
+
+        <li><a href="../index.shtml">Main CAN Support Help page</a>
+        including links to more tools.</li>
+      </ul>
+
+      <h3>Third Party/Support</h3>
+      <ul>
+        <li><a href="http://www.merg.org.uk/merg_resources/cbus-dcc.php">
+        The Model Electronic Railway Group MERG-DCC help page</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

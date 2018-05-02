@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2009 -->
+  <!-- $Id$ -->
+  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-13-->
+
+  <title>JMRI: Engine Driver Throttle for Android</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: Pilote de R&eacute;gulateur de Machine pour
+      Android</h1>
+
+      <div style="float:left;padding:8px">
+        <a href="http://enginedriver.rrclubs.org" title=
+        "Visitez EngineDriver homepage"><img></a>
+
+        <p>Cette application gratuite peut se connecter &agrave; un
+        serveur <a href=
+        "http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">R&eacute;gulateurWi JMRI</a>
+        s'ex&eacute;cutant sur un ordinateur, et prend tour
+        &agrave; tour le contr&ocirc;le de vos locomotives.
+        Vitesse, direction, et jusqu'&agrave; 29 fonctions DCC sont
+        soutenues pour une ou deux locomotives. Vous pouvez
+        &eacute;galement contr&ocirc;ler l'alimentation du
+        r&eacute;seau, les aiguillages et les
+        itin&eacute;raires.</p>
+
+        <p>Pour les captures d'&eacute;cran, l'installation et
+        l'utilisation en d&eacute;tails, visitez <a href=
+        "http://enginedriver.rrclubs.org/" target="_blank">[page
+        d'accueil pour EngineDriver]</a>.</p>
+
+        <h3>Pr&eacute;requis :</h3>
+
+        <p>V&eacute;rifiez que votre appareil Android peut se
+        connecter &agrave; votre r&eacute;seau PC via le WiFi et
+        obtenir une adresse IP.<br>
+        Assurez-vous que vous utilisez l'une des derni&egrave;res
+        versions de <a href="http://jmri.org/" target=
+        " _blank">JMRI</a> (2.8 fonctionne, 2.10 fonctionne encore
+        mieux) sur votre PC, reli&eacute; au r&eacute;seau.
+        D&eacute;marrer JMRI et v&eacute;rifiez que vous pouvez
+        utiliser l'application comprenant "Throttle" pour
+        contr&ocirc;ler une locomotive.</p>
+
+        <h3>Op&eacute;ration:</h3>
+
+        <p>D&eacute;marrez la <a href=
+        "http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        target="_blank">R&eacute;gulateur Wi</a> fonction de JMRI,
+        situ&eacute;e dans DecoderPro sous
+        Outils,R&eacute;gulateur. (Ou sous D&eacute;bogage dans les
+        anciennes versions de JMRI).</p>
+
+        <p>Sur votre t&eacute;l&eacute;phone, lancez l'application
+        Pilote Machine et attendez que l'adresse de votre PC se
+        montre dans &Acirc;&laquo;Services D&eacute;couverts".<br>
+        Cliquez sur l'adresse d&eacute;couverte, (ou vous pouvez
+        entrer l'adresse et le port de votre serveur WiThrottle
+        directement).</p>help page
+
+        <p>Sur l'&eacute;cran du r&eacute;gulateur, cliquez sur le
+        bouton loco "Appuyez sur pour s&eacute;lectionner" pour
+        chaque loco<br>
+        Sur l'&eacute;cran suivant, entrez l'adresse loco (&agrave;
+        v&eacute;rifier si courte ou longue), et appuyez sur
+        "Acqu&eacute;rir". Vous serez renvoy&eacute; &agrave;
+        l'&eacute;cran du R&eacute;gulateur.<br>
+        R&eacute;p&eacute;tez en utilisant le 2&egrave;me bouton
+        "Appuyez sur pour s&eacute;lectionner"pour acqu&eacute;rir
+        un 2&egrave;me loco.</p>help page
+
+        <p>Faite fonctionner votre loco en utilisant le curseur de
+        vitesse, et les boutons inverse, arr&ecirc;t et en avant
+        boutons pour contr&ocirc;ler la direction.<br>
+        Pour lib&eacute;rer toutes les locomotives, il suffit
+        d'appuyer sur le bouton Retour. Ce sera &eacute;galement
+        arr&ecirc;tera votre loco (peut &ecirc;tre
+        substitu&eacute;e dans les pr&eacute;f&eacute;rences).</p>
+
+        <p>Appuyez sur le bouton Menu de votre
+        t&eacute;l&eacute;phone pour acc&eacute;der aux
+        &eacute;crans de contr&ocirc;le pour les Aiguillages, les
+        Itin&eacute;raires et l'Alimentation, ainsi que
+        r&eacute;gler les param&egrave;tres de configuration par
+        d&eacute;faut et les &eacute;tiquettes de fonction. &lt;/
+        p&gt;</p>
+
+        <h3>Configuration:</h3>
+
+        <p>Sous Pr&eacute;f&eacute;rences, d&eacute;finir le nom
+        que vous voulez donner &agrave; votre r&eacute;gulateur.
+        (Doit &ecirc;tre unique si de multiples EngineDrivers sont
+        en usage) Vous pouvez d&eacute;sactiver la fonction "stop
+        &agrave; la lib&eacute;ration" si d&eacute;sir&eacute;, et
+        vous pouvez d&eacute;finir une valeur Maximale pour les
+        curseurs d'acc&eacute;l&eacute;rateur. Si vous
+        pr&eacute;voyez d'utiliser le contr&ocirc;le d'Aiguillage,
+        assurez-vous de s&eacute;lectionner le syst&egrave;me
+        mat&eacute;riel correct dans la liste.</p>
+
+        <p>Utilisez l'option de menu Boutons de Fonction pour
+        r&eacute;gler les &eacute;tiquettes et les num&eacute;ros
+        de fonction &agrave; afficher. Si vous avez mis des
+        &eacute;tiquettes dans une fiche dans JMRI, ces
+        &eacute;tiquettes peuvent &ecirc;tre copi&eacute;es
+        &agrave; partir du dialogue (acc&egrave;s au menu
+        apr&egrave;s la s&eacute;lection d'une locomotive). Enlever
+        les boutons en occultant les &eacute;tiquettes.</p>
+
+        <p>Sur le c&ocirc;t&eacute; informatique de JMRI,
+        v&eacute;rifiez vos pr&eacute;f&eacute;rences pour vous
+        assurer que vous autorisez ou interdisez WiThrottle
+        &agrave; contr&ocirc;ler les caract&eacute;ristiques
+        souhait&eacute;es. Si vous avez d&eacute;fini vos
+        aiguillages et les itin&eacute;raires dans un panneau,
+        assurez-vous de sp&eacute;cifier "les noms d'utilisateur"
+        pour ceux que vous aimeriez voir inscrits sur votre
+        r&eacute;gulateur. Vous pouvez aussi "filtrer" les
+        aiguillages montr&eacute;s en utilisant les WiThrottle-&gt;
+        option Filtre de Contr&ocirc;les dans la fen&ecirc;tre
+        WiThrottle. Mettre On "utilisation ESTOP " et "Utilisation
+        de port fixe #" sont &eacute;galement
+        recommand&eacute;s.</p>
+
+        <p>Saisie des fiches, itin&eacute;raires et des aiguillages
+        d&eacute;fini dans JMRI va rendre votre pilote de
+        r&eacute;gulateurr de machine facile &agrave; utiliser ( m
+        help page ais pas n&eacute;cessaire).</p>
+
+        <p>le code source actuellement en d&eacute;veloppement
+        (avec des balises pour les versions ant&eacute;rieures)
+        peuvent &ecirc;tre trouv&eacute;s <a href=
+        "http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/EngineDriver/"
+        target="_blank">[ ICI].</a> <em><a href=
+        "http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/EngineDriver/changelog-and-todo-list.txt"
+        target="_blank" title=
+        "Voir le changelog complet EngineDriver ">[voir le
+        changelog complet]</a></em></p>
+
+        <p><a href="http://enginedriver.rrclubs.org" target=
+        "_blank">[page d'accueil pour EngineDriver]</a></p>
+
+        <div style="clear: both;"></div>
+
+        <p>Ceci est la page d'aide
+        help/en/package/jmri/jmrit//withrottle/EngineDriverAndroidThrottle</p>
+
+        <p><!--#include virtual="/Footer" --> le</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

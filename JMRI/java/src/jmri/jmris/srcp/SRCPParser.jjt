@@ -1,0 +1,620 @@
+/* This is a parser grammar for the SRCP protocol written for code generation
+with javacc */
+
+options {
+  STATIC=false;
+  MULTI=true;
+  VISITOR=true;
+}
+
+PARSER_BEGIN(SRCPParser)
+
+package jmri.jmris.srcp.parser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/*
+ * This file defines a JavaTree/JavaCC parser implementation for
+ * the SRCP protocol.
+ *
+ * @author Paul Bender Copyright (C) 2010
+ */
+
+// This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","NM_CONFUSING","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
+
+public class SRCPParser {
+
+   private final static Logger log = LoggerFactory.getLogger(SRCPParser.class);
+
+  }
+
+PARSER_END(SRCPParser)
+
+// The Tokenizer specification begins here:
+/*<IN_DESCRIPTION>
+MORE :
+{
+  <DESCRIPT: ~[]>
+}*/
+
+//<IN_TIME>
+//TOKEN:
+//{
+//    < JULDATE: (["0"-"9"])+ >
+//  | < MINSEC: ["0"-"5"]["0"-"9"]>
+//  | < HOUR: (["0"-"2"])?["0"-"9"]>
+//}
+
+//<DEFAULT,IN_DESCRIPTION,IN_TIME>
+<DEFAULT,IN_TIME>
+TOKEN :
+{
+  //< EOL :(["\n","\r"]){1,2} >:DEFAULT
+  < EOL : "\n" >:DEFAULT
+}
+
+<DEFAULT>
+SKIP:
+{
+    <RETURN: "\r">
+   | <CONTINUE: "\\\n">
+   | <TAB: "\t">
+   | <SPACE: " ">
+}
+
+<DEFAULT>
+TOKEN :
+{
+  < ZEROADDR: ( "0" )(["0"-"9"])* >
+| < NONZEROADDR: ["1"-"9"](["0"-"9"])* >
+| < JMRITURNOUT: ["a"-"z","A"-"Z"] "T" (["0"-"9"])+ >
+| < JMRISENSOR: ["a"-"z","A"-"Z"] "S" (["0"-"9"])+ >
+| < JMRILIGHT: ["a"-"z","A"-"Z"] "L" (["0"-"9"])+ >
+| < ONOFF: (<ON>|<OFF>) >
+| < #ON: <O><N>>
+| < #OFF: <O>(<F>){2} >
+| < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
+| < DRIVEMODE: ("="|"0"|"1"|"2") >
+| < FUNCTIONMODE: ("="|"0"|"1") >
+| < DELAY: ("-")?(["0"-"9"])+>
+| < NMRA: (<N><M><R><A>) >
+
+// Device types
+| < FB: <F><B> >
+| < GA: <G><A> >
+| < GL: <G><L> >
+| < GM: <G><M> >
+| < SM: <S><M> >
+| < LOCK: <L><O><C><K> >
+| < TIME: <T><I><M><E>>
+| < POWER: <P><O><W><E><R>>
+| < SESSION: <S><E><S><S><I><O><N>>
+//| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >:IN_DESCRIPTION
+| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >
+| < SERVER: <S><E><R><V><E><R>>
+
+// Constants and commands used for handshake mode only.
+| < SRCP: <S><R><C><P>>
+| < GO: <G><O>>
+| < VERSION: (["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
+| <PROTOCOLLITTERAL: <P><R><O><T><O><C><O><L>>
+| <CONNECTIONMODELITTERAL: <C><O><N><N><E><C><T><I><O><N><M><O><D><E>>
+// Client modes
+| < INFO: <I><N><F><O>>
+| < COMMAND: <C><O><M><M><A><N><D>>
+
+//programming modes
+| <CVBIT: <C><V><B><I><T>>
+| <CV: <C><V>>
+| <REG: <R><E><G>>
+
+// commands
+| < GET: <G><E><T> >
+| < SET: <S><E><T> >
+| < CHECK: <C><H><E><C><K> >
+| < INIT: <I><N><I><T> >
+| < TERM: <T><E><R><M> >
+| < WAIT: <W><A><I><T> >
+| < VERIFY: <V><E><R><I><F><Y> >
+| < RESET: <R><E><S><E><T> >
+
+| <#A:["a","A"]>
+| <#B:["b","B"]>
+| <#C:["c","C"]>
+| <#D:["d","D"]>
+| <#E:["e","E"]>
+| <#F:["f","F"]>
+| <#G:["g","G"]>
+| <#H:["h","H"]>
+| <#I:["i","I"]>
+| <#J:["j","J"]>
+| <#K:["k","K"]>
+| <#L:["l","L"]>
+| <#M:["m","M"]>
+| <#N:["n","N"]>
+| <#O:["o","O"]>
+| <#P:["p","P"]>
+| <#Q:["q","Q"]>
+| <#R:["r","R"]>
+| <#S:["s","S"]>
+| <#T:["t","T"]>
+| <#U:["u","U"]>
+| <#V:["v","V"]>
+| <#W:["w","W"]>
+| <#X:["x","X"]>
+| <#Y:["y","Y"]>
+| <#Z:["z","Z"]>
+}
+
+// Lexical specifications begin here
+
+SimpleNode handshakecommand():{}
+{
+  // This is a simple list of the possible commands.
+  // They are broken down further below.
+  ( LOOKAHEAD(2) go() | handshake_set() ) <EOL>
+  {
+    log.debug("Handshake Command Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode command():{}
+{
+  // This is a simple list of the possible commands.
+  // They are broken down further below.
+  ( LOOKAHEAD(4) get() | set() | check() | wait_cmd() | init() |
+                 term() | reset() | verify() )  <EOL>
+  {
+    log.debug("Command Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode serviceversion():{Token t;}
+{
+  ( <SRCP> (t=<VERSION>) )
+  {
+    log.debug("Service Version Production");
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode connectionmode():{Token t;}
+{
+  ( t=<COMMAND> | t=<INFO> )
+  {
+    log.debug("Connection Mode Production");
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode bus():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+    log.debug("BUS Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode address():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+    log.debug("Address Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode value():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+    log.debug("Value Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode cvno():{SimpleNode s;}
+{
+  ( s=nonzeroaddress())
+  {
+    log.debug("CV Number Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode zeroaddress():{Token t;}
+{
+  t=<ZEROADDR>
+  {
+    //Zero Address allows a leading zero
+    log.debug("ZeroAddress Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode nonzeroaddress():{Token t;}
+{
+  t=<NONZEROADDR>
+  {
+    //NonZero Address requires a value  >=1, without
+    //a leading zero
+    log.debug("NonZeroAddress Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode port():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+    log.debug("PORT Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode devicegroup():{Token t;}
+{
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> |t=<SERVER> |
+    t=<LOCK> | t=<DESCRIPTION> | t=<POWER> )
+  {
+    log.debug("DeviceGroup Production");
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+
+SimpleNode go():{}
+{
+  <GO>
+  {
+     log.debug("GO Production");
+     return jjtThis;
+  }
+}
+
+SimpleNode get():{}
+{
+  <GET> bus() ( fb() address() |
+                ga() address() port() |
+                gl() address() |
+                sm() address() progmode() cvno() (value())* |
+                time() |
+                power() |
+                server() |
+                session() address() |
+                lock() |
+                description() )
+
+  {
+     log.debug("GET Production");
+     return jjtThis;
+  }
+}
+
+SimpleNode handshake_set():{}
+{
+	<SET> ( protocollitteral() serviceversion() |
+	        connectionlitteral() <SRCP> connectionmode() )
+  {
+    log.debug("Handshake Mode SET Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode protocollitteral():{}
+{
+   <PROTOCOLLITTERAL>
+   {
+       log.debug("Protocol Litteral production");
+       return jjtThis;
+   }
+}
+
+SimpleNode connectionlitteral():{}
+{
+   <CONNECTIONMODELITTERAL>
+   {
+       log.debug("Connection Litteral production");
+       return jjtThis;
+   }
+}
+SimpleNode set():{}
+{
+  <SET> ( bus() ( gl() address() drivemode() address() address() (functionmode())* |
+                sm() address() progmode() cvno() (value())+ |
+                ga() address() port() zeroone() (delay()|timeout()) |
+                fb() address() zeroone()|
+                time() address() address() address() address() |
+                power() onoff() |
+                lock() ) )
+  {
+    log.debug("SET Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode term():{}
+{
+  <TERM> bus()  ( fb() |
+                  gl() address() |
+                  sm() |
+                  power() |
+                  server() |
+                  lock() |
+                  time() |
+                  session() [ address() ] )
+  {return jjtThis;}
+}
+
+
+SimpleNode check():{}
+{
+  // the protocol documentation indicates check and set
+  // are the same, so there could be some refactoring here.
+  <CHECK> ( ( bus() ( gl() |
+                sm() |
+                ga() address() port() zeroone() (delay()|timeout()) |
+                fb() address() zeroone()|
+                time() |
+                power() onoff() |
+                lock() ) ) |
+	<PROTOCOLLITTERAL> serviceversion() |
+	<CONNECTIONMODELITTERAL> connectionmode() )
+  {
+    log.debug("Check Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode wait_cmd():{}
+{
+  <WAIT> bus() ( fb() address() zeroone() timeout() |
+         time() address() address() address() address())
+
+  {
+     log.debug("WAIT Production");
+     return jjtThis;
+  }
+}
+
+SimpleNode init():{}
+{
+  <INIT> bus() ( fb() |
+                 ga() address() protocol() |
+                 gl() address() protocol() |
+                 sm() <NMRA> |
+                 time() nonzeroaddress() nonzeroaddress() |
+                 power() )
+  {
+     log.debug("INIT Production");
+     return jjtThis;
+  }
+}
+
+SimpleNode reset():{}
+{
+  <RESET> bus() server()
+  {
+     log.debug("RESET Production");
+     return jjtThis;
+  }
+}
+
+SimpleNode verify():{}
+{
+  <VERIFY> bus() sm() address() progmode() cvno() (value())+
+  {
+     log.debug("RESET Production");
+     return jjtThis;
+  }
+}
+
+SimpleNode gl():{Token t;}
+{
+  t=<GL>
+  {
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode sm():{Token t;}
+{
+  t=<SM>
+  {
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode ga():{Token t;}
+{
+  t=<GA>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode fb():{Token t;}
+{
+  t=<FB>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode time():{Token t;}
+{
+  t=<TIME>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode power():{Token t;}
+{
+  t=<POWER>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode server():{Token t;}
+{
+  t=<SERVER>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode session():{Token t;}
+{
+  t=<SESSION>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode lock():{Token t;}
+{
+  ( t=<LOCK> devicegroup() address() [address()] )
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode description():{Token t; SimpleNode s; SimpleNode r;}
+{
+  ( t=<DESCRIPTION> [ devicegroup() [address()] ] )
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode onoff():{Token t;}
+{
+  t=<ONOFF>
+  {
+     log.debug("OnOff Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode zeroone():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+     log.debug("ZeroOne Production ");
+     jjtThis.jjtSetValue(s.jjtGetValue());
+     return jjtThis;
+  }
+}
+
+SimpleNode delay():{Token t;}
+{
+  // time timeout is a non-zero integer.  It may be negative.
+  t=<DELAY>
+  {
+     log.debug("Delay Production " +t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode timeout():{Token t;}
+{
+  // the timeout is a non-negative integer.
+  address()
+  {
+     log.debug("Timeout Production ");
+     return jjtThis;
+  }
+}
+
+// service mode programming modes
+
+SimpleNode progmode():{SimpleNode s;}
+{
+  // programming mode has 3 possibilities
+  ( s=cvbit() | s=cv() | s=reg() )
+  {
+     log.debug("Programming Mode Production ");
+     return jjtThis;
+  }
+}
+
+
+SimpleNode cv():{}
+{
+  <CV>
+  {return jjtThis;}
+}
+
+SimpleNode cvbit():{}
+{
+  <CVBIT>
+  {return jjtThis;}
+}
+
+SimpleNode reg():{}
+{
+  <REG>
+  {return jjtThis;}
+}
+
+SimpleNode protocol():{Token t;}
+{
+  t=<PROTOCOL> (address())*
+  {
+    log.debug("Protocol Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+
+  }
+}
+
+SimpleNode drivemode():{Token t;}
+{
+   ( t=<DRIVEMODE> | t=<ZEROADDR> | t=<NONZEROADDR> )
+   {
+    log.debug("Drivemode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode functionmode():{Token t;}
+{
+   ( t=<FUNCTIONMODE> | t=<ZEROADDR> | t=<NONZEROADDR> | t=<DRIVEMODE> )
+   {
+    log.debug("Functionmode Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+
+

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233; le 2013-09-09-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Visualisation des fichiers XML</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code xml usage">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Visualisation des fichiers XML</h1>JMRI enregistre
+      diverses informations dans des fichiers XML. Bien qu'ils
+      soient en format texte qui est fondamentalement lisible par
+      l'homme, c'est un format compliqu&eacute;.
+
+      <p>Pour les rendre plus faciles &agrave; lire, &agrave;
+      imprimer et &agrave; comprendre, les fichiers XML de JMRI
+      peuvent &ecirc;tre affich&eacute;s dans un navigateur Web.
+      Une technique appel&eacute;e &laquo;feuilles de style XSLT"
+      est utilis&eacute; pour les formater dans le navigateur web.
+      Pour un exemple de la fa&ccedil;on dont cela ressemble, s'il
+      vous pla&icirc;t voir le panneau &eacute;chantillon <a href=
+      "http://jmri.org/xml/samples/NicksClinic.xml">fichier XML</a>
+      sur les principaux Web site JMRI. (Peut prendre quelques
+      secondes &agrave; charger)</p>
+
+      <p>Pour afficher un fichier XML que JMRI a
+      cr&eacute;&eacute;, il suffit d'ouvrir le fichier avec votre
+      navigateur web favori. Dans de nombreux cas, vous devriez
+      &ecirc;tre en mesure de simplement double-cliquez sur sur
+      lui, ou faites le glisser sur l'ic&ocirc;ne du navigateur
+      Web. Sur certains types d'ordinateurs, vous aurez besoin de
+      l'ouvrir &agrave; partir du menu "Fichier".</p>
+
+      <p>Malheureusement, cette approche simple ne fonctionne pas
+      toujours, parce que tous les navigateurs ne mettent pas
+      correctement en oeuvre les algorithmes pour trouver les
+      fichiers de mise en forme n&eacute;cessaires &agrave; cet
+      affichage. Si le premier navigateur que vous essayez
+      n'affiche pas le fichier XML (habituellement montrant une
+      page blanche, bien que parfois ils vont afficher un message
+      d'erreur), S'il vous pla&icirc;t essayez les autres que vous
+      avez install&eacute;s. Internet Explorer est
+      particuli&egrave;rement probl&eacute;matique. Mozilla, Safari
+      et Opera semblent pour obtenir ce droit, tandis que Firefox
+      semble fonctionner correctement sur certaines plateformes,
+      Linux entre autres, et pas sur d'autres. (Il peut aussi y
+      avoir des options qui l'affectent s'il fonctionne)</p>
+
+      <p>Si aucun des navigateurs qui s'offrent &agrave; vous ne
+      peut afficher le fichier, vous pouvez contourner ce
+      probl&egrave;me en utilisant le <a href=
+      "../../web/index.shtml">mini serveur Web JMRI</a> dans la
+      version JMRI 2.9.4 et plus tard.</p>
+
+      <p>Pour ce faire:</p>
+
+      <ul>
+        <li>d'abord, d&eacute;marrer JMRI.
+
+          <ul>
+            <li>
+              <ul>
+                <li>Soit DecoderPro ou PanelPro peut &ecirc;tre
+                utilis&eacute;, et aucune connexion r&eacute;seau
+                n'est n&eacute;cessaire.</li>
+
+                <li>Vous devez utiliser JMRI 2.9.4 ou version
+                ult&eacute;rieure.</li>
+
+                <li>Le fichier que vous souhaitez afficher doit
+                avoir &eacute;t&eacute; entrepos&eacute; dans JMRI
+                2.9.4 ou version ult&eacute;rieure. S'il est plus
+                vieux que cela, il suffit de charger dans JMIR
+                2.9.4 ou version ult&eacute;rieure et de le stocker
+                &agrave; nouveau.</li>
+              </ul>
+            </li>
+
+            <li>D&eacute;marrez le serveur web JMRI. Dans le cadre
+            du menu d&eacute;bogage , s&eacute;lectionnez
+            "D&eacute;marrer Mini Web Server".</li>
+
+            <li>Ouvrez votre navigateur Web et saisissez l'URL "
+            <a href=
+            "http://localhost:12080/index.html">http://localhost:12080/index.html</a>
+            "</li>
+
+            <li>Vous devriez maintenant voir le logo de JMRI sur
+            une page d'index. Si votre fichier XML se trouve dans
+            le r&eacute;pertoire de distribution JMRI, cliquez sur
+            le lien "dist" . Si c'est dans le r&eacute;pertoire des
+            pr&eacute;f&eacute;rences, cliquez sur le lien "prefs"
+            .</li>
+
+            <li>Enfin, cliquez sur un des noms de
+            r&eacute;pertoires n&eacute;cessaires pour
+            acc&eacute;der &agrave; votre fichier, puis cliquez sur
+            votre fichier.</li>
+          </ul>Vous pouvez ensuite utiliser votre navigateur pour
+          visualiser, imprimer, enregistrer, etc comme vous le
+          souhaitez. <!--#include virtual="/Footer" -->
+        </li>
+      </ul>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

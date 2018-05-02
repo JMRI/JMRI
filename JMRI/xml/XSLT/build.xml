@@ -1,0 +1,282 @@
+<!-- an ANT build.xml file for JMRI XSLT -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
+
+<!-- This file is part of JMRI.                                             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<project name="JMRI" default="xslt" basedir=".">
+<!-- basedir="." means all paths are relative to the "java" subdir -->
+<!-- in the project.  We expect that lib et al will be present in -->
+<!-- .. from there -->
+
+  <description>
+  Provides build services for JMRI web pages
+  </description>
+
+  <property name="jmri.copyright.year" value="1997-2018"/>
+
+  <!-- set global properties for this build -->
+  <property name="xml" value=".."/>
+  <property name="toDTD" value="DTD/"/>
+  <property name="fromDTD" value="../DTD"/>
+  <property name="decoders" value="../decoders"/>
+  <property name="target" value="pages/"/>
+  <property name="propertiesdir" value="properties/"/>
+
+    <!-- ../../local.properties file      (not an error if doesn't exist)                -->
+    <!--                                                                                 -->
+    <!-- Things you might want to set:                                                   -->
+    <!--    # Your SourceForge ID (used for upload) if different                         -->
+    <!--    sourceforge.userid=me                                                        -->               
+    <!--                                                                                 -->
+    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!--                                                                                 -->
+    <property file="../../local.properties"/>
+
+  <target name="init" description="create needed directories">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${target}"/>
+    <mkdir dir="${toDTD}"/>
+    <mkdir dir="${propertiesdir}"/>
+  </target>
+
+  <target name="clean" 
+  			description="remove results">
+   <delete dir="${target}"/>
+   <delete dir="${toDTD}"/>
+   <delete dir="${propertiesdir}"/>
+   <delete dir="xml"/>
+  </target>
+
+  <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">
+	<copy todir="${toDTD}" >
+    	<fileset dir="${fromDTD}" >
+      		<include name="*.dtd"/>
+    	</fileset>
+  	</copy> 
+	<copy todir="${target}" >
+    	<fileset dir="${fromDTD}" >
+      		<include name="decoderIndex-config.dtd"/>
+      		<include name="decoder-config.dtd"/>
+    	</fileset>
+  	</copy> 
+  	<mkdir dir="xml"/>
+	<copy todir="xml" >
+    	<fileset dir="${fromDTD}" >
+      		<include name="decoderIndex-config.dtd"/>
+    	</fileset>
+  	</copy> 
+  </target>
+  
+  <target name="copyXML" 
+  			description="ensure local XML file copies present where needed for processing">
+	<copy todir="${target}" >
+    	<fileset dir="${xml}/decoders" >
+      		<include name="*.xml"/>
+      		<exclude name="0NMRA_test.xml" />
+    	</fileset>
+  	</copy> 
+	<copy todir="${target}" >
+    	<fileset dir="${xml}" >
+      		<include name="decoderIndex.xml"/>
+    	</fileset>
+  	</copy> 
+	<copy todir="${target}" >
+    	<fileset dir=".">
+      		<include name="interestingCVs.xml"/>
+    	</fileset>
+  	</copy> 
+  </target>
+  
+  <target name="csv" depends="init, copyDTD, copyXML, alldecodercsv, reservedcsv" 
+  			description="create CSV file listing CVs available on all decoders">
+	<copy todir="${target}" >
+    	<fileset dir="." >
+      		<include name="CSVindex.html"/>
+    	</fileset>
+  	</copy> 
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="SizeAsCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/decodersizes.csv"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="PowerAsCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/decoderpower.csv"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+
+  <target name="alldecodercsv" depends="init, copyDTD, copyXML" 
+  			description="create CSV file listing CVs available on all decoders">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="CSVsummary.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/cvsummary.csv"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="reservedcsv" depends="init, copyDTD, copyXML" 
+  			description="create CSV file listing reserved CVs used by decoders">
+	<copy todir="${target}" >
+    	<fileset dir="." >
+      		<include name="CSVindex.html"/>
+    	</fileset>
+  	</copy> 
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="reservedCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/reservedCVs.csv"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="index" depends="init, copyDTD, copyXML" 
+  			description="create a decoder index page">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="DecoderModelIndex.xsl"
+    		includes="decoderIndex.xml"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="mfgs" depends="init, copyDTD, copyXML" 
+  			description="create a manufacturer index page">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="DecoderMfgIndex.xsl"
+    		includes="decoderIndex.xml"
+    		in="pages/decoderIndex.xml"
+    		out="pages/mfgIndex.html"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <!-- the following no longer works because it runs out of memeory making the page -->
+  <!-- which is supposed to contain every CV for every decoder.  Maybe switch to -->
+  <!-- a more column oriented form, showing who uses each CV on one page? -->
+  <target name="cvsummary" depends="init, copyDTD, copyXML" 
+  			description="create HTML page listing CVs available on all decoders">
+    <echo message="setenv ANT_OPTS -Xmx1000M"/>
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="CVsummary.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/CVSummary.html"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+ <target name="selection" depends="init, copyDTD, copyXML" 
+  			description="create HTML decoder selection guide listing various properties">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		style="SelectionGuide.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/SelectionGuide.html"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="models" depends="init, copyDTD, copyXML" 
+  			description="tranform definitions into web pages">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		extension=".xml.html"
+    		style="DecoderModelList.xsl"
+    		includes="*.xml"
+    		excludes="decoderIndex.xml, names.html"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="id" depends="init, copyDTD, copyXML" 
+  			description="create a page on decoder selection">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		extension=".xml.html"
+    		style="DecoderID.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/DecoderId.html"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="properties" depends="init, copyDTD, copyXML" 
+  			description="tranform definitions into properties files">
+    <xslt  basedir="${target}"
+    		destdir="${propertiesdir}"
+    		extension=".properties"
+    		style="PropertiesFiles.xsl"
+    		includes="*.xml"
+    		excludes="decoderIndex.xml, names.html, interestingCVs.xml"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+  <target name="testweb" depends="init, copyDTD, copyXML" 
+  			description="test a single web transform">
+    <xslt  basedir="${target}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="decoder.xsl"
+    		in="pages/TCS_A1.xml"
+    		out="pages/testweb.html"
+    	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
+  </target>
+  
+
+  <target name="xslt" depends="init, models, index, selection, csv, id, properties"
+  		description="run the whole sequence of processing" />
+  		
+  <!-- This target requires access to the JMRI webserver -->
+  <!-- so it's only for use by JMRI maintainers -->
+  <target name="upload" description="Upload existing results to web site" >
+    <exec executable="rsync">
+      <arg value="-avz"/>
+      <arg value="--delete"/>
+      <arg value="pages"/>
+      <arg value="jmri@webserver.jmri.org:htdocs/xml/XSLT/"/>
+    </exec>
+    <exec executable="rsync">
+      <arg value="-avz"/>
+      <arg value="--delete"/>
+      <arg value="properties"/>
+      <arg value="jmri@webserver.jmri.org:htdocs/xml/XSLT/"/>
+    </exec>
+  </target>
+
+</project>

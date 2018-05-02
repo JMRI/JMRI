@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<!-- version 1.1 2 Aug 11 JES
+                 - made item name for CV 133 more generic
+-->
+<!-- version 1.2 - Ronald Kuhn - add german translation -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Smoke</name>
+  <name xml:lang="it">Fumo</name>
+  <name xml:lang="cs">Kouř</name>
+  <name xml:lang="de">Rauch</name>
+  <column>
+    <display item="Smoke Characteristic"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Smoke PWM at standstill"/>
+        <display item="Smoke PWM at minimum speed"/>
+        <display item="Smoke PWM at max speed"/>
+      </column>
+      <column>
+        <display item="Smoke PWM at standstill" format="hslider" label="">
+          <label/>
+        </display>
+        <display item="Smoke PWM at minimum speed" format="hslider" label="">
+          <label/>
+        </display>
+        <display item="Smoke PWM at max speed" format="hslider" label="">
+          <label/>
+        </display>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Automatic Shut-down of Smoke Generator"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Function Output as virtual Cam or Smoke Fan"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Fan Speed at Standstill"/>
+      </column>
+      <column>
+        <display item="Fan Speed at Standstill" format="hslider" label="">
+          <label/>
+        </display>
+      </column>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Smoke Fan Speed at Steady Speed"/>
+        <display item="Smoke Fan Speed at Startup and Acceleration"/>
+      </column>
+      <column>
+        <display item="Smoke Fan Speed at Steady Speed" format="hslider" label="">
+          <label/>
+        </display>
+        <display item="Smoke Fan Speed at Startup and Acceleration" format="hslider" label="">
+          <label/>
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

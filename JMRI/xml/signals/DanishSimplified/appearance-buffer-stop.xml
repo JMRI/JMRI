@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>KJ</firstname><surname>Lisby</surname></personname>
+
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-18</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Initial Version</revremark>
+    </revision>    
+  </revhistory>
+  
+  <aspecttable>DanishSimplified</aspecttable>
+
+  <name>Buffer Stop</name>
+  
+  <description>This signalmast is used for assigning to ends of sidings and where areas of track go out of control of the Signalling System.</description>
+  
+  <appearances>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls2Danger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Stop</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Stop</aspect>
+    </dark>
+  </specificappearances>
+</appearancetable>  

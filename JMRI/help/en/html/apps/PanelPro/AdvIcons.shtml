@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Advanced Icons in PanelPro</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Advanced Icons in PanelPro</h1><a name="memoryicon"
+      id="memoryicon"></a>
+
+      <h3>Memory Icons</h3>Memory objects are meant for scripting
+      control; the first implementation is a MemoryIcon that lets
+      you put a multi-state icon on the screen.
+
+      <p>MemoryIcon objects work two ways: If a series of icons is
+      defined in the file, the memory contents will be translated
+      via this table (this was the original behavior). If there
+      aren't any icons defined, the memory contents is displayed
+      directly, as a string if it's a String and as a NamedIcon if
+      it's a NamedIcon.</p>
+
+      <p>See xml/samples/MemoryIconExample.xml for info on how to
+      set this up. <a name="reportericon" id=
+      "reportericon"></a></p>
+
+      <h3>Reporter Icons</h3><a href=
+      "../../tools/images/AddReportertoPanel.png"><img src=
+      "../../tools/images/AddReportertoPanel.png" height="146"
+      width="166" align="right"></a> The first implementation of
+      Reporter is Digitrax transponding. By adding the appropriate
+      elements to your Panel files, you can show decoder ID
+      information on your Panels. 
+      <!-- information below was copied from tools/Reporters.shtml 01/2016 -->
+
+      <p>A Reporter's value can be displayed on a Panel via an
+      icon. To do this:</p>
+
+      <ul>
+        <li>On the Panel Editor window for your Panel, find the
+        "Add Reporter" button.</li>
+
+        <li>In the text box next to that button, type the user name
+        or System Name of the desired Reporter.</li>
+
+        <li>Click the "Add to Panel" button. The Reporter icon will
+        be placed on your Panel. If it's not visible, that might be
+        because the value is currently blank; use the Reporter
+        Table to change the value to something that will be
+        visible.</li>
+
+        <li>You can drag the icon to where you want it in the usual
+        way.</li>
+
+        <li>The pop-up menu on the icon will let you change the
+        formatting.</li>
+      </ul>
+
+      <p>See xml/samples/ReporterIconExample.xml for info on how to
+      set this code up by hand.</p>
+
+      <ul>
+        <li>First check that JMRI is seeing the LocoNet messages
+        OK. From the tools menu, open the "Reporter Table". Run a
+        locomotive across your transponding sections, and you
+        should see the arrival and departure status show up on one
+        of the lines in the table.</li>
+
+        <li>Next, you need to add the "ReporterIcon" that displays
+        this directly to the panel file.
+
+          <p>Look in the "xml/samples" directory within JMRI for a
+          file called "ReporterIconExample.xml".</p>
+
+          <p>(It's also available <a href=
+          "http://jmri.org/xml/samples/ReporterIconExample.xml">on
+          the web</a> but many browsers will try to interpret it
+          instead of showing you the text; your browser's "View
+          Source" option might help with that)</p>
+
+          <p>You'll see this line:</p>
+
+          <p>&lt;reportericon reporter="LR12" x="10" y="10"
+          class="jmri.jmrit.display.configurexml.ReporterIconXml"/&gt;</p>
+
+          <p>The "x" and "y" define where you want it on your
+          panel. The "LR12" is the name of the reporter object,
+          e.g. the name of the one you saw changing when you were
+          looking at the table.</p>
+        </li>
+
+        <li>Open your panel file with your favorite editor (WordPad
+        if you've got nothing you like better), and insert a line
+        like that above right _after_ the line that starts with
+
+          <p>&lt;paneleditor
+          class="jmri.jmrit.display.configurexml.PanelEditorXml"</p>
+
+          <p>(The "paneleditor" line starts a new panel. If you
+          have more than one panel in the file, you'll have to look
+          for the panel title to see where to insert the new
+          line)</p>
+        </li>
+      </ul>It's actually not as hard as it sounds. 
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
+    <label>Normal direction of motion</label>
+    <label xml:lang="it">Normale direzione di marcia</label>
+  </variable>
+  <variable CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+    <enumVal>
+      <enumChoice choice="14"/>
+      <enumChoice choice="28/128"/>
+    </enumVal>
+    <label>Speed steps</label>
+    <label xml:lang="it">Step Velocità</label>
+  </variable>
+  <variable CV="29" mask="XXXXXVXX" default="1" tooltip="'4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Analog conversion mode</label>
+    <label xml:lang="it">Modo Conversione Analogica</label>
+    <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
+  </variable>
+  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+    <enumVal>
+       <enumChoice choice="Use Vstart, Vmid, Vhigh">
+         <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
+      </enumChoice>
+      <enumChoice choice="Use Table">
+         <choice xml:lang="it">Usa Tabella Velocità</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Use Speed Table</label>
+    <label xml:lang="it">Usa Tabella Velocità</label>
+  </variable>
+</variables>

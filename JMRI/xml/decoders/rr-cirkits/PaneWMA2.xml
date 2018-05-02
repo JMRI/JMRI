@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Panes to show I/O lines -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>BOD 5-8</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>WatchMan Input Port Configuration settings. All numbers are entered as their actual</text>
+        </label>
+        <label>
+          <text>event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond</text>
+        </label>
+        <label>
+          <text>only to the first line's event numbers. The second line's event numbers are ignored.</text>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="PA5 Output-Input" label=" " tooltip="Input only">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Paired" label=" #5  (Pin 4)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Paired-I" label=" #5  (Pin 4)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP5 Type" label="Type" tooltip="Line #1 is paired with Line #2">
+          <label>IP5 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA5 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA5 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA5 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA5 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA5 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA5 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PA6 Output-Input" label=" " tooltip="Input only">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Paired" label=" #6  (Pin  3)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Paired-I" label=" #6  (Pin  3)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP6 Type" label="Type" tooltip="Line #2 is paired with Line #1">
+          <label>IP6 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA6 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA6 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA6 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA6 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA6 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA6 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PA7 Output-Input" label=" " tooltip="Input only">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Paired" label=" #7  (Pin  2)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Paired-I" label=" #7  (Pin  2)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP7 Type" label="Type" tooltip="Line #3 is paired with Line #4">
+          <label>IP7 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA7 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA7 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA7 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA7 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA7 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA7 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="PA8 Output-Input" label=" " tooltip="Input only">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Paired" label=" #8  (Pin  1)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Paired-I" label=" #8  (Pin  1)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP8 Type" label="Type" tooltip="Line #4 is paired with Line #3">
+          <label>IP8 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA8 Base Address" label="Primary event #" tooltip="30">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA8 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA8 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PA8 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PA8 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PA8 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="IOP1 Port Type" label="Set Port 1 Type" tooltip="Complete Port type setting">
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

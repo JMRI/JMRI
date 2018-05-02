@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Sound Options CVs for Märklin mSD decoders                             -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2018</year>
+      <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Alain</firstname>
+          <surname>Le Marchand</surname>
+        </personname>
+      </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2018-03-10</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>Creation</revremark>
+      </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>2018-04-02</date>
+        <authorinitials>ALM</authorinitials>
+        <revremark>French translation + add mSD/3</revremark>
+      </revision>
+    </revhistory>
+    <variable CV="57" item="Sound Group 1 Option 2" default="46">
+        <decVal/>
+        <label>Chuff interval at speed step 1</label>
+        <label xml:lang="de">Abstand der Dampfstöße bei Fahrstufe 1</label>
+        <label xml:lang="fr">Intervalle jets de vapeur au cran de vitesse 1</label>
+        <tooltip>&lt;html&gt;
+            0 = with cam sensor (Pulse gives chuff interval)&lt;br&gt;
+            >0 without cam sensor (Chuff interval at speed step 1)&lt;br&gt;
+            Diesel / Electric : Speed Modulation: CV always = 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            0 = mit Radsensor (Impuls gibt Abstand der Dampfstöße)&lt;br&gt;
+            >0 ohne Radsensor (Abstand der Dampfstöße bei FS 1)&lt;br&gt;
+            Diesellok / Elektrolok : Geschwindigkeits-Modulation: CV immer = 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            0 = avec capteur de roue (L'impulsion donne l'intervalle de jet de vapeur)&lt;br&gt;
+            >0 avec capteur de roue (intervalle de jet de vapeur au cran vitesse 1)&lt;br&gt;
+            Diesel / Electrique : Modulation de vitesse: CV toujours = 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="58" item="Sound Group 1 Option 3" default="95">
+        <decVal/>
+        <label>Chuff interval at speed step >1</label>
+        <label xml:lang="de">Abstand der Dampfstöße bei Fahrstufe >1</label>
+        <label xml:lang="fr">Intervalle jets de vapeur crans de vitesse >1</label>
+        <tooltip>&lt;html&gt;
+            0 = with cam sensor (Pulse gives chuff interval)&lt;br&gt;
+            >0 without cam sensor (Chuff interval at speed step >1)&lt;br&gt;
+            Diesel / Electric : Speed Modulation: CV always = 0&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            0 = mit Radsensor (Impuls gibt Abstand der Dampfstöße)&lt;br&gt;
+            >0 ohne Radsensor (Abstand der Dampfstöße bei FS >1)&lt;br&gt;
+            Diesellok / Elektrolok : Geschwindigkeits-Modulation: CV immer = 0&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            0 = avec capteur de roue (L'impulsion donne l'intervalle de jet de vapeur)&lt;br&gt;
+            >0 avec capteur de roue (intervalle de jet de vapeur crans vitesse >1)&lt;br&gt;
+            Diesel / Electrique : Modulation de vitesse: CV toujours = 0&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="60" item="Sound Option 1" mask="XXXXVVVV" default="0">
+        <decVal max="15"/>
+        <label>Number of Stations</label>
+        <label xml:lang="de">Anzahl der Bahnhöfe</label>
+        <label xml:lang="fr">Nombre de gares</label>
+        <tooltip>&lt;html&gt;
+            Multi-station Announcements&lt;br&gt;
+            0 = no Station Announcement&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Multibahnhofsansage&lt;br&gt;
+            0 = keine Bahnhofsansage&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            Annonces multi-gares&lt;br&gt;
+            0 = pas d'annonce en gare&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="60" item="Sound Option 2" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Turn</label>
+        <label xml:lang="de">Kehre</label>
+        <label xml:lang="fr">Retour</label>
+        <tooltip>&lt;html&gt;
+            End announcement reverses the order of announcements of the stations&lt;br&gt;
+            e.g. Stat1 > Stat2 > Stat3 End. > Stat2 > Stat1 ...
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Endansage wechselt die Ansagereihenfolge der Bahnhöfe&lt;br&gt;
+            z.B. Bhf1 > Bhf2 > Bhf3 End. > Bhf2 > Bhf1 ...
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            La fin des annonces inverse l'ordre des annonces en gare&lt;br&gt;
+            par ex. Gare1 > Gare2 > Gare3 Fin. > Gare2 > Gare1 ...
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="60" item="Sound Option 3" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Direction</label>
+        <label xml:lang="de">Lokrichtung</label>
+        <label xml:lang="fr">Direction</label>
+        <tooltip>&lt;html&gt;
+            Loco change of direction reverses the order of announcements of the stations&lt;br&gt;
+            e.g. Stat1 > Stat2 > Stat3 Direction > Stat2 > Stat1 ...&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Lokrichtung wechselt die Ansagereihenfolge der Bahnhöfe&lt;br&gt;
+            z.B. Bhf1 > Bhf2 > Bhf3 Richtung. > Bhf2 > Bhf1 ...&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            Le changement de direction de la locomotive inverse l'ordre des annonces en gare&lt;br&gt;
+            par ex. Gare1 > Gare2 > Gare3 Direction. > Gare2 > Gare1 ...&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="60" item="Sound Option 4" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice value="0">
+            <choice>Normal</choice>
+            <choice xml:lang="de">Normal</choice>
+            <choice xml:lang="fr">Normal</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Inversed</choice>
+            <choice xml:lang="de">Invertiert</choice>
+            <choice xml:lang="fr">Inversée</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sequence</label>
+        <label xml:lang="de">Reihenfolge</label>
+        <label xml:lang="fr">Séquence</label>
+        <tooltip>&lt;html&gt;
+            Default for sequence of announcements of the stations&lt;br&gt;
+            Normal (0) = Stat 1 > Stat n ...&lt;br&gt;
+            Inversed (1) = ... Stat n > Stat 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Vorgabe für Ansagereihenfolge der Bahnhöfe&lt;br&gt;
+            Normal (0) = Bhf 1 > Bhf n ...&lt;br&gt;
+            Invertiert (1) = ... Bhf n > Bhf 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            Séquence par défaut des annonces en gare&lt;br&gt;
+            Normal (0) = Gare 1 > Gare n  ...&lt;br&gt;
+            Inversée (1) = ... Gare n > Gare 1&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="63" item="Sound Setting 1" default="255">
+        <decVal/>
+        <label>Total Volume</label>
+        <label xml:lang="de">Lautstärke gesamt</label>
+        <label xml:lang="fr">Volume sonore général</label>
+        <tooltip>&lt;html&gt;Total volume for all sounds.&lt;br&gt; 0 = no sound&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Gesamtlautstärke für alle Sounds.&lt;br&gt; 0 = keine Sounds&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;Volume général pour tous les sons.&lt;br&gt; 0 = pas de sons&lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="64" item="Sound Group 1 Option 1" default="105" include="60940,60945,60965"> <!-- Steam -->
+        <decVal/>
+        <label>Threshold for brake squealing</label>
+        <label xml:lang="de">Bremsenquietschen Schwelle</label>
+        <label xml:lang="fr">Seuil de grincement des freins</label>
+        <tooltip>&lt;html&gt;
+            The higher the value the sooner the squealing begins,&lt;br&gt;
+            the lower the value the later the squealing begins.&lt;br&gt;
+            If the value is too low, no squealing is activated.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Das Quietschen beginnt, je größer der Wert um so früher,&lt;br&gt;
+            je kleiner der Wert um so später.&lt;br&gt;
+            Ist der Wert zu klein wird kein Quietschen ausgelöst.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            Plus la valeur est élévée, plus tôt commence le grincement,&lt;br&gt;
+            plus elle est petite, plus le grincement commence tard.&lt;br&gt;
+            Si la valeur est trop faible, il n'y a pas de grincement.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="64" item="Sound Group 1 Option 1" default="55" exclude="60940,60945,60965,Märklin mSD/3">  <!-- Diesel and Electric -->
+        <decVal/>
+        <label>Threshold for brake squealing</label>
+        <label xml:lang="de">Bremsenquietschen Schwelle</label>
+        <label xml:lang="fr">Seuil de grincement des freins</label>
+        <tooltip>&lt;html&gt;
+            The higher the value the sooner the squealing begins,&lt;br&gt;
+            the lower the value the later the squealing begins.&lt;br&gt;
+            If the value is too low, no squealing is activated.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Das Quietschen beginnt, je größer der Wert um so früher,&lt;br&gt;
+            je kleiner der Wert um so später.&lt;br&gt;
+            Ist der Wert zu klein wird kein Quietschen ausgelöst.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            Plus la valeur est élévée, plus tôt commence le grincement,&lt;br&gt;
+            plus elle est petite, plus le grincement commence tard.&lt;br&gt;
+            Si la valeur est trop faible, il n'y a pas de grincement.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+    <variable CV="64" item="Sound Group 1 Option 1" default="35" include="Märklin mSD/3">  <!-- mSD/3 -->
+        <decVal/>
+        <label>Threshold for brake squealing</label>
+        <label xml:lang="de">Bremsenquietschen Schwelle</label>
+        <label xml:lang="fr">Seuil de grincement des freins</label>
+        <tooltip>&lt;html&gt;
+            The higher the value the sooner the squealing begins,&lt;br&gt;
+            the lower the value the later the squealing begins.&lt;br&gt;
+            If the value is too low, no squealing is activated.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;
+            Das Quietschen beginnt, je größer der Wert um so früher,&lt;br&gt;
+            je kleiner der Wert um so später.&lt;br&gt;
+            Ist der Wert zu klein wird kein Quietschen ausgelöst.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+        <tooltip xml:lang="fr">&lt;html&gt;
+            Plus la valeur est élévée, plus tôt commence le grincement,&lt;br&gt;
+            plus elle est petite, plus le grincement commence tard.&lt;br&gt;
+            Si la valeur est trop faible, il n'y a pas de grincement.&lt;br&gt;
+            &lt;/html&gt;</tooltip>
+    </variable>
+</variables>

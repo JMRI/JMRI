@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Command Generator</title>
+  <meta name="author" content="Dan Boudreau">
+  <meta name="keywords" content="JMRI Help NCE Command Generator">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>G&Atilde;&copy;n&Atilde;&copy;rateur de Commande
+      NCE</h1>Les commandes binaires NCE sont con&Atilde;&sect;ues
+      pour fonctionner dans un mode ordinateur convivial.<br>
+      Le format de commande est la suivante: (nombre cmd)
+      (donn&Atilde;&copy;es) (donn&Atilde;&copy;es) ...<br>
+      Les Commandes vont de 0x80 &Atilde;  0xBF
+
+      <p>Le nombre d'octets r&Atilde;&copy;ponse est
+      automatiquement calcul&Atilde;&copy; par le programme. Vous
+      pouvez remplacer le nombre d'octets attendus en entrant un
+      nombre dans la zone de texte situ&Atilde;&copy;e dans le coin
+      inf&Atilde;&copy;rieur gauche.</p><br>
+
+      <h2>Les commandes binaires NCE sont prises en charge par tous
+      les syst&Atilde;&uml;mes</h2>
+
+      <p>FORMAT ET DESCRIPTION DES COMMANDES BINAIRES # OCTETS DE
+      R&Atilde;&permil;PONSES RETOURN&Atilde;&permil;ES</p>
+
+      <p>0x80 NOP, l'instruction fictive (1)!</p>
+
+      <p>0x8C retours d'instruction factice "!" (3)!, 0x0D, 0x0A
+      suivie par CR/LF</p>
+
+      <p>0x9C xx xx Ex&Atilde;&copy;cuter num&Atilde;&copy;ro de
+      macro (1)!, 0,3</p>
+
+      <p>0x9E Entrer en mode voie de programmation (1)!=
+      Succ&Atilde;&uml;s 3 = court circuit</p>
+
+      <p>0x9F sortie suivre le mode de programmation (1)! =
+      Succ&Atilde;&uml;s</p>
+
+      <p>0xA0 aaaa xx Programme CV AA avec des donn&Atilde;&copy;es
+      xx dans (1)! = Succ&Atilde;&uml;s mode pagin&Atilde;&copy;e 0
+      = suivre le programme n'est pas activ&Atilde;&copy;</p>
+
+      <p>0xA1 aaaa Lire CV AA en mode pagin&Atilde;&copy; (2)!,
+      0,3<br>
+      REMARQUE: Les cv donn&Atilde;&copy;es suivies par! pour OK,
+      0xff suivie par 3 pour ne peut pas lire</p>
+
+      <p>0xA2 (4 octets de donn&Atilde;&copy;es)
+      contr&Atilde;&acute;les commande de la locomotive (1)!, 1<br>
+      Envoie un paquet de vitesse ou de fonction &Atilde;  une
+      locomotive.<br>
+      Format des commandes: 0xA2 (addr_h) (addr_l) (op_1)</p>
+
+      <p>da format binaire CMD # DESCRIPTION DES OCTETS ta_1)<br>
+      <br>
+      Addr_h et Addr_l sont l'adresse de loco au format DCC.<br>
+      Si une adresse longue est en cours d'utilisation, les bits 6
+      et 7 de l'octet haut sont fix&Atilde;&copy;s.<br>
+      Ex: adresse Long 3 = 0xC0 0x03<br>
+      Adresse courte 3 = 0x00 0x03<br>
+      <br>
+      op_1<br>
+      donn&Atilde;&copy;es_1 description de
+      l'op&Atilde;&copy;ration 00 0-7F nop<br>
+      01 0 28-7F inverse commande de vitesse<br>
+      02 0 28-7F Forward commande de vitesse<br>
+      03 0-7F inverse 128 commande de vitesse<br>
+      04 0-7F Forward 128 commande de vitesse<br>
+      05 0 ESTOP commande inverse<br>
+      06 0 ESTOP commande avanc&Atilde;&copy;<br>
+      07 Fonction 0-1F groupe 1 (m&Atilde;&ordf;me format que des
+      paquets DCC pour FG1<br>
+      08 Le groupe de fonctions 0-0f 2 (m&Atilde;&ordf;me format
+      que des paquets DCC pour FG2<br>
+      09 0 0f-groupe de fonctions 3 (m&Atilde;&ordf;me format que
+      des paquets DCC pour FG3<br>
+      0a-14 n'est pas pris en charge dans PowerCab et SB3, la
+      version 1.28<br>
+      15 0 FF-Fonctions de contr&Atilde;&acute;le de 13 &Atilde; 
+      20 (bit 0 = F13, F20 = bit 7)<br>
+      16 0 FF-Fonctions de contr&Atilde;&acute;le de 21 &Atilde; 
+      28 (bit 0 = F21, F28 = bit 7)<br>
+      17-7F r&Atilde;&copy;serv&Atilde;&copy;s
+      r&Atilde;&copy;serv&Atilde;&copy;s</p>0xA6 rr xx Program regi
+
+      <p>0xA6 rr xx Programme REGI</p>
+
+      <p>0xA6 xx rr rr Registre programm&Atilde;&copy; avec des
+      donn&Atilde;&copy;es xx (1)! = Succ&Atilde;&uml;s dans les
+      &Atilde;&copy;critures 0 = Mode voie de programmation pas
+      activ&Atilde;&copy;</p>
+
+      <p>0xA7 rr rr Lire inscrire dans le registre de mode (2)!,
+      3<br>
+      REMARQUE: Les donn&Atilde;&copy;es cv suivies par! pour OK, 0
+      = Mode voie de programmation pas activ&Atilde;&copy; 0xff
+      suivi par 3 pour peut pas lire</p>
+
+      <p>0xA8 aaaa aaaa CV xx programme avec des
+      donn&Atilde;&copy;es xx (1)! = Succ&Atilde;&uml;s dans les
+      mode direct 0 = Mode voie de programmation pas
+      activ&Atilde;&copy; &lt;/ P&gt;</p>
+
+      <p>0xA9 aaaa aaaa Lire CV en mode direct (2)!, 3<br>
+      REMARQUE: Les donn&Atilde;&copy;es suivies cv! pour OK, 0 =
+      la piste de programmation pas activ&Atilde;&copy;e 0xff suivi
+      par 3 pour peut pas lire</p>
+
+      <p>Num&Atilde;&copy;ro de r&Atilde;&copy;vision 0xAA Retour
+      logiciels (3) (data1), (data2), (donn&Atilde;&copy;es3)<br>
+      FORMAT: VV.MM.mm &lt;/ P&gt;</p>
+
+      <p>0xAD (4 octets de donn&Atilde;&copy;es) ACCY / signal et
+      des macro-commandes (1)!, 1<br>
+      Format des commandes: 0xAD (addr_h) (addr_l) (op_1)
+      (donn&Atilde;&copy;es_1)<br>
+      Addr_h et Addr_l sont l'adresse de l'accessoire / signal (pas
+      au format DCC).<br>
+      Ex: 513 Adresse accessoire 0x01 = 0x02 (salut premier
+      octet)<br>
+      REMARQUE: accy/le signal adresse 0 n'est pas une adresse
+      valide<br>
+      NOTE SP&Atilde;&permil;CIALE: PowerCab/SB3 version 1.28 ne
+      supporte que jusqu'&Atilde;  l'accessoire Adresse 250<br>
+      <br>
+      Op_1 Donn&Atilde;&copy;es_1 description de
+      l'op&Atilde;&copy;ration<br>
+      01 0-255 NCE num&Atilde;&copy;ro de macro 0-255<br>
+      02 0-255 Duplicata du Op_1 commande<br>
+      03 0 direction d'accessoires Normal (ON)<br>
+      04 0 sens inverse des accessoires (OFF)<br>
+      05 0-1f aspect du signal 0-31<br>
+      05-7F r&Atilde;&copy;serv&Atilde;&copy;s
+      r&Atilde;&copy;serv&Atilde;&copy;s</p>
+
+      <p>0xAE (5 octets de donn&Atilde;&copy;es) PO programme loco
+      CV (1)!, 1,3<br>
+      Format des commandes: 0xAE (addr_h) (addr_l) (CV_h) (CV_l)
+      (donn&Atilde;&copy;es)<br>
+      addr_h, addr_l sont l'adresse loco (le m&Atilde;&ordf;me que
+      commande 0xA2)<br>
+      CV_h, CV_l sont cv donn&Atilde;&copy;es d'adresse octet haut
+      premier est 8 bits de donn&Atilde;&copy;es pour CV &lt;/
+      P&gt;</p>
+
+      <p>0xAF (5 octets de donn&Atilde;&copy;es) signal de
+      programme PO accessoires / (1)!, 1,3<br>
+      Format des commandes: 0xAF (addr_h) (addr_l) (CV_h) (CV_l)
+      (donn&Atilde;&copy;es)<br>
+      addr_h, addr_l sont ACCY / sig adresse (m&Atilde;&ordf;me
+      commande 0xAD)<br>
+      CV_h, CV_l sont donn&Atilde;&copy;es du CV adresse d'octet de
+      haute premier est 8 bits de donn&Atilde;&copy;es pour CV<br>
+      <br>
+      REMARQUE: un seul octet de 0 sera renvoy&Atilde;&copy; s'il
+      n'est pas dans le mode programmation<br>
+      pour les commandes 0x9F, 0xA0, 0xA1 et 0xA6-0xA9<br>
+      <br>
+      Erreurs retourn&Atilde;&copy;es: '0 '= pas pris en charge la
+      commande<br>
+      '1 '=adresse Loco/acc/signal en dehors de la gamme<br>
+      '2 'Adresse de cab ou op code = en dehors de la gamme<br>
+      '3 '= adresse ou donn&Atilde;&copy;es des CV en dehors de la
+      gamme<br>
+      '4 '= Compteur d'octetst en dehors de la gamme<br>
+      '!' Command = termin&Atilde;&copy; avec
+      succ&Atilde;&uml;s</p>&lt; H3&gt;Commandes Binaires
+      Suppl&Atilde;&copy;mentaires NCE Soutenu par Power House
+
+      <p>0x81 xx xx xxxx yy attribuer des loco au cab cc (1)!,
+      1,2</p>
+
+      <p>0x82 horloge de lecture (2) (heures) (minutes)</p>
+
+      <p>0x83 (1)Arr&Atilde;&ordf;t de l'horloge binaire!</p>
+
+      <p>0x84 (1)Horloge de d&Atilde;&copy;part!</p>
+
+      <p>0x85 xx xx R&Atilde;&copy;glez l'horloge h/min (1)!,3</p>
+
+      <p>0x86 xx R&Atilde;&copy;gler l'horloge 12/24 (1)!,3</p>
+
+      <p>0x87 xx R&Atilde;&copy;gler Taux d'Horloge (1)!,3</p>
+
+      <p>0x88 xxxx Dequeue paquet par loco adr (1)!,1,2</p>
+
+      <p>0x89 Activer principale trk, tuer prog (1)!</p>
+
+      <p>0x8A yy Retour de statut d'AIU yy (4) (en cours d'octet
+      haut) (version actuelle octets bas) (changement octets hauts)
+      (changement octet bas)</p>
+
+      <p>0x8B Tuez voie principale , permettent prog (1)!</p>
+
+      <p>0x8D xxxx mm R&Atilde;&copy;glez le mode de vitesse de la
+      loco xxxx en mode mm, 1= 4, 2=28, 3=128 (1)!, 1,3 (mode de
+      vitesse de 0 &Atilde;  3)</p>
+
+      <p>0x8E aaaa nn (16 octets de donn&Atilde;&copy;es) Ecrire nn
+      octets, commencent &Atilde;  aaaa doit avoir 16 octets de
+      donn&Atilde;&copy;es, de les &Atilde;&copy;toffer &Atilde; 
+      16 si n&Atilde;&copy;cessaire (1)!, 4</p>
+
+      <p>0x8F aaaa Lire 16 octets, commencent &Atilde;  aaaa (16)
+      16 octets</p>
+
+      <p>0x90 cc xx ... Envoyer un message 16 char Cab ccLCD la
+      ligne 3.xx = 16 Caract&Atilde;&uml;res ASCII (1)!,2 &lt;/
+      P&gt;</p>
+
+      <p>0x91 cc xx Envoyer un messashorlogege 16
+      caract&Atilde;&uml;res au cab cc ligne LCD 4.xx = 16ASCII
+      (1)!,2</p>
+
+      <p>0x92 cc xx Envoyer un message 8 caract&Atilde;&uml;res au
+      cab cc ligne LCD 2 &Atilde;  droite xx=8 char (1)!,2</p>
+
+      <p>0x93 SS (3 paquets d'octets) des paquets d'octets Queue 3
+      temporiser _Q envoyer ss fois (1)!</p>
+
+      <p>0x94 art (4 paquets d'octets) des paquets d'octets Queue
+      de 4 temporiser _Q envoyer ss fois (1)!</p>
+
+      <p>0x95 SS (5 paquets d'octets) des paquets d'octets Queue de
+      5 temporiser _Q envoyer ss fois (1)!</p>
+
+      <p>0x96 ss (6 paquets d'octets) des paquets d'octets Queue de
+      6 temporiser _Q envoyer ss fois (1)!</p>
+
+      <p>0x97 aaaa xx Ecrire 1 octet pour aaaa (1)!</p>
+
+      <p>0x98 aaaa xx xx Ecrire 2 octets pour aaaa (1)!</p>
+
+      <p>0x99 aaaa (4 octets de donn&Atilde;&copy;es) Ecrire 4
+      octets pour aaaa (1)!</p>
+
+      <p>0x9A aaaa (8 octets de donn&Atilde;&copy;es) Ecrire 8
+      octets &Atilde;  aaaa (1)!</p>
+
+      <p>0x9B aa Retour de statut d'AIU aa (forme courte de
+      commande 0x8A) (2) ( Octet courant haut) (version actuelle
+      octets bas)</p>
+
+      <p>0x9C xx xx Ex&Atilde;&copy;cuter num&Atilde;&copy;ro de
+      macro (1)!, 0,3</p>
+
+      <p>0x9D aaaa Lire 1 octet &Atilde;  partir aaaa (1) 1
+      octet</p>
+
+      <p>0x9E Entrer en mode voie de programmation (1)! =
+      Succ&Atilde;&uml;s 3 = court-circuit</p>
+
+      <p>0x9F mode piste sortir de la programmation (1)! =
+      Succ&Atilde;&uml;s</p>
+
+      <p>0xA0 aaaa xx Programme CV AA avec des donn&Atilde;&copy;es
+      en mode pagin&Atilde;&copy; xx (1) ! = Succ&Atilde;&uml;s 0 =
+      pas de piste de programmation</p>
+
+      <p>0xA1 aaaa aaaa Lire CV dans la Note mode
+      pagin&Atilde;&copy;: CV donn&Atilde;&copy;es suivie par! pour
+      OK. 0xFF suivi par 3 pour ne peut pas lire les CV(2)!,
+      0,3</p>
+
+      <p>0xA2 (4 octets de donn&Atilde;&copy;es) commande de
+      contr&Atilde;&acute;le de la locomotive (1)!,1</p>
+
+      <p>0xA3 (3 paquets d'octets) 3 paquets d'octets Queue
+      &Atilde;  TRK _Q (remplace tout paquet avec la
+      m&Atilde;&ordf;me adresse s'il existe) (1)!,1</p>
+
+      <p>0xA5 xx xx ...5 Paquets d'octets Queue &Atilde;  TRK _Q
+      (remplace n'importe quel paquet avec la m&Atilde;&ordf;me
+      adresse s'il existe (1)!,1</p>
+
+      <p>0xA6 rr dd Programme inscrire RR avec dd (1)!
+      =succ&Atilde;&uml;s 0=pas de voie de Programmation</p>
+
+      <p>0xA7 rr rr Lire registre rr. Note: Les cv
+      donn&Atilde;&copy;es suivis par! pour OK. 0xFF suivi par 3
+      pour ne peut pas lire les CV(2)!,3 0 = pas de voie de
+      Programmation</p>
+
+      <p>0xA8 aaaa ddjj Programme CV aaaa avec dd en mode
+      direct.(1) ! = succ&Atilde;&uml;s 0 = pas de voie de
+      Programmation</p>
+
+      <p>0xA9 aaaa Lire CV aaaaen mode direct. Note: Les cv
+      donn&Atilde;&copy;es CV suivie par ! pour OK. 0xFF suivi par
+      3 pour ne peut pas lire les CV (2)!,3 0 pas de voie de
+      Programmation</p>
+
+      <p>0xAA Retourne le Num&Atilde;&copy;ro de
+      r&Atilde;&copy;vision du logiciel. Format: VV.MM.mm (3) 3
+      octets de donn&Atilde;&copy;es</p>
+
+      <p>0xAB Effectuer un reset soft de la centrale de commande
+      (comme l'&Atilde;&copy;nergie du v&Atilde;&copy;lo) (0) rien
+      de retours</p>
+
+      <p>0xAC Effectuez une r&Atilde;&copy;initialisation de la
+      centrale de commande. Remise aux param&Atilde;&uml;tres
+      d'usine par d&Atilde;&copy;faut (Note: va changer la vitesse
+      de transmission &Atilde;  9600) (0) renvoie rien</p>
+
+      <p>0xAD (4 octets de donn&Atilde;&copy;es) ACCY/signal et des
+      macro-commandes (1)!, 1</p>
+    </div>
+  </div>
+</body>
+</html>

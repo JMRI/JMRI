@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Joan</firstname><surname>Carrancà</surname></personname>
+        <email>jcarranca@gmail.com</email>
+    </author>
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+    <author>
+        <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
+        <email>oscar.moutinho@gmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-09</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-17</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Simpler namespace indicators. New imagetype tag.</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2010-01-19</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Added small and medium size icons more suitable for panels</revremark>
+    </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2015-03-03</date>
+        <authorinitials>OM</authorinitials>
+        <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>DB-HV-1969</aspecttable>
+  <name>Combined entry + distant signal at short breaking distance</name>
+  <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a></reference>
+  <description>Signal to use at the station entry, with distant signal head at short breaking distance from next main signal.
+  Compared to a block signal it can also show "slow" because going through diverging switches may require a speed restriction.
+  The top left light (usually never lit) is red and serves as a spare for the other red light.
+  If main signal shows stop (Hp0) then distant signal is dark.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Hp0</aspectname>
+      <show>red</show>
+      <show>dark</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp0+dark_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp0+dark_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp0+dark_short.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Hp1+Vr0</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr0_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr0_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr0_short.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Hp1+Vr1</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr1_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr1_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr1_short.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Hp1+Vr2</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr2_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr2_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp1+vr2_short.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Hp2+Vr0</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr0_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr0_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr0_short.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Hp2+Vr1</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr1_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr1_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr1_short.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Hp2+Vr2</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr2_short.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr2_short.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry_distant_short/hp2+vr2_short.gif</imagelink>
+    </appearance>
+
+  </appearances>
+
+  <specificappearances><!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Hp0</aspect>
+    </danger>
+    <held>
+      <aspect>Hp0</aspect>
+    </held>
+  </specificappearances><!-- End of Specific Appearances list -->
+
+  <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+      <advancedAspect>Hp0</advancedAspect>
+      <ourAspect>Hp1+Vr0</ourAspect>
+      <ourAspect>Hp2+Vr0</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp00</advancedAspect>
+      <ourAspect>Hp1+Vr0</ourAspect>
+      <ourAspect>Hp2+Vr0</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp0/Sh1</advancedAspect>
+      <ourAspect>Hp1+Vr0</ourAspect>
+      <ourAspect>Hp2+Vr0</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh0</advancedAspect>
+      <ourAspect>Hp1+Vr0</ourAspect>
+      <ourAspect>Hp2+Vr0</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Sh1</advancedAspect>
+      <ourAspect>Hp1+Vr0</ourAspect>
+      <ourAspect>Hp2+Vr0</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp1</advancedAspect>
+      <ourAspect>Hp1+Vr1</ourAspect>
+      <ourAspect>Hp2+Vr1</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp1+Vr0</advancedAspect>
+      <ourAspect>Hp1+Vr1</ourAspect>
+      <ourAspect>Hp2+Vr1</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp1+Vr1</advancedAspect>
+      <ourAspect>Hp1+Vr1</ourAspect>
+      <ourAspect>Hp2+Vr1</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp1+Vr2</advancedAspect>
+      <ourAspect>Hp1+Vr1</ourAspect>
+      <ourAspect>Hp2+Vr1</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp2</advancedAspect>
+      <ourAspect>Hp1+Vr2</ourAspect>
+      <ourAspect>Hp2+Vr2</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp2+Vr0</advancedAspect>
+      <ourAspect>Hp1+Vr2</ourAspect>
+      <ourAspect>Hp2+Vr2</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp2+Vr1</advancedAspect>
+      <ourAspect>Hp1+Vr2</ourAspect>
+      <ourAspect>Hp2+Vr2</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Hp2+Vr2</advancedAspect>
+      <ourAspect>Hp1+Vr2</ourAspect>
+      <ourAspect>Hp2+Vr2</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings><!-- End of Aspect Mapping -->
+
+</appearancetable>  

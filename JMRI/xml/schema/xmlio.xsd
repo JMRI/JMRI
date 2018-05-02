@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for JMRI aspect-signaling support                           -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+<xs:element name="xmlio">
+
+    <xs:annotation>
+        <xs:documentation>
+          XML Schema describing XML I/O communication for JMRI.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="false">jmri.web.xmlio</jmri:usingclass>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="list" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>
+          Return a list of elements for each object of the relevant type.
+          </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="type" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+     
+        <xs:element name="throttle" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>
+          Request a throttle setting.
+          The first request just allocates the throttle.
+          Sub-elements present in subsequent requests are set on the throttle.
+          </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="address" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="speed" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="forward" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F0" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F1" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F2" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F3" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F4" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F5" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F6" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F7" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F8" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F9" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F10" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F11" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F12" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F13" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F14" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F15" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F16" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F17" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F18" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F19" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F20" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F21" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F22" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F23" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F24" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F25" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F26" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F27" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="F28" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation><xs:documentation>
+          Define an individual item to be read or written
+          </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="type" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="sensor"/>
+                    <xs:enumeration value="turnout"/>
+                    <xs:enumeration value="power"/>
+                    <xs:enumeration value="route"/>
+                    <xs:enumeration value="frame"/>
+                    <xs:enumeration value="panel"/>
+                    <xs:enumeration value="roster"/>
+                    <xs:enumeration value="memory"/>
+                    <xs:enumeration value="signalhead"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="name" minOccurs="1" maxOccurs="1"/>
+              <xs:choice>
+                <xs:element name="value" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                  Expected value, confirmed during asynch reads
+                  </xs:documentation></xs:annotation>
+                </xs:element>
+                <xs:element name="set" minOccurs="1" maxOccurs="1">
+                  <xs:annotation><xs:documentation>
+                  Specific value to be written
+                  </xs:documentation></xs:annotation>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

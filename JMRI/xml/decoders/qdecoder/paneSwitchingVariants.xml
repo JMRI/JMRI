@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																																				-->
+<!-- version 1 - Initial creation- Specific for Qdecoder accessory decoder	-->
+<!-- 					Alain Le Marchand (2014-08-30)																-->
+<!-- 																																				-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<name>Switching Variants</name>
+	<name xml:lang="de">Schaltvariante</name>
+	<row>
+	<grid ipadx="10" ipady="0" weightx="1">
+		<griditem gridx="0" gridy="0" anchor="LINE_START">
+			<column>
+				<label><text>    </text></label>
+				<label><text>    </text></label>
+				<label><text>    </text></label>
+			</column>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F1</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F2</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F3</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F4</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F5</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F6</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F7</text></label>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_START">
+				<label><text>F8</text></label>
+		</griditem>
+		<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+			<column>
+				<label>
+					<text>High/Low</text>
+				</label>
+				<label>
+					<text> Switch</text>
+					<text xml:lang="de"> param.</text>
+				</label>
+				<label><text>    </text></label>
+			</column>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F1" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F2" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F3" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F4" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F5" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F6" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F7" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="HiLo Switch For F8" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+			<column>
+				<label>
+					<text> Switching</text>
+					<text xml:lang="de">    Schalt-</text>
+				</label>
+				<label>
+					<text>mode Z1/Z2</text>
+					<text xml:lang="de">variante Z1/Z2</text>
+				</label>
+				<label><text>    </text></label>
+			</column>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F1" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F2" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F3" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F4" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F5" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F6" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F7" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode Z1 For F8" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+			<column>
+				<label>
+					<text>  Switching</text>
+					<text xml:lang="de">     Schalt-</text>
+				</label>
+				<label>
+					<text>mode ZH1/Z2+</text>
+					<text xml:lang="de">variante ZH1/Z2+</text>
+				</label>
+				<label><text>    </text></label>
+			</column>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F1" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F2" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F3" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F4" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F5" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F6" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F7" label="" format="checkbox"/>
+		</griditem>
+		<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+				<display item="Switching mode ZH1 For F8" label="" format="checkbox"/>
+		</griditem>
+	</grid>
+	</row>
+</pane>

@@ -1,0 +1,321 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Edit NCE Consist</title>
+  <meta name="author" content="Dan Boudreau">
+  <meta name="keywords" content="JMRI Help NCE Edit Consist">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Modifier Couplage NCE</h1>Cet outil vous permet de
+      r&Atilde;&copy;viser, modifier et enregistrer des styles de
+      Couplage NCE. Il vous permet &Atilde;&copy;galement de
+      sauvegarder et de restaurer toutes les couplages des
+      centrales de commande NCE depuis et vers un fichier. Le
+      format de fichier est identique aux NCE, de sorte que vous
+      pouvez restaurer un fichier qui a
+      &Atilde;&copy;t&Atilde;&copy;
+      g&Atilde;&copy;n&Atilde;&copy;r&Atilde;&copy; par la commande
+      de sauvegarde des NCE. Tr&Atilde;&uml;s utile, car la
+      restauration et les commandes de sauvegarde dans la
+      m&Atilde;&copy;moire EPROM 2007 ne travaillent pas
+      actuellement! Nous vous recommandons de fixer le vitesse
+      &Atilde;  9600 bauds quand vous utilisez cet outil.
+
+      <p>Il ya aussi un outil g&Atilde;&copy;n&Atilde;&copy;rique
+      JMRI de couplage s&Atilde;&copy;par&Atilde;&copy; <a href=
+      "../../../../../html/tools/consisttool/ConsistTool.shtml"></a>,
+      dont la <a href=
+      "../../../../../html/tools/consisttool/ConsistTool.shtml">page
+      d'aide</a> a aussi un petit tutorial sur les diverses formes
+      de couplage.</p>
+
+      <h2>Sauvegarde</h2>Pour sauvegarder toutes vos couplage dans
+      un fichier, appuyez sur le bouton "Sauvegarde"
+      situ&Atilde;&copy; sur la rang&Atilde;&copy;e du bas de
+      l'&Atilde;&copy;diteur de couplage JMRI . Un nom de fichier
+      par d&Atilde;&copy;faut appara&Atilde;&reg;tra dans la
+      fen&Atilde;&ordf;tre Enregistrer, vous pouvez changer le nom
+      . Appuyez sur le bouton "Sauvegarder" et
+      l'&Atilde;&copy;diteur de couplage JMRI va lire la
+      m&Atilde;&copy;moire de la centrale de commande NCE et
+      stocker le contenu dans le fichier que vous avez
+      s&Atilde;&copy;lectionn&Atilde;&copy;.
+
+      <h2>Restaurer</h2>Pour restaurer tous vos couplage &Atilde; 
+      partir d'un fichier, appuyez sur le bouton "Restaurer"
+      situ&Atilde;&copy; sur la rang&Atilde;&copy;e du bas de
+      l'&Atilde;&copy;diteur de couplage JMRI.
+      S&Atilde;&copy;lectionnez un fichier en tapant le nom, ou en
+      cliquant sur lui. Appuyez sur le bouton "Ouvrir" et
+      l'&Atilde;&copy;diteur de couplage JMRI va
+      &Atilde;&copy;crire dans la m&Atilde;&copy;moire de la
+      centrale de commande NCE le contenu du fichier que vous avez
+      s&Atilde;&copy;lectionn&Atilde;&copy;. L'&Atilde;&copy;diteur
+      de couplage JMRI va v&Atilde;&copy;rifier le contenu du
+      fichier avant d'&Atilde;&copy;crire dans la
+      m&Atilde;&copy;moire de la centrale de commande pour
+      v&Atilde;&copy;rifier que le fichier est en effet un des
+      couplages NCE du fichier de sauvegarde! Notez que le bouton
+      "Restaurer" met &Atilde;  jour uniquement la
+      m&Atilde;&copy;moire de la centrale de commande NCE. Il ne
+      fait pas la programmation des locos sur votre
+      r&Atilde;&copy;seau.
+
+      <h2>Obtenir</h2>Pour consulter un couplage, entrez le
+      num&Atilde;&copy;ro du couplage dans la zone de texte sous la
+      rubrique &Acirc;&laquo;Couplage&Acirc;&raquo; et appuyez sur
+      le bouton "Obtenir". Ceci
+      r&Atilde;&copy;cup&Atilde;&copy;rera les couplages de la
+      m&Atilde;&copy;moire de la centrale de commande.
+
+      <h2>Ajouter Loco</h2>Pour ajouter une loco &Atilde;  un
+      couplage, entrez l'adresse de la locomotive, puis appuyez sur
+      le bouton "?"jusqu'&Atilde;  ce que la direction
+      souhait&Atilde;&copy;e "Avant" ou "Arri&Atilde;&uml;re"
+      appara&Atilde;&reg;sse. Si vous voulez utiliser le format
+      d'adresse courte appuyez bri&Atilde;&uml;vement sur le bouton
+      "Longue" et "Court" devrait appara&Atilde;&reg;tre. Pour
+      programmer la locomotive avec l'adresse de couplage et mettre
+      &Atilde;  jour la centrale de commande NCE, appuyez sur le
+      bouton "Ajouter" et la loco sera ajout&Atilde;&copy;e au
+      couplage .
+
+      <h2>Ajouter Loco partir de la liste</h2>Pour ajouter une loco
+      &Atilde;  partir de votre liste de locomotive,
+      s&Atilde;&copy;lectionner la locomotive et le programme va
+      automatiquement remplir l'adresse de la locomotive et le
+      format d'adresse . S&Atilde;&copy;lectionnez la direction de
+      la locomotive et appuyez sur "Ajouter" pour terminer
+      l'op&Atilde;&copy;ration.
+
+      <h2>Remplacez</h2>Pour remplacer la locomotive de
+      t&Atilde;&ordf;te ou de queue, appuyez sur le bouton
+      "Remplacer". Ceci supprimera la loco
+      s&Atilde;&copy;lectionn&Atilde;&copy;e du couplage. Entrez
+      l'adresse de la nouvelle Loco avec sa direction et appuyez
+      sur "Ajouter" pour programmer cette loco avec l'adresse de
+      couplage. Si vous voulez qu'une loco du milieu devienne
+      maintenant la loco de t&Atilde;&ordf;te ou la loco de queue,
+      il suffit d'entrer l'adresse de la loco du milieu et puis
+      appuyez sur &Acirc;&laquo;Ajouter&Acirc;&raquo;.
+
+      <h2>Supprimer</h2>Pour supprimer une loco du couplage,
+      appuyez sur le bouton "Supprimer" &Atilde;  partir de
+      l'adresse de la loco que vous souhaitez supprimer.
+
+      <h2>Effacer</h2>Pour supprimer toutes les locomotives
+      &Atilde;  partir d'un couplage, appuyez sur le bouton
+      "Effacer" situ&Atilde;&copy; sur la rang&Atilde;&copy;e du
+      bas.
+
+      <h2>Pr&Atilde;&copy;c&Atilde;&copy;dent et Suivant</h2>Les
+      boutons "Pr&Atilde;&copy;c&Atilde;&copy;dent" et "Suivant"
+      vous permettent de rechercher des couplages. Si vous cherchez
+      un couplage vide, cliquez sur la case "Couplage
+      vide&Acirc;&laquo; situ&Atilde;&copy; dans le coin
+      sup&Atilde;&copy;rieur droit.
+
+      <h2>Case V&Atilde;&copy;rifier Loco</h2>Quand elle est
+      coch&Atilde;&copy;e, le programme va v&Atilde;&copy;rifier
+      que la loco que vous ajoutez n'est pas affect&Atilde;&copy;e
+      comme t&Atilde;&ordf;te ou queue dans un autre couplage. Il
+      se passe quelques secondes pour que le programme
+      v&Atilde;&copy;rifie que la loco &Atilde;  ajouter est bien
+      disponible. Un message d'erreur appara&Atilde;&reg;t si le
+      programme d&Atilde;&copy;termine que l'adresse loco &Atilde; 
+      ajouter est d&Atilde;&copy;j&Atilde;  en usage.
+
+      <p>Toutefois, si la loco ajout&Atilde;&copy;e
+      &Atilde;&copy;tait pr&Atilde;&copy;c&Atilde;&copy;demment
+      affect&Atilde;&copy;e comme Loco interm&Atilde;&copy;diaire
+      dans un autre couplage, le programme va supprimer la
+      locomotive de l'autre couplage et l'ajouter au nouveau, sans
+      aucun avertissement.</p>
+
+      <h2>Case Liste couplage</h2>Quand elle est
+      coch&Atilde;&copy;e, le programme va cr&Atilde;&copy;er et
+      g&Atilde;&copy;rer une liste de couplage. Un couplage doit
+      avoir une loco de t&Atilde;&ordf;te et une loco de queue
+      avant que le programme cr&Atilde;&copy;e une fiche pour vous
+      permettre de g&Atilde;&copy;rer. Deux boutons
+      suppl&Atilde;&copy;mentaires apparaissent lorsque le "Liste
+      Couplage " est coch&Atilde;&copy;e, le menu
+      d&Atilde;&copy;roulant "Enregistrer" et "Supprimer", et le
+      "Couplage" est activ&Atilde;&copy;. Si vous avez
+      d&Atilde;&copy;j&Atilde;  un couplage NCE que vous voulez
+      ajouter &Atilde;  la liste couplage, appuyez simplement sur
+      le bouton "Effacer" lorsque la case "Liste Couplage" est
+      coch&Atilde;&copy;e et le programme vous demandera si vous
+      souhaitez ajouter le couplage NCE &Atilde;  votre liste. Si
+      vous avez appuy&Atilde;&copy; sur
+      &Acirc;&laquo;oui&Acirc;&raquo;, le menu
+      &Acirc;&laquo;couplage&Acirc;&raquo; devrait alors avoir une
+      nouvelle fiche qui est l'adresse de la loco de
+      t&Atilde;&ordf;te de votre couplage. Pour recharger votre
+      couplage dans la m&Atilde;&copy;moire NCE et reprogrammer vos
+      locos, il suffit de s&Atilde;&copy;lectionner le couplage
+      depuis le menu &Acirc;&laquo;couplage&Acirc;&raquo; et
+      appuyez sur "Charger". Si vous ne voulez pas charger le
+      couplage, appuyez sur "Annuler"
+
+      <p>Il n'y a pas de limite au nombre de couplage que la liste
+      de couplage puisse g&Atilde;&copy;rer. Cela signifie que ceux
+      d'entre vous qui sont assez chanceux pour avoir plus de 127
+      couplages pouvez utiliser l'&Atilde;&copy;diteur de couplage
+      NCE pour g&Atilde;&copy;rer un nombre "Illimit&Atilde;&copy;"
+      de couplage.</p>
+
+      <p>Lorsque vous g&Atilde;&copy;rez un grand nombre de
+      couplages, il pourrait &Atilde;&ordf;tre utile d'identifier
+      vos couplages en attribuant le plus faible nombre &Atilde; 
+      vos locos de fin comme loco de t&Atilde;&ordf;te . De cette
+      fa&Atilde;&sect;on, vous pouvez rapidement
+      s&Atilde;&copy;lectionner un couplage en utilisant le plus
+      petit nombre de vos deux locos de fin. &lt;/ P&gt;</p>
+
+      <h2>Bouton Enregistrer et
+      Charger</h2>L'&Atilde;&copy;tiquette de ce bouton peut
+      &Atilde;&ordf;tre "Enregistrer" ou "Charger". Si le programme
+      d&Atilde;&copy;tecte qu'un couplage a
+      &Atilde;&copy;t&Atilde;&copy; cr&Atilde;&copy;&Atilde;&copy;
+      ou modifi&Atilde;&copy; le bouton "Sauvegarder" sera
+      activ&Atilde;&copy;. Le programme activera le bouton
+      "Sauvegarder" lors qu'il y a au moins une loco de
+      t&Atilde;&ordf;te et de queue ainsi qu'une direction de
+      s&Atilde;&copy;lectionn&Atilde;&copy;e.
+
+      <p>Lorsque vous s&Atilde;&copy;lectionnez un couplage
+      &Atilde;  charger &Atilde;  partir du menu
+      &Acirc;&laquo;Couplage&Acirc;&raquo; , le Bouton
+      "Sauvegarder" devient "Charger". Vous devez indiquer la
+      direction de la locomotive pour activer le bouton "Charger".
+      Vous pouvez &Atilde;&copy;galement modifier le couplage avant
+      de le charger c'est ainsi que le programme vous demandera si
+      vous souhaitez enregistrer les modifications. Lorsque du
+      chargement d'un couplage le programme va rechercher les
+      couplages vides dans la centrale de commande NCE
+      commen&Atilde;&sect;ant au couplage n&Acirc;&deg; 127. Si
+      vous s&Atilde;&copy;lectionner un couplage du menu
+      &Acirc;&laquo;Couplage&Acirc;&raquo; qui se trouve
+      d&Atilde;&copy;j&Atilde;  dans la centrale de commande NCE ,
+      le programme affichera un message indiquant que le couplage a
+      d&Atilde;&copy;j&Atilde;  &Atilde;&copy;t&Atilde;&copy;
+      charg&Atilde;&copy;. Vous pouvez appuyer sur "Charger" pour
+      reprogrammer vos locos si vous le souhaitez, sinon appuyez
+      sur le bouton "Annuler".</p>
+
+      <h2>Bouton Supprimer</h2>Pour supprimer un couplage &Atilde; 
+      partir de votre liste, appuyez sur le bouton "Supprimer"
+      situ&Atilde;&copy; sur la rang&Atilde;&copy;e du bas. Le
+      bouton "Supprimer devient actif uniquement apr&Atilde;&uml;s
+      que vous ayez s&Atilde;&copy;lectionn&Atilde;&copy; un
+      couplage du menu &Acirc;&laquo;Couplage&Acirc;&raquo;.
+
+      <h2>Statut:</h2>Il y a beaucoup d'&Atilde;&copy;tats que
+      l'&Atilde;&copy;diteur de couplage NCE peut avoir &Atilde; 
+      l'int&Atilde;&copy;rieur et le champs "Status:" donne une
+      indication de ce qui se passe et si l'op&Atilde;&copy;ration
+      a r&Atilde;&copy;ussi. Vous trouverez ci-dessous une
+      br&Atilde;&uml;ve description des diverss "Status:" les
+      Etats.
+
+      <dl>
+        <dt>Ok</dt>
+
+        <dd>Op&Atilde;&copy;ration termin&Atilde;&copy;e avec
+        succ&Atilde;&uml;s.</dd>
+
+        <dt>Erreur</dt>
+
+        <dd>Op&Atilde;&copy;ration
+        &Atilde;&copy;chou&Atilde;&copy;e. Un message d'erreur
+        popup doit &Atilde;&copy;galement
+        appara&Atilde;&reg;tre.</dd>
+
+        <dt>Attente</dt>
+
+        <dd>L'&Atilde;&copy;diteur est en attente d'une
+        r&Atilde;&copy;ponse de la centrale de commande NCE. Le
+        centrale de commande NCE devrait r&Atilde;&copy;pondre dans
+        un couple des secondes, autrement, il ya un
+        probl&Atilde;&uml;me de connexion ou de commande avec la
+        centrale.</dd>
+
+        <dt>Chercher</dt>
+
+        <dd>L'&Atilde;&copy;diteur lit la centrale de commande NCE
+        pour les informations d&Atilde;&copy;sir&Atilde;&copy;es .
+        Normalement, l'&Atilde;&copy;tat apr&Atilde;&uml;s avoir
+        appuy&Atilde;&copy; sur
+        "Pr&Atilde;&copy;c&Atilde;&copy;dent" ou "Suivant". Aussi,
+        lors du chargement d'un couplage de la liste,
+        l'&Atilde;&copy;diteur va chercher dans la
+        m&Atilde;&copy;moire de la centrale de commande NCE un
+        num&Atilde;&copy;ro de couplage vide pour l'affecter au
+        couplage. Ces recherches devraient s'achever en quelques
+        secondes, sinon il y a un probl&Atilde;&uml;me de connexion
+        ou de commande avec la centrale.</dd>
+
+        <dt>Termin&Atilde;&copy;None</dt>
+
+        <dd>L'&Atilde;&copy;diteur n'a pas
+        &Atilde;&copy;t&Atilde;&copy; capable de trouver un
+        couplage ou un couplage vide.</dd>
+
+        <dt>V&Atilde;&copy;rifier</dt>
+
+        <dd>L'&Atilde;&copy;diteur lit la m&Atilde;&copy;moire de
+        la centrale de commande NCE pour voir si une locomotive a
+        d&Atilde;&copy;j&Atilde;  &Atilde;&copy;t&Atilde;&copy;
+        affect&Atilde;&copy;e comme loco de t&Atilde;&ordf;te ou de
+        queue dans un couplage. Si une loco est
+        d&Atilde;&copy;j&Atilde;  attribu&Atilde;&copy;e, un
+        message contextuel appara&Atilde;&reg;t et "Status:"
+        affiche "erreur".</dd>
+
+        <dt>Inconnus</dt>
+
+        <dd>L'&Atilde;&copy;tat initial de l'&Atilde;&copy;diteur
+        NCE de couplage . Aussi lorsque le la case "Liste Couplage"
+        est coch&Atilde;&copy;e signifie que le couplage dans la
+        centrale de commande NCE n'a pas
+        &Atilde;&copy;t&Atilde;&copy;
+        cr&Atilde;&copy;&Atilde;&copy; par l'&Atilde;&copy;diteur.
+        Par cons&Atilde;&copy;quent, l'&Atilde;&copy;diteur ne
+        connait pas le sens de la loco dans le couplage.</dd>
+
+        <dt>Modification!</dt>
+
+        <dd>L'&Atilde;&copy;diteur conna&Atilde;&reg;t le couplage,
+        mais le couplage a &Atilde;&copy;t&Atilde;&copy;
+        modifi&Atilde;&copy;. Si une locomotive a
+        &Atilde;&copy;t&Atilde;&copy; ajout&Atilde;&copy;e, la
+        direction de la locomotive n'est pas connue. Et si une
+        locomotive a &Atilde;&copy;t&Atilde;&copy;
+        supprim&Atilde;&copy;e du couplage , l'&Atilde;&copy;diteur
+        veut que vous sachiez!</dd>
+      </dl>
+    </div>
+  </div>
+</body>
+</html>

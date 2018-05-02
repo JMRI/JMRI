@@ -1,0 +1,32 @@
+The resources module contains various non-source-code files used
+by JMRI classes.
+
+See the COPYING file for the license.
+
+Icon-like images are organized by size, e.g. in directories
+with names like:
+
+   images19x16
+   images128x128
+   
+This is done to group interchangable images together:  There are usually
+artifacts when an image is replaced by one of a different size, so its
+better to use ones of a single size for the various states of a control, etc.
+
+Names of individual files are meant to be robust (no spaces, case should
+not be a distinguishing characteristic) and descriptive:
+
+  redX.gif
+  greencheck.gif
+  
+At some point, files might be made available to users alphabetically.  It
+is therefore better to organized the names so that related files are
+close together.  E.g.
+
+  CtcTurnoutPlateLeft.gif and CtcTurnoutPlateRight.gif
+
+rather than
+
+  RightTurnoutCtcPlate.gif and LeftTurnoutPlateCtc.gif
+  
+Put colors, directions, etc, at the right end of the names.

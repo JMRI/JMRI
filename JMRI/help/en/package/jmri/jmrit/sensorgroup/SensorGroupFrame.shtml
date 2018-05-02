@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Sensor Groups</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Sensor Groups">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Sensor Groups</h1>The Sensor Group tool window allows you
+      to define Sensor Groups, a group of sensors of which at most
+      one can be active. When a member of the group becomes active,
+      all others are set to inactive.
+
+      <p>Generally, you would use something like this to simulate a
+      rotary switch on a real control panel. The real switch would
+      activate only one input as it was turned from position to
+      position; the previous input would become inactive as the
+      switch turned to the next position. On a PanelPro control
+      panel, each position might be shown by a separate sensor icon
+      which you click to activate. Putting that set of sensors in a
+      Sensor Group would then cause the sensor at the previous
+      position to go inactive when you clicked to change the
+      simulated rotary switch.</p>
+
+      <p>To define a group:</p>
+
+      <ul>
+        <li>Check the "Included" box next to each sensor that you
+        want to include in the group. You can click on the titles
+        at the top of the columns to sort them if you have lots of
+        sensors to flip through.</li>
+
+        <li>Put a unique sensor group name in the box at the
+        bottom. No particular format is required, but it can't
+        duplicate one you've already defined.</li>
+
+        <li>Click add/update</li>
+      </ul>
+
+      <p>To see a Sensor Group you've already defined, put it's
+      name in the Group Name box, and click View. You can then
+      change the checkboxes to add or remove sensors from the
+      group, and click Add/Update to make your changes.</p>
+
+      <p>Remember to save your changes to a new configuration or
+      panel file before quitting the program!</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

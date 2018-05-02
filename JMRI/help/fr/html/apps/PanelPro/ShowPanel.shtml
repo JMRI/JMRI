@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- UpDated by Blorec Herv&#233; 2013-09-02-->
+
+  <title>JMRI: Affichage des fichiers de Panneau</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Affichage des fichiers de Panneau</h1>Les panneaux
+      JMRI et les informations de configuration sont stock&eacute;s
+      dans des fichiers XML. Ces sont des fichiers texte que les
+      gens peuvent lire directement, mais le format et les
+      informations sur la structure prennent beaucoup d'espace.
+
+      <p>JMRI fournit un outil, appel&eacute; "transformation
+      XSLT", pour convertir le fichier panneau JMRI dans une page
+      Web plus lisibles. Vous ouvrez votre fichier de panneau avec
+      un navigateur web, et pouvez alors le lire, l'imprimer,
+      copier et coller dans un fichier d'une autre forme, etc.</p>
+
+      <p>Un exemple important de ceci est disponible en tant que
+      <a href=
+      "http://jmri.org/community/examples/SPShastaConfigFile.pdf">fichier
+      PDF</a> . Ce sont les informations de configuration, y
+      compris itin&eacute;raires, Logix, etc, pour le sch&eacute;ma
+      <a href=
+      "http://jmri.org/community/examples/SPShasta.shtml">SP Shasta
+      Itin&eacute;raires</a> .</p>
+
+      <p>Pour visualiser votre propre fichier panneau, il suffit de
+      l'ouvrir avec un navigateur web. Avec certains ordinateurs et
+      navigateurs, vous faites glisser l'ic&ocirc;ne du fichier sur
+      l'ic&ocirc;ne du navigateur. D'autres, vous utilisez les
+      entr&eacute;es dans le menu "Fichier" du navigateur pour
+      trouver et ouvrir votre fichier.</p>
+
+      <p>Pour que cela fonctionne, votre navigateur doit &ecirc;tre
+      capable de trouver le "stylesheet" (feuille de style) qui
+      fait la mise en forme. Si vous ouvrez le fichier du panneau
+      et qu'il ne fonctionne pas, et surtout s'il vient d'ouvrir
+      une fen&ecirc;tre vide, ou affiche des messages d'erreur
+      comme n'&eacute;tant pas en mesure de charger quelque chose,
+      vous pouvez avoir &agrave; changer l'emplacement
+      indiqu&eacute; pour la feuille de style. Cet emplacement est
+      sur la 2&egrave;me ligne de votre fichier de panneau.
+      Malheureusement, nous ne pouvons pas donner des r&egrave;gles
+      pr&eacute;cises, comme les navigateurs web diff&eacute;rents
+      ont des exigences diff&eacute;rentes. Mais il y a deux choses
+      que vous pouvez essayer:</p>
+
+      <ul>
+        <li>Dites au navigateur de la prendre &agrave; partir d'un
+        serveur web JMRI.<br>
+          Pour ce faire, changer la deuxi&egrave;me ligne du
+          fichier en:
+          <pre style="font-family: monospace;">
+  &lt;xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"&gt;
+</pre>
+        </li>
+
+        <li>Placez le fichier feuille de style dans le m&ecirc;me
+        endroit que votre fichier de panneau, et dire au navigateur
+        de l'utiliser.<br>
+          Pour ce faire, d'abord trouver le fichier
+          "XML/XSLT/panelfile.xsl" dans votre r&eacute;pertoire de
+          distribution JMRI, ou obtenir la version la plus
+          r&eacute;cente de JMRI en t&eacute;l&eacute;chargeant
+          <a href="http://jmri.org/xml/XSLT/panelfile.xsl">ce
+          lien</a> . Placez une copie de ce fichier dans le
+          m&ecirc;me r&eacute;pertoire que le fichier de panneau
+          que vous souhaitez afficher. Puis changez la
+          deuxi&egrave;me ligne de votre fichier de panneau en:
+          <pre style="font-family: monospace;">
+ &lt; xml-stylesheet href = "panelfile.xsl" type = "text/xsl"&gt;
+</pre>
+        </li>
+      </ul>
+
+<ul>
+<li>
+Dites au navigateur de la prendre &#224; partir d'un serveur web JMRI.
+<p>
+Pour ce faire, changer la deuxi&#232;me ligne du fichier en:
+<code> <pre>
+ &lt;?xml-stylesheet href = "http://jmri.org/xml/XSLT/panelfile.xsl"type = "text/xsl"?&gt;
+
+</pre> </code>
+<li>
+Placez le fichier feuille de style dans le m&#234;me endroit que votre fichier de panneau, et
+dire au navigateur de l'utiliser.
+<p>
+Pour ce faire, d'abord trouver le fichier "xml/XSLT/panelfile.xsl" dans votre r&#233;pertoire de distribution JMRI, ou obtenir la version la plus r&#233;cente de JMRI en t&#233;l&#233;chargeant
+<a href=  "http://jmri.org/xml/XSLT/panelfile.xsl"> ce lien </a>.
+Placez une copie de ce fichier dans le m&#234;me r&#233;pertoire que le fichier de panneau que vous souhaitez afficher.
+Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
+<code> <pre>
+&lt;?xml-stylesheet href = "panelfile.xsl" type = "text/xsl"?&gt;
+</pre> </code>
+</ul>
+<p>
+Ne pas modifier la premi&#232;re ligne!
+<p>
+Pour plus d'informations techniques &#224; ce sujet, voir la
+<a href="../../doc/Technical/XmlUsage.shtml#xslt">  page JMRI XML </a>.
+   
+<!--#include virtual="/Footer" -->
+</body>
+</html>

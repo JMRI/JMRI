@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright 2012, 2014 -->
+
+  <title>JMRI Remote Panels</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI Remote Panels</h1>
+
+      <p>JMRI displays panels via a web browser at the
+      <strong>/panel</strong> relative URL.</p>
+
+      <p>Remote Panel URLs are:</p>
+
+      <dl>
+        <dt>/panel</dt>
+
+        <dd>Without any additional parameters, <em>/panel</em>
+        lists the open JMRI panels. Clicking or tapping on the
+        listed panel name will open a functioning panel.</dd>
+
+        <dt>/panel?name=&lt;type&gt;/&lt;name&gt;</dt>
+
+        <dd>Displays an open, usable panel. <em>&lt;type&gt;</em>
+        is one of: <em>Panel</em>, <em>ControlPanel</em>, <em>Switchboard</em> or
+        <em>Layout</em>.</dd>
+
+        <dt>/panel/&lt;type&gt;/&lt;name&gt;?format=xml</dt>
+
+        <dd>Retrieves a portable XML representation of the panel.
+        <em>&lt;type&gt;</em> is one of: <em>Panel</em>,
+        <em>ControlPanel</em>, <em>Switchboard</em>  or <em>Layout</em>.</dd>
+      </dl>
+
+      <p>Panel redisplay requires a modern browser with HTML5
+      support (Chrome, FireFox, Safari, IE9).</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

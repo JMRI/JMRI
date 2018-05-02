@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Tooltips instead of comments</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-31</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German</revremark>
+    </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2010-03-12</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2003-12-05</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original 0NMRA.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="1" comment="Short address" item="Short Address" default="03">
+    <shortAddressVal/>
+    <label>Primary Address</label>
+    <label xml:lang="cs">Základní adresa</label>
+    <label xml:lang="it">Indirizzo Primario</label>
+    <label xml:lang="fr">Adresse décodeur</label>
+    <label xml:lang="de">Basisadresse</label>
+    <label xml:lang="nl">Basisadres</label>
+    <tooltip xml:lang="cs">Krátká adresa</tooltip>
+    <tooltip xml:lang="it">Indirizzo Corto</tooltip>
+    <tooltip xml:lang="fr">Adresse courte</tooltip>
+    <tooltip xml:lang="de">Kurze Adresse</tooltip>
+    <tooltip xml:lang="nl">Kort Adres</tooltip>
+    <tooltip xml:lang="de">Kurze Adresse</tooltip>
+  </variable>
+</variables>

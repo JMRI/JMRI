@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for JMRI signaling support of speeds regulatipn             -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+<xs:element name="speedtable">
+
+    <xs:annotation>
+        <xs:documentation>
+          Used by Warrants to regulate auto running trains through signaled blocks.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="false">jmri.implementation.SignalSpeedMap</jmri:usingclass>
+            <jmri:usingclass configurexml="false">jmri.jmrit.logix.Warrant</jmri:usingclass>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="name" minOccurs="1" maxOccurs="1" ></xs:element>
+
+        <xs:element name="date" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
+     
+        <xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          Must be present.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
+        <xs:element ref="docbook:authorgroup" minOccurs="1" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
+        <xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form
+          </xs:documentation></xs:annotation>
+        </xs:element>
+
+        <xs:element name="interpretation" minOccurs="1" maxOccurs="1">
+          <xs:annotation><xs:documentation>
+                Required to interpret of the content of the Speed Aspect Table.
+                percentNormal = number is a percentage of the recorded speed (the "normal" speed). 
+                percentThrottle = number is a percentage of the full throttle speed. 
+          </xs:documentation></xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="percentNormal"/>
+              <xs:enumeration value="percentThrottle"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        
+        <xs:element name="msPerIncrement" minOccurs="1" maxOccurs="1" type="xs:integer">
+          <xs:annotation><xs:documentation>
+                The delay (milliseconds) between speed steps sent to the throttle.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
+        <xs:element name="stepsPerIncrement" minOccurs="1" maxOccurs="1" type="xs:integer">
+          <xs:annotation><xs:documentation>
+                Number of speed steps sent to the throttle.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
+        <xs:element name="aspectSpeeds" minOccurs="1" maxOccurs="1">
+           <xs:annotation><xs:documentation>
+                ******** Required Speed Aspect Table  **********<br/>
+                Maps speed name to percentage number.
+          </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Cab" minOccurs="0" maxOccurs="1" type="xs:integer"/> <!-- introduced in 3.11.5, optional for preferences -->
+                <xs:element name="Maximum" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Normal" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Sixty" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Fifty" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Limited" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Medium" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Slow" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="Restricted" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+                <xs:element name="RestrictedSlow" minOccurs="0" maxOccurs="1" type="xs:integer"/> <!-- introduced in 3.11.5, optional for preferences -->
+                <xs:element name="Stop" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="appearanceSpeeds" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:annotation><xs:documentation>
+                 ******** Required Speed Appearance Table  **********<br/>
+                 Maps appearance to speed name. Value of these elements must match
+                 one of the element names in the aspectSpeeds element.
+             </xs:documentation></xs:annotation>
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="SignalHeadStateRed" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingRed" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateGreen" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingGreen" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateYellow" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingYellow" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateLunar" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="SignalHeadStateFlashingLunar" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+      
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

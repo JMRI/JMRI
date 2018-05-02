@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<title>JMRI: Non-Prototype USS Signal Masts</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Union Switch and Signal Non-Prototypical Signals
+</h1>
+
+This directory contains signaling definitions corresponding to Non-Prototype 
+USS H-2 Signal Masts used on Union Switch and Signal CTC machine model boards.
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-SL-1-head.xml">Single searchlight absolute signal</a>
+<li><a href="appearance-SL-2-head.xml">Double searchlight absolute signal</a>
+<li><a href="appearance-SL-3-head.xml">Triple searchlight absolute signal</a>
+<li><a href="appearance-DW-1-head.xml">Single dwarf searchlight signal</a>
+<li><a href="appearance-DW-2-head.xml">Double dwarf searchlight signal</a>
+
+</ul>
+
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-01-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Translate Selection Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help Layout Editor Translate"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Translater s&eacute;lection</h1>
+
+      <p>La bo&icirc;te de dialogue Translater S&eacute;lection
+      fournit pour Translater une partie d'un panneau
+      s&eacute;lectionn&eacute;e par l'utilisateur
+      cr&eacute;&eacute; en utilisant l'&Eacute;diteur de
+      R&eacute;seau. Avant de s&eacute;lectionner <b>Translater
+      S&eacute;lection...</b> dans le menu Options, une zone du
+      panneau doit &ecirc;tre "s&eacute;lectionn&eacute;e". Pour
+      s&eacute;lectionner une zone, Appuyez et maintenez
+      enfonc&eacute; la souris en haut &agrave; gauche de la zone,
+      et faites glisser la souris en bas &agrave; droite de la
+      zone. La zone s&eacute;lectionn&eacute;e est d&eacute;crite
+      par un rectangle. Pour les articles ic&ocirc;ne, le coin
+      sup&eacute;rieur gauche de l'ic&ocirc;ne doit &ecirc;tre dans
+      le rectangle de s&eacute;lection Si l'ic&ocirc;ne est
+      &agrave; Translater.</p>
+
+      <p>Pour Translater votre r&eacute;gion
+      s&eacute;lectionn&eacute;e dans la fen&ecirc;tre du panneau,
+      saisissez le montant &agrave; Translater dans les directions
+      <i>x</i> (horizontal) et <i>y</i> (vertical). Les
+      unit&eacute;s sont en pixels - les m&ecirc;mes unit&eacute;s
+      indiqu&eacute;es dans l'affichage <i>x, y</i> de la position
+      dans la barre d'outils de l'&Eacute;diteur de TCO . Pour
+      aucune Translation dans les deux sens entrez z&eacute;ro.Pour
+      une traduction horizontale , entrez un nombre n&eacute;gatif
+      pour d&eacute;placer la zone s&eacute;lectionn&eacute;e
+      &agrave; gauche du nombre de pixels, entrez un nombre positif
+      pour aller &agrave; droite. Pour la translation verticale,
+      entrez un nombre n&eacute;gatif pour d&eacute;placer la zone
+      s&eacute;lectionn&eacute;e en place par ce nombre de pixels;
+      entrer un nombre positif pour d&eacute;placer la zone
+      s&eacute;lectionn&eacute;e vers le bas.</p>
+
+      <p>Apr&egrave;s avoir entr&eacute; les montants &agrave;
+      Translater, cliquez sur <b>D&eacute;placer la
+      S&eacute;lection</b> pour d&eacute;placer la zone
+      s&eacute;lectionn&eacute;e. <b>Attention:</b> Translater trop
+      loin peut d&eacute;placer une ic&ocirc;ne en dehors du coin
+      sup&eacute;rieur gauche du bord du panneau, o&ugrave; elle ne
+      peut pas &ecirc;tre s&eacute;lectionn&eacute;e, et peut
+      dispara&icirc;tre pour toujours. Heureusement, si vous faites
+      cette erreur, vous pouvez annuler une Translation en
+      s&eacute;lectionnant imm&eacute;diatement <b>Annuler
+      Translation</b> dans le menu Options. <b>Annuler
+      Translation</b> ne fonctionne que pour la derni&egrave;re
+      <b>S&eacute;lection Translater...</b> effectu&eacute;e.
+      N'oubliez pas de v&eacute;rifier les r&eacute;sultats
+      imm&eacute;diatement apr&egrave;s la Translation d'une
+      s&eacute;lection en annulant l'op&eacute;ration est si
+      n&eacute;cessaire.</p>
+
+      <p><b>Pour conserver vos modifications, s'il vous pla&icirc;t
+      n'oubliez pas d'enregistrer votre panneau!</b></p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

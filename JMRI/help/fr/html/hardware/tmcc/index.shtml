@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated  by Blorec Herv&#233; 2013-09-19-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Guide: Lionel TMCC</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Guide Mat&eacute;riel JMRI: Lionel TMCC</h1>
+
+      <h2>Syst&egrave;me support&eacute;</h2>(Lionel TMCC ou Lionel
+      universel &agrave; travers le port s&eacute;rie sur la
+      centrale de base.)
+
+      <h2>Installation</h2>
+
+      <p>D'abord, connecter le port s&eacute;rie de votre
+      ordinateur &agrave; la centrale de commande TMCC en utilisant
+      un c&acirc;ble s&eacute;rie. Cela devrait &ecirc;tre un
+      c&acirc;ble "droit" ou "modem" , <i>pas</i> un c&acirc;ble
+      "crois&eacute;" ou "null-modem". Si votre ordinateur ne
+      dispose pas d'un port s&eacute;rie int&eacute;gr&eacute;,
+      vous pouvez utiliser un adaptateur USB-s&eacute;rie, mais
+      assurez-vous d'installer les bon conducteurs.</p>
+
+      <p>Ensuite, configurez le programme.</p>
+
+      <ul>
+        <li>Commencez avec votre programme bas&eacute; sur JMRI
+        (DecoderPro, PanelPro, etc.)</li>
+
+        <li>Allez dans le panneau des pr&eacute;f&eacute;rences du
+        programme.</li>
+
+        <li>Celui-ci s'ouvre automatiquement la premi&egrave;re
+        fois qu'un programme est ex&eacute;cut&eacute;, ou vous
+        pouvez le s&eacute;lectionner dans le menu
+        "&eacute;dition".</li>
+
+        <li>S&eacute;lectionnez "TMCC (Lionel)" dans la boite de
+        s&eacute;lection du haut.</li>
+
+        <li>Dans la deuxi&egrave;me bo&icirc;te de
+        s&eacute;lection, choisissez le nom du port s&eacute;rie
+        auquel vous avez connect&eacute; au syst&egrave;me
+        TMCC.</li>
+
+        <li>Si la vitesse de transmission ne montre pas une valeur
+        fixe, r&eacute;glez la &agrave; 9600 bauds.</li>
+
+        <li>La s&eacute;rie de boutons radio
+        &eacute;tiquet&eacute;s "style graphique" vous permet de
+        s&eacute;lectionner la fa&ccedil;on dont le programme va
+        apparaitre. "Metal" est le th&egrave;me natif de Java et
+        chercher ceux disponible sur tous les types. D'autres choix
+        peuvent varier avec votre type d'ordinateur. "Motif",
+        "Windows", "MacOS" et "MacOS adaptative" apparence native
+        sous Linux, Windows, MacOS "Classic" et Mac OS X
+        respectivement.</li>
+
+        <li>Dans la bo&icirc;te de s&eacute;lection en bas, vous
+        pouvez choisir l'option par d&eacute;faut du format du
+        programmateur. Vous pouvez remplacer celui ci &agrave;
+        chaque fois que vous ouvrez le programmateur, ce n'est donc
+        ici que par commodit&eacute;.</li>
+
+        <li>Cliquez sur "Enregistrer". Il vous sera demand&eacute;
+        si vous voulez quitter le programme, cliquez sur
+        "Oui".</li>
+
+        <li>Red&eacute;marrez le programme. Vous devriez &ecirc;tre
+        en place et fonctionnel.</li>
+      </ul>
+
+      <h2>Caract&eacute;ristiques et Limitations</h2>
+
+      <p>(Pas encore complet)</p>
+
+      <p>Avec JMRI 2.11.8, le fonctionnement des machines et des
+      d&eacute;codeurs d'accessoires est disponible avec Lionel
+      TMCC. Les commandes de train ne sont pas encore
+      disponibles.</p>
+
+      <p>Vous aurez encore besoin de votre CAB pour l'utilisation
+      des fonctions comme la saisie d'une identification d'un
+      moteur. Une fois mis en place, cependant, vous pouvez faire
+      la plupart des fonctions de la withrotttles. <span class=
+      "Apple-converted-space">_</span></p>
+
+      <p>Il n'y a pas de Lionel TMCC sous les onglets des Fiches,
+      mais vous pouvez configurer les moteurs TMCC utilisant le
+      d&eacute;codeur standard NMRA &agrave; proximit&eacute; de la
+      liste.</p>
+
+      <p>Les actions communes sont indiqu&eacute;es pour Railsounds
+      4, Err cartes de conversion et les cartes TAS. <span class=
+      "Apple-converted-space">&lt;/ span&gt; &lt;/ p&gt;</span></p>
+
+      <p><span class="Apple-converted-space">Lorsque vous utilisez
+      un r&eacute;gulateur JMRI pour faire fonctionner un moteur,
+      les touches de fonction sont attribu&eacute;es:</span></p>
+
+      <dl>
+        <dt><span class="Apple-converted-space">F0</span></dt>
+
+        <dd><span class="Apple-converted-space">AUX2 (Feux
+        On/Off)</span></dd>
+
+        <dt><span class="Apple-converted-space">F1</span></dt>
+
+        <dd><span class="Apple-converted-space">Cloche</span></dd>
+
+        <dt><span class="Apple-converted-space">F2</span></dt>
+
+        <dd><span class="Apple-converted-space">Trompe/Sifflet
+        1</span></dd>
+
+        <dt><span class="Apple-converted-space">F3</span></dt>
+
+        <dd><span class="Apple-converted-space">Coupleur
+        Avant</span></dd>
+
+        <dt><span class="Apple-converted-space">F4</span></dt>
+
+        <dd><span class="Apple-converted-space">Coupleur
+        Arri&egrave;re</span></dd>
+
+        <dt><span class="Apple-converted-space">F5+0</span></dt>
+
+        <dd><span class="Apple-converted-space">Aux 1</span></dd>
+
+        <dt><span class="Apple-converted-space">F6+1</span></dt>
+
+        <dd><span class="Apple-converted-space">+
+        Volume</span></dd>
+
+        <dt><span class="Apple-converted-space">F7+2</span></dt>
+
+        <dd><span class="Apple-converted-space">L'&eacute;quipage
+        discute</span></dd>
+
+        <dt><span class="Apple-converted-space">F8+3</span></dt>
+
+        <dd><span class="Apple-converted-space">D&eacute;marrage
+        des Sons</span></dd>
+
+        <dt><span class="Apple-converted-space">F9+4</span></dt>
+
+        <dd><span class="Apple-converted-space">-
+        Volume</span></dd>
+
+        <dt><span class="Apple-converted-space">F10+5</span></dt>
+
+        <dt><span class="Apple-converted-space">Arr&ecirc;t des
+        Sons</span></dt>
+
+        <dt><span class="Apple-converted-space">F11+6</span></dt>
+
+        <dt><span class="Apple-converted-space">Sortie de
+        vapeur/diminution RPM</span></dt>
+
+        <dt><span class="Apple-converted-space">F12+7</span></dt>
+
+        <dt><span class="Apple-converted-space">Tower
+        Comm</span></dt>
+
+        <dt><span class="Apple-converted-space">F13+8</span></dt>
+
+        <dt><span class="Apple-converted-space">Aux Off
+        (Fum&eacute;e OFF sur Vapeur Habituellemnt)</span></dt>
+
+        <dt><span class="Apple-converted-space">F14+9</span></dt>
+
+        <dt><span class="Apple-converted-space">Aux ON
+        (Fum&eacute;e ON sur Vapeur Habituellemnt)</span></dt>
+
+        <dt><span class="Apple-converted-space">F15</span></dt>
+
+        <dt><span class="Apple-converted-space">Aux 1</span></dt>
+
+        <dt><span class="Apple-converted-space">F16</span></dt>
+
+        <dt><span class="Apple-converted-space">laissez le son
+        coup&eacute;</span></dt>
+
+        <dt><span class="Apple-converted-space">F17</span></dt>
+
+        <dt><span class="Apple-converted-space">Avant</span></dt>
+
+        <dt><span class="Apple-converted-space">F18</span></dt>
+
+        <dt><span class=
+        "Apple-converted-space">Arri&egrave;re</span></dt>
+
+        <dt><span class="Apple-converted-space">F19</span></dt>
+
+        <dt><span class="Apple-converted-space">Inverser la
+        Direction</span></dt>
+
+        <dt><span class="Apple-converted-space">F20</span></dt>
+
+        <dt><span class=
+        "Apple-converted-space">Acc&eacute;l&eacute;ration</span></dt>
+
+        <dt><span class="Apple-converted-space">F21</span></dt>
+
+        <dt><span class=
+        "Apple-converted-space">Freinage</span></dt>
+      </dl><span class="Apple-converted-space">
+      <!--#include virtual="/Footer" --></span>
+    </div>
+  </div>
+</body>
+</html>

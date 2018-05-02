@@ -1,0 +1,1039 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Names and Naming</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI technical code names user name system name">
+  <!-- The combination of "Define" and {Header, Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head><!--#include virtual="/Header" -->
+
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Names and Naming</h1>
+      <p>This page discusses how JMRI objects are named, how those
+      names are used to reference the objects (hardware and software),
+      and how user-readable names are used.</p>
+
+      <span class="since">Since JMRI 4.7.4</span>
+        <b>As of March 2017, we have changed
+        the allowable user names: They can't have leading or trailing spaces.  
+        If leading or trailing spaces are entered, they'll be "trimmed" off.</b> 
+        
+      <h2>What's in a name?</h2>Why do we need names at all, rather
+      than just references within the code? There are several
+      important uses:
+
+      <ol>
+        <li>When working with user input, e.g. typing a number in a
+        field, the code will need to know how to map the
+        user-provided info onto objects. Sometimes the user will
+        want to name objects with arbitrary user names, e.g. "East
+        Lockport Turnout". These can't be known until their mapping
+        to hardware has been made. But other times these will be
+        de-novo identifications that the code must understand, e.g.
+        something that means "LocoNet Turnout 23".</li>
+
+        <li>We imagine that configurations will be stored in XML
+        files, in a symbolic form. Names are a convenient way to
+        connect objects and object references in that kind of
+        configuration.</li>
+      </ol><a name="type" id="type"></a>
+
+      <h2>Items with names</h2>
+      There are lots of things that might need names:
+
+      <ul>
+        <li>Aspects for signals</li>
+        <li>Blocks (track segments)</li>
+        <li>Conditionals (for logiX, although these are not entirely named beans)</li>
+        <li>signal mast Groups</li>
+        <li>signal Heads</li>
+        <li>signal masts (F, for some reason)</li>
+        <li>Lights (a type of output)</li>
+        <li>eNtry/exit destiNation points</li>
+        <li>Memories</li>
+        <li>Outputs</li>
+        <li>Power districts and subdistricts</li>
+        <li>Reporters</li>
+        <li>Routes (shared for historical reasons with Reporters)</li>
+        <li>input Sensors</li>
+        <li>Turnouts</li>
+        <li>logiX</li>
+        <li>Sections (Y, for some reason)</li>
+        
+      </ul>Some of these are associated with a specific hardware
+      device, e.g. a particular turnout. Others are more virtual,
+      e.g. a route, which is a collection on control information
+      within the program.
+
+      <h2>System and User Names</h2>JMRI users both "system names"
+      and "user names" to reference things.
+
+      <p>We want users to be able to call things what they want.
+      Names like "p(24,23)*" are not useful. Every named item can
+      therefore have a "user name", which is an entirely free-form
+      string. You can put whatever you want in there, so long as
+      it's not a duplicate of the user name given to something else. For
+      example, you might call a Turnout "West Yard Lead" or
+      "Turnout 32" or "Green Wire from Controller" or whatever.</p>
+
+      <p>At the same time, we need a shorthand name, really a
+      unique identifier, to talk about specific objects. This
+      doesn't have to be convenient, but does have to have a clear
+      mapping from name to object and back. For example, we need a
+      very specific way to identify "LocoNet Turnout 23". We call
+      these "system names". JMRI code will map these to and from
+      whatever information the hardware may need.</p>
+
+      <h2>System Name Format</h2>
+      
+      A system name is formed from a
+      short "system prefix" representing the hardware system, followed by a
+      single upper case "type letter" indicating the type of the object, 
+      followed by a
+      system- and type-specific "suffix string" identifying a specific
+      object. 
+      <ul>
+        <li>The system prefix is a single uppercase or lowercase letter, optionally followed
+            by one or more digits. Special characters are not allowed.
+            This simple form allows us to always fine the system prefix
+            and type letter even if we don't know the full list of 
+            hardware systems involved.
+        <li>The type letter defines the type of model-railroad object, 
+            such as (T)urnout or (S)ensor.
+        <li>The suffix string is meant to be related to the hardware
+            addressing for the specific hardware system, but is otherwise unconstrained.
+            Some are simple numbers, such as a device address. Others
+            are much more complicated strings to carry more complex 
+            information.
+      </ul>
+
+      <p>Examples:</p>
+
+      Note: These assume the default values of system prefix letters,
+      but they certainly could have been defined to be something else.
+      
+      <ul>
+        <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
+        <li>L2T23 - <u>T</u>urnout <u>23</u> on the second <u>L</u>ocoNet connection.</li>
+
+        <li>CS2012 - A <u>C</u>/MRI <u>S</u>ensor
+            (input line) addressed as 2012, which means the 12th pin on  
+            on the node with address 2.</li>
+      </ul>
+      
+      Note that there is no assumption of pattern to the
+      names; they don't have to be assigned monotonically, nor are
+      they restricted to a single system. 
+      
+      <a name="hardware" id="hardware"></a>
+      <h3>System Prefix</h3>
+      
+      Originally, the "hardware prefix" was
+      a single uppercase letter identifying a single system
+      connection: L for LocoNet, N for NCE, etc. The default
+      letters for those are listed below. This is still by far the
+      most common use: Most model railroads have a single
+      connection, and just use the default letter.
+
+      <p>The JMRI code is much more flexible than that, however.
+      This allows it to deal with multiple system connections and
+      overlaps of letters (such as the multiple possibilities
+      defined for "D" or "M" below). You change the letter associated with
+      a system connection in the preferences to any other uppercase or lowercase
+      letter. You can call your NCE connection "P" if you want to.
+      If you have two of them, you can call one "X" and the other
+      "Y". You can also use an upper case letter followed by
+      digits, e.g. "N1" and "N2".</p>
+
+      <h4>Default System Letters</h4>Note that some of these are
+      placeholders, and have no underlying implementation. (Links
+      are to JMRI pages with more information)
+
+      <ul>
+        <li>A CTI <a href=
+        "../../hardware/acela/index.shtml">Acela</a>,
+        Bachrus Speedometer
+        </li>
+
+        <li>B Direct DCC control</li>
+
+        <li>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI
+        serial</a></li>
+
+        <li>D <a href=
+        "../../hardware/SRCP/index.shtml">SRCP</a>,
+        <br>Anyma DX512
+        <br><a href="../../hardware/dccpp/index.shtml">DCC++</a> (previously written DCCpp)
+        <br><a href="../../hardware/dcc4pc/index.shtml">DCC4PC</a>
+        </li>
+        
+        <li>E <a href=
+        "../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
+
+        <li>F <a href="../../hardware/rfid/index.shtml">RFID tag
+        readers</a></li>
+
+        <li>G ProTrak <a href=
+        "../../hardware/grapevine/index.shtml">Grapevine</a></li>
+
+        <li>H</li>
+
+        <li>I Internal, e.g. objects with no associated
+        hardware</li>
+
+        <li>J JMRI network connections</li>
+
+        <li>K <a href="../../hardware/maple/index.shtml">Maple
+        Systems</a></li>
+
+        <li>L <a href=
+        "../../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
+
+        <li>M Model railroad layout control buses, including
+        <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
+        and <a href="../../hardware/can/cbus/index.shtml">MERG
+        CBUS</a>
+        <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
+        <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
+        </li>
+
+        <li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also
+        <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>
+        currently)</li>
+
+        <li>O <a href="../../hardware/oaktree/OakTree.shtml">Oak
+        Tree Systems</a></li>
+
+        <li>P <a href=
+        "../../hardware/powerline/index.shtml">Powerline
+        transmission</a>, e.g. X10 and Insteon,
+        <br>Raspberry Pi native pins
+        </li>
+
+        <li>Q <a href="../../hardware/qsi/index.shtml">QSI
+        programmer interface</a></li>
+
+        <li>R <a href="../../hardware/rps/index.shtml">RPS
+        system</a></li>
+
+        <li>S <a href=
+        "../../hardware/sprog/SPROG.shtml">SPROG</a></li>
+
+        <li>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>, 
+        <br><a href="../../hardware/tams/index.shtml">TAMS</a>
+        </li>
+        
+        <li>U <a href="../../hardware/ecos/index.shtml">ESU
+        ECoS</a></li>
+
+        <li>V TracTronics <a href=
+        "../../hardware/secsi/index.shtml">SECSI</a></li>
+
+        <li>W (reserved for Wangrow, but that's currently still
+        combined with NCE)</li>
+
+        <li>X <a href=
+        "../../hardware/XPressNet/index.shtml">XpressNet</a>
+        used by a number of Lenz, Atlas, Hornby and other connections
+        </li>
+
+        <li>Z <a href="../../hardware/zimo/Zimo.shtml">ZimoMX-1</a>,
+            IEEE802.15.4
+            and Z21 connections
+        </li>
+      </ul>
+      
+      <a name="types" id="types"></a>
+
+      <h3>Device type letters</h3>
+      
+      Note that some of these are
+      placeholders, and have no underlying implementation. Also,
+      there is no guarantee that any given hardware system will
+      ever implement all of them.
+
+      <ul>
+        <li>A Audio - an internal software object that holds
+        information about a sound sample to be placed at a specific
+        position in 3d space</li>
+
+        <li>B Block - A software object that keeps track of the
+        contents of a specific block of track.
+        Block system names are all upper case, have no trailing whitespace and start with IB.</li>
+
+        <li>D iDentity - A software object that holds information
+        about an identity tag that is, typically, attached to a
+        piece of rolling stock. These objects are not
+        system-specific but are Internal objects, hence have system
+        names commencing with ID. The underlying hardware will use
+        Reporter objects to communicate back to JMRI when a
+        specific iDentity object has been seen.</li>
+
+        <li>F signal mast (F is not particularly mnemonic; maybe a
+        mast with two heads looks like an F from the side? All the
+        good letters were taken)</li>
+
+        <li>H signal Head - One part of a signal (which may have
+        multiple heads). Also interpreted to include indicators on
+        control panels that are acting to display signal
+        aspects.
+        SignalHead system names are all upper case, have no trailing whitespace and mostly, 
+        but not always, start with IH.
+        </li>
+
+        <li>M Memory - As yet, this has no real equivalent in the
+        layout hardware, but is used as a place to store
+        information temporarily and display it on panels, etc.
+        Memory system names are all upper case, have no trailing whitespace and start with IM.</li>
+
+        <li>L Light - another form of output, used to e.g. control
+        lights on a layout</li>
+
+        <li>N eNtry/exit destination points</li>
+
+        <li>P Power manager i.e. layout, district, subdistrict; not
+        all systems distinguish between these, so the device type
+        letter doesn't either. The system-specific part of the name
+        can. For example, the system specific part might be B for
+        main layout power, e.g. LPB or S42 for subdistrict channel
+        2 on card 4, e.g. LPS42.</li>
+
+        <li>R Reporters - a general purpose mechanism for reporting
+        complicated information from the layout, e.g. locomotive
+        identification from some transponding hardware, RFID tag
+        numbers, etc.</li>
+
+        <li>R Routes - a tool for setting multiple Turnout states at once.
+        The "R" letter is shared with Reporters for historical reasons.</li>
+
+        <li>S Sensors - general purpose input sensors that can
+        generally be either ACTIVE or INACTIVE. This is most
+        commonly used for block occupancy detectors.</li>
+
+        <li>Y Sections - holds a map of trackwork.
+        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
+        
+        <li>SignalGroups - hold a set of signal heads or masts.
+            SignalGroup system names are all upper case and have no trailing whitespace.
+            For historical reasons, they're not required to have a system prefix or 
+            type letter; the example name is "R12".  This might change, so
+            using "IG" at the start is recommended.
+
+        <li>T Turnout - actually a general purpose output on the
+        layout</li>
+
+        <li>X logiX - a set of logic equations used to control the
+        layout.
+        Logix system names are all upper case, have no trailing whitespace and start with IX.</li>
+      </ul>
+
+
+
+      <a name="systeminfo" id="systeminfo"></a>
+      <h3>System-specific suffix</h3>
+      <p>"Internal" objects can also be addressed and manipulated,
+        but they don't have a strict correspondence with some
+        hardware on the layout. For example, if a signal head is
+        implemented as three different outputs, LT1, LT2 and LT3, the
+        signal head object might be called IH3. 
+        
+     <a name="special" id=
+                "special"></a></p>
+      <p>Each different hardware system
+      can specify the "suffix string" that follows the system and type
+      letters. Generally, these are small numbers, but their exact
+      meaning is very system-specific. For more information, please
+        see the specific pages for</p>
+
+      <ul>
+        <li><a href=
+        "../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a></li>
+
+        <li><a href=
+        "../../hardware/loconet/Addressing.shtml">Digitrax
+        LocoNet</a></li>
+
+        <li><a href=
+        "../../hardware/grapevine/Names.shtml">Grapevine</a></li>
+
+        <li><a href=
+        "../../hardware/XPressNet/XNetAddressing.shtml">Lenz
+        XPressNet</a></li>
+
+        <li><a href=
+        "../../hardware/nce/NCE.shtml#names">NCE</a></li>
+
+        <li><a href=
+        "../../hardware/powerline/Names.shtml">Powerline adapters,
+        e.g, X10, Insteon</a></li>
+      </ul>
+
+      <p>(If you find any missing or see omissions in the following
+      summary, please <a href="getgitcode.shtml#propose">add
+      a reference</a>)</p>
+
+      <a name="entrysummary" id="entrysummary"></a>
+      <h4>Adding an item to the table - Entry Format Summary</h4>
+      
+      <p>When you add an item to one of the tables, many times you only
+      have to enter the numbers and have JMRI construct
+      the complete system name.<br>
+      Here's a summary of the options per Connection, split up for
+        outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>Connection</th>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>i/o</td>
+          <td>1003</td>
+          <td>Node 1, Input 3</td>
+          <td>CS1003</td>
+          <td>n digits (node) + 3 digit (pin)</td>
+          <td>1:3</td>
+          <td>node: 1; pin: 1</td>
+          <td>node: 127; pin: 999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>o</td>
+          <td>3</td>
+          <td>Node 0, Output 3</td>
+          <td>CT3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>i/o</td>
+          <td>4003</td>
+          <td>Node 4, Output 3</td>
+          <td>CT4003</td>
+          <td>n digits (node) + 3 digit (pin)</td>
+          <td>4:3</td>
+          <td>node: 1; pin: 1</td>
+          <td>node: 127; pin: 999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>i/o</td>
+          <td>4:3</td>
+          <td>Node 4, Output 3</td>
+          <td>CT4:3</td>
+          <td> </td>
+          <td>4003</td>
+          <td>0:1</td>
+          <td>127:999</td>
+        </tr>
+        <tr>
+          <td>C/MRI</td>
+          <td>i/o</td>
+          <td>4B3</td>
+          <td>Node 4, Output 3</td>
+          <td>CT4B3</td>
+          <td> </td>
+          <td>4003</td>
+          <td>0B1</td>
+          <td>127B999</td>
+        </tr>
+        <tr>
+          <td>DCC++</td>
+          <td>i</td>
+          <td>4:3</td>
+          <td>(converts to 50)</td>
+          <td>DT50</td>
+          <td>node : pin</td>
+          <td> </td>
+          <td>0</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>DCC++</td>
+          <td>o</td>
+          <td>12</td>
+          <td>ID in internal DCC++ table</td>
+          <td>DT1212</td>
+          <td>integer</td>
+          <td> </td>
+          <td>0</td>
+          <td>32767</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>i</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 71(?)</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>o</td>
+          <td>4:3:4</td>
+          <td>ModuleAddress:Pin1:Pin2</td>
+          <td>ZT4:3:4</td>
+          <td>int : int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 71(?)</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22016</td>
+          <td>Sensor node 22, pin 16</td>
+          <td>GS 22 016</td>
+          <td>n digits (node) + 3 digit (pin)</td>
+          <td> </td>
+          <td>node: 1; pin: 001</td>
+          <td>node: 127; pin: 016</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22p16</td>
+          <td>p = parallel input </td>
+          <td>GS 22 p16</td>
+          <td>int + p + int (pin)</td>
+          <td> </td>
+          <td>p1</td>
+          <td>p16</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22a3</td>
+          <td>a = ASD occupancy sensor</td>
+          <td>GS 22 a3</td>
+          <td>int + a + int (pin)</td>
+          <td>22103</td>
+          <td>a1</td>
+          <td>a24</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22103</td>
+          <td>a = ASD occupancy sensor</td>
+          <td>GS 22023</td>
+          <td>int + a + int (pin)</td>
+          <td>22a3</td>
+          <td>101</td>
+          <td>124</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22s3</td>
+          <td>s = old style serial occupancy sensor</td>
+          <td>GS 22 s3</td>
+          <td>int + s + int (pin)</td>
+          <td>22023</td>
+          <td>s1</td>
+          <td>s16</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22023</td>
+          <td>s = old style serial occupancy sensor</td>
+          <td>GS 22 s3</td>
+          <td>int + s + int (pin)</td>
+          <td>22a3</td>
+          <td>021</td>
+          <td>036</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22m3</td>
+          <td>m = ASD motion sensor</td>
+          <td>GS 22 m3</td>
+          <td>int + m + int (pin)</td>
+          <td>22203</td>
+          <td>1</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>i</td>
+          <td>22203</td>
+          <td>m = ASD motion sensor</td>
+          <td>GS 22 203</td>
+          <td> </td>
+          <td>22m3</td>
+          <td>201</td>
+          <td>224</td>
+        </tr>
+        <tr>
+          <td>Grapevine</td>
+          <td>o</td>
+          <td>22103</td>
+          <td>output, card/bank 1, connector 3</td>
+          <td>GT 22 103</td>
+          <td> </td>
+          <td> </td>
+          <td>101/201/301/401</td>
+          <td>124/224/324/424</td>
+        </tr>
+        <tr>
+          <td>LocoNet</td>
+          <td>i</td>
+          <td>34</td>
+          <td>Sensor 34</td>
+          <td>LS34</td>
+          <td>integer</td>
+          <td>N/A</td>
+          <td>1</td>
+          <td>4096</td>
+        </tr>
+        <tr>
+          <td>LocoNet</td>
+          <td>o</td>
+          <td>34</td>
+          <td>Turnout 34</td>
+          <td>LT34</td>
+          <td>integer</td>
+          <td>N/A</td>
+          <td>1</td>
+          <td>4096</td>
+        </tr>
+        <tr>
+          <td>Maple</td>
+          <td>i</td>
+          <td>2010</td>
+          <td>Node 2 Input bit 10</td>
+          <td>KS2010</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1000</td>
+        </tr>
+        <tr>
+          <td>Maple</td>
+          <td>o</td>
+          <td>1016</td>
+          <td>Node 1 Output (Turnout) 16</td>
+          <td>KT1016</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>8000</td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>i</td>
+          <td>200018M07</td>
+          <td>listen to Events 18 .. 1F</td>
+          <td>MS200018M07</td>
+          <td>+ M + hex mask</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>i</td>
+          <td>X91012;X91019</td>
+          <td>hex CAN frame msg. Active; Inactive</td>
+          <td>MTX91012;X91019</td>
+          <td>hex ; hex</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>io</td>
+          <td>18</td>
+          <td>event 18 On; 18 Off</td>
+          <td>MT18</td>
+          <td>integer</td>
+          <td>+18;-18</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>io</td>
+          <td>18;21</td>
+          <td>event 18 On; 21 On</td>
+          <td>MT18;21</td>
+          <td>integer ; integer</td>
+          <td>+18;+21</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>io</td>
+          <td>+18;-21</td>
+          <td>event 18 On; 21 Off</td>
+          <td>MT+18;-21</td>
+          <td>idem signed</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>io</td>
+          <td>2000018</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MT200018</td>
+          <td>node + (5 digits)</td>
+          <td>N2E18</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>io</td>
+          <td>N2E18</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MTN2E18</td>
+          <td>N + number + E + number</td>
+          <td>2000018</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>NCE</td>
+          <td>i</td>
+          <td>4:3</td>
+          <td>AIU Cab 4, pin 3</td>
+          <td>NS50</td>
+          <td> </td>
+          <td> </td>
+          <td>cab: 1; pin: 1</td>
+          <td>cab: 63; pin: 14</td>
+        </tr>
+        <tr>
+          <td>NCE</td>
+          <td>i</td>
+          <td>50</td>
+          <td>AIU Cab 4, pin 3</td>
+          <td>NS50</td>
+          <td> </td>
+          <td> </td>
+          <td>cab: 1; pin: 1</td>
+          <td>cab: 63; pin: 14</td>
+        </tr>
+        <tr>
+          <td>NCE</td>
+          <td>o</td>
+          <td>16</td>
+          <td>Output (Turnout) 16</td>
+          <td>NT16</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>2044</td>
+        </tr>
+        <tr>
+          <td>TMCC (Lionel)</td>
+          <td>o</td>
+          <td>16</td>
+          <td>Output (Turnout) 16</td>
+          <td>NT16</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>511</td>
+        </tr>
+        <tr>
+          <td>X10</td>
+          <td>o</td>
+          <td>A3</td>
+          <td>House code A + num device code</td>
+          <td>PTA3</td>
+          <td>caps letter + num</td>
+          <td> </td>
+          <td>house code: A; device: 1</td>
+          <td>house code: P; device: 16</td>
+        </tr>
+        <tr>
+          <td>X10 Insteon</td>
+          <td>o</td>
+          <td>01.2A.B4</td>
+          <td>Light (module) PL01.2A.B4</td>
+          <td>PL01.2A.B4</td>
+          <td>3 x 2 chars</td>
+          <td> </td>
+          <td>not documented</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>XpressNet</td>
+          <td>i</td>
+          <td>3</td>
+          <td>Feedback module 1, input 3</td>
+          <td>XS3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        <tr>
+          <td>XpressNet</td>
+          <td>i</td>
+          <td>99:3</td>
+          <td>Feedback module 99, input 3</td>
+          <td>XS787</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        <tr>
+          <td>XpressNet</td>
+          <td>o</td>
+          <td>3</td>
+          <td>Turnout 3</td>
+          <td>XT3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        </tbody></table>
+      <!-- this table is maintained on the help/en/html/doc/Technical/Names.shtml based on information from the
+      Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->
+    
+      <h2>Naming Conventions For Automated Use</h2>Some
+      higher-level constructs create their own items. For example,
+      a "Sensor Group" is really just a collection of Routes that
+      implements the sensor group logic; there is no specific
+      object in the program that implements the sensor group.
+      Instead, when the user creates sensor group "my group", a
+      series of routes with system names like:
+<pre style="font-family: monospace;">
+SENSOR GROUP:my group:LS1
+SENSOR GROUP:my group:LS2
+</pre>
+    are created which implements the group. The sensor group tool
+    knows to look for routes of this name.
+
+      <p>To make this possible, two informal rules are used:</p>
+
+      <ul>
+        <li>Users should not use the : (colon, ASCII 0x3A), "
+        (double quote, ASCII 0x22), nor $ (dollar sign, ASCII 0x24
+        ) characters in their system or user names. Automatic tools
+        should use at least one of these to make sure they don't
+        collide with user-selected names. Quotes should always be
+        used in pairs to allow nesting.</li>
+
+        <li>Tools that use this method have their tool name in any
+        system names they create, as "SENSOR GROUP" was used
+        above.</li>
+      </ul>
+
+      <p>The list of tools currently working this way is:</p>
+
+      <ul>
+        <li>Logix - auto-generated 
+            <a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/Logix.html">Logix</a> 
+            system names are of the form IX:AUTO:0001</li>
+        <li>SENSOR GROUPS - <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">
+        jmri.jmrit.sensorgroup</a></li>
+
+        <li>SignalHeads - particularly the <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">
+        SE8C signal head</a></li>
+
+        <li>USS CTC - <a href=
+        "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">
+        jmri.jmrit.ussctc</a></li>
+
+      </ul>
+
+      <h2>Notes</h2>
+
+      <ul>
+        <li>Some devices are not really named, as there's no idea
+        of more than one yet. The DCC programmer is the first
+        example, but there may be others.</li>
+
+        <li><a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/Conditional.html">Conditionals</a>
+        are a special case.  Although they have things called
+        "System Names" and "User Names", they don't really obey the 
+        conventions here.  See the 
+        <a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
+        for more information.</li>
+        
+        <li>The system name convention doesn't provide a specific
+        way to identify more than one adapter of a given type. E.g.
+        if you're connected to more than one LocoNet, or more than
+        one command station of any single type, you can either give
+        the second one a separate letter (L, then M) or you can
+        identify the 2nd one with a modifier (L, then L2). That's a
+        bit ambiguous, but there are proponents of both approaches
+        so we make them both available.</li>
+
+        <li>There's no provision for a single program to deal with
+        more than one layout. If that's needed, we'll have to
+        understand what the program is trying to do.</li>
+      </ul>
+      
+      <a name="programmers" id="programmers"></a>
+      <h2>For Programmers</h2>
+      
+      <h3>Normalized form of Names, and how to work with it</h3>
+      
+          After multiple long discussions, we decided that both system and user names 
+          should be kept in a "normal" form which enforces certain restrictions.
+          For user names, that's that leading and trailing whitespace (spaces, tabs) 
+          are not allowed.  For system names, it depends on the system, but 
+          at least the system-prefix and type letter must be correct.
+          
+          <p>
+          The code to make sure that names are in normal form 
+          has been localized to a single routine for user names:
+          <br>
+<pre style="font-family: monospace;">
+          String userName = NamedBean.normalizeUserName(input);
+</pre><br>
+          Because system names may vary from type to type 
+          and manager to manager, this is manager-specific for them:
+          <br>
+<pre style="font-family: monospace;">
+          String systemName = manager.normalizeSystemName(input);
+</pre><br>
+          For more information, see the Javadoc for
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>
+            and
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#normalizeSystemName-java.lang.String-">normalizeSystemName</a>
+      
+        <p>
+        In general, it's better to use an input method that already handles all this.  Two are available
+        now:
+        <ul>
+        <li>JComboBox format:
+            <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
+            
+<pre style="font-family: monospace;">
+        import jmri.util.swing.JmriBeanComboBox;
+
+        // the first argument is the manager, the 2nd is a bean to select or null
+        // the third determines how the beans are displayed
+        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.html">JmriBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
+                                                    currentSensor, 
+                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
+        
+        // to get the selected item, depending on what you want:
+        selectComboBox.getNamedBean()                                       
+        selectComboBox.getSystemName()                                       
+        selectComboBox.getUserName()                                        
+        selectComboBox.getDisplayName()                                       
+</pre>
+
+        <li>Table format:
+            <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
+<pre style="font-family: monospace;">
+
+        import jmri.jmrit.picker.*;
+        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
+        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a> panel = new <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a>(tableModel);
+            
+        // to get the selected item as a NamedBeanHandle&lt;T&gt;
+        panel.getSelectedBeanHandle();
+
+        // you can listen for a selected value by inheriting from ListSelectionListener 
+        // and registering with panel.getTable().getSelectionModel().addListSelectionListener(this)
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            System.out.println("  Selected: "+panel.getSelectedBeanHandle());
+        }
+</pre>
+        This allows the user to select either the system name or (non-blank) user name in a row,
+        which then becomes the preferred name for the resulting 
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
+        For more information on
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>,
+        including how to get them from the 
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
+        see the page on
+        <a href="Patterns.shtml">code patterns page</a>.
+
+        </ul>
+
+      <h3>System Name Comparisons</h3>
+      
+        System names are compared and sorted in multiple places: as labels for table rows, 
+        in selection boxes and lists, etc.  We have two <code>java.util.Comparator&lt;&gt;</code>
+        implementations to handle this:
+        <ul>
+            <li><code>SystemNameComparator</code> - a comparison on Strings
+            <li><code>NamedBeanComparator</code> - a comparison on the NamedBeans themselves
+        </ul>
+        Please use one of these whenever you need to compare or sort by system names to keep the complexity in one place.
+        <p>
+        Both of them sort first by system connection prefix, to group all the objects from one system together.
+        If there are objects of multiple types, the type letter is put in alphabetical order next.
+        Finally, the system-specific suffix is sorted.
+        <p>
+        Because it works with String values, <code>SystemNameComparator</code> can only
+        do a default ordering of the system-specific suffix; it can't do anything that
+        uses any information about the system-specific meaning of that string. It therefore
+        uses an alphanumeric-by-chunks sort.
+        Because it's comparing on the actual NamedBean objects, <code>NamedBeanComparator</code>
+        can do more specific comparisons:  It knows what the C/MRI suffixes in 
+        "CT2003" and "C2B2" mean and can take that into account.
+        <p>
+        Therefore, if you can, do the sort/comparison with <code>NamedBeanComparator</code> and
+        then convert to Strings, rather than converting NamedBeans to Strings and using 
+        <code>SystemNameComparator</code>.
+        <p>
+        Also, if you've created a system that has complex information in the suffix,
+        please have your <code>NamedBean</code> subclasses implement a system-specific
+        version of the
+        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#compareSystemNameSuffix-java.lang.String-java.lang.String-jmri.NamedBean-">compareSystemNameSuffix()</a>
+        method in <code>NamedBean</code>.
+        For an example, see the bottom of jmri.jmrix.cmri.serial.SerialTurnout
+        and jmri.jmrix.cmri.serial.SerialTurnoutTest.
+      
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

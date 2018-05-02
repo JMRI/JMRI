@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated  by Blorec Hervé bzh56420@yahoo.fr 2013-11-14-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Monitor Window</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help monitor"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Fen&Atilde;&ordf;tre Moniteur de Communication</h1>JMRI
+      offre une fen&Atilde;&ordf;tre de communication pour
+      surveiller pour que vous puissiez voir ce qui se passe sur le
+      lien de communication entre le programme et le
+      mat&Atilde;&copy;riel du r&Atilde;&copy;seau.
+
+      <p>Une fois que vous ouvrez une fen&Atilde;&ordf;tre du
+      moniteur, il affichera automatiquement &Atilde;  l'
+      &Atilde;&copy;cran tout le trafic sur le lien aussi logtemps
+      que " Filtres Octets" est vide</p>
+
+      <h2>Commandes</h2>
+
+      <dl>
+        <dt>Effacer &Atilde;&permil;cran</dt>
+
+        <dd>Efface la zone de connexion au haut de
+        l'&Atilde;&copy;cran</dd>
+
+        <dt>Gel de l'&Atilde;&permil;cran</dt>
+
+        <dd>Arr&Atilde;&ordf;te l'acquisition de nouvelles
+        informations, de sorte que l'information saisie cesse de
+        d&Atilde;&copy;filer</dd>
+
+        <dt>Montrer donn&Atilde;&copy;es brutes</dt>
+
+        <dd>Normalement, le moniteur affiche
+        l'interpr&Atilde;&copy;tation de ce qu'il voit du
+        programme. Si vous voulez voir les octets bruts, cochez
+        cette case.</dd>
+
+        <dt>Montrer horodatage</dt>
+
+        <dd>Habituellement, le programme affiche simplement les
+        donn&Atilde;&copy;es du lien de communication. Si vous
+        souhaitez que chaque message soit &Atilde;&ordf;tre
+        pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par l'heure
+        &Atilde;  laquelle qu'il a &Atilde;&copy;t&Atilde;&copy;
+        envoy&Atilde;&copy; ou a &Atilde;&copy;t&Atilde;&copy;
+        re&Atilde;&sect;u, cochez cette case.</dd>
+
+        <dt>Ajoutez message</dt>
+
+        <dd>Si vous voulez ins&Atilde;&copy;rer un message dans les
+        informations captur&Atilde;&copy;es, par exemple de faire
+        une note sur ce que vous vous appr&Atilde;&ordf;tez
+        &Atilde;  faire, vous pouvez le taper dans le champ de
+        texte &Atilde;  c&Atilde;&acute;t&Atilde;&copy; du bouton
+        "Ajouter message " et puis cliquez sur ce bouton. Ceci est
+        particuli&Atilde;&uml;rement utile lorsque vous vous
+        connectez &Atilde;  un fichier (voir ci-dessous) et que
+        vous voulez faire une note pour plus tard sur ce qui se
+        passe.</dd>
+      </dl>
+
+      <h2>Journalisation dans un fichier</h2>Parfois, il est utile
+      de capturer ce qui se passe. Par exemple, vous pouvez
+      rencontrer un bug (!!), et que vous voulez envoyer une copie
+      de ce qui se arrive aux gens qui tentent d'y
+      rem&Atilde;&copy;dier.
+
+      <p>De petites quantit&Atilde;&copy;s de donn&Atilde;&copy;es
+      peuvent &Atilde;&ordf;tre copi&Atilde;&copy;es &Atilde; 
+      partir de la fen&Atilde;&ordf;tre journal avec vos
+      ordinateurs par la commande "Copier" (par exemple Ctrl-C ou
+      cmd-C), puis coll&Atilde;&copy; dans un email.</p>
+
+      <p>Si vous voulez capturer davantage, vous pouvez avoir la
+      fen&Atilde;&ordf;tre pour r&Atilde;&copy;diger dans un
+      fichier journal sur le disque de votre ordinateur. Pour ce
+      faire:</p>
+
+      <ol>
+        <li>Cliquez sur "Choisir le fichier journal". Une
+        fen&Atilde;&ordf;tre de s&Atilde;&copy;lection de fichier
+        va s'ouvrir. Naviguez &Atilde;  l'endroit o&Atilde;&sup1;
+        vous souhaitez stocker le fichier, entrez un nom pour le
+        nouveau fichier journal, puis cliquez sur "Enregistrer".
+        Notez que si vous choisissez un fichier qui existe
+        d&Atilde;&copy;j&Atilde; , il sera
+        &Atilde;&copy;cras&Atilde;&copy;.</li>
+
+        <li>Lorsque vous &Atilde;&ordf;tes pr&Atilde;&ordf;t
+        &Atilde;  capturer les donn&Atilde;&copy;es que vous
+        souhaitez, cliquez sur &Acirc;&laquo;D&Atilde;&copy;marrer
+        l'enregistrement" sur la fen&Atilde;&ordf;tre du
+        moniteur.</li>
+
+        <li>Lorsque vous avez termin&Atilde;&copy;, cliquez sur
+        "Arr&Atilde;&ordf;ter l'enregistrement" pour stocker les
+        donn&Atilde;&copy;es et fermez le fichier.</li>
+      </ol>
+
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

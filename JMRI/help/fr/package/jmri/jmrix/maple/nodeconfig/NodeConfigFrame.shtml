@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+  <title>JMRI: Maple Node Configuration</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>JMRI: Maple configuration des N&Aring;"uds</h2>
+
+      <h3>Renseignements g&Atilde;&copy;n&Atilde;&copy;raux:</h3>
+
+      <p>Le Syst&Atilde;&uml;mes Maple fait que les panneaux HMI
+      (Human Machine Interface)d'&Atilde;&copy;cran tactile peuvent
+      avoir une application dans le mod&Atilde;&copy;lisme
+      ferroviaire. En particulier, ces &Atilde;&copy;cran tactiles
+      Panneaux HMI peuvent servir de substituts de haute
+      Technologie pour les tableaux de bord sur un
+      r&Atilde;&copy;seau de chemin de fer miniature . Cette mise
+      en &Aring;"uvre de Maple vers JMRI supporte plusieurs
+      panneaux HMI identiques qui peuvent &Atilde;&ordf;tre
+      branch&Atilde;&copy;s &Atilde;  divers endroits autour du
+      r&Atilde;&copy;seau et utilis&Atilde;&copy;s pour
+      contr&Atilde;&acute;ler et afficher les
+      &Atilde;&copy;l&Atilde;&copy;ments li&Atilde;&copy;s &Atilde;
+       cet emplacement. Chaque panneau HMI a un micro-ordinateur
+      int&Atilde;&copy;gr&Atilde;&copy; qui peut &Atilde;&ordf;tre
+      programm&Atilde;&copy; (en utilisant un logiciel de
+      programmation fournis par Syst&Atilde;&uml;mes Maple) pour
+      afficher un nombre illimit&Atilde;&copy;
+      d'&Atilde;&copy;crans s&Atilde;&copy;lectionnables par
+      l'utilisateur. Il est pr&Atilde;&copy;vu qu'apr&Atilde;&uml;s
+      le branchement de son panneau, le mod&Atilde;&copy;liste
+      s&Atilde;&copy;lectionne celui qui est appropri&Atilde;&copy;
+      &Atilde;  sa localisation actuelle, permettant au Panneau de
+      servir de dispositif de communication directement dans JMRI.
+      Apr&Atilde;&uml;s avoir termin&Atilde;&copy; les
+      t&Atilde;&cent;ches &Atilde;  un endroit, l'exploitant
+      d&Atilde;&copy;branche le panneau et se
+      d&Atilde;&copy;placent avec lui &Atilde;  un autre endroit,
+      etc. De multiples panneaux HMI fonctionnant
+      simultan&Atilde;&copy;ment sont pris en charge.</p>
+
+      <p>Les "bits bobine" dans les panneaux HMI Maple sont
+      utilis&Atilde;&copy;s pour communiquer avec JMRI. Dans cette
+      mise en &Aring;"uvre de Maple vers JMRI, tous les panneaux
+      utilisent le m&Atilde;&ordf;me espace d'adressage et ont
+      exactement les m&Atilde;&ordf;mes affectations pour les bits
+      d'entr&Atilde;&copy;e et les bits de sortie. Les 1000
+      premiers "bits bobinage" sont
+      r&Atilde;&copy;serv&Atilde;&copy;s pour la configuration de
+      Capteurs. Les Capteurs sont appel&Atilde;&copy;s "Bits
+      d'Entr&Atilde;&copy;e" et sont utilis&Atilde;&copy;es pour
+      d&Atilde;&copy;finir Capteurs JMRI selon les bits
+      d'&Atilde;&copy;tat (bits bobine) dans votre panneau Maple
+      HMI. Par cons&Atilde;&copy;quent, les Capteurs transmettent
+      des informations &Atilde;  partir de panneaux HMI
+      configur&Atilde;&copy; pour JMRI. Les 8000 bits suivants sont
+      r&Atilde;&copy;serv&Atilde;&copy;s pour l'affectation comme
+      &Acirc;&laquo;Bits de sortie&Acirc;&raquo; et sont
+      utilis&Atilde;&copy; pour envoyer les param&Atilde;&uml;tres
+      actuels d'appareils de voie et de lumi&Atilde;&uml;res pour
+      les panneaux Maple.</p>
+
+      <h3>La communication entre JMRI et Panneaux Maple HMI</h3>
+
+      <p>La communication Maple travaille par sondages. Chaque
+      panneau est interrog&Atilde;&copy;
+      s&Atilde;&copy;par&Atilde;&copy;ment, et les
+      r&Atilde;&copy;sultats des sondages sont lus ensembles pour
+      param&Atilde;&copy;trer les capteurs. Par
+      cons&Atilde;&copy;quent, si un capteur est ACTIF (Maple "1")
+      dans n'importe quel panneau, il est mis ACTIF dans JMRI. Si
+      un capteur est inactif (Maple &Acirc;&laquo;0&Acirc;&raquo;)
+      dans tous les panneaux configur&Atilde;&copy;s, alors il est
+      INACTIF dans JMRI. Les panneaux sont interrog&Atilde;&copy;s
+      dans l'ordre o&Atilde;&sup1; ils sont
+      configur&Atilde;&copy;s. <b>Remarque:</b> La commande sondage
+      Maple permet une interrogation maximum de 99 bits &Atilde; 
+      chaque commande sondage, si plus de 99 bits
+      d'entr&Atilde;&copy;e sont configur&Atilde;&copy;s, les
+      commandes de sondages multiples seront
+      n&Atilde;&copy;cessaires pour chaque panneau.</p>
+
+      <p>Apr&Atilde;&uml;s que tous les panneaux aient
+      &Atilde;&copy;t&Atilde;&copy; interrog&Atilde;&copy;s, le
+      statut des bits de sortie est envoy&Atilde;&copy; aux
+      panneaux. Les bits de sortie sont envoy&Atilde;&copy;s en
+      mode &Acirc;&laquo;diffusion&Acirc;&raquo; de sorte que tous
+      les panneaux peuvent recevoir le bits &Atilde;  la fois. Le
+      Mode de diffusion est indiqu&Atilde;&copy; par une Adresse
+      Station HMI de "0". Les bits de sortie commencent par une
+      adresse HMI bits bobine de "1001". Tous les bits de sortie
+      configur&Atilde;&copy;s sont envoy&Atilde;&copy;s,
+      ind&Atilde;&copy;pendamment de si le bit est
+      affect&Atilde;&copy; ou non. <b>Remarque:</b> La commande
+      d'&Atilde;&copy;criture Maple permet une
+      &Atilde;&copy;criture maximum de 99 bits avec chaque
+      transmission des commandes, donc si plus de 99 bits de sortie
+      sont configur&Atilde;&copy;s, plusieurs transmissions de
+      commandes seront n&Atilde;&copy;cessaires. Maintenir le
+      nombre de bits de sortie configur&Atilde;&copy;s aussi bas
+      que possible permettra de r&Atilde;&copy;duire le nombre de
+      transmission des commandes qui doivent &Atilde;&ordf;tre
+      envoy&Atilde;&copy;es.</p>
+
+      <h3>Configuration d'un nouveau Panneau Maple</h3>
+
+      <p>Un nouveau Panneau Maple (un &Acirc;&laquo;N&Aring;"ud
+      Maple&Acirc;&raquo;) est configur&Atilde;&copy; en
+      sp&Atilde;&copy;cifiant son Adresse Station HMI , en
+      pr&Atilde;&copy;cisant les temps de temporisation pour les
+      sondages et les envoie, entrants le nombre de bits
+      d'entr&Atilde;&copy;es et de bits de sortie, et en cliquant
+      sur le bouton <b>Ajouter Panneau</b>. L'Adresse de la Station
+      HMI est propre &Atilde;  chaque panneau HMI, les autres
+      &Atilde;&copy;l&Atilde;&copy;ments sont les
+      m&Atilde;&ordf;mes pour tous les panneaux. Chaque
+      &Atilde;&copy;l&Atilde;&copy;ment est d&Atilde;&copy;crit
+      ci-dessous:</p>
+
+      <ul>
+        <li><b>Adresse Station HMI</b> - Ceci est l'adresse
+        utilis&Atilde;&copy;e par JMRI pour le sondage du panneau.
+        Chaque panneau doit avoir une Adresse Station HMI
+        diff&Atilde;&copy;rente. Les Adresses de 1 &Atilde;  99
+        sont autoris&Atilde;&copy;es. Les adresses n'ont pas besoin
+        d'&Atilde;&ordf;tre dans l'ordre
+        num&Atilde;&copy;rique.</li>
+
+        <li><b>Temps d'Attente de la R&Atilde;&copy;ponse au
+        Sondage</b> - C'est le temps (millisecondes) &Atilde; 
+        attendre une r&Atilde;&copy;ponse apr&Atilde;&uml;s l'envoi
+        d'une commande de sondage avant de passer &Atilde;  la
+        prochaine commande dans le processus de communication. La
+        valeur affich&Atilde;&copy;e est la temporisation actuelle,
+        ou, si c'est le premier panneau a &Atilde;&ordf;tre
+        configur&Atilde;&copy;, valeur par d&Atilde;&copy;faut de
+        la temporisation. .La changer va changer la temporisation
+        pour tous les panneaux. Ce temps devrait &Atilde;&ordf;tre
+        fix&Atilde;&copy; au plus petit nombre qui donne des
+        communications fiables entre l'ordinateur et JMRI.
+        <b>Remarque:</b> Quand un panneau est
+        configur&Atilde;&copy;, mais pas branch&Atilde;&copy; (ne
+        communique pas ), il expire. C'est le comportement qu'il
+        devrait avoir quand un utilisateur d&Atilde;&copy;place un
+        panneau entre deux emplacements.</li>
+
+        <li><b>D&Atilde;&copy;lai Envoyer</b> - C'est le temps
+        (millisecondes) &Atilde;  attendre apr&Atilde;&uml;s
+        l'&Atilde;&copy;mission diffus&Atilde;&copy;e d'une
+        commande d'&Atilde;&copy;criture avant de passer &Atilde; 
+        la prochaine commande dans le processus de communication.
+        La valeur affich&Atilde;&copy;e est le temps de retard pour
+        l'envoi, ou, si c'est le premier panneau &Atilde; 
+        &Atilde;&ordf;tre configur&Atilde;&copy;, valeur par
+        d&Atilde;&copy;faut de la temporisation de l'envoi. La
+        changer va changer les temporisations d'envoi pour tous les
+        panneaux.</li>
+
+        <li><b>Nombre de Bits d'Entr&Atilde;&copy;e</b> - C'est le
+        nombre de bits d'entr&Atilde;&copy;e qui seront
+        interrog&Atilde;&copy;s lors de l'interrogation de chaque
+        &Atilde;&copy;cran HMI. Les valeurs de 1 &Atilde;  1000
+        sont autoris&Atilde;&copy;es. Le nombre de bits
+        d'entr&Atilde;&copy;e est obligatoirement le
+        m&Atilde;&ordf;me pour chaque panneau, donc si ce nombre
+        est modifi&Atilde;&copy; lors de l'ajout ou de modification
+        de panneau, il est chang&Atilde;&copy; pour tous les
+        panneaux. Du fait de la limitation &Atilde;  99 bits dans
+        les demandes de scrutation Maple, les commandes de sondages
+        multiples seront n&Atilde;&copy;cessaires si ce nombre est
+        sup&Atilde;&copy;rieur &Atilde;  99. Alors garder ce nombre
+        &Atilde;  la valeur la plus raisonnable, donnera lieu
+        &Atilde;  des communications plus rapides.</li>
+
+        <li><b>Nombre de Bits de Sortie</b> - C'est le nombre de
+        bits de sortie qui seront envoy&Atilde;&copy;s en mode de
+        diffusion &Atilde;  la fin de chaque cycle d'interrogation.
+        Les valeurs de 1 &Atilde;  8000 sont
+        autoris&Atilde;&copy;es. Le nombre de bits de sortie est
+        obligatoirement le m&Atilde;&ordf;me pour chaque panneau,
+        donc si ce nombre est chang&Atilde;&copy; lors de l'ajout
+        ou de la modification d'un panneau, il est
+        chang&Atilde;&copy; pour tous les panneaux. Du fait de la
+        limitation &Atilde;  99 bits dans les demandes
+        d'&Atilde;&copy;criture Maple, des commandes
+        d'&Atilde;&copy;criture multiples seront
+        n&Atilde;&copy;cessaires si ce nombre est
+        sup&Atilde;&copy;rieur &Atilde;  99. Alors garder ce nombre
+        &Atilde;  une valeur raisonnable, donnera lieu &Atilde; 
+        des communications plus rapides.</li>
+      </ul>
+
+      <p><b>Important:</b> Il faut toujours v&Atilde;&copy;rifier
+      les messages contenus dans les boites <b>Notes</b>
+      apr&Atilde;&uml;s chaque op&Atilde;&copy;ration! C'est
+      l&Atilde;  que les succ&Atilde;&uml;s ou erreurs seront
+      signal&Atilde;&copy;es.</p>
+
+      <p><b>Tr&Atilde;&uml;s Important:</b> N'oubliez pas de
+      sauvegarder vos informations de configuration des N&Aring;"ud
+      de Panneaux Maple sur le disque apr&Atilde;&uml;s avoir fait
+      les changements. Utilisez le bouton <b>Enregistrer</b> au bas
+      de la fen&Atilde;&ordf;tre
+      Pr&Atilde;&copy;f&Atilde;&copy;rences</p>
+
+      <h3>Autres op&Atilde;&copy;rations</h3>
+
+      <p>Pour changer l'un des quatre param&Atilde;&uml;tres
+      communs ( temporisation r&Atilde;&copy;ponse scrutation,
+      temporisation envoi commande, nombre de bits
+      d'entr&Atilde;&copy;e, et/ou le nombre de bits de sortie),
+      entrez l'Adresse de la Station HMI de tout panneau
+      configur&Atilde;&copy;, cliquez sur Modifier Panneau, faire
+      les changements de param&Atilde;&uml;tres
+      d&Atilde;&copy;sir&Atilde;&copy;s, et cliquez sur <b>Panneau
+      mis &Atilde;  Jour</b>. Cela change le param&Atilde;&uml;tre
+      (s) dans tous les panneaux configur&Atilde;&copy;s.</p>
+
+      <p>Pour voir une liste les Adresses de Station HMI de tous
+      les panneaux configur&Atilde;&copy;s,
+      s&Atilde;&copy;lectionnez <b>Liste Affectation</b> dans le
+      menu <b>Maple</b>, et d&Atilde;&copy;roulez le menu
+      contextuel des <b>Noeuds</b></p>
+
+      <p>Pour changer l'Adresse Station HMI d'un panneau
+      pr&Atilde;&copy;alablement configur&Atilde;&copy;, entrez l'
+      Adresse Station HMI du panneau, cliquez sur <b>Supprimer
+      Panneau</b>, confirmer la suppression, entrez la nouvelle
+      Adresse Station HMI, et cliquez sur <b>Ajouter un
+      panneau</b>.Les Adresses Station HMI ne peuvent pas
+      &Atilde;&ordf;tre modifi&Atilde;&copy;es via Edition.</p>
+
+      <p>Si vous ajoutez un Capteur avec un nom de
+      syst&Atilde;&uml;me qui adresse une bobine bit au del&Atilde;
+       du nombre de bits d'entr&Atilde;&copy;e
+      configur&Atilde;&copy;, le capteur sera ajout&Atilde;&copy;,
+      et un message <b>Attention Configuration</b> sera
+      d&Atilde;&copy;livr&Atilde;&copy;. Il n'existe aucun moyen
+      d'acc&Atilde;&copy;der &Atilde;  un Capteur qui correspond
+      &Atilde;  un bit d'entr&Atilde;&copy;e HMI en dehors de la
+      plage de bits configur&Atilde;&copy;e. Donc, si vous
+      re&Atilde;&sect;evez un message <b>Attention
+      Configuration</b> , vous devez soit modifier votre <b>Nombres
+      de bits d'entr&Atilde;&copy;e</b> configur&Atilde;&copy; ou
+      supprimer le capteur.</p>
+
+      <p>Si vous ajoutez un aiguillage avec un nom de
+      syst&Atilde;&uml;me qui adresse une bobine bit en dehors de
+      la plage configur&Atilde;&copy;e de bits de sortie,
+      l'aiguillage sera ajout&Atilde;&copy;, et un message
+      d'avertissement <b>Attention Configuration</b> sera
+      d&Atilde;&copy;livr&Atilde;&copy;. La gamme
+      configur&Atilde;&copy;e des adresses de bits HMI est de 1001
+      &Atilde;  1000 + le nombre de bits de sortie, correspondant
+      aux adresses JMRI de 1 &Atilde;  travers le nombre de bits de
+      sortie. Il ya aucun moyen d'&Atilde;&copy;crire &Atilde;  un
+      aiguillage qui correspond &Atilde;  un bit HMI en dehors de
+      la gamme de bits configur&Atilde;&copy;e. Donc, si vous
+      recevez un avertissement de configuration <b>Attention
+      Configuration</b> , vous devez soit modifier votre
+      configuration du <b>Nombre de Bits de Sortie</b> ou supprimer
+      l'aiguillage.</p>
+
+      <p>JMRI refusera de cr&Atilde;&copy;er une
+      lumi&Atilde;&uml;re si elle ne correspond pas &Atilde;  la
+      plage d'adresses configur&Atilde;&copy;e pour les bits de
+      sortie (voir ci-dessus).</p>
+
+      <p>Maple= &Atilde;&permil;cran Tactile</p>
+
+      <p>HMI = Interface Homme Machine</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

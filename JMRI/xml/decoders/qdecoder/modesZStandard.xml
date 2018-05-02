@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Switching Mode	for Z Standard					 -->
+	<variable CV="550" item="Switching Mode A0" default="2" minOut="1">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A0</label>
+		<label xml:lang="de">Schaltmode A0</label>
+		<tooltip>Switching Mode for output A0</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A0</tooltip>
+	</variable>
+	<variable CV="553" item="Switching Mode A1" default="0" minOut="2">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A1</label>
+		<label xml:lang="de">Schaltmode A1</label>
+		<tooltip>Switching Mode for output A1</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A1</tooltip>
+	</variable>
+	<variable CV="556" item="Switching Mode A2" default="2" minOut="3">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A2</label>
+		<label xml:lang="de">Schaltmode A2</label>
+		<tooltip>Switching Mode for output A2</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A2</tooltip>
+	</variable>
+	<variable CV="559" item="Switching Mode A3" default="0" minOut="4">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A3</label>
+		<label xml:lang="de">Schaltmode A3</label>
+		<tooltip>Switching Mode for output A3</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A3</tooltip>
+	</variable>
+	<variable CV="562" item="Switching Mode A4" default="2" minOut="5">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A4</label>
+		<label xml:lang="de">Schaltmode A4</label>
+		<tooltip>Switching Mode for output A4</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A4</tooltip>
+	</variable>
+	<variable CV="565" item="Switching Mode A5" default="0" minOut="6">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A5</label>
+		<label xml:lang="de">Schaltmode A5</label>
+		<tooltip>Switching Mode for output A5</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A5</tooltip>
+	</variable>
+	<variable CV="568" item="Switching Mode A6" default="2" minOut="7">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A6</label>
+		<label xml:lang="de">Schaltmode A6</label>
+		<tooltip>Switching Mode for output A6</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A6</tooltip>
+	</variable>
+	<variable CV="571" item="Switching Mode A7" default="0" minOut="8">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A7</label>
+		<label xml:lang="de">Schaltmode A7</label>
+		<tooltip>Switching Mode for output A7</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A7</tooltip>
+	</variable>
+	<variable CV="574" item="Switching Mode A8" default="2" minOut="9">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A8</label>
+		<label xml:lang="de">Schaltmode A8</label>
+		<tooltip>Switching Mode for output A8</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A8</tooltip>
+	</variable>
+	<variable CV="577" item="Switching Mode A9" default="0" minOut="10">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A9</label>
+		<label xml:lang="de">Schaltmode A9</label>
+		<tooltip>Switching Mode for output A9</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A9</tooltip>
+	</variable>
+	<variable CV="580" item="Switching Mode A10" default="2" minOut="11">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A10</label>
+		<label xml:lang="de">Schaltmode A10</label>
+		<tooltip>Switching Mode for output A10</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A10</tooltip>
+	</variable>
+	<variable CV="583" item="Switching Mode A11" default="0" minOut="12">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A11</label>
+		<label xml:lang="de">Schaltmode A11</label>
+		<tooltip>Switching Mode for output A11</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A11</tooltip>
+	</variable>
+	<variable CV="586" item="Switching Mode A12" default="2" minOut="13">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A12</label>
+		<label xml:lang="de">Schaltmode A12</label>
+		<tooltip>Switching Mode for output A12</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A12</tooltip>
+	</variable>
+	<variable CV="589" item="Switching Mode A13" default="0" minOut="14">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A13</label>
+		<label xml:lang="de">Schaltmode A13</label>
+		<tooltip>Switching Mode for output A13</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A13</tooltip>
+	</variable>
+	<variable CV="592" item="Switching Mode A14" default="2" minOut="15">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A14</label>
+		<label xml:lang="de">Schaltmode A14</label>
+		<tooltip>Switching Mode for output A14</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A14</tooltip>
+	</variable>
+	<variable CV="595" item="Switching Mode A15" default="0" minOut="16">
+		<xi:include href="http://jmri.org/xml/decoders/qdecoder/enum-SwitchingModesZStandard.xml"/>
+		<label>Switching Mode A15</label>
+		<label xml:lang="de">Schaltmode A15</label>
+		<tooltip>Switching Mode for output A15</tooltip>
+		<tooltip xml:lang="de">Schaltmode für Ausgang A15</tooltip>
+	</variable>
+</variables>

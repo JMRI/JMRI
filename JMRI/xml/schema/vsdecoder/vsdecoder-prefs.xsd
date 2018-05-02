@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010                -->
+
+<!-- Not in Venetian blind form                                       -->
+<!-- Much, much work to be done                                       -->
+
+<!-- 
+Top Level Elements not brought over from DTD
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+    <xs:annotation>
+        <xs:documentation>
+          This is the schema representing Virtual Sound Decoder configuration files,
+	  which are contained within the VSD archive files.
+	  VSD files serve as the content (including source audio) for the VSD
+	  software.
+          <p/>
+          This version of the schema is for files created by JMRI
+          version 2.13.2 and later.  
+          It is the current development version.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="yes" />  <!-- too many to list -->
+        </xs:appinfo>
+    </xs:annotation>
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/connection.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/userpreferences.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmastlogics.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/routes-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/warrants-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/logix-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/editors.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+
+
+  <xs:element name="vsdecoder-preferences">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="preferences">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="DefaultVSDFilePath" type="xs:string"/>
+	      <xs:element name="DefaultVSDFileName" type="xs:string"/>
+	    </xs:sequence>
+	    <xs:attribute name="isAutoStartingEngine" type="xs:boolean" use="required"/>
+	    <xs:attribute name="isAutoLoadingDefaultVSDFile" type="xs:boolean" use="required"/>
+	  </xs:complexType>
+	</xs:element> <!-- preferences -->
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element> <!-- vsdecoder-preferences -->
+  
+</xs:schema>

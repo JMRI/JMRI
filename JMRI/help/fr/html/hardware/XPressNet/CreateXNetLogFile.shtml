@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+ <!--Updated by Herv&#233; Blorec le 2017-01-12-->
+<title>JMRI Hardware Support - Creating an XPressNet Log File</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+<div id="mainContent">
+
+	<H1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</H1>
+	<P>
+ 	D&#233;marrer Decoder Pro (ou la d&#233;mo JMRI)
+	<p>  Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
+	<P>
+ 	Le volet suivant va s'ouvrir:<br
+  	<img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
+
+		h4>Boutons</h4>
+				<ul>
+				<li>"Clear Screen" enl&#232;ve tout l'historique du panneau
+				<li>"Freeze Screen" Arr&#234;te le chargement de nouvelle donn&#233;e pour vous aider &#224; &#233;tudier le contenu actuel de l'affichage
+				<li>Cliquer sur le bouton "Choisir fichier journal", et choisir le nom d'un fichier de connexion &#224; utiliser
+				( vous pouvez garder le nom par d&#233;faut; l'important est de savoir où le fichier est stock&#233; )
+				<li>Ensuite vous cliquez "Save" dans la boite de dialogue fichier, cliquez le bouton "Start logging" sur le panneau.<br> 
+   				Maintenant, vous pouvez effectuer toutes les actions que vous souhaitez effectuer dans JMRI. Un journal est conserv&#233; de tout le trafic sur la connexion XPressNet.
+ 				<li>Cliquez le bouton "Stop Logging" sur le volet XPressNet Monitor, pour - bien - arr&#234;ter l'enregistrement.
+				</ul>
+
+<p>Retour &#224; la page <a href="index.shtml">Aide XPressNet</a>  
+
+<hr>
+Paul Bender<br>
+paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

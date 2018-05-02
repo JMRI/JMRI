@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for JMRI aspect-signaling support.                          -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+<xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+
+  <xs:element name="appearancetable">
+    <xs:annotation>
+        <xs:appinfo>
+            <jmri:class>jmri.implementation.DefaultSignalAppearanceMap</jmri:class>
+            <jmri:class>jmri.jmrit.beantable.signalmast.AddSignalMastPanel</jmri:class>
+        </xs:appinfo>
+        <xs:documentation>
+        We allow unlimited extension at the end of the appearancetable element
+        for the purposes of automatically-created documentation, 
+        but only the aspecttable, name and appearances elements are used by the
+        program.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        
+        <xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          Must be present.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+
+        <xs:element ref="docbook:authorgroup" minOccurs="1" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
+        <xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form
+          </xs:documentation></xs:annotation>
+        </xs:element>
+
+        <xs:element name="aspecttable" minOccurs="1" maxOccurs="1">
+          <xs:annotation><xs:documentation>
+          Content of this element must match the name of an
+          aspect table, as it's used to retrieve a 
+          SignalSystem at run time.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="name" minOccurs="1" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          Content of this element defines the name that's present to the
+          user when selecting an appearance table to use.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+
+        <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="description" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="appearances" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              
+              <xs:element name="appearance" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:annotation><xs:documentation>
+                  We allow unlimited extension at the end of the aspect element
+                  for the purposes of automatically-created documentation, 
+                  but only the aspectname and show element(s) are used by the
+                  program.
+                  </xs:documentation></xs:annotation>
+                  <xs:sequence>
+                    
+                    <xs:element name="aspectname" minOccurs="1" maxOccurs="1" >
+                      <xs:annotation><xs:documentation>
+                      This must match the "name" element of exactly one
+                      "aspect" element in the "aspects.xml" file.
+                      </xs:documentation></xs:annotation>
+                    </xs:element>
+                    <xs:element name="show" type="signalColorType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="delay" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                      <xs:annotation><xs:documentation>
+                      *** Indicates a image location and type ***
+                      *** Type should be a member of the list in **
+                      *** the imagetype elements in the aspects.xml file **
+                      </xs:documentation></xs:annotation>
+                        <xs:complexType>
+                          <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                              <xs:attribute name="type" type="xs:string"/>
+                            </xs:extension>
+                          </xs:simpleContent>
+                         </xs:complexType>
+                    </xs:element>
+                    
+                    
+                    <!-- next line causes a "Unique Particle Attribution" error -->
+                    <!--<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>-->
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      <xs:element name="specificappearances" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+        These are the appearences that the jmri code will specifically look for,
+        given that the appearance/aspect name is free form and can vary from
+        different signal masts.
+        </xs:documentation></xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="danger" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="permissive" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="held" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dark" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                <xs:element name="aspect" minOccurs="1" maxOccurs="1" />
+                <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                  <xs:annotation><xs:documentation>
+                  *** Indicates a image location and type ***
+                  *** Type should be a member of the list in **
+                  *** the imagetype elements in the aspects.xml file **
+                  </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="type" type="xs:string"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                     </xs:complexType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+      
+      <xs:element name="aspectMappings" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+        Provides a mapping between the appearance of any advanced signal mast and
+        the valid aspects that the current signal mast can display.  The advanced 
+        aspect can be any valid aspect/appearance in the aspect file, but our aspect
+        must be valid on the current signal mast.
+        </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="aspectMapping" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="advancedAspect" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="ourAspect" minOccurs="1" maxOccurs="unbounded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>      
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>
+

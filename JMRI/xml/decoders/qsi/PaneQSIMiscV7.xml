@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007, 2010  All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file panes for QSi V7 files -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>QSI Misc.</name>
+  <column>
+    <label>
+      <text>JMRI 2.9.5 or later is required for QSI V7</text>
+    </label>
+    <label>
+      <text>JMRI 2.13.2 or later is required for QSI V8 and V9</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Decoder Version"/>
+    <display item="CV56.254.6"/>
+    <display item="CV56.254.8"/>
+    <display item="Product Number"/>
+    <display item="Sound Set"/>
+    <display item="Sound Set Number"/>
+    <display item="Hardware Profile"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="CV56.254.10"/>
+    <display item="CV56.254.11"/>
+    <display item="CV56.254.12"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="CV56.254.16"/>
+    <display item="CV56.254.17"/>
+    <display item="CV56.254.18"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>When programming in Ops-mode, set Verbal Acknowledgement to disable</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="CV62 Verbal Ack"/>
+    <display item="CV62 CV Readout"/>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>When in Ops-mode:</text>
+    </label>
+    <label>
+      <text>Enter a CV you wish to hear the value spoken out</text>
+    </label>
+    <label>
+      <text>If needed, enter Primary and Secondary Indexes</text>
+    </label>
+    <label>
+      <text>Then press - Write changes on sheet</text>
+    </label>
+    <display item="Primary Index"/>
+    <display item="Secondary Index"/>
+    <display item="Verbal CV Inquiry"/>
+  </column>
+</pane>

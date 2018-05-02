@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+  <xs:complexType name="UserPrefsType">
+    <xs:annotation>
+        <xs:documentation>
+          Defines user Preferences configuration.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="yes">jmri.managers.configurexml.DefaultUserMessagePreferencesXml</jmri:usingclass>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="setting" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="comboBoxLastValue" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="comboBox" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string" />
+                <xs:attribute name="lastSelected" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="classPreferences" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="reminderPrompts" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="reminder" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="class" type="classType" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="windowDetails" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="locX" type="xs:float" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="locY" type="xs:float" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="width" type="xs:float" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="height" type="xs:float" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="properties" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="key" minOccurs="1" maxOccurs="1">
+                          <xs:complexType>                          
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="class" type="xs:string" use="required" />
+                              </xs:extension>
+                            </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="value" minOccurs="0" maxOccurs="1">
+                          <xs:complexType>                          
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="class" type="xs:string" use="required" />
+                              </xs:extension>
+                            </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="class" type="xs:string" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="tableDetails" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="table" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="order" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="width" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="sort" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="hidden" type="yesNoType" minOccurs="0" maxOccurs="1" />
+                      </xs:sequence>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="class" type="classType" use="required" />
+  </xs:complexType>
+
+</xs:schema>

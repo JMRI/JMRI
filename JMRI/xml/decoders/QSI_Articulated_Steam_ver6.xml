@@ -1,0 +1,2857 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Howard G. Penny" version="2" lastUpdated="20051117"/>
+  <version author="Peter Ulvestad" version="3" lastUpdated="20100807"/>
+  <version author="Peter Ulvestad" version="4" lastUpdated="20100809"/>
+  <!-- version 1 - modified for QSI CV.PI.SI version 6 format - Howard -->
+  <!-- version 2 - added new models - Howard -->
+  <!-- version 3 - Corrected spelling on Function Output pane - Peter -->
+  <!-- version 4 - Turned off Direct mode - Peter -->
+  <version author="jacobsen@mac.com" version="5" lastUpdated="20150628"/>
+  <!-- Version 5  Using regular variable elements intead of ivariables -->
+  <decoder>
+    <family name="QSI Articulated Steam Ver. 6" mfg="QSIndustries" lowVersionID="6">
+      <model model="BLI N-W Class A" lowVersionID="6" numFns="14" numOuts="14" productID="400">
+        <output name="1" label="Plug" connection="other"/>
+        <output name="2" label="Plug" connection="other"/>
+        <output name="3" label="Snd" connection="other"/>
+        <output name="4" label="Snd" connection="other"/>
+        <output name="5" label="Snd" connection="other"/>
+        <output name="6" label="Snd" connection="other"/>
+        <output name="7" label="Snd" connection="other"/>
+        <output name="8" label="Snd" connection="other"/>
+        <output name="9" label="Snd" connection="other"/>
+        <output name="10" label="Snd" connection="other"/>
+        <output name="11" label="Snd" connection="other"/>
+        <output name="12" label="Snd" connection="other"/>
+        <output name="13" label="Snd" connection="other"/>
+        <output name="14" label="Snd" connection="other"/>
+      </model>
+      <model model="BLI Pennsy Duplex T1" lowVersionID="6" numFns="14" numOuts="14" productID="401">
+        <output name="1" label="Plug" connection="other"/>
+        <output name="2" label="Plug" connection="other"/>
+        <output name="3" label="Snd" connection="other"/>
+        <output name="4" label="Snd" connection="other"/>
+        <output name="5" label="Snd" connection="other"/>
+        <output name="6" label="Snd" connection="other"/>
+        <output name="7" label="Snd" connection="other"/>
+        <output name="8" label="Snd" connection="other"/>
+        <output name="9" label="Snd" connection="other"/>
+        <output name="10" label="Snd" connection="other"/>
+        <output name="11" label="Snd" connection="other"/>
+        <output name="12" label="Snd" connection="other"/>
+        <output name="13" label="Snd" connection="other"/>
+        <output name="14" label="Snd" connection="other"/>
+      </model>
+      <model model="BLI Cab Forward AC4,AC5 (Reed Switch)" lowVersionID="6" numFns="14" numOuts="14" productID="406">
+        <output name="1" label="Plug" connection="other"/>
+        <output name="2" label="Plug" connection="other"/>
+        <output name="3" label="Snd" connection="other"/>
+        <output name="4" label="Snd" connection="other"/>
+        <output name="5" label="Snd" connection="other"/>
+        <output name="6" label="Snd" connection="other"/>
+        <output name="7" label="Snd" connection="other"/>
+        <output name="8" label="Snd" connection="other"/>
+        <output name="9" label="Snd" connection="other"/>
+        <output name="10" label="Snd" connection="other"/>
+        <output name="11" label="Snd" connection="other"/>
+        <output name="12" label="Snd" connection="other"/>
+        <output name="13" label="Snd" connection="other"/>
+        <output name="14" label="Snd" connection="other"/>
+      </model>
+      <model model="Life Like USRA 2-8-8-2" lowVersionID="6" numFns="14" numOuts="14" productID="404">
+        <output name="1" label="Plug" connection="other"/>
+        <output name="2" label="Plug" connection="other"/>
+        <output name="3" label="Snd" connection="other"/>
+        <output name="4" label="Snd" connection="other"/>
+        <output name="5" label="Snd" connection="other"/>
+        <output name="6" label="Snd" connection="other"/>
+        <output name="7" label="Snd" connection="other"/>
+        <output name="8" label="Snd" connection="other"/>
+        <output name="9" label="Snd" connection="other"/>
+        <output name="10" label="Snd" connection="other"/>
+        <output name="11" label="Snd" connection="other"/>
+        <output name="12" label="Snd" connection="other"/>
+        <output name="13" label="Snd" connection="other"/>
+        <output name="14" label="Snd" connection="other"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">49</parameter>
+        <parameter name="SI">50</parameter>
+        <parameter name="cvFirst">true</parameter> <!-- 51.13 is write 13 to PICV, then access CV 51 -->
+      </capability>
+    </programming>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable item="Vstart" CV="2" default="32" tooltip="QSI uses this only if speed tables are used" comment="A value of 255 corresponds to 100%">
+        <decVal/>
+        <label>Vstart</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>A value of 255 corresponds to 100%</comment>
+      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <variable CV="5" item="Vhigh" default="1" tooltip="range 2-255, 1 = not used">
+        <decVal min="1" max="255"/>
+        <label>Max Volts</label>
+        <label xml:lang="it">Volt Massimi (0-255):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Manufacturer Version No</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="113">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable item="Packet Time-out Value" CV="11">
+        <decVal/>
+        <label>Packet Time-out Value</label>
+      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" tooltip="F1 = Bell; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F1</label>
+      </variable>
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" tooltip="F2 = Horn / Whistle; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F2</label>
+      </variable>
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" tooltip="F3 = Coupler Clash (default); Recommendation: Lead = OFF, Mid = OFF, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F3</label>
+      </variable>
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" tooltip="F4 = Blower Hiss / Fan (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F4</label>
+      </variable>
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" tooltip="F5 = Dynamic Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F5</label>
+      </variable>
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" tooltip="F6 = Doppler (Startup) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F6</label>
+      </variable>
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" tooltip="F7 = Brake Squeal and Air Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F7</label>
+      </variable>
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" tooltip="F8 = Audio Mute (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F8</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" tooltip="FL(f) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For FL in Forward</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" tooltip="FL(r) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For FL in Reverse</label>
+      </variable>
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX" tooltip="F9 = Cruise Ctrl (Shut Down) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F9</label>
+      </variable>
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX" tooltip="F10 = SMPH Report (Status Report) (default); Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F10</label>
+      </variable>
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" tooltip="F11 = Number Board Lights (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F11</label>
+      </variable>
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" tooltip="F12 = Cab Lights (default); Recommendation: Lead = OFF, Mid = OFF, End = OFF">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F12</label>
+      </variable>
+      <variable CV="23" mask="XVVVVVVV" tooltip="This is used whenever acceleration is non zero" item="Consist Acceleration Adjustment">
+        <decVal max="127"/>
+        <label>Acceleration Adjustment</label>
+      </variable>
+      <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign">
+        <enumVal>
+          <enumChoice choice="Adjustment Added">
+            <choice>Adjustment Added</choice>
+          </enumChoice>
+          <enumChoice choice="Adjustment Subtracted">
+            <choice>Adjustment Subtracted</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Acceleration Adjustment Sign</label>
+      </variable>
+      <variable CV="24" mask="XVVVVVVV" tooltip="This is used whenever deceleration is non zero" item="Consist Deceleration Adjustment">
+        <decVal max="127"/>
+        <label>Deceleration Adjustment</label>
+      </variable>
+      <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign">
+        <enumVal>
+          <enumChoice choice="Adjustment Added">
+            <choice>Adjustment Added</choice>
+          </enumChoice>
+          <enumChoice choice="Adjustment Subtracted">
+            <choice>Adjustment Subtracted</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Deceleration Adjustment Sign</label>
+      </variable>
+      <variable CV="25" item="Speed Table Selection" default="2" comment="value is applied">
+        <enumVal>
+          <enumChoice choice="User Defined Speed Table" value="1">
+            <choice>User Defined Speed Table</choice>
+          </enumChoice>
+          <enumChoice choice="Linear Curve">
+            <choice>Linear Curve</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 1 (close to linear)">
+            <choice>Fast start 1 (close to linear)</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 2">
+            <choice>Fast start 2</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 3">
+            <choice>Fast start 3</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 4">
+            <choice>Fast start 4</choice>
+          </enumChoice>
+          <enumChoice choice="Fast start 5 (greatest curvature)">
+            <choice>Fast start 5 (greatest curvature)</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 1 (close to linear)" value="67">
+            <choice>Slow start 1 (close to linear)</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 2">
+            <choice>Slow start 2</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 3">
+            <choice>Slow start 3</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 4">
+            <choice>Slow start 4</choice>
+          </enumChoice>
+          <enumChoice choice="Slow start 5 (greatest curavture">
+            <choice>Slow start 5 (greatest curavture</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Quantum Speed Table</label>
+        <comment>value is applied</comment>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- This bit is not used by QSI
+    <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
+          item="Advanced Ack">
+      <enumVal>
+        <enumChoice choice="disabled"/>
+        <enumChoice choice="enabled"/>
+      </enumVal></variable>
+-->
+      <variable item="Speed Table Definition" CV="29" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="Use Straight-Line Response">
+            <choice>Use Straight-Line Response</choice>
+          </enumChoice>
+          <enumChoice choice="Use QSI table or User table in CVs 67 through 94">
+            <choice>Use QSI table or User table in CVs 67 through 94</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Table Definition</label>
+      </variable>
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 3</label>
+      </variable>
+      <variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 4</label>
+      </variable>
+      <variable item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 5</label>
+      </variable>
+      <variable item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 6</label>
+      </variable>
+      <variable item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 7</label>
+      </variable>
+      <variable item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 8</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 3</label>
+      </variable>
+      <variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 4</label>
+      </variable>
+      <variable item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 5</label>
+      </variable>
+      <variable item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 6</label>
+      </variable>
+      <variable item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 7</label>
+      </variable>
+      <variable item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 8</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 3</label>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 4</label>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 5</label>
+      </variable>
+      <variable item="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 6</label>
+      </variable>
+      <variable item="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 7</label>
+      </variable>
+      <variable item="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 8</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 3</label>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 4</label>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 5</label>
+      </variable>
+      <variable item="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 6</label>
+      </variable>
+      <variable item="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 7</label>
+      </variable>
+      <variable item="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 8</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 3</label>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 4</label>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 5</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 6</label>
+      </variable>
+      <variable item="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 7</label>
+      </variable>
+      <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 8</label>
+      </variable>
+      <variable item="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 4</label>
+      </variable>
+      <variable item="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 5</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 6</label>
+      </variable>
+      <variable item="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 7</label>
+      </variable>
+      <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 8</label>
+      </variable>
+      <variable item="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 9</label>
+      </variable>
+      <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 10</label>
+      </variable>
+      <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output 11</label>
+      </variable>
+      <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 4</label>
+      </variable>
+      <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 5</label>
+      </variable>
+      <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 6</label>
+      </variable>
+      <variable item="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 7</label>
+      </variable>
+      <variable item="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 8</label>
+      </variable>
+      <variable item="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 9</label>
+      </variable>
+      <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 10</label>
+      </variable>
+      <variable item="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 11</label>
+      </variable>
+      <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 4</label>
+      </variable>
+      <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 5</label>
+      </variable>
+      <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 6</label>
+      </variable>
+      <variable item="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 7</label>
+      </variable>
+      <variable item="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 8</label>
+      </variable>
+      <variable item="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 9</label>
+      </variable>
+      <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 10</label>
+      </variable>
+      <variable item="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 11</label>
+      </variable>
+      <variable item="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 4</label>
+      </variable>
+      <variable item="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 5</label>
+      </variable>
+      <variable item="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 6</label>
+      </variable>
+      <variable item="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 7</label>
+      </variable>
+      <variable item="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 8</label>
+      </variable>
+      <variable item="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 9</label>
+      </variable>
+      <variable item="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 10</label>
+      </variable>
+      <variable item="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7 controls output 11</label>
+      </variable>
+      <variable item="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 4</label>
+      </variable>
+      <variable item="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 5</label>
+      </variable>
+      <variable item="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 6</label>
+      </variable>
+      <variable item="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 7</label>
+      </variable>
+      <variable item="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 8</label>
+      </variable>
+      <variable item="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 9</label>
+      </variable>
+      <variable item="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 10</label>
+      </variable>
+      <variable item="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8 controls output 11</label>
+      </variable>
+      <variable item="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 7</label>
+      </variable>
+      <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 8</label>
+      </variable>
+      <variable item="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 9</label>
+      </variable>
+      <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 10</label>
+      </variable>
+      <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 11</label>
+      </variable>
+      <variable item="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 12</label>
+      </variable>
+      <variable item="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 13</label>
+      </variable>
+      <variable item="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F9 controls output 14</label>
+      </variable>
+      <variable item="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 7</label>
+      </variable>
+      <variable item="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 8</label>
+      </variable>
+      <variable item="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 9</label>
+      </variable>
+      <variable item="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 10</label>
+      </variable>
+      <variable item="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 11</label>
+      </variable>
+      <variable item="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 12</label>
+      </variable>
+      <variable item="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 13</label>
+      </variable>
+      <variable item="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F10 controls output 14</label>
+      </variable>
+      <variable item="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 7</label>
+      </variable>
+      <variable item="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 8</label>
+      </variable>
+      <variable item="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 9</label>
+      </variable>
+      <variable item="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 10</label>
+      </variable>
+      <variable item="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 11</label>
+      </variable>
+      <variable item="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 12</label>
+      </variable>
+      <variable item="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 13</label>
+      </variable>
+      <variable item="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F11 controls output 14</label>
+      </variable>
+      <variable item="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 7</label>
+      </variable>
+      <variable item="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 8</label>
+      </variable>
+      <variable item="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 9</label>
+      </variable>
+      <variable item="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 10</label>
+      </variable>
+      <variable item="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 11</label>
+      </variable>
+      <variable item="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 12</label>
+      </variable>
+      <variable item="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 13</label>
+      </variable>
+      <variable item="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F12 controls output 14</label>
+      </variable>
+      <variable CV="62" comment="CV62" item="CV62 QSI Control" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Programming Verbal Acknowledgement</label>
+        <comment>CV62</comment>
+      </variable>
+      <!-- need to make this work for indexed CVs as well - TBD -->
+      <variable CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
+        <decVal/>
+        <label>Verbal CV Inquiry</label>
+        <comment>CV64</comment>
+      </variable>
+      <variable item="Forward Trim" CV="66" default="128">
+        <decVal/>
+        <label>Forward Trim</label>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable item="Reverse Trim" CV="95" default="128">
+        <decVal/>
+        <label>Reverse Trim</label>
+      </variable>
+      <constant item="PICV" default="49" comment="CV used for Primary Index"/>
+      <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
+      <!-- QSI CV.PI.SI formatted items -->
+      <!-- Sound control -->
+      <variable label="System Volume" CV="51.0" default="127" comment="QSI" item="CV51.0">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Mute Volume" CV="51.1" default="0" comment="QSI" item="CV51.1">
+        <decVal max="63"/>
+      </variable>
+      <variable label="Horn Triggered Doppler" CV="51.2" mask="XXXXXXXV" default="1" comment="QSI" item="CV51.2">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <!-- Sound volumes -->
+      <variable label="Whistle" CV="52.0" default="11" comment="QSI" item="CV52.0">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Bell" CV="52.8" default="11" comment="QSI" item="CV52.8">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Chuff" CV="52.10" default="11" comment="QSI" item="CV52.10">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Air Pump 1" CV="52.16" default="11" comment="QSI" item="CV52.16">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Air Pump 2" CV="52.17" default="11" comment="QSI" item="CV52.17">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Steam Blower (hiss)" CV="52.19" default="8" comment="QSI" item="CV52.19">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Long Air Let-off" CV="52.21" default="11" comment="QSI" item="CV52.21">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Short Air Let-off" CV="52.22" default="11" comment="QSI" item="CV52.22">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Squealing Brakes" CV="52.24" default="11" comment="QSI" item="CV52.24">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Steam Dynamo" CV="52.26" default="8" comment="QSI" item="CV52.26">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Boiler Pop-off" CV="52.29" default="11" comment="QSI" item="CV52.29">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Blow Down" CV="52.30" default="11" comment="QSI" item="CV52.30">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Injector" CV="52.31" default="11" comment="QSI" item="CV52.31">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Coupler Sounds" CV="52.34" default="11" comment="QSI" item="CV52.34">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Output 1 - Forward/Reverse Only" CV="53.1.0" default="96" item="CV53.1.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.1.1" default="96" item="CV53.1.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 2 - Forward/Reverse Only" CV="53.2.0" default="97" item="CV53.2.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.2.1" default="97" item="CV53.2.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 3 - Forward/Reverse Only" CV="53.3.0" default="3" item="CV53.3.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.3.1" default="3" item="CV53.3.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 4 - Forward/Reverse Only" CV="53.4.0" default="1" comment="QSI" item="CV53.4.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.4.1" default="1" item="CV53.4.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 5 - Forward/Reverse Only" CV="53.5.0" default="211" item="CV53.5.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.5.1" default="211" item="CV53.5.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 6 - Forward/Reverse Only" CV="53.6.0" default="8" item="CV53.6.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.6.1" default="8" item="CV53.6.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 7 - Forward/Reverse Only" CV="53.7.0" default="5" item="CV53.7.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.7.1" default="5" item="CV53.7.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 8 - Forward/Reverse Only" CV="53.8.0" default="65" item="CV53.8.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.8.1" default="144" item="CV53.8.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 9 - Forward/Reverse Only" CV="53.9.0" default="216" item="CV53.9.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.9.1" default="9" item="CV53.9.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 10 - Forward/Reverse Only" CV="53.10.0" default="64" item="CV53.10.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.10.1" default="64" item="CV53.10.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 11 - Forward/Reverse Only" CV="53.11.0" default="10" item="CV53.11.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.11.1" default="145" item="CV53.11.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 12 - Forward/Reverse Only" CV="53.12.0" default="178" item="CV53.12.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.12.1" default="178" item="CV53.12.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 13 - Forward/Reverse Only" CV="53.13.0" default="10" item="CV53.13.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.13.1" default="13" item="CV53.13.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Output 14 - Forward/Reverse Only" CV="53.14.0" default="10" item="CV53.14.0">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Doppler Shift">
+            <choice>Doppler Shift</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Air Brakes" value="176">
+            <choice>Air Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Scale mph Report" value="178">
+            <choice>Scale mph Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes" value="215">
+            <choice>Squealing Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Squealing Brakes + Air Brakes">
+            <choice>Squealing Brakes + Air Brakes</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label=" - Neutral Only" CV="53.14.1" default="10" item="CV53.14.1">
+        <enumVal>
+          <enumChoice choice="None" value="0">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle" value="1">
+            <choice>Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="Bell" value="3">
+            <choice>Bell</choice>
+          </enumChoice>
+          <enumChoice choice="Dynamic Brakes" value="5">
+            <choice>Dynamic Brakes</choice>
+          </enumChoice>
+          <enumChoice choice="Blower Hiss" value="8">
+            <choice>Blower Hiss</choice>
+          </enumChoice>
+          <enumChoice choice="Long Air Let-off">
+            <choice>Long Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Short Air Let-off">
+            <choice>Short Air Let-off</choice>
+          </enumChoice>
+          <enumChoice choice="Pop-off" value="12">
+            <choice>Pop-off</choice>
+          </enumChoice>
+          <enumChoice choice="Blow down">
+            <choice>Blow down</choice>
+          </enumChoice>
+          <enumChoice choice="Injector">
+            <choice>Injector</choice>
+          </enumChoice>
+          <enumChoice choice="Mute" value="64">
+            <choice>Mute</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Headlight" value="96">
+            <choice>Directional Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Directional Reverse Light" value="97">
+            <choice>Directional Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Headlight" value="98">
+            <choice>Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Dim Headlight">
+            <choice>Dim Headlight</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse Light">
+            <choice>Reverse Light</choice>
+          </enumChoice>
+          <enumChoice choice="Start Up" value="144">
+            <choice>Start Up</choice>
+          </enumChoice>
+          <enumChoice choice="Shut Down">
+            <choice>Shut Down</choice>
+          </enumChoice>
+          <enumChoice choice="Status Report" value="178">
+            <choice>Status Report</choice>
+          </enumChoice>
+          <enumChoice choice="Coupler Effect" value="211">
+            <choice>Coupler Effect</choice>
+          </enumChoice>
+          <enumChoice choice="Pumps" value="217">
+            <choice>Pumps</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Speed Step to Scale MPH Scale Factor" CV="56.10" default="64" item="CV56.10">
+        <decVal max="128"/>
+      </variable>
+      <variable label="Chuff Interval Scale Factor" CV="56.12" default="32" item="CV56.12">
+        <decVal max="128"/>
+      </variable>
+      <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+      <!-- CV 56.254 About Quantum Decoder -->
+      <!-- QSI Product ID -->
+      <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
+    </variables>
+    <xi:include href="http://jmri.org/xml/decoders/qsi/ResetStandard.xml"/>
+  </decoder>
+  <pane>
+    <column>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV51.0" format="hslider" tooltip="(0 - 127)"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV51.1" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="CV51.2" format="checkbox"/>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <separator/>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Individual Sound Volumes </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Note: If a Read or Write for a sound fails, </text>
+          </label>
+          <label>
+            <text>this particular model does not support it. </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="CV52.0" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.8" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.10" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.16" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.17" format="hslider"/>
+        </column>
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        <column>
+          <display item="CV52.19" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.21" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.22" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.24" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.26" format="hslider"/>
+        </column>
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        <column>
+          <display item="CV52.29" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.30" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.31" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.34" format="hslider"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="CV52.37" format="hslider"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <name>Sound / Volume Control</name>
+  </pane>
+  <pane>
+    <column>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>When programming in Ops-mode, see note on QSI Misc. tab</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Do NOT assign a Function to more than one Output</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="CV53.1.0"/>
+          <display item="CV53.2.0"/>
+          <display item="CV53.3.0"/>
+          <display item="CV53.4.0"/>
+          <display item="CV53.5.0"/>
+          <display item="CV53.6.0"/>
+          <display item="CV53.7.0"/>
+          <display item="CV53.8.0"/>
+          <display item="CV53.9.0"/>
+          <display item="CV53.10.0"/>
+          <display item="CV53.11.0"/>
+          <display item="CV53.12.0"/>
+          <display item="CV53.13.0"/>
+          <display item="CV53.14.0"/>
+        </column>
+        <column>
+          <display item="CV53.1.1"/>
+          <display item="CV53.2.1"/>
+          <display item="CV53.3.1"/>
+          <display item="CV53.4.1"/>
+          <display item="CV53.5.1"/>
+          <display item="CV53.6.1"/>
+          <display item="CV53.7.1"/>
+          <display item="CV53.8.1"/>
+          <display item="CV53.9.1"/>
+          <display item="CV53.10.1"/>
+          <display item="CV53.11.1"/>
+          <display item="CV53.12.1"/>
+          <display item="CV53.13.1"/>
+          <display item="CV53.14.1"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <name>Function Output</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="CV56.254.8"/>
+      <display item="CV56.254.10"/>
+      <display item="CV56.254.11"/>
+      <display item="CV56.254.12"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>When programming in Ops-mode, set Verbal Acknowledgement to disable</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="CV62 QSI Control"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>When in Ops-mode:</text>
+      </label>
+      <label>
+        <text>Enter a CV you wish to hear and press -- Write changes on sheet</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Verbal CV Inquiry"/>
+    </column>
+    <name>QSI Misc.</name>
+  </pane>
+</decoder-config>

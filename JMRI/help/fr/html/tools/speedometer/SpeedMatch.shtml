@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- Translated by Blorec Hervé le 2011-09-28-->
+
+  <title>JMRI: Speed Matching</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>Correspondance de Vitesse</h2>
+
+      <h3>Couplage de Machines de Diff&Atilde;&copy;rents
+      Fabricants Utilisant DCC/DecoderPro</h3>(Fourni par Keith
+      Keith Albright, des Four County Society of Model Engineers)
+
+      <p>Dans la plupart des cas, DCC a rendu facile le couplage de
+      machines ce qui ne pouvait pas &Atilde;&ordf;tre
+      ex&Atilde;&copy;cut&Atilde;&copy; en mode analogique. Voici
+      des conseils et des proc&Atilde;&copy;dures que j'utilise
+      pour permettrent aux machines de circuler ensemble. J'ai prit
+      comme une habitude de mettre l'ensemble de mes machines de
+      fret &Atilde;  circuler &Atilde;  la m&Atilde;&ordf;me
+      vitesse. J'ai fait de m&Atilde;&ordf;me avec mes machines
+      voyageur. Si vous utilisez le m&Atilde;&ordf;me type de
+      machines pour les deux, vous pourriez les r&Atilde;&copy;gler
+      toutes &Atilde;  la m&Atilde;&ordf;me vitesse.</p>
+
+      <p>Quelle vitesse? - Quelle machine choisir comme base. Trois
+      choix sont possibles :</p>
+
+      <ol>
+        <li>La machine le plus lente (vitesse de pointe)</li>
+
+        <li>Votre machine favorite</li>
+
+        <li>Une machiner sonoris&Atilde;&copy;e</li>
+      </ol>Toutes les trois peuvent &Atilde;&ordf;tre
+      utilis&Atilde;&copy;es et chacune a des avantages et des
+      inconv&Atilde;&copy;nients. La machine la plus lente a
+      l'avantage de garantir que toutes les autres peuvent
+      &Atilde;&ordf;tre coupl&Atilde;&copy;es. Les machines
+      sp&Atilde;&copy;cialis&Atilde;&copy;e tels que Shays sont
+      g&Atilde;&copy;n&Atilde;&copy;ralement ignor&Atilde;&copy;es.
+      Si vous &Atilde;&ordf;tes partiellement
+      &Atilde;&copy;quip&Atilde;&copy;s avec un certain fabricant
+      (ex Stewart), vous pouvez vouloir en faire votre standard.
+
+      <p>Un mots sur les moteurs des Machines et les
+      d&Atilde;&copy;codeurs. Les moteurs de Machines peuvent
+      &Atilde;&ordf;tre class&Atilde;&copy;s en deux
+      cat&Atilde;&copy;gories; moteur ouvert et moteurs CAN. Les
+      moteurs &Atilde;  ch&Atilde;&cent;ssis ouvert ont tendance
+      &Atilde;  &Atilde;&ordf;tre plus rapide et plus sujet aux
+      instabilit&Atilde;&copy;s de vitesse que les moteurs Can. Ils
+      consomment davantage et sont un peu plus difficile &Atilde; 
+      faire rouler &Atilde;  basse vitesse. Bien que moins chers,
+      avec un peu de soin et d'entretien, ils peuvent donner de
+      nombreuses heures de service. Ils sont
+      g&Atilde;&copy;n&Atilde;&copy;ralement moins chers. Les
+      moteurs CAN ont tendance &Atilde;  &Atilde;&ordf;tre beaucoup
+      plus progressif durant toute leur plage de vitesse. Ils ont
+      une faible consommation de courant et demande peu
+      d'entretien. On les trouve sur les machines nouvelles et de
+      meilleur qualit&Atilde;&copy;.</p>
+
+      <p>Si vous pr&Atilde;&copy;voyez un couplage de machines
+      &Atilde;  moteurs ouvert et &Atilde;  moteur Can, je
+      recommande d'utiliser les d&Atilde;&copy;codeurs TCS pour les
+      moteurs &Atilde;  ch&Atilde;&cent;ssis ouvert. Dither, une
+      caract&Atilde;&copy;ristique de D&Atilde;&copy;codeurs TCS,
+      fait un grand travail pour surmonter la lenteur du
+      d&Atilde;&copy;marrage des moteurs &Atilde; 
+      ch&Atilde;&cent;ssis ouvert . Je voudrais
+      &Atilde;&copy;galement s&Atilde;&copy;lectionner un moteur de
+      machine motoris&Atilde;&copy;e Can comme base. Une fois que
+      vous avez d&Atilde;&copy;cid&Atilde;&copy; de votre machine
+      de base, les &Atilde;&copy;tapes suivantes devraient vous
+      permettrent de faire fonctionner des moteurs &Atilde;  la
+      m&Atilde;&ordf;me vitesse.</p>
+
+      <ol>
+        <li>Si la machine est neuve, elle doit &Atilde;&ordf;tre
+        rod&Atilde;&copy;e une heure ou deux avant de
+        r&Atilde;&copy;gler sa vitesse</li>
+
+        <li>Faites tourner les deux machines et assurez vous de la
+        propret&Atilde;&copy; des roues. 3-5 minutes suffissent
+        g&Atilde;&copy;n&Atilde;&copy;ralement. .</li>
+
+        <li>Assurez vous que CV19 est fix&Atilde;&copy; &Atilde;  0
+        pour les deux moteurs. Aussi, assurez-vous que votre moteur
+        n'est pas r&Atilde;&copy;gl&Atilde;&copy; pour les crans de
+        vitesse altern&Atilde;&copy;s. Si vous voulez augmenter la
+        tension de d&Atilde;&copy;marrage de votre moteur, le faire
+        avant de proc&Atilde;&copy;der &Atilde; 
+        l'&Atilde;&copy;tape 4.</li>
+
+        <li>Assurez-vous que le machine que vous voulez aligner est
+        bien dans votre liste D&Atilde;&copy;coderPro. Lancer
+        D&Atilde;&copy;codeur Pro et utiliser la programmation sur
+        voie principale. Appelez le machine que vous voulez aligner
+        &Atilde;  partir de votre liste.</li>
+
+        <li>Faire un couplage normal avec votre machine de
+        r&Atilde;&copy;f&Atilde;&copy;rence comme machine de
+        t&Atilde;&ordf;te. N'accrochez pas vos machines ensembles.
+        Laisser un &Atilde;&copy;cartement de 8-10 pouces( 20-25
+        centim&Atilde;&uml;tres) est une bonne valeur pour
+        commencer.</li>
+
+        <li>Si vous utilisez un d&Atilde;&copy;codeur avec BEMF
+        (r&Atilde;&copy;gulateur de charge), il doit
+        &Atilde;&ordf;tre d&Atilde;&copy;sactiv&Atilde;&copy; pour
+        le couplage.</li>
+
+        <li>S&Atilde;&copy;lectionnez l'&Atilde;&copy;cran de la
+        table vitesse pour la machine appel&Atilde;&copy;e &Atilde;
+         partir de d&Atilde;&copy;codeur pro.</li>
+
+        <li>S&Atilde;&copy;lectionnez la table de vitesse
+        d&Atilde;&copy;fini par l'utilisateur sur
+        l'&Atilde;&copy;cran</li>
+
+        <li>R&Atilde;&copy;glez l'&Atilde;&copy;tape 1 de votre
+        vitesse &Atilde;  la tension &Atilde;  partir du haut de la
+        page. R&Atilde;&copy;glez les &Atilde;&copy;tape de 28
+        &Atilde;  255</li>
+
+        <li>Cliquez sur la fin de la correspondance sur la table de
+        vitesse. Ensuite, &Atilde;&copy;crire tout cela dans la
+        loco.</li>
+
+        <li>Faites rouler la loco. Si vous avez fait le bon choix
+        sur votre machine de base, la machine suivante sera
+        probablement plus rapide. R&Atilde;&copy;duire le
+        r&Atilde;&copy;glage de vitesse du cran 28 ; L'alignement
+        se termine et &Atilde;&copy;crivez dans le moteur . Certain
+        syst&Atilde;&uml;mes/d&Atilde;&copy;codeurs vous permette
+        de le faire &Atilde;  la vol&Atilde;&copy;e, d'autres vous
+        feront arr&Atilde;&ordf;ter les machines.
+        R&Atilde;&copy;p&Atilde;&copy;tez cette
+        proc&Atilde;&copy;dure jusqu'&Atilde;  ce que les vitesses
+        des machines correspondent. Apr&Atilde;&uml;s avoir fait
+        quelques r&Atilde;&copy;glages, vous serez en mesure
+        d'aligner un moteur plus rapidement que vous ne pouvez lire
+        cette proc&Atilde;&copy;dure. Nous avons
+        constat&Atilde;&copy; que cette m&Atilde;&copy;thode nous
+        permet de contr&Atilde;&acute;ler une grande vitesse et est
+        plus rapide &Atilde;  faire que d'utiliser les
+        Param&Atilde;&uml;tres VMID et Vmax. Elle
+        &Atilde;&copy;limine &Atilde;&copy;galement la
+        possibilit&Atilde;&copy; d'erreur entre l'orientation
+        marche avant et arri&Atilde;&uml;re si votre
+        d&Atilde;&copy;codeur l'exige.</li>
+
+        <li>Si votre d&Atilde;&copy;codeur ne supporte pas les 28
+        crans de vitesse , vous aurez besoin d'utiliser la
+        m&Atilde;&copy;thode d&Atilde;&copy;crite dans l'autre
+        "Tutoriel".</li>
+      </ol><!--#include virtual="/Footer" -->
+      insi
+    </div>
+  </div>
+</body>
+</html>

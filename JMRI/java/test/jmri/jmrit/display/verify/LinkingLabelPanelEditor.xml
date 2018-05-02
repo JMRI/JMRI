@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>6</minor>
+    <test>0</test>
+    <modifier />
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="11:10 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Apr 17 17:36:32 PDT 2015" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="PanelThing1" x="18" y="440" height="361" width="462" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="no" scrollable="both" redBackground="0" greenBackground="0" blueBackground="255">
+    <positionablelabel x="2" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="I am Panel Thing1" size="24" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="5" redBorder="255" greenBorder="0" blueBorder="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip />
+    </positionablelabel>
+    <linkinglabel x="330" y="248" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Home" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>/panel</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="90" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Link to Panel Thing2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:PanelThing2</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="to ControlPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel1%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="150" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="to ControlPanel2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel2%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Pointing at LayoutPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:LayoutPanel1</url>
+    </linkinglabel>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="PanelThing2" x="468" y="455" height="350" width="455" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="no" scrollable="both" redBackground="0" greenBackground="0" blueBackground="255">
+    <positionablelabel x="2" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="I am Panel Thing2" size="24" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="5" redBorder="0" greenBorder="255" blueBorder="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip />
+    </positionablelabel>
+    <linkinglabel x="330" y="231" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Home" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>/panel</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="60" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Link to Panel Thing1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:PanelThing1</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="to ControlPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel1%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="150" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="to ControlPanel2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel2%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Pointing at LayoutPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:LayoutPanel1</url>
+    </linkinglabel>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="ControlPanel1" x="20" y="20" height="395" width="453" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <positionablelabel x="2" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="I ar' a Control Panel Thing1" size="24" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="5" redBorder="0" greenBorder="0" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip />
+    </positionablelabel>
+    <linkinglabel x="330" y="248" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Home" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>/panel</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="60" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Link to Panel Thing1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:PanelThing1</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="90" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Link to Panel Thing2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:PanelThing2</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="150" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="to ControlPanel2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel2%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Pointing at LayoutPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:LayoutPanel1</url>
+    </linkinglabel>
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="ControlPanel2" x="466" y="23" height="437" width="447" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <positionablelabel x="2" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Me too a Control Panel Thing2" size="24" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="5" redBorder="0" greenBorder="0" blueBorder="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip />
+    </positionablelabel>
+    <linkinglabel x="330" y="302" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Home" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>/panel</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="60" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Link to Panel Thing1" size="20" style="1" red="51" green="51" blue="51" hasBackground="no" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:PanelThing1</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="90" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Link to Panel Thing2" size="20" style="1" red="51" green="51" blue="51" hasBackground="no" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:PanelThing2</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="to ControlPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel1%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Pointing at LayoutPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Linking Label</tooltip>
+      <url>frame:LayoutPanel1</url>
+    </linkinglabel>
+  </paneleditor>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="LayoutPanel1" x="909" y="451" height="960" width="1900" windowheight="367" windowwidth="421" panelheight="960" panelwidth="1900" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="255" greenBackground="255" blueBackground="255" gridSize="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <positionablelabel x="6" y="4" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Layout Panel #1" size="28" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <linkinglabel x="330" y="248" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Home" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Text Label</tooltip>
+      <url>/panel</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="60" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Link to Panel Thing1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Text Label</tooltip>
+      <url>frame:PanelThing1</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="90" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Link to Panel Thing2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Text Label</tooltip>
+      <url>frame:PanelThing2</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="to ControlPanel1" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Text Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel1%20Editor</url>
+    </linkinglabel>
+    <linkinglabel x="20" y="150" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="to ControlPanel2" size="20" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" borderSize="1" redBorder="238" greenBorder="238" blueBorder="238" justification="centre" class="jmri.jmrit.display.configurexml.LinkingLabelXml">
+      <tooltip>Text Label</tooltip>
+      <url>panel/ControlPanel/ControlPanel2%20Editor</url>
+    </linkinglabel>
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Thu Dec 29 10:57:53 PST 2016</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Dec 29 10:58:43 PST 2016</date>
+      <filename>/C:/Users/cliffaa-rr/JMRI/Config%20Profiles/Old%20History/Link%20I%20Hope/Link%20I%20Hope%200F.xml</filename>
+      <filehistory />
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Thu Dec 29 11:10:10 PST 2016</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.6-R81496dc on Thu Dec 29 11:10:10 PST 2016 $Id$-->
+</layout-config>
+
+<!-- neodl1.grp.bf1.yahoo.com Fri Dec 30 19:53:44 PST 2016 -->

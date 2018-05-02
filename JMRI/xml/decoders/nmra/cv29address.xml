@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2010</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Michael</firstname>
+				<surname>Mosher</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2018-02-14</date>
+			<authorinitials>WK</authorinitials>
+			<revremark>Added Dutch translation</revremark>
+	</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2016-10-23</date>
+			<authorinitials>PS</authorinitials>
+			<revremark>Czech translation</revremark>
+		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2013-07-25</date>
+			<authorinitials>PB</authorinitials>
+			<revremark>Added French and German translations</revremark>
+		</revision>
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2013-01-22</date>
+			<authorinitials>MM</authorinitials>
+		<revremark>Initial release</revremark>
+	</revision>
+	</revhistory>
+	<variable item="Address Format" CV="29" mask="XXVXXXXX">
+		<enumVal>
+			<enumChoice choice="2 digit, One byte (short) address">
+				<choice xml:lang="it">2 cifre, 1 byte (ind.Corto)</choice>
+				<choice xml:lang="fr">1 byte (adresse courte)</choice>
+				<choice xml:lang="de">1 byte (Basisadresse)</choice>
+				<choice xml:lang="cs">2 číslice, jeden byte (krátká) adresa</choice>
+				<choice xml:lang="nl">1 byte (Korte adres)</choice>
+			</enumChoice>
+			<enumChoice choice="4 digit, Two byte (extended) address">
+				<choice xml:lang="it">4 cifre, 2 byte (ind.Esteso)</choice>
+				<choice xml:lang="fr">2 byte (adresse étendue)</choice>
+				<choice xml:lang="de">2 byte (Erweiterte Adresse)</choice>
+				<choice xml:lang="cs">4 číslice, dva byte (dlouhá) adresa</choice>
+				<choice xml:lang="nl">2 bytes (Lange adres)</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Address Format</label>
+		<label xml:lang="it">Formato Indirizzo</label>
+		<label xml:lang="fr">Format d'Adresse</label>
+		<label xml:lang="de">Adresse Format</label>
+		<label xml:lang="cs">Typ adresy</label>
+		<label xml:lang="nl">Adres formaat</label>
+	</variable>
+</variables>

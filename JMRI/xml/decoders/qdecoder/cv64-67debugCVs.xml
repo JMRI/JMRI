@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-09-23</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Debug CVs - not documented but present in QRail 1.5 	 -->
+	<variable item="Anti-Noise" CV="64" default="80">
+		<decVal/>
+		<label xml:lang="de">Anti-Noise</label>
+		<label>Anti-Noise</label>
+	</variable>
+	<!-- Sniffer Debug CV1										 	 -->
+	<variable item="Sniffer Debug CV1.0" CV="65" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">DCC Befehle protokollieren</label>
+		<label>DCC commands log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - DCC Befehle protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - DCC commands log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV1.1" CV="65" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Zuböherbefehle protokollieren</label>
+		<label>Accessory commands log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - Zuböherbefehle protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - Accessory commands log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV1.2" CV="65" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">DCC Fehler protokollieren</label>
+		<label>DCC fault log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - DCC Fehler protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - DCC fault log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV1.3" CV="65" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">DCC Bits protokollieren</label>
+		<label>DCC bits log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - DCC Bits protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - DCC bits log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV1.4" CV="65" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Funktionsaugänge protokollieren</label>
+		<label>Function outputs log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - Funktionsaugänge protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - Function outputs log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV1.5" CV="65" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Funktionsaugang Schaltvorgänge protokollieren</label>
+		<label>Function output commutation log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - Funktionsaugang Schaltvorgänge protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - Function output commutation log</tooltip>
+	</variable>
+		<variable item="Sniffer Debug CV1.6" CV="65" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Status der Funktionsaugänge protokollieren</label>
+		<label>Status of function outputs log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - Status der Funktionsaugänge protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - Status of function outputs log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV1.7" CV="65" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Änderungen im Zustandsautomaten protokollieren</label>
+		<label>Changes in sequence generator log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV1 - Änderungen im Zustandsautomaten protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV1 - Changes in sequence generator log</tooltip>
+	</variable>
+	<!-- Sniffer Debug CV2										 	 -->
+	<variable item="Sniffer Debug CV2.0" CV="66" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Funktionsgenerator protokollieren</label>
+		<label>Function generator log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Funktionsgenerator protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - Function generator log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV2.1" CV="66" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">CV-Zugriffsbefehle protokollieren</label>
+		<label>CV-Aspect command log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - CV-Zugriffsbefehle protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - CV-Aspect command log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV2.2" CV="66" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Funktionsgenerator Detailanalyse</label>
+		<label>Function generator detailed analysis</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Funktionsgenerator Detailanalyse</tooltip>
+		<tooltip>Sniffer Debug CV2 - Function generator detailed analysis</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV2.3" CV="66" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Strommessungen protokollieren</label>
+		<label>Current measurement log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Strommessungen protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - Current measurement log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV2.4" CV="66" mask="XXXVXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Einzelströme protokollieren</label>
+		<label>Individual currents log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Einzelströme protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - Individual currents log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV2.5" CV="66" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Dimmung protokollieren</label>
+		<label>Dimming log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Dimmung protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - Dimming log</tooltip>
+	</variable>
+		<variable item="Sniffer Debug CV2.6" CV="66" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Dimmungsänderungen protokollieren</label>
+		<label>Dimming change log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Dimmungsänderungen protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - Dimming change log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV2.7" CV="66" mask="VXXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Dimmungszähler protokollieren</label>
+		<label>Dimming counter log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV2 - Dimmungszähler protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV2 - Dimming counter log</tooltip>
+	</variable>
+	<!-- Sniffer Debug CV3										 	 -->
+	<variable item="Sniffer Debug CV3.0" CV="67" mask="XXXXXXXV" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Motorola Befehle protokollieren</label>
+		<label>Motorola commands log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV3 - Motorola Befehle protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV3 - Motorola commands log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV3.1" CV="67" mask="XXXXXXVX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Motorola Bits protokollieren</label>
+		<label>Motorola Bits log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV3 - Motorola Bits protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV3 - Motorola Bits log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV3.2" CV="67" mask="XXXXXVXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Motorola Ports protokollieren</label>
+		<label>Motorola Ports log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV3 - Motorola Ports protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV3 - Motorola Ports log</tooltip>
+	</variable>
+	<variable item="Sniffer Debug CV3.3" CV="67" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="de">Servos protokollieren</label>
+		<label>Servos log</label>
+		<tooltip xml:lang="de">Sniffer Debug CV3 - Servos protokollieren</tooltip>
+		<tooltip>Sniffer Debug CV3 - Servos log</tooltip>
+	</variable>
+</variables>

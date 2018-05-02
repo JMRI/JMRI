@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+    </author>
+    <author>
+        <personname><firstname>Paul</firstname><surname>Bender</surname></personname>
+    </author>   
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-12</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Adapted from NYCS-1937</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2013-07-09</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add aspect mapping</revremark>
+    </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2013-07-10</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add signal icons</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>SLSF</aspecttable>
+  <name>Double searchlight signal with triangle placard</name>
+  <reference> As described in the
+July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
+  </reference>
+  <description>Appearances for a two-searchlight signal head with a triangular plackard</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 281</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-281.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Rule 282</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-282.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Rule 283</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-283.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 285</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-285.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 286</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-286.gif
+      </imagelink>
+    </appearance>
+
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 287</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-287.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>lunar</show>
+      <show>red</show>
+      <reference>Rule 288</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-a.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Rule 288</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-b.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 290</reference>
+      <imagelink>
+        ../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-290.gif
+      </imagelink>
+    </appearance>
+
+  </appearances>
+
+        <specificappearances><!-- Start of Specific Appearances list -->
+           <danger>
+              <aspect>Stop and Proceed</aspect>
+           </danger>
+           <held>
+              <aspect>Stop and Proceed</aspect>
+           </held>
+    </specificappearances><!-- End of Specific Appearances list -->
+ 
+ 
+    <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Stop and Proceed</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Grade</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach</advancedAspect>
+     <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Clear</advancedAspect>
+     <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach</advancedAspect>
+     <ourAspect>Advance Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Medium</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Limited</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Advance Approach</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings><!-- End of Aspect Mapping -->
+
+</appearancetable>  

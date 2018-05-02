@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile.xsl" ?>
+<!DOCTYPE layout-config SYSTEM "http://jmri.org/xml/DTD/layout-config.dtd" >
+<layout-config>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="LT200" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT201" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT202" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT203" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT256" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT257" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT258" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT259" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT260" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT261" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT262" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT263" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT264" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT265" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT266" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT267" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT268" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT269" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT270" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT271" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT272" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT273" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT274" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT275" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT276" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT277" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT278" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT279" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT280" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT281" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT282" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT283" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT284" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT285" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT286" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT287" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT288" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT289" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT290" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT291" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT293" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT294" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT295" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT296" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT297" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT298" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT299" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT300" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT301" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT303" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT304" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT305" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT306" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT309" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT311" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT312" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT50" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT51" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT52" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT53" feedback="MONITORING" automate="Default" />
+  </turnouts>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+  </turnouts>
+  <lights class="jmri.jmrix.loconet.configurexml.LnLightManagerXml" />
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS50" userName="Drives TO 200" />
+    <sensor systemName="LS51" userName="Drives TO 201" />
+    <sensor systemName="LS52" userName="Drives TO 202" />
+    <sensor systemName="LS53" userName="Drives TO 203" />
+    <sensor systemName="LS100" />
+    <sensor systemName="LS101" />
+    <sensor systemName="LS102" />
+    <sensor systemName="LS103" userName="Start/Stop" />
+    <sensor systemName="LS150" />
+    <sensor systemName="LS151" />
+    <sensor systemName="LS152" />
+    <sensor systemName="LS153" />
+    <sensor systemName="LS154" />
+    <sensor systemName="LS155" />
+    <sensor systemName="LS156" />
+    <sensor systemName="LS157" />
+    <sensor systemName="LS158" />
+    <sensor systemName="LS159" />
+    <sensor systemName="LS160" />
+    <sensor systemName="LS161" />
+    <sensor systemName="LS162" />
+    <sensor systemName="LS163" />
+    <sensor systemName="LS164" />
+    <sensor systemName="LS165" />
+  </sensors>
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH257" userName="200 Main">
+      <turnout systemName="257" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH261" userName="200 Facing Lower">
+      <turnout systemName="261" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH263" userName="200 Facing Upper">
+      <turnout systemName="263" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH265" userName="201 Main">
+      <turnout systemName="265" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH269" userName="201 Facing Lower">
+      <turnout systemName="269" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH271" userName="201 Facing Upper">
+      <turnout systemName="271" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH273" userName="200 Siding">
+      <turnout systemName="273" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH279" userName="201 Siding">
+      <turnout systemName="279" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH289" userName="202 Main">
+      <turnout systemName="289" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH293" userName="202 Facing Lower">
+      <turnout systemName="293" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH295" userName="202 Facing Upper">
+      <turnout systemName="295" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH297" userName="203 Facing Upper">
+      <turnout systemName="297" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH299" userName="203 Facing Lower">
+      <turnout systemName="299" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH303" userName="203 Main">
+      <turnout systemName="303" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH305" userName="202 Siding">
+      <turnout systemName="305" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH311" userName="203 Siding">
+      <turnout systemName="311" />
+    </signalhead>
+  </signalheads>
+  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="JMRI at JavaOne" x="-8" y="22" height="832" width="1384" editable="yes" positionable="no" controlling="yes" hide="yes" panelmenu="yes">
+    <positionablelabel forcecontroloff="false" fixed="true" showtooltip="false" class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="-3" y="-1" level="1" icon="/Users/jake/Library/Preferences/JMRI/javaone/javaone.gif" rotate="0" />
+    <sensoricon sensor="LS103" x="11" y="695" active="file:/Users/jake/Library/Preferences/JMRI/javaone/stopicon.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/starticon.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/starticon.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/starticon.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS162" x="347" y="520" active="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLRed.gif" rotate="2" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS163" x="914" y="520" active="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS164" x="349" y="87" active="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorRRed.gif" rotate="2" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS165" x="914" y="87" active="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutSensorLRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS150" x="1036" y="349" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" rotate="3" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS151" x="1037" y="80" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS152" x="693" y="92" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS153" x="693" y="155" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS154" x="470" y="92" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS155" x="471" y="155" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS156" x="79" y="95" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" rotate="1" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS157" x="92" y="349" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LoopSegmentRed.gif" rotate="2" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS158" x="467" y="583" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS159" x="468" y="518" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS160" x="692" y="581" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="LS161" x="692" y="517" active="file:/Users/jake/Library/Preferences/JMRI/javaone/LineYellow.gif" inactive="file:/Users/jake/Library/Preferences/JMRI/javaone/LineWhite.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/LineRed.gif" rotate="0" forcecontroloff="false" momentary="false" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <turnouticon turnout="LT200" x="347" y="520" closed="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutClosedL.gif" thrown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutThrownL.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutNeitherL.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutBothL.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT203" x="915" y="87" closed="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutClosedL.gif" thrown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutThrownL.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutNeitherL.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutBothL.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT201" x="914" y="522" closed="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutClosedR.gif" thrown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutThrownR.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutNeitherR.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutBothR.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT202" x="346" y="78" closed="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutClosedR.gif" thrown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutThrownR.gif" unknown="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutNeitherR.gif" inconsistent="file:/Users/jake/Library/Preferences/JMRI/javaone/TurnoutBothR.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+
+    <signalheadicon signalhead="LH261" x="281" y="609" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH263" x="309" y="609" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH257" x="470" y="612" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH273" x="466" y="485" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH269" x="1037" y="549" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH271" x="1010" y="549" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH265" x="843" y="609" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH279" x="847" y="486" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH293" x="282" y="122" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH295" x="309" y="122" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH289" x="470" y="65" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH305" x="478" y="183" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH299" x="1057" y="68" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH297" x="1031" y="68" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="0" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH303" x="851" y="65" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="LH311" x="848" y="184" red="file:/Users/jake/Library/Preferences/JMRI/javaone/left-red-high.gif" yellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-yellow-high.gif" flashyellow="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashyellow-marker.gif" green="file:/Users/jake/Library/Preferences/JMRI/javaone/left-green-high.gif" flashred="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashred-marker.gif" flashgreen="file:/Users/jake/Library/Preferences/JMRI/javaone/left-flashgreen-marker.gif" rotate="2" forcecontroloff="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+  </paneleditor>
+  <!--Written by JMRI version 1.7.3 on Mon May 15 12:47:17 PDT 2006 $Id$-->
+</layout-config>
+

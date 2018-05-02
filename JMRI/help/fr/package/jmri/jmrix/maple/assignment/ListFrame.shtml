@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+  <!-- Translated  by Blorec Hervé le 2011-10-28-->
+
+  <title>JMRI: Maple Input and Output Assignments</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+</head>
+
+<body>
+  charset=iso-8859-1"&gt; <!-- /Style -->
+   <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>JMRI: Entr&Atilde;&copy;e Maple et les Affectation des
+      Sorties</h2>
+
+      <p>Cet outil vous permet d'afficher les affectations Capteur,
+      Aiguillages et Lumi&Atilde;&uml;res pour vos Panneaux Maple*
+      et les faire correspondre &Atilde;  des adresses
+      d'&Atilde;&copy;cran Panneau d'adresses HMI** Maple .</p>
+
+      <p>Sur Maple, les bits bobine dans le HMI Maple sont
+      utilis&Atilde;&copy;s pour communiquer avec JMRI. Les 1000
+      premiers bits bobines sont r&Atilde;&copy;serv&Atilde;&copy;s
+      pour les capteurs - ceux-ci sont appel&Atilde;&copy;s "Bits
+      d'entr&Atilde;&copy;e&Acirc;&raquo; et sont
+      utilis&Atilde;&copy;s pour d&Atilde;&copy;finir les Capteurs
+      JMRI. Les Capteurs transmettent des informations &Atilde; 
+      partir du panneaux HMI pour JMRI. Le 8000 bits suivants sont
+      r&Atilde;&copy;serv&Atilde;&copy;s aux "Bits de
+      sortie&Acirc;&raquo; et sont utilis&Atilde;&copy; pour
+      envoyer les param&Atilde;&uml;tres actuels d'appareils de
+      voie et de lumi&Atilde;&uml;res pour les panneaux Maple.</p>
+
+      <p>Le menu d&Atilde;&copy;roulant <b>N&Aring;"ud</b> en haut
+      de l'&Atilde;&copy;cran permet &Atilde;  l'utilisateur de
+      voir les Adresse HMI de la Station de tous les panneaux Maple
+      qui sont actuellement configur&Atilde;&copy;s. Comme tous les
+      panneaux utilisent les m&Atilde;&ordf;mes adresses,
+      s&Atilde;&copy;lectionner un panneau ne change pas les
+      informations affich&Atilde;&copy;es. Le nombre
+      d'entr&Atilde;&copy;es configur&Atilde;&copy;es et les bits
+      de sortie sont &Atilde;&copy;galement
+      affich&Atilde;&copy;s.</p>
+
+      <p>Choisissez entre afficher les bits d'entr&Atilde;&copy;e
+      ou de sortie en s&Atilde;&copy;lectionnant <b>Montrer Bits
+      d'Entr&Atilde;&copy;e</b> ou <b>Voir Bits de Sortie</b> en
+      haut de l'&Atilde;&copy;cran. Le num&Atilde;&copy;ro du bits
+      JMRI et l'adresse bits bobine de l'HMi Maple correspondante
+      sont affich&Atilde;&copy;s pour chaque bit
+      configur&Atilde;&copy;. Le Nom du syst&Atilde;&uml;me JMRI et
+      le nom d'utilisateur JMRI sont affich&Atilde;&copy;s si le
+      bit a une affectation JMRI. Les bits qui n'ad=ffichent pas un
+      nom Syst&Atilde;&uml;me JMRI sont configur&Atilde;&copy;s et
+      sont disponibles pour une affectation.</p>
+
+      <p><b>Renseignements g&Atilde;&copy;n&Atilde;&copy;raux :</b>
+      Dans cette mise en &Aring;"uvre&Atilde;&copy; Maple vers
+      JMRI, tous les panneaux ont exactement les m&Atilde;&ordf;me
+      affectations des bits d'entr&Atilde;&copy;e et des de bits de
+      sortie. Les bits de sortie sont envoy&Atilde;&copy;s dans un
+      &Acirc;&laquo; mode Diffusion " afin que tous les panneaux
+      puissent voir les param&Atilde;&uml;tres. Chaque panneau est
+      interrog&Atilde;&copy; s&Atilde;&copy;par&Atilde;&copy;ment,
+      et les r&Atilde;&copy;sultats des sondages sont lus ensemble
+      pour &Atilde;&copy;tablir les capteurs. Par
+      cons&Atilde;&copy;quent, si un capteur est actif (Maple "1")
+      dans n'importe quel panneau, il est ACTIF. Si un Capteur est
+      inactif (Maple &Acirc;&laquo;0&Acirc;&raquo;) dans tous les
+      panneaux configur&Atilde;&copy;s, puis il est rendu
+      INACTIF.</p>
+
+      <p>* Maple = &Atilde;&permil;cran Tactile ** HMI = Interface
+      Homme Machine</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

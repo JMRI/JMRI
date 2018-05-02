@@ -1,0 +1,105 @@
+<!-- Defines XML documenting the list of available decoder definitions -->
+
+<!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT decoderIndex-config (decoderIndex)>
+<!ATTLIST decoderIndex-config xmlns:xsi	CDATA #IMPLIED> <!-- to allow XML Schema reference to be DTD valid -->
+<!ATTLIST decoderIndex-config xsi:noNamespaceSchemaLocation	CDATA #IMPLIED> <!-- to allow XML Schema reference to be DTD valid -->
+
+<!ELEMENT decoderIndex (mfgList, familyList)>
+<!ATTLIST decoderIndex version	CDATA #IMPLIED>   <!-- version of the index, controls update -->
+
+<!-- Match NMRA codes to manufacturer names & vice versa -->
+<!ELEMENT mfgList (manufacturer*) >
+<!ATTLIST mfgList nmraListDate	CDATA #REQUIRED>  <!-- date on the NMRA list used for last update   -->
+<!ATTLIST mfgList updated		CDATA #REQUIRED>  <!-- date the file last updated   -->
+<!ATTLIST mfgList lastadd		CDATA #IMPLIED>   <!-- last ID number added   -->
+
+<!ELEMENT manufacturer EMPTY >
+<!ATTLIST manufacturer mfg		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST manufacturer mfgID 	CDATA #IMPLIED>  <!-- CV08 value, missing means any           -->
+<!ATTLIST manufacturer comment	CDATA #IMPLIED>
+
+<!-- familyList is actually a list of families and hence decoder definitions -->
+<!ELEMENT familyList (family*) >
+
+<!ELEMENT family (model*, functionlabels*) >
+<!ATTLIST family file      		CDATA #REQUIRED>  <!-- file name for details -->
+<!ATTLIST family name      		CDATA #REQUIRED>  <!-- family name used for identification -->
+<!ATTLIST family mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST family type      	( stationary | locomotive ) "locomotive">
+<!ATTLIST family comment   		CDATA #IMPLIED>
+<!ATTLIST family defnVersion 	CDATA #IMPLIED> <!-- version of the XML defining the decoder -->
+<!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
+<!-- If only one is specified, only that single value is acceptable -->
+<!-- Note that these are defaults for the 'decoder' attributes of same name, not an override -->
+<!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+
+<!ELEMENT model (versionCV*, output*, size?)* >
+<!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST model options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
+<!ATTLIST model comment   	CDATA #IMPLIED>
+<!-- numFns and numOuts interact with the minFn and minOut attributes in a decoder file -->
+<!-- to customize the decoder file to a specific decoder package within the family. Note -->
+<!-- that output leads, e.g. hardware, is the usual thing to vary; that's represented by -->
+<!-- numOut.  The number of cab functions is more of a software thing, and varies more -->
+<!-- rarely; its represented by numFns -->
+<!ATTLIST model numFns    	CDATA #IMPLIED>   <!-- number of cab functions, default is all -->
+<!ATTLIST model numOuts    	CDATA #IMPLIED>   <!-- number of output leads, default is all -->
+<!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
+<!-- If only one is specified, only that single value is acceptable -->
+<!ATTLIST model lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST model highVersionID CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST model productID     CDATA #IMPLIED >  <!-- default blank means any   -->
+<!-- Physical specifications -->
+<!ATTLIST model maxInputVolts 	CDATA #IMPLIED >  <!-- default blank means NMRA spec   -->
+<!ATTLIST model maxMotorCurrent 	CDATA #IMPLIED >  <!-- motor only   -->
+<!ATTLIST model maxTotalCurrent 	CDATA #IMPLIED >  <!-- motor plus functions   -->
+<!ATTLIST model formFactor          CDATA #IMPLIED >  <!-- mfg name for specific shape, etc -->
+<!-- NMRA Conformance status -->
+<!ATTLIST model nmraWarrant  (yes|no) "no" >
+<!ATTLIST model nmraWarrantStart CDATA #IMPLIED >  <!-- issue date of current warrant, if known -->
+<!ATTLIST model nmraWarrantEnd CDATA #IMPLIED >  <!-- end date of current warrant, if any -->
+<!-- wiring specification -->
+<!ATTLIST model connector ( unspecified | NMRAsmall | 9pin | NMRAmedium | NMRAlarge |
+							 21MTC | PluX8 | PluX16 | PluX22 | NEM651 | NEM652 | 16pin | 21pin | other ) "unspecified" >
+<!-- type of extended function packets accepted (not all combinations valid) -->
+<!ATTLIST model extFnsNmraF13 ( no | yes ) "no" >  <!-- RP packets for F13-F20 -->
+<!ATTLIST model extFnsNmraBSC ( no | yes ) "no" >  <!-- "Binary State Control" -->
+<!ATTLIST model extFnsMRC  ( no | yes ) "no" >     <!-- Model Rectifier Corp "extension" -->
+<!ELEMENT functionlabels (functionlabel*) >
+<!ELEMENT functionlabel (#PCDATA)  >
+<!ATTLIST functionlabel  num	CDATA #REQUIRED>
+<!ATTLIST functionlabel  lockable ( true | false ) "false">
+<!ELEMENT versionCV EMPTY >
+<!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
+<!-- If only one is specified, only that single value is acceptable -->
+<!ATTLIST versionCV lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST versionCV highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST versionCV comment   	CDATA #IMPLIED>
+
+<!ELEMENT output EMPTY >
+<!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
+<!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->
+<!ATTLIST output comment   	CDATA #IMPLIED>
+<!ATTLIST output maxcurrent CDATA #IMPLIED>
+<!ATTLIST output connection ( plug | solder | wire | other | LED | unspecified  ) "unspecified" >
+
+<!ELEMENT size EMPTY>
+<!ATTLIST size length    CDATA #IMPLIED >
+<!ATTLIST size width    CDATA #IMPLIED >
+<!ATTLIST size height   CDATA #IMPLIED >
+<!ATTLIST size units  	( inches | cm | mm ) #REQUIRED >
+<!ATTLIST size comment 	CDATA #IMPLIED >
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-30-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Configure Digitrax PM4</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help configure loconet PM4">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Configurer PM4 Digitrax</h1><a href=
+      "../../../../../html/apps/LocoTools/images/DS64.jpg"><img src="../../../../../html/apps/LocoTools/images/DS64.jpg"
+      align="right" height="271" width="245" alt=
+      "image du panneau"></a> -&gt;
+
+      <p>L'outil de programmation JMRI PM4 vous permet de
+      configurer les options internes d'un PM4 directement &Atilde;
+       partir de votre ordinateur.</p>
+
+      <p>Pour ouvrir cet outil &Atilde;  partir de la page de
+      d&Atilde;&copy;marrage JMRI s&Atilde;&copy;lectionnez
+      l'onglet LocoNet puis trouver l'outil sur la liste
+      d&Atilde;&copy;roulante.</p>
+
+      <p>Pour l'utiliser, vous mettez l'adresse d'une carte PM4
+      dans le champ texte et cliquez sur "Lire PM4&Acirc;&raquo;.
+      L'outil relira les &Atilde;&copy;tats actuels des
+      diff&Atilde;&copy;rentes options et d&Atilde;&copy;finira les
+      cases &Atilde;  cocher pour correspondre &Atilde;  leurs
+      valeurs actuelles.</p>
+
+      <p>Vous pouvez alors, si vous le souhaitez, modifier les
+      cases et cliquez sur "Ecrire dans DS64" pour rendre vos
+      modifications permanentes.</p>
+
+      <h3>Limitations</h3>En raison de la fa&Atilde;&sect;on dont
+      fonctionne la carte PM4, cet outil ne peut pas changer
+      l'adresse de base de l'unit&Atilde;&copy;. 
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

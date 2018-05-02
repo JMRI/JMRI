@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                -->
+<!-- Created from MRC_sound1619to1624.xml           -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="Normal On/Off">
+      <choice>Normal On/Off</choice>
+    </enumChoice>
+    <enumChoice choice="Dynamo">
+      <choice>Dynamo effect (fading)</choice>
+    </enumChoice>
+    <enumChoice choice="Dim, Bright, Off cycle">
+      <choice>Dim, Bright, Off cycle</choice>
+    </enumChoice>
+    <enumChoice choice="Rule 17">
+      <choice>Rule 17</choice>
+    </enumChoice>
+    <enumChoice choice="Both headlights on">
+      <choice>Both headlights on</choice>
+    </enumChoice>
+    <enumChoice choice="Ditch Light type A">
+      <choice>Ditch Light type A</choice>
+    </enumChoice>
+    <enumChoice choice="Ditch Light type B">
+      <choice>Ditch Light type B</choice>
+    </enumChoice>
+    <enumChoice choice="Gyra light">
+      <choice>Gyra light</choice>
+    </enumChoice>
+    <enumChoice choice="Mars light">
+      <choice>Mars light</choice>
+    </enumChoice>
+    <enumChoice choice="Prime strato light">
+      <choice>Prime strato light</choice>
+    </enumChoice>
+    <enumChoice choice="Single strobe light">
+      <choice>Single strobe light</choice>
+    </enumChoice>
+    <enumChoice choice="Double strobe light">
+      <choice>Double strobe light</choice>
+    </enumChoice>
+    <enumChoice choice="Rotating beacon">
+      <choice>Rotating beacon</choice>
+    </enumChoice>
+    <enumChoice choice="FRED Rear End Flashing">
+      <choice>FRED Rear End Flashing</choice>
+    </enumChoice>
+    <enumChoice choice="Firebox Flicker A">
+      <choice>Firebox Flicker A</choice>
+    </enumChoice>
+    <enumChoice choice="Firebox Flicker B">
+      <choice>Firebox Flicker B</choice>
+    </enumChoice>
+    <enumChoice choice="Engine Exhaust Flicker">
+      <choice>Engine Exhaust Flicker</choice>
+    </enumChoice>
+</enumVal>

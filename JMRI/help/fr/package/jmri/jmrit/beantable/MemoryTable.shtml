@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Herv&#233; Blorec  2013-10-11-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Memory Table Help</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Memory Table">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Le Tableau M&eacute;moire</h1>Vous pouvez utiliser le
+      tableau de la m&eacute;moire pour regarder le contenu des
+      variables de la m&eacute;moire JMRI.
+
+      <p>Notez que vous pouvez trier le tableau par chacune des
+      colonnes, cliquez simplement sur la t&ecirc;te de
+      colonne.</p>
+
+      <p>Pour modifier la valeur stock&eacute;e dans une
+      m&eacute;moire particuli&egrave;re, il suffit de cliquer sur
+      le valeur de colonne dans la ligne d&eacute;sir&eacute;e.
+      Entrez une nouvelle valeur, puis en appuyant sur le touche
+      Retour ou Entr&eacute;e pour stocker la valeur.</p>
+
+      <p>Pour cr&eacute;er une nouvelle variable m&eacute;moire,
+      cliquez sur le bouton " <a href="MemoryAddEdit.shtml">Ajouter
+      ...</a>" au bas de la fen&ecirc;tre.</p>
+
+      <p>Pour plus d'informations sur les m&eacute;moires,
+      consultez le <a href=
+      "../../../../html/tools/Memories.shtml">page d'aide
+      m&eacute;moire</a>.</p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

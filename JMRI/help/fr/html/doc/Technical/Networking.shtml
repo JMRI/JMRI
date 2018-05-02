@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233; 2013-09-07-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Acc&egrave;s au r&eacute;seau</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI network access">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Acc&egrave;s au r&eacute;seau
+      (informatique)</h1>Cette page d&eacute;crit les
+      diff&eacute;rentes formes d'acc&egrave;s au r&eacute;seau
+      (informatique) disponible dans JMRI. De nouvelles
+      capacit&eacute;s sont ajout&eacute;s tous le temps, de
+      sorte,s'il vous pla&icirc;t, v&eacute;rifier aupr&egrave;s du
+      groupe d'utilisateurs pour obtenir des renseignements
+      &agrave; jour.
+
+      <h2>M&eacute;thodes d'Acc&egrave;s au R&eacute;seau</h2>JMRI
+      interagit avec les r&eacute;seaux informatiques sous deux
+      formes fondamentales: connexion en aval et connexions en
+      amont.
+
+      <p>La connexion descendante permet de connecter JMRI &agrave;
+      un r&eacute;seau ferr&eacute; via un r&eacute;seau pour les
+      op&eacute;rations et le contr&ocirc;le. Celui-ci utilise une
+      connexion r&eacute;seau pour faire les m&ecirc;mes choses que
+      celles qui se font souvent via le port s&eacute;rie RS232 et
+      les liens USB.</p>
+
+      <p>Une connexion montante permet aux autres
+      p&eacute;riph&eacute;riques de commander JMRI via une
+      connexion r&eacute;seau. Dans ce cas, la connexion au
+      r&eacute;seau permet aux autres p&eacute;riph&eacute;riques
+      et/ou des programmes de faire des choses qui sont normalement
+      fait avec les scripts et l'interface utilisateur
+      graphique.</p>
+
+      <p>Dans le reste de cette page, nous fournissons des liens
+      vers les diff&eacute;rents exemples de ces deux domaines
+      g&eacute;n&eacute;raux.</p>
+
+      <h2>Connexions descendante (mise en r&eacute;seau du
+      mat&eacute;riel r&eacute;seau ferr&eacute;)</h2>
+
+      <ul>
+        <li>Syst&egrave;mes LocoNet
+
+          <ul>
+            <li>
+              <a href=
+              "../../hardware/loconet/LocoNetServer.shtml">Connexion
+              serveur client LocoNet</a>
+
+              <p>Celui-ci utilise Java RMI pour fournir un
+              acc&egrave;s client-serveur pour le flux de messages
+              LocoNet.</p>
+            </li>
+
+            <li>
+              <a href=
+              "../../hardware/loconet/LbServer.shtml">LocoNetOverTcp
+              to LbServer</a>
+
+              <p>Celui-ci utilise Java RMI pour donner acc&egrave;s
+              &agrave; un flux de messages LocoNet via le <a href=
+              "http://loconetovertcp.sourceforge.net/">liensProtocole
+              LbServer</a>.</p>
+            </li>
+          </ul>
+        </li>
+
+        <li>EasyDCC
+
+          <ul>
+            <li><a href="../../hardware/TerminalServer.shtml">Via
+            serveur terminal</a></li>
+          </ul>
+        </li>
+
+        <li>NCE
+
+          <ul>
+            <li><a href="../../hardware/TerminalServer.shtml">Via
+            serveur terminal</a></li>
+          </ul>
+        </li>
+
+        <li>SRCP
+
+          <ul>
+            <li><a href="../../hardware/SRCP/index.shtml">Via
+            connexion r&eacute;seau au serveur SRCP</a></li>
+          </ul>
+        </li>
+
+        <li>ECOS
+
+          <ul>
+            <li><a href="../../hardware/ecos/index.shtml">Via la
+            connexion r&eacute;seau &agrave; la station de commande
+            ECOS</a></li>
+          </ul>
+        </li>
+
+        <li>XPressNet
+
+          <ul>
+            <li><a href="../../hardware/XPressNet/index.shtml">Via
+            une connexion r&eacute;seau &agrave; un adaptateur
+            XnTcp</a></li>
+
+            <li><a href="../../hardware/XPressNet/index.shtml">Via
+            une connexion r&eacute;seau &agrave; un serveur Lenz
+            LIUSB (Windows seulement)</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2>Connexions descendantes( r&eacute;seau exploitations JMRI
+      )</h2>
+
+      <ul>
+        <li>Int&eacute;gr&eacute; <a mini="" href=
+        "../../web/index.shtml">un miniserveur Web</a> (<a href=
+        "http://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
+
+          <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
+          service &laquo;_http._tcp.local.". En particulier, il
+          contient les <a href=
+          "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+          support JMRI XMLIO</a>, qui permet aux navigateurs web
+          (avec ou sans AJAX) de surveiller et de contr&ocirc;ler
+          un r&eacute;seau ferr&eacute; en acc&eacute;dant &agrave;
+          un <a href=
+          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+          Servlet JMRI XMLIO</a> Il comprend &eacute;galement des
+          installations pour l'affichage et en cliquant sur
+          n'importe quoi <a href=
+          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
+          d'ouvrir la fen&ecirc;tre JMRI</a>.</p>
+        </li>
+
+        <li>Via script Python/Jython</li>
+
+        <li>Pour <a href=
+        "../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
+          r&eacute;gulateur &agrave; distance</a> tels que l'iPhone
+          ou Android. (<a href=
+          "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
+          ( <a href="http://withrottle.com">site web du produit
+          WiThrottle</a>) ( <a href=
+          "../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">
+          page Pilote Android Engine</a>)
+
+          <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
+          service &laquo;_withrottle._tcp.local.".</p>
+        </li>
+      </ul>Via l'ex&eacute;cution JMRI comme une <a href=
+      "http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html">
+      Enterprise Java Bean</a>
+
+      <ul>
+        <li>Via la fourniture d'un serveur RMI <a href=
+        "../../hardware/loconet/LocoNetServer.shtml">LocoNet</a>.
+
+          <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
+          service &laquo;_jmri-locormi._tcp.local.".</p>
+        </li>
+
+        <li>Via la fourniture d'une impl&eacute;mentation
+          <a href="http://loconetovertcp.sourceforge.net/">LbServer</a>.
+
+          <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
+          service &laquo;_loconetovertcpserver._tcp.local.". (Nom
+          en attendant l'approbation &agrave; partir de
+          l'&eacute;laboration des protocoles d'origine)</p>
+        </li>
+
+        <li>Via la fourniture d'une implantation d'un <a href=
+        "http://srcpd.sourceforge.net/">serveur SRCP</a>.
+
+          <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
+          service "_srcp._tcp.local."</p>
+        </li>
+
+        <li>Via la fourniture d'une implantation d'un . <a href=
+        "../../hardware/jmriclient/index.shtml">Serveur
+        JMRI</a>.</li>
+      </ul>
+
+      <p>Voir aussi le package d'utilitaires <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">
+      jmri.util.zeroconf</a> de Zeroconf/Bonjour pour une
+      utilisation dans JMRI.</p>
+
+      <p>Voir aussi le <a href="http://www.dns-sd.org">DNS-SD</a>
+      pour plus d'informations sur Zeroconf/Bonjour/"DNS Service
+      Discovery" pour la mise en r&eacute;seau.</p>
+
+      <p>Voir aussi "man dns-sd" pour de plus d'informations sur
+      l'outil DNS-SD de d&eacute;bogage en ligne de commande.</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

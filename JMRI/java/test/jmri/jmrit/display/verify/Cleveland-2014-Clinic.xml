@@ -1,0 +1,3681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>3</major>
+    <minor>8</minor>
+    <test>0</test>
+    <modifier />
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>inactive</defaultInitialState>
+    <sensor systemName="LS1" inverted="false">
+      <systemName>LS1</systemName>
+    </sensor>
+    <sensor systemName="LS10" inverted="false">
+      <systemName>LS10</systemName>
+    </sensor>
+    <sensor systemName="LS11" inverted="false">
+      <systemName>LS11</systemName>
+    </sensor>
+    <sensor systemName="LS117" inverted="false" userName="Whithead East Main 2">
+      <systemName>LS117</systemName>
+      <userName>Whithead East Main 2</userName>
+    </sensor>
+    <sensor systemName="LS118" inverted="false" userName="Whithead East Main 1">
+      <systemName>LS118</systemName>
+      <userName>Whithead East Main 1</userName>
+    </sensor>
+    <sensor systemName="LS119" inverted="false" userName="Butler Main 2">
+      <systemName>LS119</systemName>
+      <userName>Butler Main 2</userName>
+    </sensor>
+    <sensor systemName="LS12" inverted="false">
+      <systemName>LS12</systemName>
+    </sensor>
+    <sensor systemName="LS120" inverted="false" userName="Butler Main 1">
+      <systemName>LS120</systemName>
+      <userName>Butler Main 1</userName>
+    </sensor>
+    <sensor systemName="LS121" inverted="false" userName="Whithead OS Main 2">
+      <systemName>LS121</systemName>
+      <userName>Whithead OS Main 2</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS122" inverted="false" userName="Whithead OS Main 1">
+      <systemName>LS122</systemName>
+      <userName>Whithead OS Main 1</userName>
+    </sensor>
+    <sensor systemName="LS123" inverted="false" userName="Whithead West Main 2">
+      <systemName>LS123</systemName>
+      <userName>Whithead West Main 2</userName>
+    </sensor>
+    <sensor systemName="LS124" inverted="false" userName="Whithead West Main 1">
+      <systemName>LS124</systemName>
+      <userName>Whithead West Main 1</userName>
+    </sensor>
+    <sensor systemName="LS13" inverted="false">
+      <systemName>LS13</systemName>
+    </sensor>
+    <sensor systemName="LS14" inverted="false">
+      <systemName>LS14</systemName>
+    </sensor>
+    <sensor systemName="LS15" inverted="false">
+      <systemName>LS15</systemName>
+    </sensor>
+    <sensor systemName="LS16" inverted="false">
+      <systemName>LS16</systemName>
+    </sensor>
+    <sensor systemName="LS2" inverted="false">
+      <systemName>LS2</systemName>
+    </sensor>
+    <sensor systemName="LS218" inverted="false" userName="Manion East Main 1">
+      <systemName>LS218</systemName>
+      <userName>Manion East Main 1</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS219" inverted="false" userName="Manion OS Main 1">
+      <systemName>LS219</systemName>
+      <userName>Manion OS Main 1</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS220" inverted="false" userName="Manion OS Main 2">
+      <systemName>LS220</systemName>
+      <userName>Manion OS Main 2</userName>
+    </sensor>
+    <sensor systemName="LS221" inverted="false" userName="Manion East Main 2">
+      <systemName>LS221</systemName>
+      <userName>Manion East Main 2</userName>
+      <comment />
+    </sensor>
+    <sensor systemName="LS222" inverted="false" userName="Squires Main 1">
+      <systemName>LS222</systemName>
+      <userName>Squires Main 1</userName>
+    </sensor>
+    <sensor systemName="LS223" inverted="false" userName="Manion West Main 1">
+      <systemName>LS223</systemName>
+      <userName>Manion West Main 1</userName>
+    </sensor>
+    <sensor systemName="LS224" inverted="false" userName="Manion West Main 2">
+      <systemName>LS224</systemName>
+      <userName>Manion West Main 2</userName>
+    </sensor>
+    <sensor systemName="LS225" inverted="false" userName="Squires Main 2">
+      <systemName>LS225</systemName>
+      <userName>Squires Main 2</userName>
+    </sensor>
+    <sensor systemName="LS3" inverted="false">
+      <systemName>LS3</systemName>
+    </sensor>
+    <sensor systemName="LS4" inverted="false">
+      <systemName>LS4</systemName>
+    </sensor>
+    <sensor systemName="LS5" inverted="false">
+      <systemName>LS5</systemName>
+    </sensor>
+    <sensor systemName="LS6" inverted="false">
+      <systemName>LS6</systemName>
+    </sensor>
+    <sensor systemName="LS7" inverted="false">
+      <systemName>LS7</systemName>
+    </sensor>
+    <sensor systemName="LS8" inverted="false">
+      <systemName>LS8</systemName>
+    </sensor>
+    <sensor systemName="LS9" inverted="false">
+      <systemName>LS9</systemName>
+    </sensor>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="LT1" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT1</systemName>
+    </turnout>
+    <turnout systemName="LT10" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT10</systemName>
+    </turnout>
+    <turnout systemName="LT101" userName="Whithead Main 1" feedback="MONITORING" inverted="false" automate="Off">
+      <systemName>LT101</systemName>
+      <userName>Whithead Main 1</userName>
+      <comment />
+    </turnout>
+    <turnout systemName="LT1017" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT1017</systemName>
+    </turnout>
+    <turnout systemName="LT1018" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT1018</systemName>
+    </turnout>
+    <turnout systemName="LT1019" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT1019</systemName>
+    </turnout>
+    <turnout systemName="LT102" userName="Whithead Main 2" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT102</systemName>
+      <userName>Whithead Main 2</userName>
+    </turnout>
+    <turnout systemName="LT1020" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT1020</systemName>
+    </turnout>
+    <turnout systemName="LT11" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT11</systemName>
+    </turnout>
+    <turnout systemName="LT12" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT12</systemName>
+    </turnout>
+    <turnout systemName="LT13" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT13</systemName>
+    </turnout>
+    <turnout systemName="LT14" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT14</systemName>
+    </turnout>
+    <turnout systemName="LT15" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT15</systemName>
+    </turnout>
+    <turnout systemName="LT16" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT16</systemName>
+    </turnout>
+    <turnout systemName="LT201" userName="Manion Main 1" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT201</systemName>
+      <userName>Manion Main 1</userName>
+    </turnout>
+    <turnout systemName="LT202" userName="Manion Main 2" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT202</systemName>
+      <userName>Manion Main 2</userName>
+    </turnout>
+    <turnout systemName="LT203" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT203</systemName>
+    </turnout>
+    <turnout systemName="LT204" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT204</systemName>
+    </turnout>
+    <turnout systemName="LT5" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT5</systemName>
+    </turnout>
+    <turnout systemName="LT582" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT582</systemName>
+    </turnout>
+    <turnout systemName="LT6" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT6</systemName>
+    </turnout>
+    <turnout systemName="LT7" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT7</systemName>
+    </turnout>
+    <turnout systemName="LT8" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT8</systemName>
+    </turnout>
+    <turnout systemName="LT9" feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>LT9</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="3:10 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Butler W1">
+      <systemName>IF$vsm:NS-2008:CLS-3-hi($0017)</systemName>
+      <userName>Butler W1</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Butler W2">
+      <systemName>IF$vsm:NS-2008:CLS-3-hi($0018)</systemName>
+      <userName>Butler W2</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Squires E1">
+      <systemName>IF$vsm:NS-2008:CLS-3-hi($0019)</systemName>
+      <userName>Squires E1</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Squires E2">
+      <systemName>IF$vsm:NS-2008:CLS-3-hi($0020)</systemName>
+      <userName>Squires E2</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="End of Track W1">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0009)</systemName>
+      <userName>End of Track W1</userName>
+      <unlit allowed="yes" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="End of Track W2">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0010)</systemName>
+      <userName>End of Track W2</userName>
+      <unlit allowed="yes" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="End of Track E1">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0011)</systemName>
+      <userName>End of Track E1</userName>
+      <unlit allowed="yes" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="End of Track E2">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0012)</systemName>
+      <userName>End of Track E2</userName>
+      <unlit allowed="yes" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Butler E1">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0013)</systemName>
+      <userName>Butler E1</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Limited Clear</disabledAspect>
+        <disabledAspect>Slow Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Butler E2">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0014)</systemName>
+      <userName>Butler E2</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Limited Clear</disabledAspect>
+        <disabledAspect>Slow Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Squires W1">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0015)</systemName>
+      <userName>Squires W1</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Limited Clear</disabledAspect>
+        <disabledAspect>Slow Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="Squires W2">
+      <systemName>IF$vsm:NS-2008:CLS-3-lo($0016)</systemName>
+      <userName>Squires W2</userName>
+      <unlit allowed="yes" />
+      <disabledAspects>
+        <disabledAspect>Limited Clear</disabledAspect>
+        <disabledAspect>Slow Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Whithead W2">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(1)</systemName>
+      <userName>Whithead W2</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Manion W1">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(10)</systemName>
+      <userName>Manion W1</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Manion E1">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(11)</systemName>
+      <userName>Manion E1</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Manion E2">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(12)</systemName>
+      <userName>Manion E2</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Whithead W1">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(2)</systemName>
+      <userName>Whithead W1</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Whithead E1">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(3)</systemName>
+      <userName>Whithead E1</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Whithead E2">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(4)</systemName>
+      <userName>Whithead E2</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Manion W2">
+      <systemName>LF$dsm:NS-2008:CLS-3-3-hi(9)</systemName>
+      <userName>Manion W2</userName>
+      <unlit allowed="yes">
+        <aspect>31</aspect>
+      </unlit>
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Approach Limited">
+        <number>27</number>
+      </aspect>
+      <aspect defines="Limited Clear">
+        <number>20</number>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <number>25</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>22</number>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <number>15</number>
+      </aspect>
+      <aspect defines="Approach Slow">
+        <number>23</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Medium Approach">
+        <number>11</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>4</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Cressman W1">
+      <systemName>LF$dsm:NS-2008:CLS-3-hi(5)</systemName>
+      <userName>Cressman W1</userName>
+      <unlit allowed="no" />
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Cressman W2">
+      <systemName>LF$dsm:NS-2008:CLS-3-hi(6)</systemName>
+      <userName>Cressman W2</userName>
+      <unlit allowed="no" />
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Cressman E2">
+      <systemName>LF$dsm:NS-2008:CLS-3-hi(7)</systemName>
+      <userName>Cressman E2</userName>
+      <unlit allowed="no" />
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </dccsignalmast>
+    <dccsignalmast class="jmri.implementation.configurexml.DccSignalMastXml" userName="Cressman E1">
+      <systemName>LF$dsm:NS-2008:CLS-3-hi(8)</systemName>
+      <userName>Cressman E1</userName>
+      <unlit allowed="no" />
+      <aspect defines="Clear">
+        <number>29</number>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Approach">
+        <number>21</number>
+      </aspect>
+      <aspect defines="Restricting">
+        <number>-1</number>
+      </aspect>
+      <aspect defines="Stop Signal">
+        <number>0</number>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Advance Approach</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+      </disabledAspects>
+    </dccsignalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" nextSysNum="17">
+    <oblock systemName="OBBU-M1" userName="Butler Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Butler Main 1" />
+      <path pathName="BU M1" blockName="OBBU-M1" toPortal="Butler 1" fromDirection="0" toDirection="0" />
+      <portal systemName="IP1" portalName="Butler 1">
+        <fromBlock blockName="OBWH-W1">
+          <path pathName="BU-WH M1" blockName="OBWH-W1" />
+        </fromBlock>
+        <toBlock blockName="OBBU-M1">
+          <path pathName="BU M1" blockName="OBBU-M1" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0013)" signalDelay="0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OBBU-M2" userName="Butler Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Butler Main 2" />
+      <path pathName="BU M2" blockName="OBBU-M2" toPortal="Butler 2" fromDirection="0" toDirection="0" />
+      <portal systemName="IP2" portalName="Butler 2">
+        <fromBlock blockName="OBWH-W2">
+          <path pathName="BU-WH M2" blockName="OBWH-W2" />
+        </fromBlock>
+        <toBlock blockName="OBBU-M2">
+          <path pathName="BU M2" blockName="OBBU-M2" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0014)" signalDelay="0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OBMA-E1" userName="Manion East Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Manion East Main 1" />
+      <path pathName="MA-SQ M1" blockName="OBMA-E1" fromPortal="Manion E1" toPortal="Squires 1" fromDirection="0" toDirection="0" />
+      <portal systemName="IP3" portalName="Manion E1">
+        <fromBlock blockName="OBMA-E1">
+          <path pathName="MA-SQ M1" blockName="OBMA-E1" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(11)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M1">
+          <path pathName="MA M1" blockName="OBMA-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP4" portalName="Squires 1">
+        <fromBlock blockName="OBMA-E1">
+          <path pathName="MA-SQ M1" blockName="OBMA-E1" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0015)" signalDelay="0" />
+        <toBlock blockName="OBSQ-M1">
+          <path pathName="SQ M1" blockName="OBSQ-M1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBMA-E2" userName="Manion East Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Manion East Main 2" />
+      <path pathName="MA-SQ M2" blockName="OBMA-E2" fromPortal="Squires 2" toPortal="Manion E2" fromDirection="0" toDirection="0" />
+      <portal systemName="IP5" portalName="Manion E2">
+        <fromBlock blockName="OBMA-E2">
+          <path pathName="MA-SQ M2" blockName="OBMA-E2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(12)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M2">
+          <path pathName="MA M2" blockName="OBMA-OS-M2" />
+          <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP6" portalName="Squires 2">
+        <fromBlock blockName="OBMA-E2">
+          <path pathName="MA-SQ M2" blockName="OBMA-E2" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0016)" signalDelay="0" />
+        <toBlock blockName="OBSQ-M2">
+          <path pathName="SQ M2" blockName="OBSQ-M2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBMA-OS-M1" userName="Manion OS Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Manion OS Main 1" />
+      <path pathName="MA M1" blockName="OBMA-OS-M1" fromPortal="Manion E1" toPortal="Manion W1" fromDirection="0" toDirection="0">
+        <setting turnout="LT201" set="2" />
+      </path>
+      <path pathName="MA M1-M2" blockName="OBMA-OS-M1" fromPortal="Manion Crossover" toPortal="Manion W1" fromDirection="0" toDirection="0">
+        <setting turnout="LT201" set="4" />
+      </path>
+      <portal systemName="IP3" portalName="Manion E1">
+        <fromBlock blockName="OBMA-E1">
+          <path pathName="MA-SQ M1" blockName="OBMA-E1" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(11)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M1">
+          <path pathName="MA M1" blockName="OBMA-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP7" portalName="Manion Crossover">
+        <fromBlock blockName="OBMA-OS-M2">
+          <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
+        </fromBlock>
+        <toBlock blockName="OBMA-OS-M1">
+          <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP8" portalName="Manion W1">
+        <fromBlock blockName="OBMA-W1">
+          <path pathName="CR-MA M1" blockName="OBMA-W1" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(10)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M1">
+          <path pathName="MA M1" blockName="OBMA-OS-M1" />
+          <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBMA-OS-M2" userName="Manion OS Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Manion OS Main 2" />
+      <path pathName="MA M2" blockName="OBMA-OS-M2" fromPortal="Manion W2" toPortal="Manion E2" fromDirection="0" toDirection="0">
+        <setting turnout="LT202" set="2" />
+      </path>
+      <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" fromPortal="Manion Crossover" toPortal="Manion E2" fromDirection="0" toDirection="0">
+        <setting turnout="LT202" set="4" />
+      </path>
+      <portal systemName="IP5" portalName="Manion E2">
+        <fromBlock blockName="OBMA-E2">
+          <path pathName="MA-SQ M2" blockName="OBMA-E2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(12)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M2">
+          <path pathName="MA M2" blockName="OBMA-OS-M2" />
+          <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP7" portalName="Manion Crossover">
+        <fromBlock blockName="OBMA-OS-M2">
+          <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
+        </fromBlock>
+        <toBlock blockName="OBMA-OS-M1">
+          <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP9" portalName="Manion W2">
+        <fromBlock blockName="OBMA-W2">
+          <path pathName="CR-MA M2" blockName="OBMA-W2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(9)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M2">
+          <path pathName="MA M2" blockName="OBMA-OS-M2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBMA-W1" userName="Manion West Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Manion West Main 1" />
+      <path pathName="CR-MA M1" blockName="OBMA-W1" fromPortal="Manion W1" toPortal="Cressman M1" fromDirection="0" toDirection="0" />
+      <portal systemName="IP8" portalName="Manion W1">
+        <fromBlock blockName="OBMA-W1">
+          <path pathName="CR-MA M1" blockName="OBMA-W1" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(10)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M1">
+          <path pathName="MA M1" blockName="OBMA-OS-M1" />
+          <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP10" portalName="Cressman M1">
+        <fromBlock blockName="OBWH-E1">
+          <path pathName="WH-CR M1" blockName="OBWH-E1" />
+        </fromBlock>
+        <toBlock blockName="OBMA-W1">
+          <path pathName="CR-MA M1" blockName="OBMA-W1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBMA-W2" userName="Manion West Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Manion West Main 2" />
+      <path pathName="CR-MA M2" blockName="OBMA-W2" fromPortal="Manion W2" toPortal="Cressman M2" fromDirection="0" toDirection="0" />
+      <portal systemName="IP9" portalName="Manion W2">
+        <fromBlock blockName="OBMA-W2">
+          <path pathName="CR-MA M2" blockName="OBMA-W2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(9)" signalDelay="0" />
+        <toBlock blockName="OBMA-OS-M2">
+          <path pathName="MA M2" blockName="OBMA-OS-M2" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP11" portalName="Cressman M2">
+        <fromBlock blockName="OBWH-E2">
+          <path pathName="WH-CR M2" blockName="OBWH-E2" />
+        </fromBlock>
+        <toBlock blockName="OBMA-W2">
+          <path pathName="CR-MA M2" blockName="OBMA-W2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBSQ-M1" userName="Squires Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Squires Main 1" />
+      <path pathName="SQ M1" blockName="OBSQ-M1" toPortal="Squires 1" fromDirection="0" toDirection="0" />
+      <portal systemName="IP4" portalName="Squires 1">
+        <fromBlock blockName="OBMA-E1">
+          <path pathName="MA-SQ M1" blockName="OBMA-E1" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0015)" signalDelay="0" />
+        <toBlock blockName="OBSQ-M1">
+          <path pathName="SQ M1" blockName="OBSQ-M1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBSQ-M2" userName="Squires Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Squires Main 2" />
+      <path pathName="SQ M2" blockName="OBSQ-M2" toPortal="Squires 2" fromDirection="0" toDirection="0" />
+      <portal systemName="IP6" portalName="Squires 2">
+        <fromBlock blockName="OBMA-E2">
+          <path pathName="MA-SQ M2" blockName="OBMA-E2" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0016)" signalDelay="0" />
+        <toBlock blockName="OBSQ-M2">
+          <path pathName="SQ M2" blockName="OBSQ-M2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBWH-E1" userName="Whithead East Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="LS118" />
+      <path pathName="WH-CR M1" blockName="OBWH-E1" fromPortal="Cressman M1" toPortal="Whithead E1" fromDirection="0" toDirection="0" />
+      <portal systemName="IP10" portalName="Cressman M1">
+        <fromBlock blockName="OBWH-E1">
+          <path pathName="WH-CR M1" blockName="OBWH-E1" />
+        </fromBlock>
+        <toBlock blockName="OBMA-W1">
+          <path pathName="CR-MA M1" blockName="OBMA-W1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP12" portalName="Whithead E1">
+        <fromBlock blockName="OBWH-E1">
+          <path pathName="WH-CR M1" blockName="OBWH-E1" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(3)" signalDelay="0" />
+        <toBlock blockName="OBWH-OS-M1">
+          <path pathName="WH M1" blockName="OBWH-OS-M1" />
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBWH-E2" userName="Whithead East Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Whithead East Main 2" />
+      <path pathName="WH-CR M2" blockName="OBWH-E2" fromPortal="Cressman M2" toPortal="Whithead E2" fromDirection="0" toDirection="0" />
+      <portal systemName="IP11" portalName="Cressman M2">
+        <fromBlock blockName="OBWH-E2">
+          <path pathName="WH-CR M2" blockName="OBWH-E2" />
+        </fromBlock>
+        <toBlock blockName="OBMA-W2">
+          <path pathName="CR-MA M2" blockName="OBMA-W2" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP13" portalName="Whithead E2">
+        <fromBlock blockName="OBWH-E2">
+          <path pathName="WH-CR M2" blockName="OBWH-E2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(4)" signalDelay="0" />
+        <toBlock blockName="OBWH-OS-M2">
+          <path pathName="WH M2" blockName="OBWH-OS-M2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBWH-OS-M1" userName="Whithead OS Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="LS122" />
+      <path pathName="WH M1" blockName="OBWH-OS-M1" fromPortal="Whithead W1" toPortal="Whithead E1" fromDirection="0" toDirection="0">
+        <setting turnout="LT101" set="2" />
+      </path>
+      <path pathName="WH M2-M1" blockName="OBWH-OS-M1" fromPortal="Whithead Crossover" toPortal="Whithead E1" fromDirection="0" toDirection="0">
+        <setting turnout="LT101" set="4" />
+      </path>
+      <portal systemName="IP12" portalName="Whithead E1">
+        <fromBlock blockName="OBWH-E1">
+          <path pathName="WH-CR M1" blockName="OBWH-E1" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(3)" signalDelay="0" />
+        <toBlock blockName="OBWH-OS-M1">
+          <path pathName="WH M1" blockName="OBWH-OS-M1" />
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP14" portalName="Whithead Crossover">
+        <fromBlock blockName="OBWH-OS-M2">
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M2" />
+        </fromBlock>
+        <toBlock blockName="OBWH-OS-M1">
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP15" portalName="Whithead W1">
+        <fromBlock blockName="OBWH-W1">
+          <path pathName="BU-WH M1" blockName="OBWH-W1" />
+        </fromBlock>
+        <toBlock blockName="OBWH-OS-M1">
+          <path pathName="WH M1" blockName="OBWH-OS-M1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBWH-OS-M2" userName="Whithead OS Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
+      <sensor systemName="Whithead OS Main 2" />
+      <path pathName="WH M2" blockName="OBWH-OS-M2" fromPortal="Whithead E2" toPortal="Whithead W2" fromDirection="0" toDirection="0">
+        <setting turnout="LT102" set="2" />
+      </path>
+      <path pathName="WH M2-M1" blockName="OBWH-OS-M2" fromPortal="Whithead W2" toPortal="Whithead Crossover" fromDirection="0" toDirection="0">
+        <setting turnout="LT102" set="4" />
+      </path>
+      <portal systemName="IP13" portalName="Whithead E2">
+        <fromBlock blockName="OBWH-E2">
+          <path pathName="WH-CR M2" blockName="OBWH-E2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(4)" signalDelay="0" />
+        <toBlock blockName="OBWH-OS-M2">
+          <path pathName="WH M2" blockName="OBWH-OS-M2" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP14" portalName="Whithead Crossover">
+        <fromBlock blockName="OBWH-OS-M2">
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M2" />
+        </fromBlock>
+        <toBlock blockName="OBWH-OS-M1">
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
+        </toBlock>
+      </portal>
+      <portal systemName="IP16" portalName="Whithead W2">
+        <fromBlock blockName="OBWH-W2">
+          <path pathName="BU-WH M2" blockName="OBWH-W2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(1)" signalDelay="0" />
+        <toBlock blockName="OBWH-OS-M2">
+          <path pathName="WH M2" blockName="OBWH-OS-M2" />
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBWH-W1" userName="Whithead West Main 1" length="355.6" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="Whithead West Main 1" />
+      <path pathName="BU-WH M1" blockName="OBWH-W1" fromPortal="Whithead W1" toPortal="Butler 1" fromDirection="0" toDirection="0" />
+      <portal systemName="IP1" portalName="Butler 1">
+        <fromBlock blockName="OBWH-W1">
+          <path pathName="BU-WH M1" blockName="OBWH-W1" />
+        </fromBlock>
+        <toBlock blockName="OBBU-M1">
+          <path pathName="BU M1" blockName="OBBU-M1" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0013)" signalDelay="0" />
+      </portal>
+      <portal systemName="IP15" portalName="Whithead W1">
+        <fromBlock blockName="OBWH-W1">
+          <path pathName="BU-WH M1" blockName="OBWH-W1" />
+        </fromBlock>
+        <toBlock blockName="OBWH-OS-M1">
+          <path pathName="WH M1" blockName="OBWH-OS-M1" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OBWH-W2" userName="Whithead West Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Maximum">
+      <sensor systemName="Whithead West Main 2" />
+      <path pathName="BU-WH M2" blockName="OBWH-W2" fromPortal="Butler 2" toPortal="Whithead W2" fromDirection="0" toDirection="0" />
+      <portal systemName="IP2" portalName="Butler 2">
+        <fromBlock blockName="OBWH-W2">
+          <path pathName="BU-WH M2" blockName="OBWH-W2" />
+        </fromBlock>
+        <toBlock blockName="OBBU-M2">
+          <path pathName="BU M2" blockName="OBBU-M2" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0014)" signalDelay="0" />
+      </portal>
+      <portal systemName="IP16" portalName="Whithead W2">
+        <fromBlock blockName="OBWH-W2">
+          <path pathName="BU-WH M2" blockName="OBWH-W2" />
+        </fromBlock>
+        <fromSignal signalName="LF$dsm:NS-2008:CLS-3-3-hi(1)" signalDelay="0" />
+        <toBlock blockName="OBWH-OS-M2">
+          <path pathName="WH M2" blockName="OBWH-OS-M2" />
+          <path pathName="WH M2-M1" blockName="OBWH-OS-M2" />
+        </toBlock>
+      </portal>
+    </oblock>
+  </oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <warrant systemName="IWTRAIN 2" userName="#2">
+      <blockOrder pathName="BU-WH M1" entryName="" exitName="Whithead W1">
+        <block systemName="OBWH-W1" userName="Whithead West Main 1" />
+      </blockOrder>
+      <blockOrder pathName="WH M1" entryName="Whithead W1" exitName="Whithead E1">
+        <block systemName="OBWH-OS-M1" userName="Whithead OS Main 1" />
+      </blockOrder>
+      <blockOrder pathName="WH-CR M1" entryName="Whithead E1" exitName="Cressman M1">
+        <block systemName="OBWH-E1" userName="Whithead East Main 1" />
+      </blockOrder>
+      <blockOrder pathName="CR-MA M1" entryName="Cressman M1" exitName="Manion W1">
+        <block systemName="OBMA-W1" userName="Manion West Main 1" />
+      </blockOrder>
+      <blockOrder pathName="MA M1-M2" entryName="Manion W1" exitName="Manion Crossover">
+        <block systemName="OBMA-OS-M1" userName="Manion OS Main 1" />
+      </blockOrder>
+      <blockOrder pathName="MA M2-M1 C" entryName="Manion Crossover" exitName="Manion E2">
+        <block systemName="OBMA-OS-M2" userName="Manion OS Main 2" />
+      </blockOrder>
+      <blockOrder pathName="MA-SQ M2" entryName="Manion E2" exitName="">
+        <block systemName="OBMA-E2" userName="Manion East Main 2" />
+      </blockOrder>
+      <throttleCommand time="1007" command="Speed" value="0.0" block="Whithead West Main 1" />
+      <throttleCommand time="884" command="Forward" value="false" block="Whithead West Main 1" />
+      <throttleCommand time="260" command="Speed" value="0.035714287" block="Whithead West Main 1" />
+      <throttleCommand time="149" command="Speed" value="0.071428575" block="Whithead West Main 1" />
+      <throttleCommand time="123" command="Speed" value="0.10714286" block="Whithead West Main 1" />
+      <throttleCommand time="114" command="Speed" value="0.14285715" block="Whithead West Main 1" />
+      <throttleCommand time="97" command="Speed" value="0.17857143" block="Whithead West Main 1" />
+      <throttleCommand time="121" command="Speed" value="0.21428572" block="Whithead West Main 1" />
+      <throttleCommand time="184" command="Speed" value="0.25" block="Whithead West Main 1" />
+      <throttleCommand time="146" command="Speed" value="0.2857143" block="Whithead West Main 1" />
+      <throttleCommand time="144" command="Speed" value="0.32142857" block="Whithead West Main 1" />
+      <throttleCommand time="148" command="Speed" value="0.35714287" block="Whithead West Main 1" />
+      <throttleCommand time="134" command="Speed" value="0.39285713" block="Whithead West Main 1" />
+      <throttleCommand time="68" command="Speed" value="0.42857143" block="Whithead West Main 1" />
+      <throttleCommand time="59" command="Speed" value="0.39285713" block="Whithead West Main 1" />
+      <throttleCommand time="63" command="Speed" value="0.42857143" block="Whithead West Main 1" />
+      <throttleCommand time="311" command="Speed" value="0.5" block="Whithead West Main 1" />
+      <throttleCommand time="545" command="Speed" value="0.53571427" block="Whithead West Main 1" />
+      <throttleCommand time="378" command="Speed" value="0.5714286" block="Whithead West Main 1" />
+      <throttleCommand time="172" command="Speed" value="0.60714287" block="Whithead West Main 1" />
+      <throttleCommand time="126" command="Speed" value="0.64285713" block="Whithead West Main 1" />
+      <throttleCommand time="338" command="Speed" value="0.6785714" block="Whithead West Main 1" />
+      <throttleCommand time="3131" command="NoOp" value="Enter Block" block="Whithead OS Main 1" />
+      <throttleCommand time="2050" command="Speed" value="0.64285713" block="Whithead OS Main 1" />
+      <throttleCommand time="304" command="Speed" value="0.60714287" block="Whithead OS Main 1" />
+      <throttleCommand time="1123" command="NoOp" value="Enter Block" block="Whithead East Main 1" />
+      <throttleCommand time="337" command="Speed" value="0.5714286" block="Whithead East Main 1" />
+      <throttleCommand time="1748" command="Speed" value="0.40" block="Whithead East Main 1" />
+      <throttleCommand time="1128" command="NoOp" value="Enter Block" block="Manion West Main 1" />
+      <throttleCommand time="83" command="NoOp" value="Enter Block" block="Manion OS Main 1" />
+      <throttleCommand time="12" command="Speed" value="-0.5" block="No Block" />
+      <throttleCommand time="0" command="Speed" value="0.0" block="No Block" />
+      <train trainId="522" dccAddress="522" dccType="L" runBlind="false" trainName="#2" />
+    </warrant>
+  </warrants>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="Manion E1">
+      <sourceSignalMast>Manion E1</sourceSignalMast>
+      <destinationMast destination="Cressman E1">
+        <destinationSignalMast>Cressman E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Manion Main 1</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion West Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Manion OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Cressman E1">
+      <sourceSignalMast>Cressman E1</sourceSignalMast>
+      <destinationMast destination="Whithead E1">
+        <destinationSignalMast>Whithead E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead East Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="End of Track W1">
+      <sourceSignalMast>End of Track W1</sourceSignalMast>
+      <destinationMast destination="End of Track W2">
+        <destinationSignalMast>End of Track W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>ISCLOCKRUNNING</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="End of Track W2">
+      <sourceSignalMast>End of Track W2</sourceSignalMast>
+      <destinationMast destination="End of Track W1">
+        <destinationSignalMast>End of Track W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>ISCLOCKRUNNING</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="End of Track E1">
+      <sourceSignalMast>End of Track E1</sourceSignalMast>
+      <destinationMast destination="End of Track E2">
+        <destinationSignalMast>End of Track E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>ISCLOCKRUNNING</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="End of Track E2">
+      <sourceSignalMast>End of Track E2</sourceSignalMast>
+      <destinationMast destination="End of Track E1">
+        <destinationSignalMast>End of Track E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>ISCLOCKRUNNING</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Manion E2">
+      <sourceSignalMast>Manion E2</sourceSignalMast>
+      <destinationMast destination="Cressman E1">
+        <destinationSignalMast>Cressman E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Manion Main 2</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+          <turnout>
+            <turnoutName>Manion Main 1</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Manion West Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Manion OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="Cressman E2">
+        <destinationSignalMast>Cressman E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Manion Main 2</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion West Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Manion OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Cressman E2">
+      <sourceSignalMast>Cressman E2</sourceSignalMast>
+      <destinationMast destination="Whithead E2">
+        <destinationSignalMast>Whithead E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead East Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Cressman W1">
+      <sourceSignalMast>Cressman W1</sourceSignalMast>
+      <destinationMast destination="Manion W1">
+        <destinationSignalMast>Manion W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion West Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Cressman W2">
+      <sourceSignalMast>Cressman W2</sourceSignalMast>
+      <destinationMast destination="Manion W2">
+        <destinationSignalMast>Manion W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion West Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Whithead W1">
+      <sourceSignalMast>Whithead W1</sourceSignalMast>
+      <destinationMast destination="Cressman W1">
+        <destinationSignalMast>Cressman W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Whithead Main 1</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead East Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Whithead W2">
+      <sourceSignalMast>Whithead W2</sourceSignalMast>
+      <destinationMast destination="Cressman W2">
+        <destinationSignalMast>Cressman W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Whithead Main 2</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead East Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="Cressman W1">
+        <destinationSignalMast>Cressman W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Whithead Main 2</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+          <turnout>
+            <turnoutName>Whithead Main 1</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead East Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Whithead E1">
+      <sourceSignalMast>Whithead E1</sourceSignalMast>
+      <destinationMast destination="Butler E2">
+        <destinationSignalMast>Butler E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Whithead Main 2</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+          <turnout>
+            <turnoutName>Whithead Main 1</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead West Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="Butler E1">
+        <destinationSignalMast>Butler E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Whithead Main 1</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead West Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Butler E2">
+      <sourceSignalMast>Butler E2</sourceSignalMast>
+      <destinationMast destination="End of Track W2">
+        <destinationSignalMast>End of Track W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Butler Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Butler E1">
+      <sourceSignalMast>Butler E1</sourceSignalMast>
+      <destinationMast destination="End of Track W1">
+        <destinationSignalMast>End of Track W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Butler Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Whithead E2">
+      <sourceSignalMast>Whithead E2</sourceSignalMast>
+      <destinationMast destination="Butler E2">
+        <destinationSignalMast>Butler E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Whithead Main 2</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Whithead West Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Squires W1">
+      <sourceSignalMast>Squires W1</sourceSignalMast>
+      <destinationMast destination="End of Track E1">
+        <destinationSignalMast>End of Track E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Squires Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Squires W2">
+      <sourceSignalMast>Squires W2</sourceSignalMast>
+      <destinationMast destination="End of Track E2">
+        <destinationSignalMast>End of Track E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Squires Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Manion W2">
+      <sourceSignalMast>Manion W2</sourceSignalMast>
+      <destinationMast destination="Squires W2">
+        <destinationSignalMast>Squires W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Manion Main 2</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Manion W1">
+      <sourceSignalMast>Manion W1</sourceSignalMast>
+      <destinationMast destination="Squires W1">
+        <destinationSignalMast>Squires W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Manion Main 1</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Manion East Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="Squires W2">
+        <destinationSignalMast>Squires W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>Manion Main 2</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+          <turnout>
+            <turnoutName>Manion Main 1</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion OS Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Manion OS Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Squires E1">
+      <sourceSignalMast>Squires E1</sourceSignalMast>
+      <destinationMast destination="Manion E1">
+        <destinationSignalMast>Manion E1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion East Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Squires E2">
+      <sourceSignalMast>Squires E2</sourceSignalMast>
+      <destinationMast destination="Manion E2">
+        <destinationSignalMast>Manion E2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Manion East Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Butler W1">
+      <sourceSignalMast>Butler W1</sourceSignalMast>
+      <destinationMast destination="Whithead W1">
+        <destinationSignalMast>Whithead W1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead West Main 1</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Butler W2">
+      <sourceSignalMast>Butler W2</sourceSignalMast>
+      <destinationMast destination="Whithead W2">
+        <destinationSignalMast>Whithead W2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Whithead West Main 2</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jul 08 10:49:12 EDT 2013" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Control Panel" x="23" y="171" height="205" width="749" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="25" greenBackground="25" blueBackground="25" state="0">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/UTCS/TrackSeg/portal-clear-l.png</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/UTCS/TrackSeg/portal-clear-r.png</url>
+      </from_arrow>
+    </icons>
+    <positionableRectangle x="125" y="34" level="2" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" lineWidth="1" alpha="255" hideOnSensor="false" changeLevelOnSensor="5" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRectangleXml">
+      <toolTip>CP Whithead</toolTip>
+      <lineColor red="0" green="0" blue="0" />
+      <fillColor red="51" green="51" blue="51" />
+      <size width="123" height="83" />
+    </positionableRectangle>
+    <indicatortrackicon x="22" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Butler Main 2"</tooltip>
+      <occupancyblock>Butler Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>BU M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="92" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead West Main 2"</tooltip>
+      <occupancyblock>Whithead West Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>BU-WH M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="132" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead OS Main 2"</tooltip>
+      <occupancyblock>Whithead OS Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH M2</path>
+        <path>WH M2-M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatorturnouticon x="170" y="71" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "Whithead OS Main 2"</tooltip>
+      <turnout>LT102</turnout>
+      <occupancyblock>OBWH-OS-M2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="UTCS-Left">
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-clear.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-clear.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-manual.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-manual.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-out-of-service.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-out-of-service.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-track-and-time.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-track-and-time.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+      </iconmaps>
+      <paths>
+        <path>WH M2</path>
+        <path>WH M2-M1</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatorturnouticon x="182" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "Whithead OS Main 1"</tooltip>
+      <turnout>LT101</turnout>
+      <occupancyblock>Whithead OS Main 1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="UTCS-Left">
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-clear.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-clear.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-manual.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-manual.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-out-of-service.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-out-of-service.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-track-and-time.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-track-and-time.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/LeftTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/LeftTO/os-l-closed-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/LeftTO/os-l-thrown-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/LeftTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+      </iconmaps>
+      <paths>
+        <path>WH M1</path>
+        <path>WH M2-M1</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatortrackicon x="22" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Butler Main 1"</tooltip>
+      <occupancyblock>Butler Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>BU M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="92" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead West Main 1"</tooltip>
+      <occupancyblock>Whithead West Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>BU-WH M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="132" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead OS Main 1"</tooltip>
+      <occupancyblock>Whithead OS Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="148" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead OS Main 1"</tooltip>
+      <occupancyblock>Whithead OS Main 1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="279" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead East Main 2"</tooltip>
+      <occupancyblock>OBWH-E2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH-CR M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="241" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead East Main 2"</tooltip>
+      <occupancyblock>OBWH-E2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH-CR M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="185" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead OS Main 2"</tooltip>
+      <occupancyblock>OBWH-OS-M2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="241" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead East Main 1"</tooltip>
+      <occupancyblock>Whithead East Main 1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH-CR M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="279" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead East Main 1"</tooltip>
+      <occupancyblock>Whithead East Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH-CR M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="201" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead OS Main 1"</tooltip>
+      <occupancyblock>Whithead OS Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH M1</path>
+        <path>WH M2-M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="201" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead OS Main 2"</tooltip>
+      <occupancyblock>Whithead OS Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="375" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion West Main 2"</tooltip>
+      <occupancyblock>Manion West Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>CR-MA M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="412" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion West Main 2"</tooltip>
+      <occupancyblock>OBMA-W2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>CR-MA M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="452" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion OS Main 2"</tooltip>
+      <occupancyblock>Manion OS Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatorturnouticon x="502" y="71" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "Manion OS Main 2"</tooltip>
+      <turnout>LT202</turnout>
+      <occupancyblock>OBMA-OS-M2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="UTCS-Right">
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-clear.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-clear.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-manual.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-manual.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-out-of-service.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-out-of-service.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-track-and-time.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-track-and-time.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-occupied.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="0" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+      </iconmaps>
+      <paths>
+        <path>MA M2</path>
+        <path>MA M2-M1 C</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatorturnouticon x="490" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "Manion OS Main 1"</tooltip>
+      <turnout>LT201</turnout>
+      <occupancyblock>Manion OS Main 1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="UTCS-Right">
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-clear.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-clear.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-manual.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-manual.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-out-of-service.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-out-of-service.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-track-and-time.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-track-and-time.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/UTCS/RightTO/unknown.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/UTCS/RightTO/os-r-closed-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/UTCS/RightTO/os-r-thrown-occupied.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/UTCS/RightTO/error.png" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+      </iconmaps>
+      <paths>
+        <path>MA M1</path>
+        <path>MA M1-M2</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatortrackicon x="375" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion West Main 1"</tooltip>
+      <occupancyblock>Manion West Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>CR-MA M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="412" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion West Main 1"</tooltip>
+      <occupancyblock>OBMA-W1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>CR-MA M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="452" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion OS Main 1"</tooltip>
+      <occupancyblock>Manion OS Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA M1</path>
+        <path>MA M1-M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="505" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion OS Main 1"</tooltip>
+      <occupancyblock>OBMA-OS-M1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="629" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Squires Main 2"</tooltip>
+      <occupancyblock>Squires Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>SQ M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="561" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion East Main 2"</tooltip>
+      <occupancyblock>Manion East Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA-SQ M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="468" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion OS Main 2"</tooltip>
+      <occupancyblock>OBMA-OS-M2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="561" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion East Main 1"</tooltip>
+      <occupancyblock>Manion East Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA-SQ M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="628" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Squires Main 1"</tooltip>
+      <occupancyblock>Squires Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>SQ M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="521" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion OS Main 1"</tooltip>
+      <occupancyblock>Manion OS Main 1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="521" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion OS Main 2"</tooltip>
+      <occupancyblock>Manion OS Main 2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA M2</path>
+        <path>MA M2-M1 C</path>
+      </paths>
+    </indicatortrackicon>
+    <positionableRectangle x="446" y="34" level="2" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" lineWidth="1" alpha="255" hideOnSensor="false" changeLevelOnSensor="5" class="jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRectangleXml">
+      <toolTip>CP Manion</toolTip>
+      <lineColor red="0" green="0" blue="0" />
+      <fillColor red="51" green="51" blue="51" />
+      <size width="122" height="83" />
+    </positionableRectangle>
+    <positionablelabel x="141" y="37" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="CP Whithead" size="12" style="1" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="471" y="37" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="CP Manion" size="12" style="1" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="307" y="44" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Main 1" size="10" style="0" red="255" green="255" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="359" y="93" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Main 2" size="10" style="0" red="255" green="255" blue="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="313" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Cressman" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="160" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Whithead" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="482" y="1" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Manion" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="36" y="2" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Butler" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="616" y="0" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Squires" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="203" y="66" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="101" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="149" y="71" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="102" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="470" y="67" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="201" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <positionablelabel x="522" y="70" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="202" size="11" style="0" red="255" green="255" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <tooltip>Text Label</tooltip>
+    </positionablelabel>
+    <sensoricon sensor="Whithead West Main 2" x="86" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Whithead West Main 2 (LS123)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Whithead West Main 1" x="85" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Butler M1 (LS124)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Whithead OS Main 2" x="180" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Whithead OS Main 2 (LS121)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Whithead OS Main 1" x="180" y="130" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Whithead OS Main 1 (LS122)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Whithead East Main 2" x="272" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Whithead East Main 2 (LS117)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Whithead East Main 1" x="272" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Whithead East Main 1 (LS118)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Manion West Main 2" x="411" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Manion West Main 2 (LS224)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Manion West Main 1" x="411" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Manion West Main 1 (LS223)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Manion OS Main 2" x="507" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Manion OS Main 2 (LS220)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Manion OS Main 1" x="507" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Manion OS Main 1 (LS219)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="LS221" x="604" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Manion East Main 2 (LS221)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Manion East Main 1" x="604" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Manion East Main 1 (LS218)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <signalmasticon signalmast="Cressman E1" x="347" y="46" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Cressman E1 (LF$dsm:NS-2008:CLS-3-hi(8))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Cressman E2" x="348" y="74" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Cressman E2 (LF$dsm:NS-2008:CLS-3-hi(7))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Cressman W1" x="299" y="66" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Cressman W1 (LF$dsm:NS-2008:CLS-3-hi(5))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Cressman W2" x="300" y="94" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Cressman W2 (LF$dsm:NS-2008:CLS-3-hi(6))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Manion E1" x="562" y="46" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Manion E1 (LF$dsm:NS-2008:CLS-3-3-hi(11))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Manion E2" x="562" y="74" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Manion E2 (LF$dsm:NS-2008:CLS-3-3-hi(12))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Manion W1" x="397" y="65" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Manion W1 (LF$dsm:NS-2008:CLS-3-3-hi(10))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Manion W2" x="397" y="93" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Manion W2 (LF$dsm:NS-2008:CLS-3-3-hi(9))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Whithead E1" x="237" y="46" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Whithead E1 (LF$dsm:NS-2008:CLS-3-3-hi(3))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Whithead E2" x="238" y="74" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Whithead E2 (LF$dsm:NS-2008:CLS-3-3-hi(4))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Whithead W1" x="74" y="65" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Whithead W1 (LF$dsm:NS-2008:CLS-3-3-hi(2))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Whithead W2" x="74" y="93" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Whithead W2 (LF$dsm:NS-2008:CLS-3-3-hi(1))</tooltip>
+    </signalmasticon>
+    <indicatortrackicon x="307" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead East Main 1"</tooltip>
+      <occupancyblock>Whithead East Main 1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH-CR M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="308" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead East Main 2"</tooltip>
+      <occupancyblock>OBWH-E2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>WH-CR M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="348" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion West Main 2"</tooltip>
+      <occupancyblock>OBMA-W2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>CR-MA M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="347" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion West Main 1"</tooltip>
+      <occupancyblock>OBMA-W1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>CR-MA M1</path>
+      </paths>
+    </indicatortrackicon>
+    <signalmasticon signalmast="End of Track E1" x="666" y="65" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>End of Track E1 (IF$vsm:NS-2008:CLS-3-lo($0011))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="End of Track E2" x="666" y="94" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>End of Track E2 (IF$vsm:NS-2008:CLS-3-lo($0012))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="End of Track W1" x="0" y="46" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>End of Track W1 (IF$vsm:NS-2008:CLS-3-lo($0009))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="End of Track W2" x="0" y="74" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>End of Track W2 (IF$vsm:NS-2008:CLS-3-lo($0010))</tooltip>
+    </signalmasticon>
+    <indicatortrackicon x="62" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead West Main 2"</tooltip>
+      <occupancyblock>Whithead West Main 2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>BU-WH M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="62" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Whithead West Main 1"</tooltip>
+      <occupancyblock>Whithead West Main 1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>BU-WH M1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="590" y="83" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion East Main 2"</tooltip>
+      <occupancyblock>Manion East Main 2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA-SQ M2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="589" y="55" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Manion East Main 1"</tooltip>
+      <occupancyblock>OBMA-E1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="UTCS">
+        <AllocatedTrack url="program:resources/icons/track/UTCS/TrackSeg/clear.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <PositionTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ClearTrack url="program:resources/icons/track/UTCS/TrackSeg/manual.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <DontUseTrack url="program:resources/icons/track/UTCS/TrackSeg/out-of-service.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <ErrorTrack url="program:resources/icons/track/UTCS/TrackSeg/track-and-time.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+        <OccupiedTrack url="program:resources/icons/track/UTCS/TrackSeg/occupied.png" degrees="180" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+      </iconmap>
+      <paths>
+        <path>MA-SQ M1</path>
+      </paths>
+    </indicatortrackicon>
+    <sensoricon sensor="Butler Main 2" x="39" y="144" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Butler Main 2 (LS119)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Butler Main 1" x="38" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Butler M1 (LS120)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <sensoricon sensor="Squires Main 2" x="644" y="145" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Squires Main 2 (LS225)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="LS222" x="644" y="128" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>Squires Main 1 (LS222)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/yellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/hold.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallJewel" />
+    </sensoricon>
+    <signalmasticon signalmast="Butler E1" x="55" y="46" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Butler E1 (IF$vsm:NS-2008:CLS-3-lo($0013))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Butler E2" x="56" y="74" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Butler E2 (IF$vsm:NS-2008:CLS-3-lo($0014))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Squires W1" x="610" y="65" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Squires W1 (IF$vsm:NS-2008:CLS-3-lo($0015))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Squires W2" x="609" y="93" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Squires W2 (IF$vsm:NS-2008:CLS-3-lo($0016))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Butler W1" x="12" y="65" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Butler W1 (IF$vsm:NS-2008:CLS-3-hi($0017))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Butler W2" x="13" y="93" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Butler W2 (IF$vsm:NS-2008:CLS-3-hi($0018))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Squires E1" x="629" y="46" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Squires E1 (IF$vsm:NS-2008:CLS-3-hi($0019))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="Squires E2" x="627" y="75" level="9" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>Squires E2 (IF$vsm:NS-2008:CLS-3-hi($0020))</tooltip>
+    </signalmasticon>
+    <PortalIcon x="46" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Butler 1" toBlockName="Butler Main 1" fromBlockName="Whithead West Main 1" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Butler 1" between OBlocks "Butler Main 1" and "null"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="118" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Whithead W1" toBlockName="Whithead OS Main 1" fromBlockName="Whithead West Main 1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Whithead W1" between OBlocks "Whithead West Main 1" and "null"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="175" y="62" level="10" forcecontroloff="false" hidden="yes" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Whithead Crossover" toBlockName="Whithead OS Main 1" fromBlockName="Whithead OS Main 2" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Whithead Crossover" between OBlocks "Whithead OS Main 2" and "Whithead OS Main 1"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="226" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Whithead E1" toBlockName="Whithead OS Main 1" fromBlockName="Whithead East Main 1" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Whithead E1" between OBlocks "Whithead East Main 1" and "Whithead OS Main 1"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="335" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Cressman M1" toBlockName="Manion West Main 1" fromBlockName="Whithead East Main 1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Cressman M1" between OBlocks "Whithead East Main 1" and "Manion West Main 1"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="439" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Manion W1" toBlockName="Manion OS Main 1" fromBlockName="Manion West Main 1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Manion W1" between OBlocks "Manion West Main 1" and "Manion OS Main 1"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="548" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Manion E1" toBlockName="Manion OS Main 1" fromBlockName="Manion East Main 1" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Manion E1" between OBlocks "Manion East Main 1" and "Manion OS Main 1"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="616" y="49" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Squires 1" toBlockName="Squires Main 1" fromBlockName="Manion East Main 1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Squires 1" between OBlocks "Manion East Main 1" and "Squires Main 1"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="48" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Butler 2" toBlockName="Butler Main 2" fromBlockName="Whithead West Main 2" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Butler 2" between OBlocks "Whithead West Main 2" and "Butler Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="120" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Whithead W2" toBlockName="Whithead OS Main 2" fromBlockName="Whithead West Main 2" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Whithead W2" between OBlocks "Whithead West Main 2" and "Whithead OS Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="229" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Whithead E2" toBlockName="Whithead OS Main 2" fromBlockName="Whithead East Main 2" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Whithead E2" between OBlocks "Whithead East Main 2" and "Whithead OS Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="335" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Cressman M2" toBlockName="Manion West Main 2" fromBlockName="Whithead East Main 2" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Cressman M2" between OBlocks "Whithead East Main 2" and "Manion West Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="441" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Manion W2" toBlockName="Manion OS Main 2" fromBlockName="Manion West Main 2" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Manion W2" between OBlocks "Manion West Main 2" and "Manion OS Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="549" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Manion E2" toBlockName="Manion OS Main 2" fromBlockName="Manion East Main 2" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Manion E2" between OBlocks "Manion East Main 2" and "Manion OS Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="616" y="77" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Squires 2" toBlockName="Squires Main 2" fromBlockName="Manion East Main 2" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Squires 2" between OBlocks "Manion East Main 2" and "Squires Main 2"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="495" y="62" level="10" forcecontroloff="true" hidden="no" positionable="true" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Manion Crossover" toBlockName="Manion OS Main 1" fromBlockName="Manion OS Main 2" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>"Manion Crossover" between OBlocks "Manion OS Main 2" and "Manion OS Main 1"</tooltip>
+    </PortalIcon>
+    <memoryicon memory="IMCURRENTTIME" x="684" y="161" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="255" blue="255" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+      <tooltip>IMCURRENTTIME</tooltip>
+    </memoryicon>
+  </paneleditor>
+  <filehistory>
+  </filehistory>
+  <!--Written by JMRI version 3.8-r26527 on Fri Jul 11 15:10:49 EDT 2014 $Id: XmlFile.java 26283 2014-06-12 04:24:18Z jacobsen $-->
+</layout-config>
+

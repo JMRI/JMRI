@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated by Blorec Herv&#233; le 2016-08-15-->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Cartographie Technologique</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code road map">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Cartographie Technologique</H1>
+
+Cette page est la feuille de route pour le d&#233;veloppement futur de JMRI,
+incluant les changements de notre utilisation des 
+Technologies Java. Elle est maintenue et mise &#224; jour par le biais
+de la poursuite de la discussion sur la
+<a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">liste de diffusion des d&#233;veloppeurs-jmri </a>.
+
+<p>
+Il y a aussi une 
+<a href="TechRoadMapOlder.shtml">page contenant l'historique</a>, particuli&#232;rement la saga de la fa&#231;on dont nous nous sommes d&#233;plac&#233;s 
+vers l'avant pour Java 1.6 et Java 1.8 &#224; travers une s&#233;rie de changements li&#233;s &#224; la plate-forme.
+
+
+
+
+
+
+<h2>Versions JMRI</h2>
+
+Cette section d&#233;crit les plans (th&#233;oriques) 
+pour les versions JMRI &#224; l'avenir.
+
+<!--<P>
+Notez qu'il n'y a pas eu de d&#233;cision sur le moment o&#249; une version "4.0" sera justifi&#233;e, de sorte que ceux-ci sont d&#233;crits pour les num&#233;ros 3.*.
+Dans le pass&#233;, nous sommes pass&#233;s de 2.13 (test) &#224; 2.14 (production) &#224; 2.99 (test) &#224; 3.0 (production), de sorte que le syst&#232;me de 
+num&#233;rotation peut &#234;tre utilis&#233; &#224; nouveau.-->
+<table border="1">
+<tr><th>Version</th><th>Description</th>						<th>Date</th>		<td>JRE</td>	  <td>JDK</td></tr>
+<tr><td>3.11.*</td><td>S&#233;rie de D&#233;veloppment</td>                             <td></td>               <td>1.8</td>      <td>1.8</td></tr>
+<tr><td>4.0</td><td>Version de Production, point culminant des s&#233;ries 3.11.* </td> <td>Juillet 2015<b> termin&#233;</b>	</td>                                        																
+<tr><td>4.1*</td><td>S&#233;rie de D&#233;veloppment</td>      				<td></td>		<td>1.8</td> 	  <td>1.8</td></tr>							 					
+
+<tr><td>4.3.*</td><td>S&#233;rie de D&#233;veloppment </td><td></td>                    <td></td>   		 <td>1.8</td>	   <td>1.8</td></tr>
+<tr><td>4.4</td><td>Version de Production, point culminant des s&#233;ries 4.3.* </td>  <td>Juillet 2016 (fait)</td>       
+
+<tr><td>4.5.*</td><td>S&#233;rie de D&#233;veloppment</td><td></td>                     <td></td>                 <td>1.8</td>     <td>1.8</td></tr>
+<tr><td>4.6</td><td>Version de Production, point culminant des s&#233;ries 4.5.* </td><td>Automne 2016</td>       <td>1.8</td>     <td>1.8</td></tr>
+
+
+</table>
+
+
+<h4>JMRI pendant et apr&#232;s 2016</h4>
+
+La s&#233;rie JMRI 4.1
+*  de version test &#224; l'Automne 2015 a continu&#233; avec Java 1.8 
+et le m&#234;me jeu de librairies incluses.
+Les s&#233;ries suivantes 4.3.*, au printemps 2016, continueront avec Java 1.8, mais peuvent
+impliquer d'autres mises &#224; jour.
+
+<ul>
+
+<li>La librairie pour le <a href="../../web">serveur web Jetty</a> incluse, sera mis &#224; jour &#224; la version 9.3.6.
+
+<li>&#192; un certain moment, nous devons migrer loin de <a href="Help.shtml">JavaHelp et JHelpDev</a>.
+Au minimum, nous avons besoin de  
+<a href="http://weblogs.java.net/blog/brinkley/archive/2004/11/javahelp_v20_02.html"> remplacer le rendu</a>.
+Il y a 
+<a href="http://stackoverflow.com/questions/9900110/javahelp-viewers-or-alternatives">plusieurs syst&#232;mes d'aide alternatifs</a> disponilbles
+<a href="http://www.oracle.com/technetwork/topics/index-083946.html">Oracle Help</a>
+pourrait &#234;tre un bon choix. DocBook qui a un outil pour g&#233;n&#233;rer de multiples formes de documentation est &#233;galement envisag&#233;.
+
+<li>&#192; un certain point, nous devons actualiser JUnit pour l'actuelle <a href="http://junit.org">JUnit version 4.12 </a>.
+Parmi d'autres am&#233;liorations, ceci permettra l'utilisation de l' <a href="http://stackoverflow.com/questions/3806173/assert-keyword-in-java">assertion par mot-cl&#233;</a> de Java. Nous aurons 
+besoin d'&#233;tablir des conventions sur la fa&#231;on d'utiliser cela.
+
+<li>La technologie d'acc&#232;s USB a beaucoup &#233;volu&#233;e depuis que le support pour certaines biblioth&#232;ques de bases a &#233;t&#233; ajout&#233; &#224;
+JMRI. &#192; un certain moment, nous remplacerons ces premi&#232;res versions de librairie, mais cela cassera certains scripts utilisateurs.
+
+<li>Notre <a href="Logging.shtml">M&#233;thodologie de connexion</a> est maintenant un hybride de connexion natif ( dont certains comprennent les biblioth&#232;ques ), 
+Log4J ( notre solution initiale ) et SLF4J ( Le plus r&#233;cent ). Il est probable que nous allons finalement simplifier cela.
+
+</ul>
+
+<h3>Version Java et Support Syst&#232;me d'Exploitation</h3>
+
+Plus d'information sur les versions Java et les syst&#232;mes d'exploitation 
+qui les utilisent est sur une <a href="JVMCapabilities.shtml">page s&#233;par&#233;e</a>.
+
+<p>
+
+<h2>Notes de Migration</h2>
+
+C'est un recueils de notes pour les migrations de code vari&#233;s en cours
+ou termin&#233;s. Voir aussi la section concern&#233;e sur la 
+<a href="JVMCapabilities.shtml ">migration vers Java 1.8</a>.
+
+<h3 id="jdom2" name="jdom2">De JDOM 1 &#224; JDOM 2</h3>
+
+JMRI 3.11 d&#233;plac&#233; de JDOM version 1 tonne JDOM la version 2. Cela impliquait
+un nouveau fichier jdom-2.0.5.jar (&#224; la place du jdom.jar pr&#233;c&#233;dent) , changements au 
+d&#233;marrage et construire des fichiers de contr&#244;le, et certains changements de code requis:
+<ul>
+<li> les classes JDOM 2 sont dans le paquet org.jdom2 au lieu de org.jdom. Ceci
+demande quelques changements pour importer le statuts et les class-references dans le code source.
+<li>Le formatage de sortie par d&#233;faut est diff&#233;rent, demandant des changements mineurs dans la classe 	
+XmlFile des routines de sortie par exemple.
+</ul>
+
+En plus, JDOM 2 utilise des g&#233;n&#233;riques dans ses param&#232;tres d'entr&#233;e et les valeurs retourn&#233;es. Ceci
+signifie que vous pouvez supprimer cats ( maintenant redondant ) dans de nombreux emplacements.
+Jenkins vale signaler.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>

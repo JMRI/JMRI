@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<nodes
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
+>
+
+  <node><name>File</name>
+    <node><name>Quit</name>
+        <adapter>apps.gui3.paned.QuitAction</adapter>
+    </node>
+  </node>
+
+  <node><name>Edit</name>
+    <node><name>Preferences</name>
+        <panel>apps.gui3.TabbedPreferences</panel>
+    </node>
+  </node>
+
+  <node><name>Tools</name>
+    <node><name>Power</name>
+          <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
+    </node>
+  </node>
+
+  <node>
+    <name>Windows</name>
+    <node><name>New PanelPro Window</name>
+        <adapter>apps.gui3.paned.PanelProAction</adapter>
+    </node>
+  </node>
+  
+
+  <node>
+     <name>Help</name>
+
+    <node><name>General</name>
+        <help>index</help>
+    </node>
+    <node><name>License</name>
+        <adapter>apps.LicenseAction</adapter>
+    </node>
+  </node>
+
+</nodes>
+  

@@ -1,0 +1,1353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>3</minor>
+    <test>1</test>
+    <modifier>.1</modifier>
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>inactive</defaultInitialState>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor systemName="IS101" inverted="false">
+      <systemName>IS101</systemName>
+    </sensor>
+    <sensor systemName="IS102" inverted="false">
+      <systemName>IS102</systemName>
+    </sensor>
+    <sensor systemName="IS103" inverted="false">
+      <systemName>IS103</systemName>
+    </sensor>
+    <sensor systemName="IS104" inverted="false">
+      <systemName>IS104</systemName>
+    </sensor>
+    <sensor systemName="IS105" inverted="false">
+      <systemName>IS105</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="IT201" inverted="false" automate="Off">
+      <systemName>IT201</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="5:04 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="1-2">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0002)</systemName>
+      <userName>1-2</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="2-3">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0003)</systemName>
+      <userName>2-3</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="3-2">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0009)</systemName>
+      <userName>3-2</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="2-1">
+      <systemName>IF$vsm:DB-HV-1969:block_distant($0010)</systemName>
+      <userName>2-1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="3-4">
+      <systemName>IF$vsm:DB-HV-1969:entry_distant($0004)</systemName>
+      <userName>3-4</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="1-4">
+      <systemName>IF$vsm:DB-HV-1969:entry_distant($0007)</systemName>
+      <userName>1-4</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="5-4">
+      <systemName>IF$vsm:DB-HV-1969:entry_distant($0011)</systemName>
+      <userName>5-4</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="4-1">
+      <systemName>IF$vsm:DB-HV-1969:exit_distant($0005)</systemName>
+      <userName>4-1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="4-5">
+      <systemName>IF$vsm:DB-HV-1969:exit_distant($0006)</systemName>
+      <userName>4-5</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="4-3">
+      <systemName>IF$vsm:DB-HV-1969:exit_distant($0008)</systemName>
+      <userName>4-3</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml" userName="5-">
+      <systemName>IF$vsm:DB-HV-1969:shunting_dwarf($0012)</systemName>
+      <userName>5-</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
+    <oblock systemName="OB101" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <comment />
+      <sensor systemName="IS101" />
+      <path pathName="4P2" blockName="OB101" fromPortal="4-1" toPortal="1-2" fromDirection="0" toDirection="0" length="0.0" />
+      <portal systemName="IP1" portalName="1-2">
+        <fromBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0002)" signalDelay="0.0" />
+        <toBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
+      </portal>
+      <portal systemName="IP2" portalName="4-1">
+        <fromBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0005)" signalDelay="0.0" />
+        <toBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0007)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB102" length="3000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS102" />
+      <path pathName="1P3" blockName="OB102" fromPortal="1-2" toPortal="2-3" fromDirection="0" toDirection="0" length="0.0" />
+      <portal systemName="IP1" portalName="1-2">
+        <fromBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0002)" signalDelay="0.0" />
+        <toBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
+      </portal>
+      <portal systemName="IP3" portalName="2-3">
+        <fromBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0003)" signalDelay="0.0" />
+        <toBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0009)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB103" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS103" />
+      <path pathName="2P4" blockName="OB103" fromPortal="2-3" toPortal="3-4" fromDirection="0" toDirection="0" length="0.0" />
+      <portal systemName="IP3" portalName="2-3">
+        <fromBlock blockName="OB102">
+          <path pathName="1P3" blockName="OB102" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:block_distant($0003)" signalDelay="0.0" />
+        <toBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0009)" signalDelay="0.0" />
+      </portal>
+      <portal systemName="IP4" portalName="3-4">
+        <fromBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0004)" signalDelay="0.0" />
+        <toBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+          <path pathName="3P5" blockName="OB104" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0008)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB104" length="3000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS104" />
+      <path pathName="3P1" blockName="OB104" fromPortal="3-4" toPortal="4-1" fromDirection="0" toDirection="0" length="0.0">
+        <setting turnout="IT201" set="2" />
+      </path>
+      <path pathName="3P5" blockName="OB104" fromPortal="3-4" toPortal="4-5" fromDirection="0" toDirection="0" length="1000.0">
+        <setting turnout="IT201" set="4" />
+      </path>
+      <portal systemName="IP2" portalName="4-1">
+        <fromBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0005)" signalDelay="0.0" />
+        <toBlock blockName="OB101">
+          <path pathName="4P2" blockName="OB101" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0007)" signalDelay="0.0" />
+      </portal>
+      <portal systemName="IP4" portalName="3-4">
+        <fromBlock blockName="OB103">
+          <path pathName="2P4" blockName="OB103" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0004)" signalDelay="0.0" />
+        <toBlock blockName="OB104">
+          <path pathName="3P1" blockName="OB104" />
+          <path pathName="3P5" blockName="OB104" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0008)" signalDelay="0.0" />
+      </portal>
+      <portal systemName="IP5" portalName="4-5">
+        <fromBlock blockName="OB104">
+          <path pathName="3P5" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0006)" signalDelay="0.0" />
+        <toBlock blockName="OB105">
+          <path pathName="4P" blockName="OB105" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0011)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+    <oblock systemName="OB105" length="1000.0" units="true" curve="0" permissive="true" speedNotch="">
+      <sensor systemName="IS105" />
+      <path pathName="4P" blockName="OB105" fromPortal="4-5" fromDirection="0" toDirection="0" length="0.0" />
+      <portal systemName="IP5" portalName="4-5">
+        <fromBlock blockName="OB104">
+          <path pathName="3P5" blockName="OB104" />
+        </fromBlock>
+        <fromSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0006)" signalDelay="0.0" />
+        <toBlock blockName="OB105">
+          <path pathName="4P" blockName="OB105" />
+        </toBlock>
+        <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0011)" signalDelay="0.0" />
+      </portal>
+    </oblock>
+  </oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <nxparams>
+      <maxspeed>0.5</maxspeed>
+      <haltstart>no</haltstart>
+    </nxparams>
+  </warrants>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="1-2">
+      <sourceSignalMast>1-2</sourceSignalMast>
+      <destinationMast destination="2-3">
+        <destinationSignalMast>2-3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS102</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="2-3">
+      <sourceSignalMast>2-3</sourceSignalMast>
+      <destinationMast destination="3-4">
+        <destinationSignalMast>3-4</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS103</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="3-4">
+      <sourceSignalMast>3-4</sourceSignalMast>
+      <destinationMast destination="4-5">
+        <destinationSignalMast>4-5</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="4-1">
+        <destinationSignalMast>4-1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="1-4">
+      <sourceSignalMast>1-4</sourceSignalMast>
+      <destinationMast destination="4-3">
+        <destinationSignalMast>4-3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="5-4">
+      <sourceSignalMast>5-4</sourceSignalMast>
+      <destinationMast destination="4-3">
+        <destinationSignalMast>4-3</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <turnouts>
+          <turnout>
+            <turnoutName>IT201</turnoutName>
+            <turnoutState>thrown</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS104</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="4-3">
+      <sourceSignalMast>4-3</sourceSignalMast>
+      <destinationMast destination="3-2">
+        <destinationSignalMast>3-2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS103</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="3-2">
+      <sourceSignalMast>3-2</sourceSignalMast>
+      <destinationMast destination="2-1">
+        <destinationSignalMast>2-1</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS102</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="2-1">
+      <sourceSignalMast>2-1</sourceSignalMast>
+      <destinationMast destination="1-4">
+        <destinationSignalMast>1-4</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS101</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="4-1">
+      <sourceSignalMast>4-1</sourceSignalMast>
+      <destinationMast destination="1-2">
+        <destinationSignalMast>1-2</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS101</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="4-5">
+      <sourceSignalMast>4-5</sourceSignalMast>
+      <destinationMast destination="5-">
+        <destinationSignalMast>5-</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>no</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>no</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>IS105</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jan 04 16:22:19 GMT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="DB1969 Control Panel" x="943" y="425" height="308" width="408" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="153" greenBackground="153" blueBackground="153" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <indicatortrackicon x="56" y="158" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="45" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB101"</tooltip>
+      <occupancyblock>OB101</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>4P2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="54" y="126" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB101"</tooltip>
+      <occupancyblock>OB101</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>4P2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="56" y="53" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="315" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB101"</tooltip>
+      <occupancyblock>OB101</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>4P2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="343" y="85" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB103"</tooltip>
+      <occupancyblock>OB103</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>2P4</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="89" y="50" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB102"</tooltip>
+      <occupancyblock>OB102</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>1P3</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="54" y="86" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB101"</tooltip>
+      <occupancyblock>OB101</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>4P2</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="128" y="50" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB102"</tooltip>
+      <occupancyblock>OB102</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>1P3</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="343" y="125" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB103"</tooltip>
+      <occupancyblock>OB103</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="90" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>2P4</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="88" y="183" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB104"</tooltip>
+      <occupancyblock>OB104</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>3P1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="318" y="52" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="45" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB103"</tooltip>
+      <occupancyblock>OB103</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="45" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>2P4</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="168" y="50" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB102"</tooltip>
+      <occupancyblock>OB102</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>1P3</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="207" y="50" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB102"</tooltip>
+      <occupancyblock>OB102</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>1P3</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="246" y="50" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB102"</tooltip>
+      <occupancyblock>OB102</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>1P3</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="317" y="158" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="315" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB103"</tooltip>
+      <occupancyblock>OB103</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="315" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>2P4</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="286" y="50" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB102"</tooltip>
+      <occupancyblock>OB102</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>1P3</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="284" y="183" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB104"</tooltip>
+      <occupancyblock>OB104</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>3P1</path>
+        <path>3P5</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="127" y="183" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB104"</tooltip>
+      <occupancyblock>OB104</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>3P1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="166" y="183" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB104"</tooltip>
+      <occupancyblock>OB104</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>3P1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="206" y="183" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB104"</tooltip>
+      <occupancyblock>OB104</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>3P1</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatorturnouticon x="245" y="183" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "OB104"</tooltip>
+      <turnout>IT201</turnout>
+      <occupancyblock>OB104</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmaps family="USS-LeftTurnout">
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-white.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-white.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-white.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-white.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-unknown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-closed-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-thrown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/USS/LeftTO/os-lefthand-east-error-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+      </iconmaps>
+      <paths>
+        <path>3P1</path>
+        <path>3P5</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatortrackicon x="206" y="206" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB105"</tooltip>
+      <occupancyblock>OB105</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>4P</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="166" y="206" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "OB105"</tooltip>
+      <occupancyblock>OB105</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="USS-BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/USS/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/USS/TrackSeg/block-white.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/USS/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/USS/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/USS/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/USS/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>4P</path>
+      </paths>
+    </indicatortrackicon>
+    <signalmasticon signalmast="1-2" x="66" y="61" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="45" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>1-2 (IF$vsm:DB-HV-1969:block_distant($0002))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="1-4" x="47" y="166" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="135" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>1-4 (IF$vsm:DB-HV-1969:entry_distant($0007))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="2-1" x="92" y="34" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>2-1 (IF$vsm:DB-HV-1969:block_distant($0010))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="2-3" x="282" y="62" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>2-3 (IF$vsm:DB-HV-1969:block_distant($0003))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="3-2" x="327" y="43" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="315" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>3-2 (IF$vsm:DB-HV-1969:block_distant($0009))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="3-4" x="310" y="148" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="225" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>3-4 (IF$vsm:DB-HV-1969:entry_distant($0004))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="4-1" x="91" y="167" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>4-1 (IF$vsm:DB-HV-1969:exit_distant($0005))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="4-3" x="282" y="195" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>4-3 (IF$vsm:DB-HV-1969:exit_distant($0008))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="4-5" x="213" y="197" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>4-5 (IF$vsm:DB-HV-1969:exit_distant($0006))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="5-" x="166" y="195" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>5- (IF$vsm:DB-HV-1969:shunting_dwarf($0012))</tooltip>
+    </signalmasticon>
+    <signalmasticon signalmast="5-4" x="213" y="218" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+      <tooltip>5-4 (IF$vsm:DB-HV-1969:entry_distant($0011))</tooltip>
+    </signalmasticon>
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Thu Feb 11 17:00:00 GMT 2016</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Feb 11 17:00:00 GMT 2016</date>
+      <filename>/C:/Users/U006051/JMRI/OM_simulator/UserPrefsProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Feb 11 17:00:49 GMT 2016</date>
+      <filename>/C:/Users/U006051/OneDrive/JMRI_shared/Panel_20160116a.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sat Jan 16 00:47:13 WET 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Jan 16 00:47:13 WET 2016</date>
+          <filename>/Users/oscarmoutinho/Library/Preferences/JMRI/OM_Mac/UserPrefsProfileConfig.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sat Jan 16 00:47:45 WET 2016</date>
+          <filename>/Users/oscarmoutinho/Google%20Drive/JMRI_shared/Panel_20160116a.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sat Jan 16 00:23:19 WET 2016</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Jan 16 00:23:19 WET 2016</date>
+              <filename>/Users/oscarmoutinho/Library/Preferences/JMRI/OM_Mac/UserPrefsProfileConfig.xml</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sat Jan 16 00:24:43 WET 2016</date>
+              <filename>/Users/oscarmoutinho/Google%20Drive/JMRI_shared/Panel_20160114a.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Thu Jan 14 21:19:28 WET 2016</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Thu Jan 14 21:19:28 WET 2016</date>
+                  <filename>/Users/oscarmoutinho/Library/Preferences/JMRI/OM_Mac/UserPrefsProfileConfig.xml</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Thu Jan 14 21:20:02 WET 2016</date>
+                  <filename>/Users/oscarmoutinho/Google%20Drive/JMRI_shared/Panel_20160114a.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Wed Jan 13 23:34:43 WET 2016</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed Jan 13 23:34:43 WET 2016</date>
+                      <filename>/Users/oscarmoutinho/Library/Preferences/JMRI/OM_Mac/UserPrefsProfileConfig.xml</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed Jan 13 23:36:50 WET 2016</date>
+                      <filename>/Users/oscarmoutinho/Google%20Drive/JMRI_shared/Panel_20160113a.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Wed Jan 13 23:08:02 WET 2016</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Wed Jan 13 23:08:02 WET 2016</date>
+                          <filename>/Users/oscarmoutinho/Library/Preferences/JMRI/OM_Mac/UserPrefsProfileConfig.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Wed Jan 13 23:09:00 WET 2016</date>
+                          <filename>/Users/oscarmoutinho/Google%20Drive/JMRI_shared/Panel_20160111a.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Wed Jan 13 23:31:35 WET 2016</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Wed Jan 13 23:38:07 WET 2016</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Thu Jan 14 21:22:02 WET 2016</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sat Jan 16 00:37:18 WET 2016</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sat Jan 16 00:50:23 WET 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Thu Feb 11 17:04:28 GMT 2016</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.3.1-R2b72e88 on Thu Feb 11 17:04:28 GMT 2016 $Id$-->
+</layout-config>
+
+<!-- neodl5.grp.bf1.yahoo.com Thu Feb 11 21:46:44 PST 2016 -->

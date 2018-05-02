@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated  by Blorec Herv&#233;  2013-10-08-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: R&eacute;glage des options</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help preferences">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: R&eacute;glage des options</h1>
+
+      <p>Cet &eacute;cran d'aide s'ouvre automatiquement lorsque
+      les pr&eacute;f&eacute;rences JMRI n'ont pas
+      &eacute;t&eacute; r&eacute;gl&eacute;es, ou qu'il y avait une
+      erreur de pr&eacute;f&eacute;rences quand le programme a
+      &eacute;t&eacute; mis en service. Il vous guide &agrave;
+      travers les pr&eacute;f&eacute;rences de mise en
+      fonctionnement de base.</p>
+
+      <p>Une fois que les pr&eacute;f&eacute;rences sont
+      d&eacute;finies correctement, cet &eacute;cran ne s'affichera
+      plus. Le Volet d'Aide pour d&eacute;finir les
+      pr&eacute;f&eacute;rences est &agrave; <a href=
+      "./AppConfigPanel.shtml">la page d'aide principale des
+      pr&eacute;f&eacute;rences.</a>. Vous pouvez &eacute;galement
+      ouvrir le volet en s&eacute;lectionnant "Fen&ecirc;tre Aide"
+      dans le menu Aide de la fen&ecirc;tre des
+      pr&eacute;f&eacute;rences.</p>
+
+      <p>Ceci est la page d'aide
+      apps.AppConfixPanelErrorPage.shtml</p><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

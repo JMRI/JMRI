@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translated  by Blorec Hervé le 2011-10-30-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Monitor LocoNet Traffic</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help monitor loconet traffic message packet"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Moniteur de Trafic LocoNet</h1><a href=
+      "../../../../../html/apps/LocoTools/images/LocoMonFrame.gif"><img src="../../../../../html/apps/LocoTools/images/LocoMonFrame.gif"
+      width="300" height="150" alt="Command slot station Monitor"
+      align="right"></a><br>
+      L'outil Moniteur LocoNet affiche le trafic LocoNet dans un
+      une forme lisible. Les 20 derniers messages sont disponibles
+      dans une fen&Atilde;&ordf;tre de d&Atilde;&copy;filement. En
+      option, vous pouvez inclure le moment o&Atilde;&sup1; le
+      message a &Atilde;&copy;t&Atilde;&copy; re&Atilde;&sect;u,
+      et/ou le paquet octets brut . Les informations du journal
+      peuvent &Atilde;&copy;galement &Atilde;&ordf;tre
+      stock&Atilde;&copy;es dans un texte fichier.
+
+      <p>Pour plus d'informations sur les diff&Atilde;&copy;rents
+      contr&Atilde;&acute;les et les options, s'il vous
+      pla&Atilde;&reg;t voir la <a href=
+      "../../AbstractMonFrame.shtml">page Fen&Atilde;&ordf;tre
+      Moniteur de Communications</a></p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

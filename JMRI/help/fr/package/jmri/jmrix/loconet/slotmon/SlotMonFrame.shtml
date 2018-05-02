@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- $Id$ -->
+<!-- Translated  by Blorec Hervé le 2011-10-31-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: LocoNet Slot Monitor</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help loconet slot monitor">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  charset=iso-8859-1"&gt; <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>LocoNet Moniteur d'emplacements</h1><a href=
+      "../../../../../html/apps/LocoTools/images/SlotMon.gif"><img src="../../../../../html/apps/LocoTools/images/SlotMon.gif"
+      width="300" height="150" alt="Command slot station Monitor"
+      align="right"></a><br>
+      L'outil Moniteur slot affiche un tableau du contenu des
+      "emplacements de la centrale de commande". Ces emplacements
+      sont utilis&Atilde;&copy;s pour contr&Atilde;&acute;ler les
+      locomotives individuelles et les couplage. L'affichage inclut
+      le format des crans de vitesse du d&Atilde;&copy;codeur, la
+      vitesse actuelle et les param&Atilde;&uml;tres de fonction,
+      les information de couplage et de statut. Vous pouvez choisir
+      d'afficher soit tous les emplacements ou tout simplement ceux
+      utilis&Atilde;&copy;s actuellemnet.
+
+      <p>Les cases &Atilde;  cocher en haut vous permettent de
+      montrer juste les emplacements actifs (en service), ou tous
+      les emplacements de locomotive. Vous pouvez
+      &Atilde;&copy;galement choisir d'afficher ou non le
+      &Acirc;&laquo;syst&Atilde;&uml;me&Acirc;&raquo; des slots,
+      qui ne portent pas d'information de locomotive. Le bouton
+      "ESTOP tous" d&Atilde;&copy;finit la vitesse de toutes les
+      locomotives &Atilde;  l'&Acirc;&laquo;Arr&Atilde;&ordf;t
+      d'urgence" tr&Atilde;&uml;s rapidement.</p>
+
+      <p>Les colonnes sont:</p>
+
+      <dl>
+        <dt>slot</dt>
+
+        <dd>Le num&Atilde;&copy;ro de l'emplacement</dd>
+
+        <dt>E Stop</dt>
+
+        <dd>Cliquez sur ce bouton pour basculer la vitesse du
+        d&Atilde;&copy;codeur sur l'arr&Atilde;&ordf;t
+        d'urgence</dd>
+
+        <dt>Adresse</dt>
+
+        <dd>L'adresse de la locomotive de l'emplacement de
+        contr&Atilde;&acute;le</dd>
+
+        <dd>Vitesse</dd>
+
+        <dt>Pour les locomotives non coupl&Atilde;&copy;es et les
+        adresses qui sont en t&Atilde;&ordf;te d'un couplage, c'est
+        le r&Atilde;&copy;glage de la vitesse actuelle. C'est une
+        valeur interne pour l'emplacement de couplage.</dt>
+
+        <dt>D&Atilde;&copy;codeur de Type</dt>
+
+        <dd>Le format des commandes envoy&Atilde;&copy;es au
+        d&Atilde;&copy;codeur,
+        g&Atilde;&copy;n&Atilde;&copy;ralement soit 128 crans ou 28
+        crans, bien que d'autres valeurs soient possibles.</dd>
+
+        <dt>Statut</dt>
+
+        <dd>
+          L'un des quatre &Atilde;&copy;tats possibles:
+
+          <dl>
+            <dt>Libre</dt>
+
+            <dd>non r&Atilde;&copy;serv&Atilde;&copy; &Atilde;  un
+            usage particulier, aucun contenu</dd>
+
+            <dt>Inactif</dt>
+
+            <dd>non r&Atilde;&copy;serv&Atilde;&copy;e&Atilde;  un
+            usage particulier, aucun contenu</dd>
+
+            <dt>Commun</dt>
+
+            <dd>non utilis&Atilde;&copy;s pour le moment, mais
+            contient encore des donn&Atilde;&copy;es valides pour
+            le dernier d&Atilde;&copy;codeur
+            utilis&Atilde;&copy;</dd>
+
+            <dt>En Service</dt>
+
+            <dd>Contr&Atilde;&acute;le Actuellement un
+            d&Atilde;&copy;codeur</dd>
+          </dl>
+        </dd>
+
+        <dt>Libre</dt>
+
+        <dd>Cliquez sur ce bouton pour lib&Atilde;&copy;rer
+        l'emplacement, de sorte qu'il peut &Atilde;&ordf;tre
+        r&Atilde;&copy;utilis&Atilde;&copy; pour une autre
+        locomotive</dd>
+
+        <dt>Coupl&Atilde;&copy;</dt>
+
+        <dd>Affiche l'&Atilde;&copy;tat coupl&Atilde;&copy; de
+        l'emplacement, si ce n'est pas coupl&Atilde;&copy;, le d'un
+        couplage, inclus dans un couplage, etc.</dd>
+
+        <dt>ID R&Atilde;&copy;gulateur</dt>
+
+        <dd>L'ID du r&Atilde;&copy;gulateur utilisant cet
+        emplacement. C'est affich&Atilde;&copy; sur deux octets
+        hexad&Atilde;&copy;cimaux. La deuxi&Atilde;&uml;me paire
+        peut &Atilde;&ordf;tre configur&Atilde;&copy;es dans le
+        r&Atilde;&copy;gulateur, voir les instructions
+        Digitrax.</dd>
+
+        <dd>Direction</dd>
+
+        <dt>si le d&Atilde;&copy;codeur est actuellement
+        command&Atilde;&copy; pour aller en avant ou en
+        arri&Atilde;&uml;re</dt>
+
+        <dt>F0-F8</dt>
+
+        <dd>Les param&Atilde;&uml;tres de la fonction
+        actuelle.</dd><!--#include virtual="/Footer" -->
+      </dl>
+    </div>
+  </div>
+</body>
+</html>

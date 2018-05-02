@@ -1,0 +1,49 @@
+@startuml
+actor user
+participant JmrixConfigPane
+participant "locobufferusb.ConnectionConfig\nextends AbstractSerialConnectionConfig\nextends AbstractConnectionConfig" as ConnectionConfig
+participant "locobufferusb.LocoBufferUsbAdapter\nextends LocoBufferAdapter\nimplements jmri.jmrix.SerialPortAdapter" as LocoBufferUsbAdapter
+
+
+note over JmrixConfigPane: Wait for manufacturer selection
+user --> JmrixConfigPane : fireActionEvent
+activate JmrixConfigPane
+JmrixConfigPane --> JmrixConfigPane : updateComboConnection
+note over JmrixConfigPane: For each mode / type, create\nand add to mode JComboBox
+activate JmrixConfigPane
+JmrixConfigPane --> ConnectionConfig : null ctor (via reflection)
+activate ConnectionConfig
+
+ConnectionConfig --> LocoBufferUsbAdapter : null ctor
+activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+
+deactivate ConnectionConfig
+
+deactivate JmrixConfigPane
+deactivate JmrixConfigPane
+
+
+note over JmrixConfigPane: Wait for mode selection
+user --> JmrixConfigPane : fireActionEvent
+activate JmrixConfigPane
+JmrixConfigPane --> JmrixConfigPane : selection()
+activate JmrixConfigPane
+
+JmrixConfigPane --> ConnectionConfig : loadDetails(details)
+activate ConnectionConfig
+note over ConnectionConfig : Loaded GUI info into 'details' JPanel via\nAbstractConnectionConfig implementation
+deactivate ConnectionConfig
+
+JmrixConfigPane --> ConnectionConfig : setManufacturer(..)
+activate ConnectionConfig
+deactivate ConnectionConfig
+
+JmrixConfigPane --> ConnectionConfig : register()
+activate ConnectionConfig
+deactivate ConnectionConfig
+
+deactivate JmrixConfigPane
+deactivate JmrixConfigPane
+
+@enduml

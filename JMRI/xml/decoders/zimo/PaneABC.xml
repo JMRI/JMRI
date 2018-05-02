@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <display item="MAN Key Extension (Disable HLU or ABC signal control)">
+       <!--label>Set Function Key to Disable ABC Signal Control</label>
+       <label xml:lang="it">Tasto funzione per disabilitare controllo segnale ABC</label>
+       <label xml:lang="cs">Nastavení funkční klávesy pro zakázání řízení signálem ABC</label>
+       <label xml:lang="de">F-Taste zum Deaktivieren von ABC</label-->
+    </display>
+    <display item="Direction Dependent stops with asymmetrical DCC"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Distance controlled stopping"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <column>
+        <display item="Distance controlled stopping Distance"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Distance controlled stopping speed correction (ABC)"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <display item="Distance controlled stopping Distance" format="hslider" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Signal Dependent Acceleration"/>
+        <display item="Signal Dependent Deceleration"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Signal Dependent Reaction Time"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>Entered value multiplied by 0.4 seconds is the additional accel/decel</text>
+          <text xml:lang="it">Il valore x 0,4 è il valore sommato a CV3 e CV4</text>
+          <text xml:lang="cs">zadaná hodnota vynásobená 0,4 vteřiny je další zrychlení/zpomalení</text>
+          <text xml:lang="de">Der eingegebene Wert, multipliziert mit 0,4, wird den Werten in</text>
+        </label>
+        <label>
+          <text>added to the normal CV3 and CV4 setting, for speed changes due to ABC</text>
+          <text xml:lang="it">per cambio velocità per ABC</text>
+          <text xml:lang="cs">přidané k základnímu nastavení v CV3 a CV4 pro rychlost změn v důsledku ABC</text>
+          <text xml:lang="de">CV3 und CV4 hinzugerechnet und verändert die Geschwindigkeit bei ABC.</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="Asymmetrical DCC Threshold"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>    </text>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label>
+              <text>Hundreds digit = sensitivity</text>
+              <text xml:lang="it">Centinaia = sensibilità</text>
+              <text xml:lang="cs">Stovky = citlivost</text>
+              <text xml:lang="de">Hunderterstelle = Sensibilität</text>
+            </label>
+          </column>
+          <column>
+            <label>
+              <text>    </text>
+            </label>
+          </column>
+          <column>
+            <label>
+              <text>0 = Fast recognition</text>
+              <text xml:lang="it">0 = Alta</text>
+              <text xml:lang="cs">0 = Rychlé rozpoznání</text>
+              <text xml:lang="de">0 = Schnell</text>
+            </label>
+            <label>
+              <text>1 = Normal recognition (0.5s)</text>
+              <text xml:lang="it">1 = Normale (0,5 sec)</text>
+              <text xml:lang="cs">1 = Normální (0,5 vteřiny)</text>
+              <text xml:lang="de">1 = Normal (0,5 sec)</text>
+            </label>
+            <label>
+              <text>2 = Slow recognition (1s)</text>
+              <text xml:lang="it">2 = Bassa (1 sec)</text>
+              <text xml:lang="cs">2 = Pomalé rozpoznání (1 vteřina)</text>
+              <text xml:lang="de">2 = Langsam (1 sec)</text>
+            </label>
+          </column>
+        </row>
+        <label>
+          <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
+          <text xml:lang="it">Decine e Unità = Soglia asimmetrica in decimi di Volt</text>
+          <text xml:lang="cs">Desítky a jednotky = prahová hodnoty asymetrie v desetinách voltu</text>
+          <text xml:lang="de">Zehner- und Einerstelle = Asymmetrie-Schwelle in Zehntel-Volt.</text>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>ABC</name>
+</pane>

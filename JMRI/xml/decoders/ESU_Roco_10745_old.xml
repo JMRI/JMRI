@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Carasso" version="1.0" lastUpdated="20110320"/>
+  <decoder>
+    <family name="ESU Roco 10745" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
+      <model model="Roco 10745 old" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
+        <output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
+        <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
+        <size length="25.5" width="15.5" height="4.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-63">
+        <decVal min="1" max="63"/>
+        <label>Starting Voltage</label>
+        <label xml:lang="it">Volt Partenza (1-63)</label>
+        <label xml:lang="fr">V démarr. (1-63)</label>
+        <label xml:lang="de">Startspannung (1-63)</label>
+      </variable>
+      <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 1-63">
+        <decVal min="1" max="63"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (1-63)</label>
+        <label xml:lang="fr">Accelération (1-63)</label>
+        <label xml:lang="de">Anfahrverzögerung (1-63)</label>
+      </variable>
+      <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 1-63">
+        <decVal min="1" max="64"/>
+        <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-64)</label>
+        <label xml:lang="fr">Décélération (1-64)</label>
+        <label xml:lang="de">Bremszeit (1-64)</label>
+      </variable>
+      <variable CV="5" default="63" item="Vhigh" tooltip="Maximum speed of locomotive, range 1-63">
+        <decVal min="1" max="63"/>
+        <label>Maximum Speed</label>
+        <label xml:lang="it">Volt Massimi (0-63):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+      </variable>
+      <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
+        <decVal min="0" max="64"/>
+        <label>Medium speed</label>
+        <label xml:lang="it">Volts intermedi (0-64)</label>
+        <label xml:lang="de">Vmittel (0-64)</label>
+      </variable>
+      <variable CV="7" default="170" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+         <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="Active"/>
+        </enumVal>
+        <label>BEMF control</label>
+      </variable>
+      <variable CV="54" default="16" item="Global lighting option 1" tooltip="Defines the brightness of the function outputs, range 0-16">
+        <decVal min="0" max="16"/>
+        <label>Lamp brightness</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+  </decoder>
+</decoder-config>

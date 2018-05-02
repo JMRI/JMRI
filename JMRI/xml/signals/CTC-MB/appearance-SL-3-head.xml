@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+     <author>
+        <personname><firstname>Chuck</firstname><surname>Catania</surname></personname>
+        <email>info@modelrailroadcontrolsystems.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2017-10-11</date>
+        <authorinitials>CFC</authorinitials>
+        <revremark>>SP Syle Searchlight Signals for CTC Model Boards</revremark>
+    </revision>
+  </revhistory>
+
+  <aspecttable>CTC-H2</aspecttable>
+  <name>3 Head Searchlight</name>
+  <reference>Non-Prototype USS H-2 Signal Masts".</reference>
+  <description>Appearances for a three-searchlight signal head without other badging</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>CTC3H-1</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/RedRedRed.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>CTC3H-2</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/GrnRedRed.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>CTC3H-3</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/YelRedRed.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>CTC3H-5</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/RedGrnRed.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>CTC3H-6</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/RedYelRed.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>flashred</show>
+      <show>red</show>
+      <reference>CTC3H-8</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/RedFLRedRed.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Branch Approach</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>CTC3H-9</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/RedRedYel.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Branch Restricting</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>CTC3H-10</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/RedRedFLRed.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Dark</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CTC-MB/SL-3/DrkDrkDrk.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

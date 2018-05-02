@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="2" lastUpdated="20090831"/>
+  <version author="phill_perry@bigpond.com" version="1" lastUpdated="20070630"/>
+  <!-- Version 1 - made from 0NMRA.xml -->
+  <!-- Version 2 - Corrected mfg. spelling -->
+  <decoder>
+    <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive">
+      <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no"/>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="10" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal min="0" max="255"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable item="Accel" CV="3" default="1" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal max="31" min="0"/>
+        <label>Accel</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable item="Decel" CV="4" default="1" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal max="31" min="0"/>
+        <label>Decel</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable CV="7" readOnly="yes" item="Decoder Version" default="46" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal min="0" max="255"/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="71" mask="VVVVVVVV" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal min="0" max="255"/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="50" item="DC Brake Momentum" mask="XXXXXVXX" comment="Governs how loco acts in DC track block" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <enumVal>
+          <enumChoice choice="Loco runs under DC analog voltage control">
+            <choice>Loco runs under DC analog voltage control</choice>
+             <choice xml:lang="it">Loco va in Analogico</choice>
+          </enumChoice>
+          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
+            <choice>Loco brakes to a stop using momentum set in CV4</choice>
+            <choice xml:lang="it">Loco frena fino a fermarsi usando inerzia in CV4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Brake Momentum on DC</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
+        <comment>Governs how loco acts in DC track block</comment>
+        <comment xml:lang="it">Comportamento Loco in blocco analogico</comment>
+      </variable>
+      <variable CV="51" mask="VVVVVVVV" item="Function F0F options" comment="Controls which function dims headlight (CV 52 controls amount)" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <enumVal>
+          <enumChoice choice="Always Dim" value="00000000">
+            <choice>Always Dim</choice>
+          </enumChoice>
+          <enumChoice choice="F1" value="1">
+            <choice>F1</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="2">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="4">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="8">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="16">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="32">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="64">
+            <choice>F7</choice>
+          </enumChoice>
+          <enumChoice choice="F8" value="128">
+            <choice>F8</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Headlight Dimmed By</label>
+        <comment>Controls which function dims headlight (CV 52 controls amount)</comment>
+      </variable>
+      <variable CV="52" default="255" comment="Controls how much headlights dim (0-dark to 255-max bright)" item="Function F0F behavior" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal min="0" max="255"/>
+        <label>Headlight Dimming intensity</label>
+        <comment>Controls how much headlights dim (0-dark to 255-max bright)</comment>
+      </variable>
+      <variable item="User Id #1" CV="105" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal min="0" max="255"/>
+        <label>User Id #1</label>
+      </variable>
+      <variable item="User Id #2" CV="106" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
+        <decVal min="0" max="255"/>
+        <label>User Id #2</label>
+      </variable>
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

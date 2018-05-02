@@ -1,0 +1,93 @@
+<!-- Defines XML for a programmer layout for the JMRI tabbed programmer    -->
+
+<!-- This DTD is part of JMRI. Copyright 2001-2009.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- XInclude can be used to include the "programmer" or "pane" elements    -->
+
+<!ELEMENT programmer-config ( version*, xi:include?, programmer?)>
+<!ATTLIST programmer-config xmlns:xi CDATA #FIXED "http://www.w3.org/2001/XInclude">
+
+<!-- The version section identifies the file information.  Similar -->
+<!-- clauses appear in other DTD files; check consistency. -->
+<!ELEMENT version EMPTY>
+<!ATTLIST version author     	CDATA #IMPLIED>
+<!ATTLIST version version     	CDATA #IMPLIED>
+<!ATTLIST version lastUpdated   	CDATA #IMPLIED>
+<!ATTLIST version comment     	CDATA #IMPLIED>
+
+<!-- Define XInclude element -->
+<!ELEMENT xi:include (xi:fallback?) >
+<!ATTLIST xi:include
+    xmlns:xi   CDATA       #FIXED    "http://www.w3.org/2001/XInclude"
+    href       CDATA       #IMPLIED
+    parse      (xml|text)  "xml"
+    xpointer   CDATA       #IMPLIED
+    encoding   CDATA       #IMPLIED 
+    accept     CDATA       #IMPLIED
+    accept-language CDATA  #IMPLIED >
+<!ELEMENT xi:fallback ANY>
+<!ATTLIST xi:fallback
+    xmlns:xi   CDATA   #FIXED   "http://www.w3.org/2001/XInclude" >
+
+<!-- The programmer section defines the layout and contents of the  -->
+<!-- programmer window(s) -->
+<!ELEMENT programmer ((xi:include?, pane?)*)>
+<!-- Show additional panes from decoder file? -->
+<!ATTLIST programmer decoderFilePanes (yes | no ) "yes">
+<!-- Suppress panes with no variables? -->
+<!ATTLIST programmer showEmptyPanes (yes | no | default ) "default">
+<!-- Show function label pane? -->
+<!ATTLIST programmer showFnLanelPane (yes | no ) "no">
+<!-- Show roster media pane? -->
+<!ATTLIST programmer showRosterMediaPane (yes | no ) "no">
+<!-- Show CV numbers in tooltips? -->
+<!ATTLIST programmer showCvNumbers ( yes | no ) "no" >
+
+<!-- The pane sections define each tabbed pane of options -->
+<!ELEMENT pane (column | row)*>
+<!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!-- Which name to show in GUI? Mfg is the name field from the decoder file -->
+<!ATTLIST pane nameFmt (label | item) "label">
+
+<!-- The column and row sections describe the layout of a pane -->
+<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+
+<!-- Insert a separator line -->
+<!ELEMENT separator EMPTY>
+
+<!-- Insert a cv table -->
+<!ELEMENT cvtable EMPTY>
+
+<!-- Insert a function mapping display/edit panel -->
+<!ELEMENT fnmapping EMPTY>
+
+<!-- Insert a variable that handles long & short dcc addresses -->
+<!ELEMENT dccaddress EMPTY>
+<!ATTLIST dccaddress label CDATA  #IMPLIED>  <!-- optional, default is from name -->
+
+<!-- The label items describes an arbitrary text string -->
+<!ELEMENT label EMPTY >
+<!ATTLIST label label CDATA #REQUIRED>
+
+<!-- The display items define each identified variables -->
+<!-- in the column and how they are displayed -->
+
+<!ELEMENT display EMPTY >
+<!ATTLIST display item CDATA #REQUIRED>  <!-- item name used for identification -->
+<!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
+<!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
+<!ATTLIST display layout ( left | above | below | right ) "left" > <!-- label position -->
+<!ATTLIST display format  (default | vslider | hslider | hslider-percent | radiobuttons | checkbox |
+							onradiobutton | offradiobutton) "default" >
+

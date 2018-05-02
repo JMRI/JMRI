@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated  by Blorec Hervé le 2011-11-1-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Configure Grapevine Nodes</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+  "JMRI help configure grapevine node"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Configurer les N&Aring;"uds Grapevine</h1>Ceci est la
+      page d'aide
+      help/en/jmri/jmrix/grapevine/nodetable/NodeTableFrame
+
+      <p>L'outil &Acirc;&laquo;Table N&Aring;"uds" vous permet de
+      voir tous vos n&Aring;"uds &Atilde;  la fois. Chaque ligne du
+      tableau correspond &Atilde;  une adresse de n&Aring;"ud. Les
+      colonnes sont les suivants:</p>
+
+      <dl>
+        <dt>Adresse</dt>
+
+        <dd>Le num&Atilde;&copy;ro de n&Aring;"ud</dd>
+
+        <dt>&Atilde;&permil;tat</dt>
+
+        <dd>
+          L'&Atilde;&copy;tat actuel de ce n&Aring;"ud.
+
+          <dl>
+            <dt>Configur&Atilde;&copy;</dt>
+
+            <dd>Ce n&Aring;"ud a &Atilde;&copy;t&Atilde;&copy;
+            configur&Atilde;&copy; dans JMRI. vous pouvez dialoguer
+            avec ses Aiguillages, T&Atilde;&ordf;tes de Signal,
+            Capteurs, etc</dd>
+
+            <dd>Pr&Atilde;&copy;sent</dd>
+
+            <dt>Ce n&Aring;"ud a &Atilde;&copy;t&Atilde;&copy;
+            d&Atilde;&copy;tect&Atilde;&copy;e sur Grapevine, mais
+            vous devez le configurer avant de pouvoir y
+            acc&Atilde;&copy;der dans le programme.</dt>
+
+            <dt>(blanc)</dt>
+
+            <dd>Le n&Aring;"ud n'est pas configur&Atilde;&copy;, et
+            n'a pas &Atilde;&copy;t&Atilde;&copy; vu sur Grapevine.
+            &lt;/ dl&gt;</dd>
+
+            <dt>Ajouter/&Atilde;&permil;diter</dt>
+
+            <dd>La troisi&Atilde;&uml;me colonne fournit un bouton
+            pour vous pourajouter un n&Aring;"ud manquant ou
+            modifier la configuration d'un n&Aring;"ud existant. Si
+            vous Ajouter ou modifier un n&Aring;"ud, n'oubliez pas
+            de sauvegarder vos
+            pr&Atilde;&copy;f&Atilde;&copy;rences &Atilde; 
+            nouveau!</dd>
+
+            <dt>Init</dt>
+
+            <dd>Si le n&Aring;"ud est configur&Atilde;&copy;, il ya
+            un bouton dans la 4e colonne qui vous permet d'envoyer
+            les messages d'initialisation pour le n&Aring;"ud. Cet
+            est utile si par exemple le n&Aring;"ud a
+            &Atilde;&copy;t&Atilde;&copy; Off et On, il doit donc
+            &Atilde;&ordf;tre
+            r&Atilde;&copy;initialis&Atilde;&copy;. Ceci est
+            uniquement disponible pour les n&Aring;"uds
+            configur&Atilde;&copy;s.</dd>
+          </dl>
+
+          <p>Au bas de la fen&Atilde;&ordf;tre est un bouton
+          "V&Atilde;&copy;rifier" et un champ &Atilde;&copy;tat.
+          Cliquez sur "V&Atilde;&copy;rifier" pour balayer le
+          Grapevine pour v&Atilde;&copy;rifier son
+          &Atilde;&copy;tat et localiser les n&Aring;"uds. Les
+          champ d'&Atilde;&copy;tat sont les suivant:</p>
+
+          <dl>
+            <dt>D&Atilde;&copy;marrer</dt>
+
+            <dd>Un balayage commence, mais aucune
+            r&Atilde;&copy;ponse n'a &Atilde;&copy;t&Atilde;&copy;
+            entendu de Grapevine encore.</dd>
+
+            <dt>V&Atilde;&copy;rification</dt>
+
+            <dd>Balayage en cours, et le Grapevine semble
+            fonctionner.</dd>
+
+            <dt>OK</dt>
+
+            <dd>OK Analyse termin&Atilde;&copy;e.</dd>
+
+            <dt>Grapevine &Atilde;&copy;chou&Atilde;&copy;</dt>
+
+            <dd>Analyse termin&Atilde;&copy;e sans rien entendre de
+            Grapevine. Peut-&Atilde;&ordf;tre le c&Atilde;&cent;ble
+            n'est pas compl&Atilde;&uml;tement
+            connect&Atilde;&copy;, ou quelques
+            &Atilde;&copy;l&Atilde;&copy;ments ne sont pas
+            aliment&Atilde;&copy;s.</dd>
+          </dl>
+
+          <p>Il y a aussi un bouton &Acirc;&laquo; Changement
+          d'Adresse N&Aring;"ud Carte", ce qui peut
+          &Atilde;&ordf;tre utilis&Atilde;&copy; pour changer
+          l'adresse d'un noeud de Grapevine. Il ouvre une <a href=
+          "RenumberFrame.shtml">nouvelle fen&Atilde;&ordf;tre</a> .</p>
+          <!--#include virtual="/Footer" -->
+        </dd>
+      </dl>
+    </div>
+  </div>
+</body>
+</html>

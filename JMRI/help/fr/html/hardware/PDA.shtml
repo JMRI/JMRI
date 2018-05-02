@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- Updated  by Blorec Herv&#233;  2017-01-11 -->
+<html lang="fr">
+<head>
+ <title>JMRI Hardware Support - Using a PDA</title>
+    <meta name="author" content="Michael Beck">
+    <meta name="author" content="John Plocher">
+    <meta name="keywords" content="model railroad JMRI PDA">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Guide d'Installalation JMRI: Utilisation d'un PDA pour
+      acc&eacute;der aux applications JMRI</h1>Daryl Kruse a
+      exp&eacute;riment&eacute; un PDA Dell Axim pour une
+      utilisation comme r&eacute;gulateur Digitrax 2-voies
+      r&eacute;elles. Il a fourni l'information suivante sur la
+      fa&ccedil;on dont il l'a mis en place:
+
+      <H1>Guide d'Installalation JMRI: Utilisation d'un PDA pour acc&#233;der aux applications JMRI ( obsol&#232te )</H1>
+<P>
+Cette page d&#233crit une premi&#232re tentative de connexion d'un PDA Axim &#224 JMRI, qui pr&#233sente quelques d&#233fauts et est obsol&#232te.
+
+<a name="limitations"></a><h2>Limitations</h2>
+<p>Pour une approche prise en charge  impliquant l'ex&#233cution d'un programme sp&#233cifique
+Sur votre Smartphone, consultez la page
+<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a>
+
+<a name="connecting"></a><h2>Connexion</h2>
+Daryl Kruse a exp&#233;riment&#233;
+ un PDA Dell Axim pour une utilisation comme r&#233;gulateur Digitrax 2-voies r&#233;elles.
+Il a fourni l'information suivante
+sur la fa&#231;on dont il l'a mis en place:
+
+<P>1. Notre maison a un r&#233;seau local sans fil mis en place pour les membres de la famille pour acc&#233;der &#224;
+notre service Internet par c&#226;ble.
+
+<P>2. Mon ordinateur consacr&#233; au train est connect&#233; &#224; notre LAN et, bien s&#251;r, est
+connect&#233; &#224; JMRI et le LocoNet via une interface.
+
+<P>3. Mon Dell Axim est un terminal client sans fil.
+
+<P>4. Apr&#232;s avoir jet&#233; un oeil sur les r&#233;gulateurs et les contr&#244;le d'aiguillage JMRI,
+ j'utilise mon terminal Client Axim pour acc&#233;der &#224; l'&#233;cran de l'ordinateur.
+
+<P>5. Je peux alors contr&#244;ler le r&#233;seau avec l'Axim.
+
+      <p>Le bouton principal &agrave; quatre voies de l'Axim peut
+      &ecirc;tre utilis&eacute; pour augmenter (&agrave; gauche) et
+      diminuer (&agrave; droite) la vitesse et fixer la direction
+      du train (en avant- vers le haut vers le bas- en
+      arri&egrave;re)." I use the blunt end of my home made
+      uncoupling pic to" adresser &agrave; l'&eacute;cran afin de
+      s&eacute;lectionner et d'exp&eacute;dier les locomotives,
+      r&eacute;aliser des fonctions et fixer des aiguillages. Tout
+      ceci peut &ecirc;tre fait sans jamais se connecter &agrave;
+      Loconet.</p>
+
+<P>
+Le bouton principal &#224; quatre voies de l'Axim peut &#234;tre utilis&#233; pour augmenter (&#224; gauche)
+et diminuer (&#224; droite) la vitesse et fixer la direction du train (en avant- vers le haut
+ vers le bas- en arri&#232;re)." I use the blunt end of my home made 
+uncoupling pic to" adresser &#224; l'&#233;cran afin de s&#233;lectionner et d'exp&#233;dier les
+locomotives, r&#233;aliser des fonctions et commander des aiguillages. Tout ceci peut &#234;tre fait sans jamais se connecter &#224; 
+Loconet.
+<P>
+Une chose qui est un peu lourde est d'entrer le num&#233;ro de l'aiguillage 
+dans la commande de l'aiguillage. Pour cela, je dois utiliser le clavier de l'Axim
+. Je voudrais utiliser le tableau d'aiguillage, mais tous les commutateurs d'accessoires
+ qui sont utilis&#233;s se montrent automatiquement sur le tableau. Comme j'utilise
+les contr&#244;les d'itin&#233;raires, beaucoup de chiffres inutiles d'aiguillages et d'accessoires s'affichent
+alors que je n'en ai pas besoin. Est-il possible tout de m&#234;me de mettre en place une table qui soit d&#233;finie
+avec juste les aiguillages et accessoire que vous voulez?
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+
+<P>
+Pour une approche acyuellement prise en charge, impliquant l'ex&#233;cution d'un programme sp&#233;cifique
+sur votre Smartphone, voir la page
+<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur Wi</a>.
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

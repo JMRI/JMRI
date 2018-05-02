@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Updated by Blorec Herv&#233; le 2013-09-04-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Portable File Access</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code">
+  <!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  ci-dess <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Acc&egrave;s aux fichiers Portables</h1>JMRI
+      utilise des fichiers pour les ic&ocirc;nes, images, fichiers
+      de panneau, scripts, et beaucoup d'autres choses. Les
+      r&eacute;f&eacute;rences &agrave; ceux-ci sont couramment
+      utilis&eacute;es ci-dessus par des codes diff&eacute;rents,
+      et stock&eacute;es dans des fichiers XML. Certains de ces
+      fichiers sont distribu&eacute;s avec JMRI, et certains sont
+      cr&eacute;&eacute;s en dehors du r&eacute;pertoire de
+      distribution JMRI par l'utilisateur local.
+
+      <p>En outre, JMRI est une application multi-plateforme, et
+      nous voulons &ecirc;tre en mesure de d&eacute;placer les
+      fichiers XML JMRI &agrave; partir d'un ordinateur &agrave; un
+      autre, m&ecirc;me d'un type diff&eacute;rent, et les avoir
+      encore &agrave; travailler.</p>
+
+      <p>Pour ce faire, nous avons cr&eacute;&eacute; un
+      syst&egrave;me de pseudo - URLs pour acc&eacute;der &agrave;
+      l'emplacement des fichiers. Les noms de fichiers sont
+      utilis&eacute;s en interne et stock&eacute;s dans des
+      fichiers XML avec des pr&eacute;fixes qui identifient
+      l'emplacement du fichier qui se trouve d'une mani&egrave;re
+      ind&eacute;pendante du syst&egrave;me.</p>
+
+      <p>Si le nom</p>
+
+      <ul>
+        <li>commence par "program", traiter le reste comme chemin
+        relatif du r&eacute;pertoire du programme</li>
+
+        <li>commence avec une &laquo;preference:", traiter le reste
+        comme chemin d'acc&egrave;s relatif du r&eacute;pertoire
+        des pr&eacute;f&eacute;rences</li>
+
+        <li>commence par "home&laquo;, traiter le reste comme
+        chemin d'acc&egrave;s relatif du r&eacute;pertoire dans la
+        propri&eacute;t&eacute; user.home, l'id&eacute;e de Java
+        dans le r&eacute;pertoire home de l'utilisateur</li>
+
+        <li>commence par "resource", traiter le reste comme chemin
+        relatif au r&eacute;pertoire du programme (obsol&egrave;te,
+        voir &laquo;programme:" ci-dessus)</li>
+
+        <li>commence par "file: ", traiter le reste comme un chemin
+        relatif au r&eacute;pertoire des ressources ci-dessous dans
+        le r&eacute;pertoire des preferences (obsol&egrave;te, voir
+        la &laquo;pr&eacute;f&eacute;rence:" ci-dessus)</li>
+      </ul>Sinon, traiter le nom comme un chemin relatif ci-dessous
+      le r&eacute;pertoire du programme pour fournir la
+      compatibilit&eacute; descendante. Dans tous les cas, les
+      chemins absolus fonctionnent, mais ne seront pas compatibles
+      multi - plateforme . Les deux cas obsol&egrave;tes seront
+      automatiquement supprim&eacute;s lorsque le fichier
+      r&eacute;f&eacute;renc&eacute; est lu et
+      r&eacute;&eacute;crit par le biais des m&eacute;canisme de
+      conversion d&eacute;crits ci-dessous.
+
+      <h2>Impl&eacute;mentation</h2>La classe <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
+      fournit des routines de traduction automatique pour faire :
+
+      <dl>
+        <dd>static public String getExternalFilename (String
+        pName)</dd>
+
+        <dt>Convertir un nom interne (avec pr&eacute;fixes comme
+        ci-dessus) dans un chemin absolu pour une utilisation sur
+        l'ordinateur local. Il n'y a aucune garantie que le fichier
+        ou tout r&eacute;pertoire englobant soit effectivement
+        pr&eacute;sent, mais le chemin sera syntaxiquement valide
+        sur l'ordinateur actuel.</dt>
+
+        <dd>static public String getPortableFilename (File
+        fichier)</dd>
+
+        <dd>static public String getPortableFilename (String
+        filename)</dd>
+
+        <dt>Convertir un fichier ou une chaine filename dans une
+        cha&icirc;ne nom avec le pr&eacute;fixe
+        appropri&eacute;.</dt>
+      </dl>Vous devriez appeler getExternalFilename () avant de
+      passer le nom du fichier pour les Java communs , et
+      getPortableFilename () lorsque vous recevez un fichier ou le
+      nom d'une classe Java. C'est OK pour appeler l'une ou l'autre
+      plusieurs fois, comme ils vont juste passer &agrave; travers,
+      dans ce cas. En particulier, appelez getPortableFilename ()
+      avant de sauvegarder dans un fichier XML.. 
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

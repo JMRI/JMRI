@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012, 2015 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2015-04-27</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Created from MRC sound1617-1618 file</revremark>
+    </revision>
+  </revhistory>
+  <!-- Add Your the "includes" here -->
+    <variable CV="113" item="EMF Static Config" default="20">
+      <decVal max="31"/>
+      <label>Back EMF Load Control proportional gain Kp</label>
+      <tooltip>[range 0-31]</tooltip>
+    </variable>
+    <variable CV="114" item="EMF Dynamic Config" default="10">
+      <decVal max="31"/>
+      <label>Back EMF Load Control integral gain Ki</label>
+      <tooltip>[range 0-31]</tooltip>
+    </variable>
+    <variable CV="124" item="Load Control" default="160">
+      <decVal max="255"/>
+      <label>Back EMF load control intensity</label>
+      <tooltip>(0=off) [range 0-255]</tooltip>
+    </variable>
+</variables>

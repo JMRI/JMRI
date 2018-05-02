@@ -1,0 +1,42 @@
+<!-- Defines XML documenting a route roster -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT operations-config (routes)*>
+
+<!ELEMENT routes (route)*>
+<!ELEMENT route (location)*>
+<!ELEMENT location EMPTY>
+
+<!ATTLIST route id				CDATA #REQUIRED>          
+<!ATTLIST route name			CDATA #IMPLIED>
+<!ATTLIST route comment			CDATA #IMPLIED>
+
+<!ATTLIST location id				CDATA #REQUIRED>          
+<!ATTLIST location name				CDATA #IMPLIED>
+<!ATTLIST location locationId		CDATA #IMPLIED>
+<!ATTLIST location sequenceId		CDATA #IMPLIED>       
+<!ATTLIST location trainDirection	CDATA #IMPLIED> 
+<!ATTLIST location maxTrainLength	CDATA #IMPLIED> 
+<!ATTLIST location maxCarMoves		CDATA #IMPLIED> 
+<!ATTLIST location drops			(yes | no) "yes"> 
+<!ATTLIST location pickups			(yes | no) "yes">
+<!ATTLIST location departTime		CDATA #IMPLIED> 
+<!ATTLIST location wait				CDATA #IMPLIED>
+<!ATTLIST location grade			CDATA #IMPLIED> 
+<!ATTLIST location trainIconX		CDATA #IMPLIED> 
+<!ATTLIST location trainIconY		CDATA #IMPLIED> 
+<!ATTLIST location comment			CDATA #IMPLIED>
+<!ATTLIST location randomControl	CDATA #IMPLIED>
+

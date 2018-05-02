@@ -1,0 +1,12 @@
+This is a very initial implementation.
+
+Among the things that can be (and eventually should be)
+improved are:
+
+*) ACK vs NACK on write does nothing of interest; it should
+retry.
+
+*) Polling assumes that you only need to request two
+bytes of data from each node, in other words there's only
+one input message generated.
+

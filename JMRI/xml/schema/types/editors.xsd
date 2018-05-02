@@ -1,0 +1,1854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+<!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:docbook="http://docbook.org/ns/docbook" xmlns:jmri="http://jmri.org/xml/schema/JMRIschema" xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            ">
+  <xs:annotation>
+    <xs:documentation>
+      Defines XML structures common to Layout Editor and Panel Editor
+    </xs:documentation>
+  </xs:annotation>
+
+    <xs:complexType name="EditorIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing an icon reference
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeIcon
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="rotation" type="xs:integer" minOccurs="0" maxOccurs="1">
+          <xs:annotation><xs:documentation>
+            Rotation in 90-degree steps, including scaled icons;
+            added in JMRI 2.9.4 as replacement for &amp;rotate&amp; attribute
+          </xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="url" type="urlType"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:string">
+        <xs:annotation><xs:documentation>
+          Deprecated in JMRI 2.9.4 in favor of &amp;rotation&amp; element;
+          was rotation in 90-degree steps, but skipped rotating scaled icons.
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="degrees" type="xs:float"></xs:attribute>
+      <xs:attribute name="scale" type="xs:float"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorIconTextType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing an icon reference with extended "text" information
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.SlipTurnoutIconXml#storeIcon
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:complexContent mixed="false">
+        <xs:extension base="EditorIconType">
+          <xs:sequence>
+            <xs:element name="text" type="xs:string" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EditorSensorTextType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing sensor text information
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="blue" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
+      <!-- following are in code, not in 2.9.4 DTD -->
+      <xs:attribute name="size" type="xs:int"></xs:attribute>
+      <xs:attribute name="style" type="xs:string"></xs:attribute>
+      <xs:attribute name="margin" type="xs:int"></xs:attribute>
+      <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="fixedWidth" type="xs:string"></xs:attribute>
+      <xs:attribute name="fixedHeight" type="xs:string"></xs:attribute>
+
+    </xs:complexType>
+
+
+    <xs:attributeGroup name="EditorCommonAttributesGroup">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing common PositionableLabel child attributes
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="level" type="xs:int"></xs:attribute>
+      <xs:attribute name="forcecontroloff" type="trueFalseType" default="false"></xs:attribute>
+      <xs:attribute name="hidden" type="yesNoType" default="no"></xs:attribute>
+      <xs:attribute name="positionable" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="showtooltip" type="trueFalseType" default="true"></xs:attribute>
+      <xs:attribute name="editable" type="trueFalseType" default="true"></xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="EditorCommonTextInfoGroup">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing text information of PositionableLabel children
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="fontname" type="xs:string"></xs:attribute>
+      <xs:attribute name="size" type="xs:string"></xs:attribute>
+      <xs:attribute name="style" type="xs:string"></xs:attribute>
+      <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
+      <xs:attribute name="hasBackground" type="yesNoType"></xs:attribute>
+      <xs:attribute name="margin" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBack" type="xs:int"></xs:attribute>
+      <xs:attribute name="fixedWidth" type="xs:string"></xs:attribute>
+      <xs:attribute name="fixedHeight" type="xs:string"></xs:attribute>
+      <xs:attribute name="borderSize" type="xs:int"></xs:attribute>
+      <xs:attribute name="redBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="greenBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="blueBorder" type="xs:int"></xs:attribute>
+      <xs:attribute name="justification" default="left" type="JustificationType"></xs:attribute>
+      <xs:attribute name="orientation" default="horizontal">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"></xs:enumeration>
+            <xs:enumeration value="vertical_up"></xs:enumeration>
+            <xs:enumeration value="vertical_down"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="rotate" type="xs:string">
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.9.3
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="fixed" type="trueFalseType">
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.?
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="height" type="xs:integer">
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer">
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:complexType name="EditorIconsType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing icon information in a paneleditor element
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PanelEditor
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="visible" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="path_edit" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="hidden" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="to_arrow" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
+        </xs:element>
+        <xs:element name="from_arrow" minOccurs="0" maxOccurs="1">
+          <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EditorLayoutTrackDrawingOptionsType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing and loading LayoutTrackDrawingOptions
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.layouteditor.configurexml.LayoutTrackDrawingOptionsXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:all>
+        <xs:element name="mainBallastColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBallastWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBlockLineDashPercentageX10" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainBlockLineWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailCount" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainRailWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieLength" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="mainTieWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBallastColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBallastWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBlockLineDashPercentageX10" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideBlockLineWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailCount" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideRailWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieColor" type="screenColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieGap" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieLength" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sideTieWidth" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
+      <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
+
+    <xs:complexType name="EditorPositionableLabelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionableLabel
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorPositionablePointType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionablePoint
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionablePointXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="connect1name" type="xs:string"></xs:attribute>
+      <xs:attribute name="connect2name" type="xs:string"></xs:attribute>
+      <xs:attribute name="linkedpanel" type="xs:string"></xs:attribute>
+      <xs:attribute name="linkpointid" type="xs:string"></xs:attribute>
+      <xs:attribute name="eastboundsignal" type="xs:string"></xs:attribute>
+      <xs:attribute name="westboundsignal" type="xs:string"></xs:attribute>
+      <xs:attribute name="eastboundsignalmast" type="xs:string"></xs:attribute>
+      <xs:attribute name="westboundsignalmast" type="xs:string"></xs:attribute>
+      <xs:attribute name="eastboundsensor" type="xs:string"></xs:attribute>
+      <xs:attribute name="westboundsensor" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+
+    <xs:complexType name="ShapeColorType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a Shape's color
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableShapeXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="red" type="xs:unsignedByte"></xs:attribute>
+          <xs:attribute name="green" type="xs:unsignedByte"></xs:attribute>
+          <xs:attribute name="blue" type="xs:unsignedByte"></xs:attribute>
+          <xs:attribute name="alpha" type="xs:unsignedByte"></xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+
+     <xs:attributeGroup name="ShapeCommonAttributesGroup">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a Shape's attributes
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableShapeXml#storeCommonAttributes
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="degrees" type="xs:int"></xs:attribute>
+      <xs:attribute name="changeLevelOnSensor" type="xs:int"></xs:attribute>
+      <xs:attribute name="hideOnSensor" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="controlSensor" type="xs:string"></xs:attribute>
+      <xs:attribute name="alpha" type="xs:int">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 4.6</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="lineWidth" type="xs:int" use="required"></xs:attribute>
+    </xs:attributeGroup>
+
+
+    <xs:complexType name="EditorPositionableRectangleType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionableRectangle
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableRectangleXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="width" type="xs:int"></xs:attribute>
+                <xs:attribute name="height" type="xs:int"></xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorPositionableRoundRectType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionableRoundRectangle
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableRoundRectXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="width" type="xs:int"></xs:attribute>
+                <xs:attribute name="height" type="xs:int"></xs:attribute>
+                <xs:attribute name="cornerRadius" type="xs:int"></xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorPositionableCircleType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a Positionablecircle
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableCircleXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="radius" type="xs:int"></xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorPositionableEllipseType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionableEllipse
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableEllipseXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="width" type="xs:int"></xs:attribute>
+                <xs:attribute name="height" type="xs:int"></xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorPositionablePolygonType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PositionablePolygon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionablePolygonXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="path" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="vertex" minOccurs="2" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                    <xs:attribute name="type" type="xs:int"></xs:attribute>
+                    <xs:attribute name="idx0" type="xs:float"></xs:attribute>
+                    <xs:attribute name="idx1" type="xs:float"></xs:attribute>
+                    <xs:attribute name="idx2" type="xs:float"></xs:attribute>
+                    <xs:attribute name="idx3" type="xs:float"></xs:attribute>
+                    <xs:attribute name="idx4" type="xs:float"></xs:attribute>
+                    <xs:attribute name="idx5" type="xs:float"></xs:attribute>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorSensorIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a SensorIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.SensorIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="active" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="error" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="family" type="xs:string"></xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="activeText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="inactiveText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="unknownText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="inconsistentText" type="EditorSensorTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="sensor" type="beanNameType"></xs:attribute>
+      <xs:attribute name="momentary" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="sxscale" type="xs:string"></xs:attribute>
+      <xs:attribute name="sxorigin" type="xs:string"></xs:attribute>
+      <xs:attribute name="syscale" type="xs:string"></xs:attribute>
+      <xs:attribute name="syorigin" type="xs:string"></xs:attribute>
+      <xs:attribute name="filter" type="xs:string"></xs:attribute>
+      <xs:attribute name="showid" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="selectable" type="xs:string"></xs:attribute>
+      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="active" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inactive" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="unknown" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="error" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inconsistent" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="activeText" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inactiveText" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="unknownText" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inconsistentText" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redActiveBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenActiveBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueActiveBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redInActiveBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInActiveBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInActiveBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redUnknownBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenUnknownBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueUnknownBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redInconsistentBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInconsistentBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInconsistentBack" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redActive" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenActive" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueActive" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redInActive" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInActive" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInActive" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redUnknown" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenUnknown" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueUnknown" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redInconsistent" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInconsistent" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInconsistent" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorReporterIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a ReporterIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.ReporterIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+      <xs:attribute name="reporter" type="beanNameType"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorMemoryIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a MemoryIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.MemoryIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="memorystate" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+            <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="memory" type="beanNameType"></xs:attribute>
+      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
+      <xs:attribute name="selectable" type="yesNoType"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
+      <xs:attribute name="updateBlockValue" type="yesNoType" default="yes"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorMemoryInputIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a MemoryInputIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.MemoryInputIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="memory" type="beanNameType"></xs:attribute>
+      <xs:attribute name="colWidth" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorMemoryComboIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a MemoryComboIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.MemoryComboIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:all minOccurs="0" maxOccurs="1">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="itemList" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+          <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                     <xs:attribute name="index" type="xs:int"></xs:attribute>
+                  </xs:extension>
+                </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="memory" type="beanNameType"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorFastClockIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a FastClock
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.FastClockXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="x" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="y" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="scale" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="color" type="screenColorType"></xs:attribute>
+      <xs:attribute name="link" type="xs:string"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorMultiSensorIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a MultiSensorIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.MultiSensorIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="multisensoriconentry" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="sensor" type="beanNameType" use="required"></xs:attribute>
+            <xs:attribute name="icon" type="xs:string" use="required"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="active" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="EditorIconType">
+              <xs:attribute name="sensor" type="beanNameType"></xs:attribute>
+            </xs:extension>
+          </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="updown" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="active" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inactive" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="unknown" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inconsistent" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="rotate" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorSignalHeadIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a SignalHeadIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.SignalHeadIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icons" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+                <xs:element name="held" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="dark" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="red" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="yellow" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="green" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="lunar" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="flashred" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="flashyellow" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="flashgreen" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="flashlunar" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            </xs:all>
+           </xs:complexType>
+        </xs:element>
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+            <xs:attribute name="family" type="xs:string"></xs:attribute>
+        </xs:complexType>
+        </xs:element>
+        <xs:element name="held" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="dark" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="red" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="yellow" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="green" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="lunar" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="flashred" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="flashyellow" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="flashgreen" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="flashlunar" type="EditorIconType" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Deprecated</xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:string"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+      <xs:attribute name="signalhead" type="beanNameType"></xs:attribute>
+      <xs:attribute name="clickmode" type="xs:string"></xs:attribute>
+      <xs:attribute name="litmode" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="held" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="dark" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="red" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="flashred" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="yellow" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="flashyellow" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="green" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="flashgreen" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="lunar" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="flashlunar" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="heldicon" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="height" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorSignalMastIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a SignalMastIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.SignalMastIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="signalmast" type="xs:string"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:string"></xs:attribute>
+      <xs:attribute name="rotation" type="xs:string"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+      <xs:attribute name="scale" type="xs:string"></xs:attribute>
+      <xs:attribute name="clickmode" type="xs:string"></xs:attribute>
+      <xs:attribute name="litmode" type="xs:string"></xs:attribute>
+      <xs:attribute name="imageset" type="xs:string"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorTurnoutIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a TurnoutIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.TurnoutIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icons" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="closed" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"></xs:attribute>
+                  <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+                  <xs:attribute name="scale" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="thrown" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"></xs:attribute>
+                  <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+                  <xs:attribute name="scale" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="unknown" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"></xs:attribute>
+                  <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+                  <xs:attribute name="scale" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="inconsistent" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string"></xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"></xs:attribute>
+                  <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+                  <xs:attribute name="scale" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+             <xs:attribute name="family" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="closed" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="thrown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="momentary" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="turnout" type="beanNameType"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:string"></xs:attribute>
+      <xs:attribute name="tristate" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+
+      <xs:attribute name="directControl" type="trueFalseType"></xs:attribute>
+
+      <xs:attribute name="height" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="closed" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="thrown" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="unknown" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inconsistent" type="xs:string">
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+    </xs:complexType>
+
+
+    <xs:complexType name="EditorLayoutTurnoutType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LayoutTurnout
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LayoutTurnoutXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="signalAMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalBMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalCMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalDMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorA" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="type" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="continuing" type="xs:string" use="required"></xs:attribute>
+
+      <xs:attribute name="xa" type="xs:float"></xs:attribute>
+      <xs:attribute name="xb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xc" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xd" type="xs:float"></xs:attribute>
+      <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ya" type="xs:float"></xs:attribute>
+      <xs:attribute name="yb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="yc" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="yd" type="xs:float"></xs:attribute>
+      <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ver" type="xs:integer"></xs:attribute>
+
+      <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
+      <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+
+      <xs:attribute name="turnoutname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockcname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockdname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectaname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectcname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectdname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signala1name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signala2name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signala3name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signalb1name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signalb2name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signalc1name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signalc2name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signald1name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signald2name" type="beanNameType"></xs:attribute>
+      <xs:attribute name="linkedturnoutname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="secondturnoutname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="secondturnoutinverted" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="linktype" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorLayoutSlipType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LayoutSlip
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.layouteditor.configurexml.LayoutSlipXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="signalAMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalBMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalCMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalDMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorA" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signala1name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalb1name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalc1name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signald1name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signala2name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalb2name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalc2name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signald2name" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="turnoutB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="states" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="A-C" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string"></xs:element>
+                        <xs:element name="turnoutB" type="xs:string"></xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="A-D" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string"></xs:element>
+                        <xs:element name="turnoutB" type="xs:string"></xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="B-D" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string"></xs:element>
+                        <xs:element name="turnoutB" type="xs:string"></xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="B-C" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string"></xs:element>
+                        <xs:element name="turnoutB" type="xs:string"></xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="slipType" type="xs:string" use="required"></xs:attribute>
+
+      <xs:attribute name="xa" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ya" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="yb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
+
+      <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
+      <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+
+      <xs:attribute name="blockname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockcname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blockdname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectaname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectcname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectdname" type="beanNameType"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorLocoIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LocoIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LocoIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="dockX" type="xs:string"></xs:attribute>
+      <xs:attribute name="dockY" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorTrainIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a TrainIcon.
+          Persistence class inherits from jmri.jmrit.display.configurexml.LocoIconXml
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.operations.trains.configurexml.TrainIconXml
+          jmri.jmrit.display.configurexml.LocoIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="train" type="xs:string"></xs:attribute>
+      <xs:attribute name="trainName" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+      <xs:attribute name="icon" type="yesNoType"></xs:attribute>
+      <xs:attribute name="dockX" type="xs:string"></xs:attribute>
+      <xs:attribute name="dockY" type="xs:string"></xs:attribute>
+      <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorLocoLabelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LocoLabel shape
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.shape.configurexml.LocoLabelXML??
+        </xs:appinfo>
+      </xs:annotation>
+        <xs:all>
+        <xs:element name="OBlock" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="systemName" type="xs:string"></xs:attribute>
+            <xs:attribute name="trainName" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:attribute name="width" type="xs:int"></xs:attribute>
+            <xs:attribute name="height" type="xs:int"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="lineColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="fillColor" type="ShapeColorType" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="ShapeCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorBlockContentsIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a BlockContentsIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.BlockContentsIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="blockcontents" type="xs:string"></xs:attribute>
+      <xs:attribute name="selectable" type="xs:string"></xs:attribute>
+      <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+     </xs:complexType>
+
+    <xs:complexType name="EditorTrackSegmentType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a TrackSegment
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.TrackSegmentXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence>
+        <xs:element name="controlpoints" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="controlpoint" minOccurs="2" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="index" type="xs:integer" use="required"></xs:attribute>
+                  <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
+                  <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blockname" type="beanNameType"></xs:attribute>  <!-- required in DTD, missing from some files -->
+      <xs:attribute name="connect1name" type="beanNameType" use="required"></xs:attribute>
+      <xs:attribute name="type1" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="connect2name" type="beanNameType" use="required"></xs:attribute>
+      <xs:attribute name="type2" type="xs:int" use="required"></xs:attribute>
+      <xs:attribute name="dashed" type="yesNoType"></xs:attribute>
+      <xs:attribute name="mainline" type="yesNoType"></xs:attribute>
+      <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="arc" type="yesNoType"></xs:attribute>
+      <xs:attribute name="flip" type="yesNoType"></xs:attribute>
+      <xs:attribute name="circle" type="yesNoType"></xs:attribute>
+      <xs:attribute name="bezier" type="yesNoType"></xs:attribute>
+      <xs:attribute name="angle" type="xs:float"></xs:attribute>
+      <xs:attribute name="hideConLines" type="yesNoType"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorLevelXingType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LevelXing
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LevelXingXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="signalAMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalBMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalCMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="signalDMast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorA" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="blocknameac" type="beanNameType"></xs:attribute>
+      <xs:attribute name="blocknamebd" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signal1aname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signal1bname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signal1cname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="signal1dname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectaname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectbname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectcname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="connectdname" type="beanNameType"></xs:attribute>
+      <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="xb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xc" type="xs:float"></xs:attribute>    <!-- required in DTD, missing from some files -->
+      <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="yb" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="yc" type="xs:float"></xs:attribute>    <!-- required in DTD, missing from some files -->
+      <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
+
+      <xs:attribute name="signalaname" type="beanNameType"></xs:attribute> <!-- not in DTD, found in files -->
+      <xs:attribute name="signalbname" type="beanNameType"></xs:attribute> <!-- not in DTD, found in files -->
+      <xs:attribute name="signalcname" type="beanNameType"></xs:attribute> <!-- not in DTD, found in files -->
+      <xs:attribute name="signaldname" type="beanNameType"></xs:attribute> <!-- not in DTD, found in files -->
+      <xs:attribute name="xa" type="xs:float"></xs:attribute>              <!-- not in DTD, found in files -->
+      <xs:attribute name="ya" type="xs:float"></xs:attribute>              <!-- not in DTD, found in files -->
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorLayoutTurntableType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LayoutTurntable.
+          (Not present in 2.9.3 DTD, done by observation)
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LayoutTurntableXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="raytrack" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="connectname" type="xs:string"></xs:attribute>
+            <xs:attribute name="angle" type="xs:string"></xs:attribute>
+            <xs:attribute name="index" type="xs:string"></xs:attribute>
+            <xs:attribute name="turnout" type="beanNameType"></xs:attribute>
+            <xs:attribute name="turnoutstate" type="xs:string"></xs:attribute><!-- THROWN/CLOSED -->
+            <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
+            <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="radius" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
+      <xs:attribute name="turnoutControlled" type="yesNoType"></xs:attribute>
+
+    </xs:complexType>
+
+    <xs:complexType name="EditorLinkingLabelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a LinkingLabel
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LinkingLabelXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:all>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+      </xs:all>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="icon" type="xs:string"></xs:attribute>
+      <xs:attribute name="text" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorIndicatorTrackIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a MultiSensorIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.IndicatorTrackIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="iconmap" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+            <xs:element name="AllocatedTrack" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="PositionTrack" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="ClearTrack" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="DontUseTrack" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="ErrorTrack" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="OccupiedTrack" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+            </xs:all>
+
+            <xs:attribute name="family" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="paths" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+            <xs:element name="path" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="degrees" type="xs:integer"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorSlipTurnoutTconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing an SlipTurnoutTcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.SlipTurnoutIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="turnoutEast" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+        <xs:element name="turnoutWest" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+
+
+        <xs:element name="turnoutLowerEast" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="turnoutLowerWest" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="lowerWestToLowerEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="upperWestToUpperEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="lowerWestToUpperEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="upperWestToLowerEast" type="EditorIconTextType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+
+      </xs:sequence>
+
+      <xs:attribute name="turnoutType">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="doubleSlip"></xs:enumeration>
+            <xs:enumeration value="singleSlip"></xs:enumeration>
+            <xs:enumeration value="threeWay"></xs:enumeration>
+            <xs:enumeration value="scissor"></xs:enumeration>
+            <xs:enumeration value="double"></xs:enumeration><!-- obsolete, but old files still contain -->
+            <xs:enumeration value="single"></xs:enumeration><!-- obsolete, but old files still contain -->
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="tristate" type="trueFalseType"></xs:attribute>
+      <xs:attribute name="singleSlipRoute">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="upperWestToUpperEast"></xs:enumeration>
+            <xs:enumeration value="lowerWestToLowerEast"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="firstTurnoutExit">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="upper"></xs:enumeration>
+            <xs:enumeration value="lower"></xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorIndicatorTurnoutIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing an IndicatorTurnoutIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all>
+            <xs:element name="AllocatedTrack">
+              <xs:complexType>
+              <xs:all>
+                <xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+              </xs:all>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PositionTrack">
+              <xs:complexType>
+              <xs:all>
+                <xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+              </xs:all>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ClearTrack">
+              <xs:complexType>
+              <xs:all>
+                <xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+              </xs:all>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="DontUseTrack">
+              <xs:complexType>
+              <xs:all>
+                <xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+              </xs:all>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ErrorTrack">
+              <xs:complexType>
+              <xs:all>
+                <xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+              </xs:all>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="OccupiedTrack">
+              <xs:complexType>
+              <xs:all>
+                <xs:element name="BeanStateUnknown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateClosed" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="TurnoutStateThrown" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="BeanStateInconsistent" type="EditorIconType" minOccurs="0" maxOccurs="1"></xs:element>
+              </xs:all>
+              </xs:complexType>
+            </xs:element>
+            </xs:all>
+
+            <xs:attribute name="family" type="xs:string"></xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="paths" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+            <xs:element name="path" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="degrees" type="xs:integer"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+
+       <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+    </xs:complexType>
+
+    <xs:complexType name="EditorPortalIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a PortalIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      <xs:attribute name="portalName" type="xs:string"></xs:attribute>
+      <xs:attribute name="toBlockName" type="xs:string"></xs:attribute>
+      <xs:attribute name="fromBlockName" type="xs:string"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:string"></xs:attribute>
+      <xs:attribute name="scale" type="xs:string"></xs:attribute>
+      <xs:attribute name="arrowSwitch" type="yesNoType"></xs:attribute>
+      <xs:attribute name="arrowHide" type="yesNoType"></xs:attribute>
+      <xs:attribute name="rotate" type="xs:integer"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="EditorLightIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a Light Icon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LightIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+          <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="icons" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="on" type="LightIconIconsType" minOccurs="0" maxOccurs="1"></xs:element>
+              <xs:element name="off" type="LightIconIconsType" minOccurs="0" maxOccurs="1"></xs:element>
+              <xs:element name="unknown" type="LightIconIconsType" minOccurs="0" maxOccurs="1"></xs:element>
+              <xs:element name="inconsistent" type="LightIconIconsType" minOccurs="0" maxOccurs="1"></xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup"></xs:attributeGroup>
+      <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
+
+      <xs:attribute name="light" type="systemNameType" use="required"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="JustificationType">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="left"></xs:enumeration>
+        <!-- allow US spelling even though JMRI only writes UK spelling -->
+        <xs:enumeration value="center"></xs:enumeration>
+        <xs:enumeration value="centre"></xs:enumeration>
+        <xs:enumeration value="right"></xs:enumeration>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="LightIconIconsType">
+      <xs:sequence>
+        <xs:element name="rotation" minOccurs="1" maxOccurs="1" type="xs:integer"></xs:element>
+      </xs:sequence>
+      <xs:attribute name="url" type="urlType" use="required"></xs:attribute>
+      <xs:attribute name="degrees" type="xs:integer" use="required"></xs:attribute>
+      <xs:attribute name="scale" type="xs:float" use="required"></xs:attribute>
+    </xs:complexType>
+
+</xs:schema>

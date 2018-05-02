@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Speedometer - Using the serial port for block
+  sensors</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>Speedometer</h1>
+
+      <h2>Using the serial port for Block Sensors</h2>Jim Scorse
+      has provided a schematic for connecting an NCE block detector
+      to the serial port.<br>
+      <img src="images/speed0.jpg" width="400" height="300">
+
+      <h3>DB9 and DB25 connections</h3>
+      <pre>
+       DB9 pin      DB25 pin
+       -------      --------
+
+DCD      1             8
+RxD      2             3
+TxD      3             2
+DTR      4            20
+ground   5             7
+DSR      6             6
+RTS      7             4
+CTS      8             5
+RI       9            22
+
+</pre>
+
+      <p>Back to the <a href="index.shtml">Speedometer main Help
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

@@ -1,0 +1,1864 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
+  <!--
+     This decoder configuration file is based on ESU_LokPilotDCC.xml
+     V 4, dated 20050619, by Walter Thompson. Which also acknowledged
+     "the contribution of many others" including 'jake'.
+
+     Based on the "LokPilot V2.0 LokPilotDCC V2.0 LokPilot micro 4th edition,
+     August 2005" users manual (from the German web site).
+
+     This decoder XML is meant to be used with the "Comprehensive" programmer format.
+     Continued the practice of using unrelated "item" names to place ESU unique
+     variables on the proper pane of the Comprehensive programmer.
+
+     Any and all feedback on this file would be appreciated.
+
+     Version History:
+
+        1.0 - Initial release 31 Jan 2008
+
+        1.1 - 18 Feb 2009
+              Added family lowVersionID & highVersionID, range 0-255 because CV 7 doesn't seem
+                 to match software version number
+-->
+  <decoder>
+    <family name="ESU LokPilot 2.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
+      <model model="LokPilot 2.0" maxInputVolts="25 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.45 A" numOuts="4" numFns="14" formFactor="HO" connector="NMRAmedium">
+        <output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
+        <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
+        <output name="4" label="   AUX2    " maxcurrent="180 mA" connection="wire"/>
+        <size length="23" width="15.5" height="6.5" units="mm"/>
+      </model>
+      <model model="LokPilotDCC 2.0" maxInputVolts="25 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.45 A" numOuts="4" numFns="14" formFactor="HO" connector="NMRAmedium">
+        <output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
+        <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
+        <output name="4" label="   AUX2    " maxcurrent="180 mA" connection="wire"/>
+        <size length="23" width="15.5" height="6.5" units="mm"/>
+      </model>
+      <model model="LokPilot micro 2.0" maxInputVolts="25 V" maxMotorCurrent="0.5 A" maxTotalCurrent="0.78 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
+        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire"/>
+        <size length="13.5" width="9" height="3.7" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
+        <decVal min="1" max="75"/>
+        <label>Starting Voltage</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.v</label>
+        <label xml:lang="de">Startspannung</label>
+        <label xml:lang="ca">Voltatge d'arrencada</label>
+      </variable>
+      <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
+        <decVal min="0" max="64"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-64)</label>
+        <label xml:lang="fr">Accelération (0-64)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-64)</label>
+        <label xml:lang="ca">Acceleració (0-63)</label>
+      </variable>
+      <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
+        <decVal min="1" max="64"/>
+        <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-64)</label>
+        <label xml:lang="fr">Décélération (1-64)</label>
+        <label xml:lang="de">Bremszeit (1-64)</label>
+        <label xml:lang="ca">Desacceleració (1-64)</label>
+      </variable>
+      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
+        <decVal min="0" max="64"/>
+        <label>Maximum Speed</label>
+        <label xml:lang="it">Volt Massimi (0-64):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="ca">Velocitat Màxima</label>
+      </variable>
+      <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
+        <decVal min="0" max="64"/>
+        <label>Medium speed</label>
+        <label xml:lang="it">Volts intermedi (0-64)</label>
+        <label xml:lang="de">Vmittel (0-64)</label>
+        <label xml:lang="ca">Velocitat Intermitja</label>
+      </variable>
+      <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="ca">VVersió del descodificador</label>
+      </variable>
+      <variable CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="ca">ID del fabricant</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F1</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F2</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F3</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F4</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F5</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F6</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F7</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F8</label>
+      </variable>
+      <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - FL(f)</label>
+      </variable>
+      <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - FL(r)</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F9(f)" CV="14" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F9(f)</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F10(f)" CV="14" mask="XXXXVXXX" default="0">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F10(f)</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F11</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F12</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F9(r)" CV="14" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F9(r)</label>
+      </variable>
+      <variable item="Analog Mode Function Status - F10(r)" CV="14" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Analog Mode Function Status - F10(r)</label>
+      </variable>
+     <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable CV="29" mask="XXXXXXVX" default="0" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically">
+        <enumVal>
+          <enumChoice choice="14 speed step format">
+            <choice xml:lang="it">Formato 14 step</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 speed step format">
+          <choice>28/128 speed step format(recommended)</choice>
+            <choice xml:lang="it">Formato 28 o 128 step</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+        <label xml:lang="fr">Pas de vitesse</label>
+        <label xml:lang="de">Fahrstufen</label>
+        <label xml:lang="it">Step Velocità</label>
+        <label xml:lang="ca">Passos de velocitat</label>
+        <tooltip>Sets the speed step mode. 128 speed steps are recognized automatically</tooltip>
+        <tooltip xml:lang="it">Stabilisce gli Step velocità. 128 Step sono automatici</tooltip>
+        <tooltip xml:lang="ca">Estableix els passos de velocitat. Els 128 es reconeixen automàticament</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable CV="49" mask="XXXXXXXV" default="1" item="Dither option">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Load control</label>
+      </variable>
+      <variable CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
+        <enumVal>
+          <enumChoice choice="20 kHz Tact frequency on">
+            <choice>20 kHz Tact frequency on</choice>
+          </enumChoice>
+          <enumChoice choice="40 kHz Tact frequency on">
+            <choice>40 kHz Tact frequency on</choice>
+          </enumChoice>
+        </enumVal>
+        <label>DC Motor PWM frequency</label>
+      </variable>
+      <variable item="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Marklin Delta Mode</label>
+      </variable>
+      <variable item="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Marklin 2. address</label>
+      </variable>
+      <variable item="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Automatic speed step detection</label>
+      </variable>
+      <variable item="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>LGB Function button mode</label>
+      </variable>
+      <variable item="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>ZIMO Manual function</label>
+      </variable>
+      <variable CV="50" mask="XXXXXXXV" default="1" item="Trix Power Conversion">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>AC Analogue mode</label>
+      </variable>
+      <variable CV="50" mask="XXXXXXVX" default="1" item="Analog Power Conversion">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>DC Analogue mode</label>
+      </variable>
+      <variable item="Marklin Brake mode" CV="51" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Marklin Brake mode</label>
+      </variable>
+      <variable item="ZIMO Brake mode" CV="51" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>ZIMO Brake mode</label>
+      </variable>
+      <variable item="Lenz DCC Brake mode" CV="51" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Lenz DCC Brake mode</label>
+      </variable>
+      <variable CV="53" default="56" item="EMF Static Config" tooltip="Determines the back EMF that the motorshould supply at maximum speed (0-80)">
+        <decVal min="0" max="80"/>
+        <label>Control reference</label>
+      </variable>
+      <variable CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects (0-80)">
+        <decVal min="0" max="80"/>
+        <label>Load control parameter K</label>
+      </variable>
+      <variable CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor (0-80)">
+        <decVal min="0" max="80"/>
+        <label>Load control parameter I</label>
+      </variable>
+      <variable CV="56" default="64" item="EMF Feedback Cutout" tooltip="Determines up to how many % of the speed load control is active (0-64)">
+        <decVal min="0" max="64"/>
+        <label>Load control influence</label>
+      </variable>
+      <variable item="Forward Trim" CV="66" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255)">
+        <decVal min="0" max="255"/>
+        <label>Forward Trim</label>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable item="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)">
+        <decVal min="0" max="255"/>
+        <label>Reverse Trim</label>
+      </variable>
+      <variable CV="112" default="33" item="Global lighting option 1" tooltip="Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64).">
+        <decVal min="0" max="255"/>
+        <label>Blinking frequency</label>
+      </variable>
+      <variable CV="113" mask="XXXXVVVV" default="15" item="Output 1 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+        <decVal min="0" max="15"/>
+        <label>Brightness Headlights</label>
+      </variable>
+      <variable CV="113" mask="VVVVXXXX" default="0" item="Output 1 behavior">
+        <enumVal>
+          <enumChoice choice="Continous output (dimmer)">
+            <choice>Continous output (dimmer)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 1)">
+            <choice>Blinking output (Phase 1)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 2)">
+            <choice>Blinking output (Phase 2)</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox">
+            <choice>Firebox</choice>
+          </enumChoice>
+          <enumChoice choice="Smoke generator">
+            <choice>Smoke generator</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights (highbeam/lowbeam)">
+            <choice>Headlights (highbeam/lowbeam)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Gyro light">
+            <choice>Gyro light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output Configuration Headlights</label>
+      </variable>
+      <variable CV="114" mask="XXXXVVVV" default="15" item="Output 2 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+        <decVal min="0" max="15"/>
+        <label>Brightness Back up lights</label>
+      </variable>
+      <variable CV="114" mask="VVVVXXXX" default="0" item="Output 2 behavior">
+        <enumVal>
+          <enumChoice choice="Continous output (dimmer)">
+            <choice>Continous output (dimmer)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 1)">
+            <choice>Blinking output (Phase 1)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 2)">
+            <choice>Blinking output (Phase 2)</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox">
+            <choice>Firebox</choice>
+          </enumChoice>
+          <enumChoice choice="Smoke generator">
+            <choice>Smoke generator</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights (highbeam/lowbeam)">
+            <choice>Headlights (highbeam/lowbeam)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Gyro light">
+            <choice>Gyro light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output Configuration Back up lights</label>
+      </variable>
+      <variable CV="115" mask="XXXXVVVV" default="15" item="Output 3 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+        <decVal min="0" max="15"/>
+        <label>Brightness AUX1</label>
+      </variable>
+      <variable CV="115" mask="VVVVXXXX" default="0" item="Output 3 behavior">
+        <enumVal>
+          <enumChoice choice="Continous output (dimmer)">
+            <choice>Continous output (dimmer)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 1)">
+            <choice>Blinking output (Phase 1)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 2)">
+            <choice>Blinking output (Phase 2)</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox">
+            <choice>Firebox</choice>
+          </enumChoice>
+          <enumChoice choice="Smoke generator">
+            <choice>Smoke generator</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights (highbeam/lowbeam)">
+            <choice>Headlights (highbeam/lowbeam)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Gyro light">
+            <choice>Gyro light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output Configuration AUX1</label>
+      </variable>
+      <variable CV="116" mask="XXXXVVVV" default="15" item="Output 4 effect generated" tooltip="Brightness, range 0 (dark) - 15 (maximum)">
+        <decVal min="0" max="15"/>
+        <label>Brightness AUX2</label>
+      </variable>
+      <variable CV="116" mask="VVVVXXXX" default="0" item="Output 4 behavior">
+        <enumVal>
+          <enumChoice choice="Continous output (dimmer)">
+            <choice>Continous output (dimmer)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 1)">
+            <choice>Blinking output (Phase 1)</choice>
+          </enumChoice>
+          <enumChoice choice="Blinking output (Phase 2)">
+            <choice>Blinking output (Phase 2)</choice>
+          </enumChoice>
+          <enumChoice choice="Strobe">
+            <choice>Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double Strobe">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox">
+            <choice>Firebox</choice>
+          </enumChoice>
+          <enumChoice choice="Smoke generator">
+            <choice>Smoke generator</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights (highbeam/lowbeam)">
+            <choice>Headlights (highbeam/lowbeam)</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Gyro light">
+            <choice>Gyro light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Output Configuration AUX2</label>
+      </variable>
+      <variable item="Saves the direction of travel" CV="124" mask="XXXXXXXV" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Saves the direction of travel</label>
+      </variable>
+      <variable item="Saves the status of function buttons" CV="124" mask="XXXXXXVX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Saves the status of function buttons</label>
+      </variable>
+      <variable item="Saves the current speed setting" CV="124" mask="XXXXXVXX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Saves the current speed setting</label>
+      </variable>
+      <variable item="Accelerates after a reset with the programmed acceleration" CV="124" mask="XXXXVXXX" default="0" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Accelerates after a reset with the programmed acceleration</label>
+      </variable>
+      <variable CV="125" default="110" item="Radio Power Conversion" tooltip="Range 0-127">
+        <decVal min="0" max="127"/>
+        <label>Analogue DC starting voltage</label>
+      </variable>
+      <variable CV="126" default="127" item="Zero-1 Power Conversion" tooltip="Range 0-127">
+        <decVal min="0" max="127"/>
+        <label>Analogue DC maximum speed</label>
+      </variable>
+      <variable CV="127" default="50" item="CTC/Railcommand Power Conversion" tooltip="Range 0-127">
+        <decVal min="0" max="127"/>
+        <label>Analogue AC starting voltage</label>
+      </variable>
+      <variable CV="128" default="127" item="FMZ(Fleischmann)" tooltip="Range 0-127">
+        <decVal min="0" max="127"/>
+        <label>Analogue AC maximum speed</label>
+      </variable>
+      <variable item="Stand Forward A Headlight" CV="129" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Forward A Headlight</label>
+      </variable>
+      <variable item="Stand Forward A Rear light" CV="129" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Forward A Rear light</label>
+      </variable>
+      <variable item="Stand Forward A AUX1" CV="129" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Forward A AUX1</label>
+      </variable>
+      <variable item="Stand Forward A AUX2" CV="129" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Forward A AUX2</label>
+      </variable>
+      <variable item="Stand Forward B Acceleration on/off" CV="130" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="Stand Forward B Shunting mode on/off" CV="130" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="Stand Back up A Headlight" CV="132" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Back up A Headlight</label>
+      </variable>
+      <variable item="Stand Back up A Rear light" CV="132" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Back up A Rear light</label>
+      </variable>
+      <variable item="Stand Back up A AUX1" CV="132" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Back up A AUX1</label>
+      </variable>
+      <variable item="Stand Back up A AUX2" CV="132" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Back up A AUX2</label>
+      </variable>
+      <variable item="Stand Back up B Acceleration on/off" CV="133" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="Stand Back up B Shunting mode on/off" CV="133" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Stand Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="Drive Forward A Headlight" CV="135" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Forward A Headlight</label>
+      </variable>
+      <variable item="Drive Forward A Rear light" CV="135" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Forward A Rear light</label>
+      </variable>
+      <variable item="Drive Forward A AUX1" CV="135" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Forward A AUX1</label>
+      </variable>
+      <variable item="Drive Forward A AUX2" CV="135" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Forward A AUX2</label>
+      </variable>
+      <variable item="Drive Forward B Acceleration on/off" CV="136" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="Drive Forward B Shunting mode on/off" CV="136" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="Drive Back up A Headlight" CV="138" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Back up A Headlight</label>
+      </variable>
+      <variable item="Drive Back up A Rear light" CV="138" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Back up A Rear light</label>
+      </variable>
+      <variable item="Drive Back up A AUX1" CV="138" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Back up A AUX1</label>
+      </variable>
+      <variable item="Drive Back up A AUX2" CV="138" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Back up A AUX2</label>
+      </variable>
+      <variable item="Drive Back up B Acceleration on/off" CV="139" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="Drive Back up B Shunting mode on/off" CV="139" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Drive Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="Light Forward A Headlight" CV="141" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Forward A Headlight</label>
+      </variable>
+      <variable item="Light Forward A Rear light" CV="141" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Forward A Rear light</label>
+      </variable>
+      <variable item="Light Forward A AUX1" CV="141" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Forward A AUX1</label>
+      </variable>
+      <variable item="Light Forward A AUX2" CV="141" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Forward A AUX2</label>
+      </variable>
+      <variable item="Light Forward B Acceleration on/off" CV="142" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="Light Forward B Shunting mode on/off" CV="142" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="Light Back up A Headlight" CV="144" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Back up A Headlight</label>
+      </variable>
+      <variable item="Light Back up A Rear light" CV="144" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Back up A Rear light</label>
+      </variable>
+      <variable item="Light Back up A AUX1" CV="144" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Back up A AUX1</label>
+      </variable>
+      <variable item="Light Back up A AUX2" CV="144" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Back up A AUX2</label>
+      </variable>
+      <variable item="Light Back up B Acceleration on/off" CV="145" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="Light Back up B Shunting mode on/off" CV="145" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>Light Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F1 Forward A Headlight" CV="147" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Forward A Headlight</label>
+      </variable>
+      <variable item="F1 Forward A Rear light" CV="147" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Forward A Rear light</label>
+      </variable>
+      <variable item="F1 Forward A AUX1" CV="147" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Forward A AUX1</label>
+      </variable>
+      <variable item="F1 Forward A AUX2" CV="147" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Forward A AUX2</label>
+      </variable>
+      <variable item="F1 Forward B Acceleration on/off" CV="148" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F1 Forward B Shunting mode on/off" CV="148" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F1 Back up A Headlight" CV="150" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Back up A Headlight</label>
+      </variable>
+      <variable item="F1 Back up A Rear light" CV="150" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Back up A Rear light</label>
+      </variable>
+      <variable item="F1 Back up A AUX1" CV="150" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Back up A AUX1</label>
+      </variable>
+      <variable item="F1 Back up A AUX2" CV="150" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Back up A AUX2</label>
+      </variable>
+      <variable item="F1 Back up B Acceleration on/off" CV="151" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F1 Back up B Shunting mode on/off" CV="151" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F1 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F2 Forward A Headlight" CV="153" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Forward A Headlight</label>
+      </variable>
+      <variable item="F2 Forward A Rear light" CV="153" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Forward A Rear light</label>
+      </variable>
+      <variable item="F2 Forward A AUX1" CV="153" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Forward A AUX1</label>
+      </variable>
+      <variable item="F2 Forward A AUX2" CV="153" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Forward A AUX2</label>
+      </variable>
+      <variable item="F2 Forward B Acceleration on/off" CV="154" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F2 Forward B Shunting mode on/off" CV="154" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F2 Back up A Headlight" CV="156" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Back up A Headlight</label>
+      </variable>
+      <variable item="F2 Back up A Rear light" CV="156" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Back up A Rear light</label>
+      </variable>
+      <variable item="F2 Back up A AUX1" CV="156" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Back up A AUX1</label>
+      </variable>
+      <variable item="F2 Back up A AUX2" CV="156" mask="XXXXVXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Back up A AUX2</label>
+      </variable>
+      <variable item="F2 Back up B Acceleration on/off" CV="157" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F2 Back up B Shunting mode on/off" CV="157" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F2 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F3 Forward A Headlight" CV="159" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Forward A Headlight</label>
+      </variable>
+      <variable item="F3 Forward A Rear light" CV="159" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Forward A Rear light</label>
+      </variable>
+      <variable item="F3 Forward A AUX1" CV="159" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Forward A AUX1</label>
+      </variable>
+      <variable item="F3 Forward A AUX2" CV="159" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Forward A AUX2</label>
+      </variable>
+      <variable item="F3 Forward B Acceleration on/off" CV="160" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F3 Forward B Shunting mode on/off" CV="160" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F3 Back up A Headlight" CV="162" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Back up A Headlight</label>
+      </variable>
+      <variable item="F3 Back up A Rear light" CV="162" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Back up A Rear light</label>
+      </variable>
+      <variable item="F3 Back up A AUX1" CV="162" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Back up A AUX1</label>
+      </variable>
+      <variable item="F3 Back up A AUX2" CV="162" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Back up A AUX2</label>
+      </variable>
+      <variable item="F3 Back up B Acceleration on/off" CV="163" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F3 Back up B Shunting mode on/off" CV="163" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F3 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F4 Forward A Headlight" CV="165" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Forward A Headlight</label>
+      </variable>
+      <variable item="F4 Forward A Rear light" CV="165" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Forward A Rear light</label>
+      </variable>
+      <variable item="F4 Forward A AUX1" CV="165" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Forward A AUX1</label>
+      </variable>
+      <variable item="F4 Forward A AUX2" CV="165" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Forward A AUX2</label>
+      </variable>
+      <variable item="F4 Forward B Acceleration on/off" CV="166" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F4 Forward B Shunting mode on/off" CV="166" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F4 Back up A Headlight" CV="168" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Back up A Headlight</label>
+      </variable>
+      <variable item="F4 Back up A Rear light" CV="168" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Back up A Rear light</label>
+      </variable>
+      <variable item="F4 Back up A AUX1" CV="168" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Back up A AUX1</label>
+      </variable>
+      <variable item="F4 Back up A AUX2" CV="168" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Back up A AUX2</label>
+      </variable>
+      <variable item="F4 Back up B Acceleration on/off" CV="169" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F4 Back up B Shunting mode on/off" CV="169" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F4 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F5 Forward A Headlight" CV="171" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Forward A Headlight</label>
+      </variable>
+      <variable item="F5 Forward A Rear light" CV="171" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Forward A Rear light</label>
+      </variable>
+      <variable item="F5 Forward A AUX1" CV="171" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Forward A AUX1</label>
+      </variable>
+      <variable item="F5 Forward A AUX2" CV="171" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Forward A AUX2</label>
+      </variable>
+      <variable item="F5 Forward B Acceleration on/off" CV="172" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F5 Forward B Shunting mode on/off" CV="172" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F5 Back up A Headlight" CV="174" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Back up A Headlight</label>
+      </variable>
+      <variable item="F5 Back up A Rear light" CV="174" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Back up A Rear light</label>
+      </variable>
+      <variable item="F5 Back up A AUX1" CV="174" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Back up A AUX1</label>
+      </variable>
+      <variable item="F5 Back up A AUX2" CV="174" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Back up A AUX2</label>
+      </variable>
+      <variable item="F5 Back up B Acceleration on/off" CV="175" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F5 Back up B Shunting mode on/off" CV="175" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F5 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F6 Forward A Headlight" CV="177" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Forward A Headlight</label>
+      </variable>
+      <variable item="F6 Forward A Rear light" CV="177" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Forward A Rear light</label>
+      </variable>
+      <variable item="F6 Forward A AUX1" CV="177" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Forward A AUX1</label>
+      </variable>
+      <variable item="F6 Forward A AUX2" CV="177" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Forward A AUX2</label>
+      </variable>
+      <variable item="F6 Forward B Acceleration on/off" CV="178" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F6 Forward B Shunting mode on/off" CV="178" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F6 Back up A Headlight" CV="180" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Back up A Headlight</label>
+      </variable>
+      <variable item="F6 Back up A Rear light" CV="180" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Back up A Rear light</label>
+      </variable>
+      <variable item="F6 Back up A AUX1" CV="180" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Back up A AUX1</label>
+      </variable>
+      <variable item="F6 Back up A AUX2" CV="180" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Back up A AUX2</label>
+      </variable>
+      <variable item="F6 Back up B Acceleration on/off" CV="181" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F6 Back up B Shunting mode on/off" CV="181" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F6 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F7 Forward A Headlight" CV="183" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Forward A Headlight</label>
+      </variable>
+      <variable item="F7 Forward A Rear light" CV="183" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Forward A Rear light</label>
+      </variable>
+      <variable item="F7 Forward A AUX1" CV="183" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Forward A AUX1</label>
+      </variable>
+      <variable item="F7 Forward A AUX2" CV="183" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Forward A AUX2</label>
+      </variable>
+      <variable item="F7 Forward B Acceleration on/off" CV="184" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F7 Forward B Shunting mode on/off" CV="184" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F7 Back up A Headlight" CV="186" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Back up A Headlight</label>
+      </variable>
+      <variable item="F7 Back up A Rear light" CV="186" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Back up A Rear light</label>
+      </variable>
+      <variable item="F7 Back up A AUX1" CV="186" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Back up A AUX1</label>
+      </variable>
+      <variable item="F7 Back up A AUX2" CV="186" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Back up A AUX2</label>
+      </variable>
+      <variable item="F7 Back up B Acceleration on/off" CV="187" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F7 Back up B Shunting mode on/off" CV="187" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F7 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F8 Forward A Headlight" CV="189" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Forward A Headlight</label>
+      </variable>
+      <variable item="F8 Forward A Rear light" CV="189" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Forward A Rear light</label>
+      </variable>
+      <variable item="F8 Forward A AUX1" CV="189" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Forward A AUX1</label>
+      </variable>
+      <variable item="F8 Forward A AUX2" CV="189" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Forward A AUX2</label>
+      </variable>
+      <variable item="F8 Forward B Acceleration on/off" CV="190" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F8 Forward B Shunting mode on/off" CV="190" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F8 Back up A Headlight" CV="192" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Back up A Headlight</label>
+      </variable>
+      <variable item="F8 Back up A Rear light" CV="192" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Back up A Rear light</label>
+      </variable>
+      <variable item="F8 Back up A AUX1" CV="192" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Back up A AUX1</label>
+      </variable>
+      <variable item="F8 Back up A AUX2" CV="192" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Back up A AUX2</label>
+      </variable>
+      <variable item="F8 Back up B Acceleration on/off" CV="193" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F8 Back up B Shunting mode on/off" CV="193" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F8 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F9 Forward A Headlight" CV="195" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Forward A Headlight</label>
+      </variable>
+      <variable item="F9 Forward A Rear light" CV="195" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Forward A Rear light</label>
+      </variable>
+      <variable item="F9 Forward A AUX1" CV="195" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Forward A AUX1</label>
+      </variable>
+      <variable item="F9 Forward A AUX2" CV="195" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Forward A AUX2</label>
+      </variable>
+      <variable item="F9 Forward B Acceleration on/off" CV="196" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F9 Forward B Shunting mode on/off" CV="196" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F9 Back up A Headlight" CV="198" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Back up A Headlight</label>
+      </variable>
+      <variable item="F9 Back up A Rear light" CV="198" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Back up A Rear light</label>
+      </variable>
+      <variable item="F9 Back up A AUX1" CV="198" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Back up A AUX1</label>
+      </variable>
+      <variable item="F9 Back up A AUX2" CV="198" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Back up A AUX2</label>
+      </variable>
+      <variable item="F9 Back up B Acceleration on/off" CV="199" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F9 Back up B Shunting mode on/off" CV="199" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F9 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F10 Forward A Headlight" CV="201" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Forward A Headlight</label>
+      </variable>
+      <variable item="F10 Forward A Rear light" CV="201" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Forward A Rear light</label>
+      </variable>
+      <variable item="F10 Forward A AUX1" CV="201" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Forward A AUX1</label>
+      </variable>
+      <variable item="F10 Forward A AUX2" CV="201" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Forward A AUX2</label>
+      </variable>
+      <variable item="F10 Forward B Acceleration on/off" CV="202" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F10 Forward B Shunting mode on/off" CV="202" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F10 Back up A Headlight" CV="204" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Back up A Headlight</label>
+      </variable>
+      <variable item="F10 Back up A Rear light" CV="204" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Back up A Rear light</label>
+      </variable>
+      <variable item="F10 Back up A AUX1" CV="204" mask="XXXXXVXX">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Back up A AUX1</label>
+      </variable>
+      <variable item="F10 Back up A AUX2" CV="204" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Back up A AUX2</label>
+      </variable>
+      <variable item="F10 Back up B Acceleration on/off" CV="205" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F10 Back up B Shunting mode on/off" CV="205" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F10 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F11 Forward A Headlight" CV="207" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Forward A Headlight</label>
+      </variable>
+      <variable item="F11 Forward A Rear light" CV="207" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Forward A Rear light</label>
+      </variable>
+      <variable item="F11 Forward A AUX1" CV="207" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Forward A AUX1</label>
+      </variable>
+      <variable item="F11 Forward A AUX2" CV="207" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Forward A AUX2</label>
+      </variable>
+      <variable item="F11 Forward B Acceleration on/off" CV="208" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F11 Forward B Shunting mode on/off" CV="208" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F11 Back up A Headlight" CV="210" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Back up A Headlight</label>
+      </variable>
+      <variable item="F11 Back up A Rear light" CV="210" mask="XXXXXXVX">
+       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Back up A Rear light</label>
+      </variable>
+      <variable item="F11 Back up A AUX1" CV="210" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Back up A AUX1</label>
+      </variable>
+      <variable item="F11 Back up A AUX2" CV="210" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Back up A AUX2</label>
+      </variable>
+      <variable item="F11 Back up B Acceleration on/off" CV="211" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F11 Back up B Shunting mode on/off" CV="211" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F11 Back up B Shunting mode on/off</label>
+      </variable>
+      <variable item="F12 Forward A Headlight" CV="213" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Forward A Headlight</label>
+      </variable>
+      <variable item="F12 Forward A Rear light" CV="213" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Forward A Rear light</label>
+      </variable>
+      <variable item="F12 Forward A AUX1" CV="213" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Forward A AUX1</label>
+      </variable>
+      <variable item="F12 Forward A AUX2" CV="213" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Forward A AUX2</label>
+      </variable>
+      <variable item="F12 Forward B Acceleration on/off" CV="214" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Forward B Acceleration on/off</label>
+      </variable>
+      <variable item="F12 Forward B Shunting mode on/off" CV="214" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Forward B Shunting mode on/off</label>
+      </variable>
+      <variable item="F12 Back up A Headlight" CV="216" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Back up A Headlight</label>
+      </variable>
+      <variable item="F12 Back up A Rear light" CV="216" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Back up A Rear light</label>
+      </variable>
+      <variable item="F12 Back up A AUX1" CV="216" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Back up A AUX1</label>
+      </variable>
+      <variable item="F12 Back up A AUX2" CV="216" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Back up A AUX2</label>
+      </variable>
+      <variable item="F12 Back up B Acceleration on/off" CV="217" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Back up B Acceleration on/off</label>
+      </variable>
+      <variable item="F12 Back up B Shunting mode on/off" CV="217" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>F12 Back up B Shunting mode on/off</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <label>
+        <text>Description          Headlight</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Stand Forward A Headlight" label="Standing Forward" format="checkbox">
+        <label>Standing Forward</label>
+      </display>
+      <display item="Stand Back up A Headlight" label="Standing Backward" format="checkbox">
+        <label>Standing Backward</label>
+      </display>
+      <display item="Drive Forward A Headlight" label="Drive Forward" format="checkbox">
+        <label>Drive Forward</label>
+      </display>
+      <display item="Drive Back up A Headlight" label="Drive Back up" format="checkbox">
+        <label>Drive Back up</label>
+      </display>
+      <display item="Light Forward A Headlight" label="Light Forward" format="checkbox">
+        <label>Light Forward</label>
+      </display>
+      <display item="Light Back up A Headlight" label="Light Back up" format="checkbox">
+        <label>Light Back up</label>
+      </display>
+      <display item="F1 Forward A Headlight" label="F1 Forward" format="checkbox">
+        <label>F1 Forward</label>
+      </display>
+      <display item="F1 Back up A Headlight" label="F1 Back up" format="checkbox">
+        <label>F1 Back up</label>
+      </display>
+      <display item="F2 Forward A Headlight" label="F2 Forward" format="checkbox">
+        <label>F2 Forward</label>
+      </display>
+      <display item="F2 Back up A Headlight" label="F2 Back up" format="checkbox">
+        <label>F2 Back up</label>
+      </display>
+      <display item="F3 Forward A Headlight" label="F3 Forward" format="checkbox">
+        <label>F3 Forward</label>
+      </display>
+      <display item="F3 Back up A Headlight" label="F3 Back up" format="checkbox">
+        <label>F3 Back up</label>
+      </display>
+      <display item="F4 Forward A Headlight" label="F4 Forward" format="checkbox">
+        <label>F4 Forward</label>
+      </display>
+      <display item="F4 Back up A Headlight" label="F4 Back up" format="checkbox">
+        <label>F4 Back up</label>
+      </display>
+      <display item="F5 Forward A Headlight" label="F5 Forward" format="checkbox">
+        <label>F5 Forward</label>
+      </display>
+      <display item="F5 Back up A Headlight" label="F5 Back up" format="checkbox">
+        <label>F5 Back up</label>
+      </display>
+      <display item="F6 Forward A Headlight" label="F6 Forward" format="checkbox">
+        <label>F6 Forward</label>
+      </display>
+      <display item="F6 Back up A Headlight" label="F6 Back up" format="checkbox">
+        <label>F6 Back up</label>
+      </display>
+      <display item="F7 Forward A Headlight" label="F7 Forward" format="checkbox">
+        <label>F7 Forward</label>
+      </display>
+      <display item="F7 Back up A Headlight" label="F7 Back up" format="checkbox">
+        <label>F7 Back up</label>
+      </display>
+      <display item="F8 Forward A Headlight" label="F8 Forward" format="checkbox">
+        <label>F8 Forward</label>
+      </display>
+      <display item="F8 Back up A Headlight" label="F8 Back up" format="checkbox">
+        <label>F8 Back up</label>
+      </display>
+      <display item="F9 Forward A Headlight" label="F9 Forward" format="checkbox">
+        <label>F9 Forward</label>
+      </display>
+      <display item="F9 Back up A Headlight" label="F9 Back up" format="checkbox">
+        <label>F9 Back up</label>
+      </display>
+      <display item="F10 Forward A Headlight" label="F10 Forward" format="checkbox">
+        <label>F10 Forward</label>
+      </display>
+      <display item="F10 Back up A Headlight" label="F10 Back up" format="checkbox">
+        <label>F10 Back up</label>
+      </display>
+      <display item="F11 Forward A Headlight" label="F11 Forward" format="checkbox">
+        <label>F11 Forward</label>
+      </display>
+      <display item="F11 Back up A Headlight" label="F11 Back up" format="checkbox">
+        <label>F11 Back up</label>
+      </display>
+      <display item="F12 Forward A Headlight" label="F12 Forward" format="checkbox">
+        <label>F12 Forward</label>
+      </display>
+      <display item="F12 Back up A Headlight" label="F12 Back up" format="checkbox">
+        <label>F12 Back up</label>
+      </display>
+    </column>
+    <column>
+      <label>
+        <text>Rear Light</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Stand Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Stand Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Forward A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Back up A Rear light" label="" format="checkbox">
+        <label/>
+      </display>
+    </column>
+    <column>
+      <label>
+        <text>AUX 1</text>
+      </label>
+      <label>
+        <text>(except</text>
+      </label>
+      <label>
+        <text>micro)</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Stand Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Stand Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Forward A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Back up A AUX1" label="" format="checkbox">
+        <label/>
+      </display>
+    </column>
+    <column>
+      <label>
+        <text>AUX 2</text>
+      </label>
+      <label>
+        <text>(except</text>
+      </label>
+      <label>
+        <text>micro)</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Stand Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Stand Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Forward A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Back up A AUX2" label="" format="checkbox">
+        <label/>
+      </display>
+    </column>
+    <column>
+      <label>
+        <text>Accel-</text>
+      </label>
+      <label>
+        <text>eration</text>
+      </label>
+      <label>
+        <text>on/off</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Stand Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Stand Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Forward B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Back up B Acceleration on/off" label="" format="checkbox">
+        <label/>
+      </display>
+    </column>
+    <column>
+      <label>
+        <text>Shunting</text>
+      </label>
+      <label>
+        <text>mode</text>
+      </label>
+      <label>
+        <text>on/off</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Stand Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Stand Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Drive Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="Light Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F1 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F2 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F3 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F4 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F5 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F6 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F7 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F8 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F9 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F10 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F11 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Forward B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+      <display item="F12 Back up B Shunting mode on/off" label="" format="checkbox">
+        <label/>
+      </display>
+    </column>
+    <name>Function Map</name>
+  </pane>
+  <pane>
+    <column>
+      <display item="Marklin Delta Mode"/>
+      <display item="Marklin 2. address"/>
+      <display item="Automatic speed step detection"/>
+      <display item="LGB Function button mode"/>
+      <display item="ZIMO Manual function"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Marklin Brake mode"/>
+      <display item="ZIMO Brake mode"/>
+      <display item="Lenz DCC Brake mode"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Saves the direction of travel"/>
+      <display item="Saves the status of function buttons"/>
+      <display item="Saves the current speed setting"/>
+      <display item="Accelerates after a reset with the programmed acceleration"/>
+    </column>
+    <name>ESU</name>
+  </pane>
+</decoder-config>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Translated  by Blorec Hervé le 2011-11-1-->
+
+  <title>JMRI: C/MRI Diagnostics</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>JMRI: Diagnostiques C/MRI</h2>
+      <p>Quand on vous demande votre
+      num&Atilde;&copy;ro de carte de sortie, cela signifie
+      l'adresse. Par exemple, si vous avez deux cartes
+      d'entr&Atilde;&copy;e 0 et 1, puis des cartes de sortie avec
+      les adresse 2, 3 et 4, vous pouvez sp&Atilde;&copy;cifier 2,
+      3 et 4 ici. Ne pensez pas qu'il se
+      r&Atilde;&copy;f&Atilde;&uml;re &Atilde;  la "1er" carte de
+      sortie, etc</p>
+
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

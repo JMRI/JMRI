@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<title>N&amp;W 1981 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2>
+Southern 1981 Signal Definitions
+</h2>
+
+To set up this signal system, the user will need to define the speeds of blocks and turnouts to get proper operation.  The Southern signal system was route based and technically speeds were identified by time table for a given location.  This created the possibility to have two different signal aspects mean the same thing.  Rule 304 Diverging Route Clear for example shows either a red over green over red or red over red over green as having the same indication.   To make the signal system work in JMRI, I artificially designated one as a medium speed and one as a slow speed.  Setting the turnout and block speeds will determine which one will be displayed.  Block and turnout speeds should be set to either Normal, Medium, Slow, or Restricted.
+<p>
+The spaced mast looks like a three-head mast signal in which the center head was omitted.  This mast may or may not be accurate.  It is difficult to tell by looking at the signal rules.  I have seen examples where the art did show unlit heads.  In this case, there could have been a middle head but the red place holder was omitted.  In this situation, the use of a three-head mast would be in order.
+<p>
+Feel free to let me know if I have made any mistakes in this system.  I am not a Southern Railway signal expert and will be happy to correct any mistakes.
+</body>
+
+
+<p>
+See the
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CL-3-arm-absolute.xml">Three Arm Absolute Color Light Mast Signals</a>
+<li><a href="appearance-CL-2-arm-absolute.xml">Two Arm Absolute Color Light Mast Signals</a>
+<li><a href="appearance-CL-1-arm-absolute.xml">Single Arm Absolute Color Light Mast Signals</a>
+<li><a href="appearance-CL-2-arm-highspaced-absolute.xml">Two Arm Spaced Absolute Color Light Mast Signals</a>
+<li><a href="appearance-CL-2-arm-permissive.xml">Two Arm Permissive Color Light Mast Signals</a>
+<li><a href="appearance-CL-1-arm-permissive.xml">Single Arm Permissive Color Light Mast Signals</a>
+<li><a href="appearance-2-light-dwarf.xml">Two Light Dwarf Signals</a>
+<li><a href="appearance-1-light-dwarf.xml">Single Light Dwarf Signals</a>
+<li><a href="appearance-1-light-dwarf-permissive.xml">Single Light Permissive Dwarf Signals</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

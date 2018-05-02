@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Applications</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI: Applications</h1>
+
+      <p>JMRI provides several applications that are optimized for
+      specific purposes. You can of course also <a href=
+      "../doc/Technical/index.shtml#writecode">write your
+      own</a>.</p>
+
+      <dl>
+        <dd>
+          <h3><a href=
+          "./DecoderPro/index.shtml">DecoderPro&reg;</a></h3>
+        </dd>
+
+        <dd>A better tool for programming decoders. DecoderPro
+        simplifies the job of configuring complicated DCC decoders
+        by providing screens on which you can select the various
+        options and values you want.<br>
+        Open DecoderPro by double clicking its icon in the JMRI
+        installation folder.</dd>
+
+        <dd>
+          <h3><a href=
+          "./PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3>
+        </dd>
+
+        <dd>Operating CRT based CTC control panels that reflect the
+        real-time state of your railroad <em>and</em> let you
+        control it - almost like a Prototype dispatcher!<br>
+        Open PanelPro by double clicking its icon in the JMRI
+        installation folder.</dd>
+
+        <dd>
+          <h3><a href=
+          "./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3>
+        </dd>
+
+        <dd>A system for Dispatching, grouping your Roster and
+        Throttles.</dd>
+
+        <dd>
+          <h3><a href=
+          "../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3>
+        </dd>
+
+        <dd>Create Train Manifests that detail the work your train
+        crews will perform during an operations session. The
+        Manifest lists of car pick up and set outs, shows where the
+        cars are located, and provides the cars' destinations.</dd>
+
+        <dd>
+          <h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3>
+        </dd>
+
+        <dd>A set of tools for using Audio with JMRI.<br>
+        Open SoundPro by double clicking its icon in the JMRI
+        installation folder.</dd>
+      </dl>
+
+      <h2>More Tools</h2>
+
+      <ul>
+        <li>Common <a href="../tools/index.shtml">Tools and
+        features</a> to set up and operate your layout shared by
+        most JMRI applications.</li>
+
+        <li><a href=
+        "../tools/index.shtml#systemSpecificTools">System-specific
+        Tools</a> are available in most of the JMRI applications
+        from their own menu when you have JMRI configured for that
+        System Connection.</li>
+      </ul><!--#include virtual="/Footer" -->
+    </div><!-- close #mainContent -->
+  </div><!-- close #mBody -->
+</body>
+</html>

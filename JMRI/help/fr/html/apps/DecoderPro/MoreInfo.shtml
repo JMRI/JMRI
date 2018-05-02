@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: DecoderPro In Depth</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+</head>
+
+<body>
+  &Eacute; <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
+   <!-- Style -->
+   <!-- /Style -->
+   <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>DecoderPro - D&eacute;tails</h1>
+
+      <p>Cette page fournit des renseignements sur la fa&ccedil;on
+      dont le programmateur DecoderPro symbolique fonctionne. Pour
+      plus de d&eacute;tails internes sur JMRI, s'il vous
+      pla&icirc;t voir les pages techniques, qui sont encore en
+      cours d'&eacute;laboration.</p>
+
+      <dl>
+        <dt class="left">Fichiers de Configuration</dt>
+
+        <dd class="first">
+          <p>Il existe deux types de fichiers de configuration:</p>
+
+          <ul>
+            <li>Fichiers de Configuration D&eacute;codeur - Ceux-ci
+            portent la description d'un type particulier de
+            d&eacute;codeur, et contr&ntilde;lent le programmateur
+            qui affiche les informations des variables.</li>
+
+            <li>Fichiers de Configuration Locomotive - Ceux-ci
+            portent les informations sp&eacute;cifiques sur une
+            seule locomotive.</li>
+          </ul>
+
+          <p>Le programmeur peut lire n'importe quel type de
+          fichier. Si vous s&eacute;lectionnez un fichier
+          d&eacute;codeur apr&egrave;s avoir cliqu&eacute; sur Lire
+          le fichier, le programmateur sera mis en place avec les
+          variables, options, etc pour ce type. Les valeurs seront
+          vides, parce que que le programmateur ne sait rien sur ce
+          qui a &eacute;t&eacute; programm&eacute; dans un
+          d&eacute;codeur sp&eacute;cifique.</p>
+
+          <p>Si vous s&eacute;lectionnez un fichier locomotive
+          apr&egrave;s avoir cliqu&eacute; sur Lire le fichier, des
+          informations sur la configuration &agrave; la fois du
+          d&eacute;codeur et des param&egrave;tres
+          sp&eacute;cifiques &agrave; cette locomotive seront
+          affich&eacute;es. Cela vous montre comment la locomotive
+          est d&eacute;j&agrave; configur&eacute;e, vous permettant
+          de faire de petits changements avec moins de chance de
+          confusion.</p>
+
+          <p>Vous pouvez &eacute;galement &eacute;crire des
+          fichiers locomotive avec le bouton &Eacute;crire dans un
+          fichier. Ceci va archiver le contenu connu du
+          d&eacute;codeur, vous permettant d'y revenir &agrave;
+          plus tard.</p>
+
+          <p>Les fichiers de configuration sont stock&eacute;s au
+          format XML. Il s'agit d'un formulaire standard pour les
+          donn&eacute;es structur&eacute;es. XML est largement
+          utilis&eacute; pour standardiser l'&eacute;change de
+          donn&eacute;es entre les diff&eacute;rents fabricants
+          dans de nombreux domaines, peut-&ecirc;tre un jour les
+          fabricants de d&eacute;codeurs DCC fourniront une
+          description XML de chaque d&eacute;codeur qu'ils font.
+          Dans l'intervalle, les fichiers de configuration sont
+          cr&eacute;&eacute;s par des b&eacute;n&eacute;voles. S'il
+          n'existe pas pour un d&eacute;codeur sp&eacute;cifique,
+          vous pouvez <a href="CreateDecoder.shtml">cr&eacute;er
+          vos propres</a> fichiers. Vous pouvez &eacute;galement
+          modifier un fichier si vous pr&eacute;f&eacute;rez des
+          noms diff&eacute;rents, un regroupement de
+          diff&eacute;rentes options, ou si vous ne voulez voir que
+          certaines options que vous n'utilisez pas. Un simple
+          &eacute;diteur de texte peut cr&eacute;er ces fichiers
+          facilement, comme le format n'a pas de champs de longueur
+          fixe, de caract&egrave;res sp&eacute;ciaux, etc Il y a
+          aussi de puissants outils de XML dans le domaine public
+          qui font qu'il est tr&egrave;s facile de g&eacute;rer un
+          grand nombre de fichiers d&eacute;codeur.</p>
+        </dd>
+
+        <dt class="left">Variables</dt>
+
+        <dd>
+          <p>Une "variable" d&eacute;finit la valeur qui sera
+          charg&eacute;e dans tout ou partie d'un CV. Par exemple,
+          une variable peut &ecirc;tre d&eacute;finie qui
+          d&eacute;finit la valeur des trois bits les plus
+          significatifs de la CV 47. Si il y a plusieurs options
+          configur&eacute;es dans un seul CV, ces informations sont
+          assur&eacute;es par des variables distinctes.
+          Actuellement, il existe plusieurs types de variables:</p>
+
+          <ul>
+            <li>Decimal - nombres entr&eacute;s dans la notation
+            habituelle d&eacute;cimale. Ce sont les adresses
+            courtes, les tensions de d&eacute;marrage, etc.</li>
+
+            <li>Enum (&eacute;num&eacute;r&eacute;) - choisir parmi
+            un ensemble d'options. Elles peuvent &ecirc;tre
+            utilis&eacute;es pour un simple choix on/off, oui/non,
+            ou plusieurs ensembles complexes comme les FX par
+            exemple l'&eacute;clairage ci-dessus. La configuration
+            contient un nom pour chaque possibilit&eacute;.</li>
+
+            <li>Long adresse - comme une valeur d&eacute;cimale,
+            sauf que les contraintes sur une adresse longue valide
+            qui sont prise en compte.</li>
+
+            <li>Hex - Ce n'est pas tellement n&eacute;cessaire, car
+            les options multiples dans un seul CV peuvent
+            &ecirc;tre manipul&eacute;es par des variables
+            multiples. Mais si elle est n&eacute;cessaire pour
+            certaines raisons, la possibilit&eacute; est
+            pr&eacute;sente.</li>
+
+            <li>Speed table - pas encore vraiment au point, ce type
+            de variable est destin&eacute;e &agrave; fournir un
+            tableau des tables graphiques des vitesses, que vous
+            pouvez faire glisser autour pour configurer comme vous
+            le souhaitez.</li>
+          </ul>
+        </dd>
+
+        <dt class="left">Communication, Programmateur:
+        &eacute;tats</dt>
+
+        <dd>
+          <p>La communication avec la station de
+          commande/programmeur, permettant la lecture et
+          &eacute;criture du d&eacute;codeur, n'est
+          effectu&eacute;e que lorsque les boutons "Lecture" ou
+          "&Eacute;criture" sont press&eacute;s. Le programme
+          assure le suivi de savoir si une valeur a
+          &eacute;t&eacute; envoy&eacute;e au d&eacute;codeur en
+          utilisant quatre &eacute;tats de variables ou de
+          CVs::</p>
+
+          <ul>
+            <li>Read - La valeur indiqu&eacute;e a
+            &eacute;t&eacute; lue par le d&eacute;codeur.</li>
+
+            <li>Stored - La valeur indiqu&eacute;e a
+            &eacute;t&eacute; &eacute;crite dans le
+            d&eacute;codeur.</li>
+
+            <li>Editted - La valeur indiqu&eacute;e a
+            &eacute;t&eacute; chang&eacute;e dans l'ordinateur,
+            mais pas encore &eacute;crite dans le d&eacute;codeur.
+            Appuyez sur le bouton d'&eacute;criture quand vous
+            &ecirc;tes d'accord avec la valeur.</li>
+
+            <li>Unknown - Une valeur par d&eacute;faut, ou une
+            lecture a &eacute;chou&eacute;, ou pour d'autres
+            raisons le programme n'a pas confiance dans la valeur,
+            est ce vraiment celle que vous voulez?. Modifiez la
+            valeur ou appuyez sur le bouton d'&eacute;criture.</li>
+          </ul>
+        </dd>
+
+        <dt class="left">Impression</dt>
+
+        <dd>
+          <p>Vous pouvez imprimer les informations de la locomotive
+          courante depuis la fen&ecirc;tre du programmateur. Dans
+          le menu "Fichier...", s&eacute;lectionnez "Imprimer...",
+          et de remplir le bo&icirc;te de dialogue qui se
+          pr&eacute;sente.</p>
+
+          <p>L'impression est format&eacute;e par le format de
+          programmation actuellement s&eacute;lectionn&eacute;e,
+          afin que l'information de tous les onglets soit
+          imprim&eacute;e. Vous obtenez une impression plus courte
+          des valeurs les plus importantes lorsque vous imprimez
+          &agrave; partir du format "de base", et une liste de tout
+          lorsque vous utilisez le format "complet"..</p>
+        </dd>
+      </dl><!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

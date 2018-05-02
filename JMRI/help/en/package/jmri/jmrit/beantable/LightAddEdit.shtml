@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Adding/Editing Lights</title>
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author"content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Light Add Edit">
+  <!--#include virtual="/Style" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Adding/Editing Lights</h1><a name="addLight" id=
+      "addLight"></a>
+
+      <h2>Adding a new Light</h2>
+      To add a new Light, follow this procedure:
+
+      <ol>
+        <li>
+          <p>Click <b>Lights</b> in the <b>Tables</b> submenu of
+          the <b>Tools</b> menu to bring up the <b><a href=
+          "LightTable.shtml">Light Table</a></b>, and click the
+          <b>Add...</b> button at the bottom of the <b>Light
+          Table</b> pane to bring up the <b>Add Light</b> pane.</p><img src=
+          "images/LightAddFrame.png" height="398" width="577">
+        </li>
+
+        <li>
+          <p>Select a <b>System Connection</b> if your layout is
+          connected to more than one system or to create an Internal Light.<br>
+          Next enter the <b>Hardware Address</b> of your new Light
+          (often entered as a number, look at the Tooltip for accepted
+          <a href="../../../../html/doc/Technical/Names.shtml#entrysummary">
+          entry patterns per system</a>).
+          This is the address JMRI will
+          send to your system when switching the Light.<br>From this
+          information, the program will make a <b>System Name</b>
+          in the JMRI convention, appropriate for a Light in the
+          selected System using the entered address.<br>
+          When you hover your mouse over the Hardware Address entry field,
+          a tooltip will display accepted entry example (depending
+          on availability).<br>
+          Some examples of valid System Names are: CL1004, and LL401
+          (entered as '401' here), assuming you have the hardware
+          for the addressed digital output bits.</p>
+        </li>
+
+        <li>
+          <p>Enter a User Name. Any string of characters that is
+          different from the User Name of other Lights will be
+          accepted, but it's wise to use a string that describes
+          the intended use of the Light. Entry of a User Name is
+          optional.</p>
+        </li>
+
+        <li>
+          <p>If you wish to enter a Control for your new Light,
+          click the <b>Add Control</b> button, and enter your
+          choices into the <b>Add Light Control</b> pane which
+          appears. You may enter as many Light Controls as desired.
+          More information on Light Controls <a href=
+          "#lightcontrol">below</a>.</p>
+        </li>
+
+        <li>
+          <p>Each Light Control is displayed in the Light Control
+          table on the Add Light and Edit Light pane.
+          The <b>Control Type</b> is shown on the left,
+          followed by a <b>Description</b> of the Control
+          mechanism. These are followed by <b>Edit</b> and
+          <b>Delete</b> buttons. Click <b>Edit</b> to bring up
+          the <b>Edit Light Control</b> pane allowing changes
+          to the control specification as described above.
+          Click a <b>Delete</b> button to remove a Light Control.</p>
+        </li>
+
+        <li>
+          <p>Next is the notes area of the Add Light pane.
+          This is where instructions and error messages will appear
+          as you create (or edit) a Light. Always check this area to
+          see if things went as expected.</p>
+        </li>
+
+        <li>
+          <p>Click the <b>Create</b> button at the bottom of the
+          window. If everything is fine, a message stating "New
+          Light added ... " will be displayed in the notes area. If
+          there is trouble with anything, an error or warning
+          message will be displayed in the notes area:<br>
+          <img src="images/LightAddErrorBar.png" height="97" width=
+          "301"><br>
+          Correct the error and click <b>Create</b> again.</p>
+
+          <p>-OR-</p>
+
+          <p>Click the <b>Close</b> button to dismiss the pane
+          without creating any more Lights.</p>
+        </li>
+      </ol><a name="addManyLight" id="addManyLight"></a>
+
+      <h2>Adding several new Lights at Once</h2>
+      If the selected
+      <b>System Connection</b> supports adding multiple Lights at once, the
+      <b>Add Light</b> pane will display two additional
+      items, marked in purple:
+
+      <p><img src="images/LightAddManyFrame.png" height="399" width=
+      "576"></p>
+
+      <p>Adding several new Lights at once is optional. If you only
+      want to add one new Light, ignore the <b>Add a sequential
+      range</b> check box and the <b>Number of items:</b> entry.<br>
+      If you want to add several new Lights with sequential hardware
+      addresses, check the <b>Add a sequential range</b> check box.<br>
+      When this box is checked, the <b>Number of items:</b> field is
+      activated. Set the number of Lights you want to
+      add. Enter other properties for the first Light, following the
+      procedure above, and click the <b>Create</b> button. If any of the
+      requested addresses are not available (previously assigned to
+      a Light or a Turnout by the same address), a message will appear in the notes
+      area, and no new Lights will be created.<br>
+      If everything checks out, the requested Lights will be created, and
+      a message will appear in the notes area at the bottom of the pane.</p>
+
+      <p>Adding multiple Lights at once is intended to support
+      stationary decoders which require several addresses in
+      sequence. As a result, restrictions apply when creating
+      several Lights at once. Note the following:</p>
+
+      <ul>
+        <li>
+          <p>The addresses must be numerical -- only numbers are
+          allowed in the hardware address.</p>
+        </li>
+
+        <li>
+          <p>The addresses of the created Lights must be
+          consecutive.</p>
+        </li>
+
+        <li>
+          <p>All requested addresses must be available, i.e., not
+          currently assigned to a Light or Turnout.</p>
+        </li>
+
+        <li>
+          <p>If a User Name is entered, each of the created Lights
+          after the first will have that User Name with ":1", ":2", etc.
+          appended.</p>
+        </li>
+
+        <li>
+          <p>Entered Light Control items and Variable Intensity
+          items will be assigned to the first Light created, and
+          not to subsequent Lights. These items may be added by
+          manual Editing (see next paragraph).</p>
+        </li>
+      </ul>
+
+      <h2>Editing an existing Light</h2>
+      To edit an existing Light, follow this procedure:
+
+      <ol>
+        <li>
+          <p>Click on a Light's <b>Edit</b> button in the
+          <a href="LightTable.shtml">Light Table</a> to bring up
+          the <b>Edit Light</b> pane:</p>
+          <img src="images/LightEditFrame.png" height="351" width="578">
+        </li>
+
+        <li>
+          <p>The <b>System Name:</b> of the Light is displayed at
+          the top of the pane and cannot be changed once created.
+          <br>
+          The <b>User Name</b> may be changed either here or by double
+          clicking on it in the Light Table.<br>
+          The Light Control and notes areas are the same as above.</p>
+        </li>
+
+        <li>
+          <p>After making changes to the Light information, click
+          <b>Update</b> to change the selected Light. If there is
+          any trouble, an error or warning message will be
+          displayed in the notes area, and the update is stopped
+          for you to correct the error and click <b>Update</b>
+          again. If all is fine, the Light is changed and the
+          <b>Add/Edit Light</b> pane is dismissed.</p>
+
+          <p>-OR-</p>
+
+          <p>Click <b>Cancel</b> to exit edit mode without changing
+          the selected Light. If the <b>Edit Light</b> pane is
+          dismissed (closed) while in edit mode, <b>Cancel</b> is
+          automatically selected, and no changes are made to the
+          selected Light.</p>
+          <img src="images/LightAddFrameNone.png" height="138" width="273">
+        </li>
+      </ol>
+
+      <a name="lightcontrol" id="lightcontrol"></a>
+      <h2>Automated Control Options for Lights</h2>
+
+      <p>The <b>Add/Edit Light Control</b> window is used to
+      specify a Light control. Automated operation of a Light can be
+      controlled in one or more of the following ways:</p>
+
+      <ul>
+        <li>
+          <p><b>By Sensor</b> - The Light will be turned <b>ON</b>
+          when the Sensor changes to Active or Inactive, depending
+          upon the choice made in the <b>Sense for ON</b> popup
+          menu, and it will be turned <b>OFF</b>, when the Sensor
+          reverses state. Specify the Sensor by entering its name
+          (System Name or User Name) in the <b>Sensor Name</b>
+          field. This option has a number of uses, including
+          setting a fascia panel light to follow block occupancy.
+          That is useful, for example, for monitoring train
+          position in a hidden staging area.</p><img src=
+          "images/LightAddFrameSensor.png" height="177" width="280">
+        </li>
+
+        <li>
+          <p><b>By Fast Clock</b> - The Light will be turned
+          <b>ON</b> when the Fast Clock reaches the time entered in
+          <b>Time On</b> and will be turned <b>OFF</b> when the
+          Fast Clock reaches the time entered in <b>Time Off</b>.
+          The times are entered in "hh:mm" format, where "hh" is
+          hours and "mm" is minutes for a 24-hour clock. One use of
+          this option is to turn on and off scenery lighting,
+          street lights, house lights, etc. to simulate night time
+          on the layout.</p><img src="images/LightAddFrameClock.png"
+          height="175" width="273">
+        </li>
+
+        <li>
+          <p><b>By Turnout Status</b> - The Light will be turned
+          <b>ON</b> when the Turnout changes to Closed or Thrown,
+          depending upon the choice made in the <b>Status for
+          ON</b> popup menu, and it will be turned <b>OFF</b>, when
+          the Turnout reverses its status. Specify the Turnout by
+          entering its name (System Name or User Name) in the
+          <b>Turnout Name</b> field. This option may be used to set
+          a fascia panel light to follow the status of a Turnout.
+          That is useful, for example, for monitoring the status of
+          hidden turnouts.</p><img src="images/LightAddFrameTurnout.png"
+          height="177" width="273">
+        </li>
+
+        <li>
+          <p><b>By Timed ON</b> - The Light will be turned
+          <b>ON</b> when the trigger sensor changes to active, and
+          it will be turned <b>OFF</b>, when the specified time has
+          elapsed. Specify the trigger Sensor by entering its name
+          (System Name or User Name) in the <b>Trigger Sensor
+          Name</b> field. Enter the time the Light is to remain on
+          (in milliseconds) in the <b>Duration ON</b> field. This
+          option has a number of uses, it was originally designed
+          to turn on an electromagnetic decoupler in response to a
+          fascia pushbutton, but it can also be used for other
+          types of layout animation, for example, to control the
+          ringing of a crossing bell when a train enters a
+          block.</p><img src="images/LightAddFrameTimed.png" height="176"
+          width="281">
+        </li>
+
+        <li>
+          <p><b>By Two Sensors</b> - The Light will be turned
+          <b>ON</b> when the either of the two Sensors changes to
+          Active or Inactive, depending upon the choice made in the
+          <b>Sense for ON</b> popup menu, and it will be turned
+          <b>OFF</b>, when both of the two Sensors are in the
+          reverse state. Specify each Sensor by entering its name
+          (System Name or User Name) in the <b>Sensor Name</b>
+          field. The order of entry does not matter. This option
+          has multiple uses, such as controlling crossing gates
+          with point sensors that detect when a train passes. By
+          placing two point sensors, one at each end of a bridge, a
+          layout sound for a bridge rumble may be played while the
+          train is traversing the bridge.</p><img src=
+          "images/LightFrameTwoSensor.png" height="176" width="474">
+        </li>
+      </ul>
+
+      <a name="cautions" id="cautions"></a>
+      <h3>Light Control Cautions</h3>
+
+      <ul>
+        <li>
+          <p>After have set a Sensor or a Turnout as part of
+          a Light Control, be very careful about changing the User
+          Name of your Sensor or Turnout. A simple change of User
+          Name could break your Light Control definitions.</p>
+        </li>
+
+        <li>
+          <p>If you enter multiple Light Controls for the same
+          Light, it is possible that the Light Controls might
+          conflict or overlap with each other, producing strange
+          results. <b>The user is responsible for ensuring that
+          Light Controls do not conflict.</b></p>
+        </li>
+      </ul>
+
+      <a name="varLight" id="varLight"></a>
+      <h2>Working with Variable Intensity Lights</h2>
+      If the selected <b>System Connection</b> supports Lights
+      with variable intensity, the <b>Add Light</b> and
+      <b>Edit Light</b> panes will display the <b>Variable
+      Intensity</b> area:
+
+      <p><img src="images/LightAddVariable.png" height="449" width=
+      "648"></p>
+
+      <p>Systems like
+      <a href="../../../../html/hardware/powerline/index.shtml">PowerLine</a>,
+      that support variable intensity
+      lights also support lights with fixed intensity. If you are
+      adding a Light with fixed intensity, i.e. an ON/OFF light,
+      just leave the items in the <b>Variable Intensity</b> area as set.
+      When editing a simple ON/OFF light on a system not supporting variable
+      lights, the items in the <b>Variable Intensity</b> area are
+      not displayed.</p>
+
+      <p>The intensity of a Light is represented internally by the
+      range from 0.0 to 1.0, with 1.0 being brightest. Intensity
+      limits are entered as percentages, from 0 through 100, in the
+      Minimum Intensity and Maximum Intensity boxes. Because the
+      actual light hardware has only finite resolution, the
+      intensity value is mapped to the nearest supported
+      setting.</p>
+
+      <p>Each Light has a <b>Target Intensity</b> property which
+      can be set using a script or other code. Attempting to set the <b>Target
+      Intensity</b> outside the <b>Minimum Intensity to Maximum
+      Intensity</b> range will result in the <b>Target
+      Intensity</b> being set to the relevant limit.</p>
+
+      <p>Back to the <a href="LightTable.shtml">Light Table help
+      page</a>.</p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

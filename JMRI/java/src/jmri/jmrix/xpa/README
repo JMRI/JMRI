@@ -1,0 +1,22 @@
+This package provides an interface to an XPressNet based system using an 
+XPressNet Phone Adapter and a Modem.
+
+Notes:
+
+This interface is slow when compared to interfaces like the LI100 and 
+LI101F.
+
+There is only support for throwing turnouts, operating locomotives, and 
+turning the power on and off.
+
+There is no effective means of feedback available from the command 
+station.
+
+Known Issues:
+
+Currently, the modem must support Hayes style modem commands.  
+ATX0E0 is used as the modem initialization string.
+
+It is possible to interrupt a command while it is being sent to the XPA, 
+resulting in incomplete instructions, and, possibly unwanted power 
+shutdown commands being sent.

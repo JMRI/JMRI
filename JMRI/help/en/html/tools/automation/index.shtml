@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen, John Plocher 2008 -->
+
+  <title>JMRI: Layout Automation</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI Layout Automation</h2>
+
+      <p>JMRI applications provide a
+      large number of ways of automating your layout, ranging from
+      simple fill-in forms to full-fledged scripting and
+      programming capabilities. These include:</p>
+
+      <dl>
+        <dt><a href="../signaling/index.shtml">Signaling</a></dt>
+
+        <dd>JMRI provides signaling logic from simple to
+        prototypical, which can be used to drive your signals in
+        many applications.</dd>
+
+        <dt><a href="../Routes.shtml">Routes</a></dt>
+
+        <dd>A simple form of automation is to define Routes, which
+        allow you to simplify the control of your turnouts.</dd>
+
+        <dt><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dt>
+
+        <dd>Dispatcher lets you dispatch and (automatically) run
+          trains on layouts with <a href="../../apps/PanelPro/PanelPro.shtml#le">Layout Editor Panels</a>.</dd>
+
+        <dt><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dt>
+
+        <dd>Warrants let you automatically run trains on layouts with
+          <a href="../../apps/PanelPro/PanelPro.shtml#cpe">Control Panel Editor Panels</a>.</dd>
+
+        <dt><a href="../Logix.shtml">Logix</a></dt>
+
+        <dd>Using JMRI Logix, you can specify actions to happen
+        when various conditions occur on the layout.</dd>
+
+        <dt><a href="../scripting/index.shtml">Scripting</a></dt>
+
+        <dd>JMRI provides a very powerful scripting tool. Based on
+        a real programming language, it gives you access to all the
+        JMRI capabilities.</dd>
+
+        <dt><a href="viaJava.shtml">Writing your own code in
+        Java</a></dt>
+
+        <dd>The JMRI libraries greatly simplify writing a program
+        to make your layout do exactly what you want.</dd>
+      </dl>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

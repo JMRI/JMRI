@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Turnout Control</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Route Add Edit">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Commande de l'aiguillage</h1>Saisissez le num&eacute;ro
+      de l'accessoire ou le nom syst&egrave;me d'aiguillage pour
+      l'accessoire ou l'aiguillage que vous souhaitez commander
+      dans la case &agrave; droite de "aiguillage". Pour Par
+      exemple, entrer 678 et en appuyant sur le bouton
+      D&eacute;vi&eacute; ou Direct , vous devriez &ecirc;tre
+      capable de changer l'&eacute;tat de l'accessoires 678 sur le
+      r&eacute;seau. Un autre exemple, un nom syst&egrave;me valide
+      d'aiguillage des NCE pourrait &ecirc;tre NT456. Puis en
+      appuyant sur le bouton D&eacute;vi&eacute; ou Direct, vous
+      devriez &ecirc;tre capable de changer l'&eacute;tat de
+      l'aiguillage ou de l'accessoire num&eacute;ro 456 sur le
+      r&eacute;seau. Un autre exemple, un nom syst&egrave;me valide
+      de l'aiguillage pourrait &ecirc;tre IT123 qui est un
+      aiguillage interne num&eacute;ro 123. En appuyant sur
+      D&eacute;vi&eacute; ou Direct feront seulement changer
+      l'&eacute;tat de l'aiguillage interne et ne changera pas un
+      aiguillage sur le r&eacute;seau. Voir " <a href=
+      "../../../../html/doc/Technical/Names.shtml">Noms</a> " dans
+      l'aide g&eacute;n&eacute;rale pour plus d'informations.
+
+      <p>Pour plus d'informations sur les aiguillages JMRI,
+      consultez le <a href=
+      "../../../../html/tools/Turnouts.shtml">page d'aide
+      Aiguillage</a> .</p>
+
+      <h2>Boutons de Commande d'Aiguillage et Statuts</h2>
+
+      <dl>
+        <dt>informations</dt>
+
+        <dt>&Eacute;tat actuel:</dt>
+
+        <dd>Montre l'&eacute;tat actuel connu de l'aiguillage. Un
+        aiguillage peut avoir quatre &eacute;tats: inconnu,
+        incoh&eacute;rent, d&eacute;vi&eacute;, et droit. L'
+        &eacute;tat inconnu est quand JMRI ne sait pas si
+        l'aiguillage est d&eacute;vi&eacute; ou droit.
+        L'&eacute;tat incoh&eacute;rent, c'est quand un aiguillage
+        sur le r&eacute;seau est command&eacute; pour &ecirc;tre
+        d&eacute;vi&eacute; ou direct, mais que les retour
+        d'informations du r&eacute;seau n'ont pas &eacute;t&eacute;
+        re&ccedil;us. A noter &eacute;galement que l'&eacute;tat
+        incoh&eacute;rent ne peut se produire que si un aiguillage
+        a des r&eacute;trosignalisations. Les Etats
+        D&eacute;vi&eacute;s et Droits sont ce que le programme
+        JMRI sait ou croit &ecirc;tre l'&eacute;tat de
+        l'aiguillage.</dd>
+
+        <dt>Mode de r&eacute;troaction:</dt>
+
+        <dd>Montre le mode de r&eacute;troaction de l'aiguillage.
+        les modes d' <a href="#Feedback">informations</a>
+        disponibles sont: DIRECT, un capteur, DEUX CAPTEUR et le
+        suivi. Un aiguillage utilisant le mode DIRECT n'a pas de
+        r&eacute;troaction du r&eacute;seau. Quand une commande
+        "droit" ou "d&eacute;vi&eacute;" est envoy&eacute;e
+        l'ex&eacute;cution du Programme JMRI suppose que la
+        commande se r&eacute;alise toujours. Un CAPTEUR: un capteur
+        sur la r&eacute;seau fournit une r&eacute;troaction sur
+        l'&eacute;tat de l'aiguillage. DEUX capteur: utilise deux
+        capteurs de r&eacute;troaction, un pour d&eacute;vi&eacute;
+        et un pour droit. SUIVI obtient la r&eacute;troaction du
+        syst&egrave;me, soit &agrave; l'&eacute;coute de commandes
+        de r&eacute;gulateur sur le r&eacute;seau ou de scrutation
+        pour le syst&egrave;me de statut de l'aiguillage. Voir
+        leinformations <a href=
+        "../../../../html/doc/Technical/TurnoutFeedback.shtml">page
+        d'informationss aiguillage</a> pour plus
+        d'informations.</dd>
+
+        <dt>D&eacute;vi&eacute;</dt>
+
+        <dd>Appuyez sur ce bouton pour d&eacute;vi&eacute;
+        l'aiguillage.</dd>
+
+        <dt>Droit</dt>
+
+        <dd>Appuyez sur ce bouton pour mettre en droit
+        l'aiguillage.</dd>
+
+        <dt>informations</dt>
+
+        <dt>Op&eacute;ration poste:</dt>
+
+        <dd>Certains aiguillages peuvent &ecirc;tre
+        verrouill&eacute;s. Si le bouton de commande est
+        gris&eacute; , les fonctions de verrouillage nesont pas
+        disponibles. Voir <a href=
+        "#NCETurnoutLockFeature">Aiguillage NCE fonction de
+        verrouillage</a> ci-dessous.</dd>
+      </dl>
+
+      <h3><a name="NCETurnoutLockFeature" id=
+      "NCETurnoutLockFeature"></a>Aiguillage NCE, fonction de
+      verrouillage</h3>
+
+      <p>La fonction de verrouillage de l'aiguillage vous permet de
+      d&eacute;sactiver de mani&egrave;re s&eacute;lective les
+      commandes des accessoire (aiguillages) &agrave; partir des
+      r&eacute;gulateurs. En verrouillant un aiguillage, le
+      programme JMRI suivra l'adresse accessoire de l'aiguillage et
+      s'il d&eacute;tecte une changement de commande &agrave;
+      partir d'un r&eacute;gulateur, annulera la commande
+      imm&eacute;diatement par l'envoi de la commande
+      oppos&eacute;e &agrave; l'aiguillage.</p>
+
+      <p>Pour utiliser cette fonctionnalit&eacute;, vous devez
+      s&eacute;lectionner SUIVI comme mode de r&eacute;troaction
+      pour l'aiguillage et la station de commande doit avoir des
+      NCE de 2007 ou une nouvelle EPROM.</p>
+
+      <p>Pour vous aider &agrave; s&eacute;lectionner un ensemble
+      d'appareils de voie &agrave; verrouiller, un
+      itin&eacute;raire peut &ecirc;tre verrouill&eacute;. Tous les
+      aiguillages qui sont supervis&eacute;s par le programme JMRI
+      et qui sont inclus dans l'itin&eacute;raire seront
+      verrouill&eacute;s.</p>
+
+      <p>Ceci est la page d'aide
+      help/fr/package/jmri/jmrit/simpletournoutctrl/SimpleTurnoutCtrl.shtml</p>
+
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012, 2015 All rights reserved -->
+<!-- $Id: pane-FREDiFunctionMap.xml 1810 2015-11-24 12:12:00Z martin $ -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License    -->
+<!-- for more details.                                                       -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>FREDi Function Modes</name>
+    <name xml:lang="de">FREDi Funktionsmodi</name>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2015</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Knut</firstname>
+                <surname>Schwichtenberg</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2015-11-24</date>
+            <authorinitials>KS</authorinitials>
+            <revremark>Initial release as separate file</revremark>
+        </revision>
+    </revhistory>
+    <grid>
+
+        <griditem gridx="0" gridy="0">
+            <label>
+                <text>&lt;html&gt;Select which function toggles&lt;br/&gt;
+                      or is active while pressed:&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Auswahl, welche Funktion
+                                    umschaltet&lt;br/&gt;oder während des
+                                    Drückens aktiv ist:&lt;/html&gt;</text>
+            </label>
+        </griditem>
+        <griditem gridx="0" gridy="2">
+            <display item="SV18:Function Mode F0" />
+        </griditem>
+        <griditem gridx="0" gridy="3">
+            <display item="SV19:Function Mode F1" />
+        </griditem>
+        <griditem gridx="0" gridy="4">
+            <display item="SV20:Function Mode F2" />
+        </griditem>
+        <griditem gridx="0" gridy="5">
+            <display item="SV21:Function Mode F3" />
+        </griditem>
+        <griditem gridx="0" gridy="6">
+            <display item="SV22:Function Mode F4" />
+        </griditem>
+        <griditem gridx="0" gridy="7">
+            <display item="SV23:Function Mode F5" />
+        </griditem>
+        <griditem gridx="0" gridy="8">
+            <display item="SV24:Function Mode F6" />
+        </griditem>
+
+        <griditem gridx="1" gridy="0">
+            <label>
+                <text>&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;</text>
+            </label>
+        </griditem>
+        <griditem gridx="1" gridy="1">
+            <label>
+                <text>&#x0020;</text>
+            </label>
+        </griditem>
+
+        <griditem gridx="2" gridy="0">
+            <label>
+                <text>&lt;html&gt;Select which function toggles&lt;br/&gt;
+                      or is active while pressed:&lt;/html&gt;</text>
+                <text xml:lang="de">&lt;html&gt;Auswahl, welche Funktion
+                                    umschaltet&lt;br/&gt;oder während des
+                                    Drückens aktiv ist:&lt;/html&gt;</text>
+            </label>
+        </griditem>
+        <griditem gridx="2" gridy="3">
+            <display item="SV25:Function Mode F7" />
+        </griditem>
+        <griditem gridx="2" gridy="4">
+            <display item="SV26:Function Mode F8" />
+        </griditem>
+        <griditem gridx="2" gridy="5">
+            <display item="SV27:Function Mode F9" />
+        </griditem>
+        <griditem gridx="2" gridy="6">
+            <display item="SV28:Function Mode F10" />
+        </griditem>
+        <griditem gridx="2" gridy="7">
+            <display item="SV29:Function Mode F11" />
+        </griditem>
+        <griditem gridx="2" gridy="8">
+            <display item="SV30:Function Mode F12" />
+        </griditem>
+
+    </grid>
+</pane>

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Translated  by Blorec Hervé le 2011-10-27-->
+
+  <title>JMRI: RPS Receiver Control</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>JMRI: R&Atilde;&copy;cepteur de Contr&Atilde;&acute;le
+      RPS</h1><a href=
+      "../../../../../html/hardware/rps/images/ReceiverControl.gif"><img src="../../../../../html/hardware/rps/images/ReceiverControl.gif"
+      height="120" width="292" alt="RPS Receiver Control window"
+      align="right"></a><br>
+      La fen&Atilde;&ordf;tre de contr&Atilde;&acute;le du
+      r&Atilde;&copy;cepteur RPS permet d'actualiser et d'examiner
+      les informations du <a href=
+      "../../../../../html/hardware/rps/index.shtml">syst&Atilde;&uml;me
+      RPS</a> sur l'endroit o&Atilde;&sup1; ses
+      r&Atilde;&copy;cepteurs sont situ&Atilde;&copy;s.
+
+      <p>Habituellement, le syst&Atilde;&uml;me RPS va
+      d&Atilde;&copy;tecter le nombre de r&Atilde;&copy;cepteurs,
+      il a et met en place la table avec le bon nombre de lignes.
+      Vous pouvez changer cela en changeant le nombre de
+      r&Atilde;&copy;cepteurs dans le bus de texte et cliquer sur
+      "Valider".</p>
+
+      <p>Une fois que vous avez le bon nombre de
+      r&Atilde;&copy;cepteurs d&Atilde;&copy;finis, entrez chacun
+      des X, Y et Z dans le tableau.</p>
+
+      <p>Il y a aussi une case pour chaque r&Atilde;&copy;cepteur
+      qui contr&Atilde;&acute;le si elle sera utilis&Atilde;&copy;e
+      dans les calculs de position (si elle est
+      coch&Atilde;&copy;e) ou ignor&Atilde;&copy;es (non
+      v&Atilde;&copy;rifi&Atilde;&copy;).</p>
+
+      <p>Les valeurs des colonnes "Temps Min" et "Temps Max" sont
+      utilis&Atilde;&copy;es pour d&Atilde;&copy;cider si les
+      r&Atilde;&copy;cepteurs de mesure du temps doivent
+      &Atilde;&ordf;tre utilis&Atilde;&copy; dans un calcul
+      particulier. Ceux-ci peuvent
+      g&Atilde;&copy;n&Atilde;&copy;ralement &Atilde;&ordf;tre
+      laiss&Atilde;&copy;s &Atilde;  leurs valeurs par
+      d&Atilde;&copy;faut de -1 et 99999, respectivement, dans ce
+      cas, le programme tentera toujours d'utiliser la mesure des
+      r&Atilde;&copy;cepteurs. Si vous &Atilde;&copy;prouvez des
+      difficult&Atilde;&copy;s, par exemple avec des
+      &Atilde;&copy;chos qui font des mesures tr&Atilde;&uml;s
+      longues (valeurs du temps &Atilde;&copy;lev&Atilde;&copy;)
+      inexactes, vous pouvez d&Atilde;&copy;finir une limite haute,
+      au-dessus duquel la mesure ne sera pas utilis&Atilde;&copy;e.
+      Vous pouvez de la m&Atilde;&ordf;me fixer une limite basse si
+      des mesures de temps tr&Atilde;&uml;s petites (courtes
+      distances ou certaines formes d'ing&Atilde;&copy;rence)
+      s'av&Atilde;&uml;rent inexactes.</p>
+
+      <p>Pour aider &Atilde;  d&Atilde;&copy;terminer ces limites,
+      la mesure du temps la plus r&Atilde;&copy;cente pour chaque
+      r&Atilde;&copy;cepteur est indiqu&Atilde;&copy;e dans la
+      colonne "Derni&Atilde;&uml;re Mesure" de la table.</p>
+
+      <p>Par d&Atilde;&copy;faut, le syst&Atilde;&uml;me RPS mesure
+      les position en pouces et le de temps en microsecondes. Si
+      vous pr&Atilde;&copy;f&Atilde;&copy;rez utiliser une
+      unit&Atilde;&copy; de distance d'autres, comme les
+      m&Atilde;&uml;tres ou les pieds, vous changez le nombre
+      utilis&Atilde;&copy; pour la vitesse du son. Les valeurs
+      typiques sont:</p>
+
+      <dl>
+        <dt>Pouces</dt>
+
+        <dd>0,01345</dd>
+
+        <dt>Pieds</dt>
+
+        <dd>0,00112</dd>
+
+        <dt>M&Atilde;&uml;tres</dt>
+
+        <dd>0.000345</dd>
+
+        <dt>cm</dt>
+
+        <dd>
+          0,0345 &lt;/ dl&gt; Si vous changez cette valeur, veillez
+          &Atilde;  cliquer sur la case "Valider" .
+
+          <p>La valeur de "compensation" doit
+          g&Atilde;&copy;n&Atilde;&copy;ralement &Atilde;&ordf;tre
+          laiss&Atilde;&copy;e inchang&Atilde;&copy;e.</p>
+
+          <p>Pour sauvegarder les valeurs comme les nouvelles
+          valeurs par d&Atilde;&copy;faut, qui seront
+          utilis&Atilde;&copy;es la prochaine fois que le programme
+          est lanc&Atilde;&copy;, cliquez sur le bouton
+          &Acirc;&laquo;Valider par
+          D&Atilde;&copy;faut&Acirc;&raquo; .</p>
+
+          <p>Pour sauvegarder les valeurs dans un fichier
+          s&Atilde;&copy;par&Atilde;&copy;, cliquez sur
+          "Enregistrer ...", puis s&Atilde;&copy;lectionnez
+          o&Atilde;&sup1; vous souhaitez placer le fichier et
+          comment vous voulez l'appeler.</p>
+
+          <p>Pour charger les valeurs &Atilde;  partir d'un fichier
+          pr&Atilde;&copy;alablement stock&Atilde;&copy;, cliquez
+          sur "Charger ..." et s&Atilde;&copy;lectionnez le
+          fichier.</p>
+        </dd>
+      </dl>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>

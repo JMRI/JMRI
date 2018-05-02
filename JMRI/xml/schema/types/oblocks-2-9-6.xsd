@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+    <xs:complexType name="OBlockManagerType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of an OBlockManager implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logix.configurexml.OBlockManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        
+        <xs:element name="oblock" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="beanNameType" /> <!-- user or system name OK -->
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="errorSensor" minOccurs="0" maxOccurs="1" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="beanNameType" /> <!-- user or system name OK -->
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="path" type="OBlockPathType" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="portal" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+                        <xs:element name="fromBlock" minOccurs="0" maxOccurs="unbounded" >
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="path" type="OBlockPathType" minOccurs="0" maxOccurs="unbounded" />
+                              </xs:sequence>
+                              <xs:attribute name="blockName" type="xs:string" />
+                            </xs:complexType>
+                        </xs:element >
+                        <xs:element name="toBlock" minOccurs="0" maxOccurs="unbounded" >
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="path" type="OBlockPathType" minOccurs="0" maxOccurs="unbounded" />
+                              </xs:sequence>
+                              <xs:attribute name="blockName" type="xs:string" />
+                            </xs:complexType>
+                        </xs:element >
+                        <xs:element name="fromSignal" minOccurs="0" maxOccurs="unbounded" >
+                            <xs:complexType>
+                              <xs:attribute name="signalName" type="beanNameType" />
+                              <xs:attribute name="signalDelay" type="xs:float" />
+                            </xs:complexType>
+                        </xs:element >
+                        <xs:element name="toSignal" minOccurs="0" maxOccurs="unbounded" >
+                            <xs:complexType>
+                              <xs:attribute name="signalName" type="beanNameType" />
+                              <xs:attribute name="signalDelay" type="xs:float" />
+                            </xs:complexType>
+                        </xs:element >
+                    </xs:sequence>
+                  <xs:attribute name="systemName" type="xs:string" />
+                  <xs:attribute name="portalName" type="xs:string" />
+                  <xs:attribute name="pathName" type="xs:string" />
+                  <xs:attribute name="fromDirection" type="xs:string" />
+                  <xs:attribute name="toDirection" type="xs:string" />
+                  <xs:attribute name="fromPortal" type="xs:string" />
+                  <xs:attribute name="toPortal" type="xs:string" />
+                  <xs:attribute name="length" type="xs:float" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="systemName" type="systemNameType">
+                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="userName" type="userNameType">
+                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="length" type="xs:float" />
+            <xs:attribute name="curve" type="xs:integer" />
+            <xs:attribute name="units" type="trueFalseType" />
+            <xs:attribute name="permissive" type="trueFalseType" />
+            <xs:attribute name="speedNotch" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+            
+      </xs:sequence>
+      <xs:attribute name="nextSysNum" type="xs:integer"/>
+      <xs:attribute name="class" type="classType" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="OBlockPathType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture of setting elements within oblocks
+        </xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="setting" type="OBlockSettingType" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="pathName" type="xs:string" />
+      <xs:attribute name="blockName" type="xs:string" />
+      <xs:attribute name="fromDirection" type="xs:string" />
+      <xs:attribute name="toDirection" type="xs:string" />
+      <xs:attribute name="fromPortal" type="xs:string" />
+      <xs:attribute name="toPortal" type="xs:string" />
+      <xs:attribute name="length" type="xs:float" />
+    </xs:complexType>
+        
+    <xs:complexType name="OBlockSettingType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture of path elements within oblocks
+        </xs:documentation>
+      </xs:annotation>
+      <xs:attribute name="set" type="xs:string" />
+      <xs:attribute name="turnout" type="beanNameType" />
+    </xs:complexType>
+        
+    
+</xs:schema>

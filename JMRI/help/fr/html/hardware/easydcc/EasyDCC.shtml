@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDlated  by Blorec Herv&#233; le 2017-01-26-->
+<html lang="fr">
+<head>
+ <title>JMRI Hardware Support - EasyDCC</title>
+	<meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+<div id="mainContent">
+
+      <H1>Support Mat&#233;riel: EasyDCC</H1>
+
+	<a name="hardware"></a><H2>Mat&#233;riel pris en charge</H2>
+	<h3>Centrale</h3>
+		<UL>
+		<li>EDCSK -  EasyDCC Kit Centrale 
+		<li>EDCSA -  EasyDCC Centrale assembl&#233;e
+		<li>EDCSB -  EasyDCC "Circuit seul" de la Centrale
+		</UL>
+
+<a name="limitations"></a><H2>Limitations</H2>
+
+	<p> Certains anciens syst&#232;mes EasyDCC peuvent avoir besoin d'une mise &#224; jour de leur programme.
+	Ceci est fait en rempla&#231;ant la "PROM" dans la centrale de commande
+	avec une version plus r&#233;cente. La version 207 est connue pour bien fonctionner, et
+ 	la version 022 est connue pour avoir des probl&#232;mes de communication avec l'
+	ordinateur. La plupart des centrales r&#233;centes sont OK.</p>
+
+<a name="connecting"></a><h2>Connexion</h2>
+<h3>C&#226;blage</h3>
+	<ol>
+	<li> Pour connecter votre ordinateur &#224; un syst&#232;me EasyDCC, vous devez
+	connecter la centrale de commande au port s&#233;rie de l'ordinateur en utilisant un
+	c&#226;ble sp&#233;cial. Malheureusement, ce n'est pas un &#233;l&#233;ment que les
+	magasins ont g&#233;n&#233;ralement en stock, due au connecteur RJ11 n&#233;cessaire &#224; l'extr&#233;mit&#233;
+	du c&#226;ble de la centrale de commande. Vous aurez probablement &#224; faire ce
+	c&#226;ble vous-m&#234;me ou un autre utilisateur CVP le faire &#224; votre place.
+	<P>
+	Pour plus d'informations sur la fa&#231;on dont le c&#226;ble est connect&#233;, voir page
+	134 du manuel de la centrale de commande EasyDCC V4  ou de la page 143 du manuel de V6
+	(une 
+	<A HREF="http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf"> version dans un fichier PDF</a>
+ 	disponible sur le web)
+	<P>
+	Un moyen facile de le faire est d'acheter un c&#226;ble s&#233;rie &#224; 9 broches et d'un c&#226;ble de t&#233;l&#233;phone, 
+	puis les couper et les &#233;pissurrer ensemble.<br>
+	Une m&#233;thode alternative 
+	plus moderne est d'utiliser un adaptateur USB - S&#233;rie.
+	</li>
+	</ol>
+
+<h3>R&#233;glages</h3>
+<ul>
+	<li>Ensuite aller dans le panneau des pr&#233;f&#233;rences d'un programme JMRI.
+	Celui ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+	pouvez le s&#233;lectionner dans le menu "&#201;dition".</li>
+
+	<li>Dans l'onglet <strong>Connections</strong>, s&#233;lectionnez "EasyDCC" dans la fen&#234;tre "System Manufacturer". </li>
+	</ul>
+	
+	<h4>S&#233;rie</h4>
+	<ul>
+	 <li>S&#233;lectionnez "EasyDCC viaSerial" comme System Connection. Vous pouvez alaors
+	s&#233;lectionner le port s&#233;rie appropri&#233; dans la liste d&#233;roulante sous Param&#232;tres. 
+	<li>Cochez Additional Connection Settings, la vitesse de transmission s&#233;lectionn&#233;e sera fix&#233;e &#224; 9600 bauds.</li>
+	</ul>
+	<h4>R&#233;seau</h4>
+	<ul>
+	<li>S&#233;lectionnez "EasyDCC via Network" comme System Connection.</li>
+	<li>Cochez Additional Connection Settings, entrez l'adresse IP (facultative pour zeroconfig/mDNS) et le num&#233;ro du Port.</li>
+	</ul>
+<ul>
+	<li>Cliquez "Enregistrer". Il vous sera demand&#233; si vous voulez quitter le programme, cliquez "Oui".</li>
+	<li>Redemarrez JMRI, Vous devriez maintenant &#234;tre op&#233;rationnel.
+
+	<H3>D&#233;bogage</H3>
+	<p>R&#233;f&#233;rez vous aux <a href="http://www.cvpusa.com/easydcc/default.htm">Manuels CVP EasyDCC</a></p>
+
+<a name="tools"></a><h2>Outils JMRI EasyDCC</h2>
+<img src="images/EasyDCCMenu.png" width="187" height="72" align="right" alt="Menu">
+<h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Moniteur de Commande</a></h4>
+<img src="images/EasyDCCMonitor.png" width="364" height="99" alt="Monitor pane">
+
+<h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Envoi de Commande</a></h4>
+<img src="images/EasyDCCSendCmd.png" width="230" height="95" alt="Send Command pane">
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+
+<h3>Autre Source d'info</h3>
+<p>Les <a href="http://www.cvpusa.com/easydcc_system.php">ManuelsCVP EasyDCC Manuals</a>
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
+
+    

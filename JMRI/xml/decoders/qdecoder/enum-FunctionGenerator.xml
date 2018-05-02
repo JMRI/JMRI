@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-09-06</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Function Generator instructions			   -->
+	<!-- Commands															   -->
+	<enumChoice choice="[128]" value="128">
+		<choice>[128] Dimming ON</choice>
+		<choice xml:lang="de">[128] Dimmung AN</choice>
+  </enumChoice>
+	<enumChoice choice="[129]" value="129">
+		<choice>[129] Dimming OFF</choice>
+		<choice xml:lang="de">[129] Dimmung AUS</choice>
+  </enumChoice>
+	<enumChoice choice="[130]" value="130">
+		<choice>[130] Dimming</choice>
+		<choice xml:lang="de">[130] Dimmung</choice>
+  </enumChoice>
+	<enumChoice choice="[132]" value="132">
+		<choice>[132] Switch delay</choice>
+		<choice xml:lang="de">[132] Verzögerungszeit</choice>
+  </enumChoice>
+	<enumChoice choice="[136]" value="136">
+		<choice>[136] Rise time</choice>
+		<choice xml:lang="de">[136] Aufblendzeit</choice>
+  </enumChoice>
+	<enumChoice choice="[137]" value="137">
+		<choice>[137] Fall time</choice>
+		<choice xml:lang="de">[137] Abblendzeit</choice>
+  </enumChoice>
+	<enumChoice choice="[138]" value="138">
+		<choice>[138] On time (short)</choice>
+		<choice xml:lang="de">[138] Einschaltzeit (kurz)</choice>
+  </enumChoice>
+	<enumChoice choice="[139]" value="139">
+		<choice>[139] Off time (short)</choice>
+		<choice xml:lang="de">[139] Ausschaltzeit (kurz)</choice>
+  </enumChoice>
+	<enumChoice choice="[140]" value="140">
+		<choice>[140] Pulse count</choice>
+		<choice xml:lang="de">[140] Pulszahl</choice>
+  </enumChoice>
+	<enumChoice choice="[141]" value="141">
+		<choice>[141] State follower</choice>
+		<choice xml:lang="de">[141] Nachfolgezustand</choice>
+  </enumChoice>
+	<enumChoice choice="[145]" value="145">
+		<choice>[145] Mode change</choice>
+		<choice xml:lang="de">[145] Modus ändern</choice>
+  </enumChoice>
+	<enumChoice choice="[146]" value="146">
+		<choice>[146] "Receive" accessory com.</choice>
+		<choice xml:lang="de">[146] Zubehörkom. "empfangen"</choice>
+  </enumChoice>
+	<enumChoice choice="[147]" value="147">
+		<choice>[147] Copy accessory state</choice>
+		<choice xml:lang="de">[147] Zubehörkom. kopieren</choice>
+  </enumChoice>
+	<enumChoice choice="[152]" value="152">
+		<choice>[152] CV value change (short)</choice>
+		<choice xml:lang="de">[152] CV-wert ändern (kurz)</choice>
+  </enumChoice>
+	<enumChoice choice="[153]" value="153">
+		<choice>[153] CV value change (long)</choice>
+		<choice xml:lang="de">[153] CV-wert ändern (lang)</choice>
+  </enumChoice>
+	<enumChoice choice="[154]" value="154">
+		<choice>[154] On time (long)</choice>
+		<choice xml:lang="de">[154] Einschaltzeit (lang)</choice>
+  </enumChoice>
+	<enumChoice choice="[155]" value="155">
+		<choice>[155] Off time (long)</choice>
+		<choice xml:lang="de">[155] Ausschaltzeit (lang)</choice>
+  </enumChoice>
+	<enumChoice choice="[160]" value="160">
+		<choice>[160] Random (short)</choice>
+		<choice xml:lang="de">[160] Zufallswert (kurz)</choice>
+  </enumChoice>
+	<enumChoice choice="[161]" value="161">
+		<choice>[161] Random (long)</choice>
+		<choice xml:lang="de">[161] Zufallswert (lang)</choice>
+  </enumChoice>
+	<enumChoice choice="[163]" value="163">
+		<choice>[163] Random re-use</choice>
+		<choice xml:lang="de">[163] Zufallswert nutzen</choice>
+  </enumChoice>
+	<enumChoice choice="[164]" value="164">
+		<choice>[164] Speed Loc 1</choice>
+		<choice xml:lang="de">[164] Geschwind. Lok 1</choice>
+  </enumChoice>
+	<enumChoice choice="[165]" value="165">
+		<choice>[165] Speed Loc 2</choice>
+		<choice xml:lang="de">[165] Geschwind. Lok 2</choice>
+  </enumChoice>
+	<enumChoice choice="[166]" value="166">
+		<choice>[166] Speed Loc 3</choice>
+		<choice xml:lang="de">[166] Geschwind. Lok 3</choice>
+  </enumChoice>
+	<enumChoice choice="[167]" value="167">
+		<choice>[167] Speed Loc 4</choice>
+		<choice xml:lang="de">[167] Geschwind. Lok 4</choice>
+  </enumChoice>
+	<enumChoice choice="[176]" value="176">
+		<choice>[176] Output ON</choice>
+		<choice xml:lang="de">[176] Ausgang EIN</choice>
+  </enumChoice>
+	<enumChoice choice="[178]" value="178">
+		<choice>[178] State change</choice>
+		<choice xml:lang="de">[178] Zustand andern</choice>
+  </enumChoice>
+	<enumChoice choice="[179]" value="179">
+		<choice>[179] State Off</choice>
+		<choice xml:lang="de">[179] Zustand Aus</choice>
+  </enumChoice>
+	<enumChoice choice="[180]" value="180">
+		<choice>[180] State On</choice>
+		<choice xml:lang="de">[180] Zustand Ein</choice>
+  </enumChoice>
+	<enumChoice choice="[181]" value="181">
+		<choice>[181] State Machine Change</choice>
+		<choice xml:lang="de">[181] Zustandsaut. umschal.</choice>
+  </enumChoice>
+	<enumChoice choice="[182]" value="182">
+		<choice>[182] State duration (long)</choice>
+		<choice xml:lang="de">[182] Dauer Zustands (lang)</choice>
+  </enumChoice>
+	<enumChoice choice="[183]" value="183">
+		<choice>[183] State duration (short)</choice>
+		<choice xml:lang="de">[183] Dauer Zustands (kurz)</choice>
+  </enumChoice>
+	<enumChoice choice="[186]" value="186">
+		<choice>[186] State output</choice>
+		<choice xml:lang="de">[186] Ausgang Zustands</choice>
+  </enumChoice>
+	<!-- Conditions														   -->
+	<enumChoice choice="[192]" value="192">
+		<choice>[192] AND Accessory going ON</choice>
+		<choice xml:lang="de">[192] UND Zubehör wird EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[193]" value="193">
+		<choice>[193] OR Accessory going ON</choice>
+		<choice xml:lang="de">[193] ODER Zubehör wird EIN</choice>
+  </enumChoice>
+	<enumChoice choice="[194]" value="194">
+		<choice>[194] AND Accessory ON</choice>
+		<choice xml:lang="de">[194] UND Zubehör EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[195]" value="195">
+		<choice>[195] OR Accessory ON</choice>
+		<choice xml:lang="de">[195] ODER Zubehör EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[196]" value="196">
+		<choice>[196] AND Accessory OFF</choice>
+		<choice xml:lang="de">[196] UND Zubehör AUS</choice>
+  </enumChoice>
+  <enumChoice choice="[197]" value="197">
+		<choice>[197] OR Accessory OFF</choice>
+		<choice xml:lang="de">[197] ODER Zubehör AUS</choice>
+  </enumChoice>
+  <enumChoice choice="[198]" value="198">
+		<choice>[198] AND Direction</choice>
+		<choice xml:lang="de">[198] UND Fahrichtung</choice>
+  </enumChoice>
+  <enumChoice choice="[199]" value="199">
+		<choice>[199] OR Direction</choice>
+		<choice xml:lang="de">[199] ODER Fahrichtung</choice>
+  </enumChoice>
+  <enumChoice choice="[200]" value="200">
+		<choice>[200] AND Function ON</choice>
+		<choice xml:lang="de">[200] UND Funktion EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[201]" value="201">
+		<choice>[201] OR Function ON</choice>
+		<choice xml:lang="de">[201] ODER Funktion EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[202]" value="202">
+		<choice>[202] AND Function OFF</choice>
+		<choice xml:lang="de">[202] UND Funktion AUS</choice>
+  </enumChoice>
+  <enumChoice choice="[203]" value="203">
+		<choice>[203] OR Function OFF</choice>
+		<choice xml:lang="de">[203] ODER Funktion AUS</choice>
+  </enumChoice>
+	<enumChoice choice="[204]" value="204">
+		<choice>[204] AND Accessory ON</choice>
+		<choice xml:lang="de">[204] UND Zubehör EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[205]" value="205">
+		<choice>[205] OR Accessory ON</choice>
+		<choice xml:lang="de">[205] ODER Zubehör EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[206]" value="206">
+		<choice>[206] AND Accessory OFF</choice>
+		<choice xml:lang="de">[206] UND Zubehör AUS</choice>
+  </enumChoice>
+  <enumChoice choice="[207]" value="207">
+		<choice>[207] OR Accessory OFF</choice>
+		<choice xml:lang="de">[207] ODER Zubehör AUS</choice>
+  </enumChoice>
+	<enumChoice choice="[208]" value="208">
+		<choice>[208] AND Output ON</choice>
+		<choice xml:lang="de">[208] UND Ausgang EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[209]" value="209">
+		<choice>[209] OR Output ON</choice>
+		<choice xml:lang="de">[209] ODER Ausgang EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[210]" value="210">
+		<choice>[210] AND Output OFF</choice>
+		<choice xml:lang="de">[210] UND Ausgang AUS</choice>
+  </enumChoice>
+  <enumChoice choice="[211]" value="211">
+		<choice>[211] OR Output OFF</choice>
+		<choice xml:lang="de">[211] ODER Ausgang AUS</choice>
+  </enumChoice>
+	<enumChoice choice="[212]" value="212">
+		<choice>[212] AND Output ON</choice>
+		<choice xml:lang="de">[212] UND Ausgang EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[213]" value="213">
+		<choice>[213] OR Output ON</choice>
+		<choice xml:lang="de">[213] ODER Ausgang EIN</choice>
+  </enumChoice>
+  <enumChoice choice="[214]" value="214">
+		<choice>[214] AND Output OFF</choice>
+		<choice xml:lang="de">[214] UND Ausgang AUS</choice>
+  </enumChoice>
+  <enumChoice choice="[215]" value="215">
+		<choice>[215] OR Output OFF</choice>
+		<choice xml:lang="de">[215] ODER Ausgang AUS</choice>
+  </enumChoice>
+	<enumChoice choice="[216]" value="216">
+		<choice>[216] AND Output ended</choice>
+		<choice xml:lang="de">[216] UND Ausgang beendet</choice>
+  </enumChoice>
+  <enumChoice choice="[217]" value="217">
+		<choice>[217] OR Output ended</choice>
+		<choice xml:lang="de">[217] ODER Ausgang beendet</choice>
+  </enumChoice>
+  <enumChoice choice="[218]" value="218">
+		<choice>[218] AND Output not ended</choice>
+		<choice xml:lang="de">[218] UND Ausgang nicht beendet</choice>
+  </enumChoice>
+  <enumChoice choice="[219]" value="219">
+		<choice>[219] OR Output not ended</choice>
+		<choice xml:lang="de">[219] ODER Ausgang nicht beendet</choice>
+  </enumChoice>
+	<enumChoice choice="[220]" value="220">
+		<choice>[220] AND Key pressed</choice>
+		<choice xml:lang="de">[220] UND Schalter geschlossen</choice>
+  </enumChoice>
+  <enumChoice choice="[221]" value="221">
+		<choice>[221] OR Key pressed</choice>
+		<choice xml:lang="de">[221] ODER Schalter geschlossen</choice>
+  </enumChoice>
+  <enumChoice choice="[222]" value="222">
+		<choice>[222] AND Key not pressed</choice>
+		<choice xml:lang="de">[222] UND Schalter geöffnet</choice>
+  </enumChoice>
+  <enumChoice choice="[223]" value="223">
+		<choice>[223] OR Key not pressed</choice>
+		<choice xml:lang="de">[223] ODER Schalter geöffnet</choice>
+  </enumChoice>
+	<enumChoice choice="[236]" value="236">
+		<choice>[236] AND Key ch. to pressed</choice>
+		<choice xml:lang="de">[236] UND Schalter wird geschlos.</choice>
+  </enumChoice>
+  <enumChoice choice="[237]" value="237">
+		<choice>[237] OR Key ch. to pressed</choice>
+		<choice xml:lang="de">[237] ODER Schalter wird geschlos.</choice>
+  </enumChoice>
+  <enumChoice choice="[238]" value="238">
+		<choice>[238] AND Key ch. to not pressed</choice>
+		<choice xml:lang="de">[238] UND Schalter wird geöffnet</choice>
+  </enumChoice>
+  <enumChoice choice="[239]" value="239">
+		<choice>[239] OR Key ch. to not pressed</choice>
+		<choice xml:lang="de">[239] ODER Schalter wird geöffnet</choice>
+  </enumChoice>
+	<enumChoice choice="[240]" value="240">
+		<choice>[240] AND State active</choice>
+		<choice xml:lang="de">[240] UND Zustand aktiv</choice>
+  </enumChoice>
+  <enumChoice choice="[241]" value="241">
+		<choice>[241] OR State active</choice>
+		<choice xml:lang="de">[241] ODER Zustand aktiv</choice>
+  </enumChoice>
+  <enumChoice choice="[242]" value="242">
+		<choice>[242] AND State not active</choice>
+		<choice xml:lang="de">[242] UND Zustand inaktiv</choice>
+  </enumChoice>
+  <enumChoice choice="[243]" value="243">
+		<choice>[243] OR State not active</choice>
+		<choice xml:lang="de">[243] ODER Zustand inaktiv</choice>
+  </enumChoice>
+	<enumChoice choice="[244]" value="244">
+		<choice>[244] AND State activates</choice>
+		<choice xml:lang="de">[244] UND Zustand aktiviert</choice>
+  </enumChoice>
+  <enumChoice choice="[245]" value="245">
+		<choice>[245] OR State activates</choice>
+		<choice xml:lang="de">[245] ODER Zustand aktiviert</choice>
+  </enumChoice>
+  <enumChoice choice="[246]" value="246">
+		<choice>[246] AND State deactivates</choice>
+		<choice xml:lang="de">[246] UND Zustand deaktiviert</choice>
+  </enumChoice>
+  <enumChoice choice="[247]" value="247">
+		<choice>[247] OR State deactivates</choice>
+		<choice xml:lang="de">[247] ODER Zustand deaktiviert</choice>
+  </enumChoice>
+  <enumChoice choice="[248]" value="248">
+		<choice>[248] AND speed check</choice>
+		<choice xml:lang="de">[248] UND Geschw.-prüfung</choice>
+  </enumChoice>
+  <enumChoice choice="[249]" value="249">
+		<choice>[249] OR speed check</choice>
+		<choice xml:lang="de">[249] ODER Geschw.-prüfung</choice>
+  </enumChoice>
+  <enumChoice choice="[252]" value="252">
+		<choice>[252] ELSE</choice>
+		<choice xml:lang="de">[252] ELSE</choice>
+  </enumChoice>
+  <enumChoice choice="[254]" value="254">
+		<choice>[254] NOP</choice>
+		<choice xml:lang="de">[254] NOP</choice>
+  </enumChoice>
+  <enumChoice choice="[255]" value="255">
+		<choice>[255] END</choice>
+		<choice xml:lang="de">[255] ENDE</choice>
+  </enumChoice>
+</enumVal>

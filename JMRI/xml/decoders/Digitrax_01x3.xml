@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2007, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="36" lastUpdated="20140427"/>
+  <version author="Alain Le Marchand" version="35" lastUpdated="20140406"/>
+  <version author="Alain Le Marchand" version="34" lastUpdated="20140302"/>
+  <version author="Michael Greene mgreene@cedarlane.com" version="33" lastUpdated="20131201"/>
+  <version author="Bob Jacobsen" version="32" lastUpdated="20121226"/>
+  <version author="Richard Sauerbrun" version="31" lastUpdated="20111230"/>
+  <version author="Peter Ulvestad" version="30" lastUpdated="20091101"/>
+  <version author="Peter Ulvestad" version="29" lastUpdated="20090704"/>
+  <version author="Peter Ulvestad" version="28" lastUpdated="20080908"/>
+  <version author="Bob Jacobsen" version="27" lastUpdated="20080819"/>
+  <version author="Michael Mosher" version="26" lastUpdated="20080504"/>
+  <version author="Bob Jacobsen" version="25" lastUpdated="20080313"/>
+  <version author="Martin Gostling" version="24" lastUpdated="20080308"/>
+  <version author="Bob Jacobsen" version="23" lastUpdated="20071120"/>
+  <version author="Christopher Zurek" version="22" lastUpdated="20070831"/>
+  <version author="Bob Blackwell afticarr@sympatico.ca" version="21" lastUpdated="20070830"/>
+  <version author="Bob Blackwell afticarr@sympatico.ca" version="20" lastUpdated="20070828"/>
+  <version author="Michael Mosher" version="19" lastUpdated="20070824"/>
+  <version author="Bob Blackwell afticarr@sympatico.ca" version="18" lastUpdated="20070304"/>
+  <version author="Bob Blackwell afticarr@sympatico.ca" version="17" lastUpdated="20070216"/>
+  <version author="Bob Blackwell afticarr@sympatico.ca" version="16" lastUpdated="20060807"/>
+  <version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
+  <version author="Simon Ginsburg" version="13" lastUpdated="20050422"/>
+  <!-- Created from version 5 of the 1x2 file -->
+  <!-- V2: fix default values for CV56, 57 BEMF -->
+  <!-- V3: change to new name -->
+  <!-- V4: change to yet another name, add decoders -->
+  <!-- V5: advanced consist options and parameters added -->
+  <!-- V6: BEMF defaults updated - jake -->
+  <!-- V7: decoder lock feature - jake -->
+  <!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
+  <!-- Version 9 - fix "rule 17" typos -->
+  <!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
+  <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
+  <!-- Version 12 - added some tooltips (Jack Shall) -->
+  <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
+  <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+  <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
+  <!-- Version 16 - added DN163K1C (Simon Ginsburg, Bob Blackwell) -->
+  <!-- Version 17 - added DN163A2, DN163K0D, DN163I1A, DN163I1B, DN163I1C, DH163PS; corrected maxMotorCurrent and output name for most DN series decoders ( Bob Blackwell) -->
+  <!-- Version 18 - corrected errors introduced in Version 17 maxMotorCurrent. Added dimensions for DH163L0, DN143,  (Bob Blackwell) -->
+  <!-- Version 19 - Added DH165xx decoders -->
+  <!-- Version 20 - Added DN123K3, Corrected list sorted error; moved DG series ahead of DH series  (Bob Blackwell) -->
+  <!-- Version 21 - Revised highVersionID to accomodate DN123K3. Value changed from 49 to 51. New value provided by Kent Sulivan (Bob Blackwell) -->
+  <!-- Version 22 - Removed "Rear Headlight Controlled by F4", not supported in this series of decoders  (Christopher Zurek) -->
+  <!-- Version 23 - Updated connectors from web info (Bob Jacobsen) -->
+  <!-- Version 24 - Added  DN143IP and DZ125xx decoders -->
+  <!-- Version 25 - Add DN143K1, DN143K2 (Bob Jacobsen) -->
+  <!-- Version 26 - Add DH165Q1 (Michael Mosher) -->
+  <!-- Version 27 - DG*83 have functions through F12 (Bob Jacobsen) -->
+  <!-- Version 28 - Add DH165IP (Peter Ulvestad) -->
+  <!-- Version 29 - Add DN163K1D. Updated 'maxMotorCurrents' on DN163K1A,B,C (Peter Ulvestad) -->
+  <!-- Version 30 - Add DZ123MO (Peter Ulvestad) -->
+  <!-- Version 32 - Switch to includes for common vars -->
+  <!-- Version 33 - Add DH465 (Michael Greene) -->
+  <!-- Version 34 - Add DN163A4 (derived from DN163A2) + fix width values for DN163A1/A2 - Add DN163I2, DN163K0E (Alain Le Marchand) -->
+  <!-- Version 35 - Add DN135D, DN135PS, DN163A3, DN163K4A, DN163L0A, DZ123PS, DZ123Z0. -->
+  <!--				Renamed DZ123MO in DZ123M0 (zero) and fully update definition -->
+  <!--				Removed LowVersionID for DZ143 and DZ143PS (back to default for this family - tested with a decoder of that type -->
+  <!--				Add comment to N and Z-Scale decoders. Change connector to DropIn for N and Z-scale replacement boards -->
+  <!--  			Update DN143K2 output definition + add a note for swapped headlights for display on Function map pane (Alain Le Marchand) -->
+  <!-- Version 35 - Refactoring of common parts - more comments for HO decoders (Alain Le Marchand) -->
+  <decoder>
+    <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">
+      <model model="DG383" numOuts="8" numFns="14" maxMotorCurrent="3A (peak=5A)" formFactor="O/G" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Brown" connection="wire"/>
+        <output name="6" label="Wht/Yel" connection="wire"/>
+        <output name="7" label="Wht/Grn" connection="wire"/>
+        <output name="8" label="Wht/Blu" connection="wire"/>
+        <size length="2.23" width="1.45" height="0" units="inches"/>
+      </model>
+      <model model="DG583" numOuts="8" numFns="14" maxMotorCurrent="5A (peak=10A)" formFactor="O/G" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Brown" connection="wire"/>
+        <output name="6" label="Wht/Yel" connection="wire"/>
+        <output name="7" label="Wht/Grn" connection="wire"/>
+        <output name="8" label="Wht/Blu" connection="wire"/>
+        <size length="2.23" width="1.45" height="0" units="inches"/>
+      </model>
+      <model model="DH163" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH163AT" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, for Athearn Standard Locos">
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad 1" connection="solder"/>
+        <output name="6" label="Pad 2" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH163A0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="fits many HO Diesel Locomotives: Athearn Genesis, Kato, Stewart &amp; Atlas">
+        <output name="1" label="Pad" connection="solder"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.877" width="0.667" height="0.173" units="inches"/>
+      </model>
+      <model model="DH163D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH163IP" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Integrated Medium Plug">
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH163K0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="fits many Kato HO Diesel Locomotives">
+        <output name="1" label="Pad" connection="solder"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.877" width="0.667" height="0.173" units="inches"/>
+      </model>
+      <model model="DH163L0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="for LifeLike HO GP7, SD60 &amp; other Locos">
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width=".67" height=".25" units="inches"/>
+      </model>
+      <model model="DH163P" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug">
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH163PS" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with Medium Plug on Short Harness">
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH165A0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="fits many HO Diesel Locomotives: Athearn Genesis, Kato, Stewart &amp; Atlas">
+        <output name="1" label="Pad" connection="solder"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.877" width="0.667" height="0.173" units="inches"/>
+      </model>
+      <model model="DH165IP" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium" comment="&lt;html&gt;HO-Scale, with Integrated Medium Plug,&lt;br&gt; for Kato EMD SD70MAC &amp; other locos&lt;/html&gt;">
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
+      </model>
+      <model model="DH165K0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="HO-Scale, for Kato, Stewart, Atlas &amp; other locos">
+        <output name="1" label="Pad" connection="solder"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.877" width="0.667" height="0.173" units="inches"/>
+      </model>
+      <model model="DH165K1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="fits many Kato HO Diesel Locomotives">
+        <output name="1" label="LED" connection="solder"/>
+        <output name="2" label="LED" connection="solder"/>
+        <output name="3" label="LED" connection="solder"/>
+        <output name="4" label="LED" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.877" width="0.667" height="0.173" units="inches"/>
+      </model>
+      <model model="DH165L0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="DropIn" comment="fits many Proto 2000/Lifelike GP7/SD60 locos">
+        <output name="1" label="Pin" connection="solder"/>
+        <output name="2" label="Pin" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="1.05" width=".67" height=".25" units="inches"/>
+      </model>
+      <model model="DH165Q1" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="DropIn" comment="&lt;html&gt;HO-Scale, fits Atlas, Intermountain, LifeLike &amp; other factory sound-equipped locos.&lt;br&gt; QSI-style PCB replacement.&lt;/html&gt;">
+        <output name="1" label="Pin" connection="solder"/>
+        <output name="2" label="Pin" connection="solder"/>
+        <output name="3" label="Pin" connection="solder"/>
+        <output name="4" label="Pin" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.877" width=".667" height=".173" units="inches"/>
+      </model>
+      <model model="DH465" numOuts="6" numFns="10" maxMotorCurrent="4A (peak=6A)" formFactor="HO" comment="HO/O-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Pad (Green)" connection="solder"/>
+        <output name="4" label="Pad (Violet)" connection="solder"/>
+        <output name="5" label="Pad (Brown)" connection="solder"/>
+        <output name="6" label="Pad (Yellow/white)" connection="solder"/>
+        <size length="2.04" width="0.67" height="0.11" units="inches"/>
+      </model>
+      <model model="DN123K3" numOuts="2" numFns="5" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale NW-2">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <size length="1.34" width="0.39" height="0.1" units="inches"/>
+      </model>
+      <model model="DN135D" numOuts="3" numFns="5" maxMotorCurrent="1.00A (peak=1.25A)" formFactor="N" connector="unspecified" comment="N/HO-Scale, wired, with Digitrax Easy Connect 8-pin Harness">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <size length=".55" width=".406" height=".2" units="inches"/>
+      </model>
+      <model model="DN135PS" numOuts="3" numFns="5" maxMotorCurrent="1.00A (peak=1.25A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, 8-pin Medium Socket, with Digitrax Easy Connect 8-pin Harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="plug"/>
+        <size length=".55" width=".406" height=".2" units="inches"/>
+      </model>
+      <model model="DN143" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="N" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <size length=".55" width=".36" height=".13" units="inches"/>
+      </model>
+      <model model="DN143IP" numOuts="4" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1.25A (peak=2.0A)" formFactor="Z" connector="NMRAmedium" comment="with medium plug, for Con-Cor N-Scale 4-8-4 and other locos">
+        <output name="3" label="Pad (Green)" connection="solder"/>
+        <output name="4" label="Pad (Violet)" connection="solder"/>
+        <size length="0.55" width="0.36" height="0.13" units="inches"/>
+      </model>
+      <model model="DN143K1" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="Kato N Locomotive" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <size length=".55" width=".36" height=".13" units="inches"/>
+      </model>
+      <model model="DN143K2" numOuts="4" numFns="8" maxMotorCurrent="1.25A (peak=2A)" formFactor="Kato N Locomotive" connector="other" productID="DN143K2" comment="for Kato N-scale Budd RDC">
+        <output name="1" label="LED Front" connection="LED"/>
+        <output name="2" label="LED Rear" connection="LED"/>
+        <output name="3" label="LED Interior" connection="LED"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <size length=".55" width=".36" height=".13" units="inches"/>
+      </model>
+      <model model="DN163" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="9pin">
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="0" width="0" height="0" units="inches"/>
+      </model>
+      <model model="DN163A0" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP40-2, U25B, SD35, Trainmaster, B23-7 &amp; many others">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.0015" width="0.374" height="0.157" units="inches"/>
+      </model>
+      <model model="DN163A1" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale SD60, SD60M, SD50 &amp; many others">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.875" width="0.374" height="0.157" units="inches"/>
+      </model>
+      <model model="DN163A2" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP7, GP9 and GP15-1, GP30, GP35 and similar locos">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.0015" width="0.374" height="0.157" units="inches"/>
+      </model>
+      <model model="DN163A3" numOuts="4" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-scale MP15">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad/Green" connection="solder"/>
+        <output name="4" label="Pad/Violet" connection="solder"/>
+        <size length="3.875" width="0.374" height="0.157" units="inches"/>
+      </model>
+      <model model="DN163A4" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP7, GP9 and GP15-1, GP30, GP35 and similar locos">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.87" width="0.374" height="0.1575" units="inches"/>
+      </model>
+      <model model="DN163I0" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale SD40T-2 Tunnel Motor">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.5" width=".367" height="0.135" units="inches"/>
+      </model>
+      <model model="DN163I1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-A Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN163I1B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-B Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN163I1C" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale F3 &amp; F7 Units">
+        <output name="1" label="Pad/LED" connection="solder"/>
+        <output name="2" label="Pad/LED" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN163I2" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 &amp; FP9 Units">
+        <output name="1" label="Pad" connection="solder"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN163K0A" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale P-42, PA-1 &amp; E-8">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.2165" width="0.5485" height="0.1015" units="inches"/>
+      </model>
+      <model model="DN163K0B" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale F3 A &amp; B">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.2165" width="0.5485" height="0.1015" units="inches"/>
+      </model>
+      <model model="DN163K0D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale F40PH">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.2165" width="0.5485" height="0.1015" units="inches"/>
+      </model>
+      <model model="DN163K0E" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="for N-Scale Kato E5">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.38" width="0.54" height="0.107" units="inches"/>
+      </model>
+      <model model="DN163K1A" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale SD40-2, SD70MAC &amp; others">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.11" width="0.426" height="0.195" units="inches"/>
+      </model>
+      <model model="DN163K1B" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale SD40-2, SD70MAC &amp; others">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.11" width="0.426" height="0.195" units="inches"/>
+      </model>
+      <model model="DN163K1C" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale SD40-2 locos made from year 2006 onward">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.11" width="0.426" height="0.195" units="inches"/>
+      </model>
+      <model model="DN163K1D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale EMD Class 66, GG1 &amp; DD51 locos">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.11" width="0.426" height="0.195" units="inches"/>
+      </model>
+      <model model="DN163K2" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale SD80/90MAC Series, RSC2, RS2">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="3.18" width="0.354" height="0.128" units="inches"/>
+      </model>
+      <model model="DN163K4A" numOuts="6" numFns="6" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale Glacier Express &amp; other EU locos">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="not specified" width="not specified" height="not specified" units="inches"/>
+      </model>
+      <model model="DN163K4B" numOuts="6" numFns="6" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Kato N-Scale MP36PH Metra">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.351" width="0.411" height="0.061" units="inches"/>
+      </model>
+      <model model="DN163L0A" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Life Like/Walthers Proto N-Scale GP20 &amp; similar">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <output name="3" label="Pad/Green" connection="solder"/>
+        <output name="4" label="Pad/Violet" connection="solder"/>
+        <output name="5" label="Pad/Brown" connection="solder"/>
+        <output name="6" label="Pad/White-Yellow" connection="solder"/>
+        <size length="2.12" width="0.35" height="0.044" units="inches"/>
+      </model>
+      <model model="DN163M0" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="DropIn" comment="for MicroTrains N-Scale FT-A &amp; FT-B">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="Pad" connection="solder"/>
+        <output name="3" label="Pad" connection="solder"/>
+        <output name="4" label="Pad" connection="solder"/>
+        <output name="5" label="Pad" connection="solder"/>
+        <output name="6" label="Pad" connection="solder"/>
+        <size length="2.158" width="0.58" height="0.135" units="inches"/>
+      </model>
+      <model model="DN163PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" comment="Z/N-Scale, with Medium Plug">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="Brown" connection="wire"/>
+        <output name="6" label="White-Yellow" connection="wire"/>
+        <size length="1.084" width="0.379" height="0.178" units="inches"/>
+      </model>
+      <model model="DZ123" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="9pin" comment="wired">
+        <size length="0.55" width="0.36" height="0.13" units="inches"/>
+      </model>
+      <model model="DZ123M0" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="DropIn" comment="for MicroTrains Z-Scale GP-35, GP-9">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <size length="1.319" width="0.32" height="0.118" units="inches"/>
+      </model>
+      <model model="DZ123PS" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="NMRAmedium" comment="with Medium Plug on Short Harness">
+        <size length="0.55" width="0.36" height="0.13" units="inches"/>
+      </model>
+      <model model="DZ123Z0" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="DropIn" comment="for American Z Line (AZL) GP-30 &amp; others">
+        <output name="1" label="LED" connection="LED"/>
+        <output name="2" label="LED" connection="LED"/>
+        <size length="1.296" width="0.271" height=".099" units="inches"/>
+      </model>
+      <model model="DZ125" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=1.25A)" formFactor="Z" connector="9pin" comment="Z/N/HO-Scale, wired">
+        <size length="0.418" width="0.340" height="0.112" units="inches"/>
+      </model>
+      <model model="DZ125IN" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=1.25A)" formFactor="Z" connector="NMRAsmall" comment="Z/N/HO-Scale, with NEM651 Integrated Plug">
+        <size length="0.418" width="0.340" height="0.112" units="inches"/>
+      </model>
+      <model model="DZ125PS" numOuts="2" numFns="5" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=1.25A)" formFactor="Z" connector="NMRAmedium" comment="Z/N/HO-Scale, with Medium Plug with short harness">
+        <size length="0.418" width="0.340" height="0.112" units="inches"/>
+      </model>
+      <model model="DZ143" numOuts="4" numFns="8" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="9pin" comment="Z/N/HO-Scale, wired">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.55" width="0.36" height="0.13" units="inches"/>
+      </model>
+      <model model="DZ143PS" numOuts="4" numFns="8" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="NMRAmedium" comment="Z/N/HO-Scale, with Medium Plug with short harness">
+        <output name="1" label="White" connection="plug"/>
+        <output name="2" label="Yellow" connection="plug"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <size length="0.55" width="0.36" height="0.13" units="inches"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series3.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <!-- Warning message for DN143K2 for display on the Function map pane -->
+      <!-- known manufacturing non systematic error for this decoder -->
+      <!-- Using a dummy variable with a non used CV to display a message -->
+      <variable CV="127" default="0" comment="for display on Function map pane" item="Function Map Option 1" infoOnly="yes" readOnly="yes" include="DN143K2">
+        <enumVal>
+          <enumChoice choice="Need to switch F0(f) and F0(r) outputs if headlights opposite to direction of travel">
+            <choice>Need to switch F0(f) and F0(r) outputs if headlights opposite to direction of travel</choice>
+          </enumChoice>
+        </enumVal>
+        <label>WARNING:</label>
+      </variable>
+      <!-- End of warning message for DN143K2 -->
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+        <label xml:lang="it">Reset delle CV salvo Tabella Velocità ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
+</decoder-config>

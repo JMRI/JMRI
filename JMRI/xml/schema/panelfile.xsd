@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009, 2010, 2017          -->
+
+<!-- Not in Venetian blind form                                       -->
+<!-- 'operation' element not complete                                 -->
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+    <xs:annotation>
+        <xs:documentation>
+          This is the schema representing panel files, including
+          both the panels themselves and configuration information.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="yes" />  <!-- too many to list -->
+        </xs:appinfo>
+    </xs:annotation>
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/routes-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/logix-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+
+  <xs:element name="layout-config">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+
+<!-- 
+Top Level Elements from DTD (remove when done) 
+programmer
+roster
+perform
+preferences
+ 
+securityelements
+aspectgenerator
+oblocks
+paneleditor
+application
+
+-->
+
+        <xs:element name="gui" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:attribute name="LAFclass" type="xs:string"/>
+                <xs:attribute name="class" type="xs:string"/>
+                <xs:attribute name="LocaleLanguage" type="xs:string"/>
+                <xs:attribute name="LocaleCountry" type="xs:string"/>
+                <xs:attribute name="LocaleVariant" type="xs:string"/>
+            </xs:complexType>
+        </xs:element>
+      
+        <xs:element name="connection" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:attribute name="class" type="xs:string"/>
+            </xs:complexType>
+        </xs:element>
+      
+
+        <xs:element name="turnouts"     type="TurnoutManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="sensors"      type="SensorManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="lights"       type="LightManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="reporters"    type="ReporterManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memories"     type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memorys"      type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" /> <!-- deprecated older spelling -->
+
+        <xs:element name="blocks"       type="BlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="oblocks"      type="OBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="sections"     type="SectionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="transits"     type="TransitManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="timebase"     type="TimebaseType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalgroups" type="SignalGroupManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutblocks" type="LayoutBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="audio"        type="AudioManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="routes"       type="RouteManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixs"       type="LogixManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="conditionals" type="ConditionalManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
+
+        
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
