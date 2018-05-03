@@ -40,7 +40,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
-        log.debug("new Reporter " + number);
+        log.debug("new Reporter {}", number);
         _number = number;
         // At construction, register for messages
         tc.addLocoNetListener(~0, this);
@@ -166,10 +166,10 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     @Override
     public LocoAddress getLocoAddress(String rep) {
         // Extract the number from the head of the report string
-        log.debug("report string: " + rep);
+        log.debug("report string: {}", rep);
         Matcher m = this.parseReport(rep);
         if ((m != null) && m.find()) {
-            log.debug("Parsed address: " + m.group(1));
+            log.debug("Parsed address: {}", m.group(1));
             return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
         } else {
             return (null);
@@ -181,10 +181,10 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // Extract the direction from the tail of the report string
-        log.debug("report string: " + rep); // NOI18N
+        log.debug("report string: {}", rep); // NOI18N
         Matcher m = this.parseReport(rep);
         if (m.find()) {
-            log.debug("Parsed direction: " + m.group(2)); // NOI18N
+            log.debug("Parsed direction: {}", m.group(2)); // NOI18N
             if (m.group(2).equals("enter")) { // NOI18N
                 // LocoNet Enter message
                 return (PhysicalLocationReporter.Direction.ENTER);
@@ -211,7 +211,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     }
 
     // data members
-    int _number;   // loconet Reporter number
+    int _number;   // LocoNet Reporter number
 
     @SuppressWarnings("unused")
     @Deprecated

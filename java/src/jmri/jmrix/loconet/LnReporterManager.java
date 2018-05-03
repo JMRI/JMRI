@@ -65,7 +65,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "R"))) {
-            // here if an illegal loconet reporter system name
+            // here if an illegal LocoNet Reporter system name
             log.error("invalid character in header field of loconet reporter system name: {}", systemName);
             return (0);
         }

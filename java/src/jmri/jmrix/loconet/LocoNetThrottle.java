@@ -334,7 +334,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         int new_spd = intSpeed(speed);
 
-        // decide whether to send a new loconet message
+        // decide whether to send a new LocoNet message
         boolean sendLoconetMessage = false;
         if (new_spd != layout_spd) {
             // the new speed is different - send a message

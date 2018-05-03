@@ -335,7 +335,7 @@ public final class LnConstants {
 //public final static int PROG_CV_NUM(ptr)    (((((ptr->cvh & CVH_CV8_CV9) >> 3) | (ptr->cvh & CVH_CV7)) * 128)   \
 //                            + (ptr->cvl & 0x7f))
 
-    /* loconet opcodes */
+    /* LocoNet opcodes */
     public final static int OPC_GPBUSY = 0x81;
     public final static int OPC_GPOFF = 0x82;
     public final static int OPC_GPON = 0x83;
@@ -431,7 +431,7 @@ public final class LnConstants {
     public final static int EXPD_F27_F21 = 9;
 
 //  opcode keys used to express interest in various messages
-//            note these are _not_ the loconet opcode values!
+//            note these are _not_ the LocoNet opcode values!
     public final static int KEY_GPBUSY = 1 << 0;
     public final static int KEY_GPOFF = 1 << 1;
     public final static int KEY_GPON = 1 << 2;

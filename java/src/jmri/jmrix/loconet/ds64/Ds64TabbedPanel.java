@@ -1956,7 +1956,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             Bundle.getMessage("ButtonCancel")};
         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                 Bundle.getMessage("DialogTextBoardResetWarning"),
-                Bundle.getMessage("DialogHeadingBoardResetWarning"),
+                Bundle.getMessage("WarningTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
         if (userReply != 0) {
@@ -2020,7 +2020,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         //      Routes tab - configure features related to routes
         //          Routes tab has sub-tabs, one for each of the 8 routes
 
-        addrField.setText(Bundle.getMessage("LABEL_UNIT_ADDRESS"));
+        addrField.setText(Bundle.getMessage("LabelBoardID"));
 
         String[] outputTypes = {Bundle.getMessage("ComboBoxOutputType0"),
             Bundle.getMessage("ComboBoxOutputType1")};
@@ -2096,22 +2096,22 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         commandSource.addActionListener(basicConfigChangeActionListener);
 
         // Crossbuck Flasher controls
-        output1CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput1Crossbuck"));
+        output1CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 1));
         output1CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput1Crossbuck"));
         output1CrossbuckFlasherCheckBox.setName("17"); // NOI18N
         output1CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-
-        output2CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput2Crossbuck"));
+        // output 3 to the right
+        output3CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 3));
+        output3CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput3Crossbuck"));
+        output3CrossbuckFlasherCheckBox.setName("19"); // NOI18N
+        output3CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
+        // output 2 below output 1
+        output2CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 2));
         output2CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput2Crossbuck"));
         output2CrossbuckFlasherCheckBox.setName("18"); // NOI18N
         output2CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
 
-        output3CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput3Crossbuck"));
-        output3CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput3Crossbuck"));
-        output3CrossbuckFlasherCheckBox.setName("19"); // NOI18N
-        output3CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-
-        output4CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput4Crossbuck"));
+        output4CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 4));
         output4CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput4Crossbuck"));
         output4CrossbuckFlasherCheckBox.setName("20"); // NOI18N
         output4CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
@@ -2154,8 +2154,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         localSensorType.setName("21"); // NOI18N
         localSensorType.addActionListener(basicConfigChangeActionListener);
 
-        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonTextResetToFactoryDefault"));
-        factoryResetButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextResetToFactoryDefault"));
+        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonResetToFactoryDefault"));
+        factoryResetButton.setToolTipText(Bundle.getMessage("ToolTipButtonResetToFactoryDefault"));
         factoryResetButton.addActionListener(
                 event -> {
                     readAllButton.setEnabled(false);
@@ -2176,19 +2176,19 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         routeA7 = new SimpleTurnoutStateEntry[9];
         routeA8 = new SimpleTurnoutStateEntry[9];
 
-        resetRouteButton = new JToggleButton(Bundle.getMessage("ButtonTextResetRoute"));
-        resetRouteButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextResetRoute"));
+        resetRouteButton = new JToggleButton(Bundle.getMessage("ButtonResetRoute"));
+        resetRouteButton.setToolTipText(Bundle.getMessage("ToolTipButtonResetRoute"));
         resetRouteButton.setEnabled(false);
         resetRouteButton.setVisible(false);
 
         JPanel addressingPanel = provideAddressing(" "); // create read/write buttons, address
         readAllButton.setPreferredSize(null);
-        readAllButton.setText(Bundle.getMessage("ButtonTextReadFullSheet"));
-        readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextReadFullSheet"));
+        readAllButton.setText(Bundle.getMessage("ButtonReadFullSheet"));
+        readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonReadFullSheet"));
 
         writeAllButton.setPreferredSize(null);
-        writeAllButton.setText(Bundle.getMessage("ButtonTextWriteFullSheet"));
-        writeAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextWriteFullSheet"));
+        writeAllButton.setText(Bundle.getMessage("ButtonWriteFullSheet"));
+        writeAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonWriteFullSheet"));
 
         // make both buttons a little bit bigger, with identical (preferred) sizes
         // (width increased because some computers/displays trim the button text)
@@ -2360,8 +2360,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 log.debug("Creating entry for OpSw {}", i);
                 innerPanel = new JPanel(new FlowLayout());
                 innerPanel.add(new JLabel("OpSw " + i)); // NOI18N
-                opswThrown[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("RadioButtonTextThrown"));
-                opswClosed[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("RadioButtonTextClosed"));
+                opswThrown[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("TurnoutStateThrown"));
+                opswClosed[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("TurnoutStateClosed"));
                 g[i] = new ButtonGroup();
                 g[i].add(opswThrown[i]);
                 g[i].add(opswClosed[i]);
@@ -2399,7 +2399,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput1")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 1)));
         outAddr1 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
         outState1 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
         p.add(outAddr1);
@@ -2408,7 +2408,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput2")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 2)));
         outAddr2 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
         outState2 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
         p.add(outAddr2);
@@ -2417,7 +2417,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput3")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 3)));
         outAddr3 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
         outState3 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
         p.add(outAddr3);
@@ -2426,7 +2426,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput4")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 4)));
         outAddr4 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
         outState4 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
         p.add(outAddr4);
@@ -2517,11 +2517,11 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     if (routeNumber != 0) {
                         // before proceeding, make sure that the user really wants to go forward
                         Object[] dialogBoxButtonOptions = {
-                            Bundle.getMessage("ButtonTextResetRouteN", routeNumber),
+                            Bundle.getMessage("ButtonResetRouteN", routeNumber),
                             Bundle.getMessage("ButtonCancel")};
                         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                                 Bundle.getMessage("DialogTextClearRouteWarning", routeNumber),
-                                Bundle.getMessage("DialogHeadingClearRouteWarning"),
+                                Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
                         if (userReply != 0) {

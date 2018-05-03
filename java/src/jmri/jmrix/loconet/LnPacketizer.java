@@ -88,7 +88,7 @@ public class LnPacketizer extends LnTrafficController {
      * Forward a preformatted LocoNetMessage to the actual interface.
      * <p>
      * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission.
+     * to a byte array and queued for transmission.
      *
      * @param m Message to send; will be updated with CRC
      */
@@ -112,11 +112,12 @@ public class LnPacketizer extends LnTrafficController {
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify(); // NPE here on slow systems init
+                xmtHandler.notify(); // NPE here on slow systems init state query
+                // null test added in 4.11.6 in LnPowerManager and LnSensorManager
             }
         } catch (NullPointerException npe) {
             log.warn("xmtHandler.notify() npe");
-            throw new NullPointerException(); // caught by LnSensor/PowerManager run()
+            throw npe; // is caught by LnSensor/PowerManager run()
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }

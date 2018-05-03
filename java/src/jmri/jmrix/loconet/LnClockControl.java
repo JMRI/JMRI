@@ -358,9 +358,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    
     public void dispose() {
-        // Drop loconet connection
+        // Drop LocoNet connection
         if (sm != null) {
             sm.removeSlotListener(this);
         }
@@ -373,5 +372,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
+
 }
 

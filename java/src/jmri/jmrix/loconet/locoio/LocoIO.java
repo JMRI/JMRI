@@ -19,7 +19,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * <p>
  * Commands for setting SV's:
  * <p>
- * PC to LocoIO loconet message (OPC_PEER_XFER)
+ * PC to LocoIO LocoNet message (OPC_PEER_XFER)
  * <pre><code>
  * Code LOCOIO_SV_READ _or_ LOCOIO_SV_WRITE ----
  * 0xE5 OPC_PEER_XFER

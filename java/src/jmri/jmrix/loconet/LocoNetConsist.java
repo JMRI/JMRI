@@ -37,7 +37,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     private int consistRequestState = IDLESTATE;
 
     // Initialize a consist for the specific address
-    // the Default consist type for loconet is a Command
+    // the Default consist type for LocoNet is a Command
     // Station Consist. 
     public LocoNetConsist(int address, LocoNetSystemConnectionMemo lm) {
         super(address);
@@ -51,7 +51,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     // Initialize a consist for the specific address
-    // the Default consist type for loconet is a Command
+    // the Default consist type for LocoNet is a Command
     // Station Consist. 
     public LocoNetConsist(DccLocoAddress address, LocoNetSystemConnectionMemo lm) {
         super(address);

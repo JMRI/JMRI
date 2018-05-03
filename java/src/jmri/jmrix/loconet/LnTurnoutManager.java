@@ -201,7 +201,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix + "T")) {
-            // here if an illegal loconet turnout system name
+            // here if an illegal LocoNet Turnout system name
             log.error("invalid character in header field of loconet turnout system name: {}", systemName);
             return (0);
         }

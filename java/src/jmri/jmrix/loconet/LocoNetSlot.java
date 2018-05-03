@@ -385,7 +385,7 @@ public class LocoNetSlot {
     }
 
     /**
-     * Load functions 9 through 28 from loconet "Set Direct" message.
+     * Load functions 9 through 28 from LocoNet "Set Direct" message.
      */
     public void functionMessage(long pkt) {
         // parse for which set of functions

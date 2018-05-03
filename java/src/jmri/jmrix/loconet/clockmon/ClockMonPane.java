@@ -120,7 +120,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
     @Override
     public void dispose() {
-        // Drop loconet connection
+        // Drop LocoNet connection
         if (memo.getSlotManager() != null) {
             memo.getSlotManager().removeSlotListener(this);
         }

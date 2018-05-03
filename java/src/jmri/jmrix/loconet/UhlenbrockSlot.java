@@ -25,7 +25,7 @@ public class UhlenbrockSlot extends LocoNetSlot {
     }
 
     /**
-     * Load functions 9 through 12 from loconet Uhlenbrock Intellibox-II
+     * Load functions 9 through 12 from LocoNet Uhlenbrock Intellibox-II
      * implementation to be used only for message with Op code
      * RE_OPC_IB2_F9_F12.
      */
@@ -40,7 +40,7 @@ public class UhlenbrockSlot extends LocoNetSlot {
     }
 
     /**
-     * Load functions 9 through 28 from loconet Uhlenbrock Intellibox-I and -II
+     * Load functions 9 through 28 from LocoNet Uhlenbrock Intellibox-I and -II
      * implementation to be used only for message with Op code
      * RE_OPC_IB2_SPECIAL.
      */

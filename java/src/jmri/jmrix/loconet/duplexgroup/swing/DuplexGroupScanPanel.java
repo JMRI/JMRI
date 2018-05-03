@@ -461,7 +461,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     public void connect(LnTrafficController t) {
         if (t != null) {
-            // connect to the LnTrafficController if the connection is a valid loconet connection
+            // connect to the LnTrafficController if the connection is a valid LocoNet connection
             t.addLocoNetListener(~0, this);
         }
     }

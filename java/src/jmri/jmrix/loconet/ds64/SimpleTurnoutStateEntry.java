@@ -73,8 +73,8 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      */
     public SimpleTurnoutStateEntry(Integer address, boolean isClosed) {
         super(address,isClosed);
-        thrownRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextThrown"));
-        closedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextClosed"));
+        thrownRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateThrown"));
+        closedRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateClosed"));
         unusedRadioButton = null;
         addressField = new ValidatedTextField(5, true, 1, 2048, Bundle.getMessage("ErrorTextAddressInvalid"));
         entryPanel = null;
@@ -133,8 +133,8 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
      */
     public SimpleTurnoutStateEntry(Integer address, boolean closed, boolean unused) {
         super(address, closed, unused);
-        thrownRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextThrown"));
-        closedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextClosed"));
+        thrownRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateThrown"));
+        closedRadioButton = new JRadioButton(Bundle.getMessage("TurnoutStateClosed"));
         unusedRadioButton = new JRadioButton(Bundle.getMessage("RadioButtonTextUnused"));
         addressField = new ValidatedTextField(5, true, 1, 2048, Bundle.getMessage("ErrorTextAddressInvalid"));
         entryPanel = null;
@@ -270,7 +270,7 @@ public class SimpleTurnoutStateEntry extends SimpleTurnout {
 
     @Override
     public void setAddress(Integer addr) {
-        log.debug("simpleturnoutstateentry - setaddress "+addr);
+        log.debug("simpleturnoutstateentry - setaddress {}", addr);
         super.setAddress(addr);
         if (isValid()) {
             addressField.setText(String.valueOf(addr));

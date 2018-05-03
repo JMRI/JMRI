@@ -1273,7 +1273,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
 
-        int addr = cvnum - 1;    // cvnum is in human readable form; addr is what's sent over loconet
+        int addr = cvnum - 1;    // cvnum is in human readable form; addr is what's sent over LocoNet
 
         LocoNetMessage m = new LocoNetMessage(14);
 

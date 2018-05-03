@@ -503,7 +503,7 @@ public class LocoIOData
                     }
                 }
                 return;
-            default:    // we ignore all other loconet messages
+            default:    // we ignore all other LocoNet messages
             // if (log.isDebugEnabled()) {
             //     log.debug(LnConstants.OPC_NAME(opCode) + " received (ignored)");
             // }

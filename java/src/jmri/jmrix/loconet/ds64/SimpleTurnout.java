@@ -58,8 +58,9 @@ public class SimpleTurnout {
     }
 
     /**
-     * Returns the "validity" state of the simpleTurnout object.  This "validity"
+     * Get the "validity" state of the simpleTurnout object.  This "validity"
      * state does not necessarily reflect the "validity" state of a physical turnout.
+     *
      * @return true if the address is valid
      */
     public boolean isValid() {
@@ -78,7 +79,7 @@ public class SimpleTurnout {
     public void setAddress(Integer addr) {
         address = addr;
         if (isValid() == false) {
-            log.debug("simpleTurnout says "+addr+" is invalid therefore unused");
+            log.debug("simpleTurnout says {} is invalid therefore unused", addr);
             isUnused = true;
             isClosed = true;
         }
@@ -123,7 +124,7 @@ public class SimpleTurnout {
      * @return true if turnout is "unused", else false
      */
     public boolean getIsUnused() {
-        log.debug("simple turnout isunused returns "+isUnused);
+        log.debug("simple turnout isunused returns {}", isUnused);
         return isUnused;
     }
 

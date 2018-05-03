@@ -49,7 +49,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     }
 
     /**
-     * Request an update on status by sending a loconet message.
+     * Request an update on status by sending a LocoNet message.
      */
     @Override
     public void requestUpdateFromLayout() {

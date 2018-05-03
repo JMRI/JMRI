@@ -53,7 +53,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      * Forward a preformatted LocoNetMessage to the actual interface.
      *
      * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission
+     * to a byte array and queued for transmission
      *
      * @param m Message to send; will be updated with CRC
      */

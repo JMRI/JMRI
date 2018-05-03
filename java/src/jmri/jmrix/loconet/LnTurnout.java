@@ -396,7 +396,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     // data members
-    int _number;   // loconet turnout number
+    int _number;   // LocoNet Turnout number
 
     private boolean myAddress(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering

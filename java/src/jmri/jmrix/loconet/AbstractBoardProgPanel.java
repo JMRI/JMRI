@@ -669,7 +669,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
                         // have not reached maximum number of retries, so try
                         // the access again
                         replyTryCount++;
-                        log.debug("retrying(" + replyTryCount + ") access to OpSw" + state); // NOI18N
+                        log.debug("retrying({}) access to OpSw{}", replyTryCount, state); // NOI18N
                         responseTimer.stop();
                         delayedNextRequest();
                         return;
@@ -678,8 +678,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
                     // Have reached the maximum number of retries for accessing
                     // a given OpSw.
                     // Cancel the ongoing process and update the status line.
-                    log.warn("Reached OpSw access retry limit of " + MAX_OPSW_ACCESS_RETRIES +
-                            " when accessing OpSw " + state); // NOI18N
+                    log.warn("Reached OpSw access retry limit of {} when accessing OpSw{}", MAX_OPSW_ACCESS_RETRIES, state); // NOI18N
                     awaitingReply = false;
                     responseTimer.stop();
                     state = 0;
@@ -726,7 +725,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     @Override
     public void dispose() {
-        // Drop loconet connection
+        // Drop LocoNet connection
         if (memo.getLnTrafficController() != null) {
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }

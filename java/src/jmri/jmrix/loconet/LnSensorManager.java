@@ -77,7 +77,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             default:  // here we didn't find an interesting command
                 return;
         }
-        // reach here for loconet sensor input command; make sure we know about this one
+        // reach here for LocoNet sensor input command; make sure we know about this one
         String s = a.getNumericAddress();
         if (null == getBySystemName(s)) {
             // need to store a new one
@@ -175,7 +175,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
-            // here if an illegal loconet light system name
+            // here if an illegal LocoNet Light system name
             log.error("illegal character in header field of loconet sensor system name: {}", systemName);
             return (0);
         }
@@ -250,7 +250,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Class providing a thread to update sensor states
+     * Class providing a thread to update sensor states.
      */
     static class LnSensorUpdateThread extends Thread {
 
@@ -264,8 +264,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
         /**
          * Runs the thread - sends 8 commands to query status of all stationary
-         * sensors per LocoNet PE Specs, page 12-13 Thread waits 500 msec
-         * between commands.
+         * sensors per LocoNet PE Specs, page 12-13.
+         * Thread waits 500 msec between commands.
          */
         @Override
         public void run() {
@@ -279,7 +279,6 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 try {
                     // Delay 500 mSec to allow init of traffic controller, listeners.
                     Thread.sleep(500);
-                    // sleep(500) or even (750) mSec infrequently causes NPE upon sending via tc, so
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                     sm.setUpdateNotBusy();
@@ -287,20 +286,23 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 msg.setElement(1, sw1[k]);
                 msg.setElement(2, sw2[k]);
-                try {
-                    tc.sendLocoNetMessage(msg);
-                } catch (NullPointerException npe) {
-                    log.warn("init of LnSensorManager delayed");
+                while (true) {
                     try {
-                        Thread.sleep(1000); // wait a bit longer for SensorManager to init
                         tc.sendLocoNetMessage(msg);
-                        log.debug("delayed init of LnSensorManager succeeded, sent msg");
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                        sm.setUpdateNotBusy();
-                        return; // and stop work
+                        break;
+                    } catch (NullPointerException npe) {
+                        // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so retry
+                        log.debug("init of LnSensorManager delayed");
+                        try {
+                            Thread.sleep(10); // wait 1 cycle for tc to init
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt(); // retain if needed later
+                            sm.setUpdateNotBusy();
+                            return; // and stop work
+                        }
                     }
                 }
+                log.debug("LnSensorUpdate sent");
             }
             sm.setUpdateNotBusy();
         }
