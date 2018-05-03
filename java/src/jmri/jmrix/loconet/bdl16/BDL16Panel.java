@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import jmri.jmrix.loconet.AbstractBoardProgPanel;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
  */
-public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
+public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * BDL16x Configuration Tool.

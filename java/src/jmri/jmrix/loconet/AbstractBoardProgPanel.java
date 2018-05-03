@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -322,15 +323,18 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     }
 
     /**
-     * creates the status line for the GUI
+     * Create the status line for the GUI.
+     *
      * @return - a JComponent which will display status updates
      */
     protected JComponent provideStatusLine() {
+        status.setFont(status.getFont().deriveFont(0.9f * addrField.getFont().getSize())); // a bit smaller
+        status.setForeground(Color.gray);
         return status;
     }
 
     /**
-     * updates the status line
+     * Update the status line.
      *
      * @param msg - to be displayed on the status line
      */
@@ -340,6 +344,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
 
     /**
      * Handle GUI layout details during construction.
+     * Adds items as lines onto JPanel.
      *
      * @param c component to put on a single line
      */

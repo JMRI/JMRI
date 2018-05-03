@@ -2018,7 +2018,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         //      Outputs tab - configure features most related to DS64 outputs
         //      Inputs tab - configure features most related to DS64 inputs
         //      Routes tab - configure features related to routes
-        //          Routes tab has sub-tabs, one for each of the 8 routes
+        //          Routes tab has (left side, vertical) sub-tabs, one for each of the 8 routes
 
         addrField.setText(Bundle.getMessage("LabelBoardID"));
 
@@ -3075,5 +3075,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             index = i;
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
+
 }

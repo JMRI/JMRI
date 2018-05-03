@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.soundloader;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -131,11 +132,13 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
                 p = new JPanel();
                 p.setLayout(new FlowLayout());
                 status.setText(res.getString("StatusSelectFile"));
+                // layout
                 status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+                status.setFont(status.getFont().deriveFont(0.9f * inputFileName.getFont().getSize())); // a bit smaller
+                status.setForeground(Color.gray);
                 p.add(status);
                 add(p);
             }
-
         }
     }
 
