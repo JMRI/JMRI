@@ -21,6 +21,7 @@ public class EditCircuitFrameTest {
         ControlPanelEditor frame = new ControlPanelEditor();
         CircuitBuilder cb = new CircuitBuilder(frame);
         OBlock ob = new OBlock("OB01");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         EditCircuitFrame t = new EditCircuitFrame("Edit Circuit Frame", cb, ob);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(frame);
