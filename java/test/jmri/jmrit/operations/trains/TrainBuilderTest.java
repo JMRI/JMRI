@@ -7456,6 +7456,340 @@ public class TrainBuilderTest {
             Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
         }
     }
+    
+    @Test
+    public void testFindFinalDestinationForCarLoad() {
+        // register the car types used
+        ct.addName("Boxcar");
+
+        // register the car loads used
+        cld.addType("Boxcar");
+        cld.addName("Boxcar", "Flour");
+        cld.addName("Boxcar", "Bags");
+
+        // Create locations used
+        Location westend = lmanager.newLocation("Westend");
+
+        Location midtown = lmanager.newLocation("Midtown");
+
+        Location eastend = lmanager.newLocation("Eastend");
+
+        Track westendInterchange1 = westend.addTrack("Westend Interchange 1", Track.INTERCHANGE);
+        westendInterchange1.setLength(500);
+        
+        Track westendSpur1 = westend.addTrack("Westend spur 1", Track.SPUR);
+        westendSpur1.setLength(500);
+
+        Track midtownSpur1 = midtown.addTrack("Midtown spur 1", Track.SPUR);
+        midtownSpur1.setLength(500);
+        
+        Track midtownSpur2 = midtown.addTrack("Midtown spur 2", Track.SPUR);
+        midtownSpur2.setLength(500);
+        
+        // alternate track for spur 1
+        Track midtownYard = midtown.addTrack("Midtown yard", Track.YARD);
+        midtownYard.setLength(500);
+        midtownSpur1.setAlternateTrack(midtownYard);
+        
+        Track eastendSpur1 = eastend.addTrack("Eastend spur 1", Track.SPUR);
+        eastendSpur1.setLength(500);
+        
+        // must set moves after all tracks are created
+        midtownSpur1.setMoves(20);
+        midtownSpur2.setMoves(40);
+        eastendSpur1.setMoves(60);
+        
+        // improve test coverage, reports a message to the build report
+        midtownSpur1.setHoldCarsWithCustomLoadsEnabled(true);
+        
+        // create the schedule
+        Schedule sch1 = smanager.newSchedule("Schedule for car load");
+        ScheduleItem sch1Item1 = sch1.addItem("Boxcar");
+        sch1Item1.setReceiveLoadName("Bags");
+        
+        midtownSpur1.setScheduleId(sch1.getId());
+        midtownSpur2.setScheduleId(sch1.getId());
+        eastendSpur1.setScheduleId(sch1.getId());
+        
+        // load cars
+        Car c1 = cmanager.newCar("AA", "1");
+        c1.setTypeName("Boxcar");
+        c1.setLoadName("Bags");
+        c1.setLength("40");
+        c1.setLocation(westend, westendInterchange1);
+        
+        Car c2 = cmanager.newCar("AA", "2");
+        c2.setTypeName("Boxcar");
+        c2.setLength("40");
+        c2.setLocation(midtown, midtownSpur1);
+        
+        // create the route        
+        Route route = rmanager.newRoute("test car load route");
+        route.addLocation(westend);
+        route.addLocation(midtown);
+        route.addLocation(eastend);
+        
+        Train train =tmanager.newTrain("test car load train");
+        train.setRoute(route);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is Midtown spur 1", midtownSpur1, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("no schedule for this spur", 0, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
+        
+        // now test the interchange destination restriction feature
+        train.reset();
+        
+        // don't allow the car to go to Midtown
+        westendInterchange1.setDestinationOption(Track.INCLUDE_DESTINATIONS);
+        westendInterchange1.addDestination(eastend);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is Eastend spur 1", eastendSpur1, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("no schedule for this spur", 0, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        train.reset();
+        
+        // don't allow through cars
+        train.setAllowThroughCarsEnabled(false);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car was not added to train
+        Assert.assertNull("car 1 not part of train", c1.getTrain());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("no schedule for this spur", 0, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // try local move, local track has the least number of moves, so tried first by program
+        train.reset();
+        train.setAllowThroughCarsEnabled(true);
+        westendSpur1.setScheduleId(sch1.getId());
+        westendInterchange1.setDestinationOption(Track.ALL_DESTINATIONS);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is Westend spur 1", westendSpur1, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 21, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // don't allow local moves
+        train.reset();
+        train.setAllowLocalMovesEnabled(false);
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is midtown spur 1", midtownSpur1, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 22, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // test alternate track
+        midtownSpur1.setLength(80); // 40' boxcar needs 44 feet, c2 is already on this track
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is now the yard", midtownYard, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 23, midtownSpur1.getMoves()); // bumped 
+        Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown yard", 1, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // test alternate track, needs at least one train direction to be the same
+        midtownSpur1.setTrainDirections(Track.NORTH);
+        midtownYard.setTrainDirections(Track.SOUTH);
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is now spur 2", midtownSpur2, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 23, midtownSpur1.getMoves()); // bumped 
+        Assert.assertEquals("Midtown spur 2", 41, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown yard", 1, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // restore and test
+        midtownYard.setTrainDirections(Track.NORTH);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is now the yard", midtownYard, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves()); // bumped 
+        Assert.assertEquals("Midtown spur 2", 41, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // test alternate track, don't allow boxcar
+        midtownYard.deleteTypeName("Boxcar");
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is now spur 2", midtownSpur2, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 42, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+               
+        // remove alternate
+        midtownSpur1.setAlternateTrack(null);
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is now spur 2", midtownSpur2, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves()); // bumped 
+        Assert.assertEquals("Midtown spur 2", 43, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
+        // test track space available
+        c2.setFinalDestination(midtown);
+        c2.setFinalDestinationTrack(midtownSpur2);
+        
+        midtownSpur2.setLength(80);
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is eastend", eastendSpur1, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 44, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 62, eastendSpur1.getMoves());
+        
+        // now test car to staging, create four staging tracks since they are randomly selected
+        Location staging = lmanager.newLocation("Staging");
+        
+        Track stagingTrack1 = staging.addTrack("Staging Track 1", Track.STAGING);
+        stagingTrack1.setLength(500);
+        
+        Track stagingTrack2 = staging.addTrack("Staging Track 2", Track.STAGING);
+        stagingTrack2.setLength(500);
+        stagingTrack2.deleteTypeName("Boxcar");
+        
+        Track stagingTrack3 = staging.addTrack("Staging Track 3", Track.STAGING);
+        stagingTrack3.setLength(500);
+        stagingTrack3.deleteTypeName("Boxcar");
+        
+        Track stagingTrack4 = staging.addTrack("Staging Track 4", Track.STAGING);
+        stagingTrack4.setLength(500);
+        stagingTrack4.deleteTypeName("Boxcar");
+        
+        // neither staging track is currently reachable
+        eastendSpur1.setLength(40); // kill this track
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+             
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is midtown", midtownSpur2, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 46, midtownSpur2.getMoves()); // destination set and bumped
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 62, eastendSpur1.getMoves());
+        
+        // now add staging to this train's route
+        route.addLocation(staging);
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+             
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is staging", stagingTrack1, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 47, midtownSpur2.getMoves()); // bumped
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 62, eastendSpur1.getMoves());
+        
+        // don't allow staging as a destination
+        westendInterchange1.setDestinationOption(Track.INCLUDE_DESTINATIONS);
+        westendInterchange1.addDestination(midtown);
+        westendInterchange1.addDestination(eastend);
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+             
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is midtown", midtownSpur2, c1.getDestinationTrack());
+        
+        // confirm track move counts are correct
+        Assert.assertEquals("Westend spur 1", 1, westendSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 1", 24, midtownSpur1.getMoves());
+        Assert.assertEquals("Midtown spur 2", 49, midtownSpur2.getMoves()); // destination set and bumped
+        Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
+        Assert.assertEquals("Eastend spur 1", 62, eastendSpur1.getMoves());
+        
+    }
 
     private void setUpRoute(Route route) {
         A = lmanager.newLocation("A");
@@ -7494,6 +7828,8 @@ public class TrainBuilderTest {
         e4.setLocation(A, At);
 
     }
+    
+    
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
