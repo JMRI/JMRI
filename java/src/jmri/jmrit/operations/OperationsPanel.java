@@ -288,29 +288,30 @@ public class OperationsPanel extends JPanel implements AncestorListener {
     }
 
     protected synchronized void createShutDownTask() {
-        OperationsManager.getInstance().setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
-                Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
-            @Override
-            public boolean checkPromptNeeded() {
-                if (Setup.isAutoSaveEnabled()) {
-                    storeValues();
-                    return true;
-                }
-                return !OperationsXml.areFilesDirty();
-            }
+        InstanceManager.getDefault(OperationsManager.class)
+                .setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
+                        Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
+                    @Override
+                    public boolean checkPromptNeeded() {
+                        if (Setup.isAutoSaveEnabled()) {
+                            storeValues();
+                            return true;
+                        }
+                        return !OperationsXml.areFilesDirty();
+                    }
 
-            @Override
-            public boolean doPrompt() {
-                storeValues();
-                return true;
-            }
+                    @Override
+                    public boolean doPrompt() {
+                        storeValues();
+                        return true;
+                    }
 
-            @Override
-            public boolean doClose() {
-                storeValues();
-                return true;
-            }
-        });
+                    @Override
+                    public boolean doClose() {
+                        storeValues();
+                        return true;
+                    }
+                });
     }
 
     protected void storeValues() {

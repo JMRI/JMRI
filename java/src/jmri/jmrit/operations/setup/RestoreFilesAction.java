@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
@@ -83,7 +84,7 @@ public class RestoreFilesAction extends AbstractAction {
             // now deregister shut down task
             // If Trains window was opened, then task is active
             // otherwise it is normal to not have the task running
-            OperationsManager.getInstance().setShutDownTask(null);
+            InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
             Apps.handleRestart();
 

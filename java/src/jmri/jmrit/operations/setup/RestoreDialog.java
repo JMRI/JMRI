@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
@@ -221,7 +222,7 @@ public class RestoreDialog extends JDialog {
             // now deregister shut down task
             // If Trains window was opened, then task is active
             // otherwise it is normal to not have the task running
-            OperationsManager.getInstance().setShutDownTask(null);
+            InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
             JOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
                     Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
@@ -259,7 +260,7 @@ public class RestoreDialog extends JDialog {
         comboBox.removeAllItems();
 
         BackupSet[] sets = backup.getBackupSets();
-        ComboBoxModel<BackupSet> model = new DefaultComboBoxModel<BackupSet>(sets);
+        ComboBoxModel<BackupSet> model = new DefaultComboBoxModel<>(sets);
 
         // Clear any current selection so that the state change will fire when
         // we set a selection.
