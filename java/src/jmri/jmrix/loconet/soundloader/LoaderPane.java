@@ -26,8 +26,6 @@ import jmri.util.FileUtil;
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
-
     JLabel inputFileName = new JLabel("");
 
     JButton readButton;
@@ -66,7 +64,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
                 }
             });
             p.add(b);
-            p.add(new JLabel(res.getString("LabelInpFile")));
+            p.add(new JLabel(Bundle.getMessage("LabelInpFile")));
             p.add(inputFileName);
 
             add(p);
@@ -78,9 +76,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            readButton = new JButton(res.getString("ButtonRead"));
+            readButton = new JButton(Bundle.getMessage("ButtonRead"));
             readButton.setEnabled(false);
-            readButton.setToolTipText(res.getString("TipReadDisabled"));
+            readButton.setToolTipText(Bundle.getMessage("TipReadDisabled"));
             p.add(readButton);
             readButton.addActionListener(new AbstractAction() {
                 @Override
@@ -96,7 +94,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            p.add(new JLabel(res.getString("LabelFileComment")));
+            p.add(new JLabel(Bundle.getMessage("LabelFileComment")));
             comment.setEditable(false);
             p.add(comment);
             add(p);
@@ -108,9 +106,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            loadButton = new JButton(res.getString("ButtonLoad"));
+            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
             loadButton.setEnabled(false);
-            loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+            loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
                 @Override
@@ -131,7 +129,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             {
                 p = new JPanel();
                 p.setLayout(new FlowLayout());
-                status.setText(res.getString("StatusSelectFile"));
+                status.setText(Bundle.getMessage("StatusSelectFile"));
                 // layout
                 status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
                 status.setFont(status.getFont().deriveFont(0.9f * inputFileName.getFont().getSize())); // a bit smaller
@@ -160,15 +158,15 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         inputFileName.setText(chooser.getSelectedFile().getName());
 
         readButton.setEnabled(true);
-        readButton.setToolTipText(res.getString("TipReadEnabled"));
+        readButton.setToolTipText(Bundle.getMessage("TipReadEnabled"));
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadDisabled"));
-        status.setText(res.getString("StatusReadFile"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
+        status.setText(Bundle.getMessage("StatusReadFile"));
     }
 
     void doRead() {
         if (inputFileName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, res.getString("ErrorNoInputFile"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -176,18 +174,18 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // force load, verify disabled in case read fails
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
 
         try {
             file = new SpjFile(chooser.getSelectedFile());
             file.read();
         } catch (FileNotFoundException f) {
-            JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         } catch (IOException f) {
-            JOptionPane.showMessageDialog(this, res.getString("ErrorIOError"),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorIOError"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -198,17 +196,17 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // set up for next step
         loadButton.setEnabled(true);
-        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
-        status.setText(res.getString("StatusDoDownload"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
+        status.setText(Bundle.getMessage("StatusDoDownload"));
 
     }
 
     void doLoad() {
-        status.setText(res.getString("StatusDownloading"));
+        status.setText(Bundle.getMessage("StatusDownloading"));
         readButton.setEnabled(false);
-        readButton.setToolTipText(res.getString("TipDisabledDownload"));
+        readButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipDisabledDownload"));
+        loadButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
 
         // Create a loader to run in a separate thread
         // Override notify() method to do a swing-thread update of status field
