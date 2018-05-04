@@ -1913,23 +1913,23 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             int swAddr = (((m.getElement(2) & 0x0f) * 128) + (m.getElement(1) & 0x7f)) + 1;
             boolean dir = ((m.getElement(2) & 0x20) == 0x20);
             if (swAddr == Integer.parseInt(outAddr1.getText())) {
-                outState1.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState1.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState1.updateUI();
             }
             if (swAddr == Integer.parseInt(outAddr2.getText())) {
-                outState2.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState2.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState2.updateUI();
             }
             if (swAddr == Integer.parseInt(outAddr3.getText())) {
-                outState3.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState3.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState3.updateUI();
             }
             if (swAddr == Integer.parseInt(outAddr4.getText())) {
-                outState4.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState4.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState4.updateUI();
             }
         } else if ((m.getOpCode() == LnConstants.OPC_MULTI_SENSE) && ((m.getElement(1) & 0x7E) == 0x62)) {
@@ -2401,7 +2401,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         p.setLayout(new FlowLayout());
         p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 1)));
         outAddr1 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState1 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState1 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr1);
         p.add(outState1);
         outputAddrsPanel.add(p);
@@ -2410,7 +2410,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         p.setLayout(new FlowLayout());
         p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 2)));
         outAddr2 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState2 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState2 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr2);
         p.add(outState2);
         outputAddrsPanel.add(p);
@@ -2419,7 +2419,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         p.setLayout(new FlowLayout());
         p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 3)));
         outAddr3 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState3 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState3 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr3);
         p.add(outState3);
         outputAddrsPanel.add(p);
@@ -2428,7 +2428,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         p.setLayout(new FlowLayout());
         p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 4)));
         outAddr4 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState4 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState4 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr4);
         p.add(outState4);
         outputAddrsPanel.add(p);
@@ -2694,8 +2694,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr2.setText(Integer.toString(readValue));
                 outAddr2.setLastQueriedValue(outAddr2.getText());
                 outState2.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 1: {
@@ -2703,8 +2703,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr4.setText(Integer.toString(readValue));
                 outAddr4.setLastQueriedValue(outAddr4.getText());
                 outState4.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 16:
@@ -2844,8 +2844,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr1.setLastQueriedValue(readValueString);
                 outAddr1.isValid();
                 outState1.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 1: {
@@ -2853,8 +2853,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr3.setText(readValueString);
                 outAddr3.setLastQueriedValue(readValueString);
                 outState3.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 16:
