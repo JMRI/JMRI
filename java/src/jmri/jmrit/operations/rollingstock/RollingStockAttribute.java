@@ -33,7 +33,7 @@ public class RollingStockAttribute {
 //   pcs.removePropertyChangeListener(p);
     }
 
-    protected List<String> list = new ArrayList<String>();
+    protected List<String> list = new ArrayList<>();
 
     public String[] getNames() {
         if (list.size() == 0) {
@@ -56,7 +56,7 @@ public class RollingStockAttribute {
         if (names.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(names);
+        java.util.Arrays.sort(names);
         for (String name : names) {
             if (!list.contains(name)) {
                 list.add(name);

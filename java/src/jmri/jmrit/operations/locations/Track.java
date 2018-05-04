@@ -911,7 +911,7 @@ public class Track {
         if (loads.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         for (String loadName : loads) {
             if (!loadName.equals(NONE)) {
                 _loadList.add(loadName);
@@ -933,7 +933,7 @@ public class Track {
         if (_loadList.size() == 0) {
             return loads;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         return loads;
     }
 
@@ -1855,12 +1855,14 @@ public class Track {
             log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(), car
                     .getLoadName());
         }
+        // has the car already been assigned a schedule item? Then verify that its still okay
         if (!car.getScheduleItemId().equals(NONE)) {
             ScheduleItem si = getSchedule().getItemById(car.getScheduleItemId());
             if (si != null && checkScheduleItem(si, car).equals(OKAY)) {
                 return OKAY;
             }
         }
+        // search schedule for a match
         for (int i = 0; i < getSchedule().getSize(); i++) {
             ScheduleItem si = getNextScheduleItem();
             if (debugFlag) {
@@ -1947,6 +1949,7 @@ public class Track {
                     si.getReceiveLoadName() +
                     ")";
         }
+        // don't try the random feature if car is already assigned to this schedule item
         if (car.getFinalDestinationTrack() != this &&
                 !si.getRandom().equals(ScheduleItem.NONE) &&
                 !car.getScheduleItemId().equals(si.getId())) {
