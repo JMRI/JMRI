@@ -207,7 +207,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     JLabel commandSourceLabel;
     JComboBox<String> commandSource;
 
-// Crossbuck Flasher controls
+    // Crossbuck Flasher controls
     JCheckBox output1CrossbuckFlasherCheckBox;
     JCheckBox output2CrossbuckFlasherCheckBox;
     JCheckBox output3CrossbuckFlasherCheckBox;
@@ -217,7 +217,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     JLabel routesControlLabel;
     JComboBox<String> routesControl;
 
-// local input controls
+    // local input controls
     JLabel localControlOfOutputsStyleLabel;
     JComboBox<String> localControlOfOutputsStyle;
 
@@ -2100,17 +2100,17 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         output1CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput1Crossbuck"));
         output1CrossbuckFlasherCheckBox.setName("17"); // NOI18N
         output1CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-        // output 3 to the right
-        output3CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 3));
-        output3CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput3Crossbuck"));
-        output3CrossbuckFlasherCheckBox.setName("19"); // NOI18N
-        output3CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-        // output 2 below output 1
+        // output 2
         output2CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 2));
         output2CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput2Crossbuck"));
         output2CrossbuckFlasherCheckBox.setName("18"); // NOI18N
         output2CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-
+        // output 3
+        output3CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 3));
+        output3CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput3Crossbuck"));
+        output3CrossbuckFlasherCheckBox.setName("19"); // NOI18N
+        output3CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
+        // output 4
         output4CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 4));
         output4CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput4Crossbuck"));
         output4CrossbuckFlasherCheckBox.setName("20"); // NOI18N
@@ -2266,8 +2266,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         JPanel crossingGateControls = new JPanel(new java.awt.GridLayout(2, 2));
         crossingGateControls.add(output1CrossbuckFlasherCheckBox);
-        crossingGateControls.add(output2CrossbuckFlasherCheckBox);
-        crossingGateControls.add(output3CrossbuckFlasherCheckBox);
+        crossingGateControls.add(output3CrossbuckFlasherCheckBox); // display output 3 box to the right of output 1 box
+        crossingGateControls.add(output2CrossbuckFlasherCheckBox); // display output 2 box below output 1 box
         crossingGateControls.add(output4CrossbuckFlasherCheckBox);
         allOutputControls.add(crossingGateControls);
 
