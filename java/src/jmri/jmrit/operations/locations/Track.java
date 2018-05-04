@@ -911,7 +911,7 @@ public class Track {
         if (loads.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         for (String loadName : loads) {
             if (!loadName.equals(NONE)) {
                 _loadList.add(loadName);
@@ -933,7 +933,7 @@ public class Track {
         if (_loadList.size() == 0) {
             return loads;
         }
-        jmri.util.StringUtil.sort(loads);
+        java.util.Arrays.sort(loads);
         return loads;
     }
 
