@@ -146,13 +146,13 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
 
     public List<String> getConsistNameList() {
         String[] names = new String[_consistHashTable.size()];
-        List<String> out = new ArrayList<String>();
+        List<String> out = new ArrayList<>();
         Enumeration<String> en = _consistHashTable.keys();
         int i = 0;
         while (en.hasMoreElements()) {
             names[i++] = en.nextElement();
         }
-        jmri.util.StringUtil.sort(names);
+        java.util.Arrays.sort(names);
         for (String name : names) {
             out.add(name);
         }
@@ -221,7 +221,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      */
     public List<Engine> getAvailableTrainList(Train train) {
         // now build list of available engines for this route
-        List<Engine> out = new ArrayList<Engine>();
+        List<Engine> out = new ArrayList<>();
         // get engines by moves list
         for (RollingStock rs : getByMovesList()) {
             Engine engine = (Engine) rs;
@@ -251,7 +251,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      * @return List of engine road names.
      */
     public List<String> getEngineRoadNames(String model) {
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         Enumeration<String> en = _hashTable.keys();
         while (en.hasMoreElements()) {
             Engine engine = getById(en.nextElement());
