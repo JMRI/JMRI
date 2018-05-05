@@ -7540,6 +7540,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("Midtown spur 1", 20, midtownSpur1.getMoves());
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
+        
     }
     
     @Test
@@ -7588,6 +7589,17 @@ public class TrainBuilderTest {
         Assert.assertEquals("Midtown spur 1", 20, midtownSpur1.getMoves());
         Assert.assertEquals("Midtown spur 2", 40, midtownSpur2.getMoves());
         Assert.assertEquals("Eastend spur 1", 60, eastendSpur1.getMoves());
+        
+        // Caboose, Passenger, Car with FRED are exceptions to the through car restriction
+        
+        c1.setPassenger(true); // a passenger car with custom load of Bags
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm that car destination is correct
+        Assert.assertEquals("car destination is now the yard", midtownYard, c1.getDestinationTrack());
     }
     
     @Test
@@ -7900,6 +7912,31 @@ public class TrainBuilderTest {
         // confirm that car destination is correct
         Assert.assertEquals("Midtown is the only available track", midtownYard, c1.getDestinationTrack());
         Assert.assertEquals("car's final destination is staging", staging, c1.getFinalDestination());
+        
+        // now test staging at end of train's route
+        tmanager.deregister(train2);
+        
+        train.getRoute().addLocation(staging);
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm that car destination is correct
+        Assert.assertEquals("Car to staging", stagingTrack1, c1.getDestinationTrack());
+        
+        // test staging car load control
+        stagingTrack1.setLoadOption(Track.EXCLUDE_LOADS);
+        stagingTrack1.addLoadName("Bags");
+        
+        train.reset();
+        // need to change how staging tracks are selected or build will fail
+        Setup.setTrainIntoStagingCheckEnabled(false);
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm that car destination is correct
+        Assert.assertEquals("no staging tracks available", null, c1.getDestinationTrack());
     }
     
     private void setupFindFinalDestinationForCarLoad() {
