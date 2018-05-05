@@ -174,7 +174,7 @@ public class RollingStockManager<T extends RollingStock> {
             arr[i] = en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getById(arr[i]));
         }
