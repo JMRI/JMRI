@@ -3332,7 +3332,7 @@ public class TrainBuilder extends TrainCommon {
                 car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName()) ||
                 car.getDestination() != null ||
                 car.getFinalDestination() != null) {
-            return false; // no schedule found for this car
+            return false; // car doesn't have a custom load, or already has a destination set
         }
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSpur"),
                 new Object[]{car.toString(), car.getTypeName(), car.getLoadName(),
@@ -3355,7 +3355,7 @@ public class TrainBuilder extends TrainCommon {
             if (!car.getTrack().acceptsDestination(track.getLocation())) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
                         new Object[]{track.getLocation().getName(), car.getTrackName()}));
-                locations.add(track.getLocation());
+                locations.add(track.getLocation()); // location not reachable
                 continue;
             }
             if (!_train.isAllowThroughCarsEnabled() &&
@@ -3388,6 +3388,7 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // if the track has an alternate track don't abort if the issue was space
                 if (!status.startsWith(Track.LENGTH) || !track.checkSchedule(car).equals(Track.OKAY)) {
+                    log.debug("Track ({}), status ({}), skipping this track", track.getName(), status); // NOI18N
                     continue;
                 }
                 if (track.getAlternateTrack() == null) {
@@ -3526,6 +3527,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoStagingForCarLoad"),
                     new Object[]{car.toString(), car.getLoadName()}));
         }
+        log.debug("routeToSpurFound is {}", routeToSpurFound);
         return routeToSpurFound; // done
     }
 
