@@ -496,6 +496,13 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().trainIntoStagingCheck;
     }
 
+    /**
+     * Controls staging track selection, when true, the terminus staging track
+     * has to have the same characteristics as the train.
+     * 
+     * @param enabled when true, the terminal staging track must service the
+     *            same car types, loads, etc. as the train
+     */
     public static void setTrainIntoStagingCheckEnabled(boolean enabled) {
         getDefault().trainIntoStagingCheck = enabled;
     }
