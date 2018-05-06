@@ -236,8 +236,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         if (trainServicesCar) {
             testTrain = _train; // use the specific train
-        } // can specific train can service car out of staging. Note that the router code will try to route the car using
-          // two or more trains just to get the car out of staging.
+        } 
+        // can specific train can service car out of staging. Note that the router code will try to route the car using
+        // two or more trains just to get the car out of staging.
         if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"),
                     new Object[]{_train.getName(), car.toString(), car.getLocationName(), clone.getDestinationName(),
@@ -573,7 +574,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         continue;// found a route but it doesn't start with the specific train
                     }
                     // is this the staging track assigned to the specific train?
-                    if (track.getTrackType().equals(Track.STAGING) && firstTrain.getTerminationTrack() != track) {
+                    if (track.getTrackType().equals(Track.STAGING) &&
+                            firstTrain.getTerminationTrack() != null &&
+                            firstTrain.getTerminationTrack() != track) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
                                 new Object[]{firstTrain.getName(),
                                         firstTrain.getTerminationTrack().getLocation().getName(),
@@ -882,7 +885,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             return true; // the issue is route moves or train length
         }
         // check to see if track is staging
-        if (track.getTrackType().equals(Track.STAGING) && _train.getTerminationTrack() != track) {
+        if (track.getTrackType().equals(Track.STAGING) &&
+                _train != null &&
+                _train.getTerminationTrack() != null &&
+                _train.getTerminationTrack() != track) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
                     new Object[]{_train.getName(), _train.getTerminationTrack().getLocation().getName(),
                             _train.getTerminationTrack().getName()}));
