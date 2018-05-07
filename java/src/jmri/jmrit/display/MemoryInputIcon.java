@@ -249,7 +249,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (_textBox != null) {
             _textBox.removeMouseMotionListener(this);
             _textBox.removeMouseListener(this);
-            _textBox = null;
         }
         namedMemory = null;
     }
