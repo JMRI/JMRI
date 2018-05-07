@@ -326,6 +326,13 @@ public class MemoryComboIcon extends PositionableJPanel
             getMemory().removePropertyChangeListener(this);
         }
         if (_comboBox != null) {
+            for (int i = 0; i < _comboBox.getComponentCount(); i++) {
+                java.awt.Component component = _comboBox.getComponent(i);
+                if (component instanceof AbstractButton) {
+                    component.removeMouseListener(this);
+                    component.removeMouseMotionListener(this);
+                }
+            }
             _comboBox.removeMouseListener(this);
         }
         namedMemory = null;
