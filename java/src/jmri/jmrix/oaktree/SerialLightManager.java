@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for Oak Tree serial systems
- * <P>
+ * <p>
  * System names are "TLnnn", where nnn is the bit number without padding.
- * <P>
+ * <p>
  * Based in part on SerialTurnoutManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -35,7 +35,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name.
+     * Create a new Light based on the system name.
      * Assumes calling method has checked that a Light with this system name
      * does not already exist.
      *
@@ -58,7 +58,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      * @return 'true' if system name has a valid format, else return 'false'
      */
     @Override
@@ -67,7 +67,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name for configuration.
+     * Validate system name for configuration.
      *
      * @return 'true' if system name has a valid meaning in current
      * configuration, else returns 'false'
@@ -78,7 +78,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
+     * Normalize a system name.
      *
      * @return a normalized system name if system name has a valid format,
      * else return ""
@@ -89,7 +89,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to convert system name to its alternate format.
+     * Convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
      * alternate representation, else return ""
@@ -97,6 +97,15 @@ public class SerialLightManager extends AbstractLightManager {
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         return (SerialAddress.convertSystemNameToAlternate(systemName, prefix));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     /**

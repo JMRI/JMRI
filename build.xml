@@ -166,7 +166,7 @@
         <pathelement location="${libdir}/jdom.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
-        <pathelement location="${libdir}/jmdns-3.5.3.jar"/>
+        <pathelement location="${libdir}/jmdns-3.5.1.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
@@ -221,6 +221,8 @@
         <pathelement location="${libdir}/usb4java-1.2.0.jar"/>
         <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
+        <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -268,7 +270,6 @@
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
         <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
@@ -338,6 +339,23 @@
         <exclude name="apps/tests/Log4JFixture.class" />
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
         <exclude name="jmri/util/web/BrowserFactory.class" />
+        <!-- Exclude pure interfaces and classes only providing constants. -->
+        <exclude name="jmri/AddressedProgrammerManager.class" />
+        <exclude name="jmri/PhysicalLocationReporter.class" />
+        <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
+        <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
+        <exclude name="jmri/jmrit/audio/AudioSource.class" />
+        <exclude name="jmri/jmrit/operations/locations/Xml.class" />
+        <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
+        <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
+        <exclude name="jmri/jmrit/operations/trains/Xml.class" />
+        <exclude name="jmri/jmrit/ussctc/Lock.class" />
+        <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
+        <exclude name="jmri/server/json/reporter/JsonReporter.class" />
+        <exclude name="jmri/server/json/roster/JsonRoster.class" />
+        <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
+        <!-- Exclude deprecated classes. -->
+        <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
     </fileset>
 
 
@@ -1302,6 +1320,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1468,6 +1489,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1494,6 +1518,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1519,6 +1546,9 @@
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>
@@ -1674,7 +1704,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> link routinely fails -->
+            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
@@ -1741,7 +1771,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> link routinely fails -->
+            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.11"/>
@@ -1822,7 +1852,7 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> link routinely fails -->
+            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.11"/>
@@ -1873,6 +1903,16 @@
              includes="xml/decoders/*.xml"/>
     </target>
 
+    <target name="scanhelp"
+            description="scan English-language help for HTML errors">
+        <exec executable="./scripts/tidy-check.sh"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="help/en/*/*/"/>
+        </exec>
+            
+    </target>
+    
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
@@ -2171,7 +2211,7 @@
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
-        <copy todir="${dist.macosx}/JMRI/">
+        <copy todir="${dist.linux}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>

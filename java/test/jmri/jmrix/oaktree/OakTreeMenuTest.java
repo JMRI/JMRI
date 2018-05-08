@@ -31,10 +31,10 @@ public class OakTreeMenuTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new SerialTrafficControlScaffold();
         m = new OakTreeSystemConnectionMemo();
+        tc = new SerialTrafficControlScaffold(m);
         m.setSystemPrefix("ABC");
-        m.setTrafficController(tc);
+        m.setTrafficController(tc); // important for successful getTrafficController()
     }
 
     @After

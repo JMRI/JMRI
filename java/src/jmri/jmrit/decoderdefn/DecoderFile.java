@@ -318,7 +318,7 @@ public class DecoderFile extends XmlFile {
         } else {
             exclude = extraExclude;
         }
-        // if there are any include clauses, then it cannot match
+        // if there are any exclude clauses, then it cannot match
         if (!exclude.equals("") && (isInList(productID, exclude) || isInList(modelID, exclude) || isInList(familyID, exclude))) {
             if (log.isTraceEnabled()) {
                 log.trace("exclude match: /" + exclude + "/ /" + productID + "/ /" + modelID + "/");
@@ -399,7 +399,7 @@ public class DecoderFile extends XmlFile {
                         + e.getAttribute("item") + " exception: " + ex);
             }
             // load each row
-            variableModel.setRow(nextCvStoreIndex++, e);
+            variableModel.setRow(nextCvStoreIndex++, e, _element == null ? null : this);
         }
 
         // load constants to table

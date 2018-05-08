@@ -7,13 +7,11 @@ import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -30,35 +28,31 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.zeroconf.ZeroConfServiceEvent;
-import jmri.util.zeroconf.ZeroConfServiceListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.zeroconf.ZeroConfService;
 
 /**
- * UserInterface.java Create a window for WiThrottle information, advertise
- * service, and create a thread for it to run in.
+ * UserInterface.java Create a window for WiThrottle information and
+ *  and create a FacelessServer thread to handle jmdns and device requests
  * <p>
  *
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Randall Wood Copyright (C) 2013
  * @author Paul Bender Copyright (C) 2018
  */
-public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector, ZeroConfServiceListener {
-
-    private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
+public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector {
 
     JMenuBar menuBar;
     JMenuItem serverOnOff;
     JPanel panel;
     JLabel portLabel = new JLabel(Bundle.getMessage("LabelPending"));
     JLabel manualPortLabel = new JLabel();
+    String manualPortLabelString = ""; //append IPv4 addresses as they respond to zeroconf
     JLabel numConnected;
     JScrollPane scrollTable;
     JTable withrottlesList;
@@ -67,33 +61,20 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     String rosterGroupSelectorPreferencesName = this.getClass().getName() + ".rosterGroupSelector";
     RosterGroupComboBox rosterGroupSelector = new RosterGroupComboBox(userPreferences.getComboBoxLastSelection(rosterGroupSelectorPreferencesName));
 
-
     //keep a reference to the actual server
     private FacelessServer facelessServer;
 
     // Server iVars
-    int port;
     boolean isListen;
-    private ArrayList<DeviceServer> deviceList = new ArrayList<>();
+    private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
     UserInterface() {
         super(false, false);
-
+        
+        isListen = true;
         facelessServer = (FacelessServer) InstanceManager.getOptionalDefault(DeviceManager.class).orElseGet(() -> {
                 return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
         });
-
-        port = facelessServer.getPort();
-        if (log.isDebugEnabled()) {
-            log.debug("WiThrottle listening on TCP port: " + port);
-        }
-
-        try {
-           facelessServer.getZeroConfService().addEventListener(this);
-        } catch( java.lang.NullPointerException npe) {
-            //ZeroConfService may not exist yet
-            log.debug("Unable to register for ZeroConf events");
-        }
 
         // add ourselves as device listeners for any existing devices
         for(DeviceServer ds:facelessServer.getDeviceList()) {
@@ -103,9 +84,30 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         facelessServer.addDeviceListener(this);
 
+        //update the server with the currently selected roster group
+        facelessServer.setSelectedRosterGroup(rosterGroupSelector.getSelectedItem());
+
+        //show all IPv4 addresses in window, for use by manual connections
+        addIPAddressesToUI();
+
         createWindow();
 
     } // End of constructor
+
+    private void addIPAddressesToUI() {
+        //get port# directly from prefs
+        int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
+        //list the local IPv4 addresses on the UI, for manual connections
+        List<InetAddress> has = ZeroConfService.hostAddresses(); //get list of local, non-loopback addresses
+        String as = ""; //build multiline string of valid addresses
+        for (InetAddress ha : has) {
+            if (ha instanceof Inet4Address) { //ignore IPv6 addresses
+                this.portLabel.setText(ha.getHostName());
+                as += ha.getHostAddress() + ":" + port + "<br />";
+                this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
+            }
+        }
+    }
 
     protected void createWindow() {
         panel = new JPanel();
@@ -116,7 +118,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
+        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelListening"), new Object[]{DeviceServer.getWiTVersion()}));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;
@@ -153,13 +155,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         con.gridy = 3;
         con.gridwidth = 2;
         panel.add(withrottleToolBar, con);
-        /*
-         JLabel vLabel = new JLabel("v"+DeviceServer.getWiTVersion());
-         con.weightx = 0;
-         con.gridx = 2;
-         con.gridy = 3;
-         panel.add(vLabel, con);
-         */
+
         JLabel icon;
         java.net.URL imageURL = FileUtil.findURL("resources/IconForWiThrottle.gif");
 
@@ -235,16 +231,15 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                if (isListen) { // Stop server
+                if (isListen) { // Stop server, remove addresses from UI
                     disableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStart"));
                     portLabel.setText(Bundle.getMessage("LabelNone"));
                     manualPortLabel.setText(null);
                 } else { // Restart server
+                    enableServer();
                     serverOnOff.setText(Bundle.getMessage("MenuMenuStop"));
-                    isListen = true;
-
-                    //createServerThread();
+                    addIPAddressesToUI();
                 }
             }
         });
@@ -295,31 +290,25 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     }
 
     /**
-     * Received an UDID, filter out any duplicate.
+     * Received an UDID, update the device list
      * <p>
-     * @param device the device to filter for
+     * @param device the device to update for
      */
     @Override
     public void notifyDeviceInfoChanged(DeviceServer device) {
-
-        //  Filter duplicate connections
-        if ((device.getUDID() != null) && (deviceList.size() > 0)) {
-            for (int i = 0; i < deviceList.size(); i++) {
-                DeviceServer listDevice = deviceList.get(i);
-                if ((device != listDevice) && (listDevice.getUDID() != null) && (listDevice.getUDID().equals(device.getUDID()))) {
-                    //  If in here, array contains duplicate of a device
-                    log.debug("Has duplicate of device, clearing old one.");
-                    listDevice.closeThrottles();
-                    break;
-                }
-            }
-        }
         withrottlesListModel.updateDeviceList(deviceList);
     }
 
-    // this is package protected so tests can trigger easilly.
+    // this is package protected so tests can trigger easily.
     void disableServer() {
         facelessServer.disableServer();
+        isListen = false;
+    }
+
+    //tell the server thread to start listening again
+    private void enableServer() {
+        facelessServer.listen();
+        isListen = true;
     }
 
     @Override
@@ -327,41 +316,5 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         return rosterGroupSelector.getSelectedRosterGroup();
     }
 
-    @Override
-    public void serviceQueued(ZeroConfServiceEvent se) {
-        this.portLabel.setText(Bundle.getMessage("LabelPending"));
-        this.manualPortLabel.setText(null);
-    }
-
-    @Override
-    public void servicePublished(ZeroConfServiceEvent se) {
-        try {
-            try {
-                InetAddress addr = se.getDNS().getInetAddress();
-                //output last good ipV4 address to the window to support manual entry
-                if (addr instanceof Inet4Address) {
-                    this.portLabel.setText(addr.getHostName());
-                    this.manualPortLabel.setText(addr.getHostAddress() + ":" + port); // NOI18N
-                    log.debug("Published IPv4 ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
-                } else {
-                    log.debug("Published IPv6 ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
-                }
-            } catch (NullPointerException | IOException ex) {
-                log.error("Address is invalid: {}", ex.getLocalizedMessage());
-                this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
-                this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
-            }
-        } catch (UnknownHostException ex) {
-            log.error("Failed to determine this system's IP address: {}", ex.getLocalizedMessage());
-            this.portLabel.setText(Bundle.getMessage("LabelUnknown")); // NOI18N
-            this.manualPortLabel.setText(null);
-        }
-    }
-
-    @Override
-    public void serviceUnpublished(ZeroConfServiceEvent se) {
-        this.portLabel.setText(Bundle.getMessage("LabelNone"));
-        this.manualPortLabel.setText(null);
-    }
-
+    // private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 }

@@ -11,21 +11,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Models an Acela node.
- * <P>
+ * <p>
  * Nodes are numbered from 0. The first watchman node carries the first 8
  * sensors 0 to 7, etc.
- * <P>
+ * <p>
  * The array of sensor states is used to update sensor known state only when
  * there's a change on the serial bus. This allows for the sensor state to be
  * updated within the program, keeping this updated state until the next change
  * on the serial bus. E.g. you can manually change a state via an icon, and not
  * have it change back the next time that node is polled.
- * <P>
+ * <p>
  * Same applies to the outputs (Dash-8s and Signalmen)
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
-  *
  * @author Bob Coleman Copyright (C) 2007, 2008, 2009 Based on CMRI serial
  * example, modified to establish Acela support.
  */

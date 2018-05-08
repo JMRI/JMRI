@@ -39,7 +39,7 @@ public class DefaultSignalAppearanceMapTest {
 
             // check that mock (test directory) system is present
             InstanceManager.getDefault(jmri.SignalMastManager.class)
-                    .provideSignalMast("IF$shsm:" + SignalSystemTestUtil.getMockSystemName() + ":one-searchlight:h1");
+                    .provideSignalMast("IF$shsm:" + SignalSystemTestUtil.getMockSystemName() + ":one-searchlight:IH1");
 
         } finally {
             SignalSystemTestUtil.deleteMockSystem();
@@ -48,7 +48,7 @@ public class DefaultSignalAppearanceMapTest {
 
     @Test
     public void testDefaultMap() {
-        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:h1");
+        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
         DefaultSignalAppearanceMap t = (DefaultSignalAppearanceMap) s.getAppearanceMap();
         t.loadDefaults();
 
@@ -85,7 +85,7 @@ public class DefaultSignalAppearanceMapTest {
     @Test
     public void testTwoHead() {
 
-        SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:h1:h2") {
+        SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2") {
             @Override
             protected void configureAspectTable(String signalSystemName, String aspectMapName) {
                 map = new DefaultSignalAppearanceMap("sys", "user");
@@ -128,21 +128,21 @@ public class DefaultSignalAppearanceMapTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        h1 = new DefaultSignalHead("h1", "head1") {
+        JUnitUtil.setUp();        h1 = new DefaultSignalHead("IH1", "head1") {
             @Override
             protected void updateOutput() {
             }
         };
-        h2 = new DefaultSignalHead("h2", "head2") {
+        h2 = new DefaultSignalHead("IH2", "head2") {
             @Override
             protected void updateOutput() {
             }
         };
         l1 = new ArrayList<>();
-        l1.add(new NamedBeanHandle<>("h1", h1));
+        l1.add(new NamedBeanHandle<>("IH1", h1));
         l2 = new ArrayList<>();
-        l2.add(new NamedBeanHandle<>("h1", h1));
-        l2.add(new NamedBeanHandle<>("h2", h2));
+        l2.add(new NamedBeanHandle<>("IH1", h1));
+        l2.add(new NamedBeanHandle<>("IH2", h2));
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h1);
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h2);
     }

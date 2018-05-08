@@ -6,11 +6,11 @@ import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
 import jmri.util.PropertyChangeListenerScaffold;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
@@ -20,11 +20,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
-public class OlcbTurnoutTest extends TestCase {
+public class OlcbTurnoutTest {
     private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class);
 
     protected PropertyChangeListenerScaffold l; 
 
+    @Test
     public void testIncomingChange() {
         Assert.assertNotNull("exists", t);
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
@@ -61,6 +62,7 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
     }
 
+    @Test
     public void testLocalChange() throws jmri.JmriException {
         // load dummy TrafficController
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
@@ -97,6 +99,7 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(t.tc.rcvMessage));
     }
 
+    @Test
     public void testDirectFeedback() throws jmri.JmriException {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setFeedbackMode(Turnout.DIRECT);
@@ -145,6 +148,7 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertEquals("not called",0,l.getCallCount());
     }
 
+    @Test
     public void testAuthoritative() throws jmri.JmriException {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setFeedbackMode(Turnout.MONITORING);
@@ -179,6 +183,7 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertEquals(expected, t.tc.rcvMessage);
     }
 
+    @Test
     public void testLoopback() throws jmri.JmriException {
         // Two turnouts behaving in opposite ways. One will be used to generate an event and the
         // other will be observed to make sure it catches it.
@@ -203,6 +208,7 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertTrue(s.getCommandedState() == Turnout.CLOSED);
     }
 
+    @Test
     public void testForgetState() {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.FALSE.toString());
@@ -226,7 +232,7 @@ public class OlcbTurnoutTest extends TestCase {
         t.sendMessage(":X19544123N0102030405060709;");
         Assert.assertEquals("not called",0,l.getCallCount());
         l.resetPropertyChanged();
-        assertEquals(Turnout.THROWN, s.getKnownState());
+        Assert.assertEquals(Turnout.THROWN, s.getKnownState());
 
         // Resets the turnout to unknown state
         s.setState(Turnout.UNKNOWN);
@@ -243,7 +249,7 @@ public class OlcbTurnoutTest extends TestCase {
         JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
         Assert.assertEquals("called twice",2,l.getCallCount());
         l.resetPropertyChanged();
-        assertEquals(Turnout.CLOSED, s.getKnownState());
+        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
 
         // state is reported as known (thrown==invalid)
         t.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
@@ -253,9 +259,10 @@ public class OlcbTurnoutTest extends TestCase {
         t.sendMessage(":X19544123N0102030405060708;");
         Assert.assertEquals("not called",0,l.getCallCount());
         l.resetPropertyChanged();
-        assertEquals(Turnout.CLOSED, s.getKnownState());
+        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
     }
 
+    @Test
     public void testQueryState() {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
@@ -273,6 +280,7 @@ public class OlcbTurnoutTest extends TestCase {
         t.assertNoSentMessages();
     }
 
+    @Test
     public void testEventTable() {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.finishLoad();
@@ -298,6 +306,7 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertEquals("Turnout MySwitch Closed", elist[0].getDescription());
     }
 
+    @Test
     public void testNameFormatXlower() {
         // load dummy TrafficController
         OlcbTurnout s = new OlcbTurnout("M", "x0501010114FF2000;x0501010114FF2001", t.iface);
@@ -328,6 +337,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     }
 
+    @Test
     public void testNameFormatXupper() {
         // load dummy TrafficController
         OlcbTurnout s = new OlcbTurnout("M", "X0501010114FF2000;X0501010114FF2001", t.iface);
@@ -358,6 +368,7 @@ public class OlcbTurnoutTest extends TestCase {
 
     }
 
+    @Test
     public void testSystemSpecificComparisonOfSpecificFormats() {
 
         // test by putting into a tree set, then extracting and checking order
@@ -376,28 +387,11 @@ public class OlcbTurnoutTest extends TestCase {
         Assert.assertEquals("MTX0501010114FF2000;X0501010114FF2011", it.next().getSystemName());
     }
 
-    // from here down is testing infrastructure
-    public OlcbTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {OlcbTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlcbTurnoutTest.class);
-        return suite;
-    }
-
-    OlcbTestInterface t;
+    private OlcbTestInterface t;
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         l = new PropertyChangeListenerScaffold();
 
@@ -406,8 +400,11 @@ public class OlcbTurnoutTest extends TestCase {
         t.waitForStartup();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        l = null;
+        t.dispose();
+        t = null;
         JUnitUtil.tearDown();
     }
 }

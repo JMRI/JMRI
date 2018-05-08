@@ -6,6 +6,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -167,6 +171,16 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         l5.setLength(1005);
 
     }
+    
+    private void loadTrains() {
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainA = trainManager.newTrain("Test Train A");
+        // train needs to service location "l" or error message when saving track edit frame
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("Route Train A");
+        route.addLocation(l);
+        trainA.setRoute(route);      
+    }
 
     // Ensure minimal setup for log4J
     @Override
@@ -184,6 +198,8 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
 
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
+        
+        loadTrains();
        
     }
 

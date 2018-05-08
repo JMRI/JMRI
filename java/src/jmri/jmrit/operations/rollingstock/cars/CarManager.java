@@ -198,7 +198,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         while (en.hasMoreElements()) {
             names[i++] = en.nextElement();
         }
-        jmri.util.StringUtil.sort(names);
+        java.util.Arrays.sort(names);
         for (String name : names) {
             out.add(name);
         }

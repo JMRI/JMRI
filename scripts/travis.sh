@@ -20,6 +20,8 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         mvn clean test -U -P travis-spotbugs --batch-mode
         # run Javadoc
         mvn javadoc:javadoc -U --batch-mode
+        # check html
+        mvn antrun:run -Danttarget=scanhelp
     else
         # run headless tests
         mvn test -U -P travis-headless --batch-mode \

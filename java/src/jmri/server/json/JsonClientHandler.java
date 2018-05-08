@@ -37,9 +37,9 @@ public class JsonClientHandler {
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
+        ServiceLoader.load(JsonServiceFactory.class).forEach((factory) -> {
+            JsonSocketService<?> service = factory.getSocketService(connection);
             for (String type : factory.getTypes()) {
-                JsonSocketService<?> service = factory.getSocketService(connection);
                 HashSet<JsonSocketService<?>> set = this.services.get(type);
                 if (set == null) {
                     this.services.put(type, new HashSet<>());
@@ -47,7 +47,15 @@ public class JsonClientHandler {
                 }
                 set.add(service);
             }
-        }
+            for (String type : factory.getReceivedTypes()) {
+                HashSet<JsonSocketService<?>> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
+                }
+                set.add(service);
+            }
+        });
     }
 
     public void onClose() {

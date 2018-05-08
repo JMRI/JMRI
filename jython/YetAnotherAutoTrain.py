@@ -1,5 +1,8 @@
 # YetAnotherAutoTrain.py -- Data driven automatic train
 # Use a list of actions to automatically run a train.
+# v1.3 -- add line numbers to the compiler error messages.
+# v1.4 -- add a master controller that can be used to terminate all of the threads.
+# v1.5 -- add signal mast and signal head options.
 # Author:  Dave Sand copyright (c) 2018
 
 # Action Phrase Descriptions:
@@ -32,6 +35,12 @@
 #       Wait until the time has expired.  Normally used for station stops.
 # Wait for sensor <sensor name> to become <active | inactive>
 # Wait for block <block name> to become <occupied | unoccupied | reserved | free>
+# Wait for signal head <head name> to [not] show <appearance name> [or ...]
+#       The appearance names are language specific.  Use the signal head table to get the available appearance names.
+# Wait for signal mast <mast name> to [not] display <aspect name> [or ...]
+#       Use the signal mast table to get the valid aspect names.  Remember that the names vary based on signal mast type.
+# Wait while signal mast <mast name> speed is less than <aspect name> speed
+#       Use the signal mast table to get the valid aspect names.  Remember that the names vary based on signal mast type.
 # Stop if sensor <sensor name> is <active | inactive>
 #       This action needs to be the last one in the list.
 #       If the sensor state matches, the throttle will be released and the script stopped.
@@ -42,16 +51,21 @@
 #   The "If" and "Endif" actions are required.  The "Else" action is optional and is used to separate the true and false actions.
 # If sensor <sensor name> is <active | inactive>
 # If block <block name> is <occupied | unoccupied | reserved | free>
+# If signal head <head name> does [not] show <appearance> [or ...]
+# If signal mast <mast name> does [not] display <aspect> [or ...]
+# If speed for signal mast <mast name> is <eq | ne | lt | gt | le | ge> <speed name>
+#       For information on speed names, look at the JMRI install location: xml/signals/signalSpeeds.xml
 # Else
 # Endif
 
 # Usage
 #   Copy the script from the JMRI install location to your user files location.  See "Help >> Locations".
 #   Change the log level from 0 to 1 through 4 if log output is desired.  4 provides maximun detail.
-#   Enter a valid sensor name in the statusSensor variable.  This is used to provide feedback to JMRI.
-#   Define the actions for a train.  The actions can be embedded in the script or placed in an external file.
+#   Optionally enter a valid sensor name in the statusSensor variable.  This is used to provide feedback to JMRI.
+#   Optionally enter a valid sensor name in the masterSensor variable.  This is used to stop all threads.
+#   Define the actions for each train.  The actions can be embedded in the script or placed in an external file.
 #      External file:  Create a text file with one action per line.  Blank lines and lines starting with a comment character, #, are ok.
-#                      Add the train name and file name to the "fileList".  The file name can be the complete
+#                      Add the train name and file name to the "trainList".  The file name can be the complete
 #                      path or the file name can include a keyword for the location, such as "preference:"
 #                      which is replaced by the path to the user files location at run time.
 #      Embedded: The actions are added to a Python list.  Each action is enclosed in single or double quotes
@@ -63,14 +77,16 @@ import jmri
 import re
 from javax.swing import JOptionPane
 
-logLevel = 4    # 0 for no output, 4 for the most detail.
-statusSensor = 'Run Script'
+logLevel = 1    # 0 for no output, 4 for the most detail.
+statusSensor = 'Run Script'   # Optional sensor to notify JMRI if any threads are active
+masterSensor = 'YAAT Master'   # If the optional sensor becomes active, all of the threads will be stopped
 
 trainList = {}
 trainList['Train 12'] = 'preference:Train 12.txt'
 trainList['Train 16'] = 'preference:Train 16.txt'
 trainList['RT Train 1'] = 'preference:RT Train 1.txt'
 trainList['RT Train 2'] = 'preference:RT Train 2.txt'
+trainList['Signal Test'] = 'preference:Signal Test.txt'
 
 BackAndForth = [
 'Start when sensor BF-Start is active',
@@ -158,12 +174,17 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def setup(self, actionList):
         self.actionTokens = []
         self.compileMessages = []
+        self.lineNumber = 0
         self.compile(actionList)
+        if len(self.actionTokens) == 0:
+            self.compileMessages.append('The action list is empty')
         if len(self.compileMessages) > 1:
             self.displayMessage("\n".join(self.compileMessages))
             YetAnotherAutoTrain.threadCount -= 1
             if YetAnotherAutoTrain.threadCount < 1:
-                sensors.getSensor(statusSensor).setKnownState(INACTIVE)
+                statSensor = sensors.getSensor(statusSensor)
+                if statSensor is not None:
+                    statSensor.setKnownState(INACTIVE)
             return False
         return True
 
@@ -171,7 +192,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if (self.throttle is None):
             if logLevel > 0: print '>> Start YAAT <<'
 
-        runShuttle = True
+        runYAAT = True
         if logLevel > 1: print 'Start YAAT Loop'
         for action in self.actionTokens:
             if len(action) == 0:
@@ -204,6 +225,12 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.doIfBlock(action)
             elif actionKey == 'IfSensor':
                 self.doIfSensor(action)
+            elif actionKey == 'IfHead':
+                self.doIfHead(action)
+            elif actionKey == 'IfMast':
+                self.doIfMast(action)
+            elif actionKey == 'IfSpeed':
+                self.doIfSpeed(action)
             elif actionKey == 'SetBlock':
                 self.doSetBlock(action)
             elif actionKey == 'SetDirection':
@@ -221,22 +248,30 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             elif actionKey == 'Stop':
                 if not self.doStop(action):
                     if logLevel > 0: print '>> Stop YAAT <<'
-                    runShuttle = False
+                    runYAAT = False
                     YetAnotherAutoTrain.threadCount -= 1
                     if YetAnotherAutoTrain.threadCount == 0:
-                        sensors.getSensor(statusSensor).setKnownState(INACTIVE)
+                        statSensor = sensors.getSensor(statusSensor)
+                        if statSensor is not None:
+                            statSensor.setKnownState(INACTIVE)
                     break;
             elif actionKey == 'WaitBlock':
                 self.doWaitBlock(action)
             elif actionKey == 'WaitSensor':
                 self.doWaitSensor(action)
+            elif actionKey == 'WaitHead':
+                self.doWaitHead(action)
+            elif actionKey == 'WaitMast':
+                self.doWaitMast(action)
+            elif actionKey == 'WaitSpeed':
+                self.doWaitSpeed(action)
             elif actionKey == 'WaitTime':
                 self.waitMsec(action[1])    # Direct execution
             else:
                 self.displayMessage('Action, {}, is not valid'.format(actionKey))
         if logLevel > 1: print 'End YAAT Loop'
         self.TrueFalseBlock = '- none -'    # Force Endif
-        return runShuttle
+        return runYAAT
 
 
     # ------ Perform token commands ------
@@ -301,6 +336,75 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         knownState = sensor.getKnownState()
         self.TrueFalseBlock = '- true -'
         self.TrueFalseState = checkState == knownState
+
+    def doIfHead(self, action):
+        act, headName, stateList, notOption = action
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.displayMessage('Signal head {} not found'.format(headName))
+            return
+        currentAppearance = head.getAppearance()
+        checkState = False
+        if notOption:
+            if currentAppearance != stateList[0]:
+                checkState = True
+        else:
+            if currentAppearance in stateList:
+                checkState = True
+        self.TrueFalseBlock = '- true -'
+        self.TrueFalseState = checkState
+
+    def doIfMast(self, action):
+        act, mastName, aspectList, notOption = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('Signal mast {} not found'.format(mastName))
+            return
+        currentAspect = mast.getAspect()
+        checkState = False
+        if notOption:
+            if currentAspect != aspectList[0]:
+                checkState = True
+        else:
+            if currentAspect in aspectList:
+                checkState = True
+        self.TrueFalseBlock = '- true -'
+        self.TrueFalseState = checkState
+
+    def doIfSpeed(self, action):
+        act, mastName, operator, speedName = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('Signal mast {} not found'.format(mastName))
+            return
+        checkState = False
+        signalSystem = mast.getSignalSystem()
+        speedMap = jmri.InstanceManager.getDefault(jmri.implementation.SignalSpeedMap)
+        checkSpeed = speedMap.getSpeed(speedName)
+        aspectName = mast.getAspect()
+        if aspectName is not None:
+            aspectSpeedName = speedMap.getAspectSpeed(aspectName, signalSystem)
+            currentSpeed = speedMap.getSpeed(aspectSpeedName)
+            if operator == 'eq':
+                if currentSpeed == checkSpeed: checkState = True
+            elif operator == 'ne':
+                if currentSpeed != checkSpeed: checkState = True
+            elif operator == 'gt':
+                if currentSpeed > checkSpeed: checkState = True
+            elif operator == 'lt':
+                if currentSpeed < checkSpeed: checkState = True
+            elif operator == 'ge':
+                if currentSpeed >= checkSpeed: checkState = True
+            elif operator == 'le':
+                if currentSpeed <= checkSpeed: checkState = True
+            else:
+                self.displayMessage('Invalid operator: {}'.format(operator))
+                return
+        else:
+            self.displayMessage('Aspect for signal mast {} not found'.format(mastName))
+            return
+        self.TrueFalseBlock = '- true -'
+        self.TrueFalseState = checkState
 
     def doSetBlock(self, action):
         act, blockName, blockState = action
@@ -464,6 +568,56 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             self.displayMessage('Sensor state, {}, is not valid'.format(sensorState))
 
+    def doWaitHead(self, action):
+        act, headName, stateList, notOption = action
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.displayMessage('Signal head {} not found'.format(headName))
+            return
+        while True:
+            currentAppearance = head.getAppearance()
+            if notOption:
+                if currentAppearance != stateList[0]:
+                    return
+            else:
+                if currentAppearance in stateList:
+                    return
+            self.waitChange([head])
+
+    def doWaitMast(self, action):
+        act, mastName, aspectList, notOption = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('Signal mast {} not found'.format(mastName))
+            return
+        while True:
+            currentAspect = mast.getAspect()
+            if notOption:
+                if currentAspect != aspectList[0]:
+                    return
+            else:
+                if currentAspect in aspectList:
+                    return
+            self.waitChange([mast])
+
+    def doWaitSpeed(self, action):
+        act, mastName, aspectSpeed = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('Signal mast {} not found'.format(mastName))
+            return
+        signalSystem = mast.getSignalSystem()
+        speedMap = jmri.InstanceManager.getDefault(jmri.implementation.SignalSpeedMap)
+        while True:
+            aspectName = mast.getAspect()
+            if aspectName is not None:
+                speedName = speedMap.getAspectSpeed(aspectName, signalSystem)
+                currentSpeed = speedMap.getSpeed(speedName)
+                print aspectName, speedName, currentSpeed
+                if currentSpeed >= aspectSpeed:
+                    return
+            self.waitChange([mast])
+
     def displayMessage(self, msg):
         JOptionPane.showMessageDialog(None, msg, 'YAAT Error', JOptionPane.WARNING_MESSAGE)
 
@@ -481,6 +635,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def compile(self, actionList):
         self.compileMessages.append('---- Compiler Errors ----')
         for line in actionList:
+            self.lineNumber += 1
             words = line.split()
             if len(words) == 0:
                 continue
@@ -496,6 +651,12 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compileIfBlock(line)
             elif words[0] == 'If' and words[1] == 'sensor':
                 self.compileIfSensor(line)
+            elif words[0] == 'If' and words[1] == 'signal' and words[2] == 'head':
+                self.compileIfSignalHead(line)
+            elif words[0] == 'If' and words[1] == 'signal' and words[2] == 'mast':
+                self.compileIfSignalMast(line)
+            elif words[0] == 'If' and words[1] == 'speed' and words[4] == 'mast':
+                self.compileIfSignalSpeed(line)
             elif words[0] == 'Set' and words[1] == 'block':
                 self.compileSetBlock(line)
             elif words[0] == 'Set' and words[1] == 'direction':
@@ -516,10 +677,16 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compileWaitBlock(line)
             elif words[0] == 'Wait' and words[1] == 'for' and words[2] == 'sensor':
                 self.compileWaitSensor(line)
+            elif words[0] == 'Wait' and words[1] == 'for' and words[3] == 'head':
+                self.compileSignalHead(line)
+            elif words[0] == 'Wait' and words[1] == 'for' and words[3] == 'mast':
+                self.compileSignalMast(line)
+            elif words[0] == 'Wait' and words[1] == 'while' and words[2] == 'signal':
+                self.compileSignalSpeed(line)
             elif words[0] == 'Wait' and words[1] == 'for' and (words[3] == 'seconds' or words[3] == 'second'):
                 self.compileWaitTime(words[2])
             else:
-                self.compileMessages.append('Syntax error: line = {}'.format(line))
+                self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
 
     def compileAssign(self, line):
         # Assign <long | short> address <dccaddr> [[ as <train name>] in <blockname>]
@@ -537,14 +704,14 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != flds:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         grps = result[0]
         addrSize = grps[0]
         try:
             num = int(grps[1])
         except ValueError:
-            self.compileMessages.append('Assign error: the DCC address, {}, is not a number'.format(grps[1]))
+            self.compileMessages.append('Assign error at line {}: the DCC address, {}, is not a number'.format(self.lineNumber, grps[1]))
             return
         addrNum = num
         trainName = '' if flds < 3 else grps[2]
@@ -552,7 +719,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if blockName != '':
             layoutBlock = layoutblocks.getLayoutBlock(blockName)
             if layoutBlock is None:
-                self.compileMessages.append('Assign error: start block "{}" does not exist'.format(blockName))
+                self.compileMessages.append('Assign error at line {}: start block "{}" does not exist'.format(self.lineNumber, blockName))
                 return
         self.actionTokens.append(['Assign', addrNum, addrSize, trainName, blockName])
 
@@ -563,15 +730,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         blockName, blockState = result[0]
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
         if layoutBlock is None:
-            self.compileMessages.append('Block error: block {} not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: block {} not found'.format(self.lineNumber, blockName))
             return
         if layoutBlock.getOccupancySensor() is None:
-            self.compileMessages.append('Block error: occupancy sensor for block {} not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: occupancy sensor for block {} not found'.format(self.lineNumber, blockName))
             return
         self.actionTokens.append(['IfBlock', blockName, blockState])
 
@@ -582,13 +749,116 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('If sensor error: sensor {} not found'.format(sensorName))
+            self.compileMessages.append('If sensor error at line {}: sensor {} not found'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['IfSensor', sensorName, sensorState])
+
+    def compileIfSignalHead(self, line):
+        # If signal head <head name> does [not] show <appearance> [or ...]
+        if logLevel > 2: print '  {}'.format(line)
+        pattern = re.compile('\s*If\s+signal\s+head\s+(.+\S)\s+does\s+(not\s)?show\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    result = {}'.format(result)
+        if len(result) == 0 or len(result[0]) != 3:
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
+            return
+        headName, optionalNot, headStates = result[0]
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.compileMessages.append('If signal head error at line {}: head "{}" not found'.format(self.lineNumber, headName))
+            return
+        notOption = False
+        if optionalNot == 'not ':
+            notOption = True
+        stateList = headStates.split(' or ')
+        if len(stateList) > 1 and notOption:
+            self.compileMessages.append('If signal head error at line {}: the "not" option cannot be used with the "or" option'.format(self.lineNumber))
+            return
+        stateMap = {}
+        for stateNumber in head.getValidStates():
+            stateName = head.getAppearanceName(stateNumber)
+            stateMap[stateName] = stateNumber
+        stateNums = []
+        for state in stateList:
+            state = state.strip()
+            if state in stateMap:
+                stateNums.append(stateMap[state])
+            else:
+                self.compileMessages.append('If signal head error at line {}: "{}" is not a valid appearance'.format(self.lineNumber, state))
+                return
+        if len(stateNums) == 0:
+            self.compileMessages.append('If signal head error at line {}: no signal head states found'.format(self.lineNumber))
+            return
+        if logLevel > 2: print 'IfHead', headName, stateNums, notOption
+        self.actionTokens.append(['IfHead', headName, stateNums, notOption])
+
+    def compileIfSignalMast(self, line):
+        # If signal mast <mast name> does [not] display <aspect> [or ...]
+        if logLevel > 2: print '  {}'.format(line)
+        pattern = re.compile('\s*If\s+signal\s+mast\s+(.+\S)\s+does\s+(not\s+)?display\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    result = {}'.format(result)
+        if len(result) == 0 or len(result[0]) != 3:
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
+            return
+        mastName, optionalNot, mastStates = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('If signal mast error at line {}: mast "{}" not found'.format(self.lineNumber, mastName))
+            return
+        notOption = False
+        if optionalNot == 'not ':
+            notOption = True
+        aspectList = mastStates.split(' or ')
+        if len(aspectList) > 1 and notOption:
+            self.compileMessages.append('If signal mast error at line {}: the "not" option cannot be used with the "or" option'.format(self.lineNumber))
+            return
+        aspectMap = mast.getValidAspects()
+        aspectNames = []
+        for aspect in aspectList:
+            aspect = aspect.strip()
+            if aspect in aspectMap:
+                aspectNames.append(aspect)
+            else:
+                self.compileMessages.append('If signal mast error at line {}: "{}" is not a valid aspect'.format(self.lineNumber, aspect))
+                return
+        if len(aspectNames) == 0:
+            self.compileMessages.append('If signal mast error at line {}: no valid signal mast aspects found'.format(self.lineNumber))
+            return
+        if logLevel > 2: print 'IfMast', mastName, aspectNames, notOption
+        self.actionTokens.append(['IfMast', mastName, aspectNames, notOption])
+
+    def compileIfSignalSpeed(self, line):
+        # If speed for signal mast <mast name> is <eq | ne | lt | gt | le | ge> <speed name>
+        if logLevel > 2: print '  {}'.format(line)
+        pattern = re.compile('\s*If\s+speed\s+for\s+signal\s+mast\s+(.+\S)\s+is\s+(eq|ne|gt|lt|ge|le)\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    result = {}'.format(result)
+        if len(result) == 0 or len(result[0]) != 3:
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
+            return
+        mastName, operator, speedName = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('If mast speed error at line {}: mast "{}" not found'.format(self.lineNumber, mastName))
+            return
+        speedMap = jmri.InstanceManager.getDefault(jmri.implementation.SignalSpeedMap)
+        if speedMap is None:
+            self.compileMessages.append('If mast speed error at line {}: Unexpected error: get SpeedMap'.format(self.lineNumber))
+            return
+        speedNameList = speedMap.getValidSpeedNames()
+        if speedNameList is None:
+            self.compileMessages.append('If mast speed error at line {}: Unexpected error: getValidSpeedNames'.format(self.lineNumber))
+            return
+        if speedName not in speedNameList:
+            self.compileMessages.append('If mast speed error at line {}: "{}" is not a valid speed name'.format(self.lineNumber, speedName))
+            return
+        if logLevel > 2: print 'IfSpeed', mastName, operator, speedName
+        self.actionTokens.append(['IfSpeed', mastName, operator, speedName])
 
     def compileSetBlock(self, line):
         # Set block <block name> <occupied | unoccupied | reserved | free>
@@ -597,15 +867,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         blockName, blockState = result[0]
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
         if layoutBlock is None:
-            self.compileMessages.append('Block error: block "{}" not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: block "{}" not found'.format(self.lineNumber, blockName))
             return
         if layoutBlock.getOccupancySensor() is None:
-            self.compileMessages.append('Block error: occupancy sensor for block {} not found'.format(blockName))
+            self.compileMessages.append('Block error at line {}: occupancy sensor for block {} not found'.format(self.lineNumber, blockName))
             return
         self.actionTokens.append(['SetBlock', blockName, blockState])
 
@@ -616,7 +886,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) != 1:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         self.actionTokens.append(['SetDirection', result[0]])
 
@@ -633,17 +903,17 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != flds:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         grps = result[0]
         try:
             keyNum = int(grps[0])
         except ValueError:
-            self.compileMessages.append('Function key error: the key value, {}, is not an integer'.format(grps[0]))
+            self.compileMessages.append('Function key error at line {}: the key value, {}, is not an integer'.format(self.lineNumber, grps[0]))
             return
         else:
             if keyNum < 0 or keyNum > 28:
-                self.compileMessages.append('Function key error: the key value, {}, is not in the range 0-28'.format(grps[0]))
+                self.compileMessages.append('Function key error at line {}: the key value, {}, is not in the range 0-28'.format(self.lineNumber, grps[0]))
                 return
         keyState = grps[1]
         if flds ==2:
@@ -652,7 +922,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             try:
                 keyWait = float(grps[2])
             except ValueError:
-                self.compileMessages.append('Function key error: the wait time, {}, is not a number'.format(grps[2]))
+                self.compileMessages.append('Function key error at line {}: the wait time, {}, is not a number'.format(self.lineNumber, grps[2]))
                 return
         self.actionTokens.append(['SetFKey', keyNum, keyState, int(keyWait * 1000)])
 
@@ -663,11 +933,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Sensor error: sensor "{}" not found'.format(sensorName))
+            self.compileMessages.append('Sensor error at line {}: sensor "{}" not found'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['SetSensor', sensorName, sensorState])
 
@@ -678,12 +948,12 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) != 1:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         try:
             num = float(result[0])
         except ValueError:
-            self.compileMessages.append('Train speed error: the speed, {}, is not a number'.format(result[0]))
+            self.compileMessages.append('Train speed error at line {}: the speed, {}, is not a number'.format(self.lineNumber, result[0]))
         else:
             if num < 0.0:
                 num = 0.0
@@ -704,19 +974,19 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != flds:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         grps = result[0]
         turnoutName = grps[0]
         turnoutState = grps[1]
         turnoutWait = 0 if flds < 3 else grps[2]
         if turnouts.getTurnout(turnoutName) is None:
-            self.compileMessages.append('Turnout error: turnout {} not found'.format(grps[0]))
+            self.compileMessages.append('Turnout error at line {}: turnout {} not found'.format(self.lineNumber, grps[0]))
             return
         try:
             num = float(turnoutWait)
         except ValueError:
-            self.compileMessages.append('Turnout error: the wait time, {}, is not a number'.format(turnoutWait))
+            self.compileMessages.append('Turnout error at line {}: the wait time, {}, is not a number'.format(self.lineNumber, turnoutWait))
         else:
             self.actionTokens.append(['SetTurnout', turnoutName, turnoutState, int(num * 1000)])
 
@@ -727,11 +997,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Start error: sensor {} does not exist'.format(sensorName))
+            self.compileMessages.append('Start error at line {}: sensor {} does not exist'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['Start', sensorName, sensorState])
 
@@ -742,11 +1012,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Stop error: sensor {} does not exist'.format(sensorName))
+            self.compileMessages.append('Stop error at line {}: sensor {} does not exist'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['Stop', sensorName, sensorState])
 
@@ -757,15 +1027,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         blockName, blockState = result[0]
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
         if layoutBlock is None:
-            self.compileMessages.append('Wait block error: block {} not found'.format(blockName))
+            self.compileMessages.append('Wait block error at line {}: block {} not found'.format(self.lineNumber, blockName))
             return
         if layoutBlock.getOccupancySensor() is None:
-            self.compileMessages.append('Wait block error: occupancy sensor for block {} not found'.format(blockName))
+            self.compileMessages.append('Wait block error at line {}: occupancy sensor for block {} not found'.format(self.lineNumber, blockName))
             return
         self.actionTokens.append(['WaitBlock', blockName, blockState])
         return
@@ -777,11 +1047,11 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = re.findall(pattern, line)
         if logLevel > 3: print '    result = {}'.format(result)
         if len(result) == 0 or len(result[0]) != 2:
-            self.compileMessages.append('Syntax error: line = {}'.format(line))
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
             return
         sensorName, sensorState = result[0]
         if sensors.getSensor(sensorName) is None:
-            self.compileMessages.append('Wait sensor error: sensor {} not found'.format(sensorName))
+            self.compileMessages.append('Wait sensor error at line {}: sensor {} not found'.format(self.lineNumber, sensorName))
             return
         self.actionTokens.append(['WaitSensor', sensorName, sensorState])
 
@@ -791,13 +1061,144 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         try:
             num = float(timeValue)
         except ValueError:
-            self.compileMessages.append('Wait time error: the wait time, {}, is not a number'.format(timeValue))
+            self.compileMessages.append('Wait time error at line {}: the wait time, {}, is not a number'.format(self.lineNumber, timeValue))
         else:
             self.actionTokens.append(['WaitTime', int(num * 1000)])
 
+    def compileSignalHead(self, line):
+        # Wait for signal head <head name> to [not] show <appearance name> [or ...]
+        if logLevel > 2: print '  {}'.format(line)
+        pattern = re.compile('\s*Wait\s+for\s+signal\s+head\s+(.+\S)\s+to\s+(not\s)?show\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    result = {}'.format(result)
+        if len(result) == 0 or len(result[0]) != 3:
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
+            return
+        headName, optionalNot, headStates = result[0]
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.compileMessages.append('Wait signal head error at line {}: head "{}" not found'.format(self.lineNumber, headName))
+            return
+        notOption = False
+        if optionalNot == 'not ':
+            notOption = True
+        stateList = headStates.split(' or ')
+        if len(stateList) > 1 and notOption:
+            self.compileMessages.append('Wait signal head error at line {}: the "not" option cannot be used with the "or" option'.format(self.lineNumber))
+            return
+        stateMap = {}
+        for stateNumber in head.getValidStates():
+            stateName = head.getAppearanceName(stateNumber)
+            stateMap[stateName] = stateNumber
+        stateNums = []
+        for state in stateList:
+            state = state.strip()
+            if state in stateMap:
+                stateNums.append(stateMap[state])
+            else:
+                self.compileMessages.append('Wait signal head error at line {}: "{}" is not a valid appearance'.format(self.lineNumber, state))
+                return
+        if len(stateNums) == 0:
+            self.compileMessages.append('Wait signal head error at line {}: no signal head states found'.format(self.lineNumber))
+            return
+        if logLevel > 2: print 'WaitHead', headName, stateNums, notOption
+        self.actionTokens.append(['WaitHead', headName, stateNums, notOption])
+
+    def compileSignalMast(self, line):
+        # Wait for signal mast <mast name> to [not] display <aspect name> [or ...]
+        if logLevel > 2: print '  {}'.format(line)
+        pattern = re.compile('\s*Wait\s+for\s+signal\s+mast\s+(.+\S)\s+to\s+(not\s)?display\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    result = {}'.format(result)
+        if len(result) == 0 or len(result[0]) != 3:
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
+            return
+        mastName, optionalNot, mastStates = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('Wait signal mast error at line {}: mast "{}" not found'.format(self.lineNumber, mastName))
+            return
+        notOption = False
+        if optionalNot == 'not ':
+            notOption = True
+        aspectList = mastStates.split(' or ')
+        if len(aspectList) > 1 and notOption:
+            self.compileMessages.append('Wait signal mast error at line {}: the "not" option cannot be used with the "or" option'.format(self.lineNumber))
+            return
+        aspectMap = mast.getValidAspects()
+        aspectNames = []
+        for aspect in aspectList:
+            aspect = aspect.strip()
+            if aspect in aspectMap:
+                aspectNames.append(aspect)
+            else:
+                self.compileMessages.append('Wait signal mast error at line {}: "{}" is not a valid aspect'.format(self.lineNumber, aspect))
+                return
+        if len(aspectNames) == 0:
+            self.compileMessages.append('Wait signal mast error at line {}: no valid signal mast aspects found'.format(self.lineNumber))
+            return
+        if logLevel > 2: print 'WaitMast', mastName, aspectNames, notOption
+        self.actionTokens.append(['WaitMast', mastName, aspectNames, notOption])
+
+    def compileSignalSpeed(self, line):
+        # Wait while signal mast <mast name> speed is less than <aspect name> speed
+        if logLevel > 2: print '  {}'.format(line)
+        pattern = re.compile('\s*Wait\s+while\s+signal\s+mast\s+(.+\S)\s+speed\s+is\s+less\s+than\s+(.+\S)\s+speed')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    result = {}'.format(result)
+        if len(result) == 0 or len(result[0]) != 2:
+            self.compileMessages.append('Syntax error at line {}: {}'.format(self.lineNumber, line))
+            return
+        mastName, aspectName = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('Wait mast speed error at line {}: mast "{}" not found'.format(self.lineNumber, mastName))
+            return
+        aspectMap = mast.getValidAspects()
+        if aspectName not in aspectMap:
+            self.compileMessages.append('Wait mast speed error at line {}: "{}" is not a valid aspect'.format(self.lineNumber, aspectName))
+            return
+        signalSystem = mast.getSignalSystem()
+        if signalSystem is None:
+            self.compileMessages.append('Wait mast speed error at line {}: Unexpected error: getSignalSystem'.format(self.lineNumber))
+            return
+        speedMap = jmri.InstanceManager.getDefault(jmri.implementation.SignalSpeedMap)
+        if speedMap is None:
+            self.compileMessages.append('Wait mast speed error at line {}: Unexpected error: get SpeedMap'.format(self.lineNumber))
+            return
+        speedName = speedMap.getAspectSpeed(aspectName, signalSystem)
+        if speedName is None:
+            self.compileMessages.append('Wait mast speed error at line {}: Unexpected error: getAspectSpeed'.format(self.lineNumber))
+            return
+        aspectSpeed = speedMap.getSpeed(speedName)
+        if logLevel > 2: print 'WaitSpeed', mastName, aspectName, speedName, aspectSpeed
+        self.actionTokens.append(['WaitSpeed', mastName, aspectSpeed])
+
 # End of class YetAnotherAutoTrain
 
-print 'YAAT v1.2'
+class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
+    def init(self):
+        if logLevel > 0: print 'Create Master Thread'
+
+    def setup(self):
+        self.mSensor = sensors.getSensor(masterSensor)
+        if self.mSensor is None:
+            return False
+        self.mSensor.setKnownState(INACTIVE)
+        return True
+
+    def handle(self):
+        self.waitSensorActive(self.mSensor)
+        for thread in instanceList:
+            if thread is not None:
+                if thread.isRunning():
+                    if logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
+                    thread.stop()
+        return False;
+
+# End of class YAATMaster
+
+print 'YAAT v1.5'
 
 # Process text file train definitions.
 instanceList = []   # List of file based instances
@@ -815,7 +1216,15 @@ for trainName, fileName in trainList.iteritems():
         instanceList[idx].start()               # Compile was successful
 
 # Process embedded train definitions
-yaat1 = YetAnotherAutoTrain()
-yaat1.setName('Back and Forth')
-if yaat1.setup(BackAndForth):
-    yaat1.start()
+# Repeat for each embedded definition
+idx = len(instanceList)
+instanceList.append(YetAnotherAutoTrain())  # Add a new instance
+instanceList[idx].setName('Back and Forth') # <<<< this is the name of the Python list
+if instanceList[idx].setup(BackAndForth):   # <<<< Compile the train actions using the embedded list
+    instanceList[idx].start()               # Compile was successful
+
+# Keep last -- create the master thread
+master = YAATMaster()
+if master.setup():
+    master.setName('YAAT Master')
+    master.start()

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.Math;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.FileUtil;
+import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
@@ -63,8 +65,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author Dennis Miller Copyright 2004
+ * @author Egbert Broerse Copyright (C) 2018
  * @see jmri.jmrit.roster.LocoFile
- *
  */
 public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
 
@@ -97,8 +99,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String SPEED_PROFILE = "speedprofile"; // NOI18N
     public static final String SOUND_LABEL = "soundlabel"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class);
-
     // members to remember all the info
     protected String _fileName = null;
 
@@ -109,7 +109,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _owner = "";
     protected String _model = "";
     protected String _dccAddress = "3";
-    //protected boolean _isLongAddress = false;
     protected LocoAddress.Protocol _protocol = LocoAddress.Protocol.DCC_SHORT;
     protected String _comment = "";
     protected String _decoderModel = "";
@@ -1375,6 +1374,88 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
+    /**
+     * Ultra compact list view of roster entries.
+     * Shows text from fields as initially visible in the Roster frame table.
+     *
+     * Header is created in {@link PrintListAction#actionPerformed(ActionEvent)}
+     * so keep column widths identical with values of colWidth below.
+     *
+     * @param w writer providing output
+     */
+    public void printEntryLine(HardcopyWriter w) {
+        // no image
+        // @see #printEntryDetails(w);
+
+        try {
+            //int textSpace = w.getCharactersPerLine() - 1; // could be used to truncate line.
+            // for now, text just flows to next line
+            String thisText ="";
+            String thisLine = "";
+
+            // start each entry on a new line
+            w.write(newLine, 0, 1);
+
+            int colWidth = 15;
+            int startNext = colWidth;
+            // roster entry ID (not the filname)
+            if (_id != null) {
+                thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
+                log.debug("thisText = |{}|, length = {}, startNext = {}", thisText, thisText.length(), startNext);
+            } else {
+                thisText = String.format("%-" + colWidth + "s", "<null>");
+            }
+            thisLine += thisText;
+            colWidth = 6;
+            startNext += colWidth;
+            // _dccAddress
+            thisLine += StringUtil.padString(_dccAddress, colWidth);
+            colWidth = 6;
+            startNext += colWidth;
+            // _roadName
+            thisLine += StringUtil.padString(_roadName, colWidth);
+            colWidth = 6;
+            startNext += colWidth;
+            // _roadNumber
+            thisLine += StringUtil.padString(_roadNumber, colWidth);
+            colWidth = 6;
+            startNext += colWidth;
+            // _mfg
+            thisLine += StringUtil.padString(_mfg, colWidth);
+            colWidth = 10;
+            startNext += colWidth;
+            // _model
+            thisLine += StringUtil.padString(_model, colWidth);
+            colWidth = 10;
+            startNext += colWidth;
+            // _decoderModel
+            thisLine += StringUtil.padString(_decoderModel, colWidth);
+            colWidth = 12;
+            startNext += colWidth;
+            // _protocol (type)
+            thisLine += StringUtil.padString(_protocol.toString(), colWidth);
+            colWidth = 6;
+            startNext += colWidth;
+            // _owner
+            thisLine += StringUtil.padString(_owner, colWidth);
+            colWidth = 10;
+            startNext += colWidth;
+            // dateModified (type)
+            if (dateModified != null) {
+                DateFormat.getDateTimeInstance().format(dateModified);
+                thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
+                thisLine += thisText;
+            }
+            // don't include comment and decoder family
+
+            w.write(thisLine);
+            // extra whitespace line after each entry would miss goal of a compact listing
+            // w.write(newLine, 0, 1);
+        } catch (IOException e) {
+            log.error("Error printing RosterEntry: ", e);
+        }
+    }
+
     public void printEntry(HardcopyWriter w) {
         if (getIconPath() != null) {
             ImageIcon icon = new ImageIcon(getIconPath());
@@ -1425,7 +1506,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         String leftMargin = "   "; // 3 spaces in front of legend labels
         int labelColumn = 19; // pad remaining spaces for legend using fixed width font, forms "%-19s" in line
         try {
-            //int indentWidth = indent.length();
             HardcopyWriter ww = (HardcopyWriter) w;
             int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
             title = String.format("%-" + labelColumn + "s",
@@ -1567,7 +1647,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
         //Now have a vector of text pieces and line feeds that will all
         //fit in the allowed space. Print each piece, prefixing the first one
-        //with the label and indenting any remainding.
+        //with the label and indenting any remaining.
         String s;
         int k = 0;
         try {
@@ -1704,5 +1784,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             return Bundle.getMessage("RosterEntryDisplayName", this.getDccAddress(), this.getId(), ""); // NOI18N
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class);
 
 }

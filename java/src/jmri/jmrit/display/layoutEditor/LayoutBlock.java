@@ -121,7 +121,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     //constants
     public static final int OCCUPIED = Block.OCCUPIED;
     public static final int EMPTY = Block.UNOCCUPIED;
-    public static final int UNKNOWN = Sensor.UNKNOWN;  //must be a different bit
     //operational instance variables (not saved to disk)
     private int useCount = 0;
     private NamedBeanHandle<Sensor> occupancyNamedSensor = null;
@@ -211,12 +210,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         block.getPaths().stream().forEach((p) -> {
             addAdjacency(p);
         });
-    }
-
-    // this should only be used for debugging...
-    @Override
-    public String toString() {
-        return "LayoutBlock " + getDisplayName();
     }
 
     /*
@@ -1903,7 +1896,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         //Work our way backward through the list of neighbours
         //We need to work out which routes to remove first.
         //here we simply remove the routes which are advertised from the removed neighbour
-        List<Routes> tmpBlock = removeRouteRecievedFromNeighbour(removedBlock);
+        List<Routes> tmpBlock = removeRouteReceivedFromNeighbour(removedBlock);
 
         for (int i = neighbours.size() - 1; i > -1; i--) {
             //Use to check against direction but don't now.
@@ -1993,7 +1986,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         notifyNeighboursOfRemoval(routesToRemove, srcblk);
     }
 
-    private List<Routes> removeRouteRecievedFromNeighbour(Block removedBlock) {
+    private List<Routes> removeRouteReceivedFromNeighbour(Block removedBlock) {
         List<Routes> tmpBlock = new ArrayList<>();
 
         //here we simply remove the routes which are advertised from the removed neighbour
@@ -2074,7 +2067,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             neighLBlock.removePropertyChangeListener(this);
 
             //This should remove routes learned from our neighbour
-            List<Routes> tmpBlock = removeRouteRecievedFromNeighbour(neighBlock);
+            List<Routes> tmpBlock = removeRouteReceivedFromNeighbour(neighBlock);
 
             notifyNeighboursOfRemoval(tmpBlock, neighBlock);
 
@@ -3396,7 +3389,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
            which would end up be rejected*/
 
         actedUponUpdates.add(update.getPacketId());
-        adj.addPacketRecievedFromNeighbour(update.getPacketId());
+        adj.addPacketReceivedFromNeighbour(update.getPacketId());
 
         int hopCount = update.getHopCount();
         int packetmetric = update.getMetric();
@@ -3920,8 +3913,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Get the flow of traffic to and from neighbouring block at index i RXTX -
      * Means Traffic can flow both ways between the blocks RXONLY - Means we can
-     * only recieve traffic from our neighbour, we can not send traffic to it
-     * TXONLY - Means we do not recieve traffic from our neighbour, but can send
+     * only receive traffic from our neighbour, we can not send traffic to it
+     * TXONLY - Means we do not receive traffic from our neighbour, but can send
      * traffic to it.
      *
      * @param i index in neighbors
@@ -4110,7 +4103,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return actedUponUpdates.contains(packetID);
         }
 
-        void addPacketRecievedFromNeighbour(Integer packetID) {
+        void addPacketReceivedFromNeighbour(Integer packetID) {
             actedUponUpdates.add(packetID);
             if (actedUponUpdates.size() > 500) {
                 actedUponUpdates.subList(0, 250).clear();
@@ -4576,7 +4569,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         _turnouts.put(lt.getTurnout(), turnouts.get(i).getExpectedState());
                         lt.getTurnout().addPropertyChangeListener(this, lt.getTurnoutName(), "Layout Block Routing");
                     } else {
-                        log.error("{} has no physical turnout allocated", lt);
+                        log.error("{} has no physical turnout allocated, block = {}", lt, block.getDisplayName());
                     }
                 }
             }

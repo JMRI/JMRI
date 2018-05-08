@@ -13,10 +13,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 
     public SerialTrafficControlScaffold(GrapevineSystemConnectionMemo memo) {
         super(memo);
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some SerialTrafficController methods for test purposes

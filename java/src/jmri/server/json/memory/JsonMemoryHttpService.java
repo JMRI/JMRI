@@ -1,9 +1,7 @@
 package jmri.server.json.memory;
 
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
@@ -52,12 +50,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
         if (memory == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            memory.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            memory.setComment(data.path(COMMENT).asText());
-        }
+        this.postNamedBean(memory, data, name, type, locale);
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);

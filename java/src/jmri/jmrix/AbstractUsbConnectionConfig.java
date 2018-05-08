@@ -131,8 +131,8 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                 }
             }
             init = true;
-        }   // if (!init)
-    }   // checkInitDone()
+        }
+    }
 
     @Override
     public void updateAdapter() {
@@ -184,8 +184,8 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
             return;
         }
 
-        /* as we make amendments to the list of port in newList, we keep a copy of it before
-         modification, this copy is then used to validate against any changes in the port lists.
+        /* As we make amendments to the list of ports in newList, we keep a copy of it before
+         modification. This copy is then used to validate against any changes in the port lists.
          */
         originalList = new ArrayList<>(newList);
         if (portBox.getActionListeners().length > 0) {
@@ -216,7 +216,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
         updateUsbPortNames(portName, portBox, newList);
 
-        // If there's no name selected, select one that seems most likely
+        // If no name is selected, select one that seems most likely
         boolean didSetName = false;
         if ((portName == null)
                 || portName.equals(Bundle.getMessage("noneSelected"))
@@ -279,11 +279,11 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         try {
             newList = getPortNames();
             if (log.isDebugEnabled()) {
-                log.debug("loadDetails called in class " + this.getClass().getName());
-                log.debug("adapter class: " + adapter.getClass().getName());
-                log.debug("loadDetails called for " + name());
+                log.debug("loadDetails called in class {}", this.getClass().getName());
+                log.debug("adapter class: {}", adapter.getClass().getName());
+                log.debug("loadDetails called for {}", name());
                 if (newList != null) {
-                    log.debug("Found " + newList.size() + " ports");
+                    log.debug("Found {} ports", newList.size());
                 } else {
                     log.debug("Zero-length port List");
                 }
@@ -291,7 +291,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         } catch (UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
             log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
-            JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorComLibLoad"));
             return;
         }
 

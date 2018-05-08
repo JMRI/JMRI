@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
         SerialLightTest.class,
         BundleTest.class,
         jmri.jmrix.oaktree.swing.PackageTest.class,
+        jmri.jmrix.oaktree.simulator.PackageTest.class
 })
 
 /**

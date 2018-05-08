@@ -1,12 +1,6 @@
 package jmri.server.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.ValidationMessage;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Set;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,8 +14,6 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright 2018
  */
 public class JsonHttpServiceTest {
-
-    private final static Logger log = LoggerFactory.getLogger(JsonHttpServiceTest.class);
 
     @Before
     public void setUp() {
@@ -84,31 +76,5 @@ public class JsonHttpServiceTest {
         }
     }
 
-    /**
-     * Test that a JMRI JSON message is valid per the JMRI JSON schema.
-     *
-     * @param message the message to test
-     * @throws IOException if unable to read the schema
-     */
-    public static void testValidJmriJsonMessage(JsonNode message) throws IOException {
-        URL resource = JsonHttpServiceTest.class.getClassLoader().getResource("jmri/server/json/schema/json-server.json");
-        testSchemaValidJson(message, new ObjectMapper().readTree((resource)));
-    }
-
-    /**
-     * Test that a node is a valid per the given schema.
-     *
-     * @param node   the node to test
-     * @param schema the schema to test with
-     */
-    public static void testSchemaValidJson(JsonNode node, JsonNode schema) {
-        Set<ValidationMessage> errors = JsonSchemaFactory.getInstance().getSchema(schema).validate(node);
-        if (!errors.isEmpty()) {
-            log.warn("Errors validating {}", node);
-            errors.forEach((error) -> {
-                log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(), error.getMessage(), error.getPath(), error.getType());
-            });
-        }
-        Assert.assertTrue("No errors expected", errors.isEmpty());
-    }
+    // private final static Logger log = LoggerFactory.getLogger(JsonHttpServiceTest.class);
 }

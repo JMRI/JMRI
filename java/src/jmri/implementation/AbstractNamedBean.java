@@ -60,23 +60,18 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     /**
-     * Get associated comment text.
+     * {@inheritDoc}
      */
     @Override
-    public String getComment() {
+    final public String getComment() {
         return this.comment;
     }
 
     /**
-     * Set associated comment text.
-     * <p>
-     * Comments can be any valid text.
-     *
-     * @param comment 'nulln means no comment associated.
+     * {@inheritDoc}
      */
     @Override
-    @OverridingMethodsMustInvokeSuper
-    public void setComment(String comment) {
+    final public void setComment(String comment) {
         String old = this.comment;
         if (comment == null || comment.trim().isEmpty()) {
             this.comment = null;
@@ -88,8 +83,12 @@ public abstract class AbstractNamedBean implements NamedBean {
     private String comment;
 
     /**
-     * Get the name string of this object.
-     *
+     * {@inheritDoc}
+     * <p>
+     * It would be good to eventually make this final to 
+     * keep it consistent system-wide, but 
+     * we have some existing classes to update first.
+     * 
      * @return user name if not null or empty, else return system name
      */
     @Override
@@ -102,6 +101,12 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /**
+     * <p>
+     * It would be good to eventually make this final to 
+     * keep it consistent system-wide, but 
+     * we have some existing classes to update first.
+     */
     @Override
     public String getFullyFormattedDisplayName() {
         String name = getUserName();
@@ -203,12 +208,16 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @Override
-    public String getSystemName() {
+    final public String getSystemName() {
         return mSystemName;
     }
 
     /**
      * {@inheritDoc}
+     * <p>
+     * It would be good to eventually make this final to 
+     * keep it consistent system-wide, but 
+     * we have some existing classes to update first.
      */
     @Nonnull
     @Override
@@ -217,7 +226,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @Override
-    public String getUserName() {
+    final public String getUserName() {
         return mUserName;
     }
 
