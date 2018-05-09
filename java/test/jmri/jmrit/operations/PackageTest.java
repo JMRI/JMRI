@@ -22,9 +22,6 @@ import org.junit.runners.Suite;
         OperationsPanelTest.class,
         OpsPropertyChangeListenerTest.class,
         OperationsManagerTest.class,
-        ExceptionContextTest.class,
-        ExceptionDisplayFrameTest.class,
-        UnexpectedExceptionContextTest.class,
 })
 
 /**
