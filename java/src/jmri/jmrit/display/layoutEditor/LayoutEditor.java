@@ -9546,11 +9546,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         draw1(g2, main, block, hidden, dashed = true);
 
         //setup for drawing mainline rails
+        main = true;
         g2.setColor(ltdo.getMainRailColor());
         g2.setStroke(stroke);
         draw1(g2, main, block, hidden, dashed = false);
         g2.setStroke(dashedStroke);
-        draw1(g2, main, block, hidden, dashed = true);
+        dashed = true;
+        draw1(g2, main, block, hidden, dashed);
     }
 
     //
@@ -9620,7 +9622,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(ltdo.getMainBallastColor());
-            draw1(g2, main = true, block, hidden, dashed);
+            main = true;
+            draw1(g2, main, block, hidden, dashed);
         }
     }
 
@@ -9701,7 +9704,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     railWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(railColor);
-            draw1(g2, main, block, hidden, dashed = false);
+            dashed = false;
+            draw1(g2, main, block, hidden, dashed);
         }
     }   // drawLayoutTracksRails
 
@@ -9768,7 +9772,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //note: color is set in layout track's draw1 when isBlock is true
         draw1(g2, main = true, block, hidden, dashed = true);
         g2.setStroke(blockLineStroke);
-        draw1(g2, main, block, hidden, dashed = false);
+        dashed = false;
+        draw1(g2, main, block, hidden, dashed);
     }
 
     // isDashed defaults to false
