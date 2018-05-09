@@ -1,4 +1,4 @@
-package jmri.jmrit.operations;
+package jmri.util.swing;
 
 /**
  * Extends ExceptionContext class for exceptions that are not expected, and
@@ -11,13 +11,11 @@ public class UnexpectedExceptionContext extends ExceptionContext {
 
     @Override
     public String getTitle() {
-        return super.getTitle() + " (Unexpected)"; // NOI18N
+        return Bundle.getMessage("UnexpectedExceptionOperationTitle",super.getTitle());
     }
 
     public UnexpectedExceptionContext(Exception ex, String operation) {
-        super(ex, operation, "This exception was unexpected and is probably a bug in the code."); // NOI18N
-
-        this._preface = "An unexpected error occurred during the following operation."; // NOI18N
-
+        super(ex, operation, Bundle.getMessage("UnexpectedExceptionOperationHint"));
+        this._preface = Bundle.getMessage("UnexpectedExceptionOperationPreface");
     }
 }

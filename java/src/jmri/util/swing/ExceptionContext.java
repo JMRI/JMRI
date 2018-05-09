@@ -1,4 +1,4 @@
-package jmri.jmrit.operations;
+package jmri.util.swing;
 
 /**
  * Wraps an Exception and allows extra contextual information to be added, such
