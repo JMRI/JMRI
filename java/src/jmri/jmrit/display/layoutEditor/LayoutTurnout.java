@@ -2759,7 +2759,7 @@ public class LayoutTurnout extends LayoutTrack {
                             for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
                                 String blockName = entry.getKey();
                                 LayoutBlock layoutBlock = entry.getValue();
-                                viewRouting.add(new AbstractActionImpl(getBlockBName(), blockName, layoutBlock));
+                                viewRouting.add(new AbstractActionImpl(blockName, getBlockBName(), layoutBlock));
                             }
                             popup.add(viewRouting);
                         }
