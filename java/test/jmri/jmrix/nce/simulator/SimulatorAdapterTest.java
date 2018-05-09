@@ -35,7 +35,7 @@ public class SimulatorAdapterTest {
     @Test
     public void testBaudRates(){
        Assert.assertNull("no baud rates for simulator",adapter.validBaudRates());
-       Assert.assertNull("no currentbaud rate for simulator",adapter.getCurrentBaudRate());
+       Assert.assertEquals("no currentbaud rate for simulator","",adapter.getCurrentBaudRate());
     }
 
     // The minimal setup for log4J
