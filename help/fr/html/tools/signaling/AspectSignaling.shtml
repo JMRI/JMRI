@@ -8,7 +8,7 @@
 <meta name="Date.Modified" content="20151002"/>
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
@@ -130,12 +130,12 @@ dt><a href="../../../../../xml/signals/B&O-2009/index.shtml">B&amp;O-2009</a>
     <a href="../../../../../xml/signals/CSD-1962-mechaniky/index.shtml">CSD-1962-mechaniky</a> &ndash;
     <a href="../../../../../xml/signals/SZDC-2015-zakladni/index.shtml">SZDC-2015-zakladni</a> </dt>
 
-<dd>ČSD &ndash; Československé státní dráhy &ndash; Tchécoslovaquie définition du signal 1962 <br>  
+<dd>&#268;SD &ndash; &#268;eskoslovensk&#233; st&#225;tn&#237; dr&#225;hy &ndash; Tch&#233;coslovaquie d&#233;finition du signal 1962 <br>  
     <i>CSD-1962-zakladni &ndash; signaux de base &ndash; Set 0</i> <br>
-    <i>CSD-1962-cestova &ndash; signaux intermédiaires &ndash; Set 1</i> <br>
-    <i>CSD-1962-vlozena &ndash; signaux embarqués et signaux de triage à bosse &ndash; Set 2</i> <br>
-    <i>CSD-1962-mechaniky &ndash; signaux mécaniques &ndash; Set 4</i> <br>
-    SŽDC &ndash; Správa železniční dopravní cesty &ndash; Définition du signal tchèque 2015 <br>  
+    <i>CSD-1962-cestova &ndash; signaux interm&#233;diaires &ndash; Set 1</i> <br>
+    <i>CSD-1962-vlozena &ndash; signaux embarqu&#233;s et signaux de triage &#224; bosse &ndash; Set 2</i> <br>
+    <i>CSD-1962-mechaniky &ndash; signaux m&#233;caniques &ndash; Set 4</i> <br>
+    S&#381;DC &ndash; Spr&#225;va &#382;elezni&#269;n&#237; dopravn&#237; cesty &ndash; D&#233;finition du signal tchÃ¨que 2015 <br>  
     <i>SZDC-2015-zakladni &ndash; signaux de base &ndash; Set 3</i> </dd>
 
 <dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
