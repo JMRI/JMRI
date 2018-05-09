@@ -61,11 +61,10 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
-        if (p.isBezier()) {
-            element.setAttribute("bezier", "yes");
-        }
 
         if (p.isBezier()) {
+            element.setAttribute("bezier", "yes");
+            element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             // add control points
             Element elementControlpoints = new Element("controlpoints");
             for (int i = 0; i < p.getNumberOfBezierControlPoints(); i++) {

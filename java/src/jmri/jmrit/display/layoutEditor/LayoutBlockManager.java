@@ -1604,7 +1604,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             if ((p != null) && (p.getLinkedEditor() != null)) {
                 return getFacingBean(facingBlock, protectedBlock, p.getLinkedEditor(), T);
             }
-            log.error(
+            log.debug(
                     "Block " + facingBlock.getDisplayName() + " is not connected to Block " + protectedBlock.getDisplayName() + " on panel "
                     + panel.getLayoutName());
 
