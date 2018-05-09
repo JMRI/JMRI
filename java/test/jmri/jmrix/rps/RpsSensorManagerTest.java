@@ -51,9 +51,6 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     public void testUpperLower() {
         // RPS sensors use coordinates as their address, and they require a
         // 2 characterprefix (for now).
-        Sensor t = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
-        String name = t.getSystemName();
-        Assert.assertNull(l.getSensor(name.toLowerCase()));
     }
 
     @Test

@@ -153,10 +153,14 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     }
 
     @Test
-    public void testUpperLower() {
+    public void testUpperLower() {  // this is part of testing of (default) normalization
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
-        Assert.assertNull(l.getSensor(name.toLowerCase()));
+        
+        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
+        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        
+        Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
     @Test
