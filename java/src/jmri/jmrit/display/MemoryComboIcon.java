@@ -51,7 +51,6 @@ public class MemoryComboIcon extends PositionableJPanel
 
         setLayout(new java.awt.GridBagLayout());
         add(_comboBox);
-        addMouseMotionListener(this);
         _comboBox.addMouseListener(this);
 
         for (int i = 0; i < _comboBox.getComponentCount(); i++) {
