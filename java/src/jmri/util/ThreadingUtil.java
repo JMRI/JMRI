@@ -35,10 +35,11 @@ public class ThreadingUtil {
      * Run some layout-specific code before returning.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnLayout(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnLayout(() -> {
      *     sensor.setState(value);
-     * }); }
+     * }); 
+     * }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -53,10 +54,11 @@ public class ThreadingUtil {
      * later. No long-term guarantees.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnLayoutEventually(() -> {
      *     sensor.setState(value);
-     * }); }
+     * }); 
+     * }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -71,10 +73,11 @@ public class ThreadingUtil {
      * There is no long-term guarantee about the accuracy of the interval.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnLayoutEventually(() -> {
      *     sensor.setState(value);
-     * }, 1000); }
+     * }, 1000); 
+     * }
      *
      * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
@@ -98,11 +101,12 @@ public class ThreadingUtil {
      * Run some GUI-specific code before returning
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnGUI(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnGUI(() -> {
      *     mine.setVisible();
-     * }); }
-     *
+     * });
+     * }
+     * <p>
      * If an InterruptedException is encountered, it'll be deferred to the 
      * next blocking call via Thread.currentThread().interrupt()
      * 
@@ -133,8 +137,11 @@ public class ThreadingUtil {
      * after the current routine has returned.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } ); }
+     * <p> {@code 
+     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     *      mine.setVisible();
+     * } ); 
+     * }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -151,8 +158,11 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000
-     * ); }
+     * {@code 
+     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     *  mine.setVisible(); 
+     * }, 1000);
+     * }
      *
      * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
