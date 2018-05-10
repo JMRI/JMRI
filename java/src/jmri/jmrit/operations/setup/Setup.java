@@ -803,6 +803,13 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().switchListAllTrains;
     }
 
+    /**
+     * Used to determine if there's spaces or form feed between trains and
+     * locations when printing switch lists. see
+     * getSwitchListPageFormatComboBox()
+     * 
+     * @param format PAGE_NORMAL, PAGE_PER_TRAIN, or PAGE_PER_VISIT
+     */
     public static void setSwitchListPageFormat(String format) {
         getDefault().switchListPageFormat = format;
     }
@@ -1065,6 +1072,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().manifestFormat;
     }
 
+    /**
+     * Sets the format for manifests
+     * @param format STANDARD_FORMAT, TWO_COLUMN_FORMAT, or TWO_COLUMN_TRACK_FORMAT
+     */
     public static void setManifestFormat(String format) {
         getDefault().manifestFormat = format;
     }

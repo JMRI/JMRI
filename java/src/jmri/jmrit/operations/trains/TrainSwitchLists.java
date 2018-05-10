@@ -108,16 +108,14 @@ public class TrainSwitchLists extends TrainCommon {
                 }
             }
 
-            // get a list of trains sorted by arrival time
+            // get a list of built trains sorted by arrival time
             List<Train> trains = trainManager.getTrainsArrivingThisLocationList(location);
             for (Train train : trains) {
-                if (!train.isBuilt()) {
-                    continue; // train wasn't built so skip
-                }
                 if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED)) {
                     continue; // already printed this train
                 }
                 Route route = train.getRoute();
+                // TODO throw exception? only built trains should be in the list, so no route is an error
                 if (route == null) {
                     continue; // no route for this train
                 } // determine if train works this location
