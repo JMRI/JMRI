@@ -78,7 +78,7 @@ public abstract class TrainCustomCommon {
         waitTimeSeconds = getFileCount() * Control.excelWaitTime;
         alive = true;
 
-        File csvNamesFile = new File(OperationsManager.getInstance().getFile(getDirectoryName()), csvNamesFileName);
+        File csvNamesFile = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), csvNamesFileName);
 
         try {
             FileUtil.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
@@ -128,7 +128,7 @@ public abstract class TrainCustomCommon {
             String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
             try {
                 process = Runtime.getRuntime().exec(cmd, null,
-                        OperationsManager.getInstance().getFile(getDirectoryName()));
+                        InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
             } catch (IOException e) {
                 log.error("Unable to execute {}", getFileName(), e);
             }
@@ -136,7 +136,7 @@ public abstract class TrainCustomCommon {
             String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
             try {
                 process = Runtime.getRuntime().exec(cmd, null,
-                        OperationsManager.getInstance().getFile(getDirectoryName()));
+                        InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
             } catch (IOException e) {
                 log.error("Unable to execute {}", getFileName(), e);
             }
@@ -146,7 +146,7 @@ public abstract class TrainCustomCommon {
     }
 
     public boolean excelFileExists() {
-        File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
+        File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getFileName());
         return file.exists();
     }
 
@@ -191,7 +191,7 @@ public abstract class TrainCustomCommon {
         log.debug("Wait time: {} seconds", waitTimeSeconds);
         boolean status;
         synchronized (process) {
-            File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getCommonFileName());
+            File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getCommonFileName());
             if (!file.exists()) {
                 log.debug("Common file not found! Normal when processing multiple files");
             }
@@ -213,7 +213,7 @@ public abstract class TrainCustomCommon {
      * @return true if the common file exists
      */
     public boolean doesCommonFileExist() {
-        File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getCommonFileName());
+        File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getCommonFileName());
         return file.exists();
     }
 
