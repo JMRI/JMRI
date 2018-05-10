@@ -23,6 +23,23 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         return "IS" + i;
     }
 
+    public void testSensorNameCase() {
+        Assert.assertEquals(0, l.getObjectCount());
+        // create
+        Sensor t = l.provideSensor("IS:XYZ");
+        t = l.provideSensor("IS:xyz");  // upper canse and lower case are the same object
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
+        Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
+        Assert.assertEquals(1, l.getObjectCount());
+        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+
+        t = l.provideSensor("IS:XYZ");
+        Assert.assertEquals(1, l.getObjectCount());
+        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+    }
+
     @Test
     public void testAsAbstractFactory() {
 
