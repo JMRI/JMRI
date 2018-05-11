@@ -846,13 +846,34 @@
       <a id="jemmyhints" name="jemmyhints"></a>
       <h4>Jemmy hints and issues</h4>
       
-      Actions like <code>operator.click()</code> work like clicking on a real screen:
+      <p>Actions like <code>operator.click()</code> work like clicking on a real screen:
         if the click target isn't the foremost component when the click happens, the click
         will go to some other component. This is particularly annoying when you're running
         a long series of tests on your own computer will doing other work, as 
         pushing test windows to the background will likely cause (false-negative) failures.
     
-
+      <p>If your test thread invokes a method that causes a lot of 
+      Swing/AWT activity, that might not all be complete when the method returns.
+      For example, if you create a JFrame and either explicitly or implicitly call
+      <code>pack()</code>, that starts the Swing thread working on that frame;
+      that can proceed in parallel to the return to the test thread.
+      If the test thread will continue to do more Swing operations, like create and 
+      pack another frame, you'll have problems unless you either:
+      <ul>
+        <li>Do all those operations on the GUI thread by enclosing them in 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUI-jmri.util.ThreadingUtil.ThreadAction-">jmri.util.ThreadingUtil.runOnGUI</a>
+            calls so that the entire sequence of operations is done on the Swing.
+            This is what's normally done in Swing applications, and it's a test
+            of the real operation.
+        <li>But <code>Assert</code> operations need to be done on the test thread, so
+            if you want to intermix Swing and test operations you can 
+            synchronize the threads by calling 
+<pre style="font-family: monospace;">
+        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+</pre>
+            on the test thread.
+      </ul>
+      
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
 
       <p><a href="http://jfcunit.sourceforge.net/">JFCUnit</a> to control
