@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -154,6 +155,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             name = getMemory().getSystemName();
         }
         return name;
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        updateMemory();
     }
 
     private void updateMemory() {
