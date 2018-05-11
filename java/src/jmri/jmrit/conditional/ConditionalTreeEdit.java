@@ -1672,7 +1672,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         if (!_curConditionalName.equals(_curNodeName)) {
             _curConditional = _conditionalManager.getConditional(_curNodeName);
             _antecedent = _curConditional.getAntecedentExpression();
-            // TODO EBR create localized _antecedentLocalized
             _logicType = _curConditional.getLogicType();
             _triggerMode = _curConditional.getTriggerOnChange();
             _variableList = _curConditional.getCopyOfStateVariables();

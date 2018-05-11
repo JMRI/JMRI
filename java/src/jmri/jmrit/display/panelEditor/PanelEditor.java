@@ -43,6 +43,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -57,38 +58,37 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
  * JFrame.
- * <P>
+ * <p>
  * GUI is structured as a band of common parameters across the top, then a
  * series of things you can add.
- * <P>
+ * <p>
  * All created objects are put specific levels depending on their type (higher
  * levels are in front):
- * <UL>
- * <LI>BKG background
- * <LI>ICONS icons and other drawing symbols
- * <LI>LABELS text labels
- * <LI>TURNOUTS turnouts and other variable track items
- * <LI>SENSORS sensors and other independently modified objects
- * </UL>
- * <P>
+ * <ul>
+ *   <li>BKG background
+ *   <li>ICONS icons and other drawing symbols
+ *   <li>LABELS text labels
+ *   <li>TURNOUTS turnouts and other variable track items
+ *   <li>SENSORS sensors and other independently modified objects
+ * </ul>
+ * <p>
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation.
- * <P>
+ * <p>
  * If you close the Editor window, the target is left alone and the editor
  * window is just hidden, not disposed. If you close the target, the editor and
  * target are removed, and dispose is run. To make this logic work, the
  * PanelEditor is descended from a JFrame, not a JPanel. That way it can control
  * its own visibility.
- * <P>
+ * <p>
  * The title of the target and the editor panel are kept consistent via the
  * {#setTitle} method.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2003, 2007
+ * @author Bob Jacobsen Copyright (c) 2002, 2003, 2007
  * @author Dennis Miller 2004
- * @author Howard G. Penny Copyright: Copyright (c) 2005
- * @author Matthew Harris Copyright: Copyright (c) 2009
- * @author Pete Cressman Copyright: Copyright (c) 2009, 2010
- *
+ * @author Howard G. Penny Copyright (c) 2005
+ * @author Matthew Harris Copyright (c) 2009
+ * @author Pete Cressman Copyright (c) 2009, 2010
  */
 public class PanelEditor extends Editor implements ItemListener {
 
@@ -125,10 +125,11 @@ public class PanelEditor extends Editor implements ItemListener {
             public void run() {
                 try {
                     // Build resource catalog and load CatalogTree.xml now
-                    jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
+                    CatalogPanel catalog = new CatalogPanel();
                     catalog.createNewBranch("IFJAR", "Program Directory", "resources");
+                    log.debug("init run created (var=catalog)");
                 } catch (Exception ex) {
-                    log.error("Error in trying to setup preferences " + ex.toString());
+                    log.error("Error trying to set up preferences {}", ex.toString());
                 }
             }
         };
@@ -205,11 +206,11 @@ public class PanelEditor extends Editor implements ItemListener {
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.PanelEditor", true);
 
-        // allow naming the panel
+        // allow renaming the panel
         {
             JPanel namep = new JPanel();
             namep.setLayout(new FlowLayout());
-            JButton b = new JButton(Bundle.getMessage("ButtonSetName"));
+            JButton b = new JButton(Bundle.getMessage("renamePanelMenu", "..."));
             b.addActionListener(new ActionListener() {
                 PanelEditor editor;
 
@@ -522,7 +523,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     /**
      * Handle close of editor window.
-     * <P>
+     * <p>
      * Overload/override method in JmriJFrame parent, which by default is
      * permanently closing the window. Here, we just want to make it invisible,
      * so we don't dispose it (yet).
@@ -963,7 +964,7 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 showPopUp(_currentSelection, event);
             }
-            //_selectionGroup = null; //Show popup only works for a single item
+            //_selectionGroup = null; // Show popup only works for a single item
 
         } else {
             if (_currentSelection != null && !_dragging && !event.isControlDown()) {
@@ -1002,7 +1003,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;
         }
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem edit = new JMenuItem("Paste");
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
         edit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1027,7 +1028,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     protected void showMultiSelectPopUp(final MouseEvent event, Positionable p) {
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem copy = new JMenuItem(Bundle.getMessage("ButtonCopy")); // changed "edit" to "copy"
+        JMenuItem copy = new JMenuItem(Bundle.getMessage("MenuItemCopy")); // changed "edit" to "copy"
         if (p.isPositionable()) {
             setShowAlignmentMenu(p, popup);
         }
@@ -1057,8 +1058,8 @@ public class PanelEditor extends Editor implements ItemListener {
         if (!isEditable()) {
             return;
         }
-        JMenu _add = new JMenu("Add Item"); // NOI18N
-        // for the following list, I18N picked up later on
+        JMenu _add = new JMenu(Bundle.getMessage("MenuItemAddItem"));
+        // for items in the following list, I18N is picked up later on
         addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
         addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
         addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);
@@ -1302,9 +1303,6 @@ public class PanelEditor extends Editor implements ItemListener {
         popup.add(edit);
     }
 
-    /**
-     * ***************************************************
-     */
-    // initialize logging
     private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
+    
 }

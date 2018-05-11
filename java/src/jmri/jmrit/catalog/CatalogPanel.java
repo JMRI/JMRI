@@ -122,12 +122,13 @@ public class CatalogPanel extends JPanel {
         setLayout(new BorderLayout());
         add(new JLabel(Bundle.getMessage(label2)), BorderLayout.NORTH);
         _splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                makeTreePanel(label1), makePreviewPanel());
+                makeTreePanel(label1), makePreviewPanel()); // create left and right icon tree views
         _splitPane.setContinuousLayout(true);
         _splitPane.setOneTouchExpandable(true);
         add(_splitPane, BorderLayout.CENTER);
+        log.debug("CatalogPanel ready");
         if (addButtonPanel) {
-            add(makeButtonPanel());
+            add(makeButtonPanel(), BorderLayout.SOUTH); // add the background chooser
         }
     }
 
@@ -161,7 +162,7 @@ public class CatalogPanel extends JPanel {
         }
         _treeDnd = treeDnD;
         _dragIcons = dragIcons;
-        log.debug("init _treeDnd= {}, _dragIcons= {}", _treeDnd, _dragIcons);
+        log.debug("CatalogPanel.init _treeDnd= {}, _dragIcons= {}", _treeDnd, _dragIcons);
         DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
         renderer.setLeafIcon(renderer.getClosedIcon());
         _dTree.setCellRenderer(renderer);
@@ -427,7 +428,6 @@ public class CatalogPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _treePane = new JScrollPane(_dTree);
         panel.add(new JLabel(Bundle.getMessage(label)));
-//        _treePane.setPreferredSize(new Dimension(100, 350));
         _treePane.setMinimumSize(new Dimension(30, 100));
         panel.add(_treePane);
         return panel;
@@ -444,7 +444,6 @@ public class CatalogPanel extends JPanel {
         _preview.setOpaque(false);
         _iconPane =  new JScrollPane(_preview);
         previewPanel.add(_iconPane);
-//        _preview.setMaximumSize(new Dimension(200,200));
         _iconPane.setMinimumSize(new Dimension(30, 100));
         _iconPane.setPreferredSize(new Dimension(2*ICON_WIDTH, 2*ICON_HEIGHT));
         _preview.addMouseListener(new IconListener());
@@ -684,23 +683,27 @@ public class CatalogPanel extends JPanel {
     }
 
     public static CatalogPanel makeDefaultCatalog() {
+        log.debug("CatalogPanel catalog requested");
         return makeDefaultCatalog(true, true, false);
     }
 
     public static CatalogPanel makeDefaultCatalog(boolean addButtonPanel, boolean treeDrop, boolean dragIcon) {
-        CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
+                CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
         catalog.init(treeDrop, dragIcon);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
         for (int i = 0; i < sysNames.size(); i++) {
+            log.debug("CatalogPanel id={}", i);
             String systemName = sysNames.get(i);
             if (systemName.charAt(0) == 'I') {
                 catalog.addTree(manager.getBySystemName(systemName));
+                log.debug("CatalogPanel added tree {}", i);
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
+        log.debug("CatalogPanel catalog created");
         return catalog;
     }
 
@@ -832,7 +835,7 @@ public class CatalogPanel extends JPanel {
         }
     }
 
-    /**
+    /*
      * Return the icon selected in the preview panel.
      * Save this code in case there is a need to use an alternative icon
      * changing method rather than DnD.

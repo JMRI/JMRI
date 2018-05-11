@@ -157,6 +157,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("defaultCatalog", "selectNode", false); // make sure both these properties keys exist
+        log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
         _catalog.init(false, true);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
@@ -165,6 +166,7 @@ public final class ImageIndexEditor extends JmriJFrame {
             String systemName = sysNames.get(i);
             if (systemName.startsWith("IF")) {
                 _catalog.addTree(manager.getBySystemName(systemName));
+                log.debug("added item to tree");
             }
         }
 
@@ -176,6 +178,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private JPanel makeIndexPanel() {
         _index = new CatalogPanel("ImageIndex", "selectIndexNode", false); // make sure both these properties keys exist
+        log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
         _index.init(true, false);
 
         boolean found = false;
@@ -283,8 +286,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         return cnt;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImageIndexEditor.class);
-
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
 
@@ -305,4 +306,7 @@ public final class ImageIndexEditor extends JmriJFrame {
             return set;
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ImageIndexEditor.class);
+
 }
