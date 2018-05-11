@@ -12,6 +12,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
@@ -471,10 +472,10 @@ public class TrainSwitchListsTest {
     private void loadLocationsEnginesAndCars() {
         
 
-//        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
 
         // register the car and engine types used
-//        ct.addName("Boxcar");
+        ct.addName("Boxcar");
 
         locationA = lmanager.newLocation("Test Location A");
         Track spurA = locationA.addTrack("Spur at A", Track.SPUR);
