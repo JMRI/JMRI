@@ -34,6 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import org.junit.Assert;
 
 /**
  * Common utility methods for working with Operations related JUnit tests.
@@ -228,97 +229,94 @@ public class JUnitOperationsUtil {
 
         // Set up a route of 3 locations: North End Staging (2 tracks),
         // North Industries (1 track), and South End Staging (2 tracks).
-        Location l1 = new Location("1", "North End");
+        Location locationNorthEnd = new Location("1", "North End");
 
-        l1.setLocationOps(Location.STAGING);
-        l1.setTrainDirections(DIRECTION_ALL);
-        l1.setSwitchListEnabled(true);
-        lmanager.register(l1);
+        locationNorthEnd.setLocationOps(Location.STAGING);
+        Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
+        
+        locationNorthEnd.setSwitchListEnabled(true);
+        locationNorthEnd.setComment("Test comment for location North End");
+        lmanager.register(locationNorthEnd);
 
-        Track l1s1 = new Track("1s1", "North End 1", Track.STAGING, l1);
+        Track l1s1 = new Track("1s1", "North End 1", Track.STAGING, locationNorthEnd);
+        
+        // confirm defaults
+        Assert.assertEquals("confirm default", DIRECTION_ALL, l1s1.getTrainDirections());
+        Assert.assertEquals("confirm default", Track.ALL_ROADS, l1s1.getRoadOption());
+        Assert.assertEquals("confirm default", Track.ANY, l1s1.getDropOption());
+        Assert.assertEquals("confirm default", Track.ANY, l1s1.getPickupOption());
+        
         l1s1.setLength(300);
-        l1s1.setTrainDirections(DIRECTION_ALL);
-        l1s1.setRoadOption(Track.ALL_ROADS);
-        l1s1.setDropOption(Track.ANY);
-        l1s1.setPickupOption(Track.ANY);
+        l1s1.setCommentBoth("Test comment for North End 1 drops and pulls");
+        l1s1.setCommentSetout("Test comment for North End 1 drops only");
+        l1s1.setCommentPickup("Test comment for North End 1 pulls only");
 
-        Track l1s2 = new Track("1s2", "North End 2", Track.STAGING, l1);
+        Track l1s2 = new Track("1s2", "North End 2", Track.STAGING, locationNorthEnd);
         l1s2.setLength(400);
 
-        l1s2.setTrainDirections(DIRECTION_ALL);
-        l1s2.setRoadOption(Track.ALL_ROADS);
-        l1s2.setDropOption(Track.ANY);
-        l1s2.setPickupOption(Track.ANY);
+        locationNorthEnd.register(l1s1);
+        locationNorthEnd.register(l1s2);
 
-        l1.addTrack("North End 1", Track.STAGING);
-        l1.addTrack("North End 2", Track.STAGING);
-        l1.register(l1s1);
-        l1.register(l1s2);
+        Location locationNorthIndustries = new Location("2", "North Industries");
+        locationNorthIndustries.setLocationOps(Location.NORMAL);
+        locationNorthIndustries.setTrainDirections(DIRECTION_ALL);
+        locationNorthIndustries.setSwitchListEnabled(true);
+        lmanager.register(locationNorthIndustries);
 
-        Location l2 = new Location("2", "North Industries");
-        l2.setLocationOps(Location.NORMAL);
-        l2.setTrainDirections(DIRECTION_ALL);
-        l2.setSwitchListEnabled(true);
-        lmanager.register(l2);
-
-        Track l2s1 = new Track("2s1", "NI Yard", Track.YARD, l2);
+        Track l2s1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
         l2s1.setLength(432);
-        l2s1.setTrainDirections(DIRECTION_ALL);
+        l2s1.setCommentBoth("Test comment for NI Yard drops and pulls");
+        l2s1.setCommentSetout("Test comment for NI Yard drops only");
+        l2s1.setCommentPickup("Test comment for NI Yard pulls only");
 
-        l2.register(l2s1);
+        locationNorthIndustries.register(l2s1);
 
-        Location l3 = new Location("3", "South End");
-        l3.setLocationOps(Location.STAGING);
-        l3.setTrainDirections(DIRECTION_ALL);
-        l3.setSwitchListEnabled(true);
-        lmanager.register(l3);
+        Location locationSouthEnd = new Location("3", "South End");
+        locationSouthEnd.setLocationOps(Location.STAGING);
+        locationSouthEnd.setSwitchListEnabled(true);
+        lmanager.register(locationSouthEnd);
 
-        Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, l3);
+        Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
         l3s1.setLength(300);
-        l3s1.setTrainDirections(DIRECTION_ALL);
-        l3s1.setRoadOption(Track.ALL_ROADS);
-        l3s1.setDropOption(Track.ANY);
-        l3s1.setPickupOption(Track.ANY);
+        l3s1.setCommentBoth("Test comment for South End 1 drops and pulls");
+        l3s1.setCommentSetout("Test comment for South End 1 drops only");
+        l3s1.setCommentPickup("Test comment for South End 1 pulls only");
 
-        Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, l3);
+        Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, locationSouthEnd);
         l3s2.setLength(401);
-        l3s2.setTrainDirections(DIRECTION_ALL);
-        l3s2.setRoadOption(Track.ALL_ROADS);
-        l3s2.setDropOption(Track.ANY);
-        l3s2.setPickupOption(Track.ANY);
 
-        l3.addTrack("South End 1", Track.STAGING);
-        l3.addTrack("South End 2", Track.STAGING);
-        l3.register(l3s1);
-        l3.register(l3s2);
+        locationSouthEnd.register(l3s1);
+        locationSouthEnd.register(l3s2);
 
         // Place 4 Boxcars on Staging tracks
-        c3.setLocation(l1, l1s1);
-        c4.setLocation(l1, l1s1);
-        c5.setLocation(l1, l1s2);
-        c6.setLocation(l1, l1s2);
+        c3.setLocation(locationNorthEnd, l1s1);
+        c4.setLocation(locationNorthEnd, l1s1);
+        c5.setLocation(locationNorthEnd, l1s2);
+        c6.setLocation(locationNorthEnd, l1s2);
+        
+        // Place Cabooses on Staging tracks
+        c1.setLocation(locationNorthEnd, l1s1);
+        c2.setLocation(locationNorthEnd, l1s1);
 
         // Place 2 Boxcars and Flat in yard
-        c7.setLocation(l2, l2s1);
-        c8.setLocation(l2, l2s1);
-        c9.setLocation(l2, l2s1);
-
-        // Place Cabooses on Staging tracks
-        c1.setLocation(l1, l1s1);
-        c2.setLocation(l1, l1s1);
+        c7.setLocation(locationNorthIndustries, l2s1);
+        c8.setLocation(locationNorthIndustries, l2s1);
+        c9.setLocation(locationNorthIndustries, l2s1);
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
+        route1.setComment("Comment for route id 1");
 
-        RouteLocation rl1 = new RouteLocation("1r1", l1);
+        RouteLocation rl1 = new RouteLocation("1r1", locationNorthEnd);
         rl1.setSequenceId(1);
         rl1.setTrainDirection(RouteLocation.SOUTH);
         rl1.setMaxCarMoves(5);
         rl1.setMaxTrainLength(1000);
         rl1.setTrainIconX(25); // set the train icon coordinates
         rl1.setTrainIconY(25);
+        rl1.setComment("Test route location comment for North End");
 
-        RouteLocation rl2 = new RouteLocation("1r2", l2);
+        RouteLocation rl2 = new RouteLocation("1r2", locationNorthIndustries);
         rl2.setSequenceId(2);
         rl2.setTrainDirection(RouteLocation.SOUTH);
         // test for only 1 pickup and 1 drop
@@ -328,7 +326,7 @@ public class JUnitOperationsUtil {
 
         rl2.setTrainIconY(25);
 
-        RouteLocation rl3 = new RouteLocation("1r3", l3);
+        RouteLocation rl3 = new RouteLocation("1r3", locationSouthEnd);
         rl3.setSequenceId(3);
         rl3.setTrainDirection(RouteLocation.SOUTH);
         rl3.setMaxCarMoves(5);
@@ -350,15 +348,25 @@ public class JUnitOperationsUtil {
         train1.setRoadOption(Train.ALL_ROADS);
         train1.setRoute(route1);
         train1.setDepartureTime("6", "5");
+        train1.setComment("Test comment for train STF");
+        
+        // increase test coverage by providing a manifest logo for this train
+        java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);        
+        train1.setManifestLogoURL(url.getPath());
+        
         tmanager.register(train1);
 
         Train train2 = new Train("2", "SFF");
-        // there are boxcars waiting in staging so build should fail
         train2.deleteTypeName("Boxcar");
         train2.deleteTypeName("Flat");
         train2.setRoute(route1);
         train2.setDepartureTime("22", "45");
         tmanager.register(train2);
+        
+        // improve test coverage
+        Setup.setPrintLocationCommentsEnabled(true);
+        Setup.setPrintRouteCommentsEnabled(true);
+        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
