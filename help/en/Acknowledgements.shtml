@@ -1061,6 +1061,9 @@
         <li>Mike Yawn, who provided the instructions for building
         under Eclipse <a name="Z" id="Z"></a></li>
 
+        <li>Luis Zamora, <!-- eldelinux --> who updated the 
+        Catalan translation</li>
+        
         <li>david zuhn, who provided instructions for installing
         the comm libraries on Linux, wrote startup scripts and
         configured Ant for compiling with warnings</li>
