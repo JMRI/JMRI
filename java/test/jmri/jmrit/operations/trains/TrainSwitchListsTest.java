@@ -469,6 +469,12 @@ public class TrainSwitchListsTest {
     }
 
     private void loadLocationsEnginesAndCars() {
+        
+
+//        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
+
+        // register the car and engine types used
+//        ct.addName("Boxcar");
 
         locationA = lmanager.newLocation("Test Location A");
         Track spurA = locationA.addTrack("Spur at A", Track.SPUR);
