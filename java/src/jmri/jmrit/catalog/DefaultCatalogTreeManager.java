@@ -111,7 +111,8 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found memory via system name ({}) with non-null userName ({})", systemName, userName);
+                log.warn("Found memory via system name ({}) with non-null userName ({})",
+                        systemName, userName);
             }
             return s;
         }
@@ -126,9 +127,9 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
 
     /**
      * Create a CatalogTree.
-     * <P>
+     * <p>
      * Naming convention is:
-     * <PRE>
+     * <pre>
      *   IF... - filter for image files from the file system
      *   SF... - filter for sound files from the file system
      *   TF... - filter for script files from the file system
@@ -137,7 +138,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      *   SX... - index for sound files stored in XML config file
      *   TX... - index for script files stored in XML config file
      *   NX... - index for files stored in XML config file
-     * </PRE>
+     * </pre>
      *
      * @param systemName system name for catalog tree
      * @param userName   user name for catalog tree
@@ -206,9 +207,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     public void storeImageIndex() {
         jmri.jmrit.display.palette.ItemPalette.storeIcons();
 
-        if (log.isDebugEnabled()) {
-            log.debug("Start writing CatalogTree info");
-        }
+        log.debug("Start writing CatalogTree info");
         try {
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
             indexChanged(false);

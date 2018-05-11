@@ -126,7 +126,7 @@ public class CatalogPanel extends JPanel {
         _splitPane.setContinuousLayout(true);
         _splitPane.setOneTouchExpandable(true);
         add(_splitPane, BorderLayout.CENTER);
-        log.debug("CatalogPanel ready");
+        // log.debug("CatalogPanel ready");
         if (addButtonPanel) {
             add(makeButtonPanel(), BorderLayout.SOUTH); // add the background chooser
         }
@@ -169,7 +169,7 @@ public class CatalogPanel extends JPanel {
         _dTree.setRootVisible(false);
         _dTree.setShowsRootHandles(true);
         _dTree.setScrollsOnExpand(true);
-        //_dTree.setDropMode(DropMode.ON);
+        //_dTree.setDropMode(DropMode.ON); // is set by treeDnD
         _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
         _dTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
@@ -184,18 +184,14 @@ public class CatalogPanel extends JPanel {
     }
     
     public void updatePanel() {
-        if (log.isDebugEnabled()) {
-            log.debug("updatePanel: _dTree.isSelectionEmpty()= {} _dTree.getSelectionPath() is {}null",
-                    _dTree.isSelectionEmpty(), (_dTree.getSelectionPath() == null) ? "" : "not ");
-        }
+        log.debug("updatePanel: _dTree.isSelectionEmpty()= {} _dTree.getSelectionPath() is {}null",
+                _dTree.isSelectionEmpty(), (_dTree.getSelectionPath() == null) ? "" : "not ");
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             try {
                 _previewLabel.setText(setIcons());
             } catch (OutOfMemoryError oome) {
                 resetPanel();
-                if (log.isDebugEnabled()) {
-                    log.debug("setIcons threw OutOfMemoryError {}", oome);
-                }
+                log.debug("setIcons threw OutOfMemoryError {}", oome);
             }
         } else {
             _previewLabel.setText(" ");
@@ -246,7 +242,7 @@ public class CatalogPanel extends JPanel {
     }
 
     /**
-     * Recursively add the branch nodes to display tree.
+     * Recursively add the branch nodes to the display tree.
      */
     @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
@@ -254,7 +250,6 @@ public class CatalogPanel extends JPanel {
             log.debug("addTreeBranch called for node= {}, has {} children.",
                     node.toString(), node.getChildCount());
         }
-        //String name = node.toString();
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
@@ -428,6 +423,7 @@ public class CatalogPanel extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _treePane = new JScrollPane(_dTree);
         panel.add(new JLabel(Bundle.getMessage(label)));
+        // _treePane.setPreferredSize(new Dimension(100, 350));
         _treePane.setMinimumSize(new Dimension(30, 100));
         panel.add(_treePane);
         return panel;
@@ -444,6 +440,7 @@ public class CatalogPanel extends JPanel {
         _preview.setOpaque(false);
         _iconPane =  new JScrollPane(_preview);
         previewPanel.add(_iconPane);
+        // _preview.setMaximumSize(new Dimension(200,200));
         _iconPane.setMinimumSize(new Dimension(30, 100));
         _iconPane.setPreferredSize(new Dimension(2*ICON_WIDTH, 2*ICON_HEIGHT));
         _preview.addMouseListener(new IconListener());
@@ -477,7 +474,6 @@ public class CatalogPanel extends JPanel {
             _preview.setImage(_backgrounds[bgColorBox.getSelectedIndex()]);
             log.debug("Catalog setImage called");
             _preview.setOpaque(false);
-            // _preview.repaint(); // force redraw
             _preview.invalidate();
         });
 
@@ -495,6 +491,7 @@ public class CatalogPanel extends JPanel {
     /**
      * Allows ItemPalette to set the preview panel background to match that of
      * the icon set being edited.
+     *
      * @return Preview panel
      */
     public ImagePanel getPreviewPanel() {
@@ -643,9 +640,7 @@ public class CatalogPanel extends JPanel {
             JPanel p = new IconDisplayPanel(leaf.getName(), icon);
             gridbag.setConstraints(p, c);
             _preview.add(p);
-/*            if (log.isDebugEnabled()) {
-                log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
-            }*/
+            // log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
         }
 
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
@@ -683,27 +678,27 @@ public class CatalogPanel extends JPanel {
     }
 
     public static CatalogPanel makeDefaultCatalog() {
-        log.debug("CatalogPanel catalog requested");
-        return makeDefaultCatalog(true, true, false);
+        // log.debug("CatalogPanel catalog requested");
+        return makeDefaultCatalog(true, true, true); // deactivate dragNdrop? (true, true, false)
     }
 
     public static CatalogPanel makeDefaultCatalog(boolean addButtonPanel, boolean treeDrop, boolean dragIcon) {
-                CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
+        CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
         catalog.init(treeDrop, dragIcon);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
         for (int i = 0; i < sysNames.size(); i++) {
-            log.debug("CatalogPanel id={}", i);
+            // log.debug("CatalogPanel id={}", i);
             String systemName = sysNames.get(i);
             if (systemName.charAt(0) == 'I') {
                 catalog.addTree(manager.getBySystemName(systemName));
-                log.debug("CatalogPanel added tree {}", i);
+                // log.debug("CatalogPanel added tree {}", i);
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
-        log.debug("CatalogPanel catalog created");
+        // log.debug("CatalogPanel catalog created");
         return catalog;
     }
 
@@ -899,27 +894,27 @@ public class CatalogPanel extends JPanel {
                 log.warn("Unable to create data flavor", cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropJTree ctor");
+            // log.debug("DropJTree ctor");
         }
 
         @Override
         public void dragExit(DropTargetEvent dte) {
-            //if (log.isDebugEnabled()) log.debug("DropJTree.dragExit ");
+            // log.debug("DropJTree.dragExit");
         }
 
         @Override
         public void dragEnter(DropTargetDragEvent dtde) {
-            //if (log.isDebugEnabled()) log.debug("DropJTree.dragEnter ");
+            // log.debug("DropJTree.dragEnter");
         }
 
         @Override
         public void dragOver(DropTargetDragEvent dtde) {
-            //if (log.isDebugEnabled()) log.debug("DropJTree.dragOver ");
+            // log.debug("DropJTree.dragOver");
         }
 
         @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
-            //if (log.isDebugEnabled()) log.debug("DropJTree.dropActionChanged ");
+            // log.debug("DropJTree.dropActionChanged");
         }
 
         @Override
@@ -961,7 +956,7 @@ public class CatalogPanel extends JPanel {
             super();
             _name = leafName;
             _icon = icon;
-//            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            // setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setLayout(new BorderLayout());
             setOpaque(false);
             if (_name != null) {
@@ -999,7 +994,7 @@ public class CatalogPanel extends JPanel {
                 }
                 image.setIcon(icon);
                 image.setHorizontalAlignment(JLabel.CENTER);
-//                icon.addMouseListener(this); - maybe add this to NamedIcon later
+                // icon.addMouseListener(this); - maybe add this to NamedIcon later
                 image.addMouseListener(this);
                 add(image, BorderLayout.NORTH);
                 

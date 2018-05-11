@@ -127,7 +127,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     // Build resource catalog and load CatalogTree.xml now
                     CatalogPanel catalog = new CatalogPanel();
                     catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-                    log.debug("init run created (var=catalog)");
+                    // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
                 } catch (Exception ex) {
                     log.error("Error trying to set up preferences {}", ex.toString());
                 }
@@ -497,7 +497,7 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     /*
-     *  itemListener for JComboBox
+     * itemListener for JComboBox.
      */
     @Override
     public void itemStateChanged(ItemEvent e) {
@@ -514,7 +514,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 } else if (name.equals("RPSreporter")) {
                     addRpsReporter();
                 } else {
-                    log.error("Unable to open Icon Editor \"" + item.getName() + "\"");
+                    log.error("Unable to open Icon Editor \"{}\"", item.getName());
                 }
             }
             _addIconBox.setSelectedIndex(-1);
@@ -527,7 +527,6 @@ public class PanelEditor extends Editor implements ItemListener {
      * Overload/override method in JmriJFrame parent, which by default is
      * permanently closing the window. Here, we just want to make it invisible,
      * so we don't dispose it (yet).
-     *
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -597,6 +596,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * ************* implementation of Abstract Editor methods **********
      */
+
     /**
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
@@ -709,7 +709,7 @@ public class PanelEditor extends Editor implements ItemListener {
     public void mousePressed(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
-            log.debug("mousePressed at (" + event.getX() + "," + event.getY() + ") _dragging=" + _dragging);
+            log.debug("mousePressed at ({},{}) _dragging= {}", event.getX(), event.getY(), _dragging);
         }
         _anchorX = event.getX();
         _anchorY = event.getY();
@@ -744,7 +744,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 if (_multiItemCopyGroup != null && !_multiItemCopyGroup.contains(_currentSelection)) {
                     _multiItemCopyGroup = null;
                 }
-//                    _selectionGroup = null;
+                // _selectionGroup = null;
             }
         } else {
             if (event.isPopupTrigger()) {
@@ -765,7 +765,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 _currentSelection = null;
             }
         }
-        //if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
+        // if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
         if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()) {
             //Don't want to do anything, just want to catch it, so that the next two else ifs are not
             //executed
@@ -901,7 +901,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
+        // log.debug("mouseMoved at ({},{})", event.getX(), event.getY());
         if (_dragging || event.isPopupTrigger()) {
             return;
         }
@@ -937,8 +937,8 @@ public class PanelEditor extends Editor implements ItemListener {
     public void mouseClicked(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
-            log.debug("mouseClicked at (" + event.getX() + "," + event.getY() + ") dragging= " + _dragging
-                    + " selectRect is " + (_selectRect == null ? "null" : "not null"));
+            log.debug("mouseClicked at ({},{}) dragging= {} selectRect is {}",
+                    event.getX(), event.getY(), _dragging, (_selectRect == null ? "null" : "not null"));
         }
         List<Positionable> selections = getSelectedItems(event);
 
@@ -964,7 +964,7 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 showPopUp(_currentSelection, event);
             }
-            //_selectionGroup = null; // Show popup only works for a single item
+            // _selectionGroup = null; // Show popup only works for a single item
 
         } else {
             if (_currentSelection != null && !_dragging && !event.isControlDown()) {

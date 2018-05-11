@@ -111,7 +111,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         closeCatalog();
         if (_defaultIcons != null) {
             makeIconPanel(true);
-            log.debug("IconPanel ready");
+            // log.debug("IconPanel ready");
         }
         this.revalidate();
     }
@@ -277,7 +277,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (useDefaults && _userDefaults) {
             makeIcons(_defaultIcons);
         }
-        log.debug("makeIconPanel updating");
+        // log.debug("makeIconPanel updating");
         clearIconPanel();
         doIconPanel();
     }
@@ -405,6 +405,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 try {
                     name = Bundle.getMessage(leaf.getName());
                 } catch (java.util.MissingResourceException mre) {
+                    // just silence?
                 }
                 log.debug("makeIconMap: leafName= {}, name= {}", leaf.getName(), name);
                 for (String state : states) {
@@ -595,7 +596,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.add(_buttonPanel);
 
         if (changeIcon) {
-            log.debug("iconchanged - new DefaultCatalog");
+            // log.debug("iconchanged - new DefaultCatalog");
             _catalog = CatalogPanel.makeDefaultCatalog();
             _catalog.setVisible(false);
             _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
@@ -788,26 +789,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                             updateCatalogTree();
                         }
                         e.dropComplete(true);
-                        if (log.isDebugEnabled()) {
-                            log.debug("DropJLabel.drop COMPLETED for " + key
-                                    + ", " + newIcon.getURL());
-                        }
+                        log.debug("DropJLabel.drop COMPLETED for {}, {}", key, newIcon.getURL());
                     } else {
-                        if (log.isDebugEnabled()) {
-                            log.debug("DropJLabel.drop REJECTED!");
-                        }
+                        log.debug("DropJLabel.drop REJECTED!");
                         e.rejectDrop();
                     }
                 }
             } catch (IOException ioe) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DropPanel.drop REJECTED!");
-                }
+                log.debug("DropPanel.drop REJECTED!");
                 e.rejectDrop();
             } catch (UnsupportedFlavorException ufe) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DropJLabel.drop REJECTED!");
-                }
+                log.debug("DropJLabel.drop REJECTED!");
                 e.rejectDrop();
             }
         }
