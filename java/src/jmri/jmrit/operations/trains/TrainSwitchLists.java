@@ -450,15 +450,15 @@ public class TrainSwitchLists extends TrainCommon {
     }
 
     public void printSwitchList(Location location, boolean isPreview) {
-        File buildFile = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(location.getName());
-        if (!buildFile.exists()) {
+        File switchListFile = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(location.getName());
+        if (!switchListFile.exists()) {
             log.warn("Switch list file missing for location ({})", location.getName());
             return;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
-            TrainUtilities.openDesktop(buildFile);
+            TrainUtilities.openDesktop(switchListFile);
         } else {
-            TrainPrintUtilities.printReport(buildFile, location.getName(), isPreview, Setup.getFontName(), false,
+            TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(), Setup
                             .getSwitchListOrientation(),
                     Setup.getManifestFontSize());
