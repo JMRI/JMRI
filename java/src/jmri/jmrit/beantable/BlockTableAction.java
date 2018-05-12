@@ -987,13 +987,13 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
         }
         String user = userName.getText();
-        String uName = user; // result stored separately to prevent incremental manipulation
+        String uName = user; // result stored separately to prevent recursive manipulation
         user = NamedBean.normalizeUserName(user);
         if (user == null || user.length() == 0) {
             user = null;
         }
         String system = sysName.getText();
-        String sName = system; // result stored separately to prevent incremental manipulation
+        String sName = system; // result stored separately to prevent recursive manipulation
         sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
         if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch a plain IB
