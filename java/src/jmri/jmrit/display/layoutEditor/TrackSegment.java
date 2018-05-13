@@ -2243,7 +2243,7 @@ public class TrackSegment extends LayoutTrack {
     protected void drawDecorations(Graphics2D g2) {
 
         if (getName().equals("T9")) {
-            log.debug("STOP!");
+            log.debug("STOP");
         }
 
         // get end points and calculate start/stop angles (in radians)
@@ -2410,7 +2410,7 @@ public class TrackSegment extends LayoutTrack {
         //
         if (bumperEndStart || bumperEndStop) {
             if (getName().equals("T15")) {
-                log.debug("STOP!");
+                log.debug("STOP");
             }
             g2.setStroke(new BasicStroke(bumperLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
@@ -3040,7 +3040,7 @@ public class TrackSegment extends LayoutTrack {
                 else if (key.equals("bumper")) {
                     String bumperValue = entry.getValue();
                     if (getName().equals("T15")) {
-                        log.debug("STOP!");
+                        log.debug("STOP");
                     }
                     // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
                     int lineWidth = 1, length = 4;
