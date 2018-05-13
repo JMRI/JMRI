@@ -9,13 +9,15 @@ import java.util.LinkedList;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.implementation.QuietShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ * Implementation of the LocoNetOverTcp LbServer Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  */
@@ -30,8 +32,10 @@ public class LnTcpServer {
     private ZeroConfService service = null;
 
     private int portNumber;
+    private LnTrafficController tc;
 
-    private LnTcpServer() {
+    private LnTcpServer(LocoNetSystemConnectionMemo memo) {
+        tc = memo.getLnTrafficController(); // store tc in order to known where to send messages
         LnTcpPreferences pm = LnTcpPreferences.getDefault();
         portNumber = pm.getPort();
         pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {
@@ -69,7 +73,7 @@ public class LnTcpServer {
      */
     public static synchronized LnTcpServer getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServer.class).orElseGet(() -> {
-            LnTcpServer server = new LnTcpServer();
+            LnTcpServer server = new LnTcpServer(new LocoNetSystemConnectionMemo());
             return InstanceManager.setDefault(LnTcpServer.class, server);
         });
     }
@@ -151,7 +155,7 @@ public class LnTcpServer {
             socketListener = new Thread(new ClientListener());
             socketListener.setDaemon(true);
             socketListener.setName("LocoNetOverTcpServer");
-            log.info("Starting new LocoNetOverTcpServer listener on port " + portNumber);
+            log.info("Starting new LocoNetOverTcpServer listener on port {}", portNumber);
             socketListener.start();
             updateServerStateListeners();
             // advertise over Zeroconf/Bonjour
@@ -252,7 +256,7 @@ public class LnTcpServer {
                     newClientConnection = serverSocket.accept();
                     remoteAddress = newClientConnection.getRemoteSocketAddress().toString();
                     log.info("Server: Connection from: {}", remoteAddress);
-                    addClient(new ClientRxHandler(remoteAddress, newClientConnection));
+                    addClient(new ClientRxHandler(remoteAddress, newClientConnection, tc));
                 }
                 serverSocket.close();
             } catch (IOException ex) {
@@ -283,5 +287,7 @@ public class LnTcpServer {
             return clients.size();
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(LnTcpServer.class);
+
 }

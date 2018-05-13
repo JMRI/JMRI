@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * The mask represents the part of the value that's present in the first CV;
  * higher-order bits are loaded to the second CV.
  * <P>
- * The original use is for addresses of stationary (accessory)
+ * The original use is for addresses of stationary (accessory).
  * <P>
  * Factor and Offset are applied when going <i>to</i> value of the variable
  * <i>to</i> the CV values:
@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * </PRE> decoders.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
- *
  */
 public class SplitVariableValue extends VariableValue
         implements ActionListener, PropertyChangeListener, FocusListener {

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the LocoNet-specific Reporter implementation. System names are
  * "LRnnn", where nnn is the Reporter number without padding.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -65,7 +65,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "R"))) {
-            // here if an illegal loconet reporter system name
+            // here if an illegal LocoNet Reporter system name
             log.error("invalid character in header field of loconet reporter system name: {}", systemName);
             return (0);
         }
@@ -89,7 +89,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @param systemName the name to validate
      * @return VALID if system name has a valid format; otherwise return INVALID
