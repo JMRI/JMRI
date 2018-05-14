@@ -33,6 +33,23 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertTrue("system name correct ", tj == l.getBySystemName("JS1"));
     }
 
+    public void testSensorNameCase() {
+        Assert.assertEquals(0, l.getObjectCount());
+        // create
+        Sensor t = l.provideSensor("IS:XYZ");
+        t = l.provideSensor("IS:xyz");  // upper canse and lower case are the same object
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
+        Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
+        Assert.assertEquals(1, l.getObjectCount());
+        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+
+        t = l.provideSensor("IS:XYZ");
+        Assert.assertEquals(1, l.getObjectCount());
+        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+    }
+
     public void testPutGetI() {
         // create
         Sensor ti = l.newSensor("IS1", "mine");
@@ -98,10 +115,14 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
-    public void testUpperLower() {
-        Sensor t = l.provideSensor("2");
+    public void testUpperLower() {  // this is part of testing of (default) normalization
+        Sensor t = l.provideSensor("JS1ABC");  // internal will always accept that name
         String name = t.getSystemName();
-        Assert.assertNull(l.getSensor(name.toLowerCase()));
+        
+        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
+        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        
+        Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
     public void testRename() {

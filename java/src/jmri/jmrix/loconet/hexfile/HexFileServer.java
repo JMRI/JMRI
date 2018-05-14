@@ -17,8 +17,8 @@ public class HexFileServer {
 
     // member declarations
     // to find and remember the log file
-//    final javax.swing.JFileChooser inputFileChooser =
-//            jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
+    // final javax.swing.JFileChooser inputFileChooser =
+    // jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
     public HexFileServer() {
     }
 
@@ -35,11 +35,11 @@ public class HexFileServer {
             return;
         }
         // connect to a packetizing LnTrafficController
-        packets = new LnPacketizer();
+        packets = new LnPacketizer(port.getSystemConnectionMemo());
         packets.connectPort(port);
         connected = true;
 
-        // create memo
+        // set tc in memo
         port.getSystemConnectionMemo().setLnTrafficController(packets);
 
         // do the common manager config

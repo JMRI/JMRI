@@ -91,7 +91,7 @@
         Soundtraxx decoder definitions, created our Windows icons,
         has debugged several difficult problems, created several
         Tam Valley decoder definitions, and is a primary author of
-        EngineDriver.</li>
+        EngineDriver.</li><!-- n3ix on GitHub -->
 
         <li>John Bell, who improved the NCE instructions</li>
 
@@ -597,7 +597,7 @@
         of the C/MRI support.</li>
 
         <li>Alain Le Marchand, who provided a number of decoder
-        definitions and updates</li>
+        definitions and updates</li><!-- GitHub: AlanUS -->
 
         <li>Karl Johan Lisby, who made large improvements to the
         Uhlenbrock Intellibox support and contributed the Signal
@@ -890,7 +890,7 @@
         XML files</li>
 
         <li>Petr Šídlo, who provided a large update to the Czech
-        translations of JMRI</li>
+        translations of JMRI</li><!-- sidlo64 on GitHub -->
 
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific
@@ -1061,6 +1061,9 @@
         <li>Mike Yawn, who provided the instructions for building
         under Eclipse <a name="Z" id="Z"></a></li>
 
+        <li>Luis Zamora, <!-- eldelinux --> who updated the 
+        Catalan translation</li>
+        
         <li>david zuhn, who provided instructions for installing
         the comm libraries on Linux, wrote startup scripts and
         configured Ant for compiling with warnings</li>

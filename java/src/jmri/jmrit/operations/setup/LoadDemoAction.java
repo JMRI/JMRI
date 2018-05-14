@@ -5,10 +5,11 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import jmri.jmrit.operations.ExceptionContext;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.swing.ExceptionContext;
+import jmri.util.swing.ExceptionDisplayFrame;
 
 /**
  * Swing action to load the operation demo files.
@@ -51,7 +52,7 @@ public class LoadDemoAction extends AbstractAction {
             // now deregister shut down task
             // If Trains window was opened, then task is active
             // otherwise it is normal to not have the task running
-            OperationsManager.getInstance().setShutDownTask(null);
+            InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
             JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterLoadDemo"),
                     Bundle.getMessage("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);

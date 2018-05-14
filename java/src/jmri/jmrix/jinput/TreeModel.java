@@ -6,6 +6,7 @@ import java.util.Arrays;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import jmri.util.SystemType;
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
@@ -247,10 +248,22 @@ public final class TreeModel extends DefaultTreeModel {
         try {
             ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
             log.debug("Found " + ca.length + " controllers");
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
+            log.debug("Handling Throwable", ex);
             // this is probably ClassNotFoundException, but that's not part of the interface
+            if (ex instanceof ClassNotFoundException) {
+                switch (SystemType.getType()) {
+                    case SystemType.WINDOWS :
+                        log.error("Failed to find expected library", ex);
+                    default:
+                        log.info("Did not find an implementation of a class needed for the interface; not proceeding");
+                        log.info("This is normal, because support isn't available for {}", SystemType.getOSName());
+                }
+            } else {
+                log.error("Encountered Throwable while getting controllers", ex);
+            }
+            
             // could not load some component(s)
-            log.debug("Found no controllers, handled Exception", ex);
             ca = null;
             return false;
         }

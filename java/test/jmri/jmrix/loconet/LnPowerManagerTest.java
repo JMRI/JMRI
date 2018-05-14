@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * tests for the Jmri package LnPowerManager
+ * Tests for the Jmri package LnPowerManager.
  *
  * @author	Bob Jacobsen Copyright 2001
  */

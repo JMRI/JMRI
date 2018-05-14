@@ -261,6 +261,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (userName != null) {
             _tuser.remove(userName);
         }
+        _originalOrderList.remove(systemName);
         
         // notifications
         firePropertyChange("length", null, _beans.size());

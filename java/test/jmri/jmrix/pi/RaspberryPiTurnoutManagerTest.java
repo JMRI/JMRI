@@ -44,11 +44,20 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(18)));
     }
 
+    @Test
+    public void testProvideName() {
+        // create
+        Turnout t = l.provide(getSystemName(20));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(20)));
+    }
+
     @Override
     @Test
     public void testDefaultSystemName() {
         // create
-        Turnout t = l.provideTurnout("PIT" + getNumToTest1());
+        Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -100,12 +109,13 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        apps.tests.Log4JFixture.setUp();
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
+       jmri.util.JUnitUtil.resetInstanceManager();
        l = new RaspberryPiTurnoutManager("Pi");
-
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

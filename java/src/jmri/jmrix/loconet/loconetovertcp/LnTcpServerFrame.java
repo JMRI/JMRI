@@ -11,7 +11,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Frame displaying the status of the a LocoNet over TCP server.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,

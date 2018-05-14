@@ -42,15 +42,13 @@ public class SpeedUtil {
     private List<BlockOrder> _orders;
 
     private DccThrottle _throttle;
-    private float _stepIncrement = 1.0f / 126.0f;   // decoder throttle step interval
     private float _stepRampThrottleIncrement;   // user specified throttle increment for ramping
     private int _stepRampTimeIncrement; // user specified time for ramp step increment
     private RosterSpeedProfile _mergeProfile; // merge of existing Roster speeedProfile and session speeedProfile
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
     private SignalSpeedMap _signalSpeedMap; 
-    private int _ma;  // milliseconds needed to increase speed by _stepRampThrottleIncrement amount 
-    private int _md;  // milliseconds needed to decrease speed by _stepRampThrottleIncrement amount
-    private int _mp;  // default milliseconds needed to change speed by _stepRampThrottleIncrement amount
+    private float _ma;  // milliseconds needed to increase speed by throttle step amount 
+    private float _md;  // milliseconds needed to decrease speed by throttle step amount
 
     public static float SCALE_FACTOR = 125; // divided by _scale, gives a rough correction for track speed
 
@@ -197,34 +195,32 @@ public class SpeedUtil {
     protected int getRampTimeIncrement() {
         return _stepRampTimeIncrement;
     }
-    protected float getMomentumTime(boolean increasing) {
+    /** ms time to change one _stepRampThrottleIncrement amount
+     * @param delta throttle change
+     * @param increasing  is acceleration
+     * @return momentum time
+     */
+    protected float getMomentumTime(float delta, boolean increasing) {
+        float incr = getThrottleSpeedStepIncrement();  // step amount
         if (increasing) {
-            return _ma;            
+            return _ma * Math.abs(delta) / incr;   // accelerating         
         } else {
-            return _md;
+            return _md * Math.abs(delta) / incr;
         }
     }
 
-    // throttle's minimum speed increase amount 
+    /**
+     * throttle's minimum speed change amount
+     * @return speed step amount
+     */
     protected float getThrottleSpeedStepIncrement() {
-        return _stepIncrement;
+        if (_throttle != null) {
+            return _throttle.getSpeedIncrement();
+        }
+        return 1.0f / 126.0f;
     }
 
     protected RosterSpeedProfile getSpeedProfile() {
-        if (_sessionProfile == null) {
-            if (_mergeProfile == null) {
-                makeSpeedTree();
-                makeRampParameters();                
-            } else {
-                return _mergeProfile;
-            }
-        } else if (!_sessionProfile.hasForwardSpeeds() && !_sessionProfile.hasReverseSpeeds()) {
-                return _mergeProfile;
-        }
-        return _sessionProfile;
-    }
-    
-    protected RosterSpeedProfile getMergeProfile() {
         if (_mergeProfile == null) {
             makeSpeedTree();
             makeRampParameters();                
@@ -270,12 +266,8 @@ public class SpeedUtil {
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
-        _mp = (int)(9000 * _stepRampThrottleIncrement);
-        _ma = _mp;  // acceleration momentum time
-        _md = _mp;  // deceleration momentum time
-        if (_stepRampTimeIncrement < _mp) {
-            _stepRampTimeIncrement = _mp;
-        }
+        _ma = 0;  // acceleration momentum time 
+        _md = 0;  // deceleration momentum time
         if (_rosterEntry!=null) {
             String fileName = jmri.jmrit.roster.LocoFile.getFileLocation() + _rosterEntry.getFileName();
             File file;
@@ -310,43 +302,78 @@ public class SpeedUtil {
                 Attribute attr = cv.getAttribute("name");
                 if (attr != null) {
                     if (attr.getValue().equals("3")) {
-                        _ma = getMomentumFactor(cv);
-                        if (_stepRampTimeIncrement < _ma) {
-                            _stepRampTimeIncrement = _ma;
-                        }
+                        _ma += getMomentumFactor(cv);
                        count++;
-                    }
-                    if (attr.getValue().equals("4")) {
-                        _md = getMomentumFactor(cv);
-                        if (_stepRampTimeIncrement < _md) {
-                            _stepRampTimeIncrement = _md;
-                        }
+                    } else if (attr.getValue().equals("4")) {
+                        _md += getMomentumFactor(cv);
+                        count++;
+                    } else if (attr.getValue().equals("23")) {
+                        _ma += getMomentumAdustment(cv);
+                        count++;
+                    } else if (attr.getValue().equals("24")) {
+                        _md += getMomentumAdustment(cv);
                         count++;
                     }
                 }
-                if (count > 1) {
+                if (count > 3) {
                     break;
                 }
             }
-            if (log.isDebugEnabled()) log.debug("makeRampParameters for {} _mp= {}ms, _ma= {}ms, _md= {}ms. rampIncr= {}",
-                    _rosterId, _mp, _ma, _md, _stepRampThrottleIncrement);
+            if (_ma < 10) {
+                _ma = 10;
+            }
+            if (_md < 10) {
+                _md = 10;
+            }
+            if (_stepRampTimeIncrement < _ma) {
+                _stepRampTimeIncrement = (int)_ma;
+            }
+            if (_stepRampTimeIncrement < _md) {
+                _stepRampTimeIncrement = (int)_md;
+            }
+            if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms, _md= {}ms. rampIncr= {}",
+                    _rosterId, _ma, _md, _stepRampThrottleIncrement);
         }
     }
-    
-    private int getMomentumFactor(Element cv) {
+
+    // return milliseconds per one speed step
+    private float getMomentumFactor(Element cv) {
         Attribute attr = cv.getAttribute("value");
+        float num = 0;
         if (attr != null) {
             try {
-                int num = Integer.parseInt( attr.getValue());
+                 num = Integer.parseInt( attr.getValue());
                 // even with instant speed change, allow some time for new speed to be attained
-                // therefore .896 factor is ignored and 30ms added per 1% of throttle increment
-                return (int) ((num + 1) * _stepRampThrottleIncrement * 896); 
+                // therefore add 1.  (.896 is NMRA spec)
+//                return (num + 1) * 896 / 28;     // milliseconds per step
+                num = (num + 1) * 896 * getThrottleSpeedStepIncrement();     // milliseconds per step
             } catch (NumberFormatException nfe) {
-                return _mp;
+                num = 0;;
             }
-        } else {
-            return _mp;
         }
+        if (log.isDebugEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}", 
+                cv.getAttribute("name"), attr, num);
+        return num;
+    }
+    
+    // return milliseconds per one speed step
+    private float getMomentumAdustment(Element cv) {
+        Attribute attr = cv.getAttribute("value");
+        float num = 0;
+        if (attr != null) {
+            try {
+                int val = Integer.parseInt(attr.getValue());
+                num = val & 0x3F;  //value is 6 bits
+                if ((val & 0x40) != 0) {    // 7th bit sign
+                    num = -num;
+                }
+            } catch (NumberFormatException nfe) {
+                num = 0;
+            }
+        }
+        if (log.isDebugEnabled()) log.debug("getMomentumAdustment for cv {} {},  num= {}",
+                cv.getAttribute("name"), attr, num);
+        return num;
     }
     
     protected boolean profileHasSpeedInfo() {
@@ -379,7 +406,6 @@ public class SpeedUtil {
      */
     protected void setThrottle( DccThrottle throttle) {
         _throttle = throttle;
-        _stepIncrement = _throttle.getSpeedIncrement();
         getSpeedProfile();
     }
     
@@ -531,7 +557,7 @@ public class SpeedUtil {
      */
     protected float getTimeForDistance(float throttleSetting, float distance, boolean isForward) {
         float speed = getTrackSpeed(throttleSetting, isForward);
-        if (distance < 0 || speed <= 0) {
+        if (distance <= 0 || speed <= 0) {
             return 0.0f;
         }
         return (distance/speed);
@@ -561,13 +587,14 @@ public class SpeedUtil {
         return rampLengthForSpeedChange(fromSpeed, toSpeed, isForward);
     }
 
-    protected float rampLengthForSpeedChange(float fromSpeed, float toSpeed, boolean isForward) {
+    protected float rampLengthForSpeedChange(float fSpeed, float toSpeed, boolean isForward) {
+        float fromSpeed = fSpeed;
         float rampLength = 0.0f;
         float deltaTime = getRampTimeIncrement();
         float deltaThrottle = getRampThrottleIncrement();
         int numSteps = 0;
         boolean increasing = (fromSpeed <= toSpeed);
-        float momentumTime = getMomentumTime(increasing);
+        float momentumTime = getMomentumTime(deltaThrottle, increasing);
 
         if (increasing) {
             while (fromSpeed < toSpeed) {
@@ -616,7 +643,7 @@ public class SpeedUtil {
             }
         }
         if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= {} in {}ms from speed= {} to speed= {}",
-                rampLength, deltaTime*numSteps, fromSpeed, toSpeed);
+                rampLength, deltaTime*numSteps, fSpeed, toSpeed);
         return rampLength;
     }
     
@@ -683,20 +710,21 @@ public class SpeedUtil {
                 throttle = _settingsTravelled / _timeAtSpeed;
             }
             speed *= 1000;   // SpeedProfile is mm/sec
-            
-            if (throttle < _stepIncrement || speed <= 0.0f || Math.abs(aveSpeed - speed) < 20) {
+
+            float stepIncrement = _throttle.getSpeedIncrement();
+
+            if (throttle < stepIncrement || speed <= 0.0f || Math.abs(aveSpeed - speed) < 20) {
                 clearStats();
                 if (log.isDebugEnabled())
                     log.debug("Speeds invalid between {} and {}", fromBlock.getDisplayName(), toBlock.getDisplayName());
                 return;
             }
-            RosterSpeedProfile mergeProfile = getMergeProfile();
-            float mergeSpeed = mergeProfile.getSpeed(throttle, isForward);                
+            float mergeSpeed = _mergeProfile.getSpeed(throttle, isForward);                
             float profileSpeed = _sessionProfile.getSpeed(throttle, isForward);                
-            throttle = _stepIncrement * Math.round(throttle/_stepIncrement);
+            throttle = stepIncrement * Math.round(throttle/stepIncrement);
             if (log.isDebugEnabled()) {
-                log.debug("{} changes between {} and {}. ave speed= {}",
-                        _numchanges, fromBlock.getDisplayName(), toBlock.getDisplayName(), aveSpeed);
+                log.debug("{} changes on block {}. ave speed= {}mm/ms",
+                        _numchanges, fromBlock.getDisplayName(), aveSpeed);
                 log.debug("throttle= {}, speed= {}, profileSpeed={}, mergeSpeed={}",
                         throttle, speed, profileSpeed, mergeSpeed);
             }

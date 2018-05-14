@@ -5,31 +5,29 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import jmri.jmrix.loconet.LnTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Copyright (c) 2002
  *
- * @author Alex Shepherd
+ * @author Alex Shepherd Copyright (c) 2002
  */
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface {
 
-    // versioned Jul 17, 2003 - was CVS revision 1.5
     // This is required for RMI usage, do not remove
     static final long serialVersionUID = 8934498417916438203L;
 
     private static LnMessageServer self = null;
     static final String serviceName = "LocoNetServer"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class);
 
     private LnMessageServer() throws RemoteException {
         super();
     }
 
     @Override
-    public LnMessageBufferInterface getMessageBuffer() throws RemoteException {
-        return new LnMessageBuffer();
+    public LnMessageBufferInterface getMessageBuffer(LnTrafficController tc) throws RemoteException {
+        return new LnMessageBuffer(tc);
     }
 
     public static synchronized LnMessageServer getInstance() throws RemoteException {
@@ -37,27 +35,25 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new SecurityManager());
             }
-
             self = new LnMessageServer();
         }
-
         return self;
     }
 
     public synchronized void enable() {
         Registry localRegistry = null;
         try {
-            log.debug("Create RMI Registry for: " + serviceName); // NOI18N
+            log.debug("Create RMI Registry for: {}", serviceName); // NOI18N
             localRegistry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
         } catch (java.rmi.RemoteException ex) {
         }
         try {
             if (localRegistry == null) {
-                log.warn("Could not Create RMI Registry, Attempting to Locate existing Registry for: " + serviceName); // NOI18N
+                log.warn("Could not Create RMI Registry, Attempting to Locate existing Registry for: {}", serviceName); // NOI18N
                 localRegistry = LocateRegistry.getRegistry(Registry.REGISTRY_PORT);
             }
 
-            log.debug("Register LocoNet Server: " + serviceName + " with RMI Registry"); // NOI18N
+            log.debug("Register LocoNet Server: {} with RMI Registry", serviceName); // NOI18N
             localRegistry.rebind(serviceName, self);
 
             log.debug("Register LocoNet Server Complete"); // NOI18N
@@ -73,4 +69,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
             log.error("Exception during disable: " + ex); // NOI18N
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnMessageServer.class);
+
 }

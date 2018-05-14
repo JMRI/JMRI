@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager> {
+public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager, Sensor> {
 
     // implementing classes must provide these abstract members:
     //
@@ -58,6 +58,42 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
+
+    // Quite a few tests overload this to create their own name process
+    @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    public void testDelete() {
+        // create
+        Sensor t = l.provide(getSystemName(getNumToTest1()));
+        
+        // two-pass delete, details not really tested
+        
+        try {
+            l.deleteBean(t, "CanDelete");
+        } catch (java.beans.PropertyVetoException e) {}
+        try {
+            l.deleteBean(t, "DoDelete");
+        } catch (java.beans.PropertyVetoException e) {}
+        
+        // check for bean
+        Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
+        // check for lengths
+        Assert.assertEquals(0, l.getNamedBeanList().size());
+        Assert.assertEquals(0, l.getNamedBeanSet().size());
+        Assert.assertEquals(0, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(0, l.getSystemNameList().size());
+        Assert.assertEquals(0, l.getSystemNameArray().length);
+        Assert.assertEquals(0, l.getObjectCount());
+    }
+
 
     @Test
     public void testDefaultSystemName() {
@@ -117,10 +153,14 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     }
 
     @Test
-    public void testUpperLower() {
+    public void testUpperLower() {  // this is part of testing of (default) normalization
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
-        Assert.assertNull(l.getSensor(name.toLowerCase()));
+        
+        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
+        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        
+        Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
     @Test

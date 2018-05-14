@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet.streamport;
 
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -24,9 +24,13 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     private LnStreamPortController apc;
            
     private DataOutputStream ostream;  // Traffic controller writes to this
+    
+    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
     private DataInputStream tostream; // so we can read it from this
 
+    @SuppressWarnings("unused") // partial implementation of test? See jmri.jmrix.AbstractPortControllerScaffold
     private DataOutputStream tistream; // tests write to this
+    
     private DataInputStream istream;   // so the traffic controller can read from this
 
     // The minimal setup for log4J
@@ -34,8 +38,8 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnStreamPortPacketizer();
         memo = new LocoNetSystemConnectionMemo();
+        lnp = new LnStreamPortPacketizer(memo);
         memo.setLnTrafficController(lnp);
         try {
            PipedInputStream tempPipe;
@@ -46,7 +50,7 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
            tempPipe = new PipedInputStream();
            istream = new DataInputStream(tempPipe);
            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-           apc = new LnStreamPortController(memo,istream,ostream,"Test Stream Port");
+           apc = new LnStreamPortController(memo, istream, ostream, "Test Stream Port");
        } catch (java.io.IOException ioe) {
            Assert.fail("failed to initialize port controller");
        }
@@ -73,4 +77,5 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
        ((LnStreamPortPacketizer)lnp).connectPort(apc);
        lnp.startThreads();
     }
+
 }

@@ -1,5 +1,3 @@
-// CMRInetMetricsData.java
-
 package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
 /**

@@ -299,7 +299,7 @@ If somebody has merged their change into master (or it's branched from master la
 - `git cherrypick` just the changes you want.  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
 
-Special instructions for the last few test releases before a production release:
+### Special instructions for the last few test releases before a production release:
 
 (The following is tentative text for this section from a 4/2016 jmri-developers discussion on how to do this for the run-up to 4.4, starting with 4.3.7 - Bob)
 
@@ -317,6 +317,21 @@ developer need only create a single PR between 'needed-patches' (communityu deci
 
 This has the nice property that if multiple things arise, they can definitely be handled separately. It still gets a bit tricky if there’s a difference (e.g. due to a conflict with another change) that arises in either PR.  We’ll have to manage that a little carefully. One way to handle that is to _not_ merge any conflicts on master (_any_ PRs to master, not just in these dual-hatted PRs) until after the test release is done and merged back.
 
+====================================================================================
+## Create zipped .properties (experimental)
+
+ant realclean compile
+cd target
+rm -f properties.4.11.5.zip
+
+# the following will take several minutes
+foreach x ( `find classes -name \*.properties` )
+printf '%s\n' 0a '# from tag v4.11.5' . x | ex $x
+end
+
+find classes -name \*.properties | zip -@ properties.4.11.5.zip
+
+Then decide what to do with it. Tentatively, we're just attaching the properties.4.11.5.zip file to the release without further mention.
 
 ====================================================================================
 ## Format file-release information
@@ -351,9 +366,9 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 ```
 "Release title" field gets "Test/Prod Release 4.11.5"
 ```
-   - Description content (the releasesummary script above proposed this!):
-```    
+   - Description should contain (the releasesummary script above proposed this!):
 
+```   
 [Release notes](http://jmri.org/releasenotes/jmri4.11.5.shtml)
 
 Checksums:
@@ -367,6 +382,7 @@ File | SHA256 checksum
 ```
 
 - Attach files by selecting them or dragging them in (you might have to have downloaded them above via e.g. a separate 
+
 ```
 curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
@@ -377,8 +393,8 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 - Click "Publish Release"
 - Wait for completion, which might be a while with big uploads
 
-
-### Final Branch Management
+====================================================================================
+## Check for Unmerged Changes
 
 It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then (*need a cleaner, more robust mechanism for this*; maybe GitX or a PR?):
 
@@ -406,17 +422,25 @@ If there are any changes in other files, do both of:
    
 - You can delete that temp-master local branch now
 
+====================================================================================
+## Update GitHub Status items
+
+- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.6". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+```
+This is the next release in the 4.12 cycle. It's intended to be released around May 12 from HEAD of master.
+```
+
+- Confirm that the tag for the current release (v4.11.5 for release 4.11.5) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.11.5) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).
+
+- Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
+
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.6". Add the next release milestone (created above) to it. Typical text:
 ```
  This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
-- Confirm that the tag for the current release (release-4.11.5) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
-
-- Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
-
 ====================================================================================
-## Production Release preparation branches
+## Branches for preparation of Production Releases
 
 Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
 
@@ -429,11 +453,6 @@ git checkout (release-n.n.n)
 git pull
 git checkout -b (release-n.n.n+1)
 git push github
-```
-
-- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.6". Add the next release milestone (created above) to it. Typical text:
-```
- This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
 ```
 
 ====================================================================================
@@ -449,22 +468,6 @@ git push github
 - Commit site, push, etc.
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
-
-====================================================================================
-## Create zipped .properties (experimental)
-
-ant realclean compile
-cd target
-rm properties.4.11.5.zip
-
-# the following will take several minutes
-foreach x ( `find classes -name \*.properties` )
-printf '%s\n' 0a '# from tag v4.11.5' . x | ex $x
-end
-
-find classes -name \*.properties | zip -@ properties.4.11.5.zip
-
-Then decide what to do with it. Attach to release?
 
 
 ====================================================================================

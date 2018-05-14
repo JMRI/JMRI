@@ -236,6 +236,9 @@
 
             <p class="dl">Configure: Directly connecting to an
             <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configure: Connecting to a <a href=
+            "StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
           </dd>
 
           <dt class="im"><a href=

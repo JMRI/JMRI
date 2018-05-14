@@ -76,23 +76,30 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     public List<Manager<E>> getDisplayOrderManagerList() {
         // make sure internal present
         initInternal();
+        
         ArrayList<Manager<E>> retval = new ArrayList<>();
-        if (getDefaultManager() != null) { retval.add(getDefaultManager()); }
+        if (defaultManager != null) { retval.add(defaultManager); }
         for (Manager<E> manager : mgrs) {
-            if (manager != getDefaultManager() && manager != getInternalManager()) {
+            if (manager != defaultManager && manager != internalManager) {
                 retval.add(manager);
             }
         }
-        if (getInternalManager() != null) { retval.add(getInternalManager()); }
+        if (internalManager != null) { retval.add(internalManager); }
         return retval;
     }
 
     public Manager<E> getInternalManager() {
+        initInternal();
         return internalManager;
     }
 
+    /**
+     * Returns the set default or, if not present, the internal manager as defacto default
+     */
     public Manager<E> getDefaultManager() {
-        return defaultManager;
+        if (defaultManager != null) return defaultManager;
+        
+        return getInternalManager();     
     }
 
     public void addManager(Manager<E> m) {
@@ -166,7 +173,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             return getMgr(index).normalizeSystemName(inputName);
         }
         log.debug("normalizeSystemName did not find manager for name {}, defer to default", inputName); // NOI18N
-        return defaultManager.normalizeSystemName(inputName);
+        return getDefaultManager().normalizeSystemName(inputName);
     }
 
     /**
@@ -193,7 +200,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             return makeBean(index, name, null);
         }
         log.debug("provideNamedBean did not find manager for name {}, defer to default", name); // NOI18N
-        return makeBean(mgrs.entryIndex(defaultManager), defaultManager.makeSystemName(name), null);
+        return makeBean(mgrs.entryIndex(getDefaultManager()), getDefaultManager().makeSystemName(name), null);
     }
 
     /**
@@ -209,13 +216,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Override
     public E getBeanBySystemName(String systemName) {
-        for (Manager<E> m : this.mgrs) {
-            E b = m.getBeanBySystemName(systemName);
-            if (b != null) {
-                return b;
-            }
+        // System names can be matched to managers by system and type at front of name
+        int index = matchTentative(systemName);
+        if (index >= 0) {
+            Manager<E> m = getMgr(index);
+            return m.getBeanBySystemName(m.normalizeSystemName(systemName));
         }
-        return null;
+        log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
+        return getDefaultManager().getBeanBySystemName(getDefaultManager().normalizeSystemName(systemName));
     }
 
     /** {@inheritDoc} */
@@ -272,7 +280,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for system name {}, delegate to primary", systemName); // NOI18N
-        return makeBean(mgrs.entryIndex(defaultManager), systemName, userName);
+        return makeBean(mgrs.entryIndex(getDefaultManager()), systemName, userName);
     }
 
     /** {@inheritDoc} */
@@ -420,7 +428,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     public String getSystemPrefix() {
         try {
-            return defaultManager.getSystemPrefix();
+            return getDefaultManager().getSystemPrefix();
         } catch (IndexOutOfBoundsException ie) {
             return "?";
         }
@@ -431,7 +439,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      */
     @Override
     public char typeLetter() {
-        return defaultManager.typeLetter();
+        return getDefaultManager().typeLetter();
     }
 
     /**
@@ -440,7 +448,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      */
     @Override
     public String makeSystemName(String s) {
-        return defaultManager.makeSystemName(s);
+        return getDefaultManager().makeSystemName(s);
     }
 
     /** {@inheritDoc} */

@@ -1,23 +1,26 @@
 package jmri.jmrix.loconet;
 
+import jmri.util.JUnitUtil;
 import jmri.util.StringUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  *
  * @author	Bob Jacobsen
  */
-public class LocoNetMessageTest extends TestCase {
+public class LocoNetMessageTest {
 
+    @Test
     public void testCtor() {
         LocoNetMessage m = new LocoNetMessage(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
     }
 
+    @Test
     public void testArrayCtor() {
         LocoNetMessage m = new LocoNetMessage(new int[]{11, 12, 13, 14});
         Assert.assertEquals("length", 4, m.getNumDataElements());
@@ -27,6 +30,7 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertEquals("fourth value", 14, m.getElement(3));
     }
 
+    @Test
     public void testGetPeerXfr() {
         // basic message
         LocoNetMessage m1 = LocoNetMessage.makePeerXfr(0x1050, 0x1051,
@@ -65,6 +69,7 @@ public class LocoNetMessageTest extends TestCase {
     }
 
     // use the makePeerXfr calls, already tested to check the decoding
+    @Test
     public void testGetPeerXfrData() {
         int[] test;
         int[] data;
@@ -92,6 +97,7 @@ public class LocoNetMessageTest extends TestCase {
         }
     }
 
+    @Test
     public void testEqualsFromInt() {
         int[] t1 = new int[]{0x81, 0x01, 0x02, 0x02};
         int[] t2 = new int[]{0x81, 0x01, 0x02, 0x02, 0x03};
@@ -105,6 +111,7 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t5)));
     }
 
+    @Test
     public void testEqualsFromBytes() {
         byte[] t1 = new byte[]{(byte) 0x81, (byte) 0x01, (byte) 0x02, (byte) 0x02};
         byte[] t2 = new byte[]{(byte) 0x81, (byte) 0x01, (byte) 0x02, (byte) 0x02, (byte) 0x03};
@@ -118,6 +125,7 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertTrue((new LocoNetMessage(t1)).equals(new LocoNetMessage(t5)));
     }
 
+    @Test
     public void testEqualsFromString() {
         LocoNetMessage t1 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 02 02"));
         LocoNetMessage t2 = new LocoNetMessage(StringUtil.bytesFromHexString("81 01 02 02 03"));
@@ -131,6 +139,7 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertTrue((new LocoNetMessage(t1)).equals(t5));
     }
 
+    @Test
     public void testEqualsSpecificCase() {
         LocoNetMessage t1 = new LocoNetMessage(StringUtil.bytesFromHexString("D7 12 00 09 20 13"));
         LocoNetMessage t2 = new LocoNetMessage(StringUtil.bytesFromHexString("D7 12 00 09 20 13"));
@@ -144,7 +153,7 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertTrue(!(new LocoNetMessage(t3)).equals(t1));
     }
 
-    // service routine to check the contents of a single message
+    // service routine to check the contents of a single message (not a test)
     protected void checkPeerXfr(LocoNetMessage m, int src, int dst, int[] d, int code) {
         Assert.assertEquals("opcode ", 0xE5, m.getElement(0));
         Assert.assertEquals("secondary op code ", 0x10, m.getElement(1));
@@ -175,21 +184,14 @@ public class LocoNetMessageTest extends TestCase {
         Assert.assertEquals("high 7 dst address", (dst & 0x7F00) / 256, m.getElement(4));
     }
 
-    // from here down is testing infrastructure
-    public LocoNetMessageTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LocoNetMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LocoNetMessageTest.class);
-        return suite;
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }
