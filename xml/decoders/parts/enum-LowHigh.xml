@@ -6,7 +6,7 @@
     <choice>Low</choice>
     <choice xml:lang="fr">Bas</choice>
     <choice xml:lang="de">Niedrig</choice>
-    <choice xml:lang="nl">laag</choice>
+    <choice xml:lang="nl">Laag</choice>
   </enumChoice>
   <enumChoice choice="High">
     <choice>High</choice>

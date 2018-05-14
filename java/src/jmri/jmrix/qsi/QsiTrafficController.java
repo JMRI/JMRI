@@ -293,16 +293,16 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         log.debug("dispatch reply of length {}",i);
         {
             final QsiReply thisMsg = msg;
-            final QsiTrafficController thisTC = this;
+            final QsiTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
                 QsiReply msgForLater = thisMsg;
-                QsiTrafficController myTC = thisTC;
+                QsiTrafficController myTc = thisTc;
 
                 @Override
                 public void run() {
                     log.debug("Delayed notify starts");
-                    myTC.notifyReply(msgForLater);
+                    myTc.notifyReply(msgForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
