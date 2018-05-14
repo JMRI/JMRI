@@ -100,7 +100,7 @@ public class XmlTest extends OperationsTestCase {
         s2i1.setComment("Schedule 2 Item 1 Comment");
 
         // test schedule and alternate track features
-        t2.setScheduleId(s1.getId());
+        t2.setSchedule(s1);
         t2.setAlternateTrack(t1);
         t2.setReservationFactor(33);
         t2.setScheduleMode(Track.MATCH);
