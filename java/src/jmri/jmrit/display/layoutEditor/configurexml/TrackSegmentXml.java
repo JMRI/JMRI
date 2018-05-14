@@ -329,7 +329,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         }
 
         //if (l.getName().equals("T31")) {
-        //    log.debug("Stop!");
+        //    log.debug("Stop");
         //}
         // load decorations
         Element decorationsElement = element.getChild("decorations");

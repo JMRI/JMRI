@@ -26,7 +26,6 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     // GUI member declarations
     EditorFilePane pane;
 
-    ResourceBundle res;
     JButton open;
     JButton save;
 
@@ -43,14 +42,11 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
     public EditorPane() {
         super();
 
-        // Its unfortunate that we have to read that bundle twice, but it's due to Java init order
-        res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
-
         // general GUI config
         super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add file button
-        open = new JButton(res.getString("ButtonOpen"));
+        open = new JButton(Bundle.getMessage("ButtonOpen"));
         open.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -58,7 +54,7 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
             }
         });
 
-        save = new JButton(res.getString("ButtonSave"));
+        save = new JButton(Bundle.getMessage("ButtonSave"));
         save.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {

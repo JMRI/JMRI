@@ -468,7 +468,7 @@ public class LocationTest extends OperationsTestCase {
 
         // tracks with schedules get priority
         Schedule sch = InstanceManager.getDefault(ScheduleManager.class).newSchedule("dummy schedule");
-        t3.setScheduleId(sch.getId());
+        t3.setSchedule(sch);
 
         // get all tracks ids
         tracks = l.getTrackByMovesList(null);
@@ -483,7 +483,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("7th track", t6, tracks.get(6));
 
         // t4 has less moves than t3 so it will move up in priority
-        t4.setScheduleId(sch.getId());
+        t4.setSchedule(sch);
 
         // get all tracks ids
         tracks = l.getTrackByMovesList(null);

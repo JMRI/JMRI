@@ -625,7 +625,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     public void setButtonModeFromProgrammer() {
-        if (!_cvModel.getProgrammer().getCanRead()) {
+        if (_cvModel.getProgrammer() == null || !_cvModel.getProgrammer().getCanRead()) {
             for (JButton b : _readButtons) b.setEnabled(false);
         }
     }

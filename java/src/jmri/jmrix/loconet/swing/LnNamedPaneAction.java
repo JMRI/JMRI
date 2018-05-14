@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author Bob Jacobsen Copyright (C) 2010
-  */
+ */
 public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
      */
     public LnNamedPaneAction(String s, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {
         super(s, wi, paneClass);
@@ -54,8 +54,6 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
-
     @Override
     public SystemConnectionMemo getSystemConnectionMemo() {
         return this.memo;
@@ -78,5 +76,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
         return new HashSet<>(Arrays.asList(LocoNetSystemConnectionMemo.class));
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnNamedPaneAction.class);
 
 }

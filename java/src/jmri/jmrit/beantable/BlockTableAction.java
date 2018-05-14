@@ -966,6 +966,11 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         addFrame = null;
     }
 
+    /**
+     * Respond to Create new item pressed on Add Block pane.
+     *
+     * @param e the click event
+     */
     void okPressed(ActionEvent e) {
 
         int NumberOfBlocks = 1;
@@ -982,14 +987,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             }
         }
         String user = userName.getText();
+        String uName = user; // keep result separate to prevent recursive manipulation
         user = NamedBean.normalizeUserName(user);
         if (user == null || user.length() == 0) {
             user = null;
         }
-        String sName = sysName.getText();
+        String system = sysName.getText();
+        String sName = system; // keep result separate to prevent recursive manipulation
         sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
-        if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch an plain IB
+        if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch a plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
             sysName.setBackground(Color.red);
@@ -1003,15 +1010,15 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         StringBuilder b;
 
         for (int x = 0; x < NumberOfBlocks; x++) {
-            if (x != 0) {
+            if (x != 0) { // start at 2nd Block
                 if (user != null) {
                     b = new StringBuilder(user);
                     b.append(":");
                     b.append(Integer.toString(x));
-                    user = b.toString();
+                    uName = b.toString();
                 }
                 if (!_autoSystemName.isSelected()) {
-                    b = new StringBuilder(sName);
+                    b = new StringBuilder(system);
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
@@ -1021,13 +1028,13 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             String xName = "";
             try {
                 if (_autoSystemName.isSelected()) {
-                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(uName);
                     if (blk == null) {
-                        xName = user;
+                        xName = uName;
                         throw new java.lang.IllegalArgumentException();
                     }
                 } else {
-                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, uName);
                     if (blk == null) {
                         xName = sName;
                         throw new java.lang.IllegalArgumentException();

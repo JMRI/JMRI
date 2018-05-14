@@ -5,22 +5,23 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.jmrix.loconet.AbstractBoardProgPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Display and modify an SE8c configuration.
- * <P>
+ * <p>
  * The read and write require a sequence of operations, which we handle with a
  * superclass.
- * <P>
+ * <p>
  * Programming of the SE8c is done via configuration messages, so the SE8c
  * should not be put into programming mode via the built-in pushbutton while
  * this tool is in use.
- * <P>
+ * <p>
  * Throughout, the terminology is "closed" == true, "thrown" == false. Variables
  * are named for their closed state.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007, 2010
  */
-public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
+public class SE8Panel extends AbstractBoardProgPanel {
 
     public SE8Panel() {
         this(1);
@@ -45,17 +46,17 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         appendLine(twoaspects);
         panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
-        panel2.add(new JLabel("Cables 1-4 are "));
+        panel2.add(new JLabel(Bundle.getMessage("CablesXYLabel", 1, 4)));
         panel2.add(section1to4mode);
         appendLine(panel2);
         panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
-        panel2.add(new JLabel("Cables 5-8 are "));
+        panel2.add(new JLabel(Bundle.getMessage("CablesXYLabel", 5, 8)));
         panel2.add(section5to8mode);
         appendLine(panel2);
         panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
-        panel2.add(new JLabel("4th aspect is "));
+        panel2.add(new JLabel(Bundle.getMessage("Aspect4Label")));
         panel2.add(fourthAspect);
         appendLine(panel2);
         appendLine(semaphore);
@@ -70,7 +71,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         appendLine(exercise);
 
         appendLine(provideStatusLine());
-        setStatus("The SE8C should be in normal mode (Don't push the buttons on the SE8C!)");
+        setStatus(Bundle.getMessage("Status1"));
 
         setTypeWord(0x72);  // configure SE8 message type
     }
@@ -255,34 +256,44 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
     }
 
-    JCheckBox fullmode = new JCheckBox("Reserved (OpSw 1)");  // opsw 01
-    JCheckBox twoaspects = new JCheckBox("Two aspects (one turnout address) per head");  // opsw 02
+    JCheckBox fullmode = new JCheckBox(Bundle.getMessage("Box1"));   // opsw 01
+    JCheckBox twoaspects = new JCheckBox(Bundle.getMessage("Box2")); // opsw 02
     JComboBox<String> section1to4mode = new JComboBox<String>(new String[]{
-        "3 LEDs common anode", "3 LEDs common cathode",
-        "3-wire searchlight common anode", "3-wire searchlight common cathode",
-        "Reserved (4)", "Reserved (5)",
-        "2-wire searchlight common anode", "2-wire searchlight common cathode"
+            Bundle.getMessage("Box3a"),
+            Bundle.getMessage("Box3b"),
+            Bundle.getMessage("Box3c"),
+            Bundle.getMessage("Box3d"),
+            Bundle.getMessage("Box4"),
+            Bundle.getMessage("Box5"),
+            Bundle.getMessage("Box3e"),
+            Bundle.getMessage("Box3f")
     });  // opsw 3, 4, 5
     JComboBox<String> section5to8mode = new JComboBox<String>(new String[]{
-        "3 LEDs common anode", "3 LEDs common cathode",
-        "3-wire searchlight common anode", "3-wire searchlight common cathode",
-        "Reserved (4)", "Reserved (5)",
-        "2-wire searchlight common anode", "2-wire searchlight common cathode"
+            Bundle.getMessage("Box3a"),
+            Bundle.getMessage("Box3b"),
+            Bundle.getMessage("Box3c"),
+            Bundle.getMessage("Box3d"),
+            Bundle.getMessage("Box4"),
+            Bundle.getMessage("Box5"),
+            Bundle.getMessage("Box3e"),
+            Bundle.getMessage("Box3f")
     });  // opsw 6, 7, 8
     JComboBox<String> fourthAspect = new JComboBox<String>(new String[]{
-        "flashing yellow", "flashing red",
-        "dark", "flashing green"
+            Bundle.getMessage("SignalHeadStateFlashingYellow"),
+            Bundle.getMessage("SignalHeadStateFlashingRed"),
+            Bundle.getMessage("SignalHeadStateDark"),
+            Bundle.getMessage("SignalHeadStateFlashingGreen")
     });  // opsw 9, 10
-    JCheckBox semaphore = new JCheckBox("Semaphore mode");  // opsw 11
-    JCheckBox pulsed = new JCheckBox("Pulsed switch outputs");  // opsw 12
-    JCheckBox disableDS = new JCheckBox("Disable DS input");  // opsw 13
-    JCheckBox fromloconet = new JCheckBox("Enable switch command from loconet");  // opsw 14
-    JCheckBox disablelocal = new JCheckBox("Disable local switch control");  // opsw 15
-    JCheckBox sigaddress = new JCheckBox("Next switch command sets signal address");  // opsw 17
-    JCheckBox bcastaddress = new JCheckBox("Next switch command sets broadcast address");  // opsw 18
-    JCheckBox semaddress = new JCheckBox("Next switch command sets semaphore address");  // opsw 19
-    JCheckBox setdefault = new JCheckBox("Restore factory default, including address");  // opsw 20
-    JCheckBox exercise = new JCheckBox("Show LED exercise pattern");  // opsw 21
+    JCheckBox semaphore = new JCheckBox(Bundle.getMessage("Box11"));    // opsw 11
+    JCheckBox pulsed = new JCheckBox(Bundle.getMessage("Box12"));       // opsw 12
+    JCheckBox disableDS = new JCheckBox(Bundle.getMessage("Box13"));    // opsw 13
+    JCheckBox fromloconet = new JCheckBox(Bundle.getMessage("Box14"));  // opsw 14
+    JCheckBox disablelocal = new JCheckBox(Bundle.getMessage("Box15")); // opsw 15
+    JCheckBox sigaddress = new JCheckBox(Bundle.getMessage("Box17"));   // opsw 17
+    JCheckBox bcastaddress = new JCheckBox(Bundle.getMessage("Box18")); // opsw 18
+    JCheckBox semaddress = new JCheckBox(Bundle.getMessage("Box19"));   // opsw 19
+    JCheckBox setdefault = new JCheckBox(Bundle.getMessage("Box20"));   // opsw 20
+    JCheckBox exercise = new JCheckBox(Bundle.getMessage("Box21"));     // opsw 21
 
     private final static Logger log = LoggerFactory.getLogger(SE8Panel.class);
 

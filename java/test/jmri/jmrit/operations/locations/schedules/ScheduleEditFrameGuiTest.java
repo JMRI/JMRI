@@ -130,7 +130,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("First siding name", null, box2.getItemAt(0));
 
         // now add a schedule to siding
-        t.setScheduleId(sch1.getId());
+        t.setSchedule(sch1);
 
         JComboBox<LocationTrackPair> box3 = sm.getSpursByScheduleComboBox(s1);
         LocationTrackPair ltp = box3.getItemAt(0);

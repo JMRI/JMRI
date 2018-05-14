@@ -1,11 +1,3 @@
-/*
- * LocoIOModeList.java
- *
- * Created on January 30, 2007, 9:13 PM
- *
- * Manage the set of valid modes for a particular LocoIO port,
- * as well as the conversions between addresses and SV values.
- */
 package jmri.jmrix.loconet.locoio;
 
 import java.util.Vector;
@@ -14,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Manage the set of valid modes for a particular LocoIO port,
+ * as well as the conversions between addresses and SV values.
  *
- * @author plocher
+ * @author John Plocher, January 30, 2007
  */
 public class LocoIOModeList {
 
@@ -23,14 +17,14 @@ public class LocoIOModeList {
     protected String[] validmodes;
 
     /**
-     * Creates a new instance of LocoIOModeList
+     * Create a new instance of LocoIOModeList
      */
     public LocoIOModeList() {
 
         /**
-         * Initialize various configuration modes... TODO: Need to tag these
-         * with which firmware rev supports them and only allow choices that
-         * match.
+         * Initialize various configuration modes.
+         * @TODO: Need to tag these with which firmware rev supports
+         * them and only allow choices that match.
          *
          * Inputs...
          */
@@ -50,7 +44,6 @@ public class LocoIOModeList {
         /**
          * and Outputs...
          */
-
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xC0, 0x00, "Block Occupied Indication"));
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xD0, 0x00, "Block Occupied Indication, Blinking"));
         modeList.add(new LocoIOMode(1, LnConstants.OPC_SW_REQ, 0x81, 0x10, "Steady State, single output, On at Power up"));
@@ -72,7 +65,6 @@ public class LocoIOModeList {
             validmodes[i] = m.getFullMode();
         }
     }
-
 
     protected String[] getValidModes() {
         return validmodes;
@@ -125,7 +117,10 @@ public class LocoIOModeList {
     }
 
     /**
-     * Low bits
+     * Convert Value1 (Low bits) from Port Address.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
      */
     protected int addressToValue1(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -135,7 +130,10 @@ public class LocoIOModeList {
     }
 
     /**
-     * High bits...
+     * Convert Value2 (High bits) from Port Address.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
      */
     protected int addressToValue2(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -150,12 +148,20 @@ public class LocoIOModeList {
      *
      * @param a1 Byte containing the upper bits
      * @param a2 Byte containing the lower bits
-     * @return 1-4096 address
+     * @return 1-4096 address as decimal
      */
     static private int SENSOR_ADR(int a1, int a2) {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
+    /**
+     * Create 2 byte value from Port Address bits.
+     *
+     * @param opcode coded value for message type
+     * @param sv index of SV value to create, ignored
+     * @param v2mask mask to apply on Value2
+     * @param address the address for this port
+     */
     protected int addressToValues(int opcode, int sv, int v2mask, int address) {
         int v1 = 0;
         int v2 = 0;
@@ -183,6 +189,15 @@ public class LocoIOModeList {
         return v2 * 256 + v1;
     }
 
+    /**
+     * Extract Port Address from the 3 SV values.
+     *
+     * @param opcode coded value for message type
+     * @param sv first SV value, ignored
+     * @param v1 second value (high bit)
+     * @param v1 second value (high bit)
+     * @return address (int) of the port
+     */
     protected int valuesToAddress(int opcode, int sv, int v1, int v2) {
         //int hi = 0;
         //int lo = 0;
@@ -222,4 +237,5 @@ public class LocoIOModeList {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
+
 }

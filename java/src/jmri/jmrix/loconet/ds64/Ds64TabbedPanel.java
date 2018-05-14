@@ -37,36 +37,36 @@ import org.slf4j.LoggerFactory;
 /**
  * A "tabbed" swing panel to display and modify Digitrax DS64 board
  * configuration.
- * <P>
+ * <p>
  * The read and write operations require a sequence of operations, which are
  * handled with a state variable.
- * <P>
+ * <p>
  * Programming of the DS64 is done via LocoNet configuration messages, so the
  * DS64 should not be manually put into its programming mode via the DS64
  * built-in pushbutton while this tool is in use.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ * <p>
  * Extensions to include read/write of turnout output addresses and routes are
  * based on reverse-engineering of DS64 operating characteristics by B.
  * Milhaupt. As such, this tool may not be compatible with all DS64 devices.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * Based on Revision 1.1 of DS64Panel.java by Bob Jacobsen
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2005, 2007, 2010
  * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017
  */
@@ -100,7 +100,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Ds64TabbedPanel constructor when the boardNum is already known.
-     * <P>
+     * <p>
      * When instantiated, the object will not automatically read the basic
      * configuration information.
      *
@@ -120,7 +120,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      * to pre-populate the GUI combobox showing BoardID numbers. The first
      * BoardID number in the array will automatically be selected upon
      * instantiation.
-     * <P>
+     * <p>
      * When instantiated, the object will automatically read the basic
      * configuration information if readOnInit is true.
      *
@@ -145,7 +145,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     /**
      * Ds64TabbedPanel constructor when the boardNum is not known; BoardID 1 is
      * assumed.
-     * <P>
+     * <p>
      * Allows the instantiating method to specify whether the basic feature
      * configuration information will be read upon instantiation.
      *
@@ -207,7 +207,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     JLabel commandSourceLabel;
     JComboBox<String> commandSource;
 
-// Crossbuck Flasher controls
+    // Crossbuck Flasher controls
     JCheckBox output1CrossbuckFlasherCheckBox;
     JCheckBox output2CrossbuckFlasherCheckBox;
     JCheckBox output3CrossbuckFlasherCheckBox;
@@ -217,7 +217,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
     JLabel routesControlLabel;
     JComboBox<String> routesControl;
 
-// local input controls
+    // local input controls
     JLabel localControlOfOutputsStyleLabel;
     JComboBox<String> localControlOfOutputsStyle;
 
@@ -263,7 +263,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**
      * Copy from the GUI to the opsw array.
-     * <P>
+     * <p>
      * Used before write operations start.
      */
     @Override
@@ -1913,23 +1913,23 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             int swAddr = (((m.getElement(2) & 0x0f) * 128) + (m.getElement(1) & 0x7f)) + 1;
             boolean dir = ((m.getElement(2) & 0x20) == 0x20);
             if (swAddr == Integer.parseInt(outAddr1.getText())) {
-                outState1.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState1.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState1.updateUI();
             }
             if (swAddr == Integer.parseInt(outAddr2.getText())) {
-                outState2.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState2.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState2.updateUI();
             }
             if (swAddr == Integer.parseInt(outAddr3.getText())) {
-                outState3.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState3.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState3.updateUI();
             }
             if (swAddr == Integer.parseInt(outAddr4.getText())) {
-                outState4.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                outState4.setText(dir ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 outState4.updateUI();
             }
         } else if ((m.getOpCode() == LnConstants.OPC_MULTI_SENSE) && ((m.getElement(1) & 0x7E) == 0x62)) {
@@ -1956,7 +1956,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             Bundle.getMessage("ButtonCancel")};
         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                 Bundle.getMessage("DialogTextBoardResetWarning"),
-                Bundle.getMessage("DialogHeadingBoardResetWarning"),
+                Bundle.getMessage("WarningTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
         if (userReply != 0) {
@@ -2018,9 +2018,9 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         //      Outputs tab - configure features most related to DS64 outputs
         //      Inputs tab - configure features most related to DS64 inputs
         //      Routes tab - configure features related to routes
-        //          Routes tab has sub-tabs, one for each of the 8 routes
+        //          Routes tab has (left side, vertical) sub-tabs, one for each of the 8 routes
 
-        addrField.setText(Bundle.getMessage("LABEL_UNIT_ADDRESS"));
+        addrField.setText(Bundle.getMessage("LabelBoardID"));
 
         String[] outputTypes = {Bundle.getMessage("ComboBoxOutputType0"),
             Bundle.getMessage("ComboBoxOutputType1")};
@@ -2096,22 +2096,22 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         commandSource.addActionListener(basicConfigChangeActionListener);
 
         // Crossbuck Flasher controls
-        output1CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput1Crossbuck"));
+        output1CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 1));
         output1CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput1Crossbuck"));
         output1CrossbuckFlasherCheckBox.setName("17"); // NOI18N
         output1CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-
-        output2CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput2Crossbuck"));
+        // output 2
+        output2CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 2));
         output2CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput2Crossbuck"));
         output2CrossbuckFlasherCheckBox.setName("18"); // NOI18N
         output2CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-
-        output3CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput3Crossbuck"));
+        // output 3
+        output3CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 3));
         output3CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput3Crossbuck"));
         output3CrossbuckFlasherCheckBox.setName("19"); // NOI18N
         output3CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
-
-        output4CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutput4Crossbuck"));
+        // output 4
+        output4CrossbuckFlasherCheckBox = new JCheckBox(Bundle.getMessage("CheckBoxOutputXCrossbuck", 4));
         output4CrossbuckFlasherCheckBox.setToolTipText(Bundle.getMessage("ToolTipCheckBoxOutput4Crossbuck"));
         output4CrossbuckFlasherCheckBox.setName("20"); // NOI18N
         output4CrossbuckFlasherCheckBox.addActionListener(basicConfigChangeActionListener);
@@ -2154,8 +2154,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         localSensorType.setName("21"); // NOI18N
         localSensorType.addActionListener(basicConfigChangeActionListener);
 
-        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonTextResetToFactoryDefault"));
-        factoryResetButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextResetToFactoryDefault"));
+        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonResetToFactoryDefault"));
+        factoryResetButton.setToolTipText(Bundle.getMessage("ToolTipButtonResetToFactoryDefault"));
         factoryResetButton.addActionListener(
                 event -> {
                     readAllButton.setEnabled(false);
@@ -2176,19 +2176,19 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         routeA7 = new SimpleTurnoutStateEntry[9];
         routeA8 = new SimpleTurnoutStateEntry[9];
 
-        resetRouteButton = new JToggleButton(Bundle.getMessage("ButtonTextResetRoute"));
-        resetRouteButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextResetRoute"));
+        resetRouteButton = new JToggleButton(Bundle.getMessage("ButtonResetRoute"));
+        resetRouteButton.setToolTipText(Bundle.getMessage("ToolTipButtonResetRoute"));
         resetRouteButton.setEnabled(false);
         resetRouteButton.setVisible(false);
 
         JPanel addressingPanel = provideAddressing(" "); // create read/write buttons, address
         readAllButton.setPreferredSize(null);
-        readAllButton.setText(Bundle.getMessage("ButtonTextReadFullSheet"));
-        readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextReadFullSheet"));
+        readAllButton.setText(Bundle.getMessage("ButtonReadFullSheet"));
+        readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonReadFullSheet"));
 
         writeAllButton.setPreferredSize(null);
-        writeAllButton.setText(Bundle.getMessage("ButtonTextWriteFullSheet"));
-        writeAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextWriteFullSheet"));
+        writeAllButton.setText(Bundle.getMessage("ButtonWriteFullSheet"));
+        writeAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonWriteFullSheet"));
 
         // make both buttons a little bit bigger, with identical (preferred) sizes
         // (width increased because some computers/displays trim the button text)
@@ -2266,8 +2266,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         JPanel crossingGateControls = new JPanel(new java.awt.GridLayout(2, 2));
         crossingGateControls.add(output1CrossbuckFlasherCheckBox);
-        crossingGateControls.add(output2CrossbuckFlasherCheckBox);
-        crossingGateControls.add(output3CrossbuckFlasherCheckBox);
+        crossingGateControls.add(output3CrossbuckFlasherCheckBox); // display output 3 box to the right of output 1 box
+        crossingGateControls.add(output2CrossbuckFlasherCheckBox); // display output 2 box below output 1 box
         crossingGateControls.add(output4CrossbuckFlasherCheckBox);
         allOutputControls.add(crossingGateControls);
 
@@ -2360,8 +2360,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 log.debug("Creating entry for OpSw {}", i);
                 innerPanel = new JPanel(new FlowLayout());
                 innerPanel.add(new JLabel("OpSw " + i)); // NOI18N
-                opswThrown[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("RadioButtonTextThrown"));
-                opswClosed[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("RadioButtonTextClosed"));
+                opswThrown[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("TurnoutStateThrown"));
+                opswClosed[i] = new JRadioButtonWithInteger(i, Bundle.getMessage("TurnoutStateClosed"));
                 g[i] = new ButtonGroup();
                 g[i].add(opswThrown[i]);
                 g[i].add(opswClosed[i]);
@@ -2399,36 +2399,36 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput1")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 1)));
         outAddr1 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState1 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState1 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr1);
         p.add(outState1);
         outputAddrsPanel.add(p);
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput2")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 2)));
         outAddr2 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState2 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState2 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr2);
         p.add(outState2);
         outputAddrsPanel.add(p);
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput3")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 3)));
         outAddr3 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState3 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState3 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr3);
         p.add(outState3);
         outputAddrsPanel.add(p);
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(new JLabel(Bundle.getMessage("LabelTextOutput4")));
+        p.add(new JLabel(Bundle.getMessage("LabelTextOutputX", 4)));
         outAddr4 = new ValidatedTextField(5, false, 1, 2048, Bundle.getMessage("ErrorTextNonBlankAddressInvalid"));
-        outState4 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentlyIsUnknown"));
+        outState4 = new JLabel(Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateUnknown")));
         p.add(outAddr4);
         p.add(outState4);
         outputAddrsPanel.add(p);
@@ -2517,11 +2517,11 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                     if (routeNumber != 0) {
                         // before proceeding, make sure that the user really wants to go forward
                         Object[] dialogBoxButtonOptions = {
-                            Bundle.getMessage("ButtonTextResetRouteN", routeNumber),
+                            Bundle.getMessage("ButtonResetRouteN", routeNumber),
                             Bundle.getMessage("ButtonCancel")};
                         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                                 Bundle.getMessage("DialogTextClearRouteWarning", routeNumber),
-                                Bundle.getMessage("DialogHeadingClearRouteWarning"),
+                                Bundle.getMessage("WarningTitle"),
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[1]);
                         if (userReply != 0) {
@@ -2694,8 +2694,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr2.setText(Integer.toString(readValue));
                 outAddr2.setLastQueriedValue(outAddr2.getText());
                 outState2.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 1: {
@@ -2703,8 +2703,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr4.setText(Integer.toString(readValue));
                 outAddr4.setLastQueriedValue(outAddr4.getText());
                 outState4.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 16:
@@ -2844,8 +2844,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr1.setLastQueriedValue(readValueString);
                 outAddr1.isValid();
                 outState1.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 1: {
@@ -2853,8 +2853,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 outAddr3.setText(readValueString);
                 outAddr3.setLastQueriedValue(readValueString);
                 outState3.setText(direction
-                        ? Bundle.getMessage("LabelTurnoutCurrentlyIsClosed")
-                        : Bundle.getMessage("LabelTurnoutCurrentlyIsThrown"));
+                        ? Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateClosed"))
+                        : Bundle.getMessage("LabelTurnoutCurrentStateX", Bundle.getMessage("BeanStateThrown")));
                 break;
             }
             case 16:
@@ -3075,5 +3075,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             index = i;
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(Ds64TabbedPanel.class); // NOI18N
+
 }
