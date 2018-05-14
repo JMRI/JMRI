@@ -1142,10 +1142,8 @@ public class TrainBuilderTest {
         Train train1 = tmanager.getTrainById("1");
         Train train2 = tmanager.getTrainById("2");
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
-
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
-
         Car c8 = cmanager.getByRoadAndNumber("CP", "888");
 
         // Try building without engines
@@ -3929,7 +3927,7 @@ public class TrainBuilderTest {
         loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk1.setLength(900);
         loc2trk1.deleteTypeName(carTypes[4]);
-        loc2trk1.setScheduleId(sch1.getId());
+        loc2trk1.setSchedule(sch1);
         loc2trk1.setScheduleMode(Track.SEQUENTIAL);
         // start the schedule with 2nd item Flat Car
         loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1).getId());
@@ -3939,7 +3937,7 @@ public class TrainBuilderTest {
         loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk2.setLength(900);
         loc2trk2.deleteTypeName(carTypes[4]);
-        loc2trk2.setScheduleId(sch1.getId());
+        loc2trk2.setSchedule(sch1);
         loc2trk2.setScheduleMode(Track.SEQUENTIAL);
         // start the schedule with 3rd item Gon
         loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2).getId());
@@ -3955,7 +3953,7 @@ public class TrainBuilderTest {
         loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SPUR);
         loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
         loc2trk4.setLength(900);
-        loc2trk4.setScheduleId(sch2.getId());
+        loc2trk4.setSchedule(sch2);
         loc2trk4.setScheduleMode(Track.SEQUENTIAL);
 
         Track loc3trk1;
@@ -7634,7 +7632,7 @@ public class TrainBuilderTest {
 
         // try local move, local track has the least number of moves, so tried first by program
         Schedule sch1 = smanager.getScheduleByName("Schedule for car load");
-        westendSpur1.setScheduleId(sch1.getId()); // now all spurs have schedules
+        westendSpur1.setSchedule(sch1); // now all spurs have schedules
 
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
@@ -7986,9 +7984,9 @@ public class TrainBuilderTest {
         ScheduleItem sch1Item1 = sch1.addItem("Boxcar");
         sch1Item1.setReceiveLoadName("Bags");
 
-        midtownSpur1.setScheduleId(sch1.getId());
-        midtownSpur2.setScheduleId(sch1.getId());
-        eastendSpur1.setScheduleId(sch1.getId());
+        midtownSpur1.setSchedule(sch1);
+        midtownSpur2.setSchedule(sch1);
+        eastendSpur1.setSchedule(sch1);
 
         // load cars
         Car c1 = cmanager.newCar("AA", "1");

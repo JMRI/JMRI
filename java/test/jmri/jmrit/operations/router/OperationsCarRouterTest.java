@@ -3333,11 +3333,11 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         schDItem1.setDestinationTrack(foxboroSpur1);
 
         // Add schedule to tracks
-        danburySpur1.setScheduleId(schB.getId());
-        danburySpur2.setScheduleId(schC.getId());
-        essexSpur1.setScheduleId(schD.getId());
-        essexSpur2.setScheduleId(schA.getId());
-        clintonSpur1.setScheduleId(schA.getId());
+        danburySpur1.setSchedule(schB);
+        danburySpur2.setSchedule(schC);
+        essexSpur1.setSchedule(schD);
+        essexSpur2.setSchedule(schA);
+        clintonSpur1.setSchedule(schA);
 
         // bias track
         essexSpur2.setMoves(0);
@@ -3673,12 +3673,12 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         schAItem3.setDestinationTrack(danburySpur1);
 
         // Add schedule to tracks
-        clintonSpur1.setScheduleId(schA.getId());
+        clintonSpur1.setSchedule(schA);
         clintonSpur1.setScheduleMode(Track.SEQUENTIAL);
-        danburySpur1.setScheduleId("");
-        danburySpur2.setScheduleId("");
-        essexSpur1.setScheduleId("");
-        essexSpur2.setScheduleId("");
+        danburySpur1.setSchedule(null);
+        danburySpur2.setSchedule(null);
+        essexSpur1.setSchedule(null);
+        essexSpur2.setSchedule(null);
 
         // c3 (BA 3) is a Boxcar
         c3.setLoadName("Empty");
@@ -3886,8 +3886,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         schAItem5.setDestinationTrack(essexSpur2);
 
         // Add schedule to tracks
-        clintonSpur1.setScheduleId("");
-        essexSpur1.setScheduleId(schA.getId());
+        clintonSpur1.setSchedule(null);
+        essexSpur1.setSchedule(schA);
         essexSpur1.setScheduleMode(Track.MATCH);	// set schedule into match mode
 
         // c3 (BA 3) is a Boxcar
@@ -4035,8 +4035,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         schAItem5.setDestinationTrack(foxboroSpur1);
 
         // Add schedule to tracks
-        clintonSpur1.setScheduleId("");
-        essexSpur1.setScheduleId(schA.getId());
+        clintonSpur1.setSchedule(null);
+        essexSpur1.setSchedule(schA);
         essexSpur1.setScheduleMode(Track.MATCH);	// set schedule into match mode
 
         // c3 (BA 3) is a Boxcar
@@ -4458,11 +4458,11 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         schAItem7.setShipLoadName("L");
 
         // add schedules to tracks
-        actonSpur1.setScheduleId(schA.getId());
+        actonSpur1.setSchedule(schA);
         actonSpur1.setScheduleMode(Track.SEQUENTIAL);
-        actonSpur2.setScheduleId(schA.getId());
+        actonSpur2.setSchedule(schA);
         actonSpur2.setScheduleMode(Track.SEQUENTIAL);
-        AS3.setScheduleId(schA.getId());
+        AS3.setSchedule(schA);
         // put Action Siding 3 into match mode
         AS3.setScheduleMode(Track.MATCH);
 
