@@ -249,7 +249,7 @@ public class Track {
         newTrack.setReservationFactor(getReservationFactor());
         newTrack.setRoadNames(getRoadNames());
         newTrack.setRoadOption(getRoadOption());
-        newTrack.setScheduleId(getScheduleId());
+        newTrack.setSchedule(getSchedule());
         newTrack.setScheduleMode(getScheduleMode());
         newTrack.setServiceOrder(getServiceOrder());
         newTrack.setShipLoadNames(getShipLoadNames());
@@ -1577,6 +1577,14 @@ public class Track {
             log.error("No schedule for id: " + getScheduleId());
         }
         return schedule;
+    }
+    
+    public void setSchedule(Schedule schedule) {
+        String scheduleId = NONE;
+        if (schedule != null) {
+            scheduleId = schedule.getId();
+        }
+        setScheduleId(scheduleId);
     }
 
     public String getScheduleId() {
