@@ -1201,8 +1201,8 @@ public class LayoutEditorTools {
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
      *
-     * @deprectated since 4.11.6, use 
-     * {@link #setSginalHeadOnPanel(double, String, int, int} directly.
+     * @deprecated since 4.11.6, use 
+     * {@link #setSginalHeadOnPanel(double, String, int, int)} directly.
      */
     @Deprecated
     public void setSignalHeadOnPanel(int rotation,
@@ -1216,7 +1216,7 @@ public class LayoutEditorTools {
      * place, with all icons taken care of.
      *
      * @param directionDEG rotation in degrees.
-     * @param signalName name of a signal head.
+     * @param signalHeadName name of a signal head.
      * @param where coordinates for placing signal head on panel.
      */
     public void setSignalHeadOnPanel(double directionDEG, @Nonnull String signalHeadName, @Nonnull Point2D where) {
@@ -1228,7 +1228,7 @@ public class LayoutEditorTools {
      * place, with all icons taken care of.
      *
      * @param directionDEG rotation in degrees.
-     * @param signalName name of a signal head.
+     * @param signalHeadName name of a signal head.
      * @param xLoc x coordinate for placing signal head on panel.
      * @param yLoc y coordinate for placing signal head on panel.
      */
