@@ -12,12 +12,12 @@ import org.junit.Test;
  */
 public class LnPacketizerStrictTest extends LnPacketizerTest {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnPacketizerStrict();
+        memo = new LocoNetSystemConnectionMemo();
+        lnp = new LnPacketizerStrict(memo);
     }
 
     @After
@@ -26,4 +26,5 @@ public class LnPacketizerStrictTest extends LnPacketizerTest {
         lnp = null;
         JUnitUtil.tearDown();
     }
+
 }

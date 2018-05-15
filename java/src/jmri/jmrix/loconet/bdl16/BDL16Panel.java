@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import jmri.jmrix.loconet.AbstractBoardProgPanel;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
  */
-public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
+public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**
      * BDL16x Configuration Tool.
@@ -120,7 +121,6 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         opsw[43] = ((index==1) || (index==3))?true:false;
         opsw[44] = (index >=2)?true:false;
         opsw[40] = comboBox[40].getSelectedIndex()==1;
-
     }
 
     /**
@@ -146,7 +146,6 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         comboBox[42].setSelectedIndex(opsw[42]?1:0);
         comboBox[40].setSelectedIndex(opsw[40]?1:0);
 
-        
         int temp = opsw[37]?1:0;
         temp += opsw[38]?2:0;
         comboBox[37].setSelectedIndex(temp);
@@ -154,7 +153,6 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         temp = opsw[43]?1:0;
         temp += opsw[44]?2:0;
         comboBox[43].setSelectedIndex(temp);
-
     }
 
     /**
@@ -262,12 +260,12 @@ public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         addressingPanel.getComponent(0).setVisible(false);
         
         readAllButton.setPreferredSize(null);
-        readAllButton.setText(Bundle.getMessage("ButtonTextReadFullSheet"));
-        readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextReadFullSheet"));
+        readAllButton.setText(Bundle.getMessage("ButtonReadFullSheet"));
+        readAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonReadFullSheet"));
 
         writeAllButton.setPreferredSize(null);
-        writeAllButton.setText(Bundle.getMessage("ButtonTextWriteFullSheet"));
-        writeAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonTextWriteFullSheet"));
+        writeAllButton.setText(Bundle.getMessage("ButtonWriteFullSheet"));
+        writeAllButton.setToolTipText(Bundle.getMessage("ToolTipButtonWriteFullSheet"));
 
         // make both buttons a little bit bigger, with identical (preferred) sizes
         // (width increased because some computers/displays trim the button text)

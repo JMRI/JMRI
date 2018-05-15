@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.duplexgroup;
 
 /**
- * Defines constants related to Digitrax Duplex Groups and related GUI
+ * Constants related to Digitrax Duplex Groups and related GUI
  * operations.
  *
  * @author B. Milhaupt Copyright 2010, 2011
@@ -26,5 +26,4 @@ public final class LnDplxGrpInfoImplConstants {
     public final static int DPLX_QUERY_DELAY = 300; // # milliseconds to wait for response to Duplex info query
     public final static int DPLX_SCAN_DELAY = 200; // # milliseconds to wait for response to scan query
     public final static int DPLX_SCAN_LOOP_COUNT = 25;
-
 }

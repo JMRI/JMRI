@@ -14,8 +14,8 @@ public class ClientRxHandlerTest {
 
     @Test
     public void testCTor() {
-        ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
-        Assert.assertNotNull("exists",t);
+        ClientRxHandler t = new ClientRxHandler("127.0.0.1", new java.net.Socket(), new jmri.jmrix.loconet.LocoNetInterfaceScaffold());
+        Assert.assertNotNull("exists", t);
         t.dispose();
     }
 

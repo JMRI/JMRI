@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * PowerManager implementation for controlling layout power
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPowerManager
@@ -142,7 +142,7 @@ public class LnPowerManager
     volatile LnTrackStatusUpdateThread thread;
     
     /**
-     * Class providing a thread to delay then query slot 0. The LnPowerManager
+     * Class providing a thread to delay, then query slot 0. The LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the
      * current track status.
      */
@@ -151,7 +151,7 @@ public class LnPowerManager
         private LnTrafficController tc;
 
         /**
-         * Constructs the thread
+         * Construct the thread.
          *
          * @param tc LocoNetTrafficController which can be used to send the
          *           LocoNet message.
@@ -161,13 +161,13 @@ public class LnPowerManager
         }
 
         /**
-         * Runs the thread - Waits a while (to allow the managers to initialize)
-         * then sends a query of slot 0 so that the power manager can inspect
+         * Runs the thread - Waits a while (to allow the managers to initialize),
+         * then sends a query of slot 0 so that the PowerManager can inspect
          * the {@code "<trk>"} byte.
          */
         @Override
         public void run() {
-            // wait a little bit to allow power manager to be initialized
+            // wait a little bit to allow PowerManager to be initialized
             try {
                 // Delay 500 mSec to allow init of traffic controller, listeners.
                 Thread.sleep(500);
@@ -179,8 +179,25 @@ public class LnPowerManager
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);
             msg.setElement(2, 0);
-            tc.sendLocoNetMessage(msg);
+            while (true) {
+                try {
+                    tc.sendLocoNetMessage(msg);
+                    break;
+                } catch (NullPointerException npe) {
+                    // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so repeat
+                    log.debug("init of LnPowerManager delayed");
+                    try {
+                        Thread.sleep(10); // wait 1 cycle for tc to init
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // retain if needed later
+                        return; // and stop work
+                    }
+                }
+            }
+            log.debug("LnTrackStatusUpdate sent");
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class);
+
 }

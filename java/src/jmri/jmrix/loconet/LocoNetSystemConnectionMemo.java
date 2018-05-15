@@ -73,11 +73,15 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      *
      * @return the LocoNet-specific TrafficController
      */
     public LnTrafficController getLnTrafficController() {
+        if (lt == null) {
+            setLnTrafficController(new LnPacketizer(this)); // default to Packetizer TrafficController
+            log.debug("Auto create of LnTrafficController for initial configuration");
+        }
         return lt;
     }
 
@@ -110,7 +114,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     protected boolean mTurnoutExtraSpace = false;
 
     /**
-     * Configure the programming manager and "command station" objects
+     * Configure the programming manager and "command station" objects.
      *
      * @param type               Command station type, used to configure various
      *                           operations
@@ -141,7 +145,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
         }
-
     }
 
     /**
@@ -244,7 +247,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with: {}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
             log.debug("set turnout retry: {}", mTurnoutNoRetry);
@@ -279,7 +282,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         ClockControl cc = getClockControl();
         // make sure InstanceManager knows about that
         InstanceManager.setDefault(ClockControl.class, cc);
-
     }
 
     protected LnPowerManager powerManager;

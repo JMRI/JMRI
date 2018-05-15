@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Only change compared to standard Loconet SlotManager is CV programming. The
  * Uhlenbrock IB-COM / Intellibox II uses some special and undocumented means
- * (OPC_IMM_PACKET
+ * (OPC_IMM_PACKET).
  *
  * {@code PC -> IB: BB 7F 00 3B OPC_RQ_SL_DATA, 127(Command Station Options ), 0
  * IB -> PC: B4 3B 00 70 OPC_LONG_ACK, on OPC_RQ_SL_DATA, 0}
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * {@code # end off programming session PC -> IB: E5 07 01 49 42 40 57
  * OPC_PEER_XFER, src=7, dst=}
  *
- *
  * {@code # start of programming session PC -> IB: E5 07 01 49 42 41 56
  * OPC_PEER_XFER, src=7, dst= PC -> IB: 82 7D OPC_GPOFF}
  *
@@ -36,15 +35,11 @@ import org.slf4j.LoggerFactory;
  * {@code # end off programming session PC -> IB: E5 07 01 49 42 40 57
  * OPC_PEER_XFER, src=7, dst=}
  *
- *
- *
  * {@code # write 254 in cv 27 HB W CV CV VV ED 1F 01 49 42 79 71 1B 00 7E 70 00
  * 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0A # HB = high bit for
  * CV value}
  *
  * {@code # response HB VV E7 0E 7C 00 00 00 71 06 02 00 7E 00 00 61}
- *
- *
  *
  * {@code # write 255 in cv 545 HB W CV CV VV ED 1F 01 49 42 79 71 21 02 7F 70
  * 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 33}
@@ -52,10 +47,7 @@ import org.slf4j.LoggerFactory;
  * {@code # read cv 393 HB R CV CV VV ED 1F 01 49 42 73 72 09 02 00 70 00 00 00
  * 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6D}
  *
- *
- * <P>
  * @author Lisby Copyright (C) 2014
- *
  */
 public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
 
