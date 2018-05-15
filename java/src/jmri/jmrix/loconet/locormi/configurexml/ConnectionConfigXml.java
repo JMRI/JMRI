@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistence of layout connections by persisting the RMI objects
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the RMI info.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.

@@ -55,6 +55,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     // in pr3/PR3Adapter
     /**
      * Set config info from a name, which needs to be one of the valid ones.
+     *
      * @param name the name of the command station
      */
     public void setCommandStationType(String name) {
@@ -68,14 +69,15 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     /**
-     * Set configcommand station type
+     * Set configcommand station type.
+     *
      * @param value command station type enum
      */
     public void setCommandStationType(LnCommandStationType value) {
         if (value == null) {
             return;  // can happen while switching protocols
         }
-        log.debug("setCommandStationType: " + value);
+        log.debug("setCommandStationType: {}", value);
         commandStationType = value;
     }
 
@@ -85,29 +87,32 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     public void setTurnoutHandling(String value) {
-        if (value.equals("One Only") || value.equals("Both")) {
+        if (value.equals("One Only") || value.equals(Bundle.getMessage("HandleOneOnly"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutNoRetry = true;
         }
-        if (value.equals("Spread") || value.equals("Both")) {
+        log.debug("turnout no retry: {}", mTurnoutNoRetry); // NOI18N
+        if (value.equals("Spread") || value.equals(Bundle.getMessage("HandleSpread"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: " + mTurnoutNoRetry);
-        log.debug("turnout extra space: " + mTurnoutExtraSpace);
+        log.debug("turnout extra space: {}", mTurnoutExtraSpace); // NOI18N
     }
 
     /**
-     * sets whether transponding is available
+     * Set whether transponding is available.
+     *
      * @param value either yes or no
      */
     public void setTranspondingAvailable(String value) {
         // default (most common state) is off, so just check for Yes
-        mTranspondingAvailable = value.equals("Yes");
+        mTranspondingAvailable = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
 
     /**
      * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption3(String value) {

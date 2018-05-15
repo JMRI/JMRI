@@ -18,4 +18,5 @@ public interface LnMessageBufferInterface extends Remote {
     public Object[] getMessages(long timeout) throws RemoteException;
 
     public void sendLocoNetMessage(LocoNetMessage m) throws RemoteException;
+
 }

@@ -40,9 +40,7 @@ public class ConnectionStatus {
 
     public static synchronized ConnectionStatus instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("ConnectionStatus creating instance");
-            }
+            log.debug("ConnectionStatus creating instance");
             // create and load
             _instance = new ConnectionStatus();
         }
@@ -295,4 +293,5 @@ public class ConnectionStatus {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionStatus.class);
+
 }

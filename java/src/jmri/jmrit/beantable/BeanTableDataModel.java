@@ -795,7 +795,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         T oldNameBean = getBySystemName(sysNameList.get(row));
 
         if ((currentName == null) || currentName.equals("")) {
-            JOptionPane.showMessageDialog(null, "Can not move an empty UserName");
+            JOptionPane.showMessageDialog(null, "Can not move an empty UserName"); // TODO I18N
             return;
         }
 

@@ -7,25 +7,27 @@ import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
+ * Converts Stream-based I/O over the LocoNetOverTcp system network
+ * connection to/from LocoNet messages. The "LocoNetInterface"
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortnetworkController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <P>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
+ *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -34,19 +36,23 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Alex Shepherd Copyright (C) 2003, 2006
- *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
 
     static final String RECEIVE_PREFIX = "RECEIVE";
     static final String SEND_PREFIX = "SEND";
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
-    public LnOverTcpPacketizer() {
-        self = this;
+    public LnOverTcpPacketizer(LocoNetSystemConnectionMemo m) {
+        super(m);
         xmtHandler = new XmtHandler();
         rcvHandler = new RcvHandler(this);
+    }
+
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Only used during system initialization")
+    @Deprecated
+    public LnOverTcpPacketizer() {
+        this(new LocoNetSystemConnectionMemo());
     }
 
     public LnNetworkPortController networkController = null;
@@ -56,12 +62,11 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         if (networkController == null) {
             return false;
         }
-
         return true;
     }
 
     /**
-     * Make connection to existing LnPortnetworkController object.
+     * Make connection to an existing LnPortnetworkController object.
      *
      * @param p Port networkController for connected. Save this for a later
      *          disconnect call
@@ -98,7 +103,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     class RcvHandler implements Runnable {
 
         /**
-         * Remember the LnPacketizer object
+         * Remember the LnPacketizer object.
          */
         LnOverTcpPacketizer trafficController;
 
@@ -113,7 +118,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         public void run() {
 
             String rxLine;
-            while (true) {   // loop permanently, program close will exit
+            while (true) {  // loop permanently, program close will exit
                 try {
                     // start by looking for a complete line
                     rxLine = istream.readLine();
@@ -155,8 +160,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                 /* N byte message */
 
                                 if (byte2 < 2) {
-                                    log.error("LocoNet message length invalid: " + byte2
-                                            + " opcode: " + Integer.toHexString(opCode));
+                                    log.error("LocoNet message length invalid: {} opcode: {}",
+                                            byte2, Integer.toHexString(opCode));
                                 }
                                 msg = new LocoNetMessage(byte2);
                                 break;
@@ -166,12 +171,12 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         msg.setOpCode(opCode);
                         msg.setElement(1, byte2);
                         int len = msg.getNumDataElements();
-                        //log.debug("len: "+len);
+                        //log.debug("len: {}", len);
 
                         for (int i = 2; i < len; i++) {
                             // check for message-blocking error
                             int b = Integer.parseInt(st.nextToken(), 16);
-                            //log.debug("char "+i+" is: "+Integer.toHexString(b));
+                            // log.debug("char {} is: {}", i, Integer.toHexString(b));
                             if ((b & 0x80) != 0) {
                                 log.warn("LocoNet message with opCode: "
                                         + Integer.toHexString(opCode)
@@ -191,15 +196,15 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         }
 
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notify(msgForLater);
+                                myTc.notify(msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);
@@ -207,27 +212,27 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: " + e);
+                    log.warn("run: unexpected LocoNetMessageException: ", e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.debug("EOFException, is LocoNet serial I/O using timeouts?");
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
-                    log.debug("IOException, should only happen with HexFIle: {}", e);
+                    log.debug("IOException, should only happen with HexFile: ", e);
                     log.info("End of file");
 //                    disconnectPort(networkController);
                     return;
                 } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception: " + e);
+                    log.warn("run: unexpected Exception: ", e);
                 }
             } // end of permanent loop
         }
     }
 
     /**
-     * Captive class to handle transmission
+     * Captive class to handle transmission.
      */
     class XmtHandler implements Runnable {
 
@@ -247,8 +252,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            //Commented out as the origianl LnPortnetworkController always returned true.
-                            //if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
+                            // Commented out as the original LnPortnetworkController always returned true.
+                            // if (!networkController.okToSend()) log.warn("LocoNet port not ready to receive"); // TCP, not RS232, so message is a real warning
                             log.debug("start write to stream");
                             StringBuffer packet = new StringBuffer(msg.length * 3 + SEND_PREFIX.length() + 2);
                             packet.append(SEND_PREFIX);
@@ -273,7 +278,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             log.warn("sendLocoNetMessage: no connection established");
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString());
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString());
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
@@ -288,4 +293,5 @@ public class LnOverTcpPacketizer extends LnPacketizer {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class);
+
 }

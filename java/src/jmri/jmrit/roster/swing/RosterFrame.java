@@ -108,7 +108,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * TODO: Several methods are copied from PaneProgFrame and should be refactored
  * No programmer support yet (dummy object below). Color only covering borders.
- * No reset toolbar support yet No glass pane support (See DecoderPro3Panes
+ * No reset toolbar support yet. No glass pane support (See DecoderPro3Panes
  * class and usage below). Special panes (Roster entry, attributes, graphics)
  * not included. How do you pick a programmer file? (hardcoded) Initialization
  * needs partial deferal, too for 1st pane to appear.
@@ -290,9 +290,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         panel.add(buttonHolder);
         prog1Button.setEnabled(false);
         prog1Button.addActionListener((ActionEvent e) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("Open programmer pressed");
-            }
+            log.debug("Open programmer pressed");
             startProgrammer(null, re, programmer1);
         });
         /*
@@ -311,17 +309,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
          */
         rosterMedia.setEnabled(false);
         rosterMedia.addActionListener((ActionEvent e) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("Open programmer pressed");
-            }
+            log.debug("Open programmer pressed");
             edit.setSelected(true);
             startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
         });
         throttleLaunch.setEnabled(false);
         throttleLaunch.addActionListener((ActionEvent e) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("Launch Throttle pressed");
-            }
+            log.debug("Launch Throttle pressed");
             if (!checkIfEntrySelected()) {
                 return;
             }
@@ -639,6 +633,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /*=============== Getters and Setters for core properties ===============*/
+
     /**
      * @return Will closing the window quit JMRI?
      */
@@ -1149,9 +1144,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             re.removePropertyChangeListener(rosterEntryUpdateListener);
         }
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress), null, null, null, null);
-        if (log.isDebugEnabled()) {
-            log.debug("selectLoco found " + l.size() + " matches");
-        }
+        log.debug("selectLoco found {} matches", l.size());
         if (l.size() > 0) {
             if (l.size() > 1) {
                 //More than one possible loco, so check long flag
