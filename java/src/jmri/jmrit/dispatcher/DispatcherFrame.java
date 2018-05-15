@@ -2577,8 +2577,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case NEXTSECTION_COLUMN:
                     return (at.getNextSectionToAllocateName());
                 case ALLOCATEBUTTON_COLUMN:
-                case TERMINATEBUTTON_COLUMN:
                     return Bundle.getMessage("AllocateButtonName");
+                case TERMINATEBUTTON_COLUMN:
+                    return Bundle.getMessage("TerminateTrain");
                 default:
                     return (" ");
             }
