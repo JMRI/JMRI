@@ -449,7 +449,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             JPanel p1 = new JPanel();
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 //            p1.setLayout(new BorderLayout());
-            
             JPanel p11 = new JPanel();
             p11.setLayout(new FlowLayout());
             p11.add(new JLabel(rbx.getString("SectionTableMessage")));

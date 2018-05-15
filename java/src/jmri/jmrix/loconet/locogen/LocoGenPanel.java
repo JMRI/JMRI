@@ -44,7 +44,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     javax.swing.JButton add10Throttles = new javax.swing.JButton("Add 10 Throttles");
     javax.swing.JButton del10Throttles = new javax.swing.JButton("Del 10 Throttles");
     javax.swing.JTextField throttleIdField = new javax.swing.JTextField(4);
-   
+
 
     public LocoGenPanel() {
         super();
@@ -179,7 +179,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         int count=0;
         try {
             throttleAddr = Integer.parseInt(throttleIdField.getText());
-        } 
+        }
         catch (Exception e3) {
             log.error("Bother leaving it at[{}]",throttleAddr);
         }

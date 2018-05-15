@@ -340,7 +340,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             JButton sampleButton = new JButton(Bundle.getMessage("AllocateButtonName"));
             activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
             allocateButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
-            
             TableColumn releaseButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TERMINATEBUTTON_COLUMN);
             releaseButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
             releaseButtonColumn.setMinWidth(110);

@@ -712,7 +712,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * functions F0, F1, F2, F3, F4, F5, F6
      */
     protected void sendExpFunctionGroup1() {
-            int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0) 
+            int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0)
                 | (getF0() ? LnConstants.DIRF_F0 : 0)
                 | (getF1() ? LnConstants.DIRF_F1 : 0)
                 | (getF2() ? LnConstants.DIRF_F2 : 0)
@@ -731,7 +731,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Send the Expanded LocoNet message to set the state of functions F7, F8, F8, F9, F10, F11, F12, F13
      */
     protected void sendExpFunctionGroup2() {
-            int new_F7F13 = ((getF7() ? 0b00000001 : 0) | (getF8() ? 0b00000010 : 0) 
+            int new_F7F13 = ((getF7() ? 0b00000001 : 0) | (getF8() ? 0b00000010 : 0)
                     | (getF9()  ? 0b00000100 : 0)
                     | (getF10() ? 0b00001000 : 0)
                     | (getF11() ? 0b00010000 : 0)
@@ -751,7 +751,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Message.
      */
     protected void sendExpFunctionGroup3() {
-        int new_F14F20 = ((getF14() ? 0b00000001 : 0) | (getF15() ? 0b00000010 : 0) 
+        int new_F14F20 = ((getF14() ? 0b00000001 : 0) | (getF15() ? 0b00000010 : 0)
                 | (getF16()  ? 0b00000100 : 0)
                 | (getF17() ? 0b00001000 : 0)
                 | (getF18() ? 0b00010000 : 0)
@@ -764,7 +764,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F14F20);
             network.sendLocoNetMessage(msg);
-    }        
+    }
 
     /**
      * Sends Expanded loconet message F21 thru F28 Message.
