@@ -1202,7 +1202,7 @@ public class LayoutEditorTools {
      * place, with all icons taken care of.
      *
      * @deprecated since 4.11.6, use 
-     * {@link #setSginalHeadOnPanel(double, String, int, int)} directly.
+     * {@link #setSignalHeadOnPanel(double, String, int, int)} directly.
      */
     @Deprecated
     public void setSignalHeadOnPanel(int rotation,
