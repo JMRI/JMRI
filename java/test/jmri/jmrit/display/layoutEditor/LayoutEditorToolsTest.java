@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import jmri.InstanceManager;
+import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import org.junit.After;
@@ -79,6 +81,15 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
+    public void testGetHeadFromNameValid(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+
+        Assert.assertEquals("signal head for valid name",h,let.getHeadFromName("IH1"));
+    }
+
+    @Test
     public void testRemoveSignalHeadFromPanelNameNullName(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // this test verifies there is no exception
@@ -92,12 +103,117 @@ public class LayoutEditorToolsTest {
         let.removeSignalHeadFromPanel("");
     }
 
+
     @Test
     public void testFinalizeBlockBossLogicNullInput(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // this test verifies there is no exception
         let.finalizeBlockBossLogic();
         
+    }
+
+    @Test
+    @Ignore("need to set signal head icons before the call to setSignalHeadOnPanel")
+    public void testSetSignalHeadOnPanelAtXYIntAndRemove(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertFalse("Signal head not on panel before set",let.isHeadOnPanel(h));
+        let.setSignalHeadOnPanel(0,"IH1",0,0);
+        // setSignalHeadOnPanel  performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertTrue("Signal head on panel after set",let.isHeadOnPanel(h));
+        let.removeSignalHeadFromPanel("IH1");
+        // removeSignalHeadFromPanel  performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("Signal head not on panel after remove",let.isHeadOnPanel(h));
+
+    }
+
+    @Test
+    @Ignore("need to set signal head icons before the call to setSignalHeadOnPanel")
+    public void testSetSignalHeadOnPanelAtPointAndRemove(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertFalse("Signal head not on panel before set",let.isHeadOnPanel(h));
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        let.setSignalHeadOnPanel(0,"IH1",point);
+        // setSignalHeadOnPanel  performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertTrue("Signal head on panel after set",let.isHeadOnPanel(h));
+        let.removeSignalHeadFromPanel("IH1");
+        // removeSignalHeadFromPanel  performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("Signal head not on panel after remove",let.isHeadOnPanel(h));
+
+    }
+
+    @Test
+    @Ignore("need to set signal head icons before the call to setSignalHeadOnPanel")
+    public void testSetSignalHeadOnPanelAtXYDoubleAndRemove(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertFalse("Signal head not on panel before set",let.isHeadOnPanel(h));
+        let.setSignalHeadOnPanel(0.0,"IH1",0,0);
+        // setSignalHeadOnPanel  performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertTrue("Signal head on panel after set",let.isHeadOnPanel(h));
+        let.removeSignalHeadFromPanel("IH1");
+        // removeSignalHeadFromPanel  performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("Signal head not on panel after remove",let.isHeadOnPanel(h));
+
+    }
+
+    @Test
+    @Ignore("need to set signal head icons before the call to getSignalHeadIcon")
+    public void testGetSignalHeadIcon(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertNotNull("Signal head icon for panel",let.getSignalHeadIcon("IH1"));
+    }
+
+
+    @Test
+    public void testIsHeadOnPanel(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertFalse("Signal head not on panel",let.isHeadOnPanel(h));
+    }
+
+    @Test
+    public void testIsHeadAssignedAnywhere(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertFalse("Signal head not on panel",let.isHeadAssignedAnywhere(h));
+    }
+
+    @Test
+    public void testRemoveSignalHeadAssignment(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        // just verify this doesn't thrown an error.
+        let.removeAssignment(h);
+    }
+
+    @Test
+    public void testInitializeBlockBossLogic(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        VirtualSignalHead h = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        Assert.assertTrue("Signal head block boss logic started",let.initializeBlockBossLogic("IH1"));
     }
 
     // from here down is testing infrastructure
