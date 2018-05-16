@@ -1032,8 +1032,8 @@ public class TrainBuilder extends TrainCommon {
         if (departStageTrack != null && numberOfEngines == 0 && departStageTrack.getNumberEngines() == 0) {
             return true;
         }
-
-        // if leaving staging, use any number of engines if required number is 0
+        
+        // TODO the following branch should not happen, staging track selection checks number of engines needed
         if (departStageTrack != null &&
                 numberOfEngines != 0 &&
                 departStageTrack.getNumberEngines() != numberOfEngines) {

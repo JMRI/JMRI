@@ -1,6 +1,11 @@
 package jmri.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle; // for access operations keys directly.
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
@@ -157,64 +162,23 @@ public class JUnitOperationsUtil {
 
         // Set up a route of 3 locations: North End Staging (2 tracks),
         // North Industries (1 track), and South End Staging (2 tracks).
-        Location locationNorthEnd = new Location("1", "North End");
-
-        locationNorthEnd.setLocationOps(Location.STAGING);
-        Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
+        createStagingLocations();
+        createNormalLocations();
         
-        locationNorthEnd.setSwitchListEnabled(true);
-        locationNorthEnd.setComment("Test comment for location North End");
-        lmanager.register(locationNorthEnd);
+        // get departure staging and tracks
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track l1staging1 = locationNorthEnd.getTrackById("1s1");
+        Track l1staging2 = locationNorthEnd.getTrackById("1s2");
+        Assert.assertNotNull(l1staging1);
+        Assert.assertNotNull(l1staging2);
 
-        Track l1staging1 = new Track("1s1", "North End 1", Track.STAGING, locationNorthEnd);
+        Location locationNorthIndustries = lmanager.getLocationById("20");
+        Track l2yard1 = locationNorthIndustries.getTrackById("2s1");
+        Assert.assertNotNull(l2yard1);
         
-        // confirm defaults
-        Assert.assertEquals("confirm default", DIRECTION_ALL, l1staging1.getTrainDirections());
-        Assert.assertEquals("confirm default", Track.ALL_ROADS, l1staging1.getRoadOption());
-        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getDropOption());
-        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getPickupOption());
-        
-        l1staging1.setLength(300);
-        l1staging1.setCommentBoth("Test comment for North End 1 drops and pulls");
-        l1staging1.setCommentSetout("Test comment for North End 1 drops only");
-        l1staging1.setCommentPickup("Test comment for North End 1 pulls only");
-
-        Track l1staging2 = new Track("1s2", "North End 2", Track.STAGING, locationNorthEnd);
-        l1staging2.setLength(400);
-
-        locationNorthEnd.register(l1staging1);
-        locationNorthEnd.register(l1staging2);
-
-        Location locationNorthIndustries = new Location("2", "North Industries");
-        locationNorthIndustries.setLocationOps(Location.NORMAL);
-        locationNorthIndustries.setTrainDirections(DIRECTION_ALL);
-        locationNorthIndustries.setSwitchListEnabled(true);
-        lmanager.register(locationNorthIndustries);
-
-        Track l2yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
-        l2yard1.setLength(432);
-        l2yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
-        l2yard1.setCommentSetout("Test comment for NI Yard drops only");
-        l2yard1.setCommentPickup("Test comment for NI Yard pulls only");
-
-        locationNorthIndustries.register(l2yard1);
-
-        Location locationSouthEnd = new Location("3", "South End");
-        locationSouthEnd.setLocationOps(Location.STAGING);
-        locationSouthEnd.setSwitchListEnabled(true);
-        lmanager.register(locationSouthEnd);
-
-        Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
-        l3s1.setLength(300);
-        l3s1.setCommentBoth("Test comment for South End 1 drops and pulls");
-        l3s1.setCommentSetout("Test comment for South End 1 drops only");
-        l3s1.setCommentPickup("Test comment for South End 1 pulls only");
-
-        Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, locationSouthEnd);
-        l3s2.setLength(401);
-
-        locationSouthEnd.register(l3s1);
-        locationSouthEnd.register(l3s2);
+        // termination staging
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Assert.assertNotNull(locationSouthEnd);
         
         // Set up two cabooses and six box cars
         // Place Cabooses on Staging tracks
@@ -274,7 +238,6 @@ public class JUnitOperationsUtil {
         train1.setRequirements(Train.CABOOSE);
         train1.setCabooseRoad("CP");
         train1.deleteTypeName("Flat");
-        train1.setRoadOption(Train.ALL_ROADS);
         train1.setRoute(route1);
         train1.setDepartureTime("6", "5");
         train1.setComment("Test comment for train STF");
@@ -286,8 +249,6 @@ public class JUnitOperationsUtil {
         tmanager.register(train1);
 
         Train train2 = new Train("2", "SFF");
-        train2.deleteTypeName("Boxcar");
-        train2.deleteTypeName("Flat");
         train2.setRoute(route1);
         train2.setDepartureTime("22", "45");
         tmanager.register(train2);
@@ -295,6 +256,114 @@ public class JUnitOperationsUtil {
         // improve test coverage
         Setup.setPrintLocationCommentsEnabled(true);
         Setup.setPrintRouteCommentsEnabled(true);
+        
+    }
+    
+    /**
+     * Creates four staging locations for common testing
+     */
+    public static void createStagingLocations() {
+        
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        
+        Location locationNorthEnd = new Location("1", "North End Staging");
+
+        locationNorthEnd.setLocationOps(Location.STAGING);
+        Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
+        
+        locationNorthEnd.setSwitchListEnabled(true);
+        locationNorthEnd.setComment("Test comment for location North End");
+        lmanager.register(locationNorthEnd);
+
+        Track l1staging1 = new Track("1s1", "North End 1", Track.STAGING, locationNorthEnd);
+        
+        // confirm defaults
+        Assert.assertEquals("confirm default", DIRECTION_ALL, l1staging1.getTrainDirections());
+        Assert.assertEquals("confirm default", Track.ALL_ROADS, l1staging1.getRoadOption());
+        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getDropOption());
+        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getPickupOption());
+        
+        l1staging1.setLength(300);
+        l1staging1.setCommentBoth("Test comment for North End 1 drops and pulls");
+        l1staging1.setCommentSetout("Test comment for North End 1 drops only");
+        l1staging1.setCommentPickup("Test comment for North End 1 pulls only");
+
+        Track l1staging2 = new Track("1s2", "North End 2", Track.STAGING, locationNorthEnd);
+        l1staging2.setLength(400);
+
+        locationNorthEnd.register(l1staging1);
+        locationNorthEnd.register(l1staging2);
+
+        Location locationSouthEnd = new Location("3", "South End Staging");
+        locationSouthEnd.setLocationOps(Location.STAGING);
+        locationSouthEnd.setSwitchListEnabled(true);
+        lmanager.register(locationSouthEnd);
+
+        Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
+        l3s1.setLength(300);
+        l3s1.setCommentBoth("Test comment for South End 1 drops and pulls");
+        l3s1.setCommentSetout("Test comment for South End 1 drops only");
+        l3s1.setCommentPickup("Test comment for South End 1 pulls only");
+
+        Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, locationSouthEnd);
+        l3s2.setLength(401);
+
+        locationSouthEnd.register(l3s1);
+        locationSouthEnd.register(l3s2);
+        
+        Location locationWestEnd = new Location("5", "West End Staging");
+        locationWestEnd.setLocationOps(Location.STAGING);
+        lmanager.register(locationWestEnd);
+
+        Track l5s1 = new Track("5s1", "West End 1", Track.STAGING, locationWestEnd);
+        l5s1.setLength(600);
+
+        Track l5s2 = new Track("5s2", "West End 2", Track.STAGING, locationWestEnd);
+        l5s2.setLength(600);
+
+        locationWestEnd.register(l5s1);
+        locationWestEnd.register(l5s2);
+        
+        Location locationEastEnd = new Location("7", "East End Staging");
+        locationEastEnd.setLocationOps(Location.STAGING);
+        lmanager.register(locationEastEnd);
+
+        Track l7s1 = new Track("7s1", "East End 1", Track.STAGING, locationEastEnd);
+        l5s1.setLength(600);
+
+        Track l7s2 = new Track("7s2", "East End 2", Track.STAGING, locationEastEnd);
+        l5s2.setLength(600);
+
+        locationEastEnd.register(l7s1);
+        locationEastEnd.register(l7s2);
+    }
+    
+    /**
+     * Creates locations with spurs, interchanges, and yards
+     */
+    public static void createNormalLocations() {
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        Location locationNorthIndustries = new Location("20", "North Industries");
+        locationNorthIndustries.setSwitchListEnabled(true);
+        lmanager.register(locationNorthIndustries);
+
+        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
+        l20yard1.setLength(432);
+        l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
+        l20yard1.setCommentSetout("Test comment for NI Yard drops only");
+        l20yard1.setCommentPickup("Test comment for NI Yard pulls only");
+
+        locationNorthIndustries.register(l20yard1);
+        
+        // the following locations and tracks are retrieved by their names
+        Location arlington = lmanager.newLocation("Arlington");
+        Track yard1 = arlington.addTrack("Arlington Yard 1", Track.YARD);
+        yard1.setLength(500);
+        Track yard2 = arlington.addTrack("Arlington Yard 2", Track.YARD);
+        yard2.setLength(500);
+        
         
     }
     
@@ -320,6 +389,19 @@ public class JUnitOperationsUtil {
         }
 
         return car;
+    }
+    
+    public static BufferedReader getBufferedReader(File file) {
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+        } catch (FileNotFoundException e) {
+
+        } catch (UnsupportedEncodingException e) {
+
+        }
+        Assert.assertNotNull(in);
+        return in;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
