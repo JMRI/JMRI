@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
 
 /**
  * Test simple functioning of LayoutEditorTools
@@ -41,9 +42,8 @@ public class LayoutEditorToolsTest {
     public void testSetSignalsAtTurnout(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually( () -> {
-           MultiIconEditor mie = new MultiIconEditor(4);
            // this causes a "set Signal frame" to be displayed.
-           let.setSignalsAtTurnout(mie,le.getTargetFrame());    
+           let.setSignalsAtTurnout(le.signalIconEditor,le.getTargetFrame());    
         });
         // the JFrameOperator waits for the set signal frame to appear,
         // then closes it.
@@ -52,19 +52,86 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    public void testSetSignalsAtTurnoutFromMenu(){
+    public void testSetSignalsAtTurnoutWithDone(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually( () -> {
-           MultiIconEditor mie = new MultiIconEditor(4);
            Point2D point = new Point2D.Double(150.0, 100.0);
            LayoutTurnout to = new LayoutTurnout("Right Hand",
                  LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
            // this causes a "set Signal frame" to be displayed.
-           let.setSignalsAtTurnoutFromMenu(to,mie,le.getTargetFrame());    
+           let.setSignalsAtTurnoutFromMenu(to,le.signalIconEditor,le.getTargetFrame());    
+        });
+        // the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        // then we find and press the "Done" button.
+        JButtonOperator jbo = new JButtonOperator(jfo,Bundle.getMessage("ButtonDone"));
+        jbo.press();
+        jfo.requestClose();
+    }
+
+    @Test
+    public void testSetSignalsAtTurnoutWithCancel(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually( () -> {
+           Point2D point = new Point2D.Double(150.0, 100.0);
+           LayoutTurnout to = new LayoutTurnout("Right Hand",
+                 LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+           // this causes a "set Signal frame" to be displayed.
+           let.setSignalsAtTurnoutFromMenu(to,le.signalIconEditor,le.getTargetFrame());    
+        });
+        // the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        // then we find and press the "Done" button.
+        JButtonOperator jbo = new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel"));
+        jbo.press();
+        jfo.requestClose();
+    }
+
+
+    @Test
+    public void testSetSignalsAtTurnoutFromMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually( () -> {
+           Point2D point = new Point2D.Double(150.0, 100.0);
+           LayoutTurnout to = new LayoutTurnout("Right Hand",
+                 LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+           // this causes a "set Signal frame" to be displayed.
+           let.setSignalsAtTurnoutFromMenu(to,le.signalIconEditor,le.getTargetFrame());    
         });
         // the JFrameOperator waits for the set signal frame to appear,
         // then closes it.
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        jfo.requestClose();
+    }
+
+    @Test
+    @Ignore("NPE during execution due to missing frame")
+    public void testSetSignalsAtLevelXing(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually( () -> {
+           // this causes a "set Signal frame" to be displayed.
+           let.setSignalsAtLevelXing(le.signalIconEditor,le.getTargetFrame());    
+        });
+        // the JFrameOperator waits for the set signal frame to appear,
+        // then closes it.
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        jfo.requestClose();
+    }
+
+    @Test
+    @Ignore("NPE during execution due to missing frame")
+    public void testSetSignalsAtLevelXingFromMenu(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually( () -> {
+           Point2D point = new Point2D.Double(150.0, 100.0);
+           LevelXing to = new LevelXing("LevelCrossing",
+                 point, le);
+           // this causes a "set Signal frame" to be displayed.
+           let.setSignalsAtLevelXingFromMenu(to,le.signalIconEditor,le.getTargetFrame());    
+        });
+        // the JFrameOperator waits for the set signal frame to appear,
+        // then closes it.
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
         jfo.requestClose();
     }
 
@@ -113,7 +180,6 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("need to set signal head icons before the call to setSignalHeadOnPanel")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -133,7 +199,6 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("need to set signal head icons before the call to setSignalHeadOnPanel")
     public void testSetSignalHeadOnPanelAtPointAndRemove(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -154,7 +219,6 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("need to set signal head icons before the call to setSignalHeadOnPanel")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -174,7 +238,6 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("need to set signal head icons before the call to getSignalHeadIcon")
     public void testGetSignalHeadIcon(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");

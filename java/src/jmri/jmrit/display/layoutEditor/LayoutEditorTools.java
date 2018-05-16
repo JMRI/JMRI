@@ -13380,6 +13380,9 @@ public class LayoutEditorTools {
      */
     @CheckReturnValue
     public SignalHeadIcon getSignalHeadIcon(@Nonnull String signalName) {
+        if(signalIconEditor == null) {
+           signalIconEditor = layoutEditor.signalIconEditor;
+        }
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(signalName);
         l.setIcon(Bundle.getMessage("SignalHeadStateRed"), signalIconEditor.getIcon(0));
