@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Defines a GUI and associated logic to perform energy scan operations on
  * Duplex radio channels. Displays energy scan data in a graphical form.
- *
+ * <p>
  * This tool works equally well with UR92 and UR92CE devices. The UR92 and
  * UR92CE behave identically with respect to this tool. For the purpose of
  * clarity, only the term UR92 is used herein.
@@ -34,7 +34,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     DuplexChannelInfo dci[] = new DuplexChannelInfo[LnDplxGrpInfoImplConstants.DPLX_MAX_CH - LnDplxGrpInfoImplConstants.DPLX_MIN_CH + 1];
     private javax.swing.Timer tmr;
-    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupScan");
     DuplexGroupScanPanel safe;
 
     private final static int DEFAULT_SCAN_COUNT = 25;
@@ -80,10 +79,10 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
 
         grStatusValue = new javax.swing.JLabel(" ");
-        clearButton = new javax.swing.JButton(rb.getString("ButtonClearScanData"));
-        scanLoopButton = new javax.swing.JButton(rb.getString("ButtonScanChannelsLoop"));
-        clearButton.setToolTipText(rb.getString("ToolTipButtonClearScanData"));
-        scanLoopButton.setToolTipText(rb.getString("ToolTipButtonScanChannelsLoop"));
+        clearButton = new javax.swing.JButton(Bundle.getMessage("ButtonClearScanData"));
+        scanLoopButton = new javax.swing.JButton(Bundle.getMessage("ButtonScanChannelsLoop"));
+        clearButton.setToolTipText(Bundle.getMessage("ToolTipButtonClearScanData"));
+        scanLoopButton.setToolTipText(Bundle.getMessage("ToolTipButtonScanChannelsLoop"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         p = new JPanel();
@@ -94,20 +93,20 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         p = new JPanel();
         p.setLayout(new java.awt.GridLayout(4, 1));
 
-        JLabel graphicAreaLabel1 = new JLabel(rb.getString("LabelGraphicArea1"));
+        JLabel graphicAreaLabel1 = new JLabel(Bundle.getMessage("LabelGraphicArea1"));
         graphicAreaLabel1.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel1);
 
-        JLabel graphicAreaLabel2 = new JLabel(rb.getString("LabelGraphicArea2"));
+        JLabel graphicAreaLabel2 = new JLabel(Bundle.getMessage("LabelGraphicArea2"));
         graphicAreaLabel2.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel2);
 
-        JLabel graphicAreaLabel3 = new JLabel(rb.getString("LabelGraphicArea3"));
+        JLabel graphicAreaLabel3 = new JLabel(Bundle.getMessage("LabelGraphicArea3"));
         graphicAreaLabel3.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel3);
         add(p);
 
-        JLabel graphicAreaLabel4 = new JLabel(rb.getString("LabelGraphicArea4"));
+        JLabel graphicAreaLabel4 = new JLabel(Bundle.getMessage("LabelGraphicArea4"));
         graphicAreaLabel4.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel4);
         add(p);
@@ -127,7 +126,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         p = new JPanel();
         // Apply a rigid area with a width that is wide enough to display the longest status message
         try {
-            minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWindow"), 10);
+            minWindowWidth = Integer.parseInt(Bundle.getMessage("MinimumWidthForWindow"), 10);
         } catch (Exception e) {
             minWindowWidth = 400;
         }
@@ -138,10 +137,10 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         scanLoopButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (scanLoopButton.getText().equals(rb.getString("ButtonScanChannelsStop"))) {
+                if (scanLoopButton.getText().equals(Bundle.getMessage("ButtonScanChannelsStop"))) {
                     scanLoopStopButtonActionPerformed();
                 } else {
-                    scanLoopButton.setText(rb.getString("ButtonScanChannelsStop"));
+                    scanLoopButton.setText(Bundle.getMessage("ButtonScanChannelsStop"));
                     scanLoopButtonActionPerformed();
                 }
             }
@@ -158,7 +157,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         // send message to get current Duplex Channel number
         try {
-            scanLoopDelay = Integer.parseInt(rb.getString("SetupDefaultChannelDelayInMilliSec"));
+            scanLoopDelay = Integer.parseInt(Bundle.getMessage("SetupDefaultChannelDelayInMilliSec"));
         } catch (Exception e) {
             log.error("Bad value in prop files for SetupDefaultChannelDelayInMilliSec.");
             scanLoopDelay = 200;
@@ -182,7 +181,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      */
     @Override
     public String getTitle() {
-        return rb.getString("Title");
+        return Bundle.getMessage("ScanTitle");
     }
 
     /**
@@ -286,7 +285,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
         if (index != -1) {
             if (index == 16) {
-                log.error(rb.getString("ErrorLogUnexpectedChannelNumber") + " " + channelNum + " " + rb.getString("ErrorLogUnexpectedChannelNumberPart2") + "\n");
+                log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
 
             }
             dci[index].numSamples++;
@@ -303,14 +302,14 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             graphicArea.repaint();
 
         } else {
-            log.error(rb.getString("ErrorLogUnexpectedChannelNumber") + " " + channelNum + " " + rb.getString("ErrorLogUnexpectedChannelNumberPart2") + "\n");
+            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
         }
     }
 
     /**
      * Creates a LocoNet message containing a channel-specific query for signal
      * information from UR92 device(s).
-     * <p>
+     *
      * @param channelNum - integer between 11 and 26, inclusive
      * @return LocoNetMessage - query for Dulpex Channel Scan information
      */
@@ -333,7 +332,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Create a LocoNet packet to get the current Duplex group channel number.
-     * <p>
+     *
      * @return The packet which writes the Group Channel Number to the UR92
      *         device(s)
      */
@@ -361,24 +360,24 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     Integer whenToStop;
 
     private void updateScanLoopCountStatus(int current, int total) {
-        String countStatus = rb.getString("StatusCurrentLoopCounter");
-        String begin = countStatus.substring(0, countStatus.indexOf("%count")); // NOI18N
-
-        String middle = countStatus.substring(begin.length() + 6, countStatus.indexOf("%loops")); // NOI18N
-        String end = countStatus.substring(countStatus.indexOf("%loops") + 6); // NOI18N
-        countStatus = begin + Integer.toString(current) + middle + Integer.toString(total) + end;
-        grStatusValue.setText(countStatus);
+//        String countStatus = Bundle.getMessage("StatusCurrentLoopCounter"); // much easier using Bundle.getMessage variables
+//        String begin = countStatus.substring(0, countStatus.indexOf("%count")); // NOI18N
+//
+//        String middle = countStatus.substring(begin.length() + 6, countStatus.indexOf("%loops")); // NOI18N
+//        String end = countStatus.substring(countStatus.indexOf("%loops") + 6); // NOI18N
+//        countStatus = begin + Integer.toString(current) + middle + Integer.toString(total) + end;
+        grStatusValue.setText(Bundle.getMessage("StatusCurrentLoopCounter", current, total));
     }
 
     private void scanLoopButtonActionPerformed() {
         loopNum = 1;
         try {
-            whenToStop = Integer.parseInt(rb.getString("SetupNumberOfLoops"));
+            whenToStop = Integer.parseInt(Bundle.getMessage("SetupNumberOfLoops"));
         } catch (Exception e) {
             whenToStop = DEFAULT_SCAN_COUNT;
         }
         if ((whenToStop <= 0) || (whenToStop > 1000)) {
-            grStatusValue.setText(rb.getString("ErrorBadLoopCount"));
+            grStatusValue.setText(Bundle.getMessage("ErrorBadLoopCount"));
             return;
         }
         grStatusValue.setText(" ");
@@ -421,7 +420,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 } else {
                     // must be done with all channels and all loops.
                     showOnlyMaxAvgValues();
-                    scanLoopButton.setText(rb.getString("ButtonScanChannelsLoop"));
+                    scanLoopButton.setText(Bundle.getMessage("ButtonScanChannelsLoop"));
                     scanLoopStopButtonActionPerformed();
                     grStatusValue.setText(" ");
                     graphicArea.setChannelBeingScanned(-1);
@@ -437,7 +436,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     private void scanLoopStopButtonActionPerformed() {
-        scanLoopButton.setText(rb.getString("ButtonScanChannelsLoop"));
+        scanLoopButton.setText(Bundle.getMessage("ButtonScanChannelsLoop"));
         graphicArea.setChannelBeingScanned(-1);
         graphicArea.repaint();
         grStatusValue.setText(" ");
@@ -461,13 +460,13 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     public void connect(LnTrafficController t) {
         if (t != null) {
-            // connect to the LnTrafficController if the connection is a valid loconet connection
+            // connect to the LnTrafficController if the connection is a valid LocoNet connection
             t.addLocoNetListener(~0, this);
         }
     }
 
     /**
-     * Break connection with the LnTrafficController and stop timers
+     * Break connection with the LnTrafficController and stop timers.
      */
     @Override
     public void dispose() {
@@ -754,7 +753,6 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             avgSamples = 0;
             mostRecentSample = -1;
         }
-
     }
 
 }

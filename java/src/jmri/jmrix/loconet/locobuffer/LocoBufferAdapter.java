@@ -22,7 +22,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
- * <P>
+ * <p>
  * Normally controlled by the LocoBufferFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
@@ -41,8 +41,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option4Name = "PacketizerType"; //NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial")), validOption1));  // NOI18N
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));  // NOI18N
-        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"), 
-                new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
+                new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
         options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));  // NOI18N
         options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"), 
                 new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
@@ -233,7 +233,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // find and configure flow control
+        // find and configure flow control from option
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
@@ -307,13 +307,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         String packetSelection = getPacketizerOption(s);
         switch (packetSelection) {
             case "lnPacketizer":
-                packets = new LnPacketizer();
+                packets = new LnPacketizer(this.getSystemConnectionMemo());
                 break;
             case "lnPacketizerStrict":
-                packets = new LnPacketizerStrict();
+                packets = new LnPacketizerStrict(this.getSystemConnectionMemo());
                 break;
             default:
-                packets = new LnPacketizer();
+                packets = new LnPacketizer(this.getSystemConnectionMemo());
                 log.warn("Using Normal do not understand option [{}]", packetSelection);
         }
         return packets;

@@ -267,7 +267,7 @@
     <tracksegment ident="T14" blockname="Yard" connect1name="TO5" type1="4" connect2name="A3" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T15" blockname="North" connect1name="TO6" type1="3" connect2name="TO8" type2="2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T17" blockname="Yard" connect1name="SL1" type1="24" connect2name="TO6" type2="4" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T18" blockname="Yard" connect1name="SL1" type1="22" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+    <tracksegment ident="T18" blockname="Yard" connect1name="SL1" type1="22" connect2name="A4" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
       <controlpoints>
         <controlpoint index="0" x="220.0" y="130.0" />
         <controlpoint index="1" x="180.0" y="170.0" />
@@ -275,7 +275,7 @@
     </tracksegment>
     <tracksegment ident="T20" blockname="East" connect1name="TO3" type1="3" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T21" blockname="East" connect1name="TO6" type1="2" connect2name="A5" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="180.0" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
-    <tracksegment ident="T22" blockname="Yard" connect1name="SL1" type1="23" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+    <tracksegment ident="T22" blockname="Yard" connect1name="SL1" type1="23" connect2name="A6" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
       <controlpoints>
         <controlpoint index="0" x="400.0" y="140.0" />
         <controlpoint index="1" x="420.0" y="140.0" />

@@ -198,7 +198,7 @@ public class MergePrompt extends JDialog {
         if (speedProfile == null) {
             speedProfile = new RosterSpeedProfile(null);
         }
-        JPanel speedPanel = new SpeedProfilePanel(speedProfile, null);
+        SpeedProfilePanel speedPanel = new SpeedProfilePanel(speedProfile, null);
         panel.add(speedPanel);
         spPanel.add(panel);
         spPanel.add(Box.createGlue());
@@ -207,6 +207,7 @@ public class MergePrompt extends JDialog {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage("mergedSpeedProfile")));
         speedPanel = new SpeedProfilePanel(_mergeProfiles.get(id), anomalies);
+        speedPanel.setEditable(true);
         panel.add(speedPanel);
         spPanel.add(panel);
         spPanel.add(Box.createGlue());
@@ -234,7 +235,7 @@ public class MergePrompt extends JDialog {
      */
     static public HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
         // do forward speeds, then reverse
-        HashMap<Integer, Boolean> anomalies = new HashMap<Integer, Boolean>();
+        HashMap<Integer, Boolean> anomalies = new HashMap<>();
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
         float lastForward = 0;
         Integer lastKey = Integer.valueOf(0);
@@ -312,7 +313,7 @@ public class MergePrompt extends JDialog {
         static final int VIEW_COL = 2;
         static final int NUMCOLS = 3;
 
-        ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<Map.Entry<String, Boolean>>();
+        ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<>();
 
         MergeTableModel(HashMap<String, Boolean> map) {
             Iterator<java.util.Map.Entry<String, Boolean>> iter = map.entrySet().iterator();

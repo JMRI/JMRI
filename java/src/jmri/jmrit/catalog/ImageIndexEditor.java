@@ -39,7 +39,7 @@ public final class ImageIndexEditor extends JmriJFrame {
             + ";class=jmri.jmrit.catalog.NamedIcon";
 
     /**
-     * Ctor
+     * Ctor for an unnamed ImageIndexEditor.
      */
     private ImageIndexEditor() {
         super();
@@ -133,9 +133,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         mainPanel.add(labelPanel);
         JPanel catalogsPanel = new JPanel();
         catalogsPanel.setLayout(new BoxLayout(catalogsPanel, BoxLayout.X_AXIS));
-//        catalogsPanel.add(makeCatalogPanel());
-//        catalogsPanel.add(new JSeparator(SwingConstants.VERTICAL));
-//        catalogsPanel.add(makeIndexPanel());
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 makeCatalogPanel(), makeIndexPanel());
         splitPane.setContinuousLayout(true);
@@ -157,6 +154,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("defaultCatalog", "selectNode", false); // make sure both these properties keys exist
+        // log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
         _catalog.init(false, true);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
@@ -165,6 +163,7 @@ public final class ImageIndexEditor extends JmriJFrame {
             String systemName = sysNames.get(i);
             if (systemName.startsWith("IF")) {
                 _catalog.addTree(manager.getBySystemName(systemName));
+                // log.debug("added item to tree");
             }
         }
 
@@ -176,7 +175,8 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private JPanel makeIndexPanel() {
         _index = new CatalogPanel("ImageIndex", "selectIndexNode", false); // make sure both these properties keys exist
-        _index.init(true, false);
+        // log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
+        _index.init(true, false); // activate dragNdrop? (true,true)
 
         boolean found = false;
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
@@ -283,8 +283,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         return cnt;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImageIndexEditor.class);
-
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
 
@@ -305,4 +303,7 @@ public final class ImageIndexEditor extends JmriJFrame {
             return set;
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ImageIndexEditor.class);
+
 }

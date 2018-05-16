@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet.streamport;
 
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -38,8 +38,8 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        lnp = new LnStreamPortPacketizer();
         memo = new LocoNetSystemConnectionMemo();
+        lnp = new LnStreamPortPacketizer(memo);
         memo.setLnTrafficController(lnp);
         try {
            PipedInputStream tempPipe;
@@ -50,7 +50,7 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
            tempPipe = new PipedInputStream();
            istream = new DataInputStream(tempPipe);
            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-           apc = new LnStreamPortController(memo,istream,ostream,"Test Stream Port");
+           apc = new LnStreamPortController(memo, istream, ostream, "Test Stream Port");
        } catch (java.io.IOException ioe) {
            Assert.fail("failed to initialize port controller");
        }
@@ -77,4 +77,5 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
        ((LnStreamPortPacketizer)lnp).connectPort(apc);
        lnp.startThreads();
     }
+
 }

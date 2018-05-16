@@ -587,7 +587,8 @@
       into commands. They're available using negative numbers as
       above, but they're really not recommended!
 
-      <h3>Using this in a DecoderPro "board" definition</h3>You can
+      <h3>Using this in a DecoderPro "board" definition</h3>
+      <p>You can
       use all of the DecoderPro tools to manage a board using the
       LocoNet SV protocol if you provide an appropriate definition
       file. These are in the same format as a decoder definition
@@ -599,7 +600,7 @@
     &lt;/programming&gt;
 </pre>
 
-      <p>LocoNet SV Version 1 protocol is the same except you
+      <p>LocoNet SV Version 1 protocol is the same, except you
       specify LOCONETSV1MODE. </p>
 
       <p>Note that the version 1 protocol is no longer recommended.

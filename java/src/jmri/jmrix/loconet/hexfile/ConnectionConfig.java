@@ -2,10 +2,10 @@ package jmri.jmrix.loconet.hexfile;
 
 /**
  * Definition of objects to handle configuring a layout connection via a LocoNet
- * hexfile emulator
+ * hexfile emulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

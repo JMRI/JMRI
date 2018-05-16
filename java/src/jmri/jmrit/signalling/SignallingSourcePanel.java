@@ -166,17 +166,17 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             signalMastLogicFrame.pack();
             signalMastLogicFrame.setVisible(true);
 
-            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
             for (int i = 0; i < layout.size(); i++) {
                 try {
                     InstanceManager.getDefault(jmri.SignalMastLogicManager.class).discoverSignallingDest(sourceMast, layout.get(i));
-                    sourceLabel.setText(Bundle.getMessage("DiscoveringMasts") + " (" + i + "/" + layout.size() + ")"); // indicate progress  // NOI18N
                 } catch (jmri.JmriException ex) {
                     signalMastLogicFrame.setVisible(false);
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
             }
-            InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(this);
+            signalMastLogicFrame.setVisible(false);
+            signalMastLogicFrame.dispose();
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("GenComplete"));  // NOI18N
         } else {
             // don't take the trouble of searching
             JOptionPane.showMessageDialog(null, Bundle.getMessage("GenSkipped"));  // NOI18N
@@ -190,15 +190,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")) {  // NOI18N
-            if (signalMastLogicFrame != null) { // this is also called from a LayoutEditorPanel by
-                // jmri.managers.DefaultSignalMastLogicManager#discoverSignallingDest(), without an open signalMastLogicFrame
-                signalMastLogicFrame.setVisible(false);
-                signalMastLogicFrame.dispose();
-            }
             if (sml == null) {
                 updateDetails();
             }
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("GenComplete"));  // NOI18N
+            log.debug("Generate complete for a LE panel ({}): mast = {}", this.hashCode(), sourceMast);
         }
         if (e.getPropertyName().equals("advancedRoutingEnabled")) {  // NOI18N
             boolean newValue = (Boolean) e.getNewValue();

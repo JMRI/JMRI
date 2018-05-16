@@ -19,7 +19,6 @@ public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -42,4 +42,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             adapter.setPort(1234);
         }
     }
+
 }

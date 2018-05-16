@@ -6,14 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for LocoNet systems
- * <P>
- * System names are "LLnnnnn", where nnnnn is the bit number without padding.
- * <P>
+ * Implement light manager for LocoNet systems.
+ * <p>
+ * System names are "LiLnnnnn", where nnnnn is the bit number without padding.
+ * <p>
  * Based in part on SerialLightManager.java
  *
  * @author Dave Duchamp Copyright (C) 2006
-  */
+ */
 public class LnLightManager extends AbstractLightManager {
 
     public LnLightManager(LnTrafficController tc, String prefix) {
@@ -25,7 +25,7 @@ public class LnLightManager extends AbstractLightManager {
     String prefix;
 
     /**
-     * Returns the system letter for Loconet
+     * Get the system letter for Loconet.
      */
     @Override
     public String getSystemPrefix() {
@@ -33,9 +33,12 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Method to create a new Light based on the system name Returns null if the
-     * system name is not in a valid format Assumes calling method has checked
-     * that a Light with this system name does not already exist
+     * Create a new Light based on the system name.
+     * <p>
+     * Assumes calling method has checked that a Light with
+     * this system name does not already exist.
+     *
+     * @return null if the system name is not in a valid format
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
@@ -53,12 +56,12 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Get the bit address from the system name
+     * Get the bit address from the system name.
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
-            // here if an illegal loconet light system name 
+            // here if an illegal LocoNet Light system name
             log.error("invalid character in header field of loconet light system name: " + systemName);
             return (0);
         }
@@ -83,8 +86,10 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * Validate system name format.
+     *
+     * @return 'true' if system name has a valid format,
+     * else returns 'false'
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -92,10 +97,11 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name for configuration returns 'true' if
-     * system name has a valid meaning in current configuration, else returns
-     * 'false' for now, this method always returns 'true'; it is needed for the
-     * Abstract Light class
+     * Validate system name for configuration.
+     * Needed for the Abstract Light class.
+     *
+     * @return 'true' if system name has a valid meaning in current configuration,
+     * else returns 'false'. For now this method always returns 'true';
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -103,9 +109,9 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * A method that determines if it is possible to add a range of lights in
-     * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window.
+     * Determine if it is possible to add a range of Lights in
+     * numerical order eg. 11 thru 18, primarily used to show/not show the add
+     * range box in the Add Light pane.
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {

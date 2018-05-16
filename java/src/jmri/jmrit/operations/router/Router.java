@@ -178,13 +178,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             _lastLocationTrains.clear();
 
             // first try using 2 trains and an interchange track to route the car
-            if (setCarDestinationInterchange(car)) {
+            if (setCarDestinationTwoTrainsInterchange(car)) {
                 if (car.getDestination() == null) {
                     log.debug(
                             "Was able to find a route via classification/interchange track, but not using train ({})" +
                                     " or car destination not set, try again using yard tracks",
                             _train.getName()); // NOI18N
-                    if (setCarDestinationYard(car)) {
+                    if (setCarDestinationTwoTrainsYard(car)) {
                         log.debug("Was able to find route via yard ({}, {}) for car ({})", car.getDestinationName(),
                                 car.getDestinationTrackName(), car);
                     }
@@ -193,14 +193,14 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             car.getDestinationTrackName(), car);
                 }
                 // now try 2 trains and a yard track
-            } else if (setCarDestinationYard(car)) {
+            } else if (setCarDestinationTwoTrainsYard(car)) {
                 log.debug("Was able to find route via yard ({}, {}) for car ({}) using two trains", car
                         .getDestinationName(), car.getDestinationTrackName(), car);
                 // now try 3 or more trains to route car, but not through staging
             } else if (setCarDestinationMultipleTrains(car, false)) {
                 log.debug("Was able to find multiple train route for car ({})", car);
                 // now try 2 trains and a staging track
-            } else if (setCarDestinationStaging(car)) {
+            } else if (setCarDestinationTwoTrainsStaging(car)) {
                 log.debug("Was able to find route via staging ({}, {}) for car ({}) using two trains", car
                         .getDestinationName(), car.getDestinationTrackName(), car);
                 // now try 3 or more trains to route car, include staging if enabled
@@ -236,8 +236,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         if (trainServicesCar) {
             testTrain = _train; // use the specific train
-        } // can specific train can service car out of staging. Note that the router code will try to route the car using
-          // two or more trains just to get the car out of staging.
+        } 
+        // can specific train can service car out of staging. Note that the router code will try to route the car using
+        // two or more trains just to get the car out of staging.
         if (car.getTrack().getTrackType().equals(Track.STAGING) && _train != null && !trainServicesCar) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"),
                     new Object[]{_train.getName(), car.toString(), car.getLocationName(), clone.getDestinationName(),
@@ -384,7 +385,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      *         False if an interchange track wasn't found that could service the
      *         car's final destination.
      */
-    private boolean setCarDestinationInterchange(Car car) {
+    private boolean setCarDestinationTwoTrainsInterchange(Car car) {
         return setCarDestinationTwoTrains(car, Track.INTERCHANGE);
     }
 
@@ -397,7 +398,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      *         yard track wasn't found that could service the car's final
      *         destination.
      */
-    private boolean setCarDestinationYard(Car car) {
+    private boolean setCarDestinationTwoTrainsYard(Car car) {
         if (Setup.isCarRoutingViaYardsEnabled()) {
             return setCarDestinationTwoTrains(car, Track.YARD);
         }
@@ -413,7 +414,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      *         False if a staging track wasn't found that could service the
      *         car's final destination.
      */
-    private boolean setCarDestinationStaging(Car car) {
+    private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{
                     car.toString()}));
@@ -573,7 +574,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         continue;// found a route but it doesn't start with the specific train
                     }
                     // is this the staging track assigned to the specific train?
-                    if (track.getTrackType().equals(Track.STAGING) && firstTrain.getTerminationTrack() != track) {
+                    if (track.getTrackType().equals(Track.STAGING) &&
+                            firstTrain.getTerminationTrack() != null &&
+                            firstTrain.getTerminationTrack() != track) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
                                 new Object[]{firstTrain.getName(),
                                         firstTrain.getTerminationTrack().getLocation().getName(),
@@ -882,7 +885,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             return true; // the issue is route moves or train length
         }
         // check to see if track is staging
-        if (track.getTrackType().equals(Track.STAGING) && _train.getTerminationTrack() != track) {
+        if (track.getTrackType().equals(Track.STAGING) &&
+                _train != null &&
+                _train.getTerminationTrack() != null &&
+                _train.getTerminationTrack() != track) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
                     new Object[]{_train.getName(), _train.getTerminationTrack().getLocation().getName(),
                             _train.getTerminationTrack().getName()}));

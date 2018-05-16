@@ -649,9 +649,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), block.getDisplayName(), et / 60,
                         et % 60), myGreen, true);
             } else if (e.getPropertyName().equals("SpeedRestriction")) {
-                _frame.setStatusText(Bundle.getMessage("speedChange",
-                        bean.getCurrentBlockName()),
-                        myGold, true);
+                String name = (String) e.getOldValue();
+                String speed = (String) e.getNewValue();
+                _frame.setStatusText(Bundle.getMessage("SpeedRestriction",
+                        bean.getTrainName(), speed, name),
+                        Color.red, true);
             } else if (e.getPropertyName().equals("SpeedChange")) {
                 int row = getRow(bean);
                 if (row>=0) {
@@ -696,6 +698,24 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                 true);                        
                     }
                 }
+            } else if (e.getPropertyName().equals("RampDone")) {
+                boolean halt = ((Boolean) e.getOldValue()).booleanValue();
+                String speed = (String) e.getNewValue();
+                if (speed.equals(Warrant.Stop) || speed.equals(Warrant.EStop))  {
+                    if (halt) {
+                        _frame.setStatusText(Bundle.getMessage("RampHalt",
+                                bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
+                    } else  {
+                        _frame.setStatusText(Bundle.getMessage("RampWaitForClear",
+                                bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
+                    }
+                } else {
+                    _frame.setStatusText(Bundle.getMessage("RampSpeed",
+                            bean.getTrainName(), speed, bean.getCurrentBlockName()), myGreen, true);
+                }
+           } else if (e.getPropertyName().equals("Command")) {
+                _frame.setStatusText(Bundle.getMessage("TrainReady",
+                        bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
             } else if (e.getPropertyName().equals("controlChange")) {
                 String blkName = bean.getCurrentBlockName();
                 String stateStr;
@@ -727,13 +747,20 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), stateStr,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])),
                         Color.red, true);
+            } else if (e.getPropertyName().equals("SensorCommand")) {
+                boolean set = ((Boolean) e.getOldValue()).booleanValue();
+                String name = (String) e.getNewValue();
+                if (set) {
+                    _frame.setStatusText(Bundle.getMessage("setSensor",
+                            bean.getTrainName(), name), myGreen, true);
+                } else  {
+                    _frame.setStatusText(Bundle.getMessage("waitSensor",
+                            bean.getTrainName(), name), myGreen, true);
+                }
             } else if (e.getPropertyName().equals("throttleFail")) {
                 _frame.setStatusText(Bundle.getMessage("ThrottleFail",
                         bean.getTrainName(), e.getNewValue()), Color.red, true);
-            } else if (e.getPropertyName().equals("Command")) {
-                _frame.setStatusText(Bundle.getMessage("TrainReady",
-                        bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
-           }
+            }
             if (log.isDebugEnabled())
                 log.debug("propertyChange of \"" + e.getPropertyName() + "\" for warrant "
                         + bean.getDisplayName());

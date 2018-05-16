@@ -7,8 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
- *
- * System names are "LSnnn", where nnn is the sensor number without padding.
+ * System names are "LiSnnn", where nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -16,6 +15,10 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     public LnSensorManager(LnTrafficController tc, String prefix) {
         this.prefix = prefix;
+        if (tc == null) {
+            log.error("SensorManager Created, yet there is no Traffic Controller");
+            return;
+        }
         this.tc = tc;
         // ctor has to register for LocoNet events
         tc.addLocoNetListener(~0, this);
@@ -69,14 +72,12 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 a = new LnSensorAddress(sw1, sw2, prefix);
-                if (log.isDebugEnabled()) {
-                    log.debug("INPUT_REP received with address {}", a);
-                }
+                log.debug("INPUT_REP received with address {}", a);
                 break;
             default:  // here we didn't find an interesting command
                 return;
         }
-        // reach here for loconet sensor input command; make sure we know about this one
+        // reach here for LocoNet sensor input command; make sure we know about this one
         String s = a.getNumericAddress();
         if (null == getBySystemName(s)) {
             // need to store a new one
@@ -104,15 +105,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Method to set Route busy when commands are being issued to Route turnouts
+     * Set Route busy when commands are being issued to Route turnouts.
      */
     public void setUpdateBusy() {
         busy = true;
     }
 
     /**
-     * Method to set Route not busy when all commands have been issued to Route
-     * turnouts
+     * Set Route not busy when all commands have been issued to Route
+     * turnouts.
      */
     public void setUpdateNotBusy() {
         busy = false;
@@ -130,7 +131,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         if (curAddress.contains(":")) {
             int board = 0;
             int channel = 0;
-            //Address format passed is in the form of board:channel or T:turnout address
+            // Address format passed is in the form of board:channel or T:turnout address
             int seperator = curAddress.indexOf(":");
             boolean turnout = false;
             if (curAddress.substring(0, seperator).toUpperCase().equals("T")) {
@@ -155,7 +156,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 iName = 16 * board + channel - 16;
             }
         } else {
-            //Entered in using the old format
+            // Entered in using the old format
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
@@ -174,7 +175,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
-            // here if an illegal loconet light system name
+            // here if an illegal LocoNet Light system name
             log.error("illegal character in header field of loconet sensor system name: {}", systemName);
             return (0);
         }
@@ -199,7 +200,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      */
@@ -222,8 +223,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -249,7 +250,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Class providing a thread to update sensor states
+     * Class providing a thread to update sensor states.
      */
     static class LnSensorUpdateThread extends Thread {
 
@@ -263,28 +264,45 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
         /**
          * Runs the thread - sends 8 commands to query status of all stationary
-         * sensors per LocoNet PE Specs, page 12-13 Thread waits 500 msec
-         * between commands.
+         * sensors per LocoNet PE Specs, page 12-13.
+         * Thread waits 500 msec between commands.
          */
         @Override
         public void run() {
             sm.setUpdateBusy();
             byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
             byte sw2[] = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
-            // create and initialize loconet message
-            LocoNetMessage m = new LocoNetMessage(4);
-            m.setOpCode(LnConstants.OPC_SW_REQ);
+            // create and initialize LocoNet message
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_SW_REQ);
             for (int k = 0; k < 8; k++) {
                 try {
+                    // Delay 500 mSec to allow init of traffic controller, listeners.
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                     sm.setUpdateNotBusy();
-                    return;
+                    return; // and stop work
                 }
-                m.setElement(1, sw1[k]);
-                m.setElement(2, sw2[k]);
-                tc.sendLocoNetMessage(m);
+                msg.setElement(1, sw1[k]);
+                msg.setElement(2, sw2[k]);
+                while (true) {
+                    try {
+                        tc.sendLocoNetMessage(msg);
+                        break;
+                    } catch (NullPointerException npe) {
+                        // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so retry
+                        log.debug("init of LnSensorManager delayed");
+                        try {
+                            Thread.sleep(10); // wait 1 cycle for tc to init
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt(); // retain if needed later
+                            sm.setUpdateNotBusy();
+                            return; // and stop work
+                        }
+                    }
+                }
+                log.debug("LnSensorUpdate sent");
             }
             sm.setUpdateNotBusy();
         }
