@@ -22,9 +22,13 @@ import jmri
 import java
 import javax.swing
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 class LnFindTransponder(jmri.jmrit.automat.AbstractAutomaton) :
     # handle() will only execute once here, to run a single test
     def handle(self):
+
         self.long = True
         self.address = 433
         
@@ -41,7 +45,7 @@ class LnFindTransponder(jmri.jmrit.automat.AbstractAutomaton) :
         m.setElement(5,0x00)
         m.setElement(6,0x00)
         m.setElement(7,0x00)
-        jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(m)
+        jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(m)
         
         # now force sending of null packets to same address
         c = jmri.InstanceManager.getDefault(jmri.CommandStation)
