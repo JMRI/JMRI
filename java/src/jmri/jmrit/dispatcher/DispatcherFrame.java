@@ -304,52 +304,64 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             TableColumnModel activeTrainsColumnModel = activeTrainsTable.getColumnModel();
             TableColumn transitColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TRANSIT_COLUMN);
             transitColumn.setResizable(true);
-            transitColumn.setMinWidth(140);
-            transitColumn.setMaxWidth(220);
+            //transitColumn.setMinWidth(140);
+            //transitColumn.setMaxWidth(220);
             TableColumn trainColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TRAIN_COLUMN);
             trainColumn.setResizable(true);
-            trainColumn.setMinWidth(90);
-            trainColumn.setMaxWidth(160);
+            //trainColumn.setMinWidth(90);
+            //trainColumn.setMaxWidth(160);
             TableColumn typeColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TYPE_COLUMN);
             typeColumn.setResizable(true);
-            typeColumn.setMinWidth(130);
-            typeColumn.setMaxWidth(190);
+            //typeColumn.setMinWidth(130);
+            //typeColumn.setMaxWidth(190);
             TableColumn statusColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.STATUS_COLUMN);
             statusColumn.setResizable(true);
-            statusColumn.setMinWidth(90);
-            statusColumn.setMaxWidth(140);
+            //statusColumn.setMinWidth(90);
+            //statusColumn.setMaxWidth(140);
             TableColumn modeColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.MODE_COLUMN);
             modeColumn.setResizable(true);
-            modeColumn.setMinWidth(90);
-            modeColumn.setMaxWidth(140);
+            //modeColumn.setMinWidth(90);
+            //modeColumn.setMaxWidth(140);
             TableColumn allocatedColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.ALLOCATED_COLUMN);
             allocatedColumn.setResizable(true);
-            allocatedColumn.setMinWidth(120);
-            allocatedColumn.setMaxWidth(200);
+            //allocatedColumn.setMinWidth(120);
+            //allocatedColumn.setMaxWidth(200);
             TableColumn nextSectionColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.NEXTSECTION_COLUMN);
             nextSectionColumn.setResizable(true);
-            nextSectionColumn.setMinWidth(120);
-            nextSectionColumn.setMaxWidth(200);
+            //nextSectionColumn.setMinWidth(120);
+            //nextSectionColumn.setMaxWidth(200);
             TableColumn allocateButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.ALLOCATEBUTTON_COLUMN);
             allocateButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
-            allocateButtonColumn.setMinWidth(110);
-            allocateButtonColumn.setMaxWidth(190);
-            allocateButtonColumn.setResizable(false);
+            //allocateButtonColumn.setMinWidth(110);
+            //allocateButtonColumn.setMaxWidth(190);
+            allocateButtonColumn.setResizable(true);
             ButtonRenderer buttonRenderer = new ButtonRenderer();
             activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
-            JButton sampleButton = new JButton(Bundle.getMessage("AllocateButtonName"));
+            JButton sampleButton = new JButton("WWW..."); //by default 3 letters and elipse
             activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
             allocateButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
             TableColumn releaseButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TERMINATEBUTTON_COLUMN);
             releaseButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
-            releaseButtonColumn.setMinWidth(110);
-            releaseButtonColumn.setMaxWidth(190);
-            releaseButtonColumn.setResizable(false);
+            //releaseButtonColumn.setMinWidth(110);
+            //releaseButtonColumn.setMaxWidth(190);
+            releaseButtonColumn.setResizable(true);
             buttonRenderer = new ButtonRenderer();
             activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
-            sampleButton = new JButton("Terminate");
+            sampleButton = new JButton("WWW...");
             activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
             releaseButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+
+            TableColumn cancelResetButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.CANCELRESTARTBUTTON_COLUMN);
+            cancelResetButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
+            //cancelResetButtonColumn.setMinWidth(110);
+            //cancelResetButtonColumn.setMaxWidth(190);
+            cancelResetButtonColumn.setResizable(true);
+            buttonRenderer = new ButtonRenderer();
+            activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
+            sampleButton = new JButton("WWW...");
+            activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
+            cancelResetButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+
             JScrollPane activeTrainsTableScrollPane = new JScrollPane(activeTrainsTable);
             p12.add(activeTrainsTableScrollPane, BorderLayout.CENTER);
             contentPane.add(p12);
@@ -2463,7 +2475,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int NEXTSECTION_COLUMN = 6;
         public static final int ALLOCATEBUTTON_COLUMN = 7;
         public static final int TERMINATEBUTTON_COLUMN = 8;
-        public static final int MAX_ACTIVE_TRAIN_COLUMN = 8;
+        public static final int CANCELRESTARTBUTTON_COLUMN = 9;
+        public static final int MAX_ACTIVE_TRAIN_COLUMN = 9;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -2477,7 +2490,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN) {
+            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN || c == CANCELRESTARTBUTTON_COLUMN) {
                 return JButton.class;
             }
             return String.class;
@@ -2495,7 +2508,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN) {
+            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN || c == CANCELRESTARTBUTTON_COLUMN) {
                 return (true);
             }
             return (false);
@@ -2520,6 +2533,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return Bundle.getMessage("NextSectionColumnTitle");
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
+                case CANCELRESTARTBUTTON_COLUMN:
                     return (" "); // button columns have no names
                 default:
                     return "";
@@ -2546,7 +2560,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return new JTextField(17).getPreferredSize().width;
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
-                    return new JTextField(12).getPreferredSize().width;
+                case CANCELRESTARTBUTTON_COLUMN:
+                    return new JTextField(5).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2580,6 +2595,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return Bundle.getMessage("AllocateButtonName");
                 case TERMINATEBUTTON_COLUMN:
                     return Bundle.getMessage("TerminateTrain");
+                case CANCELRESTARTBUTTON_COLUMN:
+                    return Bundle.getMessage("CancelRestart");
                 default:
                     return (" ");
             }
@@ -2594,6 +2611,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (col == TERMINATEBUTTON_COLUMN) {
                 if (activeTrainsList.get(row) != null) {
                     terminateActiveTrain(activeTrainsList.get(row));
+                }
+            }
+            if (col == CANCELRESTARTBUTTON_COLUMN) {
+                ActiveTrain at = null;
+                if (activeTrainsList.get(row) != null) {
+                    at = activeTrainsList.get(row);
+                    at.setResetWhenDone(false);
+                    for (int j = restartingTrainsList.size(); j > 0; j--) {
+                        if (restartingTrainsList.get(j - 1) == at) {
+                            restartingTrainsList.remove(j - 1);
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -2614,6 +2644,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int SECTIONLENGTH_COLUMN = 6;
         public static final int ALLOCATEBUTTON_COLUMN = 7;
         public static final int CANCELBUTTON_COLUMN = 8;
+        public static final int CANCELRESTART_COLUMN = 9;
 
         public AllocationRequestTableModel() {
             super();
@@ -2634,12 +2665,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (c == ALLOCATEBUTTON_COLUMN) {
                 return JButton.class;
             }
+            if (c == CANCELRESTART_COLUMN) {
+                return JButton.class;
+            }
             return String.class;
         }
 
         @Override
         public int getColumnCount() {
-            return CANCELBUTTON_COLUMN + 1;
+            return CANCELRESTART_COLUMN + 1;
         }
 
         @Override
@@ -2653,6 +2687,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 return (true);
             }
             if (c == ALLOCATEBUTTON_COLUMN) {
+                return (true);
+            }
+            if (c == CANCELRESTART_COLUMN) {
                 return (true);
             }
             return (false);
@@ -2679,6 +2716,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return (" "); // button columns have no names
                 case CANCELBUTTON_COLUMN:
                     return (" "); // button columns have no names
+                case CANCELRESTART_COLUMN:
+                    return ("CR"); // button columns have no names, or can they
                 default:
                     return "";
             }
@@ -2704,6 +2743,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return new JTextField(12).getPreferredSize().width;
                 case CANCELBUTTON_COLUMN:
                     return new JTextField(10).getPreferredSize().width;
+                case CANCELRESTART_COLUMN:
+                    return new JTextField(5).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2748,7 +2789,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case ALLOCATEBUTTON_COLUMN:
                     return Bundle.getMessage("AllocateButton");
                 case CANCELBUTTON_COLUMN:
-                    return Bundle.getMessage("ButtonCancel");
+                    return Bundle.getMessage("TerminateTrain");
+                case CANCELRESTART_COLUMN:
+                    return Bundle.getMessage("CancelRestart");
                 default:
                     return (" ");
             }
