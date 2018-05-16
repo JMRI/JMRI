@@ -716,6 +716,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // must not have been interesting, or at least routed right
             log.error("slot rejected LocoNetMessage {}", m); // NOI18N
             return;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            log.error("Slot outside limit _slots[{}].setSlot({})",i,m,e);
+            return;
+        } catch (Exception e) {
+            log.error("Misc. error _slots[{}].setSlot({})",i,m,e);
+            return;
         }
         // notify listeners that slot may have changed
         notify(_slots[i]);
