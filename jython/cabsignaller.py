@@ -8,7 +8,7 @@
 import jmri
 
 # set the intended LocoNet connection by its index; when you have just 1 connection index = 0
-connectionIndex = 1
+connectionIndex = 0
 
 def locoNetCabSigMesg(loco, mast, vertical, diagonal, horizontal, blink):
 		# Message variables are Loco = Decimal loco address,  others are binary 1 or 0 
