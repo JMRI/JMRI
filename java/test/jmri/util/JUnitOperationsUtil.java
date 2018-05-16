@@ -162,8 +162,19 @@ public class JUnitOperationsUtil {
 
         // Set up a route of 3 locations: North End Staging (2 tracks),
         // North Industries (1 track), and South End Staging (2 tracks).
-        createStagingLocations();
-        createNormalLocations();
+        createTwoStagingLocations();
+        
+        Location locationNorthIndustries = new Location("20", "North Industries");
+        locationNorthIndustries.setSwitchListEnabled(true);
+        lmanager.register(locationNorthIndustries);
+
+        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
+        l20yard1.setLength(432);
+        l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
+        l20yard1.setCommentSetout("Test comment for NI Yard drops only");
+        l20yard1.setCommentPickup("Test comment for NI Yard pulls only");
+
+        locationNorthIndustries.register(l20yard1);
         
         // get departure staging and tracks
         Location locationNorthEnd = lmanager.getLocationById("1");
@@ -171,10 +182,6 @@ public class JUnitOperationsUtil {
         Track l1staging2 = locationNorthEnd.getTrackById("1s2");
         Assert.assertNotNull(l1staging1);
         Assert.assertNotNull(l1staging2);
-
-        Location locationNorthIndustries = lmanager.getLocationById("20");
-        Track l2yard1 = locationNorthIndustries.getTrackById("2s1");
-        Assert.assertNotNull(l2yard1);
         
         // termination staging
         Location locationSouthEnd = lmanager.getLocationById("3");
@@ -192,9 +199,9 @@ public class JUnitOperationsUtil {
         createAndPlaceCar("CP", "X10002", "Boxcar", "40", "AT", "1-84", l1staging1, 4444);
         createAndPlaceCar("CP", "X20001", "Boxcar", "40", "DAB", "1980", l1staging2, 0);
         createAndPlaceCar("CP", "X20002", "Boxcar", "40", "DAB", "1978", l1staging2, 0);
-        createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l2yard1, 6);
-        createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l2yard1, 0);
-        createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l2yard1, 0);
+        createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l20yard1, 6);
+        createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
+        createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
@@ -260,9 +267,9 @@ public class JUnitOperationsUtil {
     }
     
     /**
-     * Creates four staging locations for common testing
+     * Creates two staging locations for common testing
      */
-    public static void createStagingLocations() {
+    public static void createTwoStagingLocations() {
         
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         
@@ -310,7 +317,17 @@ public class JUnitOperationsUtil {
 
         locationSouthEnd.register(l3s1);
         locationSouthEnd.register(l3s2);
+    }
+    
+    /**
+     * Creates four staging locations for common testing
+     */
+    public static void createFourStagingLocations() {
         
+        createTwoStagingLocations();
+        
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+         
         Location locationWestEnd = new Location("5", "West End Staging");
         locationWestEnd.setLocationOps(Location.STAGING);
         lmanager.register(locationWestEnd);
@@ -344,18 +361,6 @@ public class JUnitOperationsUtil {
     public static void createNormalLocations() {
 
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
-
-        Location locationNorthIndustries = new Location("20", "North Industries");
-        locationNorthIndustries.setSwitchListEnabled(true);
-        lmanager.register(locationNorthIndustries);
-
-        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
-        l20yard1.setLength(432);
-        l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
-        l20yard1.setCommentSetout("Test comment for NI Yard drops only");
-        l20yard1.setCommentPickup("Test comment for NI Yard pulls only");
-
-        locationNorthIndustries.register(l20yard1);
         
         // the following locations and tracks are retrieved by their names
         Location arlington = lmanager.newLocation("Arlington");
