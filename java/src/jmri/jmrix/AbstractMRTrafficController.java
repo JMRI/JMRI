@@ -127,8 +127,8 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Invoked if it's appropriate to do low-priority polling of the command
-     * station, this should return the next message to send, or null if the TC
-     * should just sleep.
+     * station, this should return the next message to send, or null if the
+     * TrafficController should just sleep.
      */
     abstract protected AbstractMRMessage pollMessage();
 
@@ -1152,26 +1152,26 @@ abstract public class AbstractMRTrafficController {
 
         AbstractMRReply mMsg;
         AbstractMRListener mDest;
-        AbstractMRTrafficController mTC;
+        AbstractMRTrafficController mTc;
 
         public RcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
-                AbstractMRTrafficController pTC) {
+                AbstractMRTrafficController pTc) {
             mMsg = pMsg;
             mDest = pDest;
-            mTC = pTC;
+            mTc = pTc;
         }
 
         @Override
         public void run() {
             log.debug("Delayed rcv notify starts");
-            mTC.notifyReply(mMsg, mDest);
+            mTc.notifyReply(mMsg, mDest);
         }
     } // end RcvNotifier
 
     // allow creation of object outside package
     protected RcvNotifier newRcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
-            AbstractMRTrafficController pTC) {
-        return new RcvNotifier(pMsg, pDest, pTC);
+            AbstractMRTrafficController pTc) {
+        return new RcvNotifier(pMsg, pDest, pTc);
     }
 
     /**
@@ -1182,19 +1182,19 @@ abstract public class AbstractMRTrafficController {
 
         AbstractMRMessage mMsg;
         AbstractMRListener mDest;
-        AbstractMRTrafficController mTC;
+        AbstractMRTrafficController mTc;
 
         public XmtNotifier(AbstractMRMessage pMsg, AbstractMRListener pDest,
-                AbstractMRTrafficController pTC) {
+                AbstractMRTrafficController pTc) {
             mMsg = pMsg;
             mDest = pDest;
-            mTC = pTC;
+            mTc = pTc;
         }
 
         @Override
         public void run() {
             log.debug("Delayed xmt notify starts");
-            mTC.notifyMessage(mMsg, mDest);
+            mTc.notifyMessage(mMsg, mDest);
         }
     }  // end XmtNotifier
 
@@ -1239,15 +1239,15 @@ abstract public class AbstractMRTrafficController {
      */
     static class CleanupHook implements Runnable {
 
-        AbstractMRTrafficController mTC;
+        AbstractMRTrafficController mTc;
 
-        CleanupHook(AbstractMRTrafficController pTC) {
-            mTC = pTC;
+        CleanupHook(AbstractMRTrafficController pTc) {
+            mTc = pTc;
         }
 
         @Override
         public void run() {
-            mTC.terminate();
+            mTc.terminate();
         }
     }
 

@@ -25,23 +25,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     LocoNetInterfaceScaffold lnis;
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
-    @Override
-    @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        // prepare an interface, register
-        lnis = new LocoNetInterfaceScaffold();
-        // create and register the manager object
-        l = new LnTurnoutManager(lnis, lnis, "L", false);
-        jmri.InstanceManager.setTurnoutManager(l);
-    }
-
     @Test
     @Override
     public void testMisses() {
@@ -139,6 +122,23 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertTrue(null != l.getBySystemName("LT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
 
+    }
+
+    @Override
+    @Before
+    public void setUp(){
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        // prepare an interface, register
+        lnis = new LocoNetInterfaceScaffold();
+        // create and register the manager object
+        l = new LnTurnoutManager(lnis, lnis, "L", false);
+        jmri.InstanceManager.setTurnoutManager(l);
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class);

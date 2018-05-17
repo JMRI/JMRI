@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locormi;
 
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,20 +13,24 @@ import org.junit.Test;
  */
 public class LnMessageBufferTest {
 
+    private LocoNetSystemConnectionMemo memo;
+
     @Test
     public void testCTor() throws java.rmi.RemoteException{
-        LnMessageBuffer t = new LnMessageBuffer();
-        Assert.assertNotNull("exists",t);
+        LnMessageBuffer t = new LnMessageBuffer(memo.getLnTrafficController());
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new LocoNetSystemConnectionMemo();
     }
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

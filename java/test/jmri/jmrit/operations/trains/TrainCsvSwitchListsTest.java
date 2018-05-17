@@ -28,7 +28,7 @@ public class TrainCsvSwitchListsTest {
         Assert.assertNotNull("exists",tcs);
         
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
-        Location location = lmanager.getLocationByName("North End");
+        Location location = lmanager.getLocationByName("North End Staging");
         Assert.assertNotNull(location);
         
         // create some work

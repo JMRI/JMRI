@@ -308,15 +308,15 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         }
                         isAckReplyRequired(msg);
                         final Mx1Message thisMsg = msg;
-                        final Mx1Packetizer thisTC = trafficController;
+                        final Mx1Packetizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             Mx1Message msgForLater = thisMsg;
-                            Mx1Packetizer myTC = thisTC;
+                            Mx1Packetizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notify(msgForLater, null);
+                                myTc.notify(msgForLater, null);
                             }
                         };
                         log.debug("schedule notify of incoming packet");
@@ -361,15 +361,15 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         // message is complete, dispatch it !!
                         {
                             final Mx1Message thisMsg = msg;
-                            final Mx1Packetizer thisTC = trafficController;
+                            final Mx1Packetizer thisTc = trafficController;
                             // return a notification via the queue to ensure end
                             Runnable r = new Runnable() {
                                 Mx1Message msgForLater = thisMsg;
-                                Mx1Packetizer myTC = thisTC;
+                                Mx1Packetizer myTc = thisTc;
 
                                 @Override
                                 public void run() {
-                                    myTC.notify(msgForLater, null);
+                                    myTc.notify(msgForLater, null);
                                 }
                             };
                             log.debug("schedule notify of incoming packet");
@@ -393,16 +393,16 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     void notifyLater(Mx1Message m, Mx1Listener reply) {
         final Mx1Message thisMsg = m;
-        final Mx1Packetizer thisTC = this;
+        final Mx1Packetizer thisTc = this;
         final Mx1Listener thisLst = reply;
         Runnable r = new Runnable() {
             Mx1Message msgForLater = thisMsg;
-            Mx1Packetizer myTC = thisTC;
+            Mx1Packetizer myTc = thisTc;
             Mx1Listener myListener = thisLst;
 
             @Override
             public void run() {
-                myTC.notify(msgForLater, myListener);
+                myTc.notify(msgForLater, myListener);
             }
         };
         log.debug("schedule notify of incoming packet");

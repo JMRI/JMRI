@@ -17,17 +17,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * User interface for sending LocoNet messages to exercise the system
- * <P>
+ * User interface for sending LocoNet messages to exercise the system.
+ * <p>
  * When sending a sequence of operations:
- * <UL>
- * <LI>Send the next message
- * <LI>Wait until you hear the echo, then start a timer
- * <LI>When the timer trips, repeat if buttons still down.
- * </UL>
+ * <ul>
+ *   <li>Send the next message
+ *   <li>Wait until you hear the echo, then start a timer
+ *   <li>When the timer trips, repeat if buttons still down.
+ * </ul>
+ * @see jmri.jmrix.can.swing.send.CanSendPane
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
-  */
+ */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 
@@ -45,7 +46,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton("Go");
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
 
     /** 
      * {@inheritDoc}
@@ -72,19 +73,19 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        add(new JLabel("Send one packet:"));
+        add(new JLabel(Bundle.getMessage("LabelSendOne")));
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 
-            jLabel1.setText("Packet:");
+            jLabel1.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("PacketLabel")));
             jLabel1.setVisible(true);
 
-            sendButton.setText("Send");
+            sendButton.setText(Bundle.getMessage("ButtonSend"));
             sendButton.setVisible(true);
-            sendButton.setToolTipText("Send packet");
+            sendButton.setToolTipText(Bundle.getMessage("TooltipSendPacket"));
 
-            packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D; checksum should be present but is recalculated");
+            packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
 
             pane1.add(jLabel1);
             pane1.add(packetTextField);
@@ -104,13 +105,13 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(new JSeparator());
 
         // Configure the sequence
-        add(new JLabel("Send sequence of packets:"));
+        add(new JLabel(Bundle.getMessage("SendSeqTitle")));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 4));
         pane2.add(new JLabel(""));
-        pane2.add(new JLabel("Send"));
-        pane2.add(new JLabel("packet"));
-        pane2.add(new JLabel("wait (msec)"));
+        pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
+        pane2.add(new JLabel(Bundle.getMessage("PacketLabel")));
+        pane2.add(new JLabel(Bundle.getMessage("WaitLabel")));
         for (int i = 0; i < MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i + 1)));
             mUseField[i] = new JCheckBox();
@@ -282,4 +283,5 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LocoGenPanel.class);
+
 }

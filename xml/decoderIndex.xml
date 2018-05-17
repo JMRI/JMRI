@@ -11768,7 +11768,7 @@
       <family name="FREDi" mfg="Public-domain and DIY" file="Public_Domain_FREDi_LNSV2.xml">
         <model model="FREDi using LNSV2" productID="11" developerID="1" />
       </family>
-      <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
+      <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
         <model model="Basic LocoIO" />
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">

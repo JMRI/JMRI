@@ -2,10 +2,6 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -90,7 +86,7 @@ public class TrainSwitchListsTest {
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
-        BufferedReader in = getBufferedReader(switchListFileA);
+        BufferedReader in = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, in.lines().count());
 
     }
@@ -142,11 +138,11 @@ public class TrainSwitchListsTest {
         File switchListFileC = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationC.getName());
         Assert.assertTrue(switchListFileC.exists());
 
-        BufferedReader inA = getBufferedReader(switchListFileA);
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 27, inA.lines().count());
-        BufferedReader inB = getBufferedReader(switchListFileB);
+        BufferedReader inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 20, inB.lines().count());
-        BufferedReader inC = getBufferedReader(switchListFileC);
+        BufferedReader inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 18, inC.lines().count());
 
         // this train has no work at all locations
@@ -159,11 +155,11 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
 
         // no change in switch lists
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 27, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 20, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 18, inC.lines().count());
 
     }
@@ -235,13 +231,13 @@ public class TrainSwitchListsTest {
         File switchListFileD = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationD.getName());
         Assert.assertTrue(switchListFileD.exists());
 
-        BufferedReader inA = getBufferedReader(switchListFileA);
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 32, inA.lines().count());
-        BufferedReader inB = getBufferedReader(switchListFileB);
+        BufferedReader inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 26, inB.lines().count());
-        BufferedReader inC = getBufferedReader(switchListFileC);
+        BufferedReader inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 20, inC.lines().count());
-        BufferedReader inD = getBufferedReader(switchListFileD);
+        BufferedReader inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(); // move train to B
@@ -251,13 +247,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 25, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 20, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(rlc); // move train to C
@@ -268,13 +264,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 22, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 19, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(); // move train to D
@@ -287,13 +283,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 22, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 17, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to C
@@ -304,13 +300,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 22, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 16, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to B
@@ -321,13 +317,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 20, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 21, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 16, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to A
@@ -338,13 +334,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 19, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 18, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 16, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // terminate train
@@ -354,13 +350,13 @@ public class TrainSwitchListsTest {
         tsl.buildSwitchList(locationC);
         tsl.buildSwitchList(locationD);
 
-        inA = getBufferedReader(switchListFileA);
+        inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 9, inA.lines().count());
-        inB = getBufferedReader(switchListFileB);
+        inB = JUnitOperationsUtil.getBufferedReader(switchListFileB);
         Assert.assertEquals("confirm number of lines in switch list", 10, inB.lines().count());
-        inC = getBufferedReader(switchListFileC);
+        inC = JUnitOperationsUtil.getBufferedReader(switchListFileC);
         Assert.assertEquals("confirm number of lines in switch list", 7, inC.lines().count());
-        inD = getBufferedReader(switchListFileD);
+        inD = JUnitOperationsUtil.getBufferedReader(switchListFileD);
         Assert.assertEquals("confirm number of lines in switch list", 4, inD.lines().count());
 
     }
@@ -388,7 +384,7 @@ public class TrainSwitchListsTest {
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
-        BufferedReader inA = getBufferedReader(switchListFileA);
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 29, inA.lines().count());
 
     }
@@ -415,7 +411,7 @@ public class TrainSwitchListsTest {
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
-        BufferedReader inA = getBufferedReader(switchListFileA);
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 38, inA.lines().count());
 
     }
@@ -453,7 +449,7 @@ public class TrainSwitchListsTest {
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
-        BufferedReader inA = getBufferedReader(switchListFileA);
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 22, inA.lines().count());
 
     }
@@ -481,7 +477,7 @@ public class TrainSwitchListsTest {
         File switchListFileA = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(locationA.getName());
         Assert.assertTrue(switchListFileA.exists());
 
-        BufferedReader inA = getBufferedReader(switchListFileA);
+        BufferedReader inA = JUnitOperationsUtil.getBufferedReader(switchListFileA);
         Assert.assertEquals("confirm number of lines in switch list", 28, inA.lines().count());
 
     }
@@ -548,19 +544,6 @@ public class TrainSwitchListsTest {
         e1.setModel("E8");
         Assert.assertEquals("Place engine on track", Track.OKAY, e1.setLocation(locationA, yardA));
 
-    }
-
-    private BufferedReader getBufferedReader(File file) {
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
-        } catch (FileNotFoundException e) {
-
-        } catch (UnsupportedEncodingException e) {
-
-        }
-        Assert.assertNotNull(in);
-        return in;
     }
 
     // The minimal setup for log4J

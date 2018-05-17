@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
-<!-- $Id: 0NMRA_registers.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,85 +12,246 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2015</year>
+        <year>2018</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Bob</firstname>
+                <surname>Jacobsen</surname>
+            </personname>
+        </author>
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2015-08-12</date>
+            <authorinitials>BJ</authorinitials>
+            <revremark>Initial version, test only</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2018-04-26</date>
+            <authorinitials>EB</authorinitials>
+            <revremark>Added Board and Ports panes, manual entry, still experimental</revremark>
+        </revision>
+    </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
-  <!-- version 1 - test only -->
+
   <decoder>
-    <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY">
-      <model model="Basic LocoIO"/>
+    <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
+      <model model="Basic LocoIO" productID="142">
+          <versionCV lowVersionID="134" highVersionID="142"/>
+      </model>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
         <mode>LOCONETSV1MODE</mode>
     </programming>
     <variables>
 
+        <variable CV="100" readOnly="yes" item="Decoder Version" default="142">
+            <decVal/>
+            <label>PIC Version: </label>
+            <label xml:lang="it">Versione PIC: </label>
+            <label xml:lang="fr">Version PIC: </label>
+            <label xml:lang="de">PIC Version: </label>
+            <label xml:lang="nl">PIC-versie: </label>
+        </variable>
+
+        <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0">
+            <decVal min="0" max="15"/>
+            <label>Blink Rate:</label>
+            <tooltip>Choose from 0 = none to 15 = fast</tooltip>
+        </variable>
+
+        <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0">
+            <enumVal>
+                <enumChoice choice="0" value="0">
+                    <choice>Normal Ports</choice>
+                    <choice xml:lang="nl">Normaal</choice>
+                </enumChoice>
+                <enumChoice choice="2" value="2">
+                    <choice>2-Position Servo</choice>
+                </enumChoice>
+                <enumChoice choice="3" value="3">
+                    <choice>4-Position Servo</choice>
+                </enumChoice>
+            </enumVal>
+            <label>Board Port type:</label>
+            <tooltip>Select how the ports on this board should operate</tooltip>
+        </variable>
+
+      <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Alternate code:</label>
+        <tooltip>Button sends alternating code, default unselected = fixed code</tooltip>
+      </variable>
+
+      <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Port Refresh:</label>
+        <tooltip>Refresh Ports, default unselected</tooltip>
+      </variable>
+
      <!-- This sets a single JMRI-style composite address in two CVs -->
-      <variable CV="1" comment="Board SV address" item="Short Address" default="81">
+      <variable CV="1" item="Short Address" comment="Board SV address" default="81">
         <splitVal highCV="2" factor="1" offset="-256" default="1"/>
-        <label>Board Address (14 bit)</label>
+        <label>Board Address (14 bit):</label>
         <tooltip>This provides the full address by combining the LocoIO Address upper and LocoIO Subaddress lower parts</tooltip>
       </variable>
 
       <!-- This repurposes the UserID fields on the Basic pane to show -->
-      <!-- the indivdual address bytes                                 -->
+      <!-- the individual address bytes.                               -->
       <!-- Note defaults must be present both locations and agree      -->
-      <variable item="User Id #1" CV="1" default="81">
+      <variable item="User Id #1" CV="1" default="1">
         <decVal max="127"/>
-            <label>LocoIO SubAddress (7-bit low)</label>
+            <label>/ SubAddress (7-bit low):</label>
             <tooltip>Message DSTL byte</tooltip>
       </variable>
-      <variable item="User Id #2" CV="2" default="1">
+
+      <variable item="User Id #2" CV="2" default="81">
         <decVal min="1" max="127"/>
-            <label>LocoIO Address (7-bit high)</label>
-            <tooltip>Message DSTH byte</tooltip>
+        <label>LocoIO Address (7-bit high):</label>
+        <tooltip>Message DSTH byte</tooltip>
       </variable>
 
-      <variable CV="3" item="Advanced Group 1 Option 1" default="192">
-        <enumVal>
-          <enumChoice value="15">
-            <choice>Input from a toggle switch</choice>
-          </enumChoice>
-          <enumChoice value="47">
-            <choice>Input from an active low push button</choice>
-          </enumChoice>
-          <enumChoice value="111">
-            <choice>Input from an active high push button</choice>
-          </enumChoice>
-          <enumChoice value="192">
-            <choice>Output from 0xC0 command</choice>
-          </enumChoice>
-          <enumChoice value="128">
-            <choice>Output from 0x80 command</choice>
-          </enumChoice>
-        </enumVal>
-        <label>RB7 Configuration</label>
-      </variable>
-      <variable CV="4" item="Advanced Group 1 Option 2" default="1">
-        <hexVal/>
-        <label>RB7 Value 1 (hex)</label>
-      </variable>
-      <variable CV="5" item="Advanced Group 1 Option 3" default="0">
-        <hexVal/>
-        <label>RB7 Value 2 (hex)</label>
+      <!-- Per Port config SVs, handled like CVs, uses lists from public_domain.enum-HDL-PortMode -->
+
+      <!-- Port 1 -->
+      <variable item="Port1 Mode" CV="5" mask="VVVVXXXX">
+        <!--<splitVal highCV="3" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <label>Mode:</label>
+        <label xml:lang="nl">Functie:</label>
+        <tooltip>Enter code from list</tooltip>
       </variable>
 
+      <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="5" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
+        <label>Port Address (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
+      </variable>
 
+      <variable item="Port1 Config" CV="3">
+        <decVal min="7" max="208"/>
+        <label>Config (dec):</label>
+      </variable>
 
+      <variable item="Port1 Value1" CV="4">
+        <decVal/>
+        <label>Value1 (dec):</label>
+      </variable>
 
-      <variable item="Dummy 10" CV="10">
-        <decVal/>
+      <variable item="Port1 Value2" CV="5">
+        <decVal min="0" max="112"/>
+        <label>Value2 (dec):</label>
       </variable>
-      <variable item="Dummy 11" CV="11">
-        <decVal/>
+
+      <!-- Port 2 -->
+      <variable item="Port2 Mode" CV="8" mask="VVVVXXXX">
+        <!--<splitVal highCV="6" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <label>Mode:</label>
+        <label xml:lang="nl">Functie:</label>
+        <tooltip>Enter code from list</tooltip>
       </variable>
-      <variable item="Dummy 12" CV="12">
-        <decVal/>
+
+      <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="8" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
+        <label>Port Address (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
       </variable>
-      <variable item="Dummy 13" CV="13">
-        <decVal/>
+
+      <variable item="Port2 Config" CV="6">
+        <decVal min="7" max="208"/>
+        <label>Config (dec):</label>
       </variable>
-      <variable item="Dummy 14" CV="14">
+
+      <variable item="Port2 Value1" CV="7">
         <decVal/>
+        <label>Value1 (dec):</label>
       </variable>
+
+      <variable item="Port2 Value2" CV="8">
+        <decVal min="0" max="112"/>
+        <label>Value2 (dec):</label>
+      </variable>
+
+      <!-- Port 3 -->
+      <variable item="Port3 Mode" CV="11" mask="VVVVXXXX">
+        <!--<splitVal highCV="9" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <label>Mode:</label>
+        <label xml:lang="nl">Functie:</label>
+        <tooltip>Enter code from list</tooltip>
+      </variable>
+
+      <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="11" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
+        <label>Port Address (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
+      </variable>
+
+      <variable item="Port3 Config" CV="9">
+        <decVal min="10" max="208"/>
+        <label>Config (dec):</label>
+      </variable>
+
+      <variable item="Port3 Value1" CV="10">
+        <decVal/>
+        <label>Value1 (dec):</label>
+      </variable>
+
+      <variable item="Port3 Value2" CV="11">
+        <decVal min="0" max="112"/>
+        <label>Value2 (dec):</label>
+      </variable>
+
+      <!-- Port 4 -->
+      <variable item="Port4 Mode" CV="14" mask="VVVVXXXX">
+        <!--<splitVal highCV="12" factor="1" offset="0" upperMask="VVVVVVVV"/>-->
+        <xi:include href="http://jmri.org/xml/decoders/public_domain/enum-HDL-PortMode.xml"/>
+        <label>Mode:</label>
+        <label xml:lang="nl">Functie:</label>
+        <tooltip>Enter code from list</tooltip>
+      </variable>
+
+      <variable item="Port4 Address" CV="13" mask="XVVVVVVV">
+        <!-- splitVal misses bit 8 in port address -->
+        <splitVal highCV="14" factor="128" offset="-1" upperMask="XXXXVVVV" max="4096"/>
+        <label>Port Address (dec):</label>
+        <label xml:lang="nl">Poortadres (dec):</label>
+      </variable>
+
+      <variable item="Port4 Config" CV="12">
+        <decVal min="7" max="208"/>
+        <label>Config (dec):</label>
+      </variable>
+
+      <variable item="Port4 Value1" CV="13">
+        <decVal/>
+        <label>Value1 (dec):</label>
+      </variable>
+
+      <variable item="Port4 Value2" CV="14">
+        <decVal min="0" max="112"/>
+        <label>Value2 (dec):</label>
+      </variable>
+
+      <!-- Below are dummy CV placeholders, up to CV50 still to be configured for LocoIO ports 5 - 16 -->
+
       <variable item="Dummy 15" CV="15">
         <decVal/>
       </variable>
@@ -812,10 +972,355 @@
       <variable item="Dummy 254" CV="254">
         <decVal/>
       </variable>
-      <variable item="Dummy 255" CV="255">
-        <decVal/>
-      </variable>
 
     </variables>
   </decoder>
+
+  <!-- LocoIO GUI Panes -->
+
+  <!-- Board Settings Pane -->
+    <pane>
+        <name>LocoIO</name>
+      <column>
+        <label>
+            <text>LocoIO Board Settings</text>
+        </label>
+        <display item="Decoder Version"/>
+
+        <display item="Blink Rate"/>
+        <display item="Blink Rate" format="hslider"/>
+
+        <display item="Action Mode"/>
+
+        <display item="Alternate Mode" format="checkbox"/>
+        <display item="Port Refresh" format="checkbox"/>
+
+      </column>
+    </pane>
+
+  <!-- Per Port Config Pane -->
+  <pane>
+    <name>Ports</name>
+    <name xml:lang="nl">Poorten</name>
+      <column>
+        <separator/>
+
+        <row>
+          <column>
+        <label>
+          <text>Port 1</text>
+          <text xml:lang="nl">Poort 1</text>
+        </label>
+        <display item="Port1 Mode"/>
+        <display item="Port1 Address"/>
+
+        <display item="Port1 Config"/>
+        <display item="Port1 Value1"/>
+        <display item="Port1 Value2"/>
+          </column>
+          <separator/>
+          <column>
+            <label>
+              <text>Port 2</text>
+              <text xml:lang="nl">Poort 2</text>
+            </label>
+            <display item="Port2 Mode"/>
+            <display item="Port2 Address"/>
+
+            <display item="Port2 Config"/>
+            <display item="Port2 Value1"/>
+            <display item="Port2 Value2"/>
+          </column>
+        </row>
+        <separator/>
+
+        <row>
+          <column>
+            <label>
+              <text>Port 3</text>
+              <text xml:lang="nl">Poort 3</text>
+            </label>
+            <display item="Port3 Mode"/>
+            <display item="Port3 Address"/>
+
+            <display item="Port3 Config"/>
+            <display item="Port3 Value1"/>
+            <display item="Port3 Value2"/>
+          </column>
+          <separator/>
+          <column>
+            <label>
+              <text>Port 4</text>
+              <text xml:lang="nl">Poort 4</text>
+            </label>
+            <display item="Port4 Mode"/>
+            <display item="Port4 Address"/>
+
+            <display item="Port4 Config"/>
+            <display item="Port4 Value1"/>
+            <display item="Port4 Value2"/>
+          </column>
+        </row>
+        <separator/>
+
+      </column>
+    </pane>
+
+  <!-- LocoIO Valid Values Reference (static info) -->
+  <pane>
+    <name>Cheat Sheet</name>
+    <name xml:lang="nl">Spiekblad</name>
+    <column>
+      <row>
+      <label>
+        <text>&lt;html&gt;&lt;strong&gt;What values to enter on the Parts tab?&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Kies een rij en vul de waarden in op tab Poorten&lt;/strong&gt;&lt;/html&gt;</text>
+      </label>
+      </row>
+
+      <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Port Mode&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poortfunctie&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              Input: Toggle Switch - Indirect&lt;br/&gt;
+              Input: Toggle Switch&lt;br/&gt;
+              Input: Switch Point Feedback - Normal&lt;br/&gt;
+              Input: Block Detect - Active Low - Delayed&lt;br/&gt;
+              Input: Block Detect - Active Low&lt;br/&gt;
+              Input: Push Button - Active Low - Indirect&lt;br/&gt;
+              Input: Push Button - Active Low&lt;br/&gt;
+              Input: Switch Point Feedback - Contact 2&lt;br/&gt;
+              Input: Switch Point Feedback - Contact 1&lt;br/&gt;
+              Input: Block Detect - Active High - Delayed&lt;br/&gt;
+              Input: Block Detect - Active High&lt;br/&gt;
+              Input: Push Button - Active High - Indirect&lt;br/&gt;
+              Input: Push Button - Active High&lt;br/&gt;
+              &lt;br/&gt;
+              Output: Servo&lt;br/&gt;
+              Output: Fixed - 1 - Off&lt;br/&gt;
+              Output: Fixed - 2 - Off&lt;br/&gt;
+              Output: Fixed - 1 - On&lt;br/&gt;
+              Output: Fixed - 2 - On&lt;br/&gt;
+              Output: Pulse - 2 - Soft Reset&lt;br/&gt;
+              Output: Pulse - 1 - Soft Reset&lt;br/&gt;
+              Output: Pulse - 2 - Hard Reset&lt;br/&gt;
+              Output: Pulse - 1 - Hard Reset&lt;br/&gt;
+              Output: Fixed - 1 - Off - Blink&lt;br/&gt;
+              Output: Fixed - 2 - Off - Blink&lt;br/&gt;
+              Output: Fixed - 1 - On - Blink&lt;br/&gt;
+              Output: Fixed - 2 - On - Blink&lt;br/&gt;
+              Output: Fixed - 1 - Off - 4-Way&lt;br/&gt;
+              Output: Fixed - 1 - Off - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 2 - Off - 4-Way&lt;br/&gt;
+              Output: Fixed - 2 - Off - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 1 - On - 4-Way&lt;br/&gt;
+              Output: Fixed - 1 - On - 4-Way - Blink&lt;br/&gt;
+              Output: Fixed - 2 - On - 4-Way&lt;br/&gt;
+              Output: Fixed - 2 - On - 4-Way - Blink&lt;br/&gt;
+              Output: Occupancy&lt;br/&gt;
+              Output: Occupancy - Blink&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Config&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              7&lt;br/&gt;
+              15&lt;br/&gt;
+              23&lt;br/&gt;
+              29&lt;br/&gt;
+              33&lt;br/&gt;
+              39&lt;br/&gt;
+              47&lt;br/&gt;
+              55&lt;br/&gt;
+              55&lt;br/&gt;
+              91&lt;br/&gt;
+              95&lt;br/&gt;
+              103&lt;br/&gt;
+              111&lt;br/&gt;
+              &lt;br/&gt;
+              128&lt;br/&gt;
+              128&lt;br/&gt;
+              128&lt;br/&gt;
+              129&lt;br/&gt;
+              129&lt;br/&gt;
+              136&lt;br/&gt;
+              136&lt;br/&gt;
+              140&lt;br/&gt;
+              140&lt;br/&gt;
+              144&lt;br/&gt;
+              144&lt;br/&gt;
+              145&lt;br/&gt;
+              145&lt;br/&gt;
+              160&lt;br/&gt;
+              176&lt;br/&gt;
+              160&lt;br/&gt;
+              176&lt;br/&gt;
+              161&lt;br/&gt;
+              177&lt;br/&gt;
+              161&lt;br/&gt;
+              177&lt;br/&gt;
+              192&lt;br/&gt;
+              208&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Value1&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              Address&lt;br/&gt;
+              Address&lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+        <separator/>
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Value2&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              112&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              96&lt;br/&gt;
+              112&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              0&lt;br/&gt;
+              32&lt;br/&gt;
+              0&lt;br/&gt;
+              32&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              48&lt;br/&gt;
+              16&lt;br/&gt;
+              16&lt;br/&gt;
+              48&lt;br/&gt;
+              48&lt;br/&gt;
+              0&lt;br/&gt;
+              0&lt;br/&gt;
+              &lt;/html&gt;</text>
+          </label>
+        </column>
+
+      </row>
+    </column>
+  </pane>
+
+  <pane>
+      <name>ReadMe</name>
+      <name xml:lang="de">Lese Mich</name>
+      <name xml:lang="fr">Lisez Moi</name>
+      <name xml:lang="nl">Lees Mij</name>
+      <column>
+          <label>
+              <text>&lt;html&gt;&lt;h1&gt;Information about HDL LocoIO Boards&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Information bzw. HDL LocoIO Einheiten&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Modules LocoIO HDL&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Informatie over HDL LocoIO Modules&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+          <separator/>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;JMRI 4.11 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.11 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.11 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.11 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+        <separator/>
+          <label>
+              <text>&lt;html&gt;&lt;h3&gt;TEST for SV Programming Ops Mode addressing (LOCONETSV1MODE), no Reading&lt;/h3&gt;&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Experimenteller SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), nicht Lesen&lt;/h3&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;TEST voor SV's Programmeren via POM (LOCONETSV1MODE), niet Uitlezen&lt;/h3&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+              <text>&lt;html&gt;
+                  As an alternative for the HDL Windows LocoIO Config program, follow these steps:&lt;br/&gt;
+                  &lt;br/&gt;
+                  Be careful to disconnect all other LocoIO devices when changing a board's address (broadcast).&lt;br/&gt;
+                  &lt;br/&gt;
+                  Step 1: Connect power and LocoNet to the unit.&lt;br/&gt;
+                  Step 2: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;
+                  Step 3: Set desired options and click "Write to decoder".&lt;br/&gt;
+                  Step 4: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
+                  &lt;br/&gt;
+                  &lt;/html&gt;</text>
+          </label>
+          <label>
+              <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="http://users.telenet.be/deloof"&gt;users.telenet.be/deloof&lt;/a&gt;/&lt;html&gt;</text>
+          </label>
+      </column>
+  </pane>
+
 </decoder-config>

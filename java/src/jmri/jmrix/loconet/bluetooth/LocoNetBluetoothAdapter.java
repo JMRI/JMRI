@@ -38,7 +38,8 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         option1Name = "CommandStation"; // NOI18N
         option2Name = "TurnoutHandle"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
-        options.put(option2Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option2Name, new Option(Bundle.getMessage("TurnoutHandling"),
+                new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
     }
 
     Vector<String> portNameVector = null;
@@ -153,25 +154,25 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
             }
             switch (responseCode[0]) {
                 case DiscoveryListener.SERVICE_SEARCH_COMPLETED:
-                    log.error("Bluetooth connection " + portName + " not opened, unknown error");
+                    log.error("Bluetooth connection {} not opened, unknown error", portName);
                     return "Unknown error: failed to connect to " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_DEVICE_NOT_REACHABLE:
-                    log.error("Bluetooth device " + portName + " could not be reached");
+                    log.error("Bluetooth device {} could not be reached", portName);
                     return "Could not find " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_ERROR:
-                    log.error("Error when searching for " + portName);
+                    log.error("Error when searching for {}", portName);
                     return "Error when searching for " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_NO_RECORDS:
-                    log.error("No serial service found on " + portName);
+                    log.error("No serial service found on {}", portName);
                     return "Invalid bluetooth device: " + portName;
                 case DiscoveryListener.SERVICE_SEARCH_TERMINATED:
-                    log.error("Service search on " + portName + " ended prematurely");
+                    log.error("Service search on {} ended prematurely", portName);
                     return "Search for " + portName + " ended unexpectedly";
                 default:
                     log.warn("Unhandled response code: {}", responseCode[0]);
                     break;
             }
-            log.error("Unknown error when connecting to " + portName);
+            log.error("Unknown error when connecting to {}", portName);
             return "Unknown error when connecting to " + portName;
         }
 
@@ -186,7 +187,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         setCommandStationType(getOptionState(option1Name));
         setTurnoutHandling(getOptionState(option2Name));
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // create memo

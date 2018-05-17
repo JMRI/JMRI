@@ -25,4 +25,5 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
 
         return /*(jmri.jmrix.loconet.LnSensorManager)*/ sensorManager;
     }
+
 }
