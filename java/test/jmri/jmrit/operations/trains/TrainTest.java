@@ -19,7 +19,6 @@ import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -76,7 +75,6 @@ public class TrainTest extends OperationsTestCase {
     EngineManager emanager = null;
     CarManager cmanager = null;
     CarTypes ct = null;
-    EngineTypes et = null;
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -603,7 +601,7 @@ public class TrainTest extends OperationsTestCase {
 
     public void testAutoEnginesGrade() {
 
-        Setup.setMaxNumberEngines(6);
+//        Setup.setMaxNumberEngines(6);
 
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
@@ -4249,7 +4247,6 @@ public class TrainTest extends OperationsTestCase {
         emanager = InstanceManager.getDefault(EngineManager.class);
         cmanager = InstanceManager.getDefault(CarManager.class);
         ct = InstanceManager.getDefault(CarTypes.class);
-        et = InstanceManager.getDefault(EngineTypes.class);
 
         // turn off build fail messages
         tmanager.setBuildMessagesEnabled(false);
@@ -4262,7 +4259,6 @@ public class TrainTest extends OperationsTestCase {
         ct.addName("Gon");
         ct.addName("Coil Car");
         ct.addName(Bundle.getMessage("Caboose"));
-
     }
 
     public TrainTest(String s) {

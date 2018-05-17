@@ -70,6 +70,24 @@ public class TrainBuilderTest {
     private RouteLocation rA;
     private RouteLocation rB;
     private RouteLocation rC;
+    
+    @Test
+    public void testA() {
+        Assert.assertEquals("default number", 6, Setup.getMaxNumberEngines());
+        Setup.setMaxNumberEngines(0);
+    }
+    
+    @Test
+    public void testB() {
+        Assert.assertEquals("default number", 6, Setup.getMaxNumberEngines());
+        Setup.setMaxNumberEngines(0);
+    }
+    
+    @Test
+    public void testC() {
+        Assert.assertEquals("default number", 6, Setup.getMaxNumberEngines());
+        Setup.setMaxNumberEngines(0);
+    }
 
     @Test
     public void testCtor() {
@@ -429,8 +447,6 @@ public class TrainBuilderTest {
 
     @Test
     public void testAutoEnginesGrade() {
-        
-        Setup.setMaxNumberEngines(6);
 
         Train train = tmanager.newTrain("TestAutoEnginesGrade");
         train.setNumberEngines(Train.AUTO);
@@ -587,7 +603,7 @@ public class TrainBuilderTest {
         new TrainBuilder().build(train);
         Assert.assertTrue("Train should build", train.isBuilt());
         
-        // make track at location "C" not accept train direction
+        // make track at location "C" not accept train's direction
         Track track = C.getTrackByName("track", null);
         track.setTrainDirections(Track.EAST);
         
@@ -613,11 +629,6 @@ public class TrainBuilderTest {
     @Test
     public void testSpursAndYards() {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-
-        // register the car and engine types used
-        ct.addName(carTypes[1]);
-        ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName(carTypes[5]);
 
         // Set up two cabooses and six box cars
         Car c1 = cmanager.newCar("CP", "10");
@@ -1501,8 +1512,7 @@ public class TrainBuilderTest {
         l3s2.setLength(100);
         
         Assert.assertFalse(new TrainBuilder().build(train1));
-        Assert.assertFalse("Train 1 staging track too short", train1.isBuilt());
-        
+        Assert.assertFalse("Train 1 staging track too short", train1.isBuilt());      
     }
 
     /*
@@ -1945,9 +1955,6 @@ public class TrainBuilderTest {
         Assert.assertEquals("car X1002 in staging should be assigned to train", train1, c4.getTrain());
 
         Assert.assertEquals("car 888 at siding has load L, now excluded", null, c8.getTrain());
-
-        // done
-        train1.setLoadOption(Train.ALL_LOADS);
     }
 
     /*
@@ -1993,9 +2000,6 @@ public class TrainBuilderTest {
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 After 2nd Build staging set to South", train1.isBuilt());
-
-        // need to reset train to release cars
-        train1.reset();
     }
 
     /*
@@ -2844,7 +2848,7 @@ public class TrainBuilderTest {
     }
     
     /**
-     * test cars returning to staging
+     * test cars returning to staging when train is a turn
      */
     @Test
     public void testStagingtoStagingV() {
@@ -2918,7 +2922,7 @@ public class TrainBuilderTest {
         
         // confirm default
         Assert.assertFalse(Setup.isBuildAggressive());
-        
+        // and make true
         Setup.setBuildAggressive(true);
 
         JUnitOperationsUtil.initOperationsData();
@@ -2955,9 +2959,6 @@ public class TrainBuilderTest {
      */
     @Test
     public void testStagingtoStagingX() {
-        
-        // confirm default
-        Assert.assertFalse(Setup.isBuildAggressive());
         
         Setup.setBuildAggressive(true);
 
@@ -3025,7 +3026,7 @@ public class TrainBuilderTest {
 
     /**
      * Test prompt from staging, doesn't actually cause the user prompt to
-     * appear, that is part of the GUI tests.
+     * appear, that would be part of the GUI tests.
      */
     @Test
     public void testStagingPromptFrom() {
@@ -3047,7 +3048,7 @@ public class TrainBuilderTest {
 
     /**
      * Test prompt to staging, doesn't actually cause the user prompt to appear,
-     * that is part of the GUI tests.
+     * that would be part of the GUI tests.
      */
     @Test
     public void testStagingPromptTo() {
@@ -3065,7 +3066,7 @@ public class TrainBuilderTest {
         Track staging1 = locationSouthEnd.getTrackById("3s1");
         staging1.deleteTypeName("Boxcar");
 
-        // only staging track 2 can recieve the train
+        // only staging track 2 can receive the train
         Assert.assertTrue(new TrainBuilder().build(train1));
         
         // now disable track 2, should cause build failure
@@ -3103,11 +3104,6 @@ public class TrainBuilderTest {
         cr.addName("CP");
         cr.addName("Road2");
         cr.addName("Road3");
-
-        // register the car types used
-        ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName("Tanker");
-        ct.addName(carTypes[1]);
 
         // register the car loads used
         cld.addName(carTypes[1], "Flour");
@@ -3385,11 +3381,6 @@ public class TrainBuilderTest {
         cr.addName("CP");
         cr.addName("Road2");
         cr.addName("Road3");
-
-        // register the car types used
-        ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName("Tanker");
-        ct.addName(carTypes[1]);
 
         // register the car loads used
         cld.addName(carTypes[1], "Flour");
@@ -4289,11 +4280,6 @@ public class TrainBuilderTest {
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
-        ct.addName(carTypes[4]);
-        ct.addName(carTypes[3]);
-        ct.addName(carTypes[2]);
-        ct.addName(carTypes[1]);
-
         // create schedules
         Schedule sch1 = smanager.newSchedule("Schedule 1");
         ScheduleItem sch1Item1 = sch1.addItem(carTypes[1]);
@@ -4715,11 +4701,6 @@ public class TrainBuilderTest {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         Setup.setMaxTrainLength(500);
-        ct.addName(carTypes[4]);
-        ct.addName(carTypes[3]);
-        ct.addName(carTypes[2]);
-        ct.addName(carTypes[6]);
-        ct.addName(carTypes[1]);
 
         // confirm no locations
         Assert.assertEquals("number of locations", 0, lmanager.getNumberOfLocations());
@@ -5374,9 +5355,7 @@ public class TrainBuilderTest {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
         // register the car and engine types used
-        ct.addName(carTypes[1]);
-        ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName(carTypes[5]);
+ 
         et.addName("Diesel");
 
         // register the road names used
@@ -6143,12 +6122,6 @@ public class TrainBuilderTest {
     @Test
     public void testTrainBuildOptions() {
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
-
-        // register the car and engine types used
-        ct.addName(carTypes[1]);
-        ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName(carTypes[5]);
-        et.addName("Diesel");
 
         // create 2 consists and a single engine for testing
         Consist con1 = emanager.newConsist("C1");
@@ -7640,9 +7613,6 @@ public class TrainBuilderTest {
         Setup.setStagingTrackImmediatelyAvail(false);
 
         // register the car and engine types used
-        ct.addName(carTypes[1]);
-        ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName(carTypes[5]);
         et.addName(engineTypes[2]);
 
         // create 2 consists and a single engine for testing
@@ -8808,8 +8778,6 @@ public class TrainBuilderTest {
     }
 
     private void setupFindFinalDestinationForCarLoad() {
-        // register the car types used
-        ct.addName("Boxcar");
 
         // register the car loads used
         cld.addName("Boxcar", "Flour");
@@ -8883,15 +8851,12 @@ public class TrainBuilderTest {
         A = lmanager.newLocation("A");
         B = lmanager.newLocation("B");
         C = lmanager.newLocation("C");
-        Track At = A.addTrack("track", Track.SPUR);
-        Track Bt = B.addTrack("track", Track.SPUR);
-        Track Ct = C.addTrack("track", Track.SPUR);
-        At.setLength(300);
-        At.acceptsTypeName(Bundle.getMessage("engineDefaultType"));
-        Bt.setLength(300);
-        Bt.acceptsTypeName(Bundle.getMessage("engineDefaultType"));
-        Ct.setLength(300);
-        Ct.acceptsTypeName(Bundle.getMessage("engineDefaultType"));
+        Track tA = A.addTrack("track", Track.SPUR);
+        Track tB = B.addTrack("track", Track.SPUR);
+        Track tC = C.addTrack("track", Track.SPUR);
+        tA.setLength(300);
+        tB.setLength(300);
+        tC.setLength(300);
 
         rA = route.addLocation(A);
         rB = route.addLocation(B);
@@ -8910,11 +8875,10 @@ public class TrainBuilderTest {
         Engine e4 = emanager.newEngine("E", "4");
         e4.setModel("GP40");
 
-        e1.setLocation(A, At);
-        e2.setLocation(A, At);
-        e3.setLocation(A, At);
-        e4.setLocation(A, At);
-
+        e1.setLocation(A, tA);
+        e2.setLocation(A, tA);
+        e3.setLocation(A, tA);
+        e4.setLocation(A, tA);
     }
 
     // from here down is testing infrastructure
@@ -8947,26 +8911,22 @@ public class TrainBuilderTest {
         
         // register the car and engine types used
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
-        ct.getNames(); // reloads default names
         ct.addName("Boxcar");
         ct.addName(rb.getString("Caboose"));
         ct.addName("Flat");
+        
+        // load the first six car types
+        String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
+        ct.addName(carTypes[1]);
+        ct.addName(carTypes[2]);
+        ct.addName(carTypes[3]);
+        ct.addName(carTypes[4]);
+        ct.addName(carTypes[5]);
+        ct.addName(carTypes[6]);
+        
         et.addName("Diesel");
-
-        Setup.setBuildAggressive(false);
-        Setup.setTrainIntoStagingCheckEnabled(true);
-        Setup.setMaxTrainLength(1000);
-        Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
-        Setup.setLocalInterchangeMovesEnabled(false);
-        Setup.setLocalSpurMovesEnabled(false);
-        Setup.setLocalYardMovesEnabled(false);
+        
         Setup.setCarMoves(7); // set default to 7 moves per location
-        Setup.setMaxNumberEngines(6);
-        Setup.setTrainIntoStagingCheckEnabled(true);
-        Setup.setAllowReturnToStagingEnabled(false);
-        Setup.setGenerateCsvManifestEnabled(false);
-        Setup.setPromptToStagingEnabled(false);
-        Setup.setCarRoutingEnabled(true);
 
     }
 
