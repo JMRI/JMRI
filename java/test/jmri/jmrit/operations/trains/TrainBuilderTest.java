@@ -8947,6 +8947,7 @@ public class TrainBuilderTest {
         
         // register the car and engine types used
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+        ct.getNames(); // reloads default names
         ct.addName("Boxcar");
         ct.addName(rb.getString("Caboose"));
         ct.addName("Flat");
@@ -8960,6 +8961,12 @@ public class TrainBuilderTest {
         Setup.setLocalSpurMovesEnabled(false);
         Setup.setLocalYardMovesEnabled(false);
         Setup.setCarMoves(7); // set default to 7 moves per location
+        Setup.setMaxNumberEngines(6);
+        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setGenerateCsvManifestEnabled(false);
+        Setup.setPromptToStagingEnabled(false);
+        Setup.setCarRoutingEnabled(true);
 
     }
 

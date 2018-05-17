@@ -4956,7 +4956,26 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        
+        Setup.setBuildAggressive(false);
+        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        Setup.setLocalInterchangeMovesEnabled(false);
+        Setup.setLocalSpurMovesEnabled(false);
+        Setup.setLocalYardMovesEnabled(false);
+        Setup.setCarMoves(7); // set default to 7 moves per location
+        Setup.setMaxNumberEngines(6);
+        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setGenerateCsvManifestEnabled(false);
+        Setup.setPromptToStagingEnabled(false);
+        Setup.setCarRoutingEnabled(true);
     }
 
     public OperationsCarRouterTest(String s) {
