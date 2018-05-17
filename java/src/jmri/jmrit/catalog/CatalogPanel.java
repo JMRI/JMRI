@@ -282,6 +282,61 @@ public class CatalogPanel extends JPanel {
     }
 
     /**
+     * The tree held in the CatalogTreeManager must be kept in sync with the
+     * tree displayed as the Image Index. Required in order to save the Index to
+     * disc.
+     */
+    private CatalogTreeNode getCorrespondingNode(CatalogTreeNode node) {
+        TreeNode[] nodes = node.getPath();
+        CatalogTreeNode cNode = null;
+        for (CatalogTree t : _branchModel) {
+            CatalogTreeNode cRoot = t.getRoot();
+            cNode = match(cRoot, nodes, 1);
+            if (cNode != null) {
+                break;
+            }
+        }
+        return cNode;
+    }
+
+    /**
+     * Find the corresponding node in a CatalogTreeManager tree with a displayed
+     * node.
+     */
+    @SuppressWarnings("unchecked")
+    private CatalogTreeNode match(CatalogTreeNode cRoot, TreeNode[] nodes, int idx) {
+        if (idx == nodes.length) {
+            return cRoot;
+        }
+        Enumeration<CatalogTreeNode> e = cRoot.children();
+        CatalogTreeNode result = null;
+        while (e.hasMoreElements()) {
+            CatalogTreeNode cNode = e.nextElement();
+            if (nodes[idx].toString().equals(cNode.toString())) {
+                result = match(cNode, nodes, idx + 1);
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Find the corresponding CatalogTreeManager tree to the displayed branch.
+     */
+    private CatalogTree getCorespondingModel(CatalogTreeNode node) {
+        TreeNode[] nodes = node.getPath();
+        CatalogTree model = null;
+        for (CatalogTree t : _branchModel) {
+            model = t;
+            CatalogTreeNode cRoot = model.getRoot();
+            if (match(cRoot, nodes, 1) != null) {
+                break;
+            }
+        }
+        return model;
+    }
+
+    /**
      * Insert a new node into the displayed tree.
      *
      * @param name   the name of the new node
@@ -304,6 +359,12 @@ public class CatalogPanel extends JPanel {
         }
         CatalogTreeNode newChild = new CatalogTreeNode(name);
         _model.insertNodeInto(newChild, parent, index);
+
+        CatalogTreeNode cParent = getCorrespondingNode(parent);
+        CatalogTreeNode node = new CatalogTreeNode(name);
+        AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(parent);
+
+        tree.insertNodeInto(node, cParent, index);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         return true;
     }
@@ -314,6 +375,8 @@ public class CatalogPanel extends JPanel {
      * @param node the node to delete
      */
     protected void removeNodeFromModel(CatalogTreeNode node) {
+        AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
+        tree.removeNodeFromParent(getCorrespondingNode(node));
         _model.removeNodeFromParent(node);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
     }
@@ -330,6 +393,12 @@ public class CatalogPanel extends JPanel {
         if (!nameOK((CatalogTreeNode)node.getParent(), name)) {
             return false;
         }
+        CatalogTreeNode cNode = getCorrespondingNode(node);
+        cNode.setLeaves(node.getLeaves());
+        AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
+
+        cNode.setUserObject(name);
+        tree.nodeChanged(cNode);
         node.setUserObject(name);
         _model.nodeChanged(node);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
@@ -339,8 +408,16 @@ public class CatalogPanel extends JPanel {
     
     private void addLeaf(CatalogTreeNode node, NamedIcon icon) {
         node.addLeaf(icon.getName(), icon.getURL());
-        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+
+        CatalogTreeNode cNode = getCorrespondingNode(node);
+        cNode.setLeaves(node.getLeaves());
+        AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
+
+        cNode.setUserObject(node.toString());
+        tree.nodeChanged(cNode);
         _model.nodeChanged(node);
+        
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         if (node.equals(getSelectedNode())) {
             updatePanel();            
         }
