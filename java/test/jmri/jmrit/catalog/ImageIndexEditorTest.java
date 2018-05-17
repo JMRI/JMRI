@@ -26,7 +26,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(JFrameOperator.waitJFrame(Bundle.getMessage("editIndexFrame"), true, true));
 
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            indexEditor.addNode();
+            indexEditor.addNode(null);
         });
         flushAWT();
         java.awt.Container pane = findContainer(Bundle.getMessage("MessageTitle"));
