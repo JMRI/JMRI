@@ -311,7 +311,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     @SuppressWarnings("unchecked")
-    int countSubNodes(CatalogTreeNode node) {
+    private int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
