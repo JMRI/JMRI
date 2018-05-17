@@ -563,6 +563,21 @@ public class TrainSwitchListsTest {
         tmanager.setBuildMessagesEnabled(false);
         // disable build reports
         tmanager.setBuildReportEnabled(false);
+        
+        Setup.setBuildAggressive(false);
+        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setMaxTrainLength(1000);
+        Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        Setup.setLocalInterchangeMovesEnabled(false);
+        Setup.setLocalSpurMovesEnabled(false);
+        Setup.setLocalYardMovesEnabled(false);
+        Setup.setCarMoves(5);
+        Setup.setMaxNumberEngines(6);
+        Setup.setTrainIntoStagingCheckEnabled(true);
+        Setup.setAllowReturnToStagingEnabled(false);
+        Setup.setGenerateCsvManifestEnabled(false);
+        Setup.setPromptToStagingEnabled(false);
+        Setup.setCarRoutingEnabled(true);
 
         // improve test coverage
         Setup.setSwitchListAllTrainsEnabled(false);
