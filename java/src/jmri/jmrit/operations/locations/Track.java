@@ -2261,6 +2261,13 @@ public class Track {
         return _destinationIdList.size();
     }
 
+    /**
+     * adds a location to the list of acceptable destinations for this track.
+     * 
+     * @param destination location that is acceptable
+     * @return true if added to list, false if destination is already part of
+     *         list.
+     */
     public boolean addDestination(Location destination) {
         if (_destinationIdList.contains(destination.getId())) {
             return false;
