@@ -444,6 +444,11 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         getDefault().onlyActiveTrains = enabled;
     }
 
+    /**
+     * When true, router checks that the car's destination is serviced by departure track.
+     * Very restrictive, not recommended.
+     * @return true if enabled.
+     */
     public static boolean isCheckCarDestinationEnabled() {
         return getDefault().checkCarDestination;
     }
