@@ -96,7 +96,7 @@ public class SimpleOperationsServerTest {
     public void testSendLocationList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendLocationList();
-        Assert.assertEquals("SendLocationList Check", "OPERATIONS , LOCATIONS=North End\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End\n", sb.toString());
+        Assert.assertEquals("SendLocationList Check", "OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n", sb.toString());
     }
 
     // test sending the full status of a train.
@@ -105,7 +105,7 @@ public class SimpleOperationsServerTest {
         new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendFullStatus(jmri.jmrit.operations.trains.TrainManager.instance().getTrainByName("STF"));
-        Assert.assertEquals("SendFullStatus Check", "OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n", sb.toString());
+        Assert.assertEquals("SendFullStatus Check", "OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n", sb.toString());
     }
 
     // test sending the full status of a train.
@@ -115,7 +115,7 @@ public class SimpleOperationsServerTest {
         // Building a train causes the property change listener to send
         // full status of the train.
         new jmri.jmrit.operations.trains.TrainBuilder().build(jmri.jmrit.operations.trains.TrainManager.instance().getTrainById("1"));
-        Assert.assertEquals("SendFullStatus Check", "OPERATIONS , TRAIN=STF , TRAINLOCATION=North End , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n", sb.toString());
+        Assert.assertEquals("SendFullStatus Check", "OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n", sb.toString());
     }
 
     //test parsing an message from the client.
@@ -127,7 +127,7 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        Assert.assertEquals("Train Command Response Check", "OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End\n", sb.toString());
+        Assert.assertEquals("Train Command Response Check", "OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End Staging\n", sb.toString());
     }
 
     @Test
@@ -164,7 +164,7 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        Assert.assertEquals("Locations Command Response Check", "OPERATIONS , LOCATIONS=North End\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End\n", sb.toString());
+        Assert.assertEquals("Locations Command Response Check", "OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n", sb.toString());
     }
 
     // The minimal setup for log4J
