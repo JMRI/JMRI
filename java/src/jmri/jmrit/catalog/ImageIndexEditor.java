@@ -258,7 +258,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         invalidate();
     }
 
-    private void renameNode(CatalogTreeNode selectedNode) {
+    void renameNode(CatalogTreeNode selectedNode) {
         if (selectedNode == null) {
             selectedNode = _index.getSelectedNode();            
         }
