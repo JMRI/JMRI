@@ -18,7 +18,10 @@ import jmri
 
 import java
 import javax.swing
+
 typePacket = 0
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
 
 def whenSendButtonClicked(event) :
      # Based on user selection, prepare the arg for the specific LocoNet message
@@ -163,7 +166,7 @@ def sendLoconetMsg(msgLength,opcode,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7,ARG8,ARG9
         packet.setElement(8, ARG8)
         packet.setElement(9, ARG9)
       
-     jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+     jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
      print "Packet", packet           # print packet to Script Output window
      prevMsg.setText(str(packet))     # put packet in hex in field
      return
@@ -400,5 +403,4 @@ f.contentPane.add(panel8)
 f.contentPane.add(panel6)
 f.pack()
 f.show()
-
 
