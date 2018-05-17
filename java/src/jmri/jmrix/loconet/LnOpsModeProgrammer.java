@@ -501,7 +501,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      */
     @Override
     public boolean getCanRead() {
-        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return mSlotMgr.getTranspondingAvailable();
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return mSlotMgr.getTranspondingAvailable(); // only way can be false
         return true;
      }
 

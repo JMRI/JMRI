@@ -41,6 +41,9 @@ public class QuantumCvMgrImporterTest {
         CvTableModel tm = new CvTableModel(new JLabel(), null);
         QuantumCvMgrImporter t = new QuantumCvMgrImporter(f,tm);
         Assert.assertNotNull("exists",t);
+
+        jmri.util.JUnitAppender.assertWarnMessage("Adding CV 1 description \"\", which was in import file but not defined by the decoder definition");
+        jmri.util.JUnitAppender.assertWarnMessage("Adding CV 2 description \"\", which was in import file but not defined by the decoder definition");
     }
 
     // The minimal setup for log4J
