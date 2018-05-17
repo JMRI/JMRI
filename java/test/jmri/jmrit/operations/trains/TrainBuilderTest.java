@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -1545,9 +1546,6 @@ public class TrainBuilderTest {
         train1.addTypeName(Bundle.getMessage("Caboose"));
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build with engines include Caboose", true, train1.isBuilt());
-        
-        // test car with FRED departing staging
-        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
     }
     
     /*
@@ -8946,6 +8944,13 @@ public class TrainBuilderTest {
         tmanager.setBuildMessagesEnabled(false);
         // disable build reports
         tmanager.setBuildReportEnabled(false);
+        
+        // register the car and engine types used
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+        ct.addName("Boxcar");
+        ct.addName(rb.getString("Caboose"));
+        ct.addName("Flat");
+        et.addName("Diesel");
 
         Setup.setBuildAggressive(false);
         Setup.setTrainIntoStagingCheckEnabled(true);
