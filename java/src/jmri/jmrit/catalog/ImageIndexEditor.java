@@ -258,7 +258,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         invalidate();
     }
 
-    void renameNode(CatalogTreeNode selectedNode) {
+    private void renameNode(CatalogTreeNode selectedNode) {
         if (selectedNode == null) {
             selectedNode = _index.getSelectedNode();            
         }
@@ -311,7 +311,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     @SuppressWarnings("unchecked")
-    private int countSubNodes(CatalogTreeNode node) {
+    int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
