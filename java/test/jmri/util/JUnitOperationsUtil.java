@@ -355,6 +355,26 @@ public class JUnitOperationsUtil {
         locationEastEnd.register(l7s2);
     }
     
+    public static Route createThreeLocationRoute() {
+        
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        
+        createNormalLocations();
+        
+        Route route = rmanager.newRoute("Route Arlington-Boston-Chelmsford");
+        
+        Location arlington = lmanager.getLocationByName("Arlington");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        
+        route.addLocation(arlington);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
+        
+        return route;
+    }
+    
     /**
      * Creates locations with spurs, interchanges, and yards
      */
@@ -364,11 +384,80 @@ public class JUnitOperationsUtil {
         
         // the following locations and tracks are retrieved by their names
         Location arlington = lmanager.newLocation("Arlington");
-        Track yard1 = arlington.addTrack("Arlington Yard 1", Track.YARD);
-        yard1.setLength(500);
-        Track yard2 = arlington.addTrack("Arlington Yard 2", Track.YARD);
-        yard2.setLength(500);
+        Track arlingtonSpur1 = arlington.addTrack("Arlington Spur 1", Track.SPUR);
+        arlingtonSpur1.setLength(200);
+        arlingtonSpur1.setMoves(10);
         
+        Track arlingtonSpur2 = arlington.addTrack("Arlington Spur 2", Track.SPUR);
+        arlingtonSpur2.setLength(200);
+        arlingtonSpur2.setMoves(20);
+        
+        Track arlingtonYard1 = arlington.addTrack("Arlington Yard 1", Track.YARD);
+        arlingtonYard1.setLength(500);
+        arlingtonYard1.setMoves(30);
+        
+        Track arlingtonYard2 = arlington.addTrack("Arlington Yard 2", Track.YARD);
+        arlingtonYard2.setLength(500);
+        arlingtonYard2.setMoves(40);
+        
+        Track arlingtonInterchange1 = arlington.addTrack("Arlington Interchange 1", Track.INTERCHANGE);
+        arlingtonInterchange1.setLength(500);
+        arlingtonInterchange1.setMoves(50);
+        
+        Track arlingtonInterchange2 = arlington.addTrack("Arlington Interchange 2", Track.INTERCHANGE);
+        arlingtonInterchange2.setLength(500);
+        arlingtonInterchange2.setMoves(60);
+        
+        // location Boston two tracks of each type
+        Location boston = lmanager.newLocation("Boston");
+        Track bostonSpur1 = boston.addTrack("Boston Spur 1", Track.SPUR);
+        bostonSpur1.setLength(200);
+        bostonSpur1.setMoves(10);
+        
+        Track bostonSpur2 = boston.addTrack("Boston Spur 2", Track.SPUR);       
+        bostonSpur2.setLength(200);
+        bostonSpur2.setMoves(20);
+        
+        Track bostonYard1 = boston.addTrack("Boston Yard 1", Track.YARD);
+        bostonYard1.setLength(500);
+        bostonYard1.setMoves(30);
+        
+        Track bostonYard2 = boston.addTrack("Boston Yard 2", Track.YARD);
+        bostonYard2.setLength(500);
+        bostonYard2.setMoves(40);
+        
+        Track bostonInterchange1 = boston.addTrack("Boston Interchange 1", Track.INTERCHANGE);
+        bostonInterchange1.setLength(500);
+        bostonInterchange1.setMoves(50);
+        
+        Track bostonInterchange2 = boston.addTrack("Boston Interchange 2", Track.INTERCHANGE);
+        bostonInterchange2.setLength(500);
+        bostonInterchange2.setMoves(60);
+        
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track chelmsfordSpur1 = chelmsford.addTrack("Chelmsford Spur 1", Track.SPUR);        
+        chelmsfordSpur1.setLength(200);
+        chelmsfordSpur1.setMoves(10);
+        
+        Track chelmsfordSpur2 = chelmsford.addTrack("Chelmsford Spur 2", Track.SPUR);
+        chelmsfordSpur2.setLength(200);
+        chelmsfordSpur2.setMoves(20);
+        
+        Track chelmsfordYard1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        chelmsfordYard1.setLength(500);
+        chelmsfordYard1.setMoves(30);
+        
+        Track chelmsfordYard2 = chelmsford.addTrack("Chelmsford Yard 2", Track.YARD);
+        chelmsfordYard2.setLength(500);
+        chelmsfordYard2.setMoves(40);
+        
+        Track chelmsfordInterchange1 = chelmsford.addTrack("Chelmsford Interchange 1", Track.INTERCHANGE);
+        chelmsfordInterchange1.setLength(500);
+        chelmsfordInterchange1.setMoves(50);
+        
+        Track chelmsfordInterchange2 = chelmsford.addTrack("Chelmsford Interchange 2", Track.INTERCHANGE);
+        chelmsfordInterchange2.setLength(500);
+        chelmsfordInterchange2.setMoves(60);
         
     }
     
