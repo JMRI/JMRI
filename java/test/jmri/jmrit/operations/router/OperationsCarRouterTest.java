@@ -41,11 +41,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertTrue("Default routing using yards", Setup.isCarRoutingViaYardsEnabled());
         Assert.assertFalse("Default routing through staging", Setup.isCarRoutingViaStagingEnabled());
         
-        Assert.assertEquals("default build report level", Setup.BUILD_REPORT_VERY_DETAILED, Setup.getBuildReportLevel());
-                   
+        Assert.assertEquals("default build report level", Setup.BUILD_REPORT_VERY_DETAILED, Setup.getBuildReportLevel());                
     }
-    
-
 
     /**
      * Original test, has been broken down into multiple shorter tests and
@@ -4956,7 +4953,12 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        
     }
 
     public OperationsCarRouterTest(String s) {
