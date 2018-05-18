@@ -1032,8 +1032,8 @@ public class TrainBuilder extends TrainCommon {
         if (departStageTrack != null && numberOfEngines == 0 && departStageTrack.getNumberEngines() == 0) {
             return true;
         }
-
-        // if leaving staging, use any number of engines if required number is 0
+        
+        // TODO the following return false should never happen, staging track selection checks number of engines needed
         if (departStageTrack != null &&
                 numberOfEngines != 0 &&
                 departStageTrack.getNumberEngines() != numberOfEngines) {
@@ -1332,9 +1332,6 @@ public class TrainBuilder extends TrainCommon {
                     // determine if there's enough car pick ups at this point to reach the max train length
                     if (numberEngines > moves / carDivisor) {
                         numberEngines = Math.ceil(moves / carDivisor); // no reduce based on moves
-                    }
-                    if (numberEngines < 1) {
-                        numberEngines = 1;
                     }
                 }
             }
