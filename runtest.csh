@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 # Script to start a JMRI class directly, e.g during development
 #
@@ -72,7 +72,7 @@ for opt in "$@"; do
     elif [ "${opt}" = "--settingsdir" ]; then
         # --settingsdir /path/to/... part 1
         found_settingsdir="yes"
-    elif [ "${opt}" =~ "--settingsdir=" ]; then
+    elif [[ "${opt}" =~ "--settingsdir=" ]]; then
         # --settingsdir=/path/to/...
         settingsdir="${opt#*=}"
         prefsdir="${settingsdir}"
