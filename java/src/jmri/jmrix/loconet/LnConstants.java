@@ -371,6 +371,13 @@ public final class LnConstants {
     public final static int OPC_ALM_WRITE = 0xee; // Undocumented name
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
+    /* Expanded slot codes */
+    public final static int OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR = 0xd5;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK = 0b00010000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK = 0b00011000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK = 0b00100000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK = 0b00101000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK =  0b00110000;
 
     /** Encode LocoNet Opcode as a string */
     public final static String OPC_NAME(int opcode) {
