@@ -87,7 +87,7 @@ public class JynstrumentFactory {
         String className = null;
         if (children == null) {
             log.error("Didn't find any files in {}", f);
-            return;
+            return className;
         }
         
         String assumedClassName = f.getName().substring(0, f.getName().length() - 4);
