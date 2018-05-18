@@ -267,7 +267,7 @@ public class JUnitOperationsUtil {
     }
     
     /**
-     * Creates two staging locations for common testing
+     * Creates two staging locations for common testing each with two tracks
      */
     public static void createTwoStagingLocations() {
         
@@ -278,7 +278,6 @@ public class JUnitOperationsUtil {
         locationNorthEnd.setLocationOps(Location.STAGING);
         Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
         
-        locationNorthEnd.setSwitchListEnabled(true);
         locationNorthEnd.setComment("Test comment for location North End");
         lmanager.register(locationNorthEnd);
 
@@ -303,7 +302,6 @@ public class JUnitOperationsUtil {
 
         Location locationSouthEnd = new Location("3", "South End Staging");
         locationSouthEnd.setLocationOps(Location.STAGING);
-        locationSouthEnd.setSwitchListEnabled(true);
         lmanager.register(locationSouthEnd);
 
         Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
