@@ -4953,6 +4953,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         
+        // change report level to increase test coverage
+        Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);
