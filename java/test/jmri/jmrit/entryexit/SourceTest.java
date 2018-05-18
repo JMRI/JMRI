@@ -106,6 +106,7 @@ public class SourceTest {
     static public void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
         eep = jmri.InstanceManager.getDefault(EntryExitPairs.class);
