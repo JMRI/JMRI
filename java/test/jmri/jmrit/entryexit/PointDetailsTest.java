@@ -74,8 +74,7 @@ public class PointDetailsTest {
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        tools = new EntryExitTestTools();
-        panels = tools.getPanels();
+        panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
         eep = jmri.InstanceManager.getDefault(EntryExitPairs.class);
         lbm = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
