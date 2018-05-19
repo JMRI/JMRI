@@ -309,7 +309,7 @@ public class Route implements java.beans.PropertyChangeListener {
             resequenceIds();
         } else {
             // adjust the other item taken by this one
-            RouteLocation replaceRl = getItemBySequenceId(sequenceId - 1);
+            RouteLocation replaceRl = getRouteLocationBySequenceId(sequenceId - 1);
             if (replaceRl != null) {
                 replaceRl.setSequenceId(sequenceId);
                 rl.setSequenceId(sequenceId - 1);
@@ -332,7 +332,7 @@ public class Route implements java.beans.PropertyChangeListener {
             resequenceIds();
         } else {
             // adjust the other item taken by this one
-            RouteLocation replaceRl = getItemBySequenceId(sequenceId + 1);
+            RouteLocation replaceRl = getRouteLocationBySequenceId(sequenceId + 1);
             if (replaceRl != null) {
                 replaceRl.setSequenceId(sequenceId);
                 rl.setSequenceId(sequenceId + 1);
@@ -343,7 +343,7 @@ public class Route implements java.beans.PropertyChangeListener {
         setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
 
-    public RouteLocation getItemBySequenceId(int sequenceId) {
+    public RouteLocation getRouteLocationBySequenceId(int sequenceId) {
         for (RouteLocation rl : getLocationsByIdList()) {
             if (rl.getSequenceId() == sequenceId) {
                 return rl;

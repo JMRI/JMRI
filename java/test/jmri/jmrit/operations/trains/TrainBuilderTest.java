@@ -3085,7 +3085,7 @@ public class TrainBuilderTest {
         
         Train train1 = tmanager.getTrainById("1");
         
-        RouteLocation rlNI = train1.getRoute().getItemBySequenceId(2);
+        RouteLocation rlNI = train1.getRoute().getRouteLocationBySequenceId(2);
         
         // confirm we got the right location
         Assert.assertEquals("2nd location in train's route", "North Industries", rlNI.getLocation().getName());
@@ -3122,7 +3122,7 @@ public class TrainBuilderTest {
         
         Train train1 = tmanager.getTrainById("1");
         
-        Location lNI = train1.getRoute().getItemBySequenceId(2).getLocation();
+        Location lNI = train1.getRoute().getRouteLocationBySequenceId(2).getLocation();
         Location southEndStaging = train1.getRoute().getTerminatesRouteLocation().getLocation();
         
         // confirm we got the right location
@@ -7216,22 +7216,23 @@ public class TrainBuilderTest {
      * use train 2 to move car.
      */
     @Test
-    public void testTrainBuildOptionsServiceAllCarsWithFinalDestinations() {
+    public void testTrainBuildOptionsServiceAllCarsWithFinalDestinationsA() {
         
-        Train train1 = tmanager.newTrain("testTrainBuildOptionsRoutingRestrictedTrains1");
+        Train train1 = tmanager.newTrain("Train Arlington-Boston-Chelmsford");
         Route route = JUnitOperationsUtil.createThreeLocationRoute();
         train1.setRoute(route);
         
         // train 2 only travels from Arlington to Boston
-        Train train2 = tmanager.newTrain("testTrainBuildOptionsRoutingRestrictedTrains2");
+        Train train2 = tmanager.newTrain("Train Arlington-Boston");
         Location arlington = route.getDepartsRouteLocation().getLocation();
-        Location boston = route.getItemBySequenceId(2).getLocation();
+        Location boston = route.getRouteLocationBySequenceId(2).getLocation();
         Route rAB = rmanager.newRoute("Route Arlington to Boston");
-        rAB.addLocation(arlington);
+        RouteLocation rlA = rAB.addLocation(arlington);
         rAB.addLocation(boston);
         train2.setRoute(rAB);           
         
         Track arlingtonSpur1 = arlington.getTrackByName("Arlington Spur 1", null);
+        Track arlingtonInterchange1 = arlington.getTrackByName("Arlington Interchange 1", null);
         Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
         
         Location chelmsford = route.getTerminatesRouteLocation().getLocation();       
@@ -7241,8 +7242,8 @@ public class TrainBuilderTest {
         texasSpur.setLength(200);
         
         // third train goes to Texas departs Chelmsford
-        Train train3 = tmanager.newTrain("Train Chelmsford to Texas");
-        Route rct = rmanager.newRoute("Route Chelmsford to Texas");
+        Train train3 = tmanager.newTrain("Train Chelmsford-Texas");
+        Route rct = rmanager.newRoute("Route Chelmsford-Texas");
         rct.addLocation(chelmsford);
         rct.addLocation(texas);
         train3.setRoute(rct);
@@ -7270,9 +7271,74 @@ public class TrainBuilderTest {
         Assert.assertTrue("Train 2 status", train2.isBuilt());
         
         // confirm car destinations
-        Assert.assertEquals("c1 not part of train",  train2, c1.getTrain());
+        Assert.assertEquals("c1 assigned to train",  train2, c1.getTrain());
         Assert.assertEquals("c1 destination", bostonInterchange1, c1.getDestinationTrack());
         
+        // now configure train 2 to not be able to service c1
+        rlA.setMaxTrainLength(40); // c1 length is 40 feet, 44 feet with couplers
+        
+        train2.reset();
+        // now build allowing train length check
+        train2.build();
+        Assert.assertTrue("Train 2 status", train2.isBuilt());
+        
+        // confirm car destinations, a local move was the only option
+        Assert.assertEquals("c1 assigned to train",  train2, c1.getTrain());
+        Assert.assertEquals("c1 destination", arlingtonInterchange1, c1.getDestinationTrack());        
+    }
+    
+    /**
+     * Test train build option to move car with a final destination, even if it isn't
+     * the most efficient route.  Causes extra car movement.
+     * Two trains are created, the efficient route is train2 Attempts to
+     * use train 1 to move car.
+     */
+    @Test
+    public void testTrainBuildOptionsServiceAllCarsWithFinalDestinationsB() {
+        
+        Train train1 = tmanager.newTrain("Train Arlington-Boston-Chelmsford 1");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train1.setRoute(route);
+        
+        Train train2 = tmanager.newTrain("Train Arlington-Boston-Chelmsford 2");
+        train2.setRoute(route);
+ 
+        Location arlington = route.getDepartsRouteLocation().getLocation();
+        Track arlingtonSpur1 = arlington.getTrackByName("Arlington Spur 1", null);
+        
+        Location chelmsford = route.getTerminatesRouteLocation().getLocation();
+        Track chelmsfordInterchange2 = chelmsford.getTrackByName("Chelmsford Interchange 2", null);
+        
+        // place car at start of route
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", arlingtonSpur1, 0);
+        
+        // and send to Chelmsford
+        c1.setFinalDestination(chelmsford);
+        c1.setFinalDestinationTrack(chelmsfordInterchange2);
+
+        train2.setServiceAllCarsWithFinalDestinationsEnabled(true);
+        
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train 2 status", train2.isBuilt());
+        
+        // confirm car destinations
+        Assert.assertEquals("c1 assigned to train",  train2, c1.getTrain());
+        Assert.assertEquals("c1 destination", chelmsfordInterchange2, c1.getDestinationTrack());
+        
+        RouteLocation rlB = route.getRouteLocationBySequenceId(2);
+        Location boston = rlB.getLocation();
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", null);
+        // now configure train 2 to not be able to service c1
+        rlB.setMaxTrainLength(40); // c1 length is 40 feet, 44 feet with couplers
+        
+        train2.reset();
+        // now build allowing train length check
+        train2.build();
+        Assert.assertTrue("Train 2 status", train2.isBuilt());
+        
+        // confirm car destinations, a local move was the only option
+        Assert.assertEquals("c1 assigned to train",  train2, c1.getTrain());
+        Assert.assertEquals("c1 destination", bostonInterchange1, c1.getDestinationTrack());      
     }
     
     @Test
@@ -7283,8 +7349,8 @@ public class TrainBuilderTest {
         train1.setRoute(route);
         
         Location arlington = route.getDepartsRouteLocation().getLocation();
-        Location boston = route.getItemBySequenceId(2).getLocation();
-        Location danvers = route.getItemBySequenceId(4).getLocation();
+        Location boston = route.getRouteLocationBySequenceId(2).getLocation();
+        Location danvers = route.getRouteLocationBySequenceId(4).getLocation();
         Location essex = route.getTerminatesRouteLocation().getLocation();
         
         Track arlingtonSpur1 = arlington.getTrackByName("Arlington Spur 1", null);
@@ -9577,6 +9643,7 @@ public class TrainBuilderTest {
         et.addName("Diesel");
         
         Setup.setCarMoves(7); // set default to 7 moves per location
+        Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 
     }
 

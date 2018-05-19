@@ -717,6 +717,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().buildReportLevel;
     }
 
+    /**
+     * Sets the report level for the car router.  
+     * @param level BUILD_REPORT_NORMAL, BUILD_REPORT_DETAILED, BUILD_REPORT_VERY_DETAILED
+     */
     public static void setRouterBuildReportLevel(String level) {
         getDefault().routerBuildReportLevel = level;
     }

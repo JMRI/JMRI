@@ -21,6 +21,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -1082,7 +1083,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
      * Test routing using one train and the train is a local. a local services
      * only one location
      */
-    public void testCarRoutingA() {
+    public void testCarRoutingOneLocalTrain() {
         // load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -1172,6 +1173,17 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c4.setOwner("AT");
         c4.setBuilt("1-86");
         Assert.assertEquals("Box Car 4 Length", "40", c4.getLength());
+        
+        // test trying to route car that isn't on a track
+        Assert.assertFalse("Car not on a track", router.setDestination(c3, null, null));
+        
+        // test trying to route car that only has a track
+        c3.setLocation(null, actonSpur1);
+        Assert.assertFalse("Car doesn't have a location", router.setDestination(c3, null, null));
+        
+        // give the car a destination
+        c3.setFinalDestination(bedford);
+        Assert.assertFalse("Car doesn't have a location", router.setDestination(c3, null, null));
 
         Assert.assertEquals("place car at Acton", Track.OKAY, c3.setLocation(acton, actonSpur1));
         Assert.assertFalse("Try routing no final destination", router.setDestination(c3, null, null));
@@ -1183,7 +1195,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         // test disable routing
         Setup.setCarRoutingEnabled(false);
-        c3.setFinalDestination(bedford);
+        
         Assert.assertFalse("Test router disabled", router.setDestination(c3, null, null));
         Assert.assertEquals("Router status", Router.STATUS_ROUTER_DISABLED, router.getStatus());
         Setup.setCarRoutingEnabled(true);
@@ -1496,7 +1508,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Tests routing using one train and two locations.
      */
-    public void testCarRoutingB() {
+    public void testCarRoutingOneTrain() {
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -1899,7 +1911,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Two trains and two locations testing. A local performs the first move.
      */
-    public void testCarRoutingC() {
+    public void testCarRoutingTwoTrains() {
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -2136,7 +2148,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Five train routing test
      */
-    public void testCarRoutingD() {
+    public void testCarRoutingFiveTrains() {
 
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -2524,7 +2536,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     /**
      * Test routing through staging
      */
-    public void testCarRoutingE() {
+    public void testCarRoutingThroughStaging() {
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -2532,9 +2544,6 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Router router = InstanceManager.getDefault(Router.class);
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
-        
-        // turn off error dialogue
-        tmanager.setBuildMessagesEnabled(false);
 
         // register the car and engine types used
         ct.addName("Boxcar");
@@ -2671,9 +2680,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         stagingTrack4.setLength(500);
         stagingTrack4.setMoves(100); // the last track to try in staging
         
-        // don't allow Boxcars staging first 3 tracks
+        // don't allow Boxcars staging on two tracks
         stagingTrack1.deleteTypeName("Boxcar");
-        stagingTrack2.deleteTypeName("Boxcar");
         stagingTrack3.deleteTypeName("Boxcar");
 
         // create 2 cars
@@ -2690,29 +2698,32 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         c4.setOwner("AT");
         c4.setBuilt("1-86");
         Assert.assertEquals("Box Car 4 Length", "40", c4.getLength());
+        
+        // make staging track 2 unavailable by placing a car there
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("BC", "B", "Boxcar", "40", stagingTrack2, 0);
 
         Assert.assertEquals("place car at Acton", Track.OKAY, c3.setLocation(acton, actonSiding1));
         Assert.assertEquals("place car at Acton", Track.OKAY, c4.setLocation(acton, actonSiding1));
 
         // create two trains, one terminates into staging, the other departs
-        Train actonToStagingTrain = tmanager.newTrain("Train Acton to Staging");
-        Route routeA = rmanager.newRoute("A");
+        Train trainActonToStagingTrain = tmanager.newTrain("Train Acton-Bedford-Staging");
+        Route routeA = rmanager.newRoute("Route Acton-Bedford-Staging");
         routeA.addLocation(acton);
         routeA.addLocation(bedford);
         routeA.addLocation(staging); // terminated into staging
-        actonToStagingTrain.setRoute(routeA);
+        trainActonToStagingTrain.setRoute(routeA);
         
-        Train stagingToFoxboro1 = tmanager.newTrain("Train Staging to Foxboro");
-        Route routeB = rmanager.newRoute("B");
+        Train trainStagingToFoxboro1 = tmanager.newTrain("Train Staging-Gulf-Essex-Foxboro");
+        Route routeB = rmanager.newRoute("Route Staging-Gulf-Essex-Foxboro");
         routeB.addLocation(staging);
         RouteLocation rlgulf = routeB.addLocation(gulf);
         routeB.addLocation(essex);
         routeB.addLocation(foxboro);
-        stagingToFoxboro1.setRoute(routeB);
+        trainStagingToFoxboro1.setRoute(routeB);
         
         // default is routing through staging is disabled
         Assert.assertFalse("Default routing through staging", Setup.isCarRoutingViaStagingEnabled());
-        // try and route the car through staging to Foxboro
+        // try and route the car through staging to Essex
         c3.setFinalDestination(essex);
         Assert.assertFalse("Try routing two trains through staging", router.setDestination(c3, null, null));
         Assert.assertEquals("Check status", Router.STATUS_NOT_ABLE, router.getStatus());
@@ -2724,10 +2735,16 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // confirm car's destination
         Assert.assertEquals("car's destination is staging", staging, c3.getDestination());
         // note that the router sets a car's track into staging when a "specific" train isn't provided
+        Assert.assertEquals("car's destination track is staging", stagingTrack2, c3.getDestinationTrack());
+        Assert.assertEquals("car's final destination", essex, c3.getFinalDestination());
+        
+        c3.setDestination(null, null);  // clear previous destination
+        
+        // try again, but specify a train
+        trainActonToStagingTrain.build();
         Assert.assertEquals("car's destination track is staging", stagingTrack4, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", essex, c3.getFinalDestination());
-                
-        c3.setDestination(null, null);  // clear previous destination
+        trainActonToStagingTrain.reset(); // release car c3
         
         // now test 3 trains
         // third train doesn't exist, should fail
@@ -2737,8 +2754,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check status", Router.STATUS_NOT_ABLE, router.getStatus());
         
         // new train departs Essex terminates Clinton        
-        Train EssexToClinton = tmanager.newTrain("Train Essex to Clinton");
-        Route routeC = rmanager.newRoute("C");
+        Train EssexToClinton = tmanager.newTrain("Train Essex-Clinton");
+        Route routeC = rmanager.newRoute("Route Essex-Clinton");
         routeC.addLocation(essex);
         routeC.addLocation(clinton);
         EssexToClinton.setRoute(routeC);
@@ -2748,17 +2765,11 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // confirm car's destination
         Assert.assertEquals("car's destination is staging", staging, c3.getDestination());
         // note that the router sets a car's track into staging when a "specific" train isn't provided
-        Assert.assertEquals("car's destination track is staging", stagingTrack4, c3.getDestinationTrack());
+        Assert.assertEquals("car's destination track is staging", stagingTrack2, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", clinton, c3.getFinalDestination());
         
         c3.setDestination(null, null);  // clear previous destination
-        
-//        // build train, now there's a "specific" train
-//        actonToStagingTrain.build();
-//        Assert.assertTrue(actonToStagingTrain.isBuilt());
-//        Assert.assertEquals("car's destination track is staging", stagingTrack4, c3.getDestinationTrack());
-//        Assert.assertEquals("car's final destination", clinton, c3.getFinalDestination());
-//        actonToStagingTrain.reset();
+        c5.setLocation(null, null); // remove c5 from staging, now only one track has cars
         
         // place car in staging and try to route
         c3.setDestination(null, null);  // clear previous destination
@@ -2769,10 +2780,10 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("car's final destination", clinton, c3.getFinalDestination());
         
         // don't allow train out of staging to carry car type Boxcar
-        stagingToFoxboro1.deleteTypeName("Boxcar");
+        trainStagingToFoxboro1.deleteTypeName("Boxcar");
         c3.setDestination(null, null);  // clear previous destination
         
-        Assert.assertFalse("Try routing two trains from staging", router.setDestination(c3, stagingToFoxboro1, null));
+        Assert.assertFalse("Try routing two trains from staging", router.setDestination(c3, trainStagingToFoxboro1, null));
         Assert.assertEquals("car's destination", null, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", clinton, c3.getFinalDestination());
         
@@ -2786,7 +2797,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         
         // now specify the first train that can't carry car type Boxcar
         c3.setDestination(null, null);  // clear previous destination
-        Assert.assertFalse("Try routing two trains from staging", router.setDestination(c3, stagingToFoxboro1, null));
+        Assert.assertFalse("Try routing two trains from staging", router.setDestination(c3, trainStagingToFoxboro1, null));
         Assert.assertEquals("car's destination", null, c3.getDestinationTrack());
         Assert.assertEquals("car's final destination", clinton, c3.getFinalDestination()); 
         
