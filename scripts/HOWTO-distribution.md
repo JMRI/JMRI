@@ -258,6 +258,8 @@ to start your work.
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
+- On your local machine, open jvisualvm. Start "ant alltest" and attach jvisualvm to it. When it's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.11.5" Github issue so that historical resource usage info is available.
+
 ================================================================================
 ## Put Files Out For Checking
 

@@ -1066,7 +1066,6 @@ public class CatalogPanel extends JPanel {
                 label.setHorizontalAlignment(JLabel.CENTER);
 //                label.addMouseListener(new IconListener());
                 add(label, BorderLayout.SOUTH);
-//                FontMetrics fm = getFontMetrics(getFont());
                 setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
             } catch (java.lang.ClassNotFoundException cnfe) {
                 log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);

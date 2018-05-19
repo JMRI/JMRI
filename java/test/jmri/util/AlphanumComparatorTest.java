@@ -11,7 +11,7 @@ import org.junit.*;
  */
 public class AlphanumComparatorTest {
 
-    protected static java.util.Comparator ac;
+    protected static AlphanumComparator ac;
 
     // tests are final to make sure they're not overloaded (hence ignored) in subclass
     
