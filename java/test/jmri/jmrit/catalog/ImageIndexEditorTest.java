@@ -29,7 +29,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             indexEditor.addNode(null);
         });
         flushAWT();
-        java.awt.Container pane = findContainer(Bundle.getMessage("MessageTitle"));
+        java.awt.Container pane = findContainer(Bundle.getMessage("QuestionTitle"));
         Assert.assertNotNull("Select node prompt not found", pane);
         pressButton(pane, Bundle.getMessage("ButtonOK"));
         junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor, this);
