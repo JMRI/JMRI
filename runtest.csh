@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 # Script to start a JMRI class directly, e.g during development
 #
