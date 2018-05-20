@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.11.5ish+jake+20180414T2247Z+R480ed48268 on Sat Apr 14 15:47:25 PDT 2018-->
-  <decoderIndex version="896">
+  <!--Written by JMRI version 4.11.6ish+jake+20180519T1826Z+R25c7e6ac23 on Sat May 19 11:26:52 PDT 2018-->
+  <decoderIndex version="898">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -11769,7 +11769,9 @@
         <model model="FREDi using LNSV2" productID="11" developerID="1" />
       </family>
       <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
-        <model model="Basic LocoIO" />
+        <model model="Basic LocoIO" productID="142">
+          <versionCV lowVersionID="134" highVersionID="142" />
+        </model>
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
         <model model="Basic definition" />
