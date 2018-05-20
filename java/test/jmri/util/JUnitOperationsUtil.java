@@ -361,13 +361,13 @@ public class JUnitOperationsUtil {
 
         createSevenNormalLocations();
 
-        Route route = rmanager.newRoute("Route Arlington-Boston-Chelmsford");
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford");
 
-        Location arlington = lmanager.getLocationByName("Arlington");
+        Location acton = lmanager.getLocationByName("Acton");
         Location boston = lmanager.getLocationByName("Boston");
         Location chelmsford = lmanager.getLocationByName("Chelmsford");
 
-        route.addLocation(arlington);
+        route.addLocation(acton);
         route.addLocation(boston);
         route.addLocation(chelmsford);
 
@@ -386,41 +386,41 @@ public class JUnitOperationsUtil {
         route.addLocation(danvers);
         route.addLocation(essex);
 
-        route.setName("Route Arlington-Boston-Chelmsford-Davers-Essex");
+        route.setName("Route Acton-Boston-Chelmsford-Davers-Essex");
 
         return route;
     }
 
     /**
      * Creates 7 locations each with 2 spurs, 2 interchanges, and 2 yards
-     * Arlington, Boston, Chelmsford, Danvers, Essex, Foxboro, Gulf
+     * Acton, Boston, Chelmsford, Danvers, Essex, Foxboro, Gulf
      */
     public static void createSevenNormalLocations() {
 
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
 
         // the following locations and tracks are retrieved by their names
-        Location arlington = lmanager.newLocation("Arlington");
-        Track arlingtonSpur1 = arlington.addTrack("Arlington Spur 1", Track.SPUR);
-        arlingtonSpur1.setLength(200);
-        Track arlingtonSpur2 = arlington.addTrack("Arlington Spur 2", Track.SPUR);
-        arlingtonSpur2.setLength(200);
-        Track arlingtonYard1 = arlington.addTrack("Arlington Yard 1", Track.YARD);
-        arlingtonYard1.setLength(500);
-        Track arlingtonYard2 = arlington.addTrack("Arlington Yard 2", Track.YARD);
-        arlingtonYard2.setLength(500);
-        Track arlingtonInterchange1 = arlington.addTrack("Arlington Interchange 1", Track.INTERCHANGE);
-        arlingtonInterchange1.setLength(500);
-        Track arlingtonInterchange2 = arlington.addTrack("Arlington Interchange 2", Track.INTERCHANGE);
-        arlingtonInterchange2.setLength(500);
+        Location acton = lmanager.newLocation("Acton");
+        Track actonSpur1 = acton.addTrack("Acton Spur 1", Track.SPUR);
+        actonSpur1.setLength(200);
+        Track actonSpur2 = acton.addTrack("Acton Spur 2", Track.SPUR);
+        actonSpur2.setLength(200);
+        Track actonYard1 = acton.addTrack("Acton Yard 1", Track.YARD);
+        actonYard1.setLength(500);
+        Track actonYard2 = acton.addTrack("Acton Yard 2", Track.YARD);
+        actonYard2.setLength(500);
+        Track actonInterchange1 = acton.addTrack("Acton Interchange 1", Track.INTERCHANGE);
+        actonInterchange1.setLength(500);
+        Track actonInterchange2 = acton.addTrack("Acton Interchange 2", Track.INTERCHANGE);
+        actonInterchange2.setLength(500);
 
         // must set track move counts after all tracks are created
-        arlingtonSpur1.setMoves(10);
-        arlingtonSpur2.setMoves(20);
-        arlingtonYard1.setMoves(30);
-        arlingtonYard2.setMoves(40);
-        arlingtonInterchange1.setMoves(50);
-        arlingtonInterchange2.setMoves(60);
+        actonSpur1.setMoves(10);
+        actonSpur2.setMoves(20);
+        actonYard1.setMoves(30);
+        actonYard2.setMoves(40);
+        actonInterchange1.setMoves(50);
+        actonInterchange2.setMoves(60);
 
         // location Boston two tracks of each type
         Location boston = lmanager.newLocation("Boston");
