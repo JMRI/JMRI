@@ -55,7 +55,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         mNumber = pNumber;
         mImage = pImage;
         initData();
-        ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().addLocoNetListener(~0, this);
+        adapterMemo.getLnTrafficController().addLocoNetListener(~0, this);
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                     l.setElement(13, 0x00);
                     l.setElement(14, 0x00);
                     l.setElement(15, 0x00);
-                    ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
+                    adapterMemo.getLnTrafficController().sendLocoNetMessage(l);
                 }
                 return;
             }
@@ -159,7 +159,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                     l.setElement(13, arg4 & 0x7F);
                     l.setElement(14, arg4 / 128);
                     l.setElement(15, 0x00);
-                    ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
+                    adapterMemo.getLnTrafficController().sendLocoNetMessage(l);
                 }
 
                 noteReadCmd(block);
@@ -194,7 +194,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                     l.setElement(0, 0xB4);
                     l.setElement(1, 0x6E);  // EE without high bit
                     l.setElement(2, 0x7F);
-                    ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
+                    adapterMemo.getLnTrafficController().sendLocoNetMessage(l);
                 }
                 return;
             default:
@@ -288,7 +288,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         l.setElement(13, 0x00);
         l.setElement(14, 0x00);
         l.setElement(15, 0x00);
-        ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
+        adapterMemo.getLnTrafficController().sendLocoNetMessage(l);
     }
 
     /**
@@ -335,7 +335,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         lastWriteBlock = block;
         waitWriteMessage = true;
 
-        ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
+        adapterMemo.getLnTrafficController().sendLocoNetMessage(l);
         return;
     }
 

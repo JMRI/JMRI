@@ -348,7 +348,7 @@ public class SpeedUtil {
 //                return (num + 1) * 896 / 28;     // milliseconds per step
                 num = (num + 1) * 896 * getThrottleSpeedStepIncrement();     // milliseconds per step
             } catch (NumberFormatException nfe) {
-                num = 0;;
+                num = 0;
             }
         }
         if (log.isDebugEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}", 

@@ -109,13 +109,10 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
-        log.debug(" newSensor(\"{}\", \"{}\"", sysName, userName);
+        log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
         String systemName = normalizeSystemName(sysName);
-        if (log.isDebugEnabled()) {
-            log.debug("newSensor:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+        log.debug("    normalized name: \"{}\"", systemName);
+
         java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with "+systemName);
 
         // is system name in correct format?

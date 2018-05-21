@@ -3,6 +3,7 @@ package jmri.jmrit.catalog;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
@@ -13,8 +14,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
+import javax.swing.JTree;
 import javax.swing.SwingConstants;
+import javax.swing.tree.TreePath;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -34,6 +38,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private CatalogPanel _catalog;
     private CatalogPanel _index;
+    private JTree _indexTree;
 
     public static final String IconDataFlavorMime = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.catalog.NamedIcon";
@@ -98,30 +103,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         menuBar.add(editMenu);
-        JMenuItem addItem = new JMenuItem(Bundle.getMessage("addNode"));
-        addItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addNode();
-            }
-        });
-        editMenu.add(addItem);
-        JMenuItem renameItem = new JMenuItem(Bundle.getMessage("renameNode"));
-        renameItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                renameNode();
-            }
-        });
-        editMenu.add(renameItem);
-        JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("deleteNode"));
-        deleteItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                deleteNode();
-            }
-        });
-        editMenu.add(deleteItem);
+        addMenuItems(editMenu, null);
         setJMenuBar(menuBar);
 
         addHelpMenu("package.jmri.jmrit.catalog.ImageIndex", true);
@@ -153,7 +135,7 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     private JPanel makeCatalogPanel() {
-        _catalog = new CatalogPanel("defaultCatalog", "selectNode", false); // make sure both these properties keys exist
+        _catalog = new CatalogPanel("defaultCatalog", "selectNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
         _catalog.init(false, true);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
@@ -173,10 +155,60 @@ public final class ImageIndexEditor extends JmriJFrame {
         return _catalog;
     }
 
+    /*
+     * Provide node editing
+     * @param evt
+     */
+    private void showTreePopUp(MouseEvent evt) {
+        int row = _indexTree.getRowForLocation(evt.getX(), evt.getY());
+        if (row <= 0) {
+            return;
+        }
+        TreePath path = _indexTree.getPathForLocation(evt.getX(), evt.getY());
+        String nodeName = path.getLastPathComponent().toString();
+        if (log.isDebugEnabled()) {
+            log.debug("showTreePopUp node= {}", nodeName);
+        }
+        JPopupMenu popup = new JPopupMenu();
+        popup.add(new JMenuItem(nodeName));
+        popup.add(new javax.swing.JPopupMenu.Separator());
+        
+        addMenuItems(popup, (CatalogTreeNode) path.getLastPathComponent());
+        popup.show(evt.getComponent(), evt.getX(), evt.getY());
+    }
+
+    private void addMenuItems(javax.swing.JComponent editMenu, CatalogTreeNode node) {
+        JMenuItem addItem = new JMenuItem(Bundle.getMessage("addNode"));
+        addItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addNode(node);
+            }
+        });
+        editMenu.add(addItem);
+        JMenuItem renameItem = new JMenuItem(Bundle.getMessage("renameNode"));
+        renameItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                renameNode(node);
+            }
+        });
+        editMenu.add(renameItem);
+        JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("deleteNode"));
+        deleteItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteNode(node);
+            }
+        });
+        editMenu.add(deleteItem);
+    }
+
     private JPanel makeIndexPanel() {
-        _index = new CatalogPanel("ImageIndex", "selectIndexNode", false); // make sure both these properties keys exist
+        _index = new CatalogPanel("ImageIndex", "selectIndexNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
-        _index.init(true, false); // activate dragNdrop? (true,true)
+        // activate dragNdrop init(true,true) allows drop into same panel as the drag - i.e. duplicates icon in node
+        _index.init(true, false);
 
         boolean found = false;
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
@@ -193,11 +225,23 @@ public final class ImageIndexEditor extends JmriJFrame {
         if (!found) {
             _index.createNewBranch("IXII", Bundle.getMessage("ImageIndexRoot"), "ImageIndexRoot");
         }
+        _indexTree = _index.getTree();
+        _indexTree.setSelectionRow(0);   // begin with ImageIndexRoot selected
+        _indexTree.addMouseListener(new java.awt.event.MouseAdapter () {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger() || e.isMetaDown() || e.isAltDown()) {
+                    showTreePopUp(e);
+                }
+            }
+        });
         return _index;
     }
 
-    void addNode() {
-        CatalogTreeNode selectedNode = _index.getSelectedNode();
+    void addNode(CatalogTreeNode selectedNode) {
+        if (selectedNode == null) {
+            selectedNode = _index.getSelectedNode();            
+        }
         if (selectedNode == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("selectAddNode"),
                     Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
@@ -214,8 +258,10 @@ public final class ImageIndexEditor extends JmriJFrame {
         invalidate();
     }
 
-    private void renameNode() {
-        CatalogTreeNode selectedNode = _index.getSelectedNode();
+    private void renameNode(CatalogTreeNode selectedNode) {
+        if (selectedNode == null) {
+            selectedNode = _index.getSelectedNode();            
+        }
         if (selectedNode == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("selectRenameNode"),
                     Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
@@ -223,7 +269,7 @@ public final class ImageIndexEditor extends JmriJFrame {
             String name = JOptionPane.showInputDialog(this, Bundle.getMessage("newNameNode"),
                     selectedNode.getUserObject());
             if (name != null) {
-                if (!_index.nodeChange(selectedNode, name)) {
+                if (!_index.renameNode(selectedNode, name)) {
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateNodeName", name),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
@@ -233,8 +279,10 @@ public final class ImageIndexEditor extends JmriJFrame {
         invalidate();
     }
 
-    private void deleteNode() {
-        CatalogTreeNode selectedNode = _index.getSelectedNode();
+    private void deleteNode(CatalogTreeNode selectedNode) {
+        if (selectedNode == null) {
+            selectedNode = _index.getSelectedNode();            
+        }
         if (selectedNode == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("selectDeleteNode"),
                     Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
@@ -255,7 +303,9 @@ public final class ImageIndexEditor extends JmriJFrame {
                     Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
+                CatalogTreeNode parent = (CatalogTreeNode)selectedNode.getParent();
                 _index.removeNodeFromModel(selectedNode);
+                _index.setSelectedNode(parent);
             }
         }
     }

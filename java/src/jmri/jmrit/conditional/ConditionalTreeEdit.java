@@ -13,6 +13,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -169,10 +171,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     TreeSet<String> _oldTargetNames = new TreeSet<>();
 
     // ------------ Select Conditional Variables ------------
-    JComboBox<String> _selectLogixBox = new JComboBox<String>();
-    JComboBox<String> _selectConditionalBox = new JComboBox<String>();
-    ArrayList<String> _selectLogixList = new ArrayList<String>();
-    ArrayList<String> _selectConditionalList = new ArrayList<String>();
+    JComboBox<String> _selectLogixBox = new JComboBox<>();
+    JComboBox<String> _selectConditionalBox = new JComboBox<>();
+    TreeMap<String, String> _selectLogixMap = new TreeMap<>();
+    ArrayList<String> _selectConditionalList = new ArrayList<>();
 
     // ------------ Components of Edit Variable pane ------------
     JComboBox<String> _variableItemBox;
@@ -2710,30 +2712,35 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
 
         _selectLogixBox.removeAllItems();
-        _selectLogixList.clear();
+        _selectLogixMap.clear();
 
         String itemKey = "";
-        for (String xName : _logixManager.getSystemNameList()) {
-            if (xName.equals("SYS")) {  // NOI18N
+        for (Logix lgx : _logixManager.getNamedBeanSet()) {
+            String sName = lgx.getSystemName();
+            if (sName.equals("SYS")) {  // NOI18N
                 // Cannot refer to sensor name groups
                 continue;
             }
-            Logix x = _logixManager.getLogix(xName);
-            String uName = x.getUserName();
+            String uName = lgx.getUserName();
             String itemName = "";
             if (uName == null || uName.length() < 1) {
-                itemName = xName;
+                itemName = sName;
             } else {
-                itemName = uName + " ( " + xName + " )";
+                itemName = uName + " ( " + sName + " )";
             }
-            _selectLogixBox.addItem(itemName);
-            _selectLogixList.add(xName);
-            if (lgxName.equals(xName)) {
+            _selectLogixMap.put(itemName, sName);
+            if (lgxName.equals(sName)) {
                 itemKey = itemName;
             }
         }
-        _selectLogixBox.setSelectedItem(itemKey);
+
+        // Load the combo box
+        for (String item : _selectLogixMap.keySet()) {
+            _selectLogixBox.addItem(item);
+        }
+
         JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
+        _selectLogixBox.setSelectedItem(itemKey);
         loadSelectConditionalBox(lgxName);
     }
 
@@ -2783,8 +2790,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 itemKey = itemName;
             }
         }
-        _selectConditionalBox.setSelectedItem(itemKey);
         JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
+        _selectConditionalBox.setSelectedItem(itemKey);
     }
 
     /**
@@ -3176,10 +3183,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     transient ActionListener selectLogixBoxListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int lgxIndex = _selectLogixBox.getSelectedIndex();
-            if (lgxIndex >= 0 && lgxIndex < _selectLogixList.size()) {
-                String lgxName = _selectLogixList.get(lgxIndex);
-                loadSelectConditionalBox(lgxName);
+            String lgxItem = (String) _selectLogixBox.getSelectedItem();
+            if (lgxItem != null) {
+                String lgxName = _selectLogixMap.get(lgxItem);
+                if (lgxName != null) {
+                    loadSelectConditionalBox(lgxName);
+                }
             }
         }
     };

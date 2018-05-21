@@ -106,10 +106,6 @@ public abstract class SdfMacro implements SdfConstants {
         }
         return result;
     }
-    /**
-     * Comment text associated with this instruction.
-     */
-    String comment;
 
     /**
      * Store into a buffer.
