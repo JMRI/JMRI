@@ -1572,6 +1572,8 @@
 
 <mapID target="html.doc.Technical.JUnit" url="html/doc/Technical/JUnit.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_DeleteUnusedAttributes" url="package/jmri/jmrit/operations/Operations.shtml#DeleteUnusedAttributes"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_BuildReportPrint_Top" url="manual/JMRI_OPS_UsersGuide/Ops_BuildReportPrint.shtml#Top"/>
 
 <mapID target="manual.DecoderPro3.RosterMedia_Top" url="manual/DecoderPro3/RosterMedia.shtml#Top"/>
@@ -1941,6 +1943,8 @@
 <mapID target="package.jmri.jmrit.display.PanelEditor" url="package/jmri/jmrit/display/PanelEditor.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_GroupIdField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#GroupIdField"/>
+
+<mapID target="html.doc.Technical.Eclipse_build" url="html/doc/Technical/Eclipse.shtml#build"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ManifestPrint_Top" url="manual/JMRI_OPS_UsersGuide/Ops_ManifestPrint.shtml#Top"/>
 
