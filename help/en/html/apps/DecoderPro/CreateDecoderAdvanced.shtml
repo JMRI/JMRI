@@ -201,8 +201,6 @@ displayed from the text in the "label" attribute, which is:
                         <li>Product ID = (((CV47 * 256) + CV48) * 256 + CV49) * 256 + CV50</li>
                     </ul>
 
-                    <p></p>
-
                     <p>Individual CVs have the following meaning:</p>
 
                     <ul>
