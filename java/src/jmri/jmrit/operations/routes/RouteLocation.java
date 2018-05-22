@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
-//    protected static final int RANGE_DEFAULT = 25;
 
     protected String _id = NONE;
     protected Location _location = null; // the location in the route
@@ -39,8 +38,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     protected String _departureTime = NONE; // departure time from this location
     protected int _trainIconX = 0; // the x & y coordinates for the train icon
     protected int _trainIconY = 0;
-//    protected int _trainIconRangeX = RANGE_DEFAULT; // the x & y detection range for the train icon
-//    protected int _trainIconRangeY = RANGE_DEFAULT;
     protected String _comment = NONE;
 
     protected int _carMoves = 0; // number of moves at this location
