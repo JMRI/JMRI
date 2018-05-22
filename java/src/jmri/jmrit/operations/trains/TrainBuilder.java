@@ -2028,7 +2028,8 @@ public class TrainBuilder extends TrainCommon {
             // check to see that all cars have the same location and track
             if (car.getLocation() != c.getLocation() || car.getTrack() != c.getTrack()) {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCarKernelLocation"),
-                        new Object[]{c.toString(), car.getKernelName(), car.toString()}));
+                        new Object[]{c.toString(), car.getKernelName(), c.getLocationName(), c.getTrackName(),
+                                car.toString(), car.getLocationName(), car.getTrackName(),}));
             }
         }
         // code check, all kernels should have a lead car

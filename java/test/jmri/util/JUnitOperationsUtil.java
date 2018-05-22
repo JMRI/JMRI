@@ -373,6 +373,34 @@ public class JUnitOperationsUtil {
 
         return route;
     }
+    
+    public static Route createThreeLocationTurnRoute() {
+
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        createSevenNormalLocations();
+
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Boston-Acton");
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+
+        // default train direction is North
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
+        RouteLocation rlC = route.addLocation(chelmsford); // enter 2nd time for train reversal
+        rlC.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlB = route.addLocation(boston);
+        rlB.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlA = route.addLocation(acton);
+        rlA.setTrainDirection(RouteLocation.SOUTH);
+        rlA.setPickUpAllowed(false); // don't include cars at destination
+
+        return route;
+    }
 
     public static Route createFiveLocationRoute() {
 

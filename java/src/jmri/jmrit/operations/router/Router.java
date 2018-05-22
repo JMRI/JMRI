@@ -647,7 +647,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             loadTracks(car, testCar, tracks);
         }
         // now staging if enabled
-        if (useStaging && Setup.isCarRoutingViaStagingEnabled()) {
+        if (useStaging) {
             tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
             loadTracks(car, testCar, tracks);
         }

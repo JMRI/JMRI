@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
 import jmri.util.swing.UnexpectedExceptionContext;
 
