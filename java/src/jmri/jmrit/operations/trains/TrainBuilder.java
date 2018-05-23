@@ -4494,7 +4494,7 @@ public class TrainBuilder extends TrainCommon {
                                         testTrack.getReservedLengthDrops() - testTrack.getReserved(), available}));
                     }
                     String status = car.testDestination(testDestination, testTrack);
-                    // Could be a caboose or car with FRED with a custom load
+                    // Can be a caboose or car with FRED with a custom load
                     // is the destination a spur with a schedule demanding this car's custom load?
                     if (status.equals(Track.OKAY) &&
                             !testTrack.getScheduleId().equals(Track.NONE) &&
@@ -4521,7 +4521,7 @@ public class TrainBuilder extends TrainCommon {
                                     car.getTrack()
                                             .isAddCustomLoadsAnySpurEnabled()) &&
                             car.getLoadName().equals(carLoads.getDefaultEmptyName())) {
-                        // can we use this track?
+                        // can we use this staging track?
                         if (!testTrack.isSpaceAvailable(car)) {
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                     .getMessage("buildNoDestTrackSpace"),
@@ -4534,7 +4534,7 @@ public class TrainBuilder extends TrainCommon {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildGenerateLoad"),
                                 new Object[]{car.toString(), car.getTypeName(), testDestination.getName(),
                                         testTrack.getName()}));
-                        String carLoad = car.getLoadName(); // save the car's load
+                        String carLoad = car.getLoadName(); // save the car's load (default empty)
                         ScheduleItem si = getScheduleItem(car, testTrack);
                         if (si != null) {
                             car.setLoadName(si.getReceiveLoadName());
@@ -4606,7 +4606,7 @@ public class TrainBuilder extends TrainCommon {
                         continue;
                     }
 
-                    // not staging, then use (should never be staging TODO throw an exception)
+                    // not staging, then use (should never be staging TODO throw an exception?)
                     if (!testTrack.getTrackType().equals(Track.STAGING)) {
                         trackTemp = testTrack;
                         break;
@@ -4624,24 +4624,12 @@ public class TrainBuilder extends TrainCommon {
                     trackSave = null;
                     break; // done
                 }
-                // if there's more than one available destination use the one with the least moves
+                // if there's more than one available destination use the lowest ratio
                 if (rldSave != null) {
                     double saveCarMoves = rldSave.getCarMoves();
                     double saveRatio = saveCarMoves / rldSave.getMaxCarMoves();
                     double nextCarMoves = rld.getCarMoves();
                     double nextRatio = nextCarMoves / rld.getMaxCarMoves();
-                    // bias cars to the terminal
-                    if (rld == _train.getTrainTerminatesRouteLocation()) {
-                        nextRatio = nextRatio * nextRatio;
-                        log.debug("Location ({}) is terminate location, adjusted nextRatio {}", rld.getName(),
-                                Double.toString(nextRatio));
-                    }
-                    // bias cars with default loads to a track with a schedule
-                    if (!trackTemp.getScheduleId().equals(Track.NONE)) {
-                        nextRatio = nextRatio * nextRatio;
-                        log.debug("Track ({}) has schedule ({}), adjusted nextRatio {}",
-                                trackTemp.getName(), trackTemp.getScheduleName(), Double.toString(nextRatio));
-                    }
                     // check for an earlier drop in the route
                     for (int m = start; m < routeEnd; m++) {
                         RouteLocation rle = _routeList.get(m);
@@ -4660,8 +4648,27 @@ public class TrainBuilder extends TrainCommon {
                             break;
                         }
                     }
-                    log.debug("{} = {}, {} = {}", rldSave.getName(), Double.toString(saveRatio), rld.getName(), Double
-                            .toString(nextRatio));
+                    // bias cars to the terminal
+                    if (rld == _train.getTrainTerminatesRouteLocation()) {
+                        nextRatio = nextRatio * nextRatio;
+                        log.debug("Location ({}) is terminate location, adjusted nextRatio {}", rld.getName(),
+                                Double.toString(nextRatio));
+
+                        // bias cars with default loads to a track with a schedule
+                    } else if (!trackTemp.getScheduleId().equals(Track.NONE)) {
+                        nextRatio = nextRatio * nextRatio;
+                        log.debug("Track ({}) has schedule ({}), adjusted nextRatio {}",
+                                trackTemp.getName(), trackTemp.getScheduleName(), Double.toString(nextRatio));
+                    }
+                    // bias cars with default loads to a track with a schedule
+                    if (trackSave != null && !trackSave.getScheduleId().equals(Track.NONE)) {
+                        saveRatio = saveRatio * saveRatio;
+                        log.debug("Saved track ({}) has schedule ({}), adjusted nextRatio {}",
+                                trackSave.getName(), trackSave.getScheduleName(), Double.toString(saveRatio));
+                    }
+                    log.debug("Saved {} = {}, {} = {}", rldSave.getName(), Double.toString(saveRatio), rld.getName(),
+                            Double
+                                    .toString(nextRatio));
                     if (saveRatio < nextRatio) {
                         rld = rldSave; // the saved is better than the last found
                         trackTemp = trackSave;
