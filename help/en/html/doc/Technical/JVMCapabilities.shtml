@@ -155,6 +155,14 @@
 
           <td>10</td>
         </tr>
+ 
+        <tr>
+          <td>Improved String <a href="http://marxsoftware.blogspot.com/2018/05/jdk-11-string-methods.html">whitespace support</a></td>
+
+          <td>?</td>
+
+          <td>11</td>
+        </tr>
 
 
       </table>(* indicates that a compatibility library is used in
@@ -202,6 +210,11 @@
         <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
       </ul>
 
+    <p>In May 2018 Oracle announced that 
+        <a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, expected out at the end of calendar 2018,
+        will be a "Long Term Support" release.  Java 9 and 10 will not be.
+        
+        
       <P>As of April 2018, Java 10 only runs on 64-bit Windows versions (no 32-bit).
 
       <table border="1">

@@ -83,7 +83,7 @@ public class Train implements java.beans.PropertyChangeListener {
     protected Track _departureTrack; // the departure track from staging
     protected Track _terminationTrack; // the termination track into staging
     protected String _roadOption = ALL_ROADS;// train road name restrictions
-    protected int _requires = 0; // train requirements, caboose, FRED
+    protected int _requires = NO_CABOOSE_OR_FRED; // train requirements, caboose, FRED
     protected String _numberEngines = "0"; // number of engines this train requires
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
     protected String _engineModel = NONE; // required model of engines assigned to this train
@@ -549,10 +549,10 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Set train requirements. If NONE, then train doesn't require a caboose or
+     * Set train requirements. If NO_CABOOSE_OR_FRED, then train doesn't require a caboose or
      * car with FRED.
      *
-     * @param requires NONE CABOOSE FRED
+     * @param requires NO_CABOOSE_OR_FRED, CABOOSE, FRED
      */
     public void setRequirements(int requires) {
         int old = _requires;

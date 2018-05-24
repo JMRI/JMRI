@@ -1879,9 +1879,9 @@ public class Track {
             }
             String status = checkScheduleItem(si, car);
             if (status.equals(OKAY)) {
-                log.debug("Found item match ({}) car ({}) load ({}) ship ({}) destination ({}, {})", si.getId(), car
-                        .toString(), si.getReceiveLoadName(), si.getShipLoadName(), si.getDestinationName(), si
-                                .getDestinationTrackName()); // NOI18N
+                log.debug("Found item match ({}) car ({}) type ({}) load ({}) ship ({}) destination ({}, {})", si.getId(),
+                        car.toString(), car.getTypeName(), si.getReceiveLoadName(), si.getShipLoadName(),
+                        si.getDestinationName(), si.getDestinationTrackName()); // NOI18N
                 car.setScheduleItemId(si.getId()); // remember which item was a match
                 return OKAY;
             } else {
@@ -2261,6 +2261,13 @@ public class Track {
         return _destinationIdList.size();
     }
 
+    /**
+     * adds a location to the list of acceptable destinations for this track.
+     * 
+     * @param destination location that is acceptable
+     * @return true if added to list, false if destination is already part of
+     *         list.
+     */
     public boolean addDestination(Location destination) {
         if (_destinationIdList.contains(destination.getId())) {
             return false;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.11.5ish+jake+20180414T2247Z+R480ed48268 on Sat Apr 14 15:47:25 PDT 2018-->
-  <decoderIndex version="896">
+  <!--Written by JMRI version 4.11.7ish+jake+20180519T2323Z+Rb4579bfc83 on Sat May 19 16:23:12 PDT 2018-->
+  <decoderIndex version="900">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -44,7 +44,7 @@
       <manufacturer mfg="Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
       <manufacturer mfg="Electronik and Model Produktion" mfgID="35" />
-      <manufacturer mfg="Electroniscript" mfgID="94" />
+      <manufacturer mfg="Electroniscript, inc" mfgID="94" />
       <manufacturer mfg="Elproma Electronics Poland" mfgID="225" />
       <manufacturer mfg="Fleischmann" mfgID="155" />
       <manufacturer mfg="Frateschi Model Trains" mfgID="128" />
@@ -11769,7 +11769,9 @@
         <model model="FREDi using LNSV2" productID="11" developerID="1" />
       </family>
       <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
-        <model model="Basic LocoIO" />
+        <model model="Basic LocoIO" productID="142">
+          <versionCV lowVersionID="134" highVersionID="142" />
+        </model>
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
         <model model="Basic definition" />
@@ -11797,6 +11799,9 @@
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV.xml">
         <model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_EXT.xml">
+        <model model="UNI16ARD-NAV-EXT" lowVersionID="10" productID="16843011" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" file="QSI_Articulated_Steam.xml">
         <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403">
@@ -13231,6 +13236,9 @@
             <protocol>selectrix</protocol>
           </protocols>
         </model>
+      </family>
+      <family name="Tortoise driver" mfg="Electroniscript, inc" comment="DCC speaking driver for Tortoise" file="SDD-001.xml">
+        <model model="SDD-001" lowVersionID="1" />
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
