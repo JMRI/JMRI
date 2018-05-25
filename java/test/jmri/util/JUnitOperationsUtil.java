@@ -264,7 +264,6 @@ public class JUnitOperationsUtil {
         // improve test coverage
         Setup.setPrintLocationCommentsEnabled(true);
         Setup.setPrintRouteCommentsEnabled(true);
-
     }
 
     /**
