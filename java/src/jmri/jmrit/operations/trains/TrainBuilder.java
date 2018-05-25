@@ -4028,6 +4028,7 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[]{
                 car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName())}));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
+        // router now doesn't load a car's destination if not carried by train being built 
         if (rld == null) {
             // car has a destination that isn't serviced by this train (destination loaded by router)
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExcludeCarDestNotPartRoute"),
