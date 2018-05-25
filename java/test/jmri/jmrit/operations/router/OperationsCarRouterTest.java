@@ -2342,6 +2342,11 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // don't allow Boxcars staging on two tracks
         stagingTrack1.deleteTypeName("Boxcar");
         stagingTrack3.deleteTypeName("Boxcar");
+        
+        // create a 2nd staging location
+        Location staging2 = lmanager.newLocation("Staging 2");
+        Track stagingT2 = staging2.addTrack("Staging 2", Track.STAGING);
+        stagingT2.setLength(500);
 
         // create 2 cars
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("BA", "3", "Boxcar", "40", actonSpur1, 0);
@@ -2362,7 +2367,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Route routeB = rmanager.newRoute("Route Staging-Gulf-Essex-Foxboro");
         routeB.addLocation(staging);
         RouteLocation rlgulf = routeB.addLocation(gulf);
-        routeB.addLocation(essex);
+        RouteLocation rlessex = routeB.addLocation(essex);
         routeB.addLocation(foxboro);
         trainStagingToFoxboro1.setRoute(routeB);
         
@@ -2489,6 +2494,21 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         
         Assert.assertEquals("car's destination", gulfInterchange1, c4.getDestinationTrack());
         Assert.assertEquals("car's final destination", foxboro, c4.getFinalDestination());
+        
+        // test having train terminate into staging 2, build will try and send car there
+        trainStagingToFoxboro2.reset();
+        c4.setFinalDestination(chelmsford); // restore 
+        rlgulf.setMaxTrainLength(1000); // restore
+        routeB.addLocation(staging2); // terminate into staging 2
+        rlessex.setMaxCarMoves(1); // only allow one drop, c4 has to go to staging
+        
+        trainStagingToFoxboro2.build();
+        Assert.assertTrue(trainStagingToFoxboro2.isBuilt());
+        
+        Assert.assertEquals("car's destination", essexInterchange1, c3.getDestinationTrack());
+        Assert.assertEquals("car's final destination", chelmsford, c3.getFinalDestination());
+        Assert.assertEquals("car's destination", stagingT2, c4.getDestinationTrack()); // sent to staging rather than build failure
+        Assert.assertEquals("car's final destination", chelmsford, c4.getFinalDestination());
     }
 
     // Use trains to move cars
