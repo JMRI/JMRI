@@ -2360,12 +2360,13 @@ public class TrainBuilder extends TrainCommon {
                     _reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 200;
                 }
                 findDestinationsForCarsFromLocation(rl, routeIndex, true);
+                
+                // we might have freed up space at a spur that has an alternate track
+                if (redirectCarsFromAlternateTrack()) {
+                    addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+                }
             }
 
-            // we might have freed up space at a spur that has an alternate track
-            if (redirectCarsFromAlternateTrack()) {
-                addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
-            }
             if (routeIndex == 0) {
                 checkDepartureForStaging(percent); // report ASAP that the build has failed
             }
@@ -2793,7 +2794,7 @@ public class TrainBuilder extends TrainCommon {
      * @return
      */
     private boolean checkPickUpTrainDirection(RollingStock rs, RouteLocation rl) {
-        // check that car or engine is located on a track
+        // check that car or engine is located on a track (Code Check, rs should always have a track assignment)
         if (rs.getTrack() == null) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"), new Object[]{
                     rs.toString(), rs.getLocationName()}));
@@ -2874,6 +2875,7 @@ public class TrainBuilder extends TrainCommon {
         return true;
     }
 
+    // TODO future option to ignore train direction at last location in train's route
     private final boolean ignoreTrainDirectionIfLastLoc = false;
 
     // FIXME: ignoreTrainDirectionIfLastLoc has no way to become true, hence the if statement using it below cannot ever be true
@@ -3451,6 +3453,10 @@ public class TrainBuilder extends TrainCommon {
                                         track.getAlternateTrack().getName(),
                                         formatStringToCommaSeparated(Setup.getDirectionStrings(track.getAlternateTrack()
                                                 .getTrainDirections())),}));
+                        continue;
+                    }
+                    // check for spur or interchange track with train restrictions
+                    if (!checkTrainCanDrop(car, track.getAlternateTrack())) {
                         continue;
                     }
                 }
@@ -4136,7 +4142,8 @@ public class TrainBuilder extends TrainCommon {
                                 status.startsWith(Track.LENGTH) &&
                                 testTrack.checkSchedule(car).equals(Track.OKAY) &&
                                 testTrack.getTrackType().equals(Track.SPUR) &&
-                                testTrack.getAlternateTrack() != null) {
+                                testTrack.getAlternateTrack() != null &&
+                                checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
                             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                     .getMessage("buildTrackFullHasAlternate"),
                                     new Object[]{
@@ -4558,6 +4565,7 @@ public class TrainBuilder extends TrainCommon {
                             car.getFinalDestination() == null &&
                             testTrack.getScheduleId().equals(Track.NONE) &&
                             car.getTrack() != testTrack.getAlternateTrack() &&
+                            checkTrainCanDrop(car, testTrack.getAlternateTrack()) &&
                             car.testDestination(testDestination, testTrack.getAlternateTrack()).equals(Track.OKAY)) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildTrackFullHasAlternate"),
@@ -4837,6 +4845,7 @@ public class TrainBuilder extends TrainCommon {
      * @return true if one or more cars were redirected
      */
     private boolean redirectCarsFromAlternateTrack() {
+        // code check, always aggressive
         if (!Setup.isBuildAggressive()) {
             return false;
         }
@@ -4868,6 +4877,9 @@ public class TrainBuilder extends TrainCommon {
                             .toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
                     if (car.getKernel() != null) {
                         for (Car k : car.getKernel().getCars()) {
+                            if (k.getKernel().isLead(k)) {
+                                continue;
+                            }
                             addLine(_buildReport, FIVE, MessageFormat.format(Bundle
                                     .getMessage("buildRedirectFromAlternate"),
                                     new Object[]{
@@ -4876,15 +4888,14 @@ public class TrainBuilder extends TrainCommon {
                                             car.getDestinationTrackName()}));
                             k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
                         }
-                    } else {
-                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle
-                                .getMessage("buildRedirectFromAlternate"),
-                                new Object[]{
-                                        car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
-                                        car.toString(),
-                                        car.getDestinationTrackName()}));
-                        car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
                     }
+                    addLine(_buildReport, FIVE, MessageFormat.format(Bundle
+                            .getMessage("buildRedirectFromAlternate"),
+                            new Object[]{
+                                    car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
+                                    car.toString(),
+                                    car.getDestinationTrackName()}));
+                    car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
                     redirected = true;
                 }
             }
