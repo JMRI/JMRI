@@ -5,6 +5,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -67,16 +71,16 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     static final String retry = Bundle.getMessage("Retry");
     static final String[] controls = {halt, resume, ramp, retry, stop, abort};
 
-    public static int _maxHistorySize = 30;
+    public static int _maxHistorySize = 40;
 
-    private JTextField _startWarrant = new JTextField(30);
-    private JTextField _endWarrant = new JTextField(30);
+    private final JTextField _startWarrant = new JTextField(30);
+    private final JTextField _endWarrant = new JTextField(30);
     private JDialog _concatDialog;
-    private JTextField _status = new JTextField(90);
-    private ArrayList<String> _statusHistory = new ArrayList<String>();
+    private final JTextField _status = new JTextField(90);
+    private final ArrayList<String> _statusHistory = new ArrayList<>();
     private JScrollPane _tablePane;
 
-    private WarrantTableModel _model;
+    private final WarrantTableModel _model;
 
     /**
      * Get the default instance of a Warrant table window.
@@ -466,11 +470,24 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
     @Override
     public void mouseClicked(MouseEvent event) {
-        javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
-        for (int i = _statusHistory.size() - 1; i >= 0; i--) {
-            popup.add(_statusHistory.get(i));
+        int clicks = event.getClickCount();
+        if (clicks > 1) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = _statusHistory.size() - 1; i >= 0; i--) {
+                sb.append(_statusHistory.get(i));
+                sb.append('\n');
+            }
+            Transferable transferable = new StringSelection(sb.toString());
+            Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+            cb.setContents(transferable, null);
+
+        } else {
+            javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
+            for (int i = _statusHistory.size() - 1; i >= 0; i--) {
+                popup.add(_statusHistory.get(i));
+            }
+            popup.show(_status, 0, 0);
         }
-        popup.show(_status, 0, 0);
     }
 
     @Override
