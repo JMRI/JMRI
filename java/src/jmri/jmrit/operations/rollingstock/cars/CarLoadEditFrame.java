@@ -171,6 +171,14 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            // can't have the " & " as part of the load name
+            if (addLoad.contains(CarLoad.SPLIT_CHAR)) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carLoadNoAndChar"),
+                        new Object[]{CarLoad.SPLIT_CHAR}), MessageFormat.format(Bundle
+                                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Load")}),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             addLoadToCombobox(_type, addLoad);
         }
         if (ae.getSource() == deleteButton) {
@@ -193,6 +201,14 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
                         new Object[]{Control.max_len_string_attibute}), MessageFormat.format(Bundle
                                 .getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Load")}),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // can't have the " & " as part of the load name
+            if (newLoad.contains(CarLoad.SPLIT_CHAR)) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carLoadNoAndChar"),
+                        new Object[]{CarLoad.SPLIT_CHAR}), MessageFormat.format(Bundle
+                                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Load")}),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
