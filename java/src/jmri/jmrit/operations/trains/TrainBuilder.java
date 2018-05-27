@@ -3241,7 +3241,7 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{_train.getName(), terminateStageTrack.getName()}));
             return true;
         }
-        if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
+        else if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
                     new Object[]{terminateStageTrack.getName(), _train.getName()}));
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
@@ -3334,19 +3334,19 @@ public class TrainBuilder extends TrainCommon {
                 loads.remove(load);
             }
             for (String load : loads) {
-                String loadParts[] = load.split(CarLoad.SPLIT_CHAR); // split load name
-                if (loadParts.length > 1) {
-                    if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])) {
-                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
-                                new Object[]{terminateStageTrack.getName(), load}));
-                        return false;
-                    }
-                } else {
+//                String loadParts[] = load.split(CarLoad.SPLIT_CHAR); // split load name
+//                if (loadParts.length > 1) {
+//                    if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])) {
+//                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
+//                                new Object[]{terminateStageTrack.getName(), load}));
+//                        return false;
+//                    }
+//                } else {
                     if (!terminateStageTrack.acceptsLoadName(load)) {
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
                                 new Object[]{terminateStageTrack.getName(), load}));
                         return false;
-                    }
+//                    }
                 }
             }
         }
