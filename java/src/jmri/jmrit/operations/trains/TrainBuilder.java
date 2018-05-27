@@ -2360,7 +2360,7 @@ public class TrainBuilder extends TrainCommon {
                     _reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 200;
                 }
                 findDestinationsForCarsFromLocation(rl, routeIndex, true);
-                
+
                 // we might have freed up space at a spur that has an alternate track
                 if (redirectCarsFromAlternateTrack()) {
                     addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
@@ -3240,8 +3240,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrainCanTerminateTrack"),
                     new Object[]{_train.getName(), terminateStageTrack.getName()}));
             return true;
-        }
-        else if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
+        } else if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackRestriction"),
                     new Object[]{terminateStageTrack.getName(), _train.getName()}));
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
@@ -3270,24 +3269,10 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackAllRoads"),
                     new Object[]{terminateStageTrack.getName()}));
             return false;
-
-        } else if (_train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
-            for (String name : _train.getRoadNames()) {
-                if (!terminateStageTrack.acceptsRoadName(name)) {
-                    addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackRoad"),
-                            new Object[]{terminateStageTrack.getName(), name}));
-                    return false;
-                }
-            }
-        } else if (_train.getRoadOption().equals(Train.EXCLUDE_ROADS)) {
-            List<String> roads = new ArrayList<>();
-            for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
-                roads.add(road);
-            }
-            for (String road : _train.getRoadNames()) {
-                roads.remove(road);
-            }
-            for (String road : roads) {
+        }
+        // now determine if roads accepted by train are also accepted by staging track
+        for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
+            if (_train.acceptsRoadName(road)) {
                 if (!terminateStageTrack.acceptsRoadName(road)) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackRoad"),
                             new Object[]{terminateStageTrack.getName(), road}));
@@ -3295,58 +3280,23 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         }
-        // check go see if track will accept the train's car loads
+        
+        // determine if staging will accept loads carried by train
         if (_train.getLoadOption().equals(Train.ALL_LOADS) &&
                 !terminateStageTrack.getLoadOption().equals(Track.ALL_LOADS)) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackAllLoads"),
                     new Object[]{terminateStageTrack.getName()}));
             return false;
-
-        } else if (_train.getLoadOption().equals(Train.INCLUDE_LOADS)) {
-            for (String load : _train.getLoadNames()) {
-                String loadParts[] = load.split(CarLoad.SPLIT_CHAR); // split load name
-                if (loadParts.length > 1) {
-                    if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])) {
+        }
+        // get all of the types and loads that a train can carry, and determine if staging will accept
+        for (String type : _train.getTypeNames()) {
+            for (String load : carLoads.getNames(type)) {
+                if (_train.acceptsLoad(load, type)) {
+                    if (!terminateStageTrack.acceptsLoad(load, type)) {
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
-                                new Object[]{terminateStageTrack.getName(), load}));
+                                new Object[]{terminateStageTrack.getName(), type + CarLoad.SPLIT_CHAR + load}));
                         return false;
                     }
-                } else {
-                    if (!terminateStageTrack.acceptsLoadName(load)) {
-                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
-                                new Object[]{terminateStageTrack.getName(), load}));
-                        return false;
-                    }
-                }
-            }
-        } else if (_train.getLoadOption().equals(Train.EXCLUDE_LOADS)) {
-            // build a list of loads that the staging track must accept
-            List<String> loads = new ArrayList<>();
-            for (String type : _train.getTypeNames()) {
-                for (String load : carLoads.getNames(type)) {
-                    if (!loads.contains(load)) {
-                        loads.add(load);
-                    }
-                }
-            }
-            // remove the loads that the train won't carry
-            for (String load : _train.getLoadNames()) {
-                loads.remove(load);
-            }
-            for (String load : loads) {
-//                String loadParts[] = load.split(CarLoad.SPLIT_CHAR); // split load name
-//                if (loadParts.length > 1) {
-//                    if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])) {
-//                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
-//                                new Object[]{terminateStageTrack.getName(), load}));
-//                        return false;
-//                    }
-//                } else {
-                    if (!terminateStageTrack.acceptsLoadName(load)) {
-                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackLoad"),
-                                new Object[]{terminateStageTrack.getName(), load}));
-                        return false;
-//                    }
                 }
             }
         }
@@ -4313,7 +4263,7 @@ public class TrainBuilder extends TrainCommon {
         // more than one location in this route?
         if (!_train.isLocalSwitcher()) {
             start++; // begin looking for tracks at the next location
-        } 
+        }
         // all pick ups to terminal?
         if (_train.isSendCarsToTerminalEnabled() &&
                 !splitString(rl.getName()).equals(splitString(_departLocation.getName())) &&
