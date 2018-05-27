@@ -1201,7 +1201,7 @@ public class LayoutEditorTools {
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
      *
-     * @deprecated since 4.11.6, use 
+     * @deprecated since 4.11.6, use
      * {@link #setSignalHeadOnPanel(double, String, int, int)} directly.
      */
     @Deprecated
@@ -9507,7 +9507,6 @@ public class LayoutEditorTools {
         }
         setSignalMastsAtLayoutSlipFromMenuFlag = true;
         setSignalMastsAtLayoutSlip(theFrame);
-        setSignalMastsAtLayoutSlipFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?

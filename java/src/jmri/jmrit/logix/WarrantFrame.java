@@ -1204,13 +1204,13 @@ public class WarrantFrame extends WarrantRoute {
                                             _warrant.getTrainName(),
                                             newBlock.getDisplayName());
                         }
-                    } else if (e.getPropertyName().equals("blockRelease")) {
+                    /*} else if (e.getPropertyName().equals("blockRelease")) {
                         OBlock block = (OBlock) e.getNewValue();
                         long et = (System.currentTimeMillis() - block._entryTime) / 1000;
                         msg = Bundle.getMessage("TrackerBlockLeave",
                                 _warrant.getTrainName(), block.getDisplayName(), et / 60,
-                                et % 60);
-                    } else if (e.getPropertyName().equals("Command")) {
+                                et % 60);*/
+                    } else if (e.getPropertyName().equals("ReadyToRun")) {
                         msg = _warrant.getRunningMessage();
                     } else if (e.getPropertyName().equals("SpeedChange")) {
                         msg = _warrant.getRunningMessage();

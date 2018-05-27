@@ -642,12 +642,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                     bean.getTrainName(),
                                     newBlock.getDisplayName()), myGreen, true);
                 }
-            } else if (e.getPropertyName().equals("blockRelease")) {
+           /* } else if (e.getPropertyName().equals("blockRelease")) {
                 OBlock block = (OBlock) e.getNewValue();
                 long et = (System.currentTimeMillis() - block._entryTime) / 1000;
                 _frame.setStatusText(Bundle.getMessage("TrackerBlockLeave",
                         bean.getTrainName(), block.getDisplayName(), et / 60,
-                        et % 60), myGreen, true);
+                        et % 60), myGreen, true);*/
             } else if (e.getPropertyName().equals("SpeedRestriction")) {
                 String name = (String) e.getOldValue();
                 String speed = (String) e.getNewValue();
@@ -655,6 +655,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), speed, name),
                         Color.red, true);
             } else if (e.getPropertyName().equals("SpeedChange")) {
+                int row = getRow(bean);
+                if (row>=0) {
+                    fireTableRowsUpdated(row, row);                    
+                }
+            } else if (e.getPropertyName().equals("WaitForSync")) {
                 int row = getRow(bean);
                 if (row>=0) {
                     fireTableRowsUpdated(row, row);                    
@@ -706,14 +711,17 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         _frame.setStatusText(Bundle.getMessage("RampHalt",
                                 bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
                     } else  {
-                        _frame.setStatusText(Bundle.getMessage("RampWaitForClear",
-                                bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
+                        String s = (bean.isWaitingForSignal() ? 
+                                Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy"));
+                                ;
+                        _frame.setStatusText(Bundle.getMessage("RampWaitForClear", bean.getTrainName(), 
+                                bean.getCurrentBlockName(), s), myGreen, true);
                     }
                 } else {
                     _frame.setStatusText(Bundle.getMessage("RampSpeed",
                             bean.getTrainName(), speed, bean.getCurrentBlockName()), myGreen, true);
                 }
-           } else if (e.getPropertyName().equals("Command")) {
+            } else if (e.getPropertyName().equals("ReadyToRun")) {
                 _frame.setStatusText(Bundle.getMessage("TrainReady",
                         bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
             } else if (e.getPropertyName().equals("controlChange")) {
@@ -747,15 +755,24 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), stateStr,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])),
                         Color.red, true);
-            } else if (e.getPropertyName().equals("SensorCommand")) {
-                boolean set = ((Boolean) e.getOldValue()).booleanValue();
-                String name = (String) e.getNewValue();
-                if (set) {
-                    _frame.setStatusText(Bundle.getMessage("setSensor",
-                            bean.getTrainName(), name), myGreen, true);
-                } else  {
+            } else if (e.getPropertyName().equals("SensorSetCommand")) {
+                String action = (String) e.getOldValue();
+                String sensorName = (String) e.getNewValue();
+                _frame.setStatusText(Bundle.getMessage("setSensor",
+                            bean.getTrainName(), sensorName, action), myGreen, true);
+            } else if (e.getPropertyName().equals("SensorWaitCommand")) {
+                String action = (String) e.getOldValue();
+                String sensorName = (String) e.getNewValue();
+                if (action != null) {
                     _frame.setStatusText(Bundle.getMessage("waitSensor",
-                            bean.getTrainName(), name), myGreen, true);
+                            bean.getTrainName(), sensorName, action), myGreen, true);
+                } else {
+                    _frame.setStatusText(Bundle.getMessage("waitSensorChange",
+                            bean.getTrainName(), sensorName), myGreen, true);
+                }
+                int row = getRow(bean);
+                if (row>=0) {
+                    fireTableRowsUpdated(row, row);                    
                 }
             } else if (e.getPropertyName().equals("throttleFail")) {
                 _frame.setStatusText(Bundle.getMessage("ThrottleFail",
