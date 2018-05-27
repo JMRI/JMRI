@@ -6,7 +6,5 @@
  * and
  * <a href="https://github.com/ekapus/TrainCrew">https://github.com/ekapus/TrainCrew</a>.
  *
- * </ul>
- *
  */
 package apps.TrainCrew;

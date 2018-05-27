@@ -17,8 +17,8 @@ public class UnzipFileClass {
 		
 	/**
 	 * Unzip contents into a directory
-	 * @param directory Destination for contents, created if need be; relative or absolute, but must be pre-expanded
-	 * @param zipfile .zip file name; relative or absolute, but must be pre-expanded
+	 * @param destinationFolder Destination for contents, created if need be; relative or absolute, but must be pre-expanded
+	 * @param zipFile .zip file name; relative or absolute, but must be pre-expanded
 	 */
 	public static void unzipFunction(String destinationFolder, String zipFile) throws java.io.FileNotFoundException {
         File directory = new File(destinationFolder);
@@ -30,7 +30,7 @@ public class UnzipFileClass {
 	/**
 	 * Unzip contents into a directory
 	 * @param directory Destination for contents, created if need be
-	 * @param fInput in .zip format
+	 * @param input in .zip format
 	 */
 	public static void unzipFunction(File directory, InputStream input) {	        
 		// if the output directory doesn't exist, create it
