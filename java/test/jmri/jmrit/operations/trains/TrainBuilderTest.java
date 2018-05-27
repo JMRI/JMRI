@@ -2880,7 +2880,7 @@ public class TrainBuilderTest {
      * Test car load restrictions departing staging, track load restrictions.
      */
     @Test
-    public void testStagingtoStagingTrackCarLoadRestrications() {
+    public void testStagingtoStagingDepartureTrackCarLoadRestrications() {
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -2935,6 +2935,110 @@ public class TrainBuilderTest {
         Assert.assertEquals("train assignment", null, c3.getTrain());
         Assert.assertEquals("train assignment", null, c4.getTrain());
     }
+    
+    /*
+     * Test car load restrictions entering staging, track load restrictions.
+     */
+    @Test
+    public void testStagingtoStagingTerminalTrackCarLoadRestrications() {
+        
+        // create some car loads for this test
+        cld.addName("Boxcar", "Flour");
+        cld.addName("Boxcar", "Bricks");
+        cld.addName("Boxcar", "Coal");
+        cld.addName("Boxcar", "Books");
+        cld.addName("Boxcar", "Grain");
+        
+        cld.addName("Flat", "Coil");
+        cld.addName("Flat", "Bricks");
+        cld.addName("Flat", "Coal");
+        cld.addName("Flat", "Books");
+        cld.addName("Flat", "Tools");    
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // route North End - NI - South End
+        Train train2 = tmanager.getTrainById("2");
+
+        // get staging terminal track
+        Location southEnd = lmanager.getLocationByName("South End Staging");
+        Track southEndStaging1 = southEnd.getTrackByName("South End 1", Track.STAGING);
+        Track southEndStaging2 = southEnd.getTrackByName("South End 2", Track.STAGING);
+        southEnd.deleteTrack(southEndStaging2); // delete this track
+
+        // train should build
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+
+        // restrict car load entering staging
+        southEndStaging1.setLoadOption(Track.EXCLUDE_LOADS);
+        southEndStaging1.addLoadName("Books");
+
+        // should fail, train can have "Books" loads, excludes grain in boxcars
+        train2.setLoadOption(Train.EXCLUDE_LOADS);
+        train2.addLoadName("Grain");
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // now exclude Books, should build
+        train2.addLoadName("Books");
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // now try Books carried by Boxcars
+        train2.deleteLoadName("Books");
+        train2.addLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"Books");
+        
+        // should fail, books could be carried in other cars
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // restrict car load entering staging to boxcar with Books
+        southEndStaging1.deleteLoadName("Books");
+        southEndStaging1.addLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"Books");
+        
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // now try train include loads
+        train2.setLoadOption(Train.INCLUDE_LOADS);
+        train2.addLoadName("E"); // cars in departure staging have "E" loads
+        
+        // train can carry "E", Grain, and Boxcars with Books
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // allow Boxcar with Books into staging
+        southEndStaging1.deleteLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"Books");
+        southEndStaging1.addLoadName("Books"); // train can carry Boxcar with Books
+        
+        // should not build
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        southEndStaging1.deleteLoadName("Books");
+        southEndStaging1.addLoadName("Coal"); // train can not carry Coal in any car
+        
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // allow the train to carry Coal in any car
+        train2.addLoadName("Coal");
+        
+        // should not build
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());    
+    }
+
 
     /*
      * Test service direction departing staging
@@ -10933,6 +11037,8 @@ public class TrainBuilderTest {
 
         Setup.setCarMoves(7); // set default to 7 moves per location
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        // increase test coverage
+        Setup.setGenerateCsvManifestEnabled(true);
 
     }
 
