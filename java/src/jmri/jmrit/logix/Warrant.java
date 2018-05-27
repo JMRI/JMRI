@@ -90,7 +90,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     // Throttle modes
     public static final int MODE_NONE = 0;
     public static final int MODE_LEARN = 1; // Record a command list
-    public static final int MODE_RUN = 2; // Autorun, playback the command list
+    public static final int MODE_RUN = 2;   // Autorun, playback the command list
     public static final int MODE_MANUAL = 3; // block detection of manually run train
     public static final String[] MODES = {"none", "LearnMode", "RunAuto", "RunManual"};
     public static final int MODE_ABORT = 4; // used to set status string in WarrantTableFrame
@@ -484,11 +484,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return false;
     }
 
-    /**
-     * ************* Methods for running trains
-     *
-     ***************
-     * @return ID of run mode
+    /* ************* Methods for running trains *****************/
+
+    protected boolean isWaitingForSignal() {
+        return _waitForSignal;
+    }
+     /**
+      *  @return ID of run mode
      */
     public int getRunMode() {
         return _runMode;
@@ -572,7 +574,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         return Bundle.getMessage("Aborted", blockName, cmdIdx);
 
                     case Warrant.WAIT_FOR_CLEAR:
-                        return Bundle.getMessage("WaitForClear", _trainName, blockName, (_waitForSignal
+                        return Bundle.getMessage("WaitForClear", blockName, (_waitForSignal
                                 ? Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy")));
 
                     case Warrant.WAIT_FOR_TRAIN:
@@ -626,7 +628,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         SignalSpeedMap speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
         switch (speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
-                units = Bundle.getMessage("percentNormal");
+/*                units = Bundle.getMessage("percentNormal");
                 if (_idxCurrentOrder == _orders.size() - 1 
                         || _engineer.getCurrentCommandIndex() >= _commands.size() - 1) {
                     speed = _speedInfo.get(_idxCurrentOrder).getEntranceSpeed();
@@ -640,7 +642,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }                    
                 }
                 speed = (_engineer.getSpeedSetting() / speed) * 100;
-                break;
+                break;*/
             case SignalSpeedMap.PERCENT_THROTTLE:
                 units = Bundle.getMessage("percentThrottle");
                 speed = _engineer.getSpeedSetting() * 100;
@@ -1035,7 +1037,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
             if (_delayStart) {
                 // user must explicitly start train (resume) in a dark block
-                firePropertyChange("Command", -1, 0);   // ready to start msg
+                firePropertyChange("ReadyToRun", -1, 0);   // ready to start msg
             }
             if (_engineer.getRunState() == Warrant.RUNNING) {
                 setMovement(MID);
@@ -1314,7 +1316,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                                 if (_runMode == MODE_RUN) {
                                     msg = acquireThrottle();
                                 } else if (_runMode == MODE_MANUAL) {
-                                    firePropertyChange("Command", -1, 0);   // ready to start msg
+                                    firePropertyChange("ReadyToRun", -1, 0);   // ready to start msg
                                     _delayStart = false;
                                 } else {
                                     _delayStart = false;
@@ -1784,7 +1786,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
          * don't disturb re-allocation of blocks ahead. Previous Dark blocks do
          * need deallocation
          */
-        firePropertyChange("blockRelease", null, block);
         for (int i = idx; i > -1; i--) {
             boolean dealloc = true;
             OBlock prevBlock = getBlockAt(i);
@@ -1796,6 +1797,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (dealloc && prevBlock.isAllocatedTo(this)) {
                 prevBlock.setValue(null);
                 prevBlock.deAllocate(this);
+                firePropertyChange("blockRelease", null, block);
             }
         }
     }
