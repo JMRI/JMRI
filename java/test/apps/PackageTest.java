@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
         apps.DispatcherPro.PackageTest.class,
         apps.PanelPro.PackageTest.class,
         apps.SoundPro.PackageTest.class,
+        apps.TrainCrew.PackageTest.class,
         JmriFacelessTest.class,
         apps.systemconsole.PackageTest.class,
 	AboutActionTest.class,

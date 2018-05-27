@@ -223,6 +223,8 @@
    <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
 
   </tocitem>
+  <tocitem text="TrainCrew " target="html.apps.TrainCrew.index"/>
+
  </tocitem>
  <tocitem text="Panels " target="html.apps.PanelPro.Panels">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
