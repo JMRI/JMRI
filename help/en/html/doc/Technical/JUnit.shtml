@@ -66,18 +66,27 @@
             <li><a href="#HandlingLogOutput">Handling Log4J Output
             From Tests</a></li>
 
-            <li><a href="#RunningListeners">Running
+            <li><a href="#ResetInstMgr">Resetting the
+            InstanceManager</a></li>
+
+            <li><a href="#RunningListeners">Working with
             Listeners</a></li>
 
             <li><a href="#threads">Working with Threads</a></li>
-
-            <li><a href="#ResetInstMgr">Resetting the
-            InstanceManager</a></li>
 
             <li><a href="#io">Testing I/O</a></li>
 
             <li><a href="#tempFileCreation">Temporary File Creation
             in Tests</a></li>
+
+            <li><a href="#J4rules">JUnit4 Rules</a></li>
+            <li style="list-style: none">
+                <ul>
+                <li><a href="#TimeoutRule">Timeout rule</a>
+                <li><a href="#RetryRule">RetryRule</a>
+                </ul>
+            </li>
+
           </ul>
         </li>
 
@@ -89,9 +98,7 @@
             <li><a href="#jfcunit">Using JFCUnit</a></li>
           </ul>
         </li>
-      </ul>
 
-      <ul>
         <li><a href="#testScriptCode">Testing Script Code</a></li>
 
         <li style="list-style: none">
@@ -100,13 +107,9 @@
             sample scripts</a></li>
           </ul>
         </li>
-      </ul>
 
-      <ul>
         <li><a href="#issues">Issues</a></li>
-      </ul>
 
-      <ul>
         <li><a href="#junit4">Migrating to JUnit4</a></li>
       </ul>
 
@@ -120,16 +123,27 @@
       change.
 
       <p>For more information on JUnit, see <a href=
-      "http://www.junit.org">the JUnit home page</a>. A very
+      "http://www.junit.org">the JUnit home page</a>. 
+      We now use JUnit version 4 (JUnit4), although
+      a lot of JMRI code originally had tests
+      written in the previous version, JUnit3.
+      For instructions on how to convert existing JUnit3
+      tests to JUnit4, see the 
+      "<a href="#junit4">Migrating to JUnit4</a>" section below.
+      <p>
+      A very
       interesting example of test-based development is available
       from <a href=
       "http://www.objectmentor.com/publications/xpepisode.htm">Robert
       Martin</a>'s book.</p>
 
-      <p>Some of the classes have JUnit tests available. It's good
-      to add JUnit tests as you make changes (test your new
+      <p>All of the JMRI classes have JUnit tests available; we 
+      have decided that our 
+      <a href="ContinuousIntegration.shtml">Continuous Integration system</a>
+      will insist on that. It's good
+      to add JUnit tests as you make changes to classes (they test your new
       functionality to make sure that it is working, and keeps
-      working), when you have to figure out what somebody's code
+      working as other people change it later), when you have to figure out what somebody's code
       does (the test documents exactly what should happen!), and
       when you track down a bug (make sure it doesn't come
       back).</p>
@@ -598,7 +612,8 @@
       Uncomment that, compile and run your tests.  It will report
       any threads you've left running.
 
-      <h3><a id="io" name="io"></a>Testing I/O</h3>Some test
+      <h3><a id="io" name="io"></a>Testing I/O</h3>
+      Some test
       environments don't automatically flush I/O operations such as
       streams during testing. If you're testing something that does
       I/O, for example a TrafficController, you'll need to add
@@ -619,11 +634,10 @@
       build</a> environment. And the temporary files should not
       become part of the JMRI code repository.
 
-      <p>Here are some ideas which can help avoid these types of
-      problems.</p>
+      This section discusses ways to avoid these types of
+      problems.
       
-      <ul>
-        <li>
+      <p>
         If you need a temporary file or directory, and your test
         uses JUnit4, you can use a Rule to create a file or directory
         before each test runs.
@@ -644,12 +658,17 @@
 </pre>
 
     
-      JUnit will make sure the file or folder is removed afterwards regardless of whether the 
+      JUnit4 will make sure the file or folder is removed afterwards regardless of whether the 
       test succeeds or fails. For more information on this, see the 
-      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest"</a>.
+      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest</a>.
      
-
-        <li>(Pre-JUnit4 only; use the above if using JUnit 4)
+     <p>
+     If you're not using JUnit4, consider converting the 
+     test class (see below) and use the technique above.
+     But if you can't do that, and have to stick with JUnit3:
+     
+     <ul>
+        <li>
         Place the temporary file(s) in the "temp" directory
         which is a sub- directory of the jmri run-time directory.
         This directory is used by some testcases and is already
@@ -724,10 +743,7 @@
     will work reliably within the <a href=
     "ContinuousIntegration.shtml">continuous integration build</a>
     environment.
-        </li>
-      </ul>
-
-      <p>The above issues were identified via one testcase which
+    An issue was identified with one test case which
       executed properly on a Windows-based PC for both the
       "alltest" and "headlesstest" ant target, regardless of how
       many times it was run. In the <a href=
@@ -737,8 +753,78 @@
       integration environment execution of "headlesstest". Once the
       test was modified based on the temporary file recommendations
       shown here, the test became stable over multiple continuous
-      integration executions of "headlesstest".</p>
+      integration executions of "headlesstest".
+        </li>
+      </ul>
 
+
+      <h3>
+      <a name="J4rules" id="J4rules">JUnit Rules</a></h3>
+      
+      JUNit4 added the concept of 
+      "<a href="https://github.com/junit-team/junit4/wiki/rules">Rules</a>" 
+      that can modify the execution of tests. They work at the class or test
+      level to modify the context JUnit4 uses for running the classes tests.
+      Generally, you start by creating one:
+<pre style="font-family: monospace;">
+    @Rule
+    public final TemporaryFolder tempFolder = new TemporaryFolder();
+</pre>   
+      <p>
+      Some standard JUnit4 rules you might find useful:
+      <ul>
+      <li><a href="https://github.com/junit-team/junit4/wiki/rules#temporaryfolder-rule">TemporaryFolder</a>
+        - work with temporary files and folders, ensuring
+        they're cleaned up at the end. See the
+        <a href="#tempFileCreation">above section</a> for more on using that.
+      <li><a href="https://github.com/junit-team/junit4/wiki/rules#expectedexception-rules">ExpectedException</a>
+        - handles test methods that are expected to throw exceptions
+    
+      </ul>
+      
+      <h4>
+      <a name="TimeoutRule" id="TimeoutRule">Timeout - limit duration</a></h4>
+      
+      The <a href="https://github.com/junit-team/junit4/wiki/rules#timeout-rule">Timeout rule</a>
+      imposes a timeout on all test methods in a class.
+      
+<pre style="font-family: monospace;">
+    @Rule
+    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
+</pre>   
+
+      <p>
+      Note that you can also add a timeout option to an individual test via an
+      argument to the @Test annotation. For example,
+<pre style="font-family: monospace;">
+    @Test(timeout=2000)
+</pre>   
+      will put a 2 second (2,000 milliseconds) timeout on that test. If you use
+      both the rule and the option, the option will control the behavior.
+      
+      <h4>
+      <a name="RetryRule" id="RetryRule">RetryRule - run test several times</a></h4>
+      
+      JMRI has 
+      <code><a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/junit/rules/RetryRule.java">jmri.util.junit.rules.RetryRule</a></code>
+      which can rerun a test multiple times until
+      it reaches a limit or finally passes. Although it's
+      better to write reliable tests, this can be a way 
+      to make the CI system more reliable while you 
+      try to find out why a test isn't reliable.
+      <p>
+      For a working example, see
+      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/logix/LearnWarrantTest.java">java/test/jmri/jmrit/logix/LearnWarrantTest.java</a>
+      <p>
+      Briefly, you just add the lines 
+<pre style="font-family: monospace;">
+    import jmri.util.junit.rules.RetryRule;
+    
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+</pre>   
+      to your test class.  This will modify how JUnit4 
+      handles errors during all of the tests in that class.
 
 
       <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
@@ -876,11 +962,13 @@
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
 
-      <p><a href="http://jfcunit.sourceforge.net/">JFCUnit</a> to control
+      <p>You should not write new test classes using JFCUnit.  Use
+      <a href="#jemmy">Jemmy</a>
+      instead.  This section is to document test classes we already have.
+      
+      <p>The <a href="http://jfcunit.sourceforge.net/">JFCUnit</a> library can control
       interactions with Swing objects.
-      </p>
-
-      <p>For a very simple example of the use of JFCUnit, see the
+      For a very simple example of the use of JFCUnit, see the
       <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">
       test/jmri/util/SwingTestCaseTest.java</a> file.</p>

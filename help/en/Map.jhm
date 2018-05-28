@@ -748,6 +748,8 @@
 
 <mapID target="html.hardware.openlcb.index" url="html/hardware/openlcb/index.shtml"/>
 
+<mapID target="html.apps.TrainCrew.index" url="html/apps/TrainCrew/index.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation_track_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation_track.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_Throttle" url="manual/DecoderPro/Start_Preferences.shtml#Throttle"/>
