@@ -3405,10 +3405,6 @@ public class TrainBuilder extends TrainCommon {
                                                 .getTrainDirections())),}));
                         continue;
                     }
-                    // check for spur or interchange track with train restrictions
-                    if (!checkTrainCanDrop(car, track.getAlternateTrack())) {
-                        continue;
-                    }
                 }
             }
 

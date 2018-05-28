@@ -1287,6 +1287,9 @@ public class TrainBuilderTest {
      */
     @Test
     public void testAlternateTrackInterchange() {
+        
+        // custom load for testing
+        cld.addName("Boxcar", "Bolts");
 
         // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
         Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
@@ -1317,6 +1320,9 @@ public class TrainBuilderTest {
 
         // provide an alternate track for the spur
         bostonSpur2.setAlternateTrack(bostonInterchange2);
+        
+        // set option to hold cars with custom load
+        bostonSpur2.setHoldCarsWithCustomLoadsEnabled(true);
 
         // confirm
         Assert.assertEquals("track is an alternate", bostonInterchange2, bostonSpur2.getAlternateTrack());
@@ -1391,6 +1397,73 @@ public class TrainBuilderTest {
 
         Assert.assertEquals("Car destination", chelmsfordSpur1, c6.getDestinationTrack());
         Assert.assertEquals("Car destination", chelmsfordSpur1, c8.getDestinationTrack());
+        
+        // now try sending cars with custom load to spur
+        c5.setLoadName("Bolts");
+        c6.setLoadName("Bolts");
+        c7.setLoadName("Bolts");
+        c8.setLoadName("Bolts");
+        
+        // create schedule requesting Boxcar with load "Bolts"
+        Schedule schedule = smanager.newSchedule("test alternate");
+        ScheduleItem si = schedule.addItem("Boxcar");
+        si.setReceiveLoadName("Bolts");
+        bostonSpur2.setSchedule(schedule);
+        
+        // program will try to send all 4 cars to spur, but only one can fit, alternate interchange can not service train
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        
+        // confirm car destinations, alternate track interchange not available
+        Assert.assertEquals("Car destination", null, c1.getDestinationTrack()); // caboose
+        Assert.assertEquals("Car destination", null, c2.getDestinationTrack()); // caboose
+        Assert.assertEquals("Car destination", null, c3.getDestinationTrack()); // car with FRED
+        Assert.assertEquals("Car destination", null, c4.getDestinationTrack()); // car with FRED
+        Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", null, c6.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", null, c7.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", null, c8.getDestinationTrack()); // load = "Bolts"
+        
+        Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
+        
+        // allow train to use interchange track
+        bostonInterchange2.deleteDropId(train1.getId());
+        
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        
+        // confirm car destinations, alternate track interchange not available
+        Assert.assertEquals("Car destination", null, c1.getDestinationTrack()); // caboose
+        Assert.assertEquals("Car destination", null, c2.getDestinationTrack()); // caboose
+        Assert.assertEquals("Car destination", null, c3.getDestinationTrack()); // car with FRED
+        Assert.assertEquals("Car destination", null, c4.getDestinationTrack()); // car with FRED
+        Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", bostonInterchange2, c6.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", bostonInterchange2, c7.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", bostonInterchange2, c8.getDestinationTrack()); // load = "Bolts"
+        
+        Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());
+        
+        // limit alternate track to one car
+        bostonInterchange2.setLength(50);
+        
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        
+        // confirm car destinations, alternate track interchange not available
+        Assert.assertEquals("Car destination", null, c1.getDestinationTrack()); // caboose
+        Assert.assertEquals("Car destination", null, c2.getDestinationTrack()); // caboose
+        Assert.assertEquals("Car destination", null, c3.getDestinationTrack()); // car with FRED
+        Assert.assertEquals("Car destination", null, c4.getDestinationTrack()); // car with FRED
+        Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", bostonInterchange2, c6.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", null, c7.getDestinationTrack()); // load = "Bolts"
+        Assert.assertEquals("Car destination", null, c8.getDestinationTrack()); // load = "Bolts"
+        
+        Assert.assertEquals("Car destination", chelmsfordSpur1, c9.getDestinationTrack());       
     }
 
     /**
