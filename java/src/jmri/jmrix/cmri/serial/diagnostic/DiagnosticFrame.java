@@ -805,7 +805,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
      * Halt Poll button handler
      * Polling should be halted when executing diagnostics so as not to
      * interfere with the test sequences.  
-     * @param e 
      */
     public void haltpollButtonActionPerformed() {
          SerialTrafficController stc = _memo.getTrafficController();
@@ -1223,8 +1222,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     * Transmit bytes to selected output card starting with out card number
     * for number of bytes entered.
     * If inverted checked, data is flipped.
-    * 
-    * @param e 
     */    
     public synchronized void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
 
