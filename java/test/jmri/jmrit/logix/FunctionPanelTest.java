@@ -18,11 +18,14 @@ public class FunctionPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame ltf = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
+        LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
         RosterEntry re = new RosterEntry("file here");
         FunctionPanel t = new FunctionPanel(re,ltf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ltf);
+        JUnitUtil.dispose(wf);
+        JUnitUtil.disposeFrame("Local JMRI throttles", true, true);
     }
 
     // The minimal setup for log4J
