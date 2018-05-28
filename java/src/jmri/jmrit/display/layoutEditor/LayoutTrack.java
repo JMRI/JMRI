@@ -114,6 +114,13 @@ public abstract class LayoutTrack {
     }
 
     /**
+     * @return true if this track segment has decorations
+     */
+    public boolean hasDecorations() {
+        return false;
+    }
+
+    /**
      * get decorations
      *
      * @return the decorations
@@ -201,7 +208,7 @@ public abstract class LayoutTrack {
     /**
      * highlight unconnected connections
      *
-     * @param g2 the graphics context
+     * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
     protected abstract void highlightUnconnected(Graphics2D g2, int specificType);
