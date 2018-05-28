@@ -2880,7 +2880,7 @@ public class TrainBuilderTest {
      * Test car load restrictions departing staging, track load restrictions.
      */
     @Test
-    public void testStagingtoStagingTrackCarLoadRestrications() {
+    public void testStagingtoStagingDepartureTrackCarLoadRestrications() {
 
         JUnitOperationsUtil.initOperationsData();
 
@@ -2935,6 +2935,130 @@ public class TrainBuilderTest {
         Assert.assertEquals("train assignment", null, c3.getTrain());
         Assert.assertEquals("train assignment", null, c4.getTrain());
     }
+    
+    /*
+     * Test car load restrictions entering staging, track load restrictions.
+     */
+    @Test
+    public void testStagingtoStagingTerminalTrackCarLoadRestrications() {
+        
+        // create some car loads for this test
+        cld.addName("Boxcar", "Flour");
+        cld.addName("Boxcar", "Bricks");
+        cld.addName("Boxcar", "Coal");
+        cld.addName("Boxcar", "Books");
+        cld.addName("Boxcar", "Grain");
+        
+        cld.addName("Flat", "Coil");
+        cld.addName("Flat", "Bricks");
+        cld.addName("Flat", "Coal");
+        cld.addName("Flat", "Books");
+        cld.addName("Flat", "Tools");    
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // route North End - NI - South End
+        Train train2 = tmanager.getTrainById("2");
+
+        // get staging terminal track
+        Location southEnd = lmanager.getLocationByName("South End Staging");
+        Track southEndStaging1 = southEnd.getTrackByName("South End 1", Track.STAGING);
+        Track southEndStaging2 = southEnd.getTrackByName("South End 2", Track.STAGING);
+        southEnd.deleteTrack(southEndStaging2); // delete this track
+
+        // train should build
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+
+        // restrict car load "Books" from entering staging
+        southEndStaging1.setLoadOption(Track.EXCLUDE_LOADS);
+        southEndStaging1.addLoadName("Books");
+
+        // should fail, train can have "Books" loads, excludes grain in boxcars
+        train2.setLoadOption(Train.EXCLUDE_LOADS);
+        train2.addLoadName("Grain");
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // now exclude "Books" load in train, should build
+        train2.addLoadName("Books");
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // now exclude "Books" carried by Boxcars
+        train2.deleteLoadName("Books");
+        train2.addLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"Books");
+        
+        // should fail, "Books" could be carried by Flat cars
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // restrict car load entering staging to boxcar with "Books"
+        southEndStaging1.deleteLoadName("Books");
+        southEndStaging1.addLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"Books");
+        
+        // should build, both train and staging do not accept Boxcar with "Books"
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // don't allow Flat with Books into staging
+        southEndStaging1.addLoadName("Flat"+CarLoad.SPLIT_CHAR+"Books");
+        
+        // should fail, "Books" could be carried by Flat cars in train
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // don't allow any car to carry "Books" in train
+        train2.addLoadName("Books");
+        
+        // should build, train doesn't allow Books on any car, staging doesn't allow Books carried by Boxcar or Flat
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // now try train include loads
+        train2.setLoadOption(Train.INCLUDE_LOADS);
+        train2.addLoadName("E"); // cars in departure staging have "E" loads
+        
+        // train can carry "E", and any car with Books or Grain (only Boxcar can carry Grain)
+        // staging doesn't allow Boxcar or Flat with "Books"
+        // build should fail
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // allow Boxcar with "Books} into staging
+        southEndStaging1.deleteLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"Books");
+        
+        // should not build, Flat can carry "Books"
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // allow Flat with "Books} into staging
+        southEndStaging1.deleteLoadName("Flat"+CarLoad.SPLIT_CHAR+"Books");
+        southEndStaging1.addLoadName("Coal"); // train can not carry Coal in any car
+        
+        // should build, train doesn't allow "Coal" to be carried
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+        
+        // allow the train to carry Coal in any car
+        train2.addLoadName("Coal");
+        
+        // should not build
+        train2.reset();
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());    
+    }
+
 
     /*
      * Test service direction departing staging
@@ -4065,7 +4189,79 @@ public class TrainBuilderTest {
         Assert.assertEquals("destination track", northEndStaging1, c7.getDestinationTrack());
         Assert.assertEquals("destination track", northEndStaging1, c8.getDestinationTrack());
         Assert.assertEquals("destination track", northEndStaging1, c9.getDestinationTrack());
+    }
+    
+    /**
+     * Test to see if staging track becomes available once train is built in aggressive mode
+     */
+    @Test
+    public void testStagingtoStagingAggressiveMode() {
 
+        Setup.setBuildAggressive(true);
+        Setup.setStagingTrackImmediatelyAvail(true);
+
+        JUnitOperationsUtil.initOperationsData();
+        
+        // route North End - NI - South End
+        Train train2 = tmanager.getTrainById("2");
+
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+
+        Car c7 = cmanager.getByRoadAndNumber("CP", "777");
+        Car c8 = cmanager.getByRoadAndNumber("CP", "888");
+        Car c9 = cmanager.getByRoadAndNumber("CP", "99");
+
+        Location northEndStaging = lmanager.getLocationById("1");
+        Location northIndustries = lmanager.getLocationById("20");
+        Location southEndStaging = lmanager.getLocationById("3");
+
+        Track yardNI = northIndustries.getTrackById("2s1");
+        Track southEndStaging1 = southEndStaging.getTrackById("3s1");
+        Track southEndStaging2 = southEndStaging.getTrackById("3s2");
+        
+        // add staging track to North End
+        Track northEndStaging3 = northEndStaging.addTrack("North End Staging 3", Track.STAGING);
+        northEndStaging3.setLength(300);          
+        
+        // place cars on south end staging       
+        Car c10 = JUnitOperationsUtil.createAndPlaceCar("A", "10", "Boxcar", "40", southEndStaging1, 0);
+        Car c11 = JUnitOperationsUtil.createAndPlaceCar("A", "11", "Boxcar", "40", southEndStaging2, 1);
+        
+        // create a route that staging South end
+        Route route = rmanager.newRoute("SouthEnd-NI-NorthEnd");
+        route.addLocation(southEndStaging);
+        route.addLocation(northIndustries);
+        route.addLocation(northEndStaging);
+
+        Train train3 = tmanager.newTrain("TestStagingtoStaging");
+        train3.setRoute(route);
+
+        // train not should build, no track available terminate staging
+        Assert.assertFalse(new TrainBuilder().build(train2));
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        // now build a train departing south end staging, should free up a staging track
+        Assert.assertTrue(new TrainBuilder().build(train3));
+        Assert.assertTrue("Train status", train3.isBuilt());
+        
+        // train should now build, train3 built, freeing up staging
+        train2.reset();
+        Assert.assertTrue(new TrainBuilder().build(train2));
+        Assert.assertTrue("Train status", train2.isBuilt());
+
+        // confirm car destinations
+        Assert.assertEquals("destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("destination track", yardNI, c3.getDestinationTrack());
+        Assert.assertEquals("destination track", southEndStaging1, c4.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging3, c7.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging3, c8.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging3, c9.getDestinationTrack());
+        Assert.assertEquals("destination track", northEndStaging3, c10.getDestinationTrack());
+        Assert.assertEquals("destination track", null, c11.getDestinationTrack());
     }
 
     /**
@@ -10933,6 +11129,8 @@ public class TrainBuilderTest {
 
         Setup.setCarMoves(7); // set default to 7 moves per location
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        // increase test coverage
+        Setup.setGenerateCsvManifestEnabled(true);
 
     }
 

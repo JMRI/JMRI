@@ -1082,7 +1082,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return _typeList.contains(type);
     }
 
-    public void replaceType(String oldType, String newType) {
+    protected void replaceType(String oldType, String newType) {
         if (acceptsTypeName(oldType)) {
             deleteTypeName(oldType);
             addTypeName(newType);
@@ -1209,7 +1209,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return !_roadList.contains(road);
     }
 
-    private void replaceRoad(String oldRoad, String newRoad) {
+    protected void replaceRoad(String oldRoad, String newRoad) {
         if (newRoad != null) {
             if (deleteRoadName(oldRoad)) {
                 addRoadName(newRoad);
@@ -1462,7 +1462,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return !_ownerList.contains(owner);
     }
 
-    public void replaceOwner(String oldName, String newName) {
+    protected void replaceOwner(String oldName, String newName) {
         if (deleteOwnerName(oldName)) {
             addOwnerName(newName);
         }
@@ -2341,7 +2341,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return _leg3Model;
     }
 
-    private void replaceModel(String oldModel, String newModel) {
+    protected void replaceModel(String oldModel, String newModel) {
         if (getEngineModel().equals(oldModel)) {
             setEngineModel(newModel);
         }

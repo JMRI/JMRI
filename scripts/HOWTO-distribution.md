@@ -436,11 +436,6 @@ This is the next release in the 4.12 cycle. It's intended to be released around 
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
-- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.11.7". Add the next release milestone (created above) to it. Typical text:
-```
- This is the third release of the 4.12 cycle. It's intended to be released around April 11 from HEAD of master.
-```
-
 ====================================================================================
 ## Branches for preparation of Production Releases
 
