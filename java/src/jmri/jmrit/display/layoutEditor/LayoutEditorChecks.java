@@ -440,10 +440,6 @@ public class LayoutEditorChecks {
                     // can't be an arc, circle or bezier...
                     if (!ts1.isArc() && !ts1.isCircle() && !ts1.isBezier()
                             && !ts2.isArc() && !ts2.isCircle() && !ts2.isBezier()) {
-                        // if either track segment has decorations
-                        if (ts1.hasDecorations() || ts2.hasDecorations()) {
-                            continue;   // skip it
-                        }
                         // must be in same block...
                         String blockName1 = ts1.getBlockName();
                         String blockName2 = ts2.getBlockName();
@@ -461,6 +457,10 @@ public class LayoutEditorChecks {
                             if (length < 1.0) {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
+                            }
+                            // if either track segment has decorations
+                            if (ts1.hasDecorations() || ts2.hasDecorations()) {
+                                continue;   // skip it
                             }
                             // if adjacent tracks are collinear...
                             double dir1 = ts1.getDirectionRAD();
