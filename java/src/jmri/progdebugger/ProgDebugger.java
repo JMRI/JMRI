@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Debugging implementation of Programmer interface.
- * <P>
+ * <p>
  * Remembers writes, and returns the last written value when a read to the same
  * CV is made.
  * <p>

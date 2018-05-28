@@ -7,6 +7,7 @@ import org.junit.Assume;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
@@ -16,6 +17,12 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  */
 public class SignallingGuiToolsTest {
 
+    @Rule
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries of tests
+
+    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
+    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
+    
     // the class under test is a collection of static methods for dealing with
     // signals in GUIs.
 

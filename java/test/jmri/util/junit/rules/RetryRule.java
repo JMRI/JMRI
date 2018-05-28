@@ -36,16 +36,16 @@ public class RetryRule implements TestRule {
                 for (int i = 0; i < retryCount; i++) {
                     try {
                         base.evaluate();
-                        return;
+                        return; // successful return
                     } catch (AssumptionViolatedException ave) {
                         // an assumption was violated, so just re-throw ave.
                         throw ave;
                     } catch (Throwable t) {
                         caughtThrowable = t;
-                        log.info("{} : run  {} failed",description.getDisplayName(), (i + 1));
+                        log.warn("{} : run  {} failed, RetryRule repeats",description.getDisplayName(), (i + 1));
                     }
                 }
-                log.error("{} : giving up after {} failures",description.getDisplayName(), retryCount);
+                log.error("{} : giving up after {} failures", description.getDisplayName(), retryCount);
                 throw caughtThrowable;
             }
         };

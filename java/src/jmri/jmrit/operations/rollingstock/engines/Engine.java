@@ -143,7 +143,7 @@ public class Engine extends RollingStock {
                 {
                     return _length;
                 }
-                log.debug("Loco ({}) length has been modified", toString());
+                log.debug("Loco ({}) length ({}) has been modified from ({})", toString(), length, _length);
                 super.setLength(length); // adjust track lengths
             }
             return length;

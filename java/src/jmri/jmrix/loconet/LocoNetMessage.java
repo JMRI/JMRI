@@ -6,30 +6,28 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single command or response on the LocoNet.
- * <P>
+ * <p>
  * Content is represented with ints to avoid the problems with sign-extension
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
- * <P>
+ * <p>
  * Note that this class does not manage the upper bit of the message. By
  * convention, most LocoNet messages have the upper bit set on the first byte,
  * and on no other byte; but not all of them do, and that must be managed
  * elsewhere.
- * <P>
+ * <p>
  * Note that many specific message types are created elsewhere. In general, if
  * more than one tool will need to use a particular format, it's useful to
  * refactor it to here.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  * @see jmri.jmrix.nce.NceMessage
- *
+ * @see jmri.jmrix.nce.NceMessage
  */
 public class LocoNetMessage implements Serializable {
     // Serializable, serialVersionUID used by jmrix.loconet.locormi, please do not remove
@@ -43,14 +41,14 @@ public class LocoNetMessage implements Serializable {
      */
     public LocoNetMessage(int len) {
         if (len < 1) {
-            log.error("invalid length in call to ctor: " + len);
+            log.error("invalid length in call to ctor: {}", len);
         }
         _nDataBytes = len;
         _dataBytes = new int[len];
     }
 
     /**
-     * Create a message with specified contents
+     * Create a message with specified contents.
      *
      * @param contents The array of contents for the message. The error check
      *                 word must be present, e.g. a 4-byte message must have
@@ -83,14 +81,14 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Get a String representation of the op code in hex
+     * Get a String representation of the op code in hex.
      */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode()); // NOI18N
     }
 
     /**
-     * Get length, including op code and error-detection byte
+     * Get length, including op code and error-detection byte.
      */
     public int getNumDataElements() {
         return _nDataBytes;
@@ -98,24 +96,22 @@ public class LocoNetMessage implements Serializable {
 
     public int getElement(int n) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n // NOI18N
-                    + " in message of " + _dataBytes.length // NOI18N
-                    + " elements: " + this.toString()); // NOI18N
+            log.error("reference element {} in message of {} elements: ", // NOI18N
+                    n, _dataBytes.length, this.toString()); // NOI18N
         }
         return _dataBytes[n] & 0xFF;
     }
 
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataBytes.length) {
-            log.error("reference element " + n // NOI18N
-                    + " in message of " + _dataBytes.length // NOI18N
-                    + " elements: " + this.toString()); // NOI18N
+            log.error("reference element {} in message of {} elements: ", // NOI18N
+                    n, _dataBytes.length, this.toString()); // NOI18N
         }
         _dataBytes[n] = v;
     }
 
     /**
-     * Get a String representation of the entire message in hex
+     * Get a String representation of the entire message in hex.
      */
     @Override
     public String toString() {
@@ -134,7 +130,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Set the parity byte(s) of this message
+     * Set the parity byte(s) of this message.
      */
     public void setParity() {
         // check for the D3 special case
@@ -167,7 +163,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * check whether the message has a valid parity
+     * Check whether the message has a valid parity.
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -206,19 +202,19 @@ public class LocoNetMessage implements Serializable {
     // decode messages of a particular form
     // create messages of a particular form
     /**
-     * Get the 8 data bytes from an OPC_PEER_XFR message
+     * Get the 8 data bytes from an OPC_PEER_XFR message.
      *
      * @return int[8] data bytes
      */
     public int[] getPeerXfrData() {
         if (getOpCode() != LnConstants.OPC_PEER_XFER) {
-            log.error("getPeerXfrData called with wrong opcode " + getOpCode());
+            log.error("getPeerXfrData called with wrong opcode {}", getOpCode());
         }
         if (getElement(1) != 0x10) {
-            log.error("getPeerXfrData called with wrong secondary code " + getElement(1));
+            log.error("getPeerXfrData called with wrong secondary code {}", getElement(1));
         }
         if (getNumDataElements() != 16) {
-            log.error("getPeerXfrData called with wrong length " + getNumDataElements());
+            log.error("getPeerXfrData called with wrong length {}", getNumDataElements());
         }
 
         int[] data = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -353,14 +349,14 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Check if a high bit is set, usually used to store it in some other
-     * location (LocoNet does not allow the high bit to be set in data bytes)
+     * location (LocoNet does not allow the high bit to be set in data bytes).
      *
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
         if ((val & (~0xFF)) != 0) {
-            log.error("highBit called with too large value: 0x"
-                    + Integer.toHexString(val));
+            log.error("highBit called with too large value: 0x{}",
+                    Integer.toHexString(val));
         }
         return (0 != (val & 0x80));
     }
@@ -371,8 +367,8 @@ public class LocoNetMessage implements Serializable {
 
     static protected int highByte(int val) {
         if ((val & (~0xFFFF)) != 0) {
-            log.error("highByte called with too large value: "
-                    + Integer.toHexString(val));
+            log.error("highByte called with too large value: {}",
+                    Integer.toHexString(val));
         }
         return (val & 0xFF00) / 256;
     }
@@ -392,7 +388,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * If this is an OPC_INPUT_REP, return the 0-n address, else -1
+     * If this is an OPC_INPUT_REP, get the 0-n address, else -1
      *
      * @return 0 to n-1 address
      */
@@ -405,7 +401,7 @@ public class LocoNetMessage implements Serializable {
     }
 
     /**
-     * Return the 1-N turnout address
+     * Get the 1-N turnout address
      *
      * @return 1-N address
      */

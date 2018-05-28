@@ -3,10 +3,8 @@ package jmri.jmrit.catalog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -41,6 +39,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.TransferHandler;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -83,10 +82,6 @@ public class CatalogPanel extends JPanel {
     static Color _darkGrayColor = new Color(150, 150, 150);
     protected Color[] colorChoice = new Color[] {Color.white, _grayColor, _darkGrayColor};
     /**
-     * Active base color for Preview background, read from active Panel where available.
-     */
-    protected Color _currentBackground = _grayColor;
-    /**
      * Array of BufferedImage backgrounds loaded as background image in Preview.
      */
     protected BufferedImage[] _backgrounds;
@@ -97,10 +92,10 @@ public class CatalogPanel extends JPanel {
     private boolean _treeDnd;
     private boolean _dragIcons;
 
-    JScrollPane _treePane;
-    JTree _dTree;
-    DefaultTreeModel _model;
-    ArrayList<CatalogTree> _branchModel = new ArrayList<>();
+    private JScrollPane _treePane;
+    private JTree _dTree;
+    private DefaultTreeModel _model;
+    private final ArrayList<CatalogTree> _branchModel = new ArrayList<>();
 
     /**
      * Constructor
@@ -126,7 +121,6 @@ public class CatalogPanel extends JPanel {
         _splitPane.setContinuousLayout(true);
         _splitPane.setOneTouchExpandable(true);
         add(_splitPane, BorderLayout.CENTER);
-        // log.debug("CatalogPanel ready");
         if (addButtonPanel) {
             add(makeButtonPanel(), BorderLayout.SOUTH); // add the background chooser
         }
@@ -153,10 +147,17 @@ public class CatalogPanel extends JPanel {
         super.setToolTipText(tip);
     }
 
+    /**
+     * Customize CatalogPanel to be used either as editing/creating an ImageEditor
+     * or as a panel to display or deliver icons to widgets
+     * @param treeDnD true allows dropping into tree or panel
+     * @param dragIcons true allows dragging icons from panel
+     */
     protected void init(boolean treeDnD, boolean dragIcons) {
         _model = new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
         if (treeDnD) { // index editor (right pane)
             _dTree = new DropJTree(_model);
+            setTransferHandler(new DropOnPanelToNode());
         } else {       // Catalog (left pane index editor or all icon editors)
             _dTree = new JTree(_model);
         }
@@ -169,7 +170,6 @@ public class CatalogPanel extends JPanel {
         _dTree.setRootVisible(false);
         _dTree.setShowsRootHandles(true);
         _dTree.setScrollsOnExpand(true);
-        //_dTree.setDropMode(DropMode.ON); // is set by treeDnD
         _dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
         _dTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
@@ -225,14 +225,22 @@ public class CatalogPanel extends JPanel {
     }
 
     /**
+     * For Index Editor to able to edit its tree
+     * @return tree
+     */
+    protected JTree getTree() {
+        return _dTree;
+    }
+
+    /**
      * Extend the Catalog by adding a tree to the root.
      *
      * @param tree the tree to add to the catalog
      */
     public void addTree(CatalogTree tree) {
         String name = tree.getSystemName();
-        for (int i = 0; i < _branchModel.size(); i++) {
-            if (name.equals(_branchModel.get(i).getSystemName())) {
+        for (CatalogTree t : _branchModel) {
+            if (name.equals(t.getSystemName())) {
                 return;
             }
         }
@@ -281,8 +289,8 @@ public class CatalogPanel extends JPanel {
     private CatalogTreeNode getCorrespondingNode(CatalogTreeNode node) {
         TreeNode[] nodes = node.getPath();
         CatalogTreeNode cNode = null;
-        for (int i = 0; i < _branchModel.size(); i++) {
-            CatalogTreeNode cRoot = _branchModel.get(i).getRoot();
+        for (CatalogTree t : _branchModel) {
+            CatalogTreeNode cRoot = t.getRoot();
             cNode = match(cRoot, nodes, 1);
             if (cNode != null) {
                 break;
@@ -318,8 +326,8 @@ public class CatalogPanel extends JPanel {
     private CatalogTree getCorespondingModel(CatalogTreeNode node) {
         TreeNode[] nodes = node.getPath();
         CatalogTree model = null;
-        for (int i = 0; i < _branchModel.size(); i++) {
-            model = _branchModel.get(i);
+        for (CatalogTree t : _branchModel) {
+            model = t;
             CatalogTreeNode cRoot = model.getRoot();
             if (match(cRoot, nodes, 1) != null) {
                 break;
@@ -336,7 +344,7 @@ public class CatalogPanel extends JPanel {
      * @return true if the node was inserted
      */
     @SuppressWarnings("unchecked")
-    public boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
+    protected boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
         if (!nameOK(parent, name)) {
             return false;
         }
@@ -351,9 +359,11 @@ public class CatalogPanel extends JPanel {
         }
         CatalogTreeNode newChild = new CatalogTreeNode(name);
         _model.insertNodeInto(newChild, parent, index);
+
         CatalogTreeNode cParent = getCorrespondingNode(parent);
         CatalogTreeNode node = new CatalogTreeNode(name);
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(parent);
+
         tree.insertNodeInto(node, cParent, index);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         return true;
@@ -364,7 +374,7 @@ public class CatalogPanel extends JPanel {
      *
      * @param node the node to delete
      */
-    public void removeNodeFromModel(CatalogTreeNode node) {
+    protected void removeNodeFromModel(CatalogTreeNode node) {
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
         tree.removeNodeFromParent(getCorrespondingNode(node));
         _model.removeNodeFromParent(node);
@@ -379,18 +389,38 @@ public class CatalogPanel extends JPanel {
      * @param name new name for the node
      * @return true if the change was successful
      */
-    public boolean nodeChange(CatalogTreeNode node, String name) {
+    protected boolean renameNode(CatalogTreeNode node, String name) {
+        if (!nameOK((CatalogTreeNode)node.getParent(), name)) {
+            return false;
+        }
         CatalogTreeNode cNode = getCorrespondingNode(node);
         cNode.setLeaves(node.getLeaves());
         AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
 
         cNode.setUserObject(name);
-        node.setUserObject(name);
         tree.nodeChanged(cNode);
+        node.setUserObject(name);
         _model.nodeChanged(node);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         updatePanel();
         return true;
+    }
+    
+    private void addLeaf(CatalogTreeNode node, NamedIcon icon) {
+        node.addLeaf(icon.getName(), icon.getURL());
+
+        CatalogTreeNode cNode = getCorrespondingNode(node);
+        cNode.setLeaves(node.getLeaves());
+        AbstractCatalogTree tree = (AbstractCatalogTree) getCorespondingModel(node);
+
+        cNode.setUserObject(node.toString());
+        tree.nodeChanged(cNode);
+        _model.nodeChanged(node);
+        
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        if (node.equals(getSelectedNode())) {
+            updatePanel();            
+        }
     }
 
     /**
@@ -443,7 +473,6 @@ public class CatalogPanel extends JPanel {
         // _preview.setMaximumSize(new Dimension(200,200));
         _iconPane.setMinimumSize(new Dimension(30, 100));
         _iconPane.setPreferredSize(new Dimension(2*ICON_WIDTH, 2*ICON_HEIGHT));
-        _preview.addMouseListener(new IconListener());
         return previewPanel;
     }
 
@@ -498,35 +527,14 @@ public class CatalogPanel extends JPanel {
         return _preview;
     }
 
-    /**
-     * Reset the background to _currentBackground.
-     * Visible on JPanels and JLabels, not on ImagePanels used as Preview background.
-     *
-     * @param container the parent to set plus all its children's background color
-     * @deprecated since 4.9.6 use transparent icon panels on a graphic ImagePanel background
-     * @see jmri.util.swing.ImagePanel#setImage(Image)
-     */
-    @Deprecated
-    public void setBackground(Container container) {
-        container.setBackground(_currentBackground);
-        Component[] comp = container.getComponents();
-        for (Component comp1 : comp) {
-            if (comp1 instanceof java.awt.Container) {
-                setBackground((Container) comp1);
-            }
-        }
-        container.invalidate();
-    }
-
     protected void resetPanel() {
         _selectedImage = null;
         if (_preview == null) {
             return;
         }
-/*        Component[] comp = _preview.getComponents();
-        for (Component comp1 : comp) {
-            comp1.removeMouseListener(this);
-        }*/
+        if (log.isDebugEnabled()) {
+            log.debug("_preview.removeAll done.");
+        }
         _preview.removeAll();
         _preview.repaint();
     }
@@ -642,6 +650,7 @@ public class CatalogPanel extends JPanel {
             _preview.add(p);
             // log.debug("{} inserted at ({}, {})", leaf.getName(), c.gridx, c.gridy);
         }
+        _preview.invalidate();
 
         Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return Bundle.getMessage("numImagesInNode", node.getUserObject(), leaves.size());
@@ -662,11 +671,23 @@ public class CatalogPanel extends JPanel {
         }
         @Override
         public void mouseReleased(MouseEvent e) {
-            if (_treeDnd && e.isPopupTrigger()) {
-                Container con = (Container) e.getSource();
-                JLabel label = (JLabel) con.getComponent(0);
-                NamedIcon icon = (NamedIcon) label.getIcon();
-                showPopUp(e, icon);
+            if (log.isDebugEnabled()) {
+                log.debug("IconListener mouseReleased, _treeDnd= {}, popup= {}, source= {}",
+                        _treeDnd, e.isPopupTrigger(), e.getSource().getClass().getName());
+            }
+           if (_treeDnd && e.isPopupTrigger()) {
+               if (e.getSource() instanceof IconDisplayPanel) {
+                   IconDisplayPanel panel = (IconDisplayPanel)e.getSource();
+                   setSelection(panel);
+                   NamedIcon icon = panel.getIcon();
+                   showPopUp(e, icon);
+               } else if (e.getSource() instanceof JLabel) {
+                   JLabel label = (JLabel)e.getSource();
+                   NamedIcon icon = (NamedIcon)label.getIcon();
+                   if (icon !=null) {
+                       showPopUp(e, icon);
+                  }
+               }
             }
         }
         @Override
@@ -679,7 +700,7 @@ public class CatalogPanel extends JPanel {
 
     public static CatalogPanel makeDefaultCatalog() {
         // log.debug("CatalogPanel catalog requested");
-        return makeDefaultCatalog(true, true, true); // deactivate dragNdrop? (true, true, false)
+        return makeDefaultCatalog(true, false, true); // deactivate dragNdrop? (true, true, false)
     }
 
     public static CatalogPanel makeDefaultCatalog(boolean addButtonPanel, boolean treeDrop, boolean dragIcon) {
@@ -688,17 +709,14 @@ public class CatalogPanel extends JPanel {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
         for (int i = 0; i < sysNames.size(); i++) {
-            // log.debug("CatalogPanel id={}", i);
             String systemName = sysNames.get(i);
             if (systemName.charAt(0) == 'I') {
                 catalog.addTree(manager.getBySystemName(systemName));
-                // log.debug("CatalogPanel added tree {}", i);
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
-        // log.debug("CatalogPanel catalog created");
         return catalog;
     }
 
@@ -763,13 +781,16 @@ public class CatalogPanel extends JPanel {
         return sb.toString();
     }
 
-    protected void setSelectedNode(String[] names) {
+    protected void setSelectedNode(CatalogTreeNode node) {
         _dTree.setExpandsSelectedPaths(true);
-        CatalogTreeNode[] path = new CatalogTreeNode[names.length];
-        for (int i = 0; i < names.length; i++) {
-            path[i] = new CatalogTreeNode(names[i]);
+        if (log.isDebugEnabled()) {
+            log.debug("setSelectedNode node: {}", node.toString());
         }
-        _dTree.setSelectionPath(new TreePath(path));
+        if (node != null) {
+            _dTree.setSelectionPath(new TreePath(node.getPath()));            
+        } else {
+            _dTree.setSelectionRow(0);
+        }
     }
 
     protected void scrollPathToVisible(String[] names) {
@@ -789,10 +810,10 @@ public class CatalogPanel extends JPanel {
     protected CatalogTreeNode getSelectedNode() {
         if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath() != null) {
             // somebody has been selected
-            if (log.isDebugEnabled()) {
-                log.debug("getSelectedNode with {}", _dTree.getSelectionPath().toString());
-            }
             TreePath path = _dTree.getSelectionPath();
+            if (log.isDebugEnabled()) {
+                log.debug("getSelectedNode TreePath: {}, lastComponent= {}", path.toString(), path.getLastPathComponent().toString());
+            }
             return (CatalogTreeNode) path.getLastPathComponent();
         }
         return null;
@@ -800,20 +821,27 @@ public class CatalogPanel extends JPanel {
 
     private void delete(NamedIcon icon) {
         CatalogTreeNode node = getSelectedNode();
+        if (node == null) {
+            return;
+        }
         if (log.isDebugEnabled()) {
             log.debug("delete icon {} from node {}", icon.getName(), node.toString());
         }
         node.deleteLeaf(icon.getName(), icon.getURL());
+        _model.nodeChanged(node);
         updatePanel();
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
     }
 
     private void rename(NamedIcon icon) {
+        CatalogTreeNode node = getSelectedNode();
+        if (node == null) {
+            return;
+        }
         String name = JOptionPane.showInputDialog(getParentFrame(this),
                 Bundle.getMessage("newIconName"), icon.getName(),
                 JOptionPane.QUESTION_MESSAGE);
         if (name != null && name.length() > 0) {
-            CatalogTreeNode node = getSelectedNode();
             if (log.isDebugEnabled()) {
                 log.debug("rename icon {} to {} from node {}", icon.getName(), name, node.toString());
             }
@@ -821,26 +849,16 @@ public class CatalogPanel extends JPanel {
             if (leaf != null) {
                 leaf.setName(name);
             }
+            /* Repaint of panel doesn't happen with these calls 
+            _model.nodeChanged(node);
+            updatePanel();*/
             TreePath path = _dTree.getSelectionPath();
             // deselect to refresh panel
             _dTree.setSelectionPath(null);
             _dTree.setSelectionPath(path);
-            // updatePanel();
             InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         }
     }
-
-    /*
-     * Return the icon selected in the preview panel.
-     * Save this code in case there is a need to use an alternative icon
-     * changing method rather than DnD.
-     *
-     * public NamedIcon getSelectedIcon() { if (_selectedImage != null) { JLabel
-     * l = (JLabel)_selectedImage.getComponent(0); // deselect
-     * //setSelectionBackground(_currentBackground); Save for use as alternative
-     * to DnD. _selectedImage = null; return (NamedIcon)l.getIcon(); } return
-     * null; }
-     */
 
     private void showPopUp(MouseEvent evt, NamedIcon icon) {
         if (log.isDebugEnabled()) {
@@ -882,6 +900,51 @@ public class CatalogPanel extends JPanel {
         popup.show(evt.getComponent(), evt.getX(), evt.getY());
     }
 
+    class DropOnPanelToNode extends TransferHandler {
+        
+        DataFlavor dataFlavor;
+        
+        DropOnPanelToNode() {
+            try {
+                dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
+            } catch (ClassNotFoundException cnfe) {
+                log.warn("DropOnPanelToNode Unable to create data flavor", cnfe);
+            }
+        }
+
+        @Override
+        public boolean canImport(TransferHandler.TransferSupport support) {
+            if (!support.isDataFlavorSupported(dataFlavor)) {
+                return false;
+            }
+            support.setDropAction(COPY);
+            return true;
+        }
+
+        @Override
+        public boolean importData(TransferHandler.TransferSupport support) {
+            if (!canImport(support)) {
+                return false;
+            }
+            CatalogTreeNode node = getSelectedNode();
+            if (node == null) {
+                return false;
+            }
+            try {
+                Transferable t = support.getTransferable();
+                NamedIcon icon = (NamedIcon) t.getTransferData(dataFlavor);
+                addLeaf(node, icon);
+                if (log.isDebugEnabled()) {
+                    log.debug("DropOnPanelToNode.drop COMPLETED for {} into {}", icon.getURL(), node.toString());
+                }
+                return true;
+            } catch (IOException | UnsupportedFlavorException ex) {
+                log.warn("DropOnPanelToNode unable to drag and drop", ex);
+            }
+            return false;
+        }
+    }
+    
     class DropJTree extends JTree implements DropTargetListener {
 
         DataFlavor dataFlavor;
@@ -891,7 +954,7 @@ public class CatalogPanel extends JPanel {
             try {
                 dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                log.warn("Unable to create data flavor", cnfe);
+                log.warn("DropJTree Unable to create data flavor", cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
             // log.debug("DropJTree ctor");
@@ -924,24 +987,20 @@ public class CatalogPanel extends JPanel {
                 if (e.isDataFlavorSupported(dataFlavor)) {
                     NamedIcon icon = (NamedIcon) tr.getTransferData(dataFlavor);
                     Point pt = e.getLocation();
-                    if (log.isDebugEnabled()) {
-                        log.debug("DropJTree.drop: Point= ({}, {})", pt.x, pt.y);
-                    }
                     TreePath path = _dTree.getPathForLocation(pt.x, pt.y);
                     if (path != null) {
                         CatalogTreeNode node = (CatalogTreeNode) path.getLastPathComponent();
                         e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-                        node.addLeaf(icon.getName(), icon.getURL());
-                        nodeChange(node, node.toString());
+                        addLeaf(node, icon);
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) {
-                            log.debug("DropJTree.drop COMPLETED for {}", icon.getURL());
+                            log.debug("DropJTree.drop COMPLETED for {} into {}", icon.getURL(), node.toString());
                         }
                         return;
                     }
                 }
             } catch (IOException | UnsupportedFlavorException ex) {
-                log.warn("unable to drag and drop", ex);
+                log.warn("DropJTree unable to drag and drop", ex);
             }
             log.debug("DropJTree.drop REJECTED!");
             e.rejectDrop();
@@ -994,8 +1053,7 @@ public class CatalogPanel extends JPanel {
                 }
                 image.setIcon(icon);
                 image.setHorizontalAlignment(JLabel.CENTER);
-                // icon.addMouseListener(this); - maybe add this to NamedIcon later
-                image.addMouseListener(this);
+                image.addMouseListener(new IconListener());
                 add(image, BorderLayout.NORTH);
                 
                 String scaleMessage = Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2));
@@ -1006,8 +1064,8 @@ public class CatalogPanel extends JPanel {
                 label = new JLabel(_name);
                 label.setOpaque(false);
                 label.setHorizontalAlignment(JLabel.CENTER);
+//                label.addMouseListener(new IconListener());
                 add(label, BorderLayout.SOUTH);
-                FontMetrics fm = getFontMetrics(getFont());
                 setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
             } catch (java.lang.ClassNotFoundException cnfe) {
                 log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);

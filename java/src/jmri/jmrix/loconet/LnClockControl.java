@@ -12,19 +12,19 @@ import org.slf4j.LoggerFactory;
  * LnClockControl.java
  *
  * Implementation of the Hardware Fast Clock for Loconet
- * <P>
+ * <p>
  * This module is based on a GUI module developed by Bob Jacobsen and Alex
  * Shepherd to correct the Loconet fast clock rate and synchronize it with the
  * internal JMRI fast clock Timebase. The methods that actually send, correct,
  * or receive information from the Loconet hardware are repackaged versions of
  * their code.
- * <P>
+ * <p>
  * The Loconet Fast Clock is controlled by the user via the Fast Clock Setup GUI
  * that is accessed from the JMRI Tools menu.
- * <P>
+ * <p>
  * For this implementation, "synchronize" implies "correct", since the two
  * clocks run at a different rate.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -32,11 +32,11 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -358,9 +358,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    
     public void dispose() {
-        // Drop loconet connection
+        // Drop LocoNet connection
         if (sm != null) {
             sm.removeSlotListener(this);
         }
@@ -373,5 +372,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
+
 }
 
