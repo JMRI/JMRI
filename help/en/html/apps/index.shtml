@@ -35,8 +35,7 @@
 
       <dl>
         <dt>
-          <h3><a href=
-          "./DecoderPro/index.shtml">DecoderPro&reg;</a></h3>
+          <a href="./DecoderPro/index.shtml">DecoderPro&reg;</a>
         </dt>
 
         <dd>A better tool for programming decoders. DecoderPro
@@ -47,8 +46,7 @@
         installation folder.</dd>
 
         <dt>
-          <h3><a href=
-          "./PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3>
+          <a href="./PanelPro/PanelPro.shtml">PanelPro&trade;</a>
         </dt>
 
         <dd>Operating CRT based CTC control panels that reflect the
@@ -58,16 +56,14 @@
         installation folder.</dd>
 
         <dt>
-          <h3><a href=
-          "./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3>
+          <a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a>
         </dt>
 
         <dd>A system for Dispatching, grouping your Roster and
         Throttles.</dd>
 
         <dt>
-          <h3><a href=
-          "../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3>
+          <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>
         </dt>
 
         <dd>Create Train Manifests that detail the work your train
@@ -76,7 +72,7 @@
         cars are located, and provides the cars' destinations.</dd>
 
         <dt>
-          <h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3>
+          <a href="./SoundPro/SoundPro.shtml">SoundPro</a>
         </dt>
 
         <dd>A set of tools for using Audio with JMRI.<br>
@@ -90,8 +86,8 @@
        
        <dl>
         <dt>
-          <h3><a href=
-          "./ManifestCreator/index.shtml">Mainfest Creator</a></h3>
+          <a href=
+          "./ManifestCreator/index.shtml">Mainfest Creator</a>
         </dt>
 
         <dd>Manifest Creator is an Excel-based
@@ -100,8 +96,8 @@
             in a number of formats.</dd>
             
         <dt>
-          <h3><a href=
-          "./TrainCrew/index.shtml">TrainCrew</a></h3>
+          <a href=
+          "./TrainCrew/index.shtml">TrainCrew</a>
         </dt>
 
         <dd>TrainCrew allows engineers and conductors
@@ -109,8 +105,8 @@
             realism to their operations.</dd>
             
         <dt>
-          <h3><a href=
-          "http://cats4ctc.wikidot.com">CATS</a></h3>
+          <a href=
+          "http://cats4ctc.wikidot.com">CATS</a>
         </dt>
 
         <dd>CATS provides a modern dispatching screen for 
