@@ -280,6 +280,8 @@
  </indexitem>
  <indexitem text="MacOS Serial Ports " target="html.hardware.MacintoshSerialPorts"/>
 
+ <indexitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
+
  <indexitem text="Manuals " target="manual.index"/>
 
  <indexitem text="Marklin " target="html.hardware.marklin.index"/>

@@ -213,6 +213,8 @@
 
        <ul>
         <li><a href="#CopyLocation">Copy Location</a></li>
+        
+        <li><a href="#CopyTrack">Copy Track</a></li>
 
         <li><a href="#LocationSchedules">Schedules</a></li>
 
@@ -1880,16 +1882,17 @@
 
    <a name="LocationTools" id="LocationTools"></a>
    <h3>Location Tools</h3>
+   
+   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
+   The first is "Copy Track".
 
    <a name="CopyTrack" id="CopyTrack"></a>
    <h4>Copy Track</h4>
-   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
-   The first is "Copy Track". From the copy track window, you can select any existing track and
-   create a new track with the same attributes as the existing one. You can also transfer all of the
-   rolling stock from the existing track to the new track, and if you wish, delete the original
-   track. Select the operations you want and then press the "Copy" button to create a new track,
-   move cars and locos, and delete the original track. If you're pleased with the results, press the
-   "Save" button to make your copy permanent.
+   The copy track tool allows you to select an existing track and create a new track with the same attributes as the
+   original. You can also transfer all of the rolling stock from the original track to the new track, and if you
+   wish, delete the copied track. Select the operations you want and then press the "Copy" button to create a new
+   track, move cars and locos, and delete the original track. If you're pleased with the results, press the "Save"
+   button to make your copy permanent.
 
    <p>When using the copy track feature, it is recommended that you reset or terminate any built
     trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
@@ -2863,6 +2866,9 @@
     location's tracks, select the checkbox "Move Rolling Stock to New Track". You can also delete
     all of the tracks at the location being copied, but you must also select the "Move Rolling Stock
     to New Track" option.</p>
+    
+    <h4>Copy Track</h4>
+    See <a href="#CopyTrack">Copy Track</a> under Location tools.
 
    <a name="LocationSchedules" id="LocationSchedules"></a>
    <h4>Schedules</h4>

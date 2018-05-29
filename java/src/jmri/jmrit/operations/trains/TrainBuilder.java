@@ -1620,7 +1620,7 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarTypeAtLoc"),
                         new Object[]{car.toString(), car.getTypeName(),
                                 (car.getLocationName() + ", " + car.getTrackName())}));
-                // check for programming error
+                // code check, should never be staging
                 if (car.getTrack() == _departStageTrack) {
                     throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging"); // NOI18N
                 }
@@ -2116,7 +2116,7 @@ public class TrainBuilder extends TrainCommon {
                 // remove the largest block and maximum moves RouteLocation from the lists
                 _numOfBlocks.remove(blockId);
                 // block 0 cars have never left staging.
-                if (blockId.equals("0")) {
+                if (blockId.equals(Car.LOCATION_UNKNOWN)) {
                     continue;
                 }
                 routeList.remove(rld);
@@ -3405,10 +3405,6 @@ public class TrainBuilder extends TrainCommon {
                                                 .getTrainDirections())),}));
                         continue;
                     }
-                    // check for spur or interchange track with train restrictions
-                    if (!checkTrainCanDrop(car, track.getAlternateTrack())) {
-                        continue;
-                    }
                 }
             }
 
@@ -3991,8 +3987,8 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{car.toString(), car.getDestinationName(), _train.getRoute().getName()}));
             return true; // done
         }
+        // A car have a routeLocation if the train wasn't reset before a build
         if (car.getRouteLocation() != null) {
-            // The following code should never execute if train was reset before a build!
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
                     new Object[]{car.toString()}));
         }
@@ -4307,8 +4303,8 @@ public class TrainBuilder extends TrainCommon {
             }
             // get the destination
             Location testDestination = rld.getLocation();
+            // code check, should never throw, all locations in the route have been already checked
             if (testDestination == null) {
-                // code check, should never throw, all locations in the route have been already checked
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRouteLoc"),
                         new Object[]{_train.getRoute().getName(), rld.getName()}));
             }
@@ -4429,7 +4425,6 @@ public class TrainBuilder extends TrainCommon {
                     // report if track has planned pickups
                     if (testTrack.getIgnoreUsedLengthPercentage() > 0) {
                         // calculate the available space
-                        //                        int available = testTrack.getLength() - (testTrack.getUsedLength() + testTrack.getReserved());
                         int available = testTrack.getLength() -
                                 (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 +
                                         testTrack
@@ -4437,9 +4432,6 @@ public class TrainBuilder extends TrainCommon {
                         int available3 = testTrack.getLength() +
                                 (testTrack.getLength() * testTrack.getIgnoreUsedLengthPercentage() / 100) -
                                 (testTrack.getUsedLength() + testTrack.getReserved());
-                        //                        if (available2 > available) {
-                        //                            available = available2;
-                        //                        }
                         if (available3 < available) {
                             available = available3;
                         }
@@ -4795,7 +4787,7 @@ public class TrainBuilder extends TrainCommon {
      * @return true if one or more cars were redirected
      */
     private boolean redirectCarsFromAlternateTrack() {
-        // code check, always aggressive
+        // code check, should be aggressive
         if (!Setup.isBuildAggressive()) {
             return false;
         }
