@@ -76,6 +76,9 @@ public class ExportEngines extends XmlFile {
                     true);
         } catch (IOException e) {
             log.error("Can not open export engines CSV file: " + file.getName());
+            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"),
+                    new Object[]{0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
