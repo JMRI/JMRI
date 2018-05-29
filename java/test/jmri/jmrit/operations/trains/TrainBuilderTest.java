@@ -1778,17 +1778,11 @@ public class TrainBuilderTest {
         Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
         Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
 
-        // Set up two cabooses and six box cars, two with FRED       
-        //        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "32", actonYard1, 10);
-        //        Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", Bundle.getMessage("Caboose"), "32", actonYard1, 11);
+        // Set up 4 cars, two in a kernel      
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", carTypes[1], "40", actonYard1, 12);
-        //        Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", carTypes[1], "40", actonYard1, 13);
-        //        Car c5 = JUnitOperationsUtil.createAndPlaceCar("CP", "50", carTypes[1], "40", actonYard1, 14);
         Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "60", carTypes[1], "40", actonYard2, 15);
         Car c7 = JUnitOperationsUtil.createAndPlaceCar("CP", "70", carTypes[1], "50", actonYard2, 16);
         Car c8 = JUnitOperationsUtil.createAndPlaceCar("CP", "80", carTypes[1], "60", actonYard2, 17);
-        //        Car c9 = JUnitOperationsUtil.createAndPlaceCar("CP", "90", carTypes[5], "40", actonYard2, 18);
-        //        Car c10 = JUnitOperationsUtil.createAndPlaceCar("CP", "100", carTypes[5], "40", actonYard2, 19);
 
         Kernel k1 = cmanager.newKernel("group of 3 cars");
         c8.setKernel(k1); // lead car
@@ -9207,7 +9201,7 @@ public class TrainBuilderTest {
         train1.setRequirements(Train.CABOOSE);
 
         // create and place cars
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Caboose", "40", actonYard1, 10);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "40", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", actonYard1, 13);
@@ -9407,7 +9401,7 @@ public class TrainBuilderTest {
         train1.setRequirements(Train.CABOOSE);
 
         // create and place cars
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Caboose", "40", actonYard1, 10);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "40", actonYard1, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", actonYard1, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", actonYard1, 13);
@@ -9505,7 +9499,7 @@ public class TrainBuilderTest {
         Setup.setCarMoves(20); // set default to 20 moves per location
 
         // create and place cars
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Caboose", "40", westfordStaging, 10);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "40", westfordStaging, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", westfordStaging, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", westfordStaging, 12);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", westfordStaging, 13);
@@ -9589,7 +9583,7 @@ public class TrainBuilderTest {
         Setup.setCarMoves(20); // set default to 20 moves per location
 
         // create and place cars
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Caboose", "40", westfordStaging, 10);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "40", westfordStaging, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", westfordStaging, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", westfordStaging, 12);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", westfordStaging, 13);
@@ -9687,7 +9681,7 @@ public class TrainBuilderTest {
         Setup.setCarMoves(20); // set default to 20 moves per location
 
         // create and place cars
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Caboose", "40", westfordStaging, 10);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", Bundle.getMessage("Caboose"), "40", westfordStaging, 10);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", westfordStaging, 11);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", westfordStaging, 12);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", westfordStaging, 13);
