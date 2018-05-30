@@ -2087,8 +2087,8 @@ public class TrainBuilder extends TrainCommon {
      * @throws BuildFailedException
      */
     private void blockByLocationMoves() throws BuildFailedException {
-        List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
-        for (RouteLocation rl : routeList) {
+        List<RouteLocation> blockRouteList = _train.getRoute().getLocationsBySequenceList();
+        for (RouteLocation rl : blockRouteList) {
             // start at the second location in the route to begin blocking
             if (rl == _train.getTrainDepartsRouteLocation()) {
                 continue;
@@ -2106,8 +2106,8 @@ public class TrainBuilder extends TrainCommon {
             if (blockId.equals("") || _numOfBlocks.get(blockId) == 1) {
                 break; // done
             }
-            // get the location with the greatest number of moves
-            RouteLocation rld = getLocationWithMaximumMoves(routeList, blockId);
+            // get the remaining location with the greatest number of moves
+            RouteLocation rld = getLocationWithMaximumMoves(blockRouteList, blockId);
             if (rld == null) {
                 break; // done
             }
@@ -2119,7 +2119,7 @@ public class TrainBuilder extends TrainCommon {
                 if (blockId.equals(Car.LOCATION_UNKNOWN)) {
                     continue;
                 }
-                routeList.remove(rld);
+                blockRouteList.remove(rld);
                 Location loc = locationManager.getLocationById(blockId);
                 Location setOutLoc = rld.getLocation();
                 if (loc != null && setOutLoc != null && checkDropTrainDirection(rld)) {
@@ -2195,14 +2195,14 @@ public class TrainBuilder extends TrainCommon {
      * Returns the routeLocation with the most available moves. Used for
      * blocking a train out of staging.
      *
-     * @param routeList The route for this train.
+     * @param blockRouteList The route for this train, modified by deleting RouteLocations serviced
      * @param blockId Where these cars were originally picked up from.
      * @return The location in the route with the most available moves.
      */
-    private RouteLocation getLocationWithMaximumMoves(List<RouteLocation> routeList, String blockId) {
+    private RouteLocation getLocationWithMaximumMoves(List<RouteLocation> blockRouteList, String blockId) {
         RouteLocation rlMax = null;
         int maxMoves = 0;
-        for (RouteLocation rl : routeList) {
+        for (RouteLocation rl : blockRouteList) {
             if (rl == _train.getTrainDepartsRouteLocation()) {
                 continue;
             }
@@ -2899,7 +2899,6 @@ public class TrainBuilder extends TrainCommon {
         if ((rld.getTrainDirection() & serviceTrainDir) != 0 &&
                 rs != null &&
                 track != null &&
-                (track.getTrainDirections() & serviceTrainDir) != 0 &&
                 Car.class.isInstance(rs)) {
             Car car = (Car) rs;
             if (car.getFinalDestinationTrack() != null &&
@@ -3987,7 +3986,7 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{car.toString(), car.getDestinationName(), _train.getRoute().getName()}));
             return true; // done
         }
-        // A car have a routeLocation if the train wasn't reset before a build
+        // A car can have a routeLocation if the train wasn't reset before a build
         if (car.getRouteLocation() != null) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
                     new Object[]{car.toString()}));
