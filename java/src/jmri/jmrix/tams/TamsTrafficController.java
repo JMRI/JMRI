@@ -246,7 +246,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * Forward a pre-formatted message to the actual interface.
      *
-     * @param m  the message to forward
+     * @param tm  the message to forward
      * @param tl the listener for the reply to the messageF
      */
     @Override
@@ -274,6 +274,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         replyType = ((TamsMessage)tm).getReplyType();
         replyOneByte = ((TamsMessage)tm).getReplyOneByte();
         replyLastByte = ((TamsMessage)tm).getReplyLastByte();
+        replySensorNumber = ((TamsMessage)tm).getSensorNumber();
         super.forwardToPort(tm, reply);
     }
 
@@ -281,6 +282,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected static boolean replyBinary;
     protected static boolean replyOneByte;
     protected static int replyLastByte;
+    protected static int replySensorNumber;
     protected static boolean unsolicitedSensorMessageSeen = false;
     
     @Override
@@ -460,33 +462,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         log.trace("End of Message = {}", endReached);
         return endReached;
     }
-
-    // Override the finalize method for this class
-    /*public boolean sendWaitMessage(TamsMessage m, AbstractMRListener reply) {
-        log.trace("*** sendWaitMessage ***");
-        log.trace("Send a message and wait for the response");
-        if (ostream == null) {
-            return false;
-        }
-        m.setTimeout(100);// was 500
-        m.setRetries(5);// was 10
-        synchronized (this) {
-            forwardToPort(m, reply);
-            // wait for reply
-            try {
-                if (xmtRunnable != null) {
-                    synchronized (xmtRunnable) {
-                        xmtRunnable.wait(m.getTimeout());
-                    }
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
-                log.error("transmit interrupted");
-                return false;
-            }
-        }
-        return true;
-    }*/
 
     // mode accessors
     private boolean _isBinary;

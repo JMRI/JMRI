@@ -36,15 +36,27 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         TamsMessage tm = TamsMessage.setXSR();//auto reset after reading S88
         tc.sendTamsMessage(tm, this);
         log.debug("Sending TamsMessage = " + tm.toString() + " , isBinary = " + tm.isBinary() + " and replyType = " + tm.getReplyType());
+        //Get initial status of sensors
+        //TamsGetSensorStatus();
         //Add polling for sensor state changes
         tm = TamsMessage.getXEvtSen(); //reports only sensors with changed states
         tc.sendTamsMessage(tm, this);
         tc.addPollMessage(tm, this);
         log.debug("TamsMessage added to poll queue = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
-        //See how many Tams Sensor Modules are present and check their state
-        //Do this only once at start up time of JMRI
         
     }
+    
+    private void TamsGetSensorStatus() {
+        //See how many Tams Sensor Modules are present and check their state
+        //Do this only once at start up time of JMRI
+        log.debug("TamsGetSensorStatus, board = " + board);
+        board = 1;
+        for (int i = 1; i <= board; i++) {
+            log.debug("Requesting status of S88 module = " + board);
+            TamsMessage tm = TamsMessage.getXSensor(1);//get the status of a given sensor
+            tc.sendTamsMessage(tm, this);
+        }
+    }   
 
     TamsSystemConnectionMemo memo;
     TamsTrafficController tc;
@@ -217,31 +229,33 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         //log.debug("ReplyType = " + tm.getReplyType() + ", Binary? = " +  tm.isBinary()+ ", OneByteReply = " + tm.getReplyOneByte());
         if (TamsTrafficController.replyType == 'S') {//Only handle Sensor events
             log.debug("*** Tams Sensor Reply ***");
-            if (TamsTrafficController.replyBinary) {//Typical polling message
+            if (TamsTrafficController.replyBinary) {
                 log.debug("Reply to binary command = " + r.toString());
-                if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00)) {
-                    //Here we break up a long sensor related TamsReply into individual S88 module status'
-                    int numberOfReplies = r.getNumDataElements() / 3;
-                    //log.debug("Incoming Reply = ");
-                    for (int i = 0; i < r.getNumDataElements(); i++) {
-                        //log.debug("Byte " + i + " = " + jmri.util.StringUtil.appendTwoHexFromInt(r.getElement(i) & 0xFF, ""));
-                    }
-                    //log.debug("length of reply = " + r.getNumDataElements() + " & number of replies = " + numberOfReplies);
-                    for (int i = 0; i < numberOfReplies; i++) {
-                        //create a new TamsReply and pass it to the decoder
-                        TamsReply tr = new TamsReply();
-                        tr.setBinary(true);
-                        tr.setElement(0, r.getElement(3 * i));
-                        tr.setElement(1, r.getElement(3 * i + 1));
-                        tr.setElement(2, r.getElement(3 * i + 2));
-                        log.debug("Going to pass this to the decoder = " + tr.getElement(0) + " " + tr.getElement(1) + " " + tr.getElement(2));
-                        //The decodeSensorState will do the actual decoding of each individual S88 port
-                        decodeSensorState(tr);
-                    }
-                }
-            } else {//xSR is an ASCII message
-                //Nothing to do really
-                log.debug("Reply to ASCII command = " + r.toString());
+                    if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00)) {
+                        //Here we break up a long sensor related TamsReply into individual S88 module status'
+                        int numberOfReplies = r.getNumDataElements() / 3;
+                        //log.debug("Incoming Reply = ");
+                        for (int i = 0; i < r.getNumDataElements(); i++) {
+                            //log.debug("Byte " + i + " = " + jmri.util.StringUtil.appendTwoHexFromInt(r.getElement(i) & 0xFF, ""));
+                        }
+                        //log.debug("length of reply = " + r.getNumDataElements() + " & number of replies = " + numberOfReplies);
+                        for (int i = 0; i < numberOfReplies; i++) {
+                            //create a new TamsReply and pass it to the decoder
+                            TamsReply tr = new TamsReply();
+                            tr.setBinary(true);
+                            if (TamsTrafficController.replySensorNumber <= 0) {// Events from Sensor Polling
+                                tr.setElement(0, r.getElement(3 * i));                                
+                            } else {
+                                tr.setElement(0, TamsTrafficController.replySensorNumber & 0xFF); // Events collected during JMRI start up                                                                
+                                log.debug("MC startup getting Sensor Status: ", TamsTrafficController.replySensorNumber);
+                            }
+                            tr.setElement(1, r.getElement(3 * i + 1));
+                            tr.setElement(2, r.getElement(3 * i + 2));
+                            log.debug("Going to pass this to the decoder = " + tr.getElement(0) + " " + tr.getElement(1) + " " + tr.getElement(2));
+                            //The decodeSensorState will do the actual decoding of each individual S88 port
+                            decodeSensorState(tr);
+                        }
+                    }                   
             }
         }
     }

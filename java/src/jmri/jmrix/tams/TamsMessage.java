@@ -58,6 +58,16 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
     	_replyLastByte = rlb;
     }
     
+    private int _replySensorNumber = -1;//Not valid unless a value between 1 and 16
+
+    public int getSensorNumber() {
+        return _replySensorNumber;
+    }
+
+    public void setSensorNumber(int id) {
+        _replySensorNumber = id;
+    }
+    
     public TamsMessage() {
         super();
     }
@@ -153,6 +163,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         m.setBinary(true);
         m.setReplyOneByte(false);
         m.setReplyLastByte(TamsConstants.EOM00);//No more sensor data is following
+        m.setSensorNumber(-1);
         m.setReplyType('S');
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
         return m;
@@ -190,10 +201,23 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         TamsMessage m = new TamsMessage("xSR 1");
         m.setBinary(false);
         m.setReplyOneByte(false);
+        m.setSensorNumber(-1);
         m.setReplyType('S');
         return m;
     }
     
+    //Get Tams MC to report the current status of all ports of a given S88 sensor
+    static public TamsMessage getXSensor(int i) {
+        TamsMessage m = new TamsMessage(2);
+        m.setElement(0, TamsConstants.LEADINGX & 0xFF);
+        m.setElement(1, TamsConstants.XSENSOR & 0xFF);
+        m.setElement(2, i & 0xFF);
+        m.setBinary(true);
+        m.setReplyOneByte(false);
+        m.setSensorNumber(i);
+        m.setReplyType('S');
+        return m;
+    }
     //Command Station messages
     static public TamsMessage getReadPagedCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRP " + cv);
