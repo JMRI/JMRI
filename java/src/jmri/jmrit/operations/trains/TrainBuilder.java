@@ -2899,7 +2899,6 @@ public class TrainBuilder extends TrainCommon {
         if ((rld.getTrainDirection() & serviceTrainDir) != 0 &&
                 rs != null &&
                 track != null &&
-                (track.getTrainDirections() & serviceTrainDir) != 0 &&
                 Car.class.isInstance(rs)) {
             Car car = (Car) rs;
             if (car.getFinalDestinationTrack() != null &&
@@ -3987,7 +3986,7 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{car.toString(), car.getDestinationName(), _train.getRoute().getName()}));
             return true; // done
         }
-        // A car have a routeLocation if the train wasn't reset before a build
+        // A car can have a routeLocation if the train wasn't reset before a build
         if (car.getRouteLocation() != null) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
                     new Object[]{car.toString()}));
