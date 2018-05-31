@@ -34,7 +34,7 @@ public class CMRIMenu extends JMenu {
             add(new jmri.jmrix.cmri.serial.assignment.ListAction(Bundle.getMessage("MenuItemAssignments"), memo));
             add(new javax.swing.JSeparator());
             add(new jmri.jmrix.cmri.serial.diagnostic.DiagnosticAction(Bundle.getMessage("MenuItemDiagnostics"), memo));
-            add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+            //add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
             // add(new jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction(memo));
             // add(new jmri.jmrix.cmri.serial.assignment.ListAction(Bundle.getMessage("MenuItemAssignments"), memo));
         }

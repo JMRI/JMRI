@@ -458,6 +458,10 @@ public class LayoutEditorChecks {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
                             }
+                            // if either track segment has decorations
+                            if (ts1.hasDecorations() || ts2.hasDecorations()) {
+                                continue;   // skip it
+                            }
                             // if adjacent tracks are collinear...
                             double dir1 = ts1.getDirectionRAD();
                             double dir2 = ts2.getDirectionRAD();

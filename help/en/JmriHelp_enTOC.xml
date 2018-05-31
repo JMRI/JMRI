@@ -181,6 +181,8 @@
    <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
 
   </tocitem>
+  <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
+
   <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
@@ -223,6 +225,8 @@
    <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
 
   </tocitem>
+  <tocitem text="TrainCrew " target="html.apps.TrainCrew.index"/>
+
  </tocitem>
  <tocitem text="Panels " target="html.apps.PanelPro.Panels">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>

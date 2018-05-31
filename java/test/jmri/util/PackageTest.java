@@ -84,6 +84,7 @@ import org.junit.runners.Suite;
         NamedBeanExpectedStateTest.class,
         NamedBeanExpectedValueTest.class,
         QuickPromptUtilTest.class,
+        UnzipFileClassTest.class,
         AbstractFrameActionTest.class,
 
         // deliberately at end
