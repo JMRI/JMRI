@@ -274,7 +274,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         replyType = ((TamsMessage)tm).getReplyType();
         replyOneByte = ((TamsMessage)tm).getReplyOneByte();
         replyLastByte = ((TamsMessage)tm).getReplyLastByte();
-        replySensorNumber = ((TamsMessage)tm).getSensorNumber();
         super.forwardToPort(tm, reply);
     }
 
@@ -282,7 +281,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected static boolean replyBinary;
     protected static boolean replyOneByte;
     protected static int replyLastByte;
-    protected static int replySensorNumber;
     protected static boolean unsolicitedSensorMessageSeen = false;
     
     @Override
