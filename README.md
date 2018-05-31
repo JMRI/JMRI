@@ -6,7 +6,7 @@ For more information, see [JMRI.org](http://jmri.org)
 
 For development information, see [Technical Info](http://jmri.org/help/en/html/doc/Technical)
 
-User discussions are on the [JMRIusers Yahoo group](https://groups.yahoo.com/neo/groups/jmriusers/info)
+User discussions are on the [JMRI users Groups.io group](https://groups.io/g/jmriusers)
 
 Infrastructure status available at [status.jmri.org](http://status.jmri.org)
 

@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004
  */
+@Deprecated
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected JTextField nodeAddrField = new JTextField(3);

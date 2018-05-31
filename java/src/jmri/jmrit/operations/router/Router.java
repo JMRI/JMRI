@@ -89,14 +89,14 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      * @return true if car can be routed.
      */
     public boolean setDestination(Car car, Train train, PrintWriter buildReport) {
-        if (car.getTrack() == null || car.getFinalDestination() == null) {
+        if (car.getLocation() == null || car.getTrack() == null || car.getFinalDestination() == null) {
             return false;
         }
         _status = Track.OKAY;
         _train = train;
         _buildReport = buildReport;
-        _addtoReport = !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL) &&
-                !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL);
+        _addtoReport = Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED) ||
+                Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED);
         _addtoReportVeryDetailed = Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED);
         log.debug("Car ({}) at location ({}, {}) final destination ({}, {}) car routing begins", car, car
                 .getLocationName(), car.getTrackName(), car.getFinalDestinationName(), car
@@ -105,8 +105,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             log.debug("Routing using train ({})", train.getName());
         }
         // Has the car arrived at the car's final destination?
-        if (car.getLocation() != null &&
-                car.getLocation().equals(car.getFinalDestination()) &&
+        if (car.getLocation().equals(car.getFinalDestination()) &&
                 (car.getTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
             log.debug("Car ({}) has arrived at final destination", car);
             _status = STATUS_CAR_AT_DESINATION;
@@ -255,7 +254,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 _train.isServiceAllCarsWithFinalDestinationsEnabled()) {
             // log.debug("Option to service all cars with a final destination is enabled");
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"), new Object[]{
-                    testTrain.getName(), car.toString(), clone.getDestinationName(), clone.getDestinationTrackName()}));
+                    _train.getName(), testTrain.getName(), car.toString(), clone.getDestinationName(), clone.getDestinationTrackName()}));
             testTrain = null;
         }
         if (testTrain != null) {
@@ -530,12 +529,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
             // Is the option for the specific train carry this car?
             if (firstTrain != null &&
-                    _train != null &&
+            		_train != null &&
                     _train.isServiceAllCarsWithFinalDestinationsEnabled() &&
                     !specific.equals(YES)) {
                 if (_addtoReport) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterOptionToCarry"),
-                            new Object[]{firstTrain.getName(), car.toString(), track.getLocation().getName(),
+                            new Object[]{_train.getName(), firstTrain.getName(), car.toString(), track.getLocation().getName(),
                                     track.getName()}));
                 }
                 continue; // can't use this train
@@ -648,7 +647,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             loadTracks(car, testCar, tracks);
         }
         // now staging if enabled
-        if (useStaging && Setup.isCarRoutingViaStagingEnabled()) {
+        if (useStaging) {
             tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
             loadTracks(car, testCar, tracks);
         }
@@ -957,7 +956,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     _train.isServiceAllCarsWithFinalDestinationsEnabled() &&
                     !specific.equals(YES)) {
                 addLine(_buildReport, SEVEN, MessageFormat
-                        .format(Bundle.getMessage("RouterOptionToCarry"), new Object[]{train.getName(),
+                        .format(Bundle.getMessage("RouterOptionToCarry"), new Object[]{_train.getName(), train.getName(),
                                 car.toString(), track.getLocation().getName(), track.getName()}));
                 train = null;
             }

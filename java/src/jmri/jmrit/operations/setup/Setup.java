@@ -444,6 +444,11 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         getDefault().onlyActiveTrains = enabled;
     }
 
+    /**
+     * When true, router checks that the car's destination is serviced by departure track.
+     * Very restrictive, not recommended.
+     * @return true if enabled.
+     */
     public static boolean isCheckCarDestinationEnabled() {
         return getDefault().checkCarDestination;
     }
@@ -712,6 +717,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().buildReportLevel;
     }
 
+    /**
+     * Sets the report level for the car router.  
+     * @param level BUILD_REPORT_NORMAL, BUILD_REPORT_DETAILED, BUILD_REPORT_VERY_DETAILED
+     */
     public static void setRouterBuildReportLevel(String level) {
         getDefault().routerBuildReportLevel = level;
     }

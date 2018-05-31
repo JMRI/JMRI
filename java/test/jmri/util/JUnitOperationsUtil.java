@@ -1,6 +1,11 @@
 package jmri.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle; // for access operations keys directly.
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
@@ -70,7 +75,8 @@ public class JUnitOperationsUtil {
         InstanceManager.getDefault(RouteManagerXml.class).setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
         InstanceManager.getDefault(EngineManagerXml.class).setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
         InstanceManager.getDefault(CarManagerXml.class).setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        InstanceManager.getDefault(LocationManagerXml.class).setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        InstanceManager.getDefault(LocationManagerXml.class)
+                .setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
         InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
         // delete operations directory and all contents
@@ -157,65 +163,31 @@ public class JUnitOperationsUtil {
 
         // Set up a route of 3 locations: North End Staging (2 tracks),
         // North Industries (1 track), and South End Staging (2 tracks).
-        Location locationNorthEnd = new Location("1", "North End");
+        createTwoStagingLocations();
 
-        locationNorthEnd.setLocationOps(Location.STAGING);
-        Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
-        
-        locationNorthEnd.setSwitchListEnabled(true);
-        locationNorthEnd.setComment("Test comment for location North End");
-        lmanager.register(locationNorthEnd);
-
-        Track l1staging1 = new Track("1s1", "North End 1", Track.STAGING, locationNorthEnd);
-        
-        // confirm defaults
-        Assert.assertEquals("confirm default", DIRECTION_ALL, l1staging1.getTrainDirections());
-        Assert.assertEquals("confirm default", Track.ALL_ROADS, l1staging1.getRoadOption());
-        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getDropOption());
-        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getPickupOption());
-        
-        l1staging1.setLength(300);
-        l1staging1.setCommentBoth("Test comment for North End 1 drops and pulls");
-        l1staging1.setCommentSetout("Test comment for North End 1 drops only");
-        l1staging1.setCommentPickup("Test comment for North End 1 pulls only");
-
-        Track l1staging2 = new Track("1s2", "North End 2", Track.STAGING, locationNorthEnd);
-        l1staging2.setLength(400);
-
-        locationNorthEnd.register(l1staging1);
-        locationNorthEnd.register(l1staging2);
-
-        Location locationNorthIndustries = new Location("2", "North Industries");
-        locationNorthIndustries.setLocationOps(Location.NORMAL);
-        locationNorthIndustries.setTrainDirections(DIRECTION_ALL);
+        Location locationNorthIndustries = new Location("20", "North Industries");
         locationNorthIndustries.setSwitchListEnabled(true);
         lmanager.register(locationNorthIndustries);
 
-        Track l2yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
-        l2yard1.setLength(432);
-        l2yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
-        l2yard1.setCommentSetout("Test comment for NI Yard drops only");
-        l2yard1.setCommentPickup("Test comment for NI Yard pulls only");
+        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
+        l20yard1.setLength(432);
+        l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
+        l20yard1.setCommentSetout("Test comment for NI Yard drops only");
+        l20yard1.setCommentPickup("Test comment for NI Yard pulls only");
 
-        locationNorthIndustries.register(l2yard1);
+        locationNorthIndustries.register(l20yard1);
 
-        Location locationSouthEnd = new Location("3", "South End");
-        locationSouthEnd.setLocationOps(Location.STAGING);
-        locationSouthEnd.setSwitchListEnabled(true);
-        lmanager.register(locationSouthEnd);
+        // get departure staging and tracks
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track l1staging1 = locationNorthEnd.getTrackById("1s1");
+        Track l1staging2 = locationNorthEnd.getTrackById("1s2");
+        Assert.assertNotNull(l1staging1);
+        Assert.assertNotNull(l1staging2);
 
-        Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
-        l3s1.setLength(300);
-        l3s1.setCommentBoth("Test comment for South End 1 drops and pulls");
-        l3s1.setCommentSetout("Test comment for South End 1 drops only");
-        l3s1.setCommentPickup("Test comment for South End 1 pulls only");
+        // termination staging
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Assert.assertNotNull(locationSouthEnd);
 
-        Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, locationSouthEnd);
-        l3s2.setLength(401);
-
-        locationSouthEnd.register(l3s1);
-        locationSouthEnd.register(l3s2);
-        
         // Set up two cabooses and six box cars
         // Place Cabooses on Staging tracks
         // Place 4 Boxcars on Staging tracks
@@ -228,9 +200,9 @@ public class JUnitOperationsUtil {
         createAndPlaceCar("CP", "X10002", "Boxcar", "40", "AT", "1-84", l1staging1, 4444);
         createAndPlaceCar("CP", "X20001", "Boxcar", "40", "DAB", "1980", l1staging2, 0);
         createAndPlaceCar("CP", "X20002", "Boxcar", "40", "DAB", "1978", l1staging2, 0);
-        createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l2yard1, 6);
-        createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l2yard1, 0);
-        createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l2yard1, 0);
+        createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l20yard1, 6);
+        createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
+        createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
@@ -274,35 +246,232 @@ public class JUnitOperationsUtil {
         train1.setRequirements(Train.CABOOSE);
         train1.setCabooseRoad("CP");
         train1.deleteTypeName("Flat");
-        train1.setRoadOption(Train.ALL_ROADS);
         train1.setRoute(route1);
         train1.setDepartureTime("6", "5");
         train1.setComment("Test comment for train STF");
-        
+
         // increase test coverage by providing a manifest logo for this train
-        java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);        
+        java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);
         train1.setManifestLogoURL(url.getPath());
-        
+
         tmanager.register(train1);
 
         Train train2 = new Train("2", "SFF");
-        train2.deleteTypeName("Boxcar");
-        train2.deleteTypeName("Flat");
         train2.setRoute(route1);
         train2.setDepartureTime("22", "45");
         tmanager.register(train2);
-        
+
         // improve test coverage
         Setup.setPrintLocationCommentsEnabled(true);
         Setup.setPrintRouteCommentsEnabled(true);
-        
+    }
+
+    /**
+     * Creates two staging locations for common testing each with two tracks
+     */
+    public static void createTwoStagingLocations() {
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        Location locationNorthEnd = new Location("1", "North End Staging");
+
+        locationNorthEnd.setLocationOps(Location.STAGING);
+        Assert.assertEquals("confirm default", DIRECTION_ALL, locationNorthEnd.getTrainDirections());
+
+        locationNorthEnd.setComment("Test comment for location North End");
+        lmanager.register(locationNorthEnd);
+
+        Track l1staging1 = new Track("1s1", "North End 1", Track.STAGING, locationNorthEnd);
+
+        // confirm defaults
+        Assert.assertEquals("confirm default", DIRECTION_ALL, l1staging1.getTrainDirections());
+        Assert.assertEquals("confirm default", Track.ALL_ROADS, l1staging1.getRoadOption());
+        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getDropOption());
+        Assert.assertEquals("confirm default", Track.ANY, l1staging1.getPickupOption());
+
+        l1staging1.setLength(300);
+        l1staging1.setCommentBoth("Test comment for North End 1 drops and pulls");
+        l1staging1.setCommentSetout("Test comment for North End 1 drops only");
+        l1staging1.setCommentPickup("Test comment for North End 1 pulls only");
+
+        Track l1staging2 = new Track("1s2", "North End 2", Track.STAGING, locationNorthEnd);
+        l1staging2.setLength(400);
+
+        locationNorthEnd.register(l1staging1);
+        locationNorthEnd.register(l1staging2);
+
+        Location locationSouthEnd = new Location("3", "South End Staging");
+        locationSouthEnd.setLocationOps(Location.STAGING);
+        lmanager.register(locationSouthEnd);
+
+        Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, locationSouthEnd);
+        l3s1.setLength(300);
+        l3s1.setCommentBoth("Test comment for South End 1 drops and pulls");
+        l3s1.setCommentSetout("Test comment for South End 1 drops only");
+        l3s1.setCommentPickup("Test comment for South End 1 pulls only");
+
+        Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, locationSouthEnd);
+        l3s2.setLength(401);
+
+        locationSouthEnd.register(l3s1);
+        locationSouthEnd.register(l3s2);
+    }
+
+    /**
+     * Creates four staging locations for common testing
+     */
+    public static void createFourStagingLocations() {
+
+        createTwoStagingLocations();
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        Location locationWestEnd = new Location("5", "West End Staging");
+        locationWestEnd.setLocationOps(Location.STAGING);
+        lmanager.register(locationWestEnd);
+
+        Track l5s1 = new Track("5s1", "West End 1", Track.STAGING, locationWestEnd);
+        l5s1.setLength(600);
+
+        Track l5s2 = new Track("5s2", "West End 2", Track.STAGING, locationWestEnd);
+        l5s2.setLength(600);
+
+        locationWestEnd.register(l5s1);
+        locationWestEnd.register(l5s2);
+
+        Location locationEastEnd = new Location("7", "East End Staging");
+        locationEastEnd.setLocationOps(Location.STAGING);
+        lmanager.register(locationEastEnd);
+
+        Track l7s1 = new Track("7s1", "East End 1", Track.STAGING, locationEastEnd);
+        l5s1.setLength(600);
+
+        Track l7s2 = new Track("7s2", "East End 2", Track.STAGING, locationEastEnd);
+        l5s2.setLength(600);
+
+        locationEastEnd.register(l7s1);
+        locationEastEnd.register(l7s2);
+    }
+
+    public static Route createThreeLocationRoute() {
+
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        createSevenNormalLocations();
+
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford");
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
+
+        return route;
     }
     
-    public static Car createAndPlaceCar(String road, String number, String type, String length, Track track, int moves) {
+    public static Route createThreeLocationTurnRoute() {
+
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        createSevenNormalLocations();
+
+        Route route = rmanager.newRoute("Route Acton-Boston-Chelmsford-Boston-Acton");
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+
+        // default train direction is North
+        route.addLocation(acton);
+        route.addLocation(boston);
+        route.addLocation(chelmsford);
+        RouteLocation rlC = route.addLocation(chelmsford); // enter 2nd time for train reversal
+        rlC.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlB = route.addLocation(boston);
+        rlB.setTrainDirection(RouteLocation.SOUTH);
+        RouteLocation rlA = route.addLocation(acton);
+        rlA.setTrainDirection(RouteLocation.SOUTH);
+        rlA.setPickUpAllowed(false); // don't include cars at destination
+
+        return route;
+    }
+
+    public static Route createFiveLocationRoute() {
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+
+        Route route = createThreeLocationRoute();
+
+        Location danvers = lmanager.getLocationByName("Danvers");
+        Location essex = lmanager.getLocationByName("Essex");
+
+        route.addLocation(danvers);
+        route.addLocation(essex);
+
+        route.setName("Route Acton-Boston-Chelmsford-Davers-Essex");
+
+        return route;
+    }
+       
+    /**
+     * Creates a location with 2 spurs, 2 interchanges, and 2 yards
+     * @param name the name of the location and the tracks there.
+     * @return the location created
+     */
+    public static Location createOneNormalLocation(String name) {     
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        
+        Location location = lmanager.newLocation(name);
+        Track trackSpur1 = location.addTrack(name + " Spur 1", Track.SPUR);
+        trackSpur1.setLength(200);
+        Track trackSpur2 = location.addTrack(name + " Spur 2", Track.SPUR);
+        trackSpur2.setLength(200);
+        Track trackYard1 = location.addTrack(name + " Yard 1", Track.YARD);
+        trackYard1.setLength(500);
+        Track trackYard2 = location.addTrack(name + " Yard 2", Track.YARD);
+        trackYard2.setLength(500);
+        Track trackInterchange1 = location.addTrack(name + " Interchange 1", Track.INTERCHANGE);
+        trackInterchange1.setLength(500);
+        Track trackInterchange2 = location.addTrack(name + " Interchange 2", Track.INTERCHANGE);
+        trackInterchange2.setLength(500);
+        
+        // must set track move counts after all tracks are created
+        trackSpur1.setMoves(10);
+        trackSpur2.setMoves(20);
+        trackYard1.setMoves(30);
+        trackYard2.setMoves(40);
+        trackInterchange1.setMoves(50);
+        trackInterchange2.setMoves(60);
+        
+        return location;
+    }
+
+    /**
+     * Creates 7 locations each with 2 spurs, 2 interchanges, and 2 yards
+     * Acton, Boston, Chelmsford, Danvers, Essex, Foxboro, Gulf
+     */
+    public static void createSevenNormalLocations() {
+        
+        createOneNormalLocation("Acton");
+        createOneNormalLocation("Boston");
+        createOneNormalLocation("Chelmsford");
+        createOneNormalLocation("Danvers");
+        createOneNormalLocation("Essex");
+        createOneNormalLocation("Foxboro");
+        createOneNormalLocation("Gulf");
+    }
+
+    public static Car createAndPlaceCar(String road, String number, String type, String length, Track track,
+            int moves) {
         return createAndPlaceCar(road, number, type, length, "",
                 "", track, moves);
     }
-    
+
     public static Car createAndPlaceCar(String road, String number, String type, String length, String owner,
             String built, Track track, int moves) {
 
@@ -320,6 +489,19 @@ public class JUnitOperationsUtil {
         }
 
         return car;
+    }
+
+    public static BufferedReader getBufferedReader(File file) {
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
+        } catch (FileNotFoundException e) {
+
+        } catch (UnsupportedEncodingException e) {
+
+        }
+        Assert.assertNotNull(in);
+        return in;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
