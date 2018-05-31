@@ -244,7 +244,7 @@ public class SimplePowerServerTest {
 
     @Ignore("Not ready yet")
     @Test
-    // test parsing an OFF status message.
+    // test parsing a bad status message.
     public void testParseBadStatus() {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
@@ -262,6 +262,49 @@ public class SimplePowerServerTest {
             Assert.assertEquals("error from bad parse", "POWER ERROR\n", sb.toString());
         } catch (jmri.JmriException jmrie) {
             Assert.fail("Exception retrieving Status");
+        }
+    }
+
+    // test the property change sequence for an ON property change.
+    @Test
+    public void testPropertyChangeOnStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+            @Override
+            public void write(int b) throws java.io.IOException {
+                sb.append((char) b);
+            }
+        });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimplePowerServer a = new SimplePowerServer(input, output);
+        try {
+            jmri.InstanceManager.getDefault(jmri.PowerManager.class)
+                            .setPower(jmri.PowerManager.ON);
+             Assert.assertEquals("status as a result of on property change", "POWER ON\n", sb.toString());
+        } catch (jmri.JmriException je){
+            Assert.fail("Exception setting Status");
+        }
+    }
+
+    // test the property change sequence for an OFF property change.
+    @Test
+    public void testPropertyChangeOffStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+            @Override
+            public void write(int b) throws java.io.IOException {
+                sb.append((char) b);
+            }
+        });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimplePowerServer a = new SimplePowerServer(input, output);
+        try {
+            jmri.InstanceManager.getDefault(jmri.PowerManager.class).setPower(jmri.PowerManager.OFF);
+            Assert.assertEquals("status as a result of off property change", "POWER OFF\n", sb.toString());
+        } catch (jmri.JmriException je){
+            Assert.fail("Exception setting Status");
         }
     }
 
