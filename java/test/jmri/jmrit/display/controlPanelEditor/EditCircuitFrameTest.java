@@ -15,16 +15,31 @@ import org.junit.Test;
  */
 public class EditCircuitFrameTest {
 
+    ControlPanelEditor frame;
+    EditCircuitFrame t;
+    CircuitBuilder cb;
+    OBlock ob;
+    
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor();
-        CircuitBuilder cb = new CircuitBuilder(frame);
-        OBlock ob = new OBlock("OB01");
-        EditCircuitFrame t = new EditCircuitFrame("Edit Circuit Frame", cb, ob);
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            frame = new ControlPanelEditor();
+            cb = new CircuitBuilder(frame);
+        });
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            ob = new OBlock("OB01");
+            t = new EditCircuitFrame("Edit Circuit Frame", cb, ob);
+        });
+        
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(t);
+        frame = null;
+        t = null;
     }
 
     // The minimal setup for log4J

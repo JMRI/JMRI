@@ -299,7 +299,7 @@
   <xs:element name="enumChoiceGroup" type="EnumChoiceGroupType">
     <xs:annotation>
       <xs:documentation>
-      Provides a base element that can be used in "enumVal" fragment files, those
+      Provides a base element that can be used in "enumChoiceGroup" fragment files, those
       little files that are XIncluded into primary decoder files.
       </xs:documentation>
     </xs:annotation>

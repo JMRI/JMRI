@@ -44,4 +44,5 @@ public class LnCommandStationTypeTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

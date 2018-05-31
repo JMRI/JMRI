@@ -25,11 +25,11 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.ExceptionContext;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.UnexpectedExceptionContext;
+import jmri.util.swing.ExceptionContext;
+import jmri.util.swing.ExceptionDisplayFrame;
+import jmri.util.swing.UnexpectedExceptionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

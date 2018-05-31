@@ -6,9 +6,9 @@ import jmri.util.JmriJFrame;
 
 /**
  * Frame for editing Digitrax SDF files.
- * <P>
+ * <p>
  * This is just an enclosure for the EditorPane, which does the real work.
- * <P>
+ * <p>
  * This handles file read/write.
  *
  * @author Bob Jacobsen Copyright (C) 2007

@@ -8,7 +8,6 @@ import jmri.jmrix.AbstractProgrammerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Programmer facade for single index multi-CV access.
  * <p>
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * <li> T2CV.11.12 <BR>
  * The write operation writes 11 to the first index CV (201), 12 to the 2nd
  * index CV (202), then writes the data to CV 203 (MSB) and 204 (LSB).<BR>
- * The read operation is slightly different, writing 111 (100+11) to CV201, then
+ * The read operation is slightly different, writing 111 (100+11) to CV201,
  * then 12 to the 2nd index CV (202), then writes 100 to CV204, then reads the
  * two values from CV203 and CV204.
  * <li> T3CV.11.12.13 <BR>

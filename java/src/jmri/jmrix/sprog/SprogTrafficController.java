@@ -25,7 +25,7 @@ import purejavacomm.SerialPortEventListener;
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
  * <p>
- * Rewritten during 4.11.x series. Create a high priority thread for the TC to
+ * Rewritten during 4.11.x series. Create a high priority thread for the tc to
  * move everything off the swing thread. Use a blocking queue to handle
  * asynchronous messages from multiple sources.
  * 
@@ -43,7 +43,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private Thread tcThread;
     private final Object lock = new Object();
     private boolean replyAvailable = false;
-    // MAke this public so it can be overridden by a script for debug
+    // Make this public so it can be overridden by a script for debug
     public static int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
     
     /**

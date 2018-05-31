@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents the contents of a single slot in the LocoNet command station.
- * <P>
+ * <p>
  * A SlotListener can be registered to hear of changes in this slot. All changes
  * in values will result in notification.
- * <P>
+ * <p>
  * Strictly speaking, functions 9 through 28 are not in the actual slot, but
  * it's convenient to imagine there's an "extended slot" and keep track of them
  * here. This is a partial implementation, though, because setting is still done
@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  * read from the command station, the first message directly setting F9 through
  * F28 will not have a place to store information. Instead, it will trigger a
  * slot read, so the following messages will be properly handled.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Stephen Williams Copyright (C) 2008
  * @author B. Milhaupt, Copyright (C) 2018
@@ -385,7 +385,7 @@ public class LocoNetSlot {
     }
 
     /**
-     * Load functions 9 through 28 from loconet "Set Direct" message.
+     * Load functions 9 through 28 from LocoNet "Set Direct" message.
      */
     public void functionMessage(long pkt) {
         // parse for which set of functions

@@ -5,19 +5,20 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.jmrix.loconet.AbstractBoardProgPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying and programming a PM4 configuration.
- * <P>
+ * <p>
  * The read and write require a sequence of operations, which we handle with a
  * state variable.
- * <P>
+ * <p>
  * Programming of the PM4 is done via configuration messages, so the PM4 should
  * not be put into programming mode via the built-in pushbutton while this tool
  * is in use.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -25,8 +26,8 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
-  */
-public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
+ */
+public class PM4Panel extends AbstractBoardProgPanel {
 
     public PM4Panel() {
         this(1);
@@ -39,40 +40,40 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
-        panec.add(new JLabel("Current limit: "));
+        panec.add(new JLabel(Bundle.getMessage("CurrentLabel")));
         panec.add(current);
         current.setSelectedIndex(1);
         appendLine(panec);
 
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-        pane1.add(new JLabel("Section 1:  Speed "));
+        pane1.add(new JLabel(Bundle.getMessage("SectionXSpeedLabel", 1)));
         pane1.add(slow1);
-        pane1.add(new JLabel(" Autoreversing "));
+        //pane1.add(new JLabel(Bundle.getMessage("AutoReverseLabel")));
         pane1.add(rev1);
         appendLine(pane1);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
-        pane2.add(new JLabel("Section 2:  Speed "));
+        pane2.add(new JLabel(Bundle.getMessage("SectionXSpeedLabel", 2)));
         pane2.add(slow2);
-        pane2.add(new JLabel(" Autoreversing "));
+        //pane2.add(new JLabel(Bundle.getMessage("AutoReverseLabel")));
         pane2.add(rev2);
         appendLine(pane2);
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-        pane3.add(new JLabel("Section 3:  Speed "));
+        pane3.add(new JLabel(Bundle.getMessage("SectionXSpeedLabel", 3)));
         pane3.add(slow3);
-        pane3.add(new JLabel(" Autoreversing "));
+        //pane3.add(new JLabel(Bundle.getMessage("AutoReverseLabel")));
         pane3.add(rev3);
         appendLine(pane3);
 
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
-        pane4.add(new JLabel("Section 4:  Speed "));
+        pane4.add(new JLabel(Bundle.getMessage("SectionXSpeedLabel", 4)));
         pane4.add(slow4);
-        pane4.add(new JLabel(" Autoreversing "));
+        //pane4.add(new JLabel(Bundle.getMessage("AutoReverseLabel")));
         pane4.add(rev4);
         appendLine(pane4);
 
@@ -85,7 +86,7 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
         // add status
         appendLine(provideStatusLine());
-        setStatus("The PM4x should be in normal mode. (Don't push the buttons on the PM4x)");
+        setStatus(Bundle.getMessage("Status1"));
 
         setTypeWord(0x70);  // configure PM4 message type
 
@@ -227,21 +228,29 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         }
     }
 
-    JComboBox<String> current = new JComboBox<String>(new String[]{"1.5 amps", "3 amps", "4.5 amps", "6 amps",
-        "7.5 amps", "9 amps", "10.5 amps", "12 amps"});
+    JComboBox<String> current = new JComboBox<String>(new String[]{
+            Bundle.getMessage("CurrentXBox", "1.5"), Bundle.getMessage("CurrentXBox", "3"),
+            Bundle.getMessage("CurrentXBox", "4.5"), Bundle.getMessage("CurrentXBox", "6"),
+            Bundle.getMessage("CurrentXBox", "7.5"), Bundle.getMessage("CurrentXBox", "9"),
+            Bundle.getMessage("CurrentXBox", "10.5"), Bundle.getMessage("CurrentXBox", "12")
+    });
 
-    JComboBox<String> slow1 = new JComboBox<String>(new String[]{"Slow", "Standard",
-        "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev1 = new JCheckBox();
-    JComboBox<String> slow2 = new JComboBox<String>(new String[]{"Slow", "Standard",
-        "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev2 = new JCheckBox();
-    JComboBox<String> slow3 = new JComboBox<String>(new String[]{"Slow", "Standard",
-        "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev3 = new JCheckBox();
-    JComboBox<String> slow4 = new JComboBox<String>(new String[]{"Slow", "Standard",
-        "Faster (PM42 only)", "Fastest (PM42 only)"});
-    JCheckBox rev4 = new JCheckBox();
+    JComboBox<String> slow1 = new JComboBox<String>(new String[]{
+            Bundle.getMessage("Box1a"), Bundle.getMessage("Box1b"),
+            Bundle.getMessage("Box1c"), Bundle.getMessage("Box1d")});
+    JCheckBox rev1 = new JCheckBox(Bundle.getMessage("AutoReverseBox"));
+    JComboBox<String> slow2 = new JComboBox<String>(new String[]{
+            Bundle.getMessage("Box1a"), Bundle.getMessage("Box1b"),
+            Bundle.getMessage("Box1c"), Bundle.getMessage("Box1d")});
+    JCheckBox rev2 = new JCheckBox(Bundle.getMessage("AutoReverseBox"));
+    JComboBox<String> slow3 = new JComboBox<String>(new String[]{
+            Bundle.getMessage("Box1a"), Bundle.getMessage("Box1b"),
+            Bundle.getMessage("Box1c"), Bundle.getMessage("Box1d")});
+    JCheckBox rev3 = new JCheckBox(Bundle.getMessage("AutoReverseBox"));
+    JComboBox<String> slow4 = new JComboBox<String>(new String[]{
+            Bundle.getMessage("Box1a"), Bundle.getMessage("Box1b"),
+            Bundle.getMessage("Box1c"), Bundle.getMessage("Box1d")});
+    JCheckBox rev4 = new JCheckBox(Bundle.getMessage("AutoReverseBox"));
 
     private final static Logger log = LoggerFactory.getLogger(PM4Panel.class);
 

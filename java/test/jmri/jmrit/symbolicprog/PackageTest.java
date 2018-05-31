@@ -62,7 +62,8 @@ import org.junit.runners.Suite;
     PrintActionTest.class,
     PrintCvActionTest.class,
     ShortAddrVariableValueTest.class,
-    FnMapPanelESUTest.class
+    FnMapPanelESUTest.class,
+    CVNameComparatorTest.class
 })
 
 /**

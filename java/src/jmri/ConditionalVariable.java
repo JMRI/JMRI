@@ -880,7 +880,7 @@ public class ConditionalVariable {
                 return Bundle.getMessage("SensorStateInactive"); // NOI18N
             default:
                 log.warn("Unhandled condition type: {}", t); // NOI18N
-                return "<none>";
+                return "<none>"; // NOI18N
         }
     }
 

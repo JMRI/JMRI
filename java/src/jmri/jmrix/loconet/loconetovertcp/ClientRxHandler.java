@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ * Implementation of the LocoNetOverTcp LbServer Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  */
@@ -28,8 +28,10 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
     String inString;
     String remoteAddress;
     LocoNetMessage lastSentMessage;
+    LnTrafficController tc;
 
-    public ClientRxHandler(String newRemoteAddress, Socket newSocket) {
+    public ClientRxHandler(String newRemoteAddress, Socket newSocket, LnTrafficController _tc) {
+        tc = _tc;
         clientSocket = newSocket;
         setDaemon(true);
         setPriority(Thread.MAX_PRIORITY);
@@ -47,7 +49,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
 
-            LnTrafficController.instance().addLocoNetListener(~0, this);
+            tc.addLocoNetListener(~0, this);
 
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
@@ -61,7 +63,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                     log.debug("ClientRxHandler: Remote Connection Closed");
                     interrupt();
                 } else {
-                    log.debug("ClientRxHandler: Received: " + inString);
+                    log.debug("ClientRxHandler: Received: {}", inString);
 
                     StringTokenizer st = new StringTokenizer(inString);
                     if (st.nextToken().equals("SEND")) {
@@ -114,7 +116,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                             msg.setElement(i, b);
                         }
 
-                        LnTrafficController.instance().sendLocoNetMessage(msg);
+                        tc.sendLocoNetMessage(msg);
                         // Keep the message we just sent so we can ACK it when we hear
                         // the echo from the LocoBuffer
                         lastSentMessage = msg;
@@ -124,7 +126,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         } catch (IOException ex) {
             log.debug("ClientRxHandler: IO Exception: ", ex);
         }
-        LnTrafficController.instance().removeLocoNetListener(~0, this);
+        tc.removeLocoNetListener(~0, this);
         if (txThread != null) txThread.interrupt();
 
         txThread = null;
@@ -184,7 +186,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                         outBuf.setLength(0);
                         outBuf.append("RECEIVE ");
                         outBuf.append(msg.toString());
-                        log.debug("ClientTxHandler: Send: " + outBuf.toString());
+                        log.debug("ClientTxHandler: Send: {}", outBuf.toString());
                         outBuf.append("\r\n");
                         // See if we are waiting for an echo of a sent message
                         // and if it is append the Ack to the client
@@ -231,5 +233,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             log.warn("dispose() interrupted");
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
+
 }

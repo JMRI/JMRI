@@ -11,6 +11,9 @@
 import jmri
 import java
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 # First, define the listener class.  This gets messages
 # from the reporter, uses them to keep track of the decoders
 # in a block, and writes that list to a memory for display.
@@ -101,6 +104,7 @@ m.start("LR147", "IM147")
 # Example msg: D0 20 0B 7D 03 FF - lower byte 1 and byte 2 are reporter 12, 
 # 3,4 are loco address (3=7D short)
 # 20 vs 00 in 2nd byte shows enter/exit
+
 def test3enter() :  # 3 enters
     packet = jmri.jmrix.loconet.LocoNetMessage(6)
     packet.setElement(0, 0xD0)
@@ -108,7 +112,7 @@ def test3enter() :  # 3 enters
     packet.setElement(2, 0x11)
     packet.setElement(3, 0x7D)
     packet.setElement(4, 0x03)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+    jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
     return
     
 def test257enter() :  # 257 enters
@@ -118,7 +122,7 @@ def test257enter() :  # 257 enters
     packet.setElement(2, 0x11)
     packet.setElement(3, 0x02)
     packet.setElement(4, 0x01)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+    jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
     return
     
 def test257exit() :  # 257 exits
@@ -128,7 +132,7 @@ def test257exit() :  # 257 exits
     packet.setElement(2, 0x11)
     packet.setElement(3, 0x02)
     packet.setElement(4, 0x01)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+    jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
     return
     
 def test3exit() :  # 3 exits
@@ -138,5 +142,5 @@ def test3exit() :  # 3 exits
     packet.setElement(2, 0x11)
     packet.setElement(3, 0x7D)
     packet.setElement(4, 0x03)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+    jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
     return
