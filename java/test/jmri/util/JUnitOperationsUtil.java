@@ -344,10 +344,10 @@ public class JUnitOperationsUtil {
         lmanager.register(locationEastEnd);
 
         Track l7s1 = new Track("7s1", "East End 1", Track.STAGING, locationEastEnd);
-        l5s1.setLength(600);
+        l7s1.setLength(600);
 
         Track l7s2 = new Track("7s2", "East End 2", Track.STAGING, locationEastEnd);
-        l5s2.setLength(600);
+        l7s2.setLength(600);
 
         locationEastEnd.register(l7s1);
         locationEastEnd.register(l7s2);
