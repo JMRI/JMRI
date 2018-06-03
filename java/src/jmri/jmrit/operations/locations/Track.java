@@ -1528,6 +1528,11 @@ public class Track {
         return _order;
     }
 
+    /**
+     * Set the service order for this track. Only yards and interchange have
+     * this feature.
+     * @param order Track.NORMAL, Track.FIFO, Track.LIFO
+     */
     public void setServiceOrder(String order) {
         String old = _order;
         _order = order;

@@ -767,7 +767,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -796,7 +796,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -844,7 +844,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -896,7 +896,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
