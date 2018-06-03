@@ -1403,6 +1403,73 @@ public class TrainBuilderTest {
         //TODO finish this test
 
     }
+    
+    /**
+     * test routeLocation move count. Train is a turn. Places 4 cars at Boston, normally
+     * all pulled on the return to Acton.
+     */
+    @Test
+    public void testRouteMoveCount() {
+
+        // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
+        Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
+
+        RouteLocation rlActon = route.getDepartsRouteLocation();
+        Location acton = rlActon.getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        RouteLocation rlBoston1 = route.getRouteLocationBySequenceId(2);
+        RouteLocation rlBoston2 = route.getRouteLocationBySequenceId(5);
+
+        Location boston = rlBoston1.getLocation();
+        Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD);
+        
+        Location chelmsford = route.getRouteLocationBySequenceId(3).getLocation();
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", bostonYard2, 0);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", bostonYard2, 1);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("CP", "50", "Boxcar", "40", bostonYard2, 2);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "60", "Boxcar", "40", bostonYard2, 3);
+
+        // define the train
+        Train train1 = tmanager.newTrain("TestRouteMoveCount");
+        train1.setRoute(route);
+
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+
+        // all four cars are going to Acton
+        Assert.assertEquals("car destination", actonSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c5.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c6.getDestinationTrack());
+        
+        // confirm where in the route the cars are pulled
+        Assert.assertEquals("car pulled", rlBoston2, c3.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston2, c4.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston2, c5.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston2, c6.getRouteLocation());
+        
+        // now prevent the 2nd pull from Boston
+        rlBoston2.setMaxCarMoves(0);
+
+        train1.reset();
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+
+        // all four cars are going to Acton
+        Assert.assertEquals("car destination", actonSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car destination", chelmsfordSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c5.getDestinationTrack());
+        Assert.assertEquals("car destination", actonSpur1, c6.getDestinationTrack());
+
+        // confirm where in the route the cars are pulled
+        Assert.assertEquals("car pulled", rlBoston1, c3.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c4.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c5.getRouteLocation());
+        Assert.assertEquals("car pulled", rlBoston1, c6.getRouteLocation());
+    }
 
     /**
      * Test alternate track by restricting the spur and alternate track train
@@ -11586,7 +11653,7 @@ public class TrainBuilderTest {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null); // has schedule
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null); // has schedule
         Track midtownYard = midtown.getTrackByName("Midtown yard", null);
@@ -11632,7 +11699,7 @@ public class TrainBuilderTest {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null); // has schedule
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null); // has schedule
         Track midtownYard = midtown.getTrackByName("Midtown yard", null);
@@ -11686,7 +11753,7 @@ public class TrainBuilderTest {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null); // has schedule
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null); // has schedule
         Track midtownYard = midtown.getTrackByName("Midtown yard", null);
@@ -11763,7 +11830,7 @@ public class TrainBuilderTest {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
         Track midtownYard = midtown.getTrackByName("Midtown yard", null);
@@ -11830,7 +11897,7 @@ public class TrainBuilderTest {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
         Track midtownYard = midtown.getTrackByName("Midtown yard", null);
@@ -11971,7 +12038,7 @@ public class TrainBuilderTest {
         Location eastend = lmanager.newLocation("Eastend");
 
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
         Track midtownYard = midtown.getTrackByName("Midtown yard", null);
@@ -12134,7 +12201,8 @@ public class TrainBuilderTest {
     }
     
     /**
-     * Test car custom load generation from staging.
+     * Test car custom load generation from staging to spurs with
+     * schedules demanding car type and load.
      */
     @Test
     public void testCustomCarLoadFromStagingA() {
@@ -12169,7 +12237,7 @@ public class TrainBuilderTest {
         // confirm staging at start of route
         Assert.assertEquals("1st location in route", staging, train.getTrainDepartsRouteLocation().getLocation());
 
-        // place car in staging
+        // place cars in staging
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "50",  stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50",  stagingTrack1, 1);
  
@@ -12262,7 +12330,7 @@ public class TrainBuilderTest {
         // confirm staging at start of route
         Assert.assertEquals("1st location in route", staging, train.getTrainDepartsRouteLocation().getLocation());
 
-        // place car in staging
+        // place cars in staging
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40",  stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Flat", "40",  stagingTrack1, 1);
         
@@ -12289,6 +12357,9 @@ public class TrainBuilderTest {
      * track serviced by a different train.  Create two train routes, one
      * out of staging, the other into staging.  Note that the generation
      * of custom loads is random out from staging to another staging track.
+     * There are three loads, "Nuts" which is excluded by the receiving
+     * staging location.  "Bags" which is excluded by the 2nd train.  And
+     * 'Flour" which is the only load that can travel from staging to staging.
      */
     @Test
     public void testCustomCarLoadFromStagingC() {
@@ -12299,7 +12370,8 @@ public class TrainBuilderTest {
         Train train = tmanager.getTrainByName("Train Westend-Midtown-Eastend");
         
         Location westend = lmanager.newLocation("Westend");
-        Track westendInterchange1 = westend.getTrackByName("Westend Interchange 1", null);
+        Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
+        Track westendInterchange1 = westend.getTrackByName("Westend interchange 1", null);
 
         // create two staging locations and tracks
         Location staging1 = lmanager.newLocation("Staging 1");
@@ -12325,9 +12397,19 @@ public class TrainBuilderTest {
         // confirm staging at start of route
         Assert.assertEquals("1st location in route", staging1, train.getTrainDepartsRouteLocation().getLocation());
 
-        // place car in staging
+        // place cars in staging
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "50",  stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50",  stagingTrack1, 1);
+        
+        // first test that staging 2 isn't reachable
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // failed to route cars to staging, so sent to a track that would accept them
+        Assert.assertEquals("car load", "E", c3.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car load", "E", c4.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
         
         //there's an interchange track at Westend, so we'll create a 2nd train that departs there to staging 2
         Route rte2 = rmanager.newRoute("Route Westend-Staging2");
@@ -12340,6 +12422,7 @@ public class TrainBuilderTest {
         train2.setLoadOption(Train.EXCLUDE_LOADS);
         train2.addLoadName("Nuts");
  
+        train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
         
@@ -12353,6 +12436,27 @@ public class TrainBuilderTest {
         Assert.assertEquals("car load", "Flour", c4.getLoadName());
         Assert.assertEquals("car destination track", westendInterchange1, c4.getDestinationTrack());
         Assert.assertEquals("car final destination", staging2, c4.getFinalDestination());
+        // track into staging should not be set
+        Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
+        
+        // now limit the length of the interchange track to one additional car
+        westendInterchange1.setLength(100); // there's a 40' car already on this track
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm car has custom load and destination, only load option is "Flour"
+        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car destination track", westendInterchange1, c3.getDestinationTrack());
+        Assert.assertEquals("car final destination", staging2, c3.getFinalDestination());
+        // track into staging should not be set
+        Assert.assertEquals("car final destination track", null, c3.getFinalDestinationTrack());
+        
+        // no room at interchange track for c4, so sent to spur
+        Assert.assertEquals("car load", "E", c4.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car final destination", null, c4.getFinalDestination());
         // track into staging should not be set
         Assert.assertEquals("car final destination track", null, c4.getFinalDestinationTrack());
     }
@@ -12369,14 +12473,8 @@ public class TrainBuilderTest {
         // get tracks, train travels from west to east
         Train train = tmanager.getTrainByName("Train Westend-Midtown-Eastend");
         
-//        Location eastend = lmanager.newLocation("Eastend");
-//        Track eastendSpur1 = eastend.getTrackByName("Eastend spur 1", null);
-        
         Location midtown = lmanager.newLocation("Midtown");
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
-        
-//        Location westend = lmanager.newLocation("Westend");
-//        Track westendSpur1 = westend.getTrackByName("Westend spur 1", null);
 
         // test car from staging, create one staging track
         Location staging = lmanager.newLocation("Staging");
@@ -12391,7 +12489,7 @@ public class TrainBuilderTest {
         // change train name
         train.setName("Train Staging-Westend-Midtown-Eastend");
         
-        // place car in staging
+        // place cars in staging
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40",  stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50",  stagingTrack1, 1);
         
@@ -12410,6 +12508,205 @@ public class TrainBuilderTest {
         Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
     }
     
+    /**
+     * Test generated custom load out of staging. Departure train restricts which
+     * load can be serviced out of staging
+     */
+    @Test
+    public void testCustomCarLoadFromStagingE() {
+
+        setupCustomCarLoad();
+
+        // get tracks, train travels from west to east
+        Train train = tmanager.getTrainByName("Train Westend-Midtown-Eastend");
+        
+        Location midtown = lmanager.newLocation("Midtown");
+        Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
+
+        // test car from staging, create one staging track
+        Location staging = lmanager.newLocation("Staging");
+        Track stagingTrack1 = staging.addTrack("Staging Track 1", Track.STAGING);
+        stagingTrack1.setLength(500);
+        stagingTrack1.setAddCustomLoadsEnabled(true);
+        
+        // add staging to the start of the route
+        Route route = train.getRoute();
+        route.addLocation(staging, 1);
+        
+        // change train name
+        train.setName("Train Staging-Westend-Midtown-Eastend");
+        
+        // place cars in staging
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40",  stagingTrack1, 0);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50",  stagingTrack1, 1);
+        
+        // don't allow train to carry "Nuts"
+        train.setLoadOption(Train.EXCLUDE_LOADS);
+        train.addLoadName("Nuts");
+ 
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm car has custom load and destination
+        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
+        
+        Assert.assertEquals("car load", "Bags", c4.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
+    }
+    
+    /**
+     * Test schedule drop off and pick up day options.
+     */
+    @Test
+    public void testCustomCarLoadFromStagingF() {
+        
+        TrainScheduleManager trainScheduleManager = InstanceManager.getDefault(TrainScheduleManager.class);
+        List<TrainSchedule> schedules = trainScheduleManager.getSchedulesByNameList();
+
+        setupCustomCarLoad();
+
+        // get tracks, train travels from west to east
+        Train train = tmanager.getTrainByName("Train Westend-Midtown-Eastend");
+        
+        Location westend = lmanager.newLocation("Westend");
+        Track westendSpur1 = westend.getTrackByName("Westend spur 1", Track.SPUR);
+        
+        Location midtown = lmanager.newLocation("Midtown");
+        Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
+
+        // test car from staging, create one staging track
+        Location staging = lmanager.newLocation("Staging");
+        Track stagingTrack1 = staging.addTrack("Staging Track 1", Track.STAGING);
+        stagingTrack1.setLength(500);
+        stagingTrack1.setAddCustomLoadsEnabled(true);
+        
+        // add staging to the start of the route
+        Route route = train.getRoute();
+        route.addLocation(staging, 1);
+        
+        // change train name
+        train.setName("Train Staging-Westend-Midtown-Eastend");
+        
+        // place cars in staging
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40",  stagingTrack1, 0);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50",  stagingTrack1, 1);
+        
+        // modify schedule to only allow delivery of a certain load on a given  day
+        Schedule schedule = smanager.getScheduleByName("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.getItemBySequenceId(1); // requests Boxcar with "Bags"
+        ScheduleItem sch1Item2 = schedule.getItemBySequenceId(2); // requests Boxcar with "Flour"
+        ScheduleItem sch1Item3 = schedule.getItemBySequenceId(3); // requests Boxcar with "Nuts"
+        
+        // deliver "Bags" on Monday, pull on Saturday
+        sch1Item1.setSetoutTrainScheduleId(schedules.get(1).getId());
+        sch1Item1.setPickupTrainScheduleId(schedules.get(2).getId());
+        
+        // deliver "Flour" on Sunday, pull on Thursday
+        sch1Item2.setSetoutTrainScheduleId(schedules.get(3).getId());
+        sch1Item2.setPickupTrainScheduleId(schedules.get(4).getId());
+        
+        // deliver "Nuts" on Tuesday, pull on Wednesday
+        sch1Item3.setSetoutTrainScheduleId(schedules.get(5).getId());
+        sch1Item3.setPickupTrainScheduleId(schedules.get(6).getId());
+        
+        Assert.assertEquals("Active schedule", "", tmanager.getTrainScheduleActiveId());
+ 
+        // no deliveries allowed
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm car sent to spur, no custom load
+        Assert.assertEquals("car load", "E", c3.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c3.getDestinationTrack());
+        
+        Assert.assertEquals("car load", "E", c4.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
+        
+        // now set the day to Sunday
+        Assert.assertEquals("Train schedule day", "Sunday", schedules.get(3).getName());
+        tmanager.setTrainSecheduleActiveId(schedules.get(3).getId());
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // confirm "Sunday" delivery, and pull on Thursday
+        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car next pickup id", schedules.get(4).getId(), c3.getNextPickupScheduleId());
+        
+        Assert.assertEquals("car load", "Flour", c4.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
+        Assert.assertEquals("car next pickup id", schedules.get(4).getId(), c4.getNextPickupScheduleId());    
+    }
+    
+    /**
+     * Test schedule Random feature
+     */
+    @Test
+    public void testCustomCarLoadFromStagingG() {
+
+        setupCustomCarLoad();
+
+        // get tracks, train travels from west to east
+        Train train = tmanager.getTrainByName("Train Westend-Midtown-Eastend");
+        
+        Location midtown = lmanager.newLocation("Midtown");
+        Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
+
+        // test car from staging, create one staging track
+        Location staging = lmanager.newLocation("Staging");
+        Track stagingTrack1 = staging.addTrack("Staging Track 1", Track.STAGING);
+        stagingTrack1.setLength(500);
+        stagingTrack1.setAddCustomLoadsEnabled(true);
+        
+        // add staging to the start of the route
+        Route route = train.getRoute();
+        route.addLocation(staging, 1);
+        
+        // change train name
+        train.setName("Train Staging-Westend-Midtown-Eastend");
+        
+        // place cars in staging
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "40",  stagingTrack1, 0);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50",  stagingTrack1, 1);
+        
+        // modify schedule to only allow delivery of a certain load on a given  day
+        Schedule schedule = smanager.getScheduleByName("Schedule for car load");
+        ScheduleItem sch1Item1 = schedule.getItemBySequenceId(1); // requests Boxcar with "Bags"
+        ScheduleItem sch1Item2 = schedule.getItemBySequenceId(2); // requests Boxcar with "Flour"
+        ScheduleItem sch1Item3 = schedule.getItemBySequenceId(3); // requests Boxcar with "Nuts"
+        
+        sch1Item1.setRandom("0"); // 0% chance
+        sch1Item2.setRandom("0");
+        sch1Item3.setRandom("100"); // only choice 100% chance
+        
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        Assert.assertEquals("car load", "Nuts", c3.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
+        
+        Assert.assertEquals("car load", "Nuts", c4.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack()); 
+        
+        // test bogus random number
+        sch1Item1.setRandom("0"); // 0% chance
+        sch1Item2.setRandom("A"); // random disabled, 100% chance 
+        sch1Item3.setRandom("0"); // 0% chance
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
+        
+        Assert.assertEquals("car load", "Flour", c4.getLoadName());
+        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack()); 
+    }
+    
     private void setupCustomCarLoad() {
 
         // register the car loads used
@@ -12425,7 +12722,7 @@ public class TrainBuilderTest {
         // this location isn't reachable, for test coverage
         Location northend = lmanager.newLocation("Northend");
 
-        Track westendInterchange1 = westend.addTrack("Westend Interchange 1", Track.INTERCHANGE);
+        Track westendInterchange1 = westend.addTrack("Westend interchange 1", Track.INTERCHANGE);
         westendInterchange1.setLength(500);
 
         Track westendSpur1 = westend.addTrack("Westend spur 1", Track.SPUR);

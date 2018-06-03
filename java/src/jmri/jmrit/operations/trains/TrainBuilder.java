@@ -3635,11 +3635,8 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Tries to place a custom load in the car that is departing staging, and
-     * may terminate to staging. Tries to create a custom load that will be
-     * accepted by the train's terminal if the terminal is staging. Otherwise,
-     * any staging track is searched for that will accept this car and a custom
-     * load.
+     * Tries to place a custom load in the car that is departing staging and
+     * attempts to find a destination for the car that is also staging.
      *
      * @param car the car
      * @throws BuildFailedException
@@ -3690,8 +3687,9 @@ public class TrainBuilder extends TrainCommon {
                 locationsNotReachable.add(track.getLocation());
                 continue;
             }
+            // ignore the staging tracks at the train's terminal 
             if (_terminateStageTrack != null && track.getLocation() == _terminateStageTrack.getLocation()) {
-                log.debug("Train doesn't terminate to staging track ({}) at terminal ({})", track.getName(), track
+                log.debug("Ignoring staging track ({}) at terminal ({})", track.getName(), track
                         .getLocation().getName());
                 continue;
             }
@@ -3860,7 +3858,7 @@ public class TrainBuilder extends TrainCommon {
                     return null;
                 }
             } catch (NumberFormatException e) {
-                log.error("Random value {} isn't a number", si.getRandom());
+                log.error("Schedule item ({}) random value ({}) isn't a number", si.getId(), si.getRandom());
             }
         }
         log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
@@ -4690,7 +4688,7 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Creates a car load for a car departing staging and terminating into
+     * Creates a car load for a car departing staging and eventually terminating into
      * staging.
      *
      * @param car the car!
@@ -4730,6 +4728,7 @@ public class TrainBuilder extends TrainCommon {
                         car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
         for (int i = loads.size() - 1; i >= 0; i--) {
             String load = loads.get(i);
+            log.debug("Try custom load ({}) for car ({})", load, car.toString());
             if (!car.getTrack().shipsLoad(load, car.getTypeName()) ||
                     !stageTrack.acceptsLoad(load, car.getTypeName()) ||
                     !_train.acceptsLoad(load, car.getTypeName())) {
@@ -4755,7 +4754,9 @@ public class TrainBuilder extends TrainCommon {
             String oldLoad = car.getLoadName(); // save existing "E" load
             car.setLoadName(load);
             if (!router.isCarRouteable(car, _train, stageTrack, _buildReport)) {
-                loads.remove(i);
+                loads.remove(i); // no remove this load
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackNotReachable"),
+                        new Object[]{stageTrack.getLocation().getName(), stageTrack.getName(), load}));
             }
             car.setLoadName(oldLoad); // restore car's load
         }
