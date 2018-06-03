@@ -87,6 +87,7 @@ public class JmriSRCPPowerServerTest extends jmri.jmris.AbstractPowerServerTestB
 
     @After
     public void tearDown() {
+        ps.dispose();
         ps = null;
         sb = null;
         JUnitUtil.tearDown();
