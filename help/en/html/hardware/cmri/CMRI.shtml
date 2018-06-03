@@ -1076,7 +1076,7 @@
   </p>
   <p><img alt="" src="images/diagoutputtest.png" width="698" height="612"></p>
 
-  <a name="L624" id="L624"></a><h2>Loopback Test</h2>
+  <a name="L625" id="L625"></a><h2>Loopback Test</h2>
   <p>The Loopback Test uses a loopback cable connected to a card of outputs and a card
   of inputs.  The test writes a data value pattern to each output port and reads the
   value from the corresponding input port.  The input value is compared to the output
@@ -1087,7 +1087,7 @@
   </p>
   <p><img alt="" src="images/diagloopback.png" width="698" height="612"></p>
   
-  <a name="L624" id="L624"></a><h2>Send Commands</h2>
+  <a name="L626" id="L626"></a><h2>Send Commands</h2>
   <p>Send Commands provides raw CMRInet packet transmissions to the test node.</p>
   <p><b>Initialize Node</b> transmits an Initialize (I) message to the node.  The node
   would then execute the onboard initialize code.</p>
