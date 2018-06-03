@@ -24,6 +24,8 @@ public final class TamsConstants {
     public final static int LEADINGX = 0x58;
     public final static int XSTATUS = 0xA2;
     public final static int XEVENT = 0xC8;
+    public final static int XSENSOR = 0x98;
+    public final static int XSENSOFF = 0x99;
     public final static int XEVTSEN = 0xCB;
     public final static int XEVTLOK = 0xC9;
     public final static int XEVTTRN = 0xCA;
