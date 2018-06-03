@@ -262,6 +262,11 @@ public abstract class AppsBase {
             return;
         }
         preferenceFileExists = true;
+
+        // ensure the UserPreferencesManager has been created
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+
+        // now (attempt to) load the config file
         try {
             ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {

@@ -245,6 +245,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             file = singleConfig;
         }
+        
+        // ensure the UserPreferencesManager has loaded
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        
+        // now (attempt to) load the config file
         log.debug("Using config file(s) {}", file.getPath());
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
