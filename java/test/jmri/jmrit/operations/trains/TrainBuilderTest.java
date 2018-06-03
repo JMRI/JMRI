@@ -12645,7 +12645,7 @@ public class TrainBuilderTest {
      * Test schedule Random feature
      */
     @Test
-    public void testCustomCarLoadFromStagingG() {
+    public void testScheduleRandom() {
 
         setupCustomCarLoad();
 
@@ -12699,6 +12699,12 @@ public class TrainBuilderTest {
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
+        
+        // there are 4 spurs with this schedule, so 4 error messages
+        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
+        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
+        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
+        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
         
         Assert.assertEquals("car load", "Flour", c3.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
