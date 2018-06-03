@@ -3673,7 +3673,7 @@ public class TrainBuilder extends TrainCommon {
             log.debug("Try staging track ({}, {})", track.getLocation().getName(), track.getName());
             // find a staging track that isn't at the departure
             if (track.getLocation() == _departLocation) {
-                log.debug("Don't use departure location ({})", track.getLocation().getName());
+                log.debug("Can't use departure location ({})", track.getLocation().getName());
                 continue;
             }
             if (!_train.isAllowThroughCarsEnabled() && track.getLocation() == _terminateLocation) {
@@ -3747,6 +3747,7 @@ public class TrainBuilder extends TrainCommon {
         ScheduleItem si = null;
         if (track.getScheduleMode() == Track.SEQUENTIAL) {
             si = track.getCurrentScheduleItem();
+            // code check
             if (si == null) {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoScheduleItem"),
                         new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(),
@@ -3755,8 +3756,10 @@ public class TrainBuilder extends TrainCommon {
             return checkScheduleItem(si, car, track);
         }
         log.debug("Track ({}) in match mode", track.getName());
+        // go through entire schedule looking for a match
         for (int i = 0; i < track.getSchedule().getSize(); i++) {
             si = track.getNextScheduleItem();
+            // code check
             if (si == null) {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoScheduleItem"),
                         new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(),
@@ -3771,12 +3774,14 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
+     * Used when generating a car load from staging.
+     * 
      * Checks a schedule item to see if the car type matches, and the train and
      * track can service the schedule item's load. This code doesn't check to
      * see if the car's load can be serviced by the schedule. Instead a schedule
      * item is returned that allows the program to assign a custom load to the
-     * car that matches a schedule item. Therefore, schedule items that request
-     * don't request a custom load are ignored.
+     * car that matches a schedule item. Therefore, schedule items that don't
+     * request a custom load are ignored.
      *
      * @param si the schedule item
      * @param car the car to check
@@ -4742,10 +4747,17 @@ public class TrainBuilder extends TrainCommon {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrainNotNewLoad"),
                             new Object[]{_train.getName(), load, stageTrack.getLocation().getName(),
                                     stageTrack.getName()}));
-
                 }
                 loads.remove(i);
+                continue;
             }
+            // are there trains that can carry the car type and load to the staging track?
+            String oldLoad = car.getLoadName(); // save existing "E" load
+            car.setLoadName(load);
+            if (!router.isCarRouteable(car, _train, stageTrack, _buildReport)) {
+                loads.remove(i);
+            }
+            car.setLoadName(oldLoad); // restore car's load
         }
         // Use random loads rather that the first one that works to create interesting loads
         if (loads.size() > 0) {
