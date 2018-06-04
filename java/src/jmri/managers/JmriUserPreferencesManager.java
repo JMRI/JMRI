@@ -841,6 +841,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     public final void readUserPreferences() {
+        log.trace("starting readUserPreferences");
         this.allowSave = false;
         this.loading = true;
         File perNodeConfig = null;
@@ -848,12 +849,15 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.identity() + "/" + Profile.UI_CONFIG); // NOI18N
             if (!perNodeConfig.canRead()) {
                 perNodeConfig = null;
+                log.trace("    sharedConfig can't be read");
             }
         } catch (FileNotFoundException ex) {
             // ignore - this only means that sharedConfig does not exist.
+            log.trace("    FileNotFoundException: sharedConfig does not exist");
         }
         if (perNodeConfig != null) {
             file = perNodeConfig;
+            log.debug("  start perNodeConfig file: {}", file.getPath());
             this.readComboBoxLastSelections();
             this.readPreferencesState();
             this.readSimplePreferenceState();
@@ -878,10 +882,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 }
             } catch (FileNotFoundException ex) {
                 // ignore - this only means that UserPrefsProfileConfig.xml does not exist.
+                log.debug("UserPrefsProfileConfig.xml does not exist");
             }
         }
         this.loading = false;
         this.allowSave = true;
+        log.trace("  ending readUserPreferences");
     }
 
     private void readComboBoxLastSelections() {

@@ -228,7 +228,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     public static String adapterName(Object o) {
         String className = o.getClass().getName();
-        log.debug("handle object of class {}", className);
+        log.trace("handle object of class {}", className);
         int lastDot = className.lastIndexOf(".");
         if (lastDot > 0) {
             // found package-class boundary OK
@@ -236,7 +236,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     + ".configurexml."
                     + className.substring(lastDot + 1, className.length())
                     + "Xml";
-            log.debug("adapter class name is {}", result);
+            log.trace("adapter class name is {}", result);
             return result;
         } else {
             // no last dot found!
@@ -596,6 +596,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
+        log.trace("starting load({}, {})", url, registerDeferred);
         // must not use invokeAndWait on Swing thread
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             // direct exec
@@ -610,13 +611,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                         boolean temp = loadOnSwingThread(url, registerDeferred);
                         result.set(temp);
                     } catch (JmriConfigureXmlException e) {
+                        log.trace("  ending load() via JmriConfigureXmlException");
                         throw new RuntimeException(e);
                     }
                 });
             } catch (InterruptedException | InvocationTargetException e) {
+                log.trace("  ending load() via InterruptedException | InvocationTargetException");
                 throw new JmriConfigureXmlException(e);
             }
 
+            log.trace("  ending load({}, {})", url, registerDeferred);
             return result.get();
         }
     }
