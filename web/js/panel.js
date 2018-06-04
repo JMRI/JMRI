@@ -572,8 +572,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
-                                if (typeof $widget.name !== "undefined") { //make it clickable (unless no turnout assigned)
-                                    $widget.classes += $widget.jsonType + " clickable ";
+                                if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) { 
+                                    $widget.classes += $widget.jsonType + " clickable "; //make it clickable (unless no turnout assigned)
                                 }
                                 //set widget occupancy sensor from block to speed affected changes later
                                 if (typeof $gBlks[$widget.blockname] !== "undefined") {
@@ -631,8 +631,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
 
-                                if ((typeof $widget.turnout !== "undefined") || (typeof $widget.turnoutB !== "undefined")) {
-                                    //make it clickable (unless no turnouts assigned)
+                                if (((typeof $widget.turnout !== "undefined") || (typeof $widget.turnoutB !== "undefined"))
+                                		&& ($widget.disabled !== "yes")) {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
 
@@ -1265,7 +1265,7 @@ function $drawTurnout($widget) {
             }
         }
     }
-    if ($gPanel.turnoutcircles == "yes") {  //draw turnout circle if requested
+    if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {  //draw turnout circle if requested
         $drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
     }
 }
@@ -1416,7 +1416,8 @@ function $drawSlip($widget) {
         $drawLine(cx, cy, $third(cx, bx), $third(cy, by), $mainColourC, $widthC); //draw C to one third CB
     }
 
-    if ($gPanel.turnoutcircles == "yes") {  //draw turnout circle if requested
+    if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
+    	
         //draw the two control circles
         var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
 
