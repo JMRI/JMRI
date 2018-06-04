@@ -1,7 +1,7 @@
 package jmri.jmrix.tams;
 
 /**
- * Encodes a message to a Tams MasterConttol command station.
+ * Encodes a message to a Tams MasterControl command station.
  * <P>
  * The {@link TamsReply} class handles the response from the command station.
  * <P>
@@ -13,7 +13,7 @@ package jmri.jmrix.tams;
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     static private final int TamsProgrammingTimeout = 5000;//ms
-    //static private final int TamsCommandTimeout = 100;
+    static private final int TamsCommandTimeout = 1000;//ms
 
     //The oneByteReply is used to tell TamsReply if one or more bytes are expected
     //The lastByteReply is gives the value of the last byte to be expected, for sensors this is always 0x00
@@ -98,7 +98,7 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
             setReplyLastByte(TamsConstants.EOM80);
         }
         //log.info(jmri.util.StringUtil.appendTwoHexFromInt(this.getElement(1),""));
-        //setRetries(1);
+        setRetries(5);
     	//log.info("Binary reply will be: one byte= " + getReplyOneByte() + ", last byte= " + getReplyLastByte());
     }
 
@@ -182,6 +182,26 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         m.setReplyOneByte(false);
         m.setReplyType('T');
         //log.info("Preformatted Tams message = " + Integer.toHexString(m.getElement(0)) + " " + Integer.toHexString(m.getElement(1)));
+        return m;
+    }
+    
+    //Set Tams MC to report only sensors which have been changed on polling
+    static public TamsMessage setXSR() {
+        TamsMessage m = new TamsMessage("xSR 1");
+        m.setBinary(false);
+        m.setReplyOneByte(false);
+        m.setReplyType('S');
+        return m;
+    }
+    
+    //Set Tams MC so that a sensor module with at least 1 bit set is reporting its status
+    static public TamsMessage setXSensOff() {
+        TamsMessage m = new TamsMessage(2);
+        m.setElement(0, TamsConstants.LEADINGX & 0xFF);
+        m.setElement(1, TamsConstants.XSENSOFF & 0xFF);
+        m.setBinary(true);
+        m.setReplyOneByte(false);
+        m.setReplyType('S');
         return m;
     }
     
@@ -276,5 +296,3 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 }
-
-

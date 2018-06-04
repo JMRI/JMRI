@@ -78,6 +78,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     public String getStatus() {
         return _status;
     }
+    
+    public boolean isCarRouteable(Car car, Train train, Track track, PrintWriter buildReport) {
+        Car c = car.copy();
+        c.setTrack(car.getTrack());
+        c.setFinalDestination(track.getLocation());
+        c.setFinalDestinationTrack(track);
+        boolean results = setDestination(c, train, buildReport);
+        c.setDestination(null, null); // clear router car destinations
+        return results;
+    }
 
     /**
      * Attempts to set the car's destination if a final destination exists. Only
