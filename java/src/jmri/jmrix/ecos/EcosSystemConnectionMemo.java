@@ -3,6 +3,8 @@ package jmri.jmrix.ecos;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -75,6 +77,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setSensorManager(sensorManager);
 
         jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        jmri.InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
 
     }
 
@@ -153,6 +156,9 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return true;
         }
+        if (type.equals(jmri.AddressedProgrammerManager.class)) {
+            return true;
+        }
         return super.provides(type);
     }
 
@@ -178,6 +184,9 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T) getReporterManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
+            return (T) getProgrammerManager();
+        }
+        if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
         return super.get(T);
@@ -217,5 +226,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class);
 
 }

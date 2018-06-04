@@ -120,6 +120,23 @@
       &lt;reference-distance&gt;3.0&lt;/reference-distance&gt;
       </pre>
 
+      <h5>Engine Gain</h5>
+
+      <p>Description:<br>
+      This element allows to adjust the engine gain for steam1
+      and diesel3 engine types.<br>
+      For engine type steam1 the gain value must be in the 
+      range of 0.4 and 1.0.<br>
+      Optional. Must be declared in the tag
+      <strong>sound name="ENGINE"</strong>.
+      Default value: 0.8<br>
+      <em>Since JMRI 4.11.7</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;engine-gain&gt;0.6&lt;/engine-gain&gt;
+      </pre>
+
       <div align="right">
         <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
       </div><!--#include virtual="/Footer" -->
