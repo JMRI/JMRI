@@ -84,6 +84,7 @@ import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.Log4JUtil;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.swing.FontComboUtil;
@@ -246,8 +247,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             file = singleConfig;
         }
         
-        // ensure the UserPreferencesManager has loaded
-        InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        // ensure the UserPreferencesManager has loaded. Done on GUI
+        // thread as it can modify GUI objects
+        ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        });
         
         // now (attempt to) load the config file
         log.debug("Using config file(s) {}", file.getPath());
