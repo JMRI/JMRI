@@ -24,6 +24,17 @@ public class ThreadingUtilTest extends TestCase {
         Assert.assertTrue(done);
     }
 
+    public synchronized void testToGuiWarn() {  // synchronized is part of the test
+        done = false;
+        
+        synchronized (this) {
+            ThreadingUtil.runOnGUI( ()-> { 
+                done = true; 
+            } );
+        }
+        Assert.assertTrue(done);
+    }
+
     public void testThreadingNesting() {
         done = false;
         
@@ -84,6 +95,18 @@ public class ThreadingUtilTest extends TestCase {
         
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed operation complete");
+    }
+
+    public void testThreadingRunOnGUIwithReturn() {
+        done = false;
+        
+        Integer value = ThreadingUtil.runOnGUIwithReturn( ()-> { 
+            done = true; 
+            return new Integer(21);
+        });
+
+        Assert.assertTrue(done);
+        Assert.assertEquals(new Integer(21), value);
     }
 
     public void testThreadingDelayLayout() {
