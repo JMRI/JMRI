@@ -160,6 +160,9 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
 
     @After
     public void tearDown() throws Exception {
+        ps.dispose();
+        ps = null;
+        sb = null;
         JUnitUtil.tearDown();
     }
 
