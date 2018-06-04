@@ -1308,7 +1308,36 @@ public class TrainBuilderTest {
         c4.setTypeName("boxcar"); // lower case "boxcar" not serviced by any track
         train1.addTypeName("boxcar");
         
+        // train reset clears all of the last moved dates
         train1.reset();
+        
+        // restore
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, -4);
+        c1.setLastDate(cal.getTime()); // 4 hour ago
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, -2);
+        c2.setLastDate(cal.getTime()); // 2 hour ago
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, -3);
+        c3.setLastDate(cal.getTime()); // 3 hours ago
+
+        cal.setTime(start);
+        cal.set(java.util.Calendar.DAY_OF_MONTH, -2);
+        c4.setLastDate(cal.getTime()); // 2 months ago.
+
+        // the last car to be evaluated
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
+        c5.setLastDate(cal.getTime()); // 1 hour ago.
+
+        // the first car to be evaluated
+        cal.setTime(start);
+        cal.add(java.util.Calendar.YEAR, -1);
+        c6.setLastDate(cal.getTime()); // one year ago.
+        
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
 
