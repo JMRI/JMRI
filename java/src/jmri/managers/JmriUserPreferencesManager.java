@@ -271,7 +271,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     /**
-     * Used to surpress messages for a perticular session, the information is
+     * Used to surpress messages for a particular session, the information is
      * not stored, can not be changed via the GUI.
      * <p>
      * This can be used to help prevent over loading the user with repetitive
