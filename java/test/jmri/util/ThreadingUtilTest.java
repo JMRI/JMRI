@@ -24,15 +24,35 @@ public class ThreadingUtilTest extends TestCase {
         Assert.assertTrue(done);
     }
 
-    public synchronized void testToGuiWarn() {  // synchronized is part of the test
+    Object testRef = null;
+    public void testToGuiWarn() {
+        // if (!java.lang.management.ManagementFactory
+        //                                        .getThreadMXBean().isObjectMonitorUsageSupported())
+        //        log.info("This JVM doesn't support object monitor tracking");
+        // if (!java.lang.management.ManagementFactory
+        //                                        .getThreadMXBean().isSynchronizerUsageSupported())
+        //        log.info("This JVM doesn't support synchronized lock tracking");
+                                                
+        final Object lockedThing = new Object();
         done = false;
         
-        synchronized (this) {
+        synchronized (lockedThing) {
+            // first, run something that also wants the lock
+            new Thread(() -> {
+                synchronized (lockedThing) {
+                    testRef = lockedThing;
+                }
+            }).start();
+            
             ThreadingUtil.runOnGUI( ()-> { 
                 done = true; 
+                Assert.assertNull(testRef); // due to lock
             } );
+ 
+            JUnitUtil.waitFor( ()->{ return done; }, "GUI thread complete");
+            Assert.assertNull(testRef); // due to lock
         }
-        Assert.assertTrue(done);
+        JUnitUtil.waitFor( ()->{ return testRef != null; }, "Locked thread complete");
     }
 
     public void testThreadingNesting() {
