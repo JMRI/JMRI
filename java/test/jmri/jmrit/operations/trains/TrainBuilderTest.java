@@ -1028,7 +1028,7 @@ public class TrainBuilderTest {
     }
 
     /**
-     * Test that car with destination is pull at the right location in a train's
+     * Test that car with destination is pulled at the right location in a train's
      * route
      */
     @Test
@@ -1293,50 +1293,9 @@ public class TrainBuilderTest {
         // put Acton yard track into FIFO mode
         actonYard1.setServiceOrder(Track.FIFO);
 
-        Assert.assertTrue(new TrainBuilder().build(train1));
-        Assert.assertTrue("Train status", train1.isBuilt());
-
-        // confirm car destination, order cars were evaluated
-        Assert.assertEquals("car destination", chelmsfordSpur1, c6.getDestinationTrack());
-        Assert.assertEquals("car destination", bostonSpur1, c4.getDestinationTrack());
-        Assert.assertEquals("car destination", chelmsfordSpur1, c1.getDestinationTrack());
-        Assert.assertEquals("car destination", chelmsfordSpur1, c3.getDestinationTrack());
-        Assert.assertEquals("car destination", bostonSpur1, c2.getDestinationTrack());
-        Assert.assertEquals("car destination", chelmsfordSpur1, c5.getDestinationTrack());
-        
         // test car bypass on FIFO track
         c4.setTypeName("boxcar"); // lower case "boxcar" not serviced by any track
         train1.addTypeName("boxcar");
-        
-        // train reset clears all of the last moved dates
-        train1.reset();
-        
-        // restore
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -4);
-        c1.setLastDate(cal.getTime()); // 4 hour ago
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -2);
-        c2.setLastDate(cal.getTime()); // 2 hour ago
-
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -3);
-        c3.setLastDate(cal.getTime()); // 3 hours ago
-
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -2);
-        c4.setLastDate(cal.getTime()); // 2 months ago.
-
-        // the last car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        c5.setLastDate(cal.getTime()); // 1 hour ago.
-
-        // the first car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        c6.setLastDate(cal.getTime()); // one year ago.
         
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train status", train1.isBuilt());
@@ -1495,29 +1454,29 @@ public class TrainBuilderTest {
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
 
         // send c3 to alternate track
+        c3.setDestination(boston);
+        c3.setDestinationTrack(bostonYard2);
+        
+        // set final destination Boston spur
         c3.setFinalDestination(boston);
-        c3.setFinalDestinationTrack(bostonYard2);
+        c3.setFinalDestinationTrack(bostonSpur2);
 
         // define the train
         Train train1 = tmanager.newTrain("TestAlternateTrack1");
         train1.setRoute(route);
 
-        new TrainBuilder().build(train1);
-        Assert.assertTrue("train status", train1.isBuilt());
-
-        // confirm car going to alternate track
-        Assert.assertEquals("car destination", bostonYard2, c3.getDestinationTrack());
-
         // now configure alternate and spur so local move not possible
-        bostonSpur2.setTrainDirections(Track.NORTH);
-        bostonYard2.setTrainDirections(Track.SOUTH);
+        bostonSpur2.setTrainDirections(Track.SOUTH);
+        bostonYard2.setTrainDirections(Track.NORTH);
 
-        train1.reset();
+        // should build, but c3 should not be assigned to train
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        //TODO finish this test
-
+        // destination to alternate track not acceptable
+        Assert.assertEquals("Train assignment", null, c3.getTrain());
+        Assert.assertEquals("Destination", null, c3.getDestination());
+        Assert.assertEquals("Final destination", bostonSpur2, c3.getFinalDestinationTrack());
     }
     
     /**
@@ -5396,6 +5355,7 @@ public class TrainBuilderTest {
         cld.addName("Boxcar", "Flour");
         cld.addName("Boxcar", "Bags");
 
+        // Route Northend - NI - Southend
         Train train1 = tmanager.getTrainById("1");
 
         Location locationNorthEnd = lmanager.getLocationById("1");
@@ -5445,6 +5405,23 @@ public class TrainBuilderTest {
         // now eliminate NI yard as a possible destination
         yardNI.deleteTypeName("Boxcar");
 
+        // build should work
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        Assert.assertEquals("car destination track", southEndStaging1, c1.getDestinationTrack());
+        Assert.assertEquals("car destination track", southEndStaging1, c2.getDestinationTrack());
+        Assert.assertEquals("car destination track", southEndStaging1, c3.getDestinationTrack());
+        Assert.assertEquals("car destination track", southEndStaging1, c4.getDestinationTrack());
+
+        // the only valid custom load is Bags, Flour is rejected
+        Assert.assertEquals("car's load", "Bags", c3.getLoadName());
+        Assert.assertEquals("car's load", "Bags", c4.getLoadName());
+        
+        // try other generate custom loads out of staging
+        northEndStaging1.setAddCustomLoadsEnabled(false);
+        northEndStaging1.setAddCustomLoadsAnySpurEnabled(true);
+        
         // build should work
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));

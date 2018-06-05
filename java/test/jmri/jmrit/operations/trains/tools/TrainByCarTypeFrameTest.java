@@ -1,6 +1,9 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -23,6 +26,18 @@ public class TrainByCarTypeFrameTest {
         t.initComponents(train);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
+    }
+    
+    @Test
+    public void testTrainByCarTypeFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainByName("Test Train Name");
+        TrainByCarTypeFrame f = new TrainByCarTypeFrame();
+        f.initComponents(train);
+
+        Assert.assertNotNull("frame exists", f);
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J

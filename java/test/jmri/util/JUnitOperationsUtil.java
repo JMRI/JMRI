@@ -373,6 +373,11 @@ public class JUnitOperationsUtil {
         return route;
     }
     
+    /**
+     * Creates a three location route that is also a turn.  Train
+     * departs North bound and returns South bound.
+     * @return Route
+     */
     public static Route createThreeLocationTurnRoute() {
 
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);

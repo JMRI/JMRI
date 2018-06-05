@@ -4373,8 +4373,7 @@ public class TrainBuilder extends TrainCommon {
                         rldSave == null &&
                         (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() ||
                                 _departStageTrack.isAddCustomLoadsEnabled() ||
-                                _departStageTrack
-                                        .isAddCustomLoadsAnySpurEnabled())) {
+                                _departStageTrack.isAddCustomLoadsAnySpurEnabled())) {
                     // try and generate a load for this car into staging
                     if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
                         trackTemp = _terminateStageTrack;
@@ -4424,13 +4423,11 @@ public class TrainBuilder extends TrainCommon {
                         // calculate the available space
                         int available = testTrack.getLength() -
                                 (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 +
-                                        testTrack.getReservedLengthDrops());
+                                        testTrack.getReserved());
                         // could be less based on track length
-                        int available3 = testTrack.getLength() +
-                                (testTrack.getLength() * testTrack.getIgnoreUsedLengthPercentage() / 100) -
-                                (testTrack.getUsedLength() + testTrack.getReserved());
-                        if (available3 < available) {
-                            available = available3;
+                        int available2 = testTrack.getLength() - testTrack.getReservedLengthDrops();
+                        if (available2 < available) {
+                            available = available2;
                         }
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildTrackHasPlannedPickups"),
@@ -4921,16 +4918,14 @@ public class TrainBuilder extends TrainCommon {
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES &&
                         rl == _train.getSecondLegStartLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = true;
                 }
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegEndLocation())) {
+                                rl == _train.getThirdLegEndLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = false;
@@ -5067,16 +5062,14 @@ public class TrainBuilder extends TrainCommon {
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES &&
                         rl == _train.getSecondLegStartLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = true;
                 }
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegEndLocation())) {
+                                rl == _train.getThirdLegEndLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = false;
@@ -5086,11 +5079,9 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // check for a change of engines in the train's route
                 if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                        rl == _train
-                                .getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartLocation()) ||
                         ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     addLocos(hpAvailable, extraHpNeeded, rlNeedHp, rlStart, rl);
                     addLine(_buildReport, THREE, BLANK_LINE);
