@@ -209,7 +209,7 @@ public class JUnitOperationsUtil {
         route1.setComment("Comment for route id 1");
 
         RouteLocation rl1 = new RouteLocation("1r1", locationNorthEnd);
-        rl1.setSequenceId(1);
+        rl1.setSequenceNumber(1);
         rl1.setTrainDirection(RouteLocation.SOUTH);
         rl1.setMaxCarMoves(5);
         rl1.setMaxTrainLength(1000);
@@ -218,7 +218,7 @@ public class JUnitOperationsUtil {
         rl1.setComment("Test route location comment for North End");
 
         RouteLocation rl2 = new RouteLocation("1r2", locationNorthIndustries);
-        rl2.setSequenceId(2);
+        rl2.setSequenceNumber(2);
         rl2.setTrainDirection(RouteLocation.SOUTH);
         // test for only 1 pickup and 1 drop
         rl2.setMaxCarMoves(2);
@@ -228,7 +228,7 @@ public class JUnitOperationsUtil {
         rl2.setTrainIconY(25);
 
         RouteLocation rl3 = new RouteLocation("1r3", locationSouthEnd);
-        rl3.setSequenceId(3);
+        rl3.setSequenceNumber(3);
         rl3.setTrainDirection(RouteLocation.SOUTH);
         rl3.setMaxCarMoves(5);
         rl3.setMaxTrainLength(1000);
@@ -344,10 +344,10 @@ public class JUnitOperationsUtil {
         lmanager.register(locationEastEnd);
 
         Track l7s1 = new Track("7s1", "East End 1", Track.STAGING, locationEastEnd);
-        l5s1.setLength(600);
+        l7s1.setLength(600);
 
         Track l7s2 = new Track("7s2", "East End 2", Track.STAGING, locationEastEnd);
-        l5s2.setLength(600);
+        l7s2.setLength(600);
 
         locationEastEnd.register(l7s1);
         locationEastEnd.register(l7s2);
@@ -373,6 +373,11 @@ public class JUnitOperationsUtil {
         return route;
     }
     
+    /**
+     * Creates a three location route that is also a turn.  Train
+     * departs North bound and returns South bound.
+     * @return Route
+     */
     public static Route createThreeLocationTurnRoute() {
 
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);

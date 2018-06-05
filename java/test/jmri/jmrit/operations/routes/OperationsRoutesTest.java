@@ -120,7 +120,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Location l1 = new Location("TESTLOCATIONID1", "TESTLOCATIONNAME1");
 
         RouteLocation rl1 = new RouteLocation("TESTROUTELOCATIONID", l1);
-        rl1.setSequenceId(4);
+        rl1.setSequenceNumber(4);
         rl1.setComment("TESTROUTELOCATIONCOMMENT");
         rl1.setMaxTrainLength(320);
         rl1.setTrainLength(220);
@@ -136,7 +136,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("RouteLocation toString", "TESTLOCATIONNAME1", rl1.toString());
 
         Assert.assertEquals("RouteLocation Comment", "TESTROUTELOCATIONCOMMENT", rl1.getComment());
-        Assert.assertEquals("RouteLocation Sequence", 4, rl1.getSequenceId());
+        Assert.assertEquals("RouteLocation Sequence", 4, rl1.getSequenceNumber());
 
         Assert.assertEquals("RouteLocation Max Train Length", 320, rl1.getMaxTrainLength());
         Assert.assertEquals("RouteLocation Train Length", 220, rl1.getTrainLength());
@@ -215,15 +215,15 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 before", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 before", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 before", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
         }
 
@@ -239,19 +239,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
             if (i == 3) {
                 Assert.assertEquals("List Location 4 after", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceNumber());
             }
         }
 
@@ -263,19 +263,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after move up", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after move up", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
             if (i == 3) {
                 Assert.assertEquals("List Location 4 after move up", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceNumber());
             }
         }
 
@@ -288,19 +288,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after move up", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after move up", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
             if (i == 3) {
                 Assert.assertEquals("List Location 4 after move up", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceNumber());
             }
         }
 
@@ -312,15 +312,15 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after move up", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after move up", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
         }
     }

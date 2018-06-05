@@ -48,6 +48,7 @@ class Diesel3Sound extends EngineSound {
     AudioBuffer stop_buffer;
     AudioBuffer transition_buf;
     float engine_rd;
+    float engine_gain;
 
     // Common variables
     Float throttle_setting; // used for handling speed changes
@@ -143,7 +144,7 @@ class Diesel3Sound extends EngineSound {
     @Override
     public void setXml(Element e, VSDFile vf) {
         Element el;
-        String fn;
+        String fn, in;
         D3Notch sb;
 
         // Handle the common stuff.
@@ -153,7 +154,7 @@ class Diesel3Sound extends EngineSound {
         _soundName = this.getName() + ":LoopSound";
         log.debug("get name: {}, soundName: {}, name: {}", this.getName(), _soundName, name);
         notch_sounds = new HashMap<Integer, D3Notch>();
-        String in = e.getChildText("idle-notch");
+        in = e.getChildText("idle-notch");
         Integer idle_notch = null;
         if (in != null) {
             idle_notch = Integer.parseInt(in);
@@ -170,6 +171,16 @@ class Diesel3Sound extends EngineSound {
         // Sounds with distance to listener position lower than reference-distance will not have attenuation
         engine_rd = setXMLReferenceDistance(e); // Handle reference distance
         log.debug("engine-sound referenceDistance: {}", engine_rd);
+
+        // Optional value
+        // Allows to adjust the engine gain
+        in = e.getChildText("engine-gain");
+        if ((in != null) && (!in.isEmpty())) {
+            engine_gain = Float.parseFloat(in);
+        } else {
+            engine_gain = default_gain;
+        }
+        log.debug("engine gain: {}", engine_gain);
 
         // Get the notch sounds
         Iterator<Element> itr = (e.getChildren("notch-sound")).iterator();
@@ -518,10 +529,10 @@ class Diesel3Sound extends EngineSound {
             is_running = r;
             is_looping = false;
             is_dying = false;
+            _parent = d;
             _notch = n;
             _sound = new SoundBite(s);
-            _sound.setGain(0.8f);
-            _parent = d;
+            _sound.setGain(_parent.engine_gain);
             _throttle = 0.0f;
             if (r) {
                 this.start();

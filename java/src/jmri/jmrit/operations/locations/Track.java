@@ -1382,7 +1382,7 @@ public class Track {
      * Used to determine if track can service the rolling stock.
      *
      * @param rs the car or loco to be tested
-     * @return Error string starting with TYPE, ROAD, LENGTH, DESTINATION, or
+     * @return Error string starting with TYPE, ROAD, CAPACITY, LENGTH, DESTINATION or
      *         LOAD if there's an issue. OKAY if track can service Rolling
      *         Stock.
      */
@@ -1401,6 +1401,7 @@ public class Track {
         }
         // now determine if there's enough space for the rolling stock
         int length = rs.getTotalLength();
+        // error check
         try {
             Integer.parseInt(rs.getLength());
         } catch (Exception e) {
@@ -1426,15 +1427,7 @@ public class Track {
             }
             // check for car in kernel
             if (car.getKernel() != null && car.getKernel().isLead(car)) {
-                length = 0;
-                for (Car c : car.getKernel().getCars()) {
-                    // don't add length for cars already on this track or already going to this track
-                    if (c.getTrack() != null && c.getTrack().equals(this) ||
-                            c.getDestinationTrack() != null && c.getDestinationTrack().equals(this)) {
-                        continue;
-                    }
-                    length += c.getTotalLength();
-                }
+                length = car.getKernel().getTotalLength();
             }
             if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
@@ -1446,15 +1439,7 @@ public class Track {
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
             if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
-                length = 0;
-                for (Engine e : eng.getConsist().getEngines()) {
-                    // don't add length for locos already on this track or already going to this track
-                    if (e.getTrack() != null && e.getTrack().equals(this) ||
-                            e.getDestinationTrack() != null && e.getDestinationTrack().equals(this)) {
-                        continue;
-                    }
-                    length = length + Integer.parseInt(e.getLength()) + RollingStock.COUPLER;
-                }
+                length = eng.getConsist().getTotalLength();
             }
         }
         if (rs.getTrack() != this &&
@@ -1543,6 +1528,11 @@ public class Track {
         return _order;
     }
 
+    /**
+     * Set the service order for this track. Only yards and interchange have
+     * this feature.
+     * @param order Track.NORMAL, Track.FIFO, Track.LIFO
+     */
     public void setServiceOrder(String order) {
         String old = _order;
         _order = order;
