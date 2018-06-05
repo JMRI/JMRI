@@ -2427,7 +2427,7 @@ public class TrainBuilder extends TrainCommon {
             }
 
             // check for car order?
-            car = getCarOrder(car);
+            car = getCarServiceOrder(car);
 
             // is car departing staging and generate custom load?
             if (!generateCarLoadFromStaging(car)) {
@@ -2447,7 +2447,7 @@ public class TrainBuilder extends TrainCommon {
                     car.getDestination() == null &&
                     car.getTrack() != _departStageTrack) {
                 // done with this car, it has a custom load, and there are spurs/schedules, but no destination found
-                checkCarOrder(car);
+                adjustCarOrder(car);
                 continue;
             }
             // does car have a final destination, but no destination
@@ -2553,14 +2553,14 @@ public class TrainBuilder extends TrainCommon {
                         findDestinationAndTrack(car, rl, routeIndex, _routeList.size());
                         continue;
                     } else {
-                        checkCarOrder(car);
+                        adjustCarOrder(car);
                         continue;
                     }
                 } else {
                     // did the router assign a destination?
                     if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != _departStageTrack) {
                         log.debug("Skipping car ({}) no car destination", car.toString()); // NOI18N
-                        checkCarOrder(car);
+                        adjustCarOrder(car);
                         continue;
                     } else {
                         // if departing staging try and find a destination for this car
@@ -3635,11 +3635,8 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Tries to place a custom load in the car that is departing staging, and
-     * may terminate to staging. Tries to create a custom load that will be
-     * accepted by the train's terminal if the terminal is staging. Otherwise,
-     * any staging track is searched for that will accept this car and a custom
-     * load.
+     * Tries to place a custom load in the car that is departing staging and
+     * attempts to find a destination for the car that is also staging.
      *
      * @param car the car
      * @throws BuildFailedException
@@ -3690,8 +3687,9 @@ public class TrainBuilder extends TrainCommon {
                 locationsNotReachable.add(track.getLocation());
                 continue;
             }
+            // ignore the staging tracks at the train's terminal 
             if (_terminateStageTrack != null && track.getLocation() == _terminateStageTrack.getLocation()) {
-                log.debug("Train doesn't terminate to staging track ({}) at terminal ({})", track.getName(), track
+                log.debug("Ignoring staging track ({}) at terminal ({})", track.getName(), track
                         .getLocation().getName());
                 continue;
             }
@@ -3860,7 +3858,7 @@ public class TrainBuilder extends TrainCommon {
                     return null;
                 }
             } catch (NumberFormatException e) {
-                log.error("Random value {} isn't a number", si.getRandom());
+                log.error("Schedule item ({}) random value ({}) isn't a number", si.getId(), si.getRandom());
             }
         }
         log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
@@ -3869,26 +3867,25 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Checks all of the cars on an interchange track and returns the oldest
-     * (FIFO) or newest (LIFO) car residing on that track. Note high priority
-     * cars will be serviced first, then low.
+     * Checks all of the cars on a yard or interchange track and returns the oldest
+     * (FIFO) or newest (LIFO) car residing on that track. Note that
+     * cars with high priority loads will be serviced first.
      *
-     * Also see checkCarOrder(Car car).
+     * Also see adjustCarOrder(Car car).
      *
-     * @param car the car being pulled from the interchange track
-     * @return The FIFO car at this interchange
+     * @param car the car being pulled from a yard or interchange track
+     * @return The FIFO car at this track
      */
-    private Car getCarOrder(Car car) {
+    private Car getCarServiceOrder(Car car) {
         if (car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
             return car;
         }
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
                 new Object[]{car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
                         car.getTrack().getServiceOrder()}));
-        log.debug(
-                "Get {} car ({}) from {} ({}), last moved date: {}", // NOI18N
+        log.debug("Get {} car ({}) from {} ({}), last moved date: {}",
                 car.getTrack().getServiceOrder(), car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
-                car.getLastDate());
+                car.getLastDate()); // NOI18N
         Car bestCar = car;
         for (int i = _carIndex; i < _carList.size(); i++) {
             Car testCar = _carList.get(i);
@@ -3924,7 +3921,7 @@ public class TrainBuilder extends TrainCommon {
      * list so it won't be evaluated again.
      *
      */
-    private void checkCarOrder(Car car) {
+    private void adjustCarOrder(Car car) {
         // is car sitting on a FIFO or LIFO track?
         if (car.getTrack() != null &&
                 !car.getTrack().getServiceOrder().equals(Track.NORMAL) &&
@@ -4197,7 +4194,7 @@ public class TrainBuilder extends TrainCommon {
         car.setDestination(null, null);
         car.updateKernel();
 
-        checkCarOrder(car);
+        adjustCarOrder(car);
         return true; // car no longer has a destination, but it had one.
     }
 
@@ -4376,8 +4373,7 @@ public class TrainBuilder extends TrainCommon {
                         rldSave == null &&
                         (_departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() ||
                                 _departStageTrack.isAddCustomLoadsEnabled() ||
-                                _departStageTrack
-                                        .isAddCustomLoadsAnySpurEnabled())) {
+                                _departStageTrack.isAddCustomLoadsAnySpurEnabled())) {
                     // try and generate a load for this car into staging
                     if (generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
                         trackTemp = _terminateStageTrack;
@@ -4427,13 +4423,11 @@ public class TrainBuilder extends TrainCommon {
                         // calculate the available space
                         int available = testTrack.getLength() -
                                 (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 +
-                                        testTrack.getReservedLengthDrops());
+                                        testTrack.getReserved());
                         // could be less based on track length
-                        int available3 = testTrack.getLength() +
-                                (testTrack.getLength() * testTrack.getIgnoreUsedLengthPercentage() / 100) -
-                                (testTrack.getUsedLength() + testTrack.getReserved());
-                        if (available3 < available) {
-                            available = available3;
+                        int available2 = testTrack.getLength() - testTrack.getReservedLengthDrops();
+                        if (available2 < available) {
+                            available = available2;
                         }
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildTrackHasPlannedPickups"),
@@ -4649,7 +4643,7 @@ public class TrainBuilder extends TrainCommon {
             addCarToTrain(car, rl, rldSave, trackSave);
             return true;
         }
-        checkCarOrder(car);
+        adjustCarOrder(car);
         return false; // no build errors, but car not given destination
     }
 
@@ -4690,7 +4684,7 @@ public class TrainBuilder extends TrainCommon {
     }
 
     /**
-     * Creates a car load for a car departing staging and terminating into
+     * Creates a car load for a car departing staging and eventually terminating into
      * staging.
      *
      * @param car the car!
@@ -4730,6 +4724,7 @@ public class TrainBuilder extends TrainCommon {
                         car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
         for (int i = loads.size() - 1; i >= 0; i--) {
             String load = loads.get(i);
+            log.debug("Try custom load ({}) for car ({})", load, car.toString());
             if (!car.getTrack().shipsLoad(load, car.getTypeName()) ||
                     !stageTrack.acceptsLoad(load, car.getTypeName()) ||
                     !_train.acceptsLoad(load, car.getTypeName())) {
@@ -4755,7 +4750,9 @@ public class TrainBuilder extends TrainCommon {
             String oldLoad = car.getLoadName(); // save existing "E" load
             car.setLoadName(load);
             if (!router.isCarRouteable(car, _train, stageTrack, _buildReport)) {
-                loads.remove(i);
+                loads.remove(i); // no remove this load
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingTrackNotReachable"),
+                        new Object[]{stageTrack.getLocation().getName(), stageTrack.getName(), load}));
             }
             car.setLoadName(oldLoad); // restore car's load
         }
@@ -4921,16 +4918,14 @@ public class TrainBuilder extends TrainCommon {
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES &&
                         rl == _train.getSecondLegStartLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = true;
                 }
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegEndLocation())) {
+                                rl == _train.getThirdLegEndLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = false;
@@ -5067,16 +5062,14 @@ public class TrainBuilder extends TrainCommon {
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES &&
                         rl == _train.getSecondLegStartLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = true;
                 }
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train
-                                        .getThirdLegEndLocation())) {
+                                rl == _train.getThirdLegEndLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = false;
@@ -5086,11 +5079,9 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // check for a change of engines in the train's route
                 if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                        rl == _train
-                                .getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartLocation()) ||
                         ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     addLocos(hpAvailable, extraHpNeeded, rlNeedHp, rlStart, rl);
                     addLine(_buildReport, THREE, BLANK_LINE);

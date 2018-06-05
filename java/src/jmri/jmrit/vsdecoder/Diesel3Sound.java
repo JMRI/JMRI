@@ -529,10 +529,10 @@ class Diesel3Sound extends EngineSound {
             is_running = r;
             is_looping = false;
             is_dying = false;
+            _parent = d;
             _notch = n;
             _sound = new SoundBite(s);
             _sound.setGain(_parent.engine_gain);
-            _parent = d;
             _throttle = 0.0f;
             if (r) {
                 this.start();
