@@ -265,14 +265,33 @@ public class ThreadingUtil {
      * Warn if a thread is holding locks. Used when transitioning to another context.
      */
     static public void warnLocks() {
-        java.lang.management.MonitorInfo[] monitors = java.lang.management.ManagementFactory
-                                            .getThreadMXBean()
-                                                .getThreadInfo(Thread.currentThread().getId())
-                                                    .getLockedMonitors();
-        for (java.lang.management.MonitorInfo mon : monitors) {
-            log.warn("Thread was holding lock {} from {}", mon, mon.getLockedStackFrame());
+        if ( log.isDebugEnabled() ) {
+            try {
+                java.lang.management.ThreadInfo threadInfo = java.lang.management.ManagementFactory
+                                                    .getThreadMXBean()
+                                                        .getThreadInfo(new long[]{Thread.currentThread().getId()}, true, true)[0];
+
+                java.lang.management.MonitorInfo[] monitors = threadInfo.getLockedMonitors();
+                for (java.lang.management.MonitorInfo mon : monitors) {
+                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame()); // yes, warn - for re-enable later
+                }
+
+                java.lang.management.LockInfo[] locks = threadInfo.getLockedSynchronizers();
+                for (java.lang.management.LockInfo lock : locks) {
+                    log.warn("Thread was holding lock {} from {}", lock);  // yes, warn - for re-enable later
+                }
+            } catch (RuntimeException ex) {
+                // just record exceptions for later pick up during debugging
+                if (!lastWarnLocksLimit) log.warn("Exception in warnLocks", ex);
+                lastWarnLocksLimit = true;
+                lastWarnLocksException = ex;
+            }
         }
     }
+    private static boolean lastWarnLocksLimit = false;
+    public static RuntimeException lastWarnLocksException = null;
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
+
 }
+
