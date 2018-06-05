@@ -12835,6 +12835,16 @@ public class TrainBuilderTest {
         
         Location midtown = lmanager.newLocation("Midtown");
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
+        Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
+        
+        Location eastend = lmanager.getLocationByName("Eastend");
+        Track eastendSpur1 = eastend.getTrackByName("Eastend spur 1", Track.SPUR);
+        
+        Location westend = lmanager.getLocationByName("Westend");
+        Track westendSpur1 = westend.getTrackByName("Westend spur 1", Track.SPUR);
+        
+        Location northend = lmanager.getLocationByName("Northend");
+        Track northendSpur1 = northend.getTrackByName("Northend spur 1", Track.SPUR);
 
         // test car from staging, create one staging track
         Location staging = lmanager.newLocation("Staging");
@@ -12870,28 +12880,33 @@ public class TrainBuilderTest {
         Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
         
         Assert.assertEquals("car load", "Nuts", c4.getLoadName());
-        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack()); 
+        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
         
-//        // test bogus random number
-//        sch1Item1.setRandom("0"); // 0% chance
-//        sch1Item2.setRandom("A"); // random disabled, 100% chance 
-//        sch1Item3.setRandom("0"); // 0% chance
-//        
-//        train.reset();
-//        new TrainBuilder().build(train);
-//        Assert.assertTrue(train.isBuilt());
-//        
-//        // there are 4 spurs with this schedule, so 4 error messages
+        // configure test so only one spur reports error message
+        midtownSpur1.deleteTypeName("Boxcar");
+        midtownSpur2.deleteTypeName("Boxcar");
+        northendSpur1.deleteTypeName("Boxcar");
+        
+        c4.setTypeName("Flat");
+        
+        // test bogus random number
+        sch1Item1.setRandom("0"); // 0% chance
+        sch1Item2.setRandom("A"); // random disabled, 100% chance 
+        sch1Item3.setRandom("0"); // 0% chance
+        
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+        
+        // there are 4 spurs with this schedule, but only one error messages
+        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
 //        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
-//        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
-//        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
-//        jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
-//        
-//        Assert.assertEquals("car load", "Flour", c3.getLoadName());
-//        Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
-//        
-//        Assert.assertEquals("car load", "Flour", c4.getLoadName());
-//        Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack()); 
+        
+        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        Assert.assertEquals("car destination track", eastendSpur1, c3.getDestinationTrack());
+        
+        Assert.assertEquals("car load", "E", c4.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack()); 
     }
     
     private void setupCustomCarLoad() {
