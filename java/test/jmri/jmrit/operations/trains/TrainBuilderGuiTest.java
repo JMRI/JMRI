@@ -9,6 +9,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
@@ -224,7 +225,8 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         Train train2 = tmanager.getTrainById("2");
         train2.setNumberEngines("2");
         Route route = train2.getRoute();
-               
+        
+        // don't allow any drops in the train's route to cause build failure
         RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
         rlNI.setDropAllowed(false);
         
@@ -303,6 +305,11 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+        
+        // increase test code coverage by placing cars in a kernel
+        Kernel k2 = cmanager.newKernel("2 Boxcars");
+        c3.setKernel(k2);
+        c4.setKernel(k2);
         
         // Route Northend-NI-Southend
         Train train2 = tmanager.getTrainById("2");
@@ -446,7 +453,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
     
     /**
      * Test failure message when build fails, release engines
-     * by reset.
+     * by reset. No cars in staging for this test.
      */
     @Test
     public void testBuildFailedMessageStagingD() {
@@ -526,6 +533,91 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", null, e3.getTrain());
         Assert.assertEquals("Train assignment", null, e4.getTrain());
+    }
+    
+    /**
+     * Test failure message when build fails, Don't release engines
+     * by reset. No cars in staging for this test.
+     */
+    @Test
+    public void testBuildFailedMessageStagingE() {
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        tmanager.setBuildMessagesEnabled(true);
+        
+        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
+        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
+        Engine e3 = emanager.getByRoadAndNumber("PC", "5524");
+        Engine e4 = emanager.getByRoadAndNumber("PC", "5559");
+
+        Location northend = lmanager.getLocationById("1");
+        Track northendStaging1 = northend.getTrackById("1s1");
+        
+        Location southend = lmanager.getLocationById("3");
+        Track southendStaging1 = southend.getTrackById("3s1");
+        
+        // 4 cars in staging, 2 cabooses, and 2 Boxcars
+        Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
+        Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+        
+        // remove cars from departure track
+        c1.setLocation(null, null);
+        c2.setLocation(null, null);
+        c3.setLocation(null, null);
+        c4.setLocation(null, null);
+
+        // Place Engines on Staging tracks
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(northend, northendStaging1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(northend, northendStaging1));
+        
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+        train2.setNumberEngines("4");
+               
+        southendStaging1.setLength(200); // make track too short for 4 locos
+
+        // should cause failure dialog to appear
+        Thread build = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new TrainBuilder().build(train2);
+            }
+        });
+        build.setName("Build Train 2"); // NOI18N
+        build.start();
+
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
+
+        // dialog remove engines from staging or continue by pressing OK
+        pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
+        
+        // next prompt asks if cars are to be released from train by reset
+        pressDialogButton(Bundle.getMessage("buildResetTrain"), "No");
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
+        
+        // only e3 and e4 have been assigned to train
+        Assert.assertFalse("Train status", train2.isBuilt());
+        
+        //confirm that the two cabooses are assigned to the train
+        Assert.assertEquals("Train assignment", null, e1.getTrain());
+        Assert.assertEquals("Train assignment", null, e2.getTrain());
+        Assert.assertEquals("Train assignment", train2, e3.getTrain());
+        Assert.assertEquals("Train assignment", train2, e4.getTrain());
     }
 
     // Ensure minimal setup for log4J
