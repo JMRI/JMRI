@@ -6,10 +6,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -156,32 +152,6 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         JUnitUtil.dispose(fl);
     }
 
-    private void loadLocations() {
-        // create 5 locations
-        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-        Location l1 = lManager.newLocation("Test Loc E");
-        l1.setLength(1001);
-        Location l2 = lManager.newLocation("Test Loc D");
-        l2.setLength(1002);
-        Location l3 = lManager.newLocation("Test Loc C");
-        l3.setLength(1003);
-        Location l4 = lManager.newLocation("Test Loc B");
-        l4.setLength(1004);
-        Location l5 = lManager.newLocation("Test Loc A");
-        l5.setLength(1005);
-
-    }
-    
-    private void loadTrains() {
-        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
-        Train trainA = trainManager.newTrain("Test Train A");
-        // train needs to service location "l" or error message when saving track edit frame
-        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
-        Route route = routeManager.newRoute("Route Train A");
-        route.addLocation(l);
-        trainA.setRoute(route);      
-    }
-
     // Ensure minimal setup for log4J
     @Override
     @Before
@@ -199,7 +169,7 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
         
-        loadTrains();
+        loadTrain(l);
        
     }
 
