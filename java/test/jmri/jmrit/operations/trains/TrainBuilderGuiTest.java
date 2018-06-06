@@ -335,7 +335,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         
         // need some time for the train reset to work through the rolling stock
         try {
-            Thread.sleep(10);
+            Thread.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -515,7 +515,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         
         // need some time for the train reset to work through the rolling stock
         try {
-            Thread.sleep(1);
+            Thread.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
