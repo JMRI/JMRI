@@ -247,12 +247,12 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         }, "wait for prompt");
 
         // dialog "remove cars from staging" or continue by pressing "OK"
-        JDialogOperator jdo = pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+        pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
-            return !jdo.isShowing();
-        }, "wait for dialog to close");
+            return build.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         pressDialogButton(Bundle.getMessage("buildResetTrain"), "No");
@@ -334,6 +334,10 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
+        
         // next prompt asks if cars are to be released from train by reset
         pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
         
@@ -413,6 +417,10 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         // dialog "remove cars from staging" or continue by pressing "OK"
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("buttonRemoveCars"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
@@ -499,6 +507,10 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         // dialog remove engines from staging or continue by pressing OK
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
