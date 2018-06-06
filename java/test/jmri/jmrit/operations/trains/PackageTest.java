@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         TrainManagerTest.class,
         TrainTest.class,
         TrainCommonTest.class,
+        TrainBuilderGuiTest.class,
         TrainBuilderTest.class,
         XmlTest.class,
         BundleTest.class,
