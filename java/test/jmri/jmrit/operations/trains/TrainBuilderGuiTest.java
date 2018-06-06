@@ -186,6 +186,10 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), "OK");
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
+        
         Assert.assertFalse("Train status", train2.isBuilt());
     }
     
@@ -243,15 +247,19 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         }, "wait for prompt");
 
         // dialog "remove cars from staging" or continue by pressing "OK"
-        JDialogOperator jdo = pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+        pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
-            return !jdo.isShowing();
-        }, "wait for dialog to close");
+            return build.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
         pressDialogButton(Bundle.getMessage("buildResetTrain"), "No");
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
         
@@ -326,19 +334,16 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
+        
         // next prompt asks if cars are to be released from train by reset
-        JDialogOperator jdo = pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
+        pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
         
         jmri.util.JUnitUtil.waitFor(() -> {
-            return !jdo.isShowing();
-        }, "wait for dialog to close");
-        
-        // need some time for the train reset to work through the rolling stock
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
         
@@ -413,19 +418,16 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("buttonRemoveCars"));
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
+        
         // next prompt asks if cars are to be released from train by reset
-        JDialogOperator jdo = pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
+        pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
         
         jmri.util.JUnitUtil.waitFor(() -> {
-            return !jdo.isShowing();
-        }, "wait for dialog to close");
-        
-        // need some time for the train reset to work through the rolling stock
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
         
@@ -506,19 +508,16 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return build.getState().equals(Thread.State.WAITING);
+        },"wait for prompt");
+        
         // next prompt asks if cars are to be released from train by reset
-        JDialogOperator jdo = pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
+        pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
         
         jmri.util.JUnitUtil.waitFor(() -> {
-            return !jdo.isShowing();
-        }, "wait for dialog to close");
-        
-        // need some time for the train reset to work through the rolling stock
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            return build.getState().equals(Thread.State.TERMINATED);
+        }, "wait for build to complete");
         
         Assert.assertFalse("Train status", train2.isBuilt());
         
@@ -535,8 +534,6 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
     public void setUp() throws Exception {
         super.setUp();
 
-        JUnitOperationsUtil.resetOperationsManager();
-        JUnitOperationsUtil.initOperationsData();
         // setup new managers
         tmanager = InstanceManager.getDefault(TrainManager.class);
         lmanager = InstanceManager.getDefault(LocationManager.class);
@@ -545,6 +542,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
 
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);
+        JUnitOperationsUtil.initOperationsData();
     }
 
     protected JDialogOperator pressDialogButton(String dialogTitle, String buttonName) {
