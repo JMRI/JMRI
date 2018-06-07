@@ -228,7 +228,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     public static String adapterName(Object o) {
         String className = o.getClass().getName();
-        log.debug("handle object of class {}", className);
+        log.trace("handle object of class {}", className);
         int lastDot = className.lastIndexOf(".");
         if (lastDot > 0) {
             // found package-class boundary OK
@@ -236,7 +236,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     + ".configurexml."
                     + className.substring(lastDot + 1, className.length())
                     + "Xml";
-            log.debug("adapter class name is {}", result);
+            log.trace("adapter class name is {}", result);
             return result;
         } else {
             // no last dot found!
@@ -596,29 +596,21 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
-        // must not use invokeAndWait on Swing thread
-        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
-            // direct exec
-            return loadOnSwingThread(url, registerDeferred);
-        } else {
-            // push to swing
-            final java.util.concurrent.atomic.AtomicReference<Boolean> result = new java.util.concurrent.atomic.AtomicReference<>();
-
-            try {
-                javax.swing.SwingUtilities.invokeAndWait(() -> {
-                    try {
-                        boolean temp = loadOnSwingThread(url, registerDeferred);
-                        result.set(temp);
-                    } catch (JmriConfigureXmlException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            } catch (InterruptedException | InvocationTargetException e) {
-                throw new JmriConfigureXmlException(e);
+        log.trace("starting load({}, {})", url, registerDeferred);
+        
+        // we do the actual load on the Swing thread in case it changes visible windows
+        Boolean retval = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
+            try { 
+                Boolean ret = loadOnSwingThread(url, registerDeferred);
+                return ret;
+            } catch (Exception e) {
+                log.trace("  ending load() via JmriConfigureXmlException");
+                throw new RuntimeException(e);
             }
-
-            return result.get();
-        }
+        });
+        
+        log.trace("  ending load({}, {} with {})", url, registerDeferred, retval);
+        return retval;
     }
 
     private XmlFile.Validate validate = XmlFile.Validate.CheckDtdThenSchema;
@@ -639,7 +631,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return validate;
     }
 
-    private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
+    // must run on GUI thread only; that's ensured at the using level.
+    private Boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
         /* We will put all the elements into a load list, along with the load order
@@ -675,6 +668,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
             List<Map.Entry<Element, Integer>> l = new ArrayList<>(loadlist.entrySet());
             Collections.sort(l, (Map.Entry<Element, Integer> o1, Map.Entry<Element, Integer> o2) -> o1.getValue().compareTo(o2.getValue()));
+
             for (int i = 0; i < l.size(); i++) {
                 Element item = l.get(i).getKey();
                 String adapterName = item.getAttribute("class").getValue();
