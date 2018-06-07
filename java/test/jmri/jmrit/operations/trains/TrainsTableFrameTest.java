@@ -82,15 +82,16 @@ public class TrainsTableFrameTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+    public void setUp() throws Exception {
+        super.setUp();
+        loadTrains();
     }
-
-    @Override
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
+    
+     @Override
+     @After
+     public void tearDown() throws Exception {
+         super.tearDown();
+     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class);
 
