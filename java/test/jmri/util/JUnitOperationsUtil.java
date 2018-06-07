@@ -109,6 +109,10 @@ public class JUnitOperationsUtil {
 
     /**
      * Populate the Operations Managers with a common set of data for tests.
+     * Creates and places 10 cars on tracks. 2 Cabooses on staging track 1,
+     * 2 Boxcars on staging track 1, 2 Boxcars on staging track 2, 2 Boxcars
+     * and 1 Flat in NI yard.  Also creates 4 engines, and places them into
+     * two separate consists.  Engines are not on a track. 
      */
     public static void initOperationsData() {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
@@ -188,10 +192,10 @@ public class JUnitOperationsUtil {
         Location locationSouthEnd = lmanager.getLocationById("3");
         Assert.assertNotNull(locationSouthEnd);
 
-        // Set up two cabooses and six box cars
+        // Create 2 cabooses, 6 Boxcars, 2 Flats
         // Place Cabooses on Staging tracks
         // Place 4 Boxcars on Staging tracks
-        // Place 2 Boxcars and Flat in yard
+        // Place 2 Boxcars and 2 Flats in yard
         Car c1 = createAndPlaceCar("CP", "C10099", rb.getString("Caboose"), "32", "AT", "1980", l1staging1, 23);
         c1.setCaboose(true);
         Car c2 = createAndPlaceCar("CP", "C20099", rb.getString("Caboose"), "32", "DAB", "1984", l1staging1, 54);

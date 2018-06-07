@@ -10687,7 +10687,7 @@ public class TrainBuilderTest {
         Assert.assertEquals("Train should build", true, train1.isBuilt());
 
         // test swap engines at location at Chelmsford
-        train1.setSecondLegOptions(0); // disable swap
+        train1.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED); // disable swap
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -10913,7 +10913,7 @@ public class TrainBuilderTest {
 
         Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
 
-        // create 5 locations with tracks
+        // create 5 locations with tracks, Route = Acton-Boston-Chelmsford-Danvers-Essex
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
         Location acton = route.getDepartsRouteLocation().getLocation();
         Track actonYard1 = acton.getTrackByName("Acton Yard 1", Track.YARD);
@@ -10955,12 +10955,23 @@ public class TrainBuilderTest {
         e4.setLength("50");
         e4.setWeightTons("130");
         e4.setMoves(5);
+        
+        // place this engine later in the route
+        Engine e5 = emanager.newEngine("SP", "5");
+        e5.setModel("GP40-800");
+        e5.setTypeName("Diesel");
+        e5.setHp("800");
+        e5.setLength("50");
+        e5.setWeightTons("120");
+        e5.setMoves(0); // the 1st engine to try, but at the wrong location      
 
         // Place engines
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard1));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard1));
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, actonYard1));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, actonYard1));
+        
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(boston, bostonYard1));
 
         // add grade to route
         RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(2);
@@ -11100,6 +11111,13 @@ public class TrainBuilderTest {
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
         c1.setWeightTons("400"); // 400 tons loaded
         c1.setLoadName(cld.getDefaultLoadName());
+        
+        // increase test code coverage use 3rd leg options
+        // add helpers at Boston remove at Chelmsford
+        train1.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED); 
+        train1.setThirdLegOptions(Train.HELPER_ENGINES);
+        train1.setThirdLegStartLocation(rlBoston);
+        train1.setThirdLegEndLocation(rlChelmsford);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
