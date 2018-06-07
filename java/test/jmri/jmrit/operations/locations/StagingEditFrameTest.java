@@ -4,10 +4,6 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -147,14 +143,14 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
 
         JUnitUtil.dispose(f);
 
-        Location l2 = lManager.getLocationByName("Test Loc A");
-        Assert.assertNotNull("Test Loc A", l2);
+        Location l2 = lManager.getLocationByName("Test Loc C");
+        Assert.assertNotNull("Test Loc C", l2);
 
         LocationEditFrame fl = new LocationEditFrame(l2);
         fl.setTitle("Test Edit Location Frame Staging");
 
         // check location name
-        Assert.assertEquals("name", "Test Loc A", fl.locationNameTextField.getText());
+        Assert.assertEquals("name", "Test Loc C", fl.locationNameTextField.getText());
 
         Assert.assertEquals("number of sidings", 0, fl.spurModel.getRowCount());
         Assert.assertEquals("number of interchanges", 0, fl.interchangeModel.getRowCount());
@@ -167,32 +163,6 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         JUnitUtil.dispose(fl);
     }
 
-    private void loadLocations() {
-        // create 5 locations
-        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-        Location l1 = lManager.newLocation("Test Loc E");
-        l1.setLength(1001);
-        Location l2 = lManager.newLocation("Test Loc D");
-        l2.setLength(1002);
-        Location l3 = lManager.newLocation("Test Loc C");
-        l3.setLength(1003);
-        Location l4 = lManager.newLocation("Test Loc B");
-        l4.setLength(1004);
-        Location l5 = lManager.newLocation("Test Loc A");
-        l5.setLength(1005);
-
-    }
-    
-    private void loadTrains() {
-        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
-        Train trainA = trainManager.newTrain("Test Train A");
-        // train needs to service location "l" or error message when saving track edit frame
-        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
-        Route route = routeManager.newRoute("Route Train A");
-        route.addLocation(l);
-        trainA.setRoute(route);      
-    }
-
     // Ensure minimal setup for log4J
     @Override
     @Before
@@ -200,12 +170,11 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
-
-        lManager = InstanceManager.getDefault(LocationManager.class);
-        l = lManager.getLocationByName("Test Loc A");
-        Assert.assertNotNull("Test Loc A", l);
         
-        loadTrains();
+        lManager = InstanceManager.getDefault(LocationManager.class);
+        l = lManager.getLocationByName("Test Loc C");
+        
+        loadTrain(l);
 
         jmri.jmrit.operations.setup.Setup.setRfidEnabled(false); // turn off the ID Tag Reader field by default.
     }

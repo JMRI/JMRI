@@ -4935,11 +4935,9 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // check for a change of engines in the train's route
                 if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                        rl == _train
-                                .getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartLocation()) ||
                         ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     break; // done
                 }
@@ -4995,7 +4993,7 @@ public class TrainBuilder extends TrainCommon {
             hpMax += hpNeeded / 2; // start off looking for an engine with no more than 50% extra HP
             log.debug("Max hp {}", hpMax);
             for (Engine engine : _engineList) {
-                if (engine.getLocation() != _train.getTrainDepartsRouteLocation().getLocation())
+                if (engine.getLocation() != rl.getLocation())
                     continue;
                 int engineHp = engine.getHpInteger();
                 if (engineHp > hpNeeded && engineHp <= hpMax) {
@@ -5007,6 +5005,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         }
+        // code check
         if (_train.getLeadEngine() == null && !_train.isBuildConsistEnabled()) {
             throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
         }
@@ -5240,6 +5239,7 @@ public class TrainBuilder extends TrainCommon {
      * routine removes those cars from the staging track by user request.
      */
     private void removeCarsFromStaging() {
+        // Code check, only called if train was departing staging
         if (_departStageTrack == null) {
             return;
         }
