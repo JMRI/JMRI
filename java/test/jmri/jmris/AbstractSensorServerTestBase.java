@@ -56,6 +56,32 @@ abstract public class AbstractSensorServerTestBase {
         checkSensorUnknownSent();
     }
 
+    // test the property change sequence for an ACTIVE property change.
+    @Test
+    public void testPropertyChangeOnStatus() {
+        try {
+            ss.initSensor("IS1");
+            jmri.InstanceManager.getDefault(jmri.SensorManager.class)
+                            .provideSensor("IS1").setState(jmri.Sensor.ACTIVE);
+            checkSensorActiveSent();
+        } catch (jmri.JmriException je){
+            Assert.fail("Exception setting Status");
+        }
+    }
+
+    // test the property change sequence for an INACTIVE property change.
+    @Test
+    public void testPropertyChangeOffStatus() {
+        try {
+            ss.initSensor("IS1");
+            jmri.InstanceManager.getDefault(jmri.SensorManager.class)
+                            .provideSensor("IS1").setState(jmri.Sensor.INACTIVE);
+            checkSensorInActiveSent();
+        } catch (jmri.JmriException je){
+            Assert.fail("Exception setting Status");
+        }
+    }
+
     /**
      * pre test setup.  Must setup SensorServer ss.
      */
