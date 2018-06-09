@@ -4779,6 +4779,97 @@ public class TrainBuilderTest {
         Assert.assertEquals("c3 destination track", northEnd3, c3.getDestinationTrack());
         Assert.assertEquals("c4 destination track", northEnd3, c4.getDestinationTrack());
     }
+    
+    /**
+     * test cars returning to staging when train is a turn.
+     * Generate custom loads
+     */
+    @Test
+    public void testStagingtoStagingCustomLoadsG() {
+
+        JUnitOperationsUtil.initOperationsData();
+        
+        // register the car loads used
+        cld.addName("Boxcar", "Flour");
+        cld.addName("Boxcar", "Bags");
+
+        // Boxcars with "E" load in staging
+        Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
+        Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+
+        Location northEndStaging = lmanager.getLocationById("1");
+        Track northEndStaging1 = northEndStaging.getTrackByName("North End 1", Track.STAGING);
+        
+        Location northIndustries = lmanager.getLocationById("20");
+        Track niYard = northIndustries.getTrackById("2s1");
+        
+        Location southEndStaging = lmanager.getLocationById("3");
+        Track southEndStaging1 = southEndStaging.getTrackByName("South End 1", Track.STAGING);
+        Track southEndStaging2 = southEndStaging.getTrackByName("South End 2", Track.STAGING);
+
+        // add a third staging track since the first two have cars on them
+        Track northEndStaging3 = northEndStaging.addTrack("North End 3", Track.STAGING);
+        northEndStaging3.setLength(500);
+
+        // create a route that returns to staging
+        Route route = rmanager.newRoute("NorthEnd-NI-NorthEnd");
+        route.addLocation(northEndStaging);
+        route.addLocation(northIndustries);
+        route.addLocation(northEndStaging);
+
+        Train train1 = tmanager.newTrain("Test turn to staging");
+        train1.setRoute(route);
+        
+        // allow staging to generate custom loads for cars
+        northEndStaging1.setAddCustomLoadsEnabled(true);
+        northEndStaging1.setAddCustomLoadsAnyStagingTrackEnabled(true);
+        
+        // bias staging track selection so the cars return
+        southEndStaging1.deleteTypeName("Boxcar");
+        southEndStaging2.deleteTypeName("Boxcar");
+
+        train1.setAllowReturnToStagingEnabled(true);
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 status", train1.isBuilt());
+
+        Assert.assertEquals("c3 destination track", northEndStaging3, c3.getDestinationTrack());
+        Assert.assertEquals("c4 destination track", northEndStaging3, c4.getDestinationTrack());
+        
+        // check load
+        Assert.assertNotEquals("car load is not", "E", c3.getLoadName());
+        Assert.assertNotEquals("car load is not", "E", c4.getLoadName());
+
+        // there's also a global setting allowing trains to return to staging
+        train1.setAllowReturnToStagingEnabled(false);
+        Setup.setAllowReturnToStagingEnabled(true);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 status", train1.isBuilt());
+
+        Assert.assertEquals("c3 destination track", northEndStaging3, c3.getDestinationTrack());
+        Assert.assertEquals("c4 destination track", northEndStaging3, c4.getDestinationTrack());
+        
+        // check load
+        Assert.assertNotEquals("car load is not", "E", c3.getLoadName());
+        Assert.assertNotEquals("car load is not", "E", c4.getLoadName());
+        
+        // now test that returning to staging isn't acceptable
+        Setup.setAllowReturnToStagingEnabled(false);
+        
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train 1 status", train1.isBuilt());
+
+        Assert.assertEquals("c3 destination track", niYard, c3.getDestinationTrack());
+        Assert.assertEquals("c4 destination track", niYard, c4.getDestinationTrack());
+        
+        // check load
+        Assert.assertEquals("car load", "E", c3.getLoadName());
+        Assert.assertEquals("car load", "E", c4.getLoadName());
+    }
+
 
     /**
      * test cars returning to staging when train is a turn. Build mode
@@ -5497,6 +5588,7 @@ public class TrainBuilderTest {
         // should fail
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
+        Assert.assertFalse("Train status", train1.isBuilt());
     }
 
     /**
