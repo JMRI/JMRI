@@ -25,6 +25,7 @@
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: improve handling of layoutBlock with systemname != username
+ *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *
  **********************************************************************************************/
 
@@ -572,8 +573,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
-                                if (typeof $widget.name !== "undefined") { //make it clickable (unless no turnout assigned)
-                                    $widget.classes += $widget.jsonType + " clickable ";
+                                if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) { 
+                                    $widget.classes += $widget.jsonType + " clickable "; //make it clickable (unless no turnout assigned)
                                 }
                                 //set widget occupancy sensor from block to speed affected changes later
                                 if (typeof $gBlks[$widget.blockname] !== "undefined") {
@@ -631,8 +632,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
 
-                                if ((typeof $widget.turnout !== "undefined") || (typeof $widget.turnoutB !== "undefined")) {
-                                    //make it clickable (unless no turnouts assigned)
+                                if (((typeof $widget.turnout !== "undefined") || (typeof $widget.turnoutB !== "undefined"))
+                                		&& ($widget.disabled !== "yes")) {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
 
@@ -1265,8 +1266,23 @@ function $drawTurnout($widget) {
             }
         }
     }
-    if ($gPanel.turnoutcircles == "yes") {  //draw turnout circle if requested
-        $drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
+    
+    // erase and draw turnout circles if enabled, including occupancy check
+    if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
+    	$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, erase, 1);
+    	if  (($widget.disableWhenOccupied !== "yes") || ($widget.occupancystate != ACTIVE)) {
+    		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
+    	}
+    	// if disableWhenOccupied requested, disable click if enabled and active
+    	if  ($widget.disableWhenOccupied == "yes") {
+    		if ($widget.occupancystate == ACTIVE) {
+    			$('#'+$widget.id).removeClass("clickable");
+    			$('#'+$widget.id).unbind(UPEVENT, $handleClick);
+    		} else { 
+    			$('#'+$widget.id).addClass("clickable");
+    			$('#'+$widget.id).bind(UPEVENT, $handleClick);
+    		}
+    	}
     }
 }
 
@@ -1416,7 +1432,8 @@ function $drawSlip($widget) {
         $drawLine(cx, cy, $third(cx, bx), $third(cy, by), $mainColourC, $widthC); //draw C to one third CB
     }
 
-    if ($gPanel.turnoutcircles == "yes") {  //draw turnout circle if requested
+    if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
+    	
         //draw the two control circles
         var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
 
@@ -2030,7 +2047,7 @@ var $getNextState = function($widget) {
 
 //request the panel xml from the server, and setup callback to process the response
 var requestPanelXML = function(panelName) {
-    $("activity-alert").addClass("show").removeClass("hidden");
+    $("#activity-alert").addClass("show").removeClass("hidden");
     $.ajax({
         type: "GET",
         url: "/panel/" + panelName + "?format=xml", //request proper url
@@ -2212,6 +2229,9 @@ function updateOccupancySub(occupancyName, state) {
             case 'indicatorturnouticon' :
                 $reDrawIcon($widget);
                 break;
+            case 'layoutturnout' :
+                $drawTurnout($widget);
+                break;
             }
         });
     }
@@ -2334,8 +2354,8 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             sensor: function(name, state, data) {
-                updateWidgets(name, state, data);
                 updateOccupancy(name, state, data);
+                updateWidgets(name, state, data);
             },
             signalHead: function(name, state, data) {
                 updateWidgets(name, state, data);

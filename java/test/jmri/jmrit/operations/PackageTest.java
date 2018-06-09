@@ -12,16 +12,15 @@ import org.junit.runners.Suite;
         jmri.jmrit.operations.router.PackageTest.class,  // fixed references to Swing, 10/10/2012
         jmri.jmrit.operations.locations.PackageTest.class, // fixed references to Swing, 10/10/2012
         jmri.jmrit.operations.automation.PackageTest.class,
-
-        XmlLoadTest.class, // no tests in class itself
+       
         BundleTest.class, 
         CommonConductorYardmasterPanelTest.class, 
-//        jmri.jmrit.operations.locations.PackageTest.class, // fixed references to Swing, 10/10/2012
         OperationsFrameTest.class,
+        OperationsManagerTest.class,
         OperationsMenuTest.class,
         OperationsPanelTest.class,
         OpsPropertyChangeListenerTest.class,
-        OperationsManagerTest.class,
+        XmlLoadTest.class, // no tests in class itself
 })
 
 /**

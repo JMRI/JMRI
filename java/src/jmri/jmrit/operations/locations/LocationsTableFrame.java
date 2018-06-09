@@ -19,6 +19,7 @@ import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
 import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
 import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
 import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackCopyAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -86,6 +87,7 @@ public class LocationsTableFrame extends OperationsFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new LocationCopyAction());
+        toolMenu.add(new TrackCopyAction());
         toolMenu.add(new SchedulesTableAction(Bundle.getMessage("Schedules")));
         toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
         toolMenu.add(new ModifyLocationsCarLoadsAction());

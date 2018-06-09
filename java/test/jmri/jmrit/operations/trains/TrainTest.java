@@ -767,7 +767,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -796,7 +796,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -844,7 +844,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -896,7 +896,7 @@ public class TrainTest extends OperationsTestCase {
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceId(2);
+        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
         Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
@@ -3494,7 +3494,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertTrue(train1.build());
         Assert.assertEquals("Train 1 After Build 20", true, train1.isBuilt());
 
-        // Set the track length too short missing one set of couplers
+        // Set the track length too short missing one set of couplers, two engines
         loc3trk2.setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLER);
         Assert.assertFalse(train1.build());
         Assert.assertEquals("Train 1 After Build 20.1", false, train1.isBuilt());

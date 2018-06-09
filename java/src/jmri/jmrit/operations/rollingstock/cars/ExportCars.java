@@ -77,6 +77,9 @@ public class ExportCars extends XmlFile {
                     true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: {}", file.getName());
+            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
+                    0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -115,7 +118,35 @@ public class ExportCars extends XmlFile {
                 del +
                 Bundle.getMessage("Miscellaneous") +
                 del +
-                Bundle.getMessage("Extensions");
+                Bundle.getMessage("Extensions") +
+                del +
+                Bundle.getMessage("Wait") +
+                del +
+                Bundle.getMessage("Pickup") +
+                del +
+                Bundle.getMessage("Last") +
+                del +               
+                Bundle.getMessage("RWELocation") +
+                del +
+                "-" +
+                del +
+                Bundle.getMessage("Track") +
+                del +
+                Bundle.getMessage("RWELoad") +
+                del +
+                Bundle.getMessage("Train") +
+                del +
+                Bundle.getMessage("Destination") +
+                del +
+                "-" +
+                del +
+                Bundle.getMessage("Track") +
+                del +
+                Bundle.getMessage("FinalDestination") +
+                del +
+                "-" +
+                del +
+                Bundle.getMessage("Track");
         fileOut.println(header);
 
         String line = "";
@@ -196,7 +227,30 @@ public class ExportCars extends XmlFile {
                     del +
                     miscellaneous +
                     del +
-                    extensions;
+                    extensions +
+                    del +
+                    car.getWait() +
+                    del +
+                    car.getPickupScheduleName() +
+                    del +
+                    car.getLastDate() +
+                    del +
+                    car.getReturnWhenEmptyDestinationName() +
+                    ",-," +
+                    car.getReturnWhenEmptyDestTrackName() +
+                    del +
+                    car.getReturnWhenEmptyLoadName() +
+                    del +
+                    car.getTrainName() +
+                    del +
+                    car.getDestinationName() +
+                    ",-," +
+                    car.getDestinationTrackName() +
+                    del +
+                    car.getFinalDestinationName() +
+                    ",-," +
+                    car.getFinalDestinationTrackName();     
+                    
             fileOut.println(line);
         }
         fileOut.flush();
