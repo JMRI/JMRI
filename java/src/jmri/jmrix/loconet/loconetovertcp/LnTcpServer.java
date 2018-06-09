@@ -35,7 +35,7 @@ public class LnTcpServer {
     private LnTrafficController tc;
 
     private LnTcpServer(LocoNetSystemConnectionMemo memo) {
-        tc = memo.getLnTrafficController(); // store tc in order to known where to send messages
+        tc = memo.getLnTrafficController(); // store tc in order to know where to send messages
         LnTcpPreferences pm = LnTcpPreferences.getDefault();
         portNumber = pm.getPort();
         pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {
@@ -232,6 +232,15 @@ public class LnTcpServer {
 
     public boolean removeStateListener(LnTcpServerListener l) {
         return this.stateListeners.remove(l);
+    }
+
+    /**
+     * Get the connection user name this server is using.
+     *
+     * @return the system name
+     */
+    public String getSystemName() {
+        return this.tc.getSystemConnectionMemo().getUserName();
     }
 
     /**

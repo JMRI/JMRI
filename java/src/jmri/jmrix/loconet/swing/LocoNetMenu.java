@@ -34,7 +34,7 @@ public class LocoNetMenu extends JMenu {
         }
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.loconet.locormi.LnMessageServerAction(Bundle.getMessage("MenuItemStartLocoNetServer")));
-        add(new jmri.jmrix.loconet.loconetovertcp.LnTcpServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer")));
+        add(new jmri.jmrix.loconet.loconetovertcp.LnTcpServerAction(Bundle.getMessage("MenuItemLocoNetOverTCPServer"), memo));
     }
     // TODO Sort out the Loconet server menu items
     Item[] panelItems = new Item[]{

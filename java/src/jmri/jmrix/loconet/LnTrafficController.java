@@ -40,6 +40,16 @@ public abstract class LnTrafficController implements LocoNetInterface {
     LocoNetSystemConnectionMemo memo = null;
 
     /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        return memo;
+    }
+
+    /**
      * Set the system connection memo associated with this traffic controller.
      *
      * @param m associated systemConnectionMemo object

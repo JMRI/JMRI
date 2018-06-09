@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -68,7 +68,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         try {
             manufacturer = shared.getAttribute("manufacturer").getValue(); // NOI18N
-        } catch (NullPointerException ex) { //Considered normal if not present
+        } catch (NullPointerException ex) { // Considered normal if not present
         }
 
         ConnectionConfig cc = new ConnectionConfig(hostName, manufacturer);

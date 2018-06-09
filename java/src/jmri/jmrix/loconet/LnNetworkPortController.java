@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.jmrix.AbstractNetworkPortController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,11 +9,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
+public abstract class LnNetworkPortController extends AbstractNetworkPortController {
 
     /**
      * Base class. Implementations will provide InputStream and OutputStream
-     * objects to LnTrafficController classes, who in turn will deal in messages.
+     * objects to LnTrafficController classes, which in turn will deal in messages.
      *
      * @param connectionMemo associated memo for this connection
      */

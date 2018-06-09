@@ -29,7 +29,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
     }
 
     public LnTcpDriverAdapter() {
-        this(new LocoNetSystemConnectionMemo());
+        this(new LocoNetSystemConnectionMemo()); // Bug: creates an extra LocoNet connection + memo
     }
 
     /**
