@@ -3693,7 +3693,7 @@ public class TrainBuilder extends TrainCommon {
                         .getLocation().getName());
                 continue;
             }
-            // the following method sets the load generated from staging boolean
+            // the following method sets the Car load generated from staging boolean
             if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
                 // test to see if destination is reachable by this train
                 if (router.setDestination(car, _train, _buildReport) && car.getDestination() != null) {
@@ -3716,7 +3716,9 @@ public class TrainBuilder extends TrainCommon {
                 generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
             return true;
         }
-
+        
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoStagingForCarCustom"),
+                new Object[]{car.toString()}));
         return false;
     }
 
@@ -3967,7 +3969,7 @@ public class TrainBuilder extends TrainCommon {
      * Checks to see if car has a destination and tries to add car to train
      *
      * @param rl the car's route location
-     * @param routeIndex where in the route the car pick up is
+     * @param routeIndex where in the route to start search
      * @return true if car has a destination. Need to check if car has a train
      *         assignment.
      * @throws BuildFailedException if destination was staging and can't place
@@ -3981,7 +3983,7 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[]{
                 car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName())}));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
-        // Code check, router doesn't set a car's destination if not carried by train being built 
+        // code check, router doesn't set a car's destination if not carried by train being built 
         if (rld == null) {
             // car has a destination that isn't serviced by this train
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExcludeCarDestNotPartRoute"),
@@ -4766,7 +4768,12 @@ public class TrainBuilder extends TrainCommon {
             if (status.equals(Track.OKAY) || (status.startsWith(Track.LENGTH) && stageTrack != _terminateStageTrack)) {
                 car.setLoadGeneratedFromStaging(true);
                 car.setFinalDestination(stageTrack.getLocation());
-                car.setFinalDestinationTrack(null); // don't assign the track, that will be done later
+                // don't set track assignment unless the car is going to this train's staging
+                if (stageTrack == _terminateStageTrack) {
+                    car.setFinalDestinationTrack(stageTrack);
+                } else {
+                    car.setFinalDestinationTrack(null); // don't assign the track, that will be done later
+                }
                 car.updateKernel(); // is car part of kernel?
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildAddingScheduleLoad"),
                         new Object[]{car.getLoadName(), car.toString()}));
@@ -4935,11 +4942,9 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // check for a change of engines in the train's route
                 if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                        rl == _train
-                                .getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartLocation()) ||
                         ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                                rl == _train
-                                        .getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     break; // done
                 }
@@ -4995,7 +5000,7 @@ public class TrainBuilder extends TrainCommon {
             hpMax += hpNeeded / 2; // start off looking for an engine with no more than 50% extra HP
             log.debug("Max hp {}", hpMax);
             for (Engine engine : _engineList) {
-                if (engine.getLocation() != _train.getTrainDepartsRouteLocation().getLocation())
+                if (engine.getLocation() != rl.getLocation())
                     continue;
                 int engineHp = engine.getHpInteger();
                 if (engineHp > hpNeeded && engineHp <= hpMax) {
@@ -5007,6 +5012,7 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         }
+        // code check
         if (_train.getLeadEngine() == null && !_train.isBuildConsistEnabled()) {
             throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
         }
@@ -5240,6 +5246,7 @@ public class TrainBuilder extends TrainCommon {
      * routine removes those cars from the staging track by user request.
      */
     private void removeCarsFromStaging() {
+        // Code check, only called if train was departing staging
         if (_departStageTrack == null) {
             return;
         }

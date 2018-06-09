@@ -3,12 +3,6 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.routes.RouteManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
@@ -32,7 +26,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
-    
+
     @Test
     public void testTrainEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -60,8 +54,10 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 
         // test departure time fields
-        trainEditFrame.hourBox.setSelectedItem("15");
-        trainEditFrame.minuteBox.setSelectedItem("45");
+        ThreadingUtil.runOnGUI(() -> {
+            trainEditFrame.hourBox.setSelectedItem("15");
+            trainEditFrame.minuteBox.setSelectedItem("45");
+        });
         // shouldn't change until Save
         Assert.assertEquals("train comment", "00:00", t.getDepartureTime());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
@@ -92,10 +88,9 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
 
         // test car types using the clear and set buttons
         enterClickAndLeave(trainEditFrame.clearButton);
-
         Assert.assertFalse("train accepts car type Boxcar", t.acceptsTypeName("Boxcar"));
-        enterClickAndLeave(trainEditFrame.setButton);
 
+        enterClickAndLeave(trainEditFrame.setButton);
         Assert.assertTrue("train accepts car type Boxcar", t.acceptsTypeName("Boxcar"));
 
         // test engine fields
@@ -103,15 +98,17 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("engine model", "", t.getEngineModel());
         Assert.assertEquals("engine road", "", t.getEngineRoad());
         // now change them
-        trainEditFrame.numEnginesBox.setSelectedItem("3");
-        trainEditFrame.modelEngineBox.setSelectedItem("FT");
-        trainEditFrame.roadEngineBox.setSelectedItem("UP");
+        ThreadingUtil.runOnGUI(() -> {
+            trainEditFrame.numEnginesBox.setSelectedItem("3");
+            trainEditFrame.modelEngineBox.setSelectedItem("FT");
+            trainEditFrame.roadEngineBox.setSelectedItem("UP");
+        });
         // shouldn't change until Save
         Assert.assertEquals("number of engines 1", "0", t.getNumberEngines());
         Assert.assertEquals("engine model 1", "", t.getEngineModel());
         Assert.assertEquals("engine road 1", "", t.getEngineRoad());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
-
+        // confirm changes
         Assert.assertEquals("number of engines 2", "3", t.getNumberEngines());
         Assert.assertEquals("engine model 2", "FT", t.getEngineModel());
         Assert.assertEquals("engine road 2", "UP", t.getEngineRoad());
@@ -123,25 +120,25 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         // shouldn't change until Save
         Assert.assertEquals("train requirements 1", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
+        Assert.assertEquals("train requirements FRED", Train.FRED, t.getRequirements());
 
-        Assert.assertEquals("train requirements 2", Train.FRED, t.getRequirements());
         enterClickAndLeave(trainEditFrame.cabooseRadioButton);
-
         enterClickAndLeave(trainEditFrame.saveTrainButton);
+        Assert.assertEquals("train requirements Caboose", Train.CABOOSE, t.getRequirements());
 
-        Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
         Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
         // shouldn't change until Save
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        trainEditFrame.roadCabooseBox.setSelectedItem(roadNames[2]);
+        ThreadingUtil.runOnGUI(() -> {
+            trainEditFrame.roadCabooseBox.setSelectedItem(roadNames[2]);
+        });
         Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
         enterClickAndLeave(trainEditFrame.saveTrainButton);
-
         Assert.assertEquals("caboose road 3", roadNames[2], t.getCabooseRoad());
+
+        // remove Caboose or FRED requirement
         enterClickAndLeave(trainEditFrame.noneRadioButton);
-
         enterClickAndLeave(trainEditFrame.saveTrainButton);
-
         Assert.assertEquals("train requirements 4", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 
         // test frame size and location
@@ -166,13 +163,12 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
 
         // now reload the window
         Train t2 = tmanager.getTrainByName("Test Train Name");
-        Assert.assertNotNull(t);
+        Assert.assertNotNull(t2);
 
         // change the train so it doesn't match the add test
         ThreadingUtil.runOnGUI(() -> {
             t2.setRequirements(Train.CABOOSE);
             t2.setCabooseRoad("CP");
-
         });
 
         TrainEditFrame f = new TrainEditFrame(t2);
@@ -198,7 +194,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
             JUnitUtil.dispose(f);
         });
     }
-    
+
     /**
      * Test that delete train works
      */
@@ -236,52 +232,6 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         super.setUp();
         loadTrains();
     }
-
-    private void loadTrains() {
-        // Add some cars for the various tests in this suite
-        CarManager cm = InstanceManager.getDefault(CarManager.class);
-        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
-        // add caboose to the roster
-        Car c = cm.newCar(roadNames[2], "687");
-        c.setCaboose(true);
-        c = cm.newCar("CP", "435");
-        c.setCaboose(true);
-
-        // load engines
-        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = emanager.newEngine("E", "1");
-        e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
-        e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("UP", "3");
-        e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("UP", "4");
-        e4.setModel("FT");
-
-        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
-        // turn off build fail messages
-        tmanager.setBuildMessagesEnabled(true);
-        // turn off print preview
-        tmanager.setPrintPreviewEnabled(false);
-
-        // load 5 trains
-        for (int i = 0; i < 5; i++) {
-            tmanager.newTrain("Test_Train " + i);
-        }
-
-        // load 6 locations
-        for (int i = 0; i < 6; i++) {
-            InstanceManager.getDefault(LocationManager.class).newLocation("Test_Location " + i);
-        }
-
-        // load 5 routes
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route A");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route B");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route C");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route D");
-        InstanceManager.getDefault(RouteManager.class).newRoute("Test Route E");
-    }
-
 
     @Override
     @After

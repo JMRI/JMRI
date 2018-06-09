@@ -99,6 +99,7 @@ public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        loadTrains();
     }
 
     @Override

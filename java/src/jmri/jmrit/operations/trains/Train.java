@@ -117,7 +117,7 @@ public class Train implements java.beans.PropertyChangeListener {
     protected String _tableRowColorResetName = NONE; //color of row in Trains table when reset
 
     // Engine change and helper engines
-    protected int _leg2Options = 0; // options
+    protected int _leg2Options = NO_CABOOSE_OR_FRED; // options
     protected RouteLocation _leg2Start = null; // route location when 2nd leg begins
     protected RouteLocation _end2Leg = null; // route location where 2nd leg ends
     protected String _leg2Engines = "0"; // number of engines 2nd leg
@@ -125,7 +125,7 @@ public class Train implements java.beans.PropertyChangeListener {
     protected String _leg2Model = NONE; // engine model 2nd leg
     protected String _leg2CabooseRoad = NONE; // road name for caboose 2nd leg
 
-    protected int _leg3Options = 0; // options
+    protected int _leg3Options = NO_CABOOSE_OR_FRED; // options
     protected RouteLocation _leg3Start = null; // route location when 3rd leg begins
     protected RouteLocation _leg3End = null; // route location where 3rd leg ends
     protected String _leg3Engines = "0"; // number of engines 3rd leg
@@ -2467,7 +2467,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Optional changes to train while en route.
      *
-     * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
+     * @param options NO_CABOOSE_OR_FRED, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
      *                REMOVE_CABOOSE
      */
     public void setSecondLegOptions(int options) {
@@ -2485,7 +2485,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Optional changes to train while en route.
      *
-     * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
+     * @param options NO_CABOOSE_OR_FRED, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
      *                REMOVE_CABOOSE
      */
     public void setThirdLegOptions(int options) {
