@@ -25,7 +25,6 @@ public class FunctionPanelTest {
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
-        JUnitUtil.disposeFrame("Local JMRI throttles", true, true);
     }
 
     // The minimal setup for log4J

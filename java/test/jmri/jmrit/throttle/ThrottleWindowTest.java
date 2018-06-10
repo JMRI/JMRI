@@ -21,7 +21,6 @@ public class ThrottleWindowTest {
         ThrottleWindow frame = new ThrottleWindow();
         Assert.assertNotNull("exists", frame);
         JUnitUtil.dispose(frame);
-        JUnitUtil.disposeFrame("Local JMRI throttles", true, true);
     }
 
     @Before
