@@ -24,7 +24,7 @@
     <decoder>
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
-            <model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+            <model model="UNI16ARD-NAV" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />
