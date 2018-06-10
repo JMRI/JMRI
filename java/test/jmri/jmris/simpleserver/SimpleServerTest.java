@@ -15,11 +15,11 @@ import org.junit.Test;
  */
 public class SimpleServerTest {
 
+    private SimpleServer ss = null;
+
     @Test
     public void testCtor() {
-        SimpleServer a = new SimpleServer();
-        Assert.assertNotNull(a);
-        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
+        Assert.assertNotNull(ss);
     }
 
     @Test
@@ -32,9 +32,6 @@ public class SimpleServerTest {
     @Test
     // test sending a message.
     public void testSendMessage() {
-        SimpleServer a = new SimpleServer();
-        Assert.assertNotNull(a);
-        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -47,7 +44,7 @@ public class SimpleServerTest {
         java.io.InputStream input = new java.io.ByteArrayInputStream(code.getBytes());
         Thread t = new Thread(() -> { 
             try{
-               a.handleClient(new java.io.DataInputStream(input),output); }
+               ss.handleClient(new java.io.DataInputStream(input),output); }
             catch(java.io.IOException ioe){
                // exception expected at end of input.
                return;
@@ -61,11 +58,19 @@ public class SimpleServerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugPowerManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+        ss = new SimpleServer();
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        ss = null;
     }
 
 }
