@@ -33,5 +33,5 @@ Scenario Outline: Basic Http requests
    | chrome  | http://localhost:12080/web/webThrottle.html | JMRI Web Throttle |
    | chrome  | http://localhost:12080/prefs/ | Directory: /prefs/ \| My JMRI Railroad |
    | chrome  | http://localhost:12080/dist/ | Directory: /dist/ \| My JMRI Railroad |
-   | chrome  | http://localhost:12080/image/ | Directory: /images/ \| My JMRI Railroad |
+   | chrome  | http://localhost:12080/images/ | Directory: /images/ \| My JMRI Railroad |
    | chrome  | http://localhost:12080/xml/signals/ | Directory: /xml/signals/ \| My JMRI Railroad |
