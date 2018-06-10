@@ -403,7 +403,7 @@ also needs some parts copied over.
           to store its node information.</li>
         </ul>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -194,7 +194,7 @@
 
       <p><img src="images/NetBeansJenkinsOverview.png" width="342"
       height="452" alt="Jenkins Overview"></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

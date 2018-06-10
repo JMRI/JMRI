@@ -1173,7 +1173,7 @@
           delete it (if it has somebody's name, you might want to
           add that to the copyright notice if there is one.)</p>
         </dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
   <!-- FAQ-Tail -->

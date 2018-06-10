@@ -135,7 +135,7 @@ the serial/network refactoring.
         interface. This will connected them to their specific 
         <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a>.
         
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

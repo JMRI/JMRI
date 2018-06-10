@@ -203,7 +203,7 @@
         "https://netbeans.org/kb/trails/matisse.html">Java GUI
         Applications Learning Trail</a></li>
       </ul>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div>
 </body>

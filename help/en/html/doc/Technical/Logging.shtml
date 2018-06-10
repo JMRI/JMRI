@@ -249,7 +249,7 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout<br>log4j.appender.R.layou
 </pre>
     to include the user readable description from the exception
     itself, plus all its traceback information.
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

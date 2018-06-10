@@ -299,7 +299,7 @@ you should add an annotation so that others know why it's OK and don't have to w
 </pre>
 </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
