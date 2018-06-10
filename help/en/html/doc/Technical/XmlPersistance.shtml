@@ -12,8 +12,8 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml persistance">
-  <!--#include virtual="/Style" -->
-</head><!--#include virtual="/Header" -->
+  <!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">

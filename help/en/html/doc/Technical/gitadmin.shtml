@@ -6,9 +6,9 @@
   <title>JMRI: GitHub Administration</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI Git Github">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
