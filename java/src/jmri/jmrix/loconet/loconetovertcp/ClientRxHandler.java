@@ -36,7 +36,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
         setDaemon(true);
         setPriority(Thread.MAX_PRIORITY);
         remoteAddress = newRemoteAddress;
-        setName("ClientRxHandler:" + remoteAddress);
+        setName("ClientRxHandler: " + remoteAddress);
         lastSentMessage = null;
         start();
     }

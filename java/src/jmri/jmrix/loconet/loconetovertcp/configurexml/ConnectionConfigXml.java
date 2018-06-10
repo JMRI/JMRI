@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -25,7 +25,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        adapter = new LnTcpDriverAdapter();
+        if (adapter == null) {
+            adapter = new LnTcpDriverAdapter();
+        }
     }
 
     @Override

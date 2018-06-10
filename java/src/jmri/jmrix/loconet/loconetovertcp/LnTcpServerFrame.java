@@ -1,11 +1,14 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 
@@ -24,6 +27,8 @@ import jmri.util.JmriJFrame;
  */
 public class LnTcpServerFrame extends JmriJFrame {
 
+    private final JLabel connectionLabel = new JLabel(Bundle.getMessage("ConnectionLabel", "?"));
+    private final JLabel spacer = new JLabel(" - ");
     private final JLabel portNumberLabel = new JLabel(Bundle.getMessage("PortLabel", 1234));
     private final JLabel statusLabel = new JLabel(Bundle.getMessage("StatusLabel", Bundle.getMessage("Stopped"), 0));
 
@@ -44,17 +49,26 @@ public class LnTcpServerFrame extends JmriJFrame {
         super.getContentPane().setLayout(new BoxLayout(super.getContentPane(), BoxLayout.Y_AXIS));
 
         // add GUI items
-        portNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        super.getContentPane().add(portNumberLabel);
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+        panel1.add(connectionLabel);
+        panel1.add(spacer);
+        panel1.add(portNumberLabel);
+        panel1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        super.getContentPane().add(panel1);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        Border panelBorder = BorderFactory.createEtchedBorder();
+        panel.setBorder(panelBorder);
         panel.add(startButton);
         panel.add(stopButton);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         super.getContentPane().add(panel);
 
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusLabel.setFont(statusLabel.getFont().deriveFont(0.9f * connectionLabel.getFont().getSize())); // a bit smaller
+        statusLabel.setForeground(Color.gray);
         super.getContentPane().add(statusLabel);
 
         startButton.addActionListener((ActionEvent a) -> {
@@ -125,6 +139,7 @@ public class LnTcpServerFrame extends JmriJFrame {
     }
 
     private void updateServerStatus(LnTcpServer s) {
+        connectionLabel.setText(Bundle.getMessage("ConnectionLabel", s.getSystemName()));
         portNumberLabel.setText(Bundle.getMessage("PortLabel", s.getPort()));
         startButton.setEnabled(!s.isEnabled());
         stopButton.setEnabled(s.isEnabled());

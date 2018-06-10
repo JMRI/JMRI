@@ -1,13 +1,11 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-
 /**
  * Definition of objects to handle configuring a LocoNetOverTcp layout
  * connection via a LnTcpDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Stephen Williams Copyright (C) 2008
- *
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -20,7 +18,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -35,6 +33,10 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return false;
     }
 
+    /**
+     * Load the adapter with an appropriate object
+     * <i>unless</i> it has already been set.
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

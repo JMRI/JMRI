@@ -34,8 +34,13 @@ public class LnTcpServer {
     private int portNumber;
     private LnTrafficController tc;
 
+    /**
+     * Get a server instance for a given SystemConnectionMemo.
+     *
+     * @param memo the SystemConnectionMemo to use
+     */
     private LnTcpServer(LocoNetSystemConnectionMemo memo) {
-        tc = memo.getLnTrafficController(); // store tc in order to known where to send messages
+        tc = memo.getLnTrafficController(); // store tc in order to know where to send messages
         LnTcpPreferences pm = LnTcpPreferences.getDefault();
         portNumber = pm.getPort();
         pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {
@@ -51,6 +56,16 @@ public class LnTcpServer {
                     break;
             }
         });
+    }
+
+    /**
+     * Get a server instance for the default  SystemConnectionMemo.
+     * Used as startup action {@link apps.startup.AbstractStartupModel}
+     *
+     * @param memo the SystemConnectionMemo to use
+     */
+    private LnTcpServer() {
+        this(InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
     }
 
     /**
@@ -73,7 +88,7 @@ public class LnTcpServer {
      */
     public static synchronized LnTcpServer getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServer.class).orElseGet(() -> {
-            LnTcpServer server = new LnTcpServer(new LocoNetSystemConnectionMemo());
+            LnTcpServer server = new LnTcpServer(); // uses default memo, don't create an additional connection
             return InstanceManager.setDefault(LnTcpServer.class, server);
         });
     }
@@ -232,6 +247,24 @@ public class LnTcpServer {
 
     public boolean removeStateListener(LnTcpServerListener l) {
         return this.stateListeners.remove(l);
+    }
+
+    /**
+     * Get the connection user name this server is using.
+     *
+     * @return the system name
+     */
+    public String getSystemName() {
+        return this.tc.getSystemConnectionMemo().getUserName();
+    }
+
+    /**
+     * Get the traffic controller this server is using.
+     *
+     * @return the traffic controller
+     */
+    public LnTrafficController getTrafficController() {
+        return this.tc;
     }
 
     /**

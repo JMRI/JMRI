@@ -44,4 +44,5 @@ public interface SystemConnectionAction {
      */
     @Nonnull
     public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses();
+
 }
