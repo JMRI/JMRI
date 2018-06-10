@@ -21,6 +21,11 @@ import org.slf4j.LoggerFactory;
 public class NodeIdentityTest {
 
     @Test
+    public void testIdentity() {
+        Assert.assertNotNull(NodeIdentity.identity());
+    }
+
+    @Test
     public void testSafeCharsCount() {
         Assert.assertEquals(64, URL_SAFE_CHARACTERS.length());
     }
@@ -28,7 +33,7 @@ public class NodeIdentityTest {
     @Test
     public void testGenerateUuid() {
         byte mac[] = {(byte) 0x70, (byte) 0xcd, (byte) 0x60, (byte) 0xaa, (byte) 0xce, (byte) 0xa6};
-        generateUuid(mac);
+        Assert.assertNotNull("UUID generated",generateUuid(mac));
     }
 
     @Test
