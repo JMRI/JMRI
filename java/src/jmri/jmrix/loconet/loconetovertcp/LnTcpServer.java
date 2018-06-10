@@ -60,7 +60,7 @@ public class LnTcpServer {
 
     /**
      * Get a server instance for the default  SystemConnectionMemo.
-     * Used as startup action {@link }
+     * Used as startup action {@link apps.startup.AbstractStartupModel}
      *
      * @param memo the SystemConnectionMemo to use
      */
