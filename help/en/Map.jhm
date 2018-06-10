@@ -544,6 +544,8 @@
 
 <mapID target="html.tools.Logix_notes" url="html/tools/Logix.shtml#notes"/>
 
+<mapID target="html.doc.Technical.JUnit_RetryRule" url="html/doc/Technical/JUnit.shtml#RetryRule"/>
+
 <mapID target="html.tools.signaling.index_terms" url="html/tools/signaling/index.shtml#terms"/>
 
 <mapID target="html.doc.Technical.Logging_code" url="html/doc/Technical/Logging.shtml#code"/>
@@ -748,6 +750,8 @@
 
 <mapID target="html.hardware.openlcb.index" url="html/hardware/openlcb/index.shtml"/>
 
+<mapID target="html.apps.TrainCrew.index" url="html/apps/TrainCrew/index.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditLocation_track_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditLocation_track.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_Throttle" url="manual/DecoderPro/Start_Preferences.shtml#Throttle"/>
@@ -767,6 +771,8 @@
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_FrameProperties_Top" url="manual/DecoderPro3/dp3_Main_Throttle_FrameProperties.shtml#Top"/>
 
 <mapID target="html.hardware.easydcc.EasyDCC_hardware" url="html/hardware/easydcc/EasyDCC.shtml#hardware"/>
+
+<mapID target="html.doc.Technical.JUnit_J4rules" url="html/doc/Technical/JUnit.shtml#J4rules"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_SetEngines" url="manual/JMRI_OPS_UsersGuide/Ops_SetEngines.shtml"/>
 
@@ -851,6 +857,8 @@
 <mapID target="html.tools.throttle.ThrottleMain" url="html/tools/throttle/ThrottleMain.shtml"/>
 
 <mapID target="manual.DecoderPro3.index_Installing" url="manual/DecoderPro3/index.shtml#Installing"/>
+
+<mapID target="html.doc.Technical.JUnit_TimeoutRule" url="html/doc/Technical/JUnit.shtml#TimeoutRule"/>
 
 <mapID target="package.jmri.jmrit.beantable.BlockEdit_properties" url="package/jmri/jmrit/beantable/BlockEdit.shtml#properties"/>
 
@@ -3941,6 +3949,8 @@
 <mapID target="package.jmri.jmrit.withrottle.Protocol" url="package/jmri/jmrit/withrottle/Protocol.shtml"/>
 
 <mapID target="html.hardware.XBee.XBeeNodeConfigurationTool_documentation" url="html/hardware/XBee/XBeeNodeConfigurationTool.shtml#documentation"/>
+
+<mapID target="html.apps.ManifestCreator.index" url="html/apps/ManifestCreator/index.shtml"/>
 
 <mapID target="manual.DecoderPro.images.sflogo" url="manual/DecoderPro/images/sflogo.png"/>
 

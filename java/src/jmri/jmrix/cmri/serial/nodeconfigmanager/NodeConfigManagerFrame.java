@@ -1049,7 +1049,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         TableModel cpnodeConfigModel = new CPnodeConfigModel();
         JTable cpnodeConfigTable = new JTable(cpnodeConfigModel);
         cpnodeConfigTable.setRowSelectionAllowed(false);
-        cpnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200, 130)); //160
+        cpnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(240, 130)); //160
 
         JComboBox<String> cpnodeTypeCombo = new JComboBox<>();
         cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeOutput"));
@@ -1057,9 +1057,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         cpnodeTypeCombo.addItem(Bundle.getMessage("CardTypeNone"));
 
         TableColumnModel cpnodePortModel = cpnodeConfigTable.getColumnModel();
+        TableColumn x0Column = cpnodePortModel.getColumn(CPnodeConfigModel.CARD_COLUMN);
+        x0Column.setMinWidth(30);
+        x0Column.setMaxWidth(50);
         TableColumn x1Column = cpnodePortModel.getColumn(CPnodeConfigModel.CARDNUM_COLUMN);
         x1Column.setMinWidth(70);
-        x1Column.setMaxWidth(100);
+        x1Column.setMaxWidth(120);
         TableColumn x2Column = cpnodePortModel.getColumn(CPnodeConfigModel.CARDTYPE_COLUMN);
         x2Column.setCellEditor(new DefaultCellEditor(cpnodeTypeCombo));
         x2Column.setResizable(false);
@@ -2356,7 +2359,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         @Override
         public int getColumnCount() {
-            return 2;
+            return CARDTYPE_COLUMN+1;
         }
 
         @Override
@@ -2369,6 +2372,9 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             String[] cdPort = {"  A", "  B"};
             String val = "     ";
             switch (c) {
+                case CARD_COLUMN:
+                    val = Integer.toString(r+2);
+                    return "   " + val;
                 case CARDNUM_COLUMN:
                     int i = r / 2;
                     if (r % 2 == 0) {
@@ -2384,20 +2390,21 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         @Override
         public void setValueAt(Object type, int r, int c) {
-            if (c == 1) {
+            if (c == CARDTYPE_COLUMN) {
                 cardType[r + cpNodeOnboard] = (String) type;
             }
         }
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            return (c == 1);
+            return (c == CARDTYPE_COLUMN);
         }
 
-        public static final int CARDNUM_COLUMN = 0;
-        public static final int CARDTYPE_COLUMN = 1;
+        public static final int CARD_COLUMN = 0;
+        public static final int CARDNUM_COLUMN = 1;
+        public static final int CARDTYPE_COLUMN = 2;
     }
-    private final String[] cpnodeConfigColumnNames = {"IOX Addr Port", "Port Type"};
+    private final String[] cpnodeConfigColumnNames = {"Card","IOX Addr Port", "Port Type"};
 
     /**
      * Set up table for selecting card type by address for CPNODE/CPMEGA nodes

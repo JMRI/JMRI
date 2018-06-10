@@ -13,12 +13,16 @@ import jmri.jmrit.operations.locations.LocationEditFrame;
  */
 public class TrackCopyAction extends AbstractAction {
 
+    public TrackCopyAction() {
+        super(Bundle.getMessage("MenuItemCopyTrack"));
+    }
+    
     public TrackCopyAction(LocationEditFrame lef) {
         super(Bundle.getMessage("MenuItemCopyTrack"));
         _lef = lef;
     }
 
-    private LocationEditFrame _lef;
+    private LocationEditFrame _lef = null;
     TrackCopyFrame f = null;
 
     @Override

@@ -562,6 +562,12 @@
 </li>
   
 <li>
+<a href="html/apps/ManifestCreator/index.shtml">Manifest Creator </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
    
@@ -690,6 +696,12 @@
   
 </ul>
 </li>
+  
+<li>
+<a href="html/apps/TrainCrew/index.shtml">TrainCrew </a>
+<ul></ul>
+</li>
+
  
 </ul>
 </li>

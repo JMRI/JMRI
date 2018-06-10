@@ -109,6 +109,10 @@ public class JUnitOperationsUtil {
 
     /**
      * Populate the Operations Managers with a common set of data for tests.
+     * Creates and places 10 cars on tracks. 2 Cabooses on staging track 1,
+     * 2 Boxcars on staging track 1, 2 Boxcars on staging track 2, 2 Boxcars
+     * and 1 Flat in NI yard.  Also creates 4 engines, and places them into
+     * two separate consists.  Engines are not on a track. 
      */
     public static void initOperationsData() {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
@@ -188,10 +192,10 @@ public class JUnitOperationsUtil {
         Location locationSouthEnd = lmanager.getLocationById("3");
         Assert.assertNotNull(locationSouthEnd);
 
-        // Set up two cabooses and six box cars
+        // Create 2 cabooses, 6 Boxcars, 2 Flats
         // Place Cabooses on Staging tracks
         // Place 4 Boxcars on Staging tracks
-        // Place 2 Boxcars and Flat in yard
+        // Place 2 Boxcars and 2 Flats in yard
         Car c1 = createAndPlaceCar("CP", "C10099", rb.getString("Caboose"), "32", "AT", "1980", l1staging1, 23);
         c1.setCaboose(true);
         Car c2 = createAndPlaceCar("CP", "C20099", rb.getString("Caboose"), "32", "DAB", "1984", l1staging1, 54);
@@ -209,7 +213,7 @@ public class JUnitOperationsUtil {
         route1.setComment("Comment for route id 1");
 
         RouteLocation rl1 = new RouteLocation("1r1", locationNorthEnd);
-        rl1.setSequenceId(1);
+        rl1.setSequenceNumber(1);
         rl1.setTrainDirection(RouteLocation.SOUTH);
         rl1.setMaxCarMoves(5);
         rl1.setMaxTrainLength(1000);
@@ -218,7 +222,7 @@ public class JUnitOperationsUtil {
         rl1.setComment("Test route location comment for North End");
 
         RouteLocation rl2 = new RouteLocation("1r2", locationNorthIndustries);
-        rl2.setSequenceId(2);
+        rl2.setSequenceNumber(2);
         rl2.setTrainDirection(RouteLocation.SOUTH);
         // test for only 1 pickup and 1 drop
         rl2.setMaxCarMoves(2);
@@ -228,7 +232,7 @@ public class JUnitOperationsUtil {
         rl2.setTrainIconY(25);
 
         RouteLocation rl3 = new RouteLocation("1r3", locationSouthEnd);
-        rl3.setSequenceId(3);
+        rl3.setSequenceNumber(3);
         rl3.setTrainDirection(RouteLocation.SOUTH);
         rl3.setMaxCarMoves(5);
         rl3.setMaxTrainLength(1000);
@@ -344,10 +348,10 @@ public class JUnitOperationsUtil {
         lmanager.register(locationEastEnd);
 
         Track l7s1 = new Track("7s1", "East End 1", Track.STAGING, locationEastEnd);
-        l5s1.setLength(600);
+        l7s1.setLength(600);
 
         Track l7s2 = new Track("7s2", "East End 2", Track.STAGING, locationEastEnd);
-        l5s2.setLength(600);
+        l7s2.setLength(600);
 
         locationEastEnd.register(l7s1);
         locationEastEnd.register(l7s2);
@@ -373,6 +377,11 @@ public class JUnitOperationsUtil {
         return route;
     }
     
+    /**
+     * Creates a three location route that is also a turn.  Train
+     * departs North bound and returns South bound.
+     * @return Route
+     */
     public static Route createThreeLocationTurnRoute() {
 
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -417,166 +426,53 @@ public class JUnitOperationsUtil {
 
         return route;
     }
+       
+    /**
+     * Creates a location with 2 spurs, 2 interchanges, and 2 yards
+     * @param name the name of the location and the tracks there.
+     * @return the location created
+     */
+    public static Location createOneNormalLocation(String name) {     
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        
+        Location location = lmanager.newLocation(name);
+        Track trackSpur1 = location.addTrack(name + " Spur 1", Track.SPUR);
+        trackSpur1.setLength(200);
+        Track trackSpur2 = location.addTrack(name + " Spur 2", Track.SPUR);
+        trackSpur2.setLength(200);
+        Track trackYard1 = location.addTrack(name + " Yard 1", Track.YARD);
+        trackYard1.setLength(500);
+        Track trackYard2 = location.addTrack(name + " Yard 2", Track.YARD);
+        trackYard2.setLength(500);
+        Track trackInterchange1 = location.addTrack(name + " Interchange 1", Track.INTERCHANGE);
+        trackInterchange1.setLength(500);
+        Track trackInterchange2 = location.addTrack(name + " Interchange 2", Track.INTERCHANGE);
+        trackInterchange2.setLength(500);
+        
+        // must set track move counts after all tracks are created
+        trackSpur1.setMoves(10);
+        trackSpur2.setMoves(20);
+        trackYard1.setMoves(30);
+        trackYard2.setMoves(40);
+        trackInterchange1.setMoves(50);
+        trackInterchange2.setMoves(60);
+        
+        return location;
+    }
 
     /**
      * Creates 7 locations each with 2 spurs, 2 interchanges, and 2 yards
      * Acton, Boston, Chelmsford, Danvers, Essex, Foxboro, Gulf
      */
     public static void createSevenNormalLocations() {
-
-        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
-
-        // the following locations and tracks are retrieved by their names
-        Location acton = lmanager.newLocation("Acton");
-        Track actonSpur1 = acton.addTrack("Acton Spur 1", Track.SPUR);
-        actonSpur1.setLength(200);
-        Track actonSpur2 = acton.addTrack("Acton Spur 2", Track.SPUR);
-        actonSpur2.setLength(200);
-        Track actonYard1 = acton.addTrack("Acton Yard 1", Track.YARD);
-        actonYard1.setLength(500);
-        Track actonYard2 = acton.addTrack("Acton Yard 2", Track.YARD);
-        actonYard2.setLength(500);
-        Track actonInterchange1 = acton.addTrack("Acton Interchange 1", Track.INTERCHANGE);
-        actonInterchange1.setLength(500);
-        Track actonInterchange2 = acton.addTrack("Acton Interchange 2", Track.INTERCHANGE);
-        actonInterchange2.setLength(500);
-
-        // must set track move counts after all tracks are created
-        actonSpur1.setMoves(10);
-        actonSpur2.setMoves(20);
-        actonYard1.setMoves(30);
-        actonYard2.setMoves(40);
-        actonInterchange1.setMoves(50);
-        actonInterchange2.setMoves(60);
-
-        // location Boston two tracks of each type
-        Location boston = lmanager.newLocation("Boston");
-        Track bostonSpur1 = boston.addTrack("Boston Spur 1", Track.SPUR);
-        bostonSpur1.setLength(200);
-        Track bostonSpur2 = boston.addTrack("Boston Spur 2", Track.SPUR);
-        bostonSpur2.setLength(200);
-        Track bostonYard1 = boston.addTrack("Boston Yard 1", Track.YARD);
-        bostonYard1.setLength(500);
-        Track bostonYard2 = boston.addTrack("Boston Yard 2", Track.YARD);
-        bostonYard2.setLength(500);
-        Track bostonInterchange1 = boston.addTrack("Boston Interchange 1", Track.INTERCHANGE);
-        bostonInterchange1.setLength(500);
-        Track bostonInterchange2 = boston.addTrack("Boston Interchange 2", Track.INTERCHANGE);
-        bostonInterchange2.setLength(500);
-
-        bostonSpur1.setMoves(10);
-        bostonSpur2.setMoves(20);
-        bostonYard1.setMoves(30);
-        bostonYard2.setMoves(40);
-        bostonInterchange1.setMoves(50);
-        bostonInterchange2.setMoves(60);
-
-        Location chelmsford = lmanager.newLocation("Chelmsford");
-        Track chelmsfordSpur1 = chelmsford.addTrack("Chelmsford Spur 1", Track.SPUR);
-        chelmsfordSpur1.setLength(200);
-
-        Track chelmsfordSpur2 = chelmsford.addTrack("Chelmsford Spur 2", Track.SPUR);
-        chelmsfordSpur2.setLength(200);
-        Track chelmsfordYard1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
-        chelmsfordYard1.setLength(500);
-        Track chelmsfordYard2 = chelmsford.addTrack("Chelmsford Yard 2", Track.YARD);
-        chelmsfordYard2.setLength(500);
-        Track chelmsfordInterchange1 = chelmsford.addTrack("Chelmsford Interchange 1", Track.INTERCHANGE);
-        chelmsfordInterchange1.setLength(500);
-        Track chelmsfordInterchange2 = chelmsford.addTrack("Chelmsford Interchange 2", Track.INTERCHANGE);
-        chelmsfordInterchange2.setLength(500);
-
-        chelmsfordSpur1.setMoves(10);
-        chelmsfordSpur2.setMoves(20);
-        chelmsfordYard1.setMoves(30);
-        chelmsfordYard2.setMoves(40);
-        chelmsfordInterchange1.setMoves(50);
-        chelmsfordInterchange2.setMoves(60);
-
-        Location danvers = lmanager.newLocation("Danvers");
-        Track danversSpur1 = danvers.addTrack("Danvers Spur 1", Track.SPUR);
-        danversSpur1.setLength(200);
-        Track danversSpur2 = danvers.addTrack("Danvers Spur 2", Track.SPUR);
-        danversSpur2.setLength(200);
-        Track danversYard1 = danvers.addTrack("Danvers Yard 1", Track.YARD);
-        danversYard1.setLength(500);
-        Track danversYard2 = danvers.addTrack("Danvers Yard 2", Track.YARD);
-        danversYard2.setLength(500);
-        Track danversInterchange1 = danvers.addTrack("Danvers Interchange 1", Track.INTERCHANGE);
-        danversInterchange1.setLength(500);
-        Track danversInterchange2 = danvers.addTrack("Danvers Interchange 2", Track.INTERCHANGE);
-        danversInterchange2.setLength(500);
-
-        danversSpur1.setMoves(10);
-        danversSpur2.setMoves(20);
-        danversYard1.setMoves(30);
-        danversYard2.setMoves(40);
-        danversInterchange1.setMoves(50);
-        danversInterchange2.setMoves(60);
-
-        Location essex = lmanager.newLocation("Essex");
-        Track essexSpur1 = essex.addTrack("Essex Spur 1", Track.SPUR);
-        essexSpur1.setLength(200);
-        Track essexSpur2 = essex.addTrack("Essex Spur 2", Track.SPUR);
-        essexSpur2.setLength(200);
-        Track essexYard1 = essex.addTrack("Essex Yard 1", Track.YARD);
-        essexYard1.setLength(500);
-        Track essexYard2 = essex.addTrack("Essex Yard 2", Track.YARD);
-        essexYard2.setLength(500);
-        Track essexInterchange1 = essex.addTrack("Essex Interchange 1", Track.INTERCHANGE);
-        essexInterchange1.setLength(500);
-        Track essexInterchange2 = essex.addTrack("Essex Interchange 2", Track.INTERCHANGE);
-        essexInterchange2.setLength(500);
-
-        essexSpur1.setMoves(10);
-        essexSpur2.setMoves(20);
-        essexYard1.setMoves(30);
-        essexYard2.setMoves(40);
-        essexInterchange1.setMoves(50);
-        essexInterchange2.setMoves(60);
         
-        Location foxboro = lmanager.newLocation("Foxboro");
-        Track foxboroSpur1 = foxboro.addTrack("Foxboro Spur 1", Track.SPUR);
-        foxboroSpur1.setLength(200);
-        Track foxboroSpur2 = foxboro.addTrack("Foxboro Spur 2", Track.SPUR);
-        foxboroSpur2.setLength(200);
-        Track foxboroYard1 = foxboro.addTrack("Foxboro Yard 1", Track.YARD);
-        foxboroYard1.setLength(500);
-        Track foxboroYard2 = foxboro.addTrack("Foxboro Yard 2", Track.YARD);
-        foxboroYard2.setLength(500);
-        Track foxboroInterchange1 = foxboro.addTrack("Foxboro Interchange 1", Track.INTERCHANGE);
-        foxboroInterchange1.setLength(500);
-        Track foxboroInterchange2 = foxboro.addTrack("Foxboro Interchange 2", Track.INTERCHANGE);
-        foxboroInterchange2.setLength(500);
-
-        foxboroSpur1.setMoves(10);
-        foxboroSpur2.setMoves(20);
-        foxboroYard1.setMoves(30);
-        foxboroYard2.setMoves(40);
-        foxboroInterchange1.setMoves(50);
-        foxboroInterchange2.setMoves(60);
-        
-        Location gulf = lmanager.newLocation("Gulf");
-        Track gulfSpur1 = gulf.addTrack("Gulf Spur 1", Track.SPUR);
-        gulfSpur1.setLength(200);
-        Track gulfSpur2 = gulf.addTrack("Gulf Spur 2", Track.SPUR);
-        gulfSpur2.setLength(200);
-        Track gulfYard1 = gulf.addTrack("Gulf Yard 1", Track.YARD);
-        gulfYard1.setLength(500);
-        Track gulfYard2 = gulf.addTrack("Gulf Yard 2", Track.YARD);
-        gulfYard2.setLength(500);
-        Track gulfInterchange1 = gulf.addTrack("Gulf Interchange 1", Track.INTERCHANGE);
-        gulfInterchange1.setLength(500);
-        Track gulfInterchange2 = gulf.addTrack("Gulf Interchange 2", Track.INTERCHANGE);
-        gulfInterchange2.setLength(500);
-
-        gulfSpur1.setMoves(10);
-        gulfSpur2.setMoves(20);
-        gulfYard1.setMoves(30);
-        gulfYard2.setMoves(40);
-        gulfInterchange1.setMoves(50);
-        gulfInterchange2.setMoves(60);
-
+        createOneNormalLocation("Acton");
+        createOneNormalLocation("Boston");
+        createOneNormalLocation("Chelmsford");
+        createOneNormalLocation("Danvers");
+        createOneNormalLocation("Essex");
+        createOneNormalLocation("Foxboro");
+        createOneNormalLocation("Gulf");
     }
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, Track track,

@@ -2778,6 +2778,14 @@ public class TrackSegment extends LayoutTrack {
     /*======================*\
     |* decoration accessors *|
     \*======================*/
+    @Override
+    public boolean hasDecorations() {
+        return ((arrowStyle > 0)
+                || (bridgeSideLeft || bridgeSideRight)
+                || (bumperEndStart || bumperEndStop)
+                || (tunnelSideLeft || tunnelSideRight));
+    }
+
     /**
      * get decorations
      *
