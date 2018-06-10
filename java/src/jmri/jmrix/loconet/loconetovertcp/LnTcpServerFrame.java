@@ -1,11 +1,14 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 
@@ -56,12 +59,16 @@ public class LnTcpServerFrame extends JmriJFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        Border panelBorder = BorderFactory.createEtchedBorder();
+        panel.setBorder(panelBorder);
         panel.add(startButton);
         panel.add(stopButton);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         super.getContentPane().add(panel);
 
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusLabel.setFont(statusLabel.getFont().deriveFont(0.9f * connectionLabel.getFont().getSize())); // a bit smaller
+        statusLabel.setForeground(Color.gray);
         super.getContentPane().add(statusLabel);
 
         startButton.addActionListener((ActionEvent a) -> {

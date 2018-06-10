@@ -29,7 +29,9 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
     }
 
     public LnTcpDriverAdapter() {
-        this(new LocoNetSystemConnectionMemo()); // Bug: creates an extra LocoNet connection + memo
+        this(new LocoNetSystemConnectionMemo());
+        // jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class)); requires at least 1 connection or gives NPE
+        // new LocoNetSystemConnectionMemo()); creates an extra LocoNet connection + memo
     }
 
     /**

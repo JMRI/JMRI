@@ -19,13 +19,25 @@ import jmri.jmrix.swing.SystemConnectionAction;
 public class LnTcpServerAction
         extends AbstractAction implements SystemConnectionAction {
 
+    /**
+     * Initiate a LnTcpServer for a given SystemConnectionMemo, eg. when called from a specific system connection menu.
+     * TODO allow multiple server instance for different connections
+     *
+     * @param s name for the server action
+     * @param memo the SystemConnectionMemo to connect to
+     */
     public LnTcpServerAction(String s, LocoNetSystemConnectionMemo memo) {
         super(s);
         setSystemConnectionMemo(memo);
     }
 
+    /**
+     * Initiate a LnTcpServer without a known SystemConnectionMemo, eg. as part of the auto startupAction.
+     *
+     * @param s name for the server action
+     */
     public LnTcpServerAction(String s) {
-        super(s);
+        this(s, jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
     }
 
     public LnTcpServerAction() {

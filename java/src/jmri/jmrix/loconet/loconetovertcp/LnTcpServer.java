@@ -34,6 +34,11 @@ public class LnTcpServer {
     private int portNumber;
     private LnTrafficController tc;
 
+    /**
+     * Get a server instance for a given SystemConnectionMemo.
+     *
+     * @param memo the SystemConnectionMemo to use
+     */
     private LnTcpServer(LocoNetSystemConnectionMemo memo) {
         tc = memo.getLnTrafficController(); // store tc in order to know where to send messages
         LnTcpPreferences pm = LnTcpPreferences.getDefault();
@@ -51,6 +56,16 @@ public class LnTcpServer {
                     break;
             }
         });
+    }
+
+    /**
+     * Get a server instance for the default  SystemConnectionMemo.
+     * Used as startup action {@link }
+     *
+     * @param memo the SystemConnectionMemo to use
+     */
+    private LnTcpServer() {
+        this(InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
     }
 
     /**
@@ -73,7 +88,7 @@ public class LnTcpServer {
      */
     public static synchronized LnTcpServer getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServer.class).orElseGet(() -> {
-            LnTcpServer server = new LnTcpServer(new LocoNetSystemConnectionMemo());
+            LnTcpServer server = new LnTcpServer(); // uses default memo, don't create an additional connection
             return InstanceManager.setDefault(LnTcpServer.class, server);
         });
     }
@@ -241,6 +256,15 @@ public class LnTcpServer {
      */
     public String getSystemName() {
         return this.tc.getSystemConnectionMemo().getUserName();
+    }
+
+    /**
+     * Get the traffic controller this server is using.
+     *
+     * @return the traffic controller
+     */
+    public LnTrafficController getTrafficController() {
+        return this.tc;
     }
 
     /**
