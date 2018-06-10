@@ -48,7 +48,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             sensors.addContent(elem);
         }
 
-        java.util.Iterator<String> iter = tm.getSystemNameAddedOrderList().iterator();
+        java.util.Iterator<Sensor> iter = tm.getNamedBeanSet().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {
@@ -56,10 +56,9 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         }
         // store the sensors
         while (iter.hasNext()) {
-            String sname = iter.next();
+            Sensor s  = iter.next();
+            String sname = s.getSystemName();
             log.debug("system name is " + sname);
-            Sensor s = tm.getBySystemName(sname);
-
             String inverted = s.getInverted() ? "true" : "false";
 
             Element elem = new Element("sensor")
@@ -86,7 +85,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             }
 
             sensors.addContent(elem);
-
         }
         return sensors;
     }

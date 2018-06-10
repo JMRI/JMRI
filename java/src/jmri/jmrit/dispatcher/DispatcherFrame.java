@@ -98,98 +98,212 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
+    /***
+     *  reads thru all the traininfo files found in the dispatcher directory
+     *  and loads the ones flagged as "loadAtStartup"
+     */
     public void loadAtStartup() {
         log.debug("Loading saved trains flagged as LoadAtStartup");
         TrainInfoFile tif = new TrainInfoFile();
         String[] names = tif.getTrainInfoFileNames();
-        boolean pathsInited = false;
+        log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class)
+                .initializeLayoutBlockPaths();
         if (names.length > 0) {
             for (int i = 0; i < names.length; i++) {
-                //read xml data from selected filename and move it into the new train dialog box
                 TrainInfo info = null;
                 try {
                     info = tif.readTrainInfo(names[i]);
                 } catch (java.io.IOException ioe) {
                     log.error("IO Exception when reading train info file {}: {}", names[i], ioe);
+                    continue;
                 } catch (org.jdom2.JDOMException jde) {
                     log.error("JDOM Exception when reading train info file {}: {}", names[i], jde);
+                    continue;
                 }
                 if (info != null && info.getLoadAtStartup()) {
-                    log.debug("restoring train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
-                            info.getStartBlockName(), info.getDestinationBlockName());
-                    // create a new Active Train
-                    int tSource = ActiveTrain.ROSTER;
-                    if (info.getTrainFromTrains()) {
-                        tSource = ActiveTrain.OPERATIONS;
-                    } else if (info.getTrainFromUser()) {
-                        tSource = ActiveTrain.USER;
-                    }
-
-                    if (!pathsInited) { //only init the layoutblockpaths once here
-                        log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
-                        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                    }
-                    ActiveTrain at = createActiveTrain(info.getTransitId(), info.getTrainName(), tSource,
-                            info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(), info.getDestinationBlockSeq(),
-                            info.getAutoRun(), info.getDccAddress(), info.getPriority(),
-                            info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
-                    if (at != null) {
-                        if (tSource == ActiveTrain.ROSTER) {
-                            RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
-                            at.setRosterEntry(re);
-                            at.setDccAddress(re.getDccAddress());
-                        }
-                        at.setAllocateMethod(info.getAllocationMethod());
-                        at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
-                        at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
-                        at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
-                        at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
-                        at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
-                        at.setDelaySensor(info.getDelaySensor());
-                        if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY)
-                                || info.getDelayedStart() == ActiveTrain.NODELAY) {
-                            at.setStarted();
-                        }
-                        at.setRestartSensor(info.getRestartSensor());
-                        at.setTrainType(info.getTrainType());
-                        at.setTerminateWhenDone(info.getTerminateWhenDone());
-                        if (info.getAutoRun()) {
-                            AutoActiveTrain aat = new AutoActiveTrain(at);
-                            aat.setSpeedFactor(info.getSpeedFactor());
-                            aat.setMaxSpeed(info.getMaxSpeed());
-                            aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
-                            aat.setResistanceWheels(info.getResistanceWheels());
-                            aat.setRunInReverse(info.getRunInReverse());
-                            aat.setSoundDecoder(info.getSoundDecoder());
-                            aat.setMaxTrainLength(info.getMaxTrainLength());
-                            aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
-                            aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
-                            aat.setUseSpeedProfile(info.getUseSpeedProfile());
-                            if (!aat.initialize()) {
-                                log.error("ERROR initializing autorunning for train {}", at.getTrainName());
-                                JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
-                                        "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                            getAutoTrainsFrame().addAutoActiveTrain(aat);
-                        }
-                        allocateNewActiveTrain(at);
-                        newTrainDone(at);
-
+                    if (loadTrainFromTrainInfo(info) != 0) {
+                        /*
+                         * Error loading occurred The error will have already
+                         * been sent to the log and to screen
+                         */
                     } else {
-                        log.warn("failed to create create Active Train {}", info.getTrainName());
-                    }
-                    // give time for throttles to be allocated.
-                    try {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException e) {
-                        log.warn("Sleep Interupted in loading trains, likely being stopped",e);
+                        /* give time to set up throttles etc */
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            log.warn("Sleep Interupted in loading trains, likely being stopped", e);
+                        }
                     }
                 }
-
             }
         }
+    }
+
+    /**
+     * Constants for the override type
+     */
+    public static final String OVERRIDETYPE_NONE = "NONE";
+    public static final String OVERRIDETYPE_USER = "USER";
+    public static final String OVERRIDETYPE_DCCADDRESS = "DCCADDRESS";
+    public static final String OVERRIDETYPE_OPERATIONS = "OPERATIONS";
+    public static final String OVERRIDETYPE_ROSTER = "ROSTER";
+
+    /**
+     * Loads a train into the Dispatcher from a traininfo file
+     *
+     * @param traininfoFileName - the file name of a traininfo file.
+     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     */
+    public int loadTrainFromTrainInfo(String traininfoFileName) {
+        return loadTrainFromTrainInfo(traininfoFileName, "NONE", "");
+    }
+
+    /**
+     * Loads a train into the Dispatcher from a traininfo file, overriding
+     * dccaddress
+     *
+     * @param traininfoFileName - the file name of a traininfo file.
+     * @param overRideType - "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue - "" , dccAddress, RosterEntryName or Operations
+     *            trainname.
+     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     */
+    public int loadTrainFromTrainInfo(String traininfoFileName, String overRideType, String overRideValue) {
+        //read xml data from selected filename and move it into trainfo
+        try {
+            // maybe called from jthon protect our selves
+            TrainInfoFile tif = new TrainInfoFile();
+            TrainInfo info = null;
+            try {
+                info = tif.readTrainInfo(traininfoFileName);
+            } catch (java.io.IOException ioe) {
+                log.error("IO Exception when reading train info file {}: {}", traininfoFileName, ioe);
+                return -2;
+            } catch (org.jdom2.JDOMException jde) {
+                log.error("JDOM Exception when reading train info file {}: {}", traininfoFileName, jde);
+                return -3;
+            }
+            return loadTrainFromTrainInfo(info, overRideType, overRideValue);
+        } catch (Exception ex) {
+            log.error("Unexpected, uncaught exception loading traininfofile [{}]", traininfoFileName, ex);
+            return -9;
+        }
+    }
+
+    /**
+     * Loads a train into the Dispatcher
+     *
+     * @param info - a completed TrainInfo class.
+     * @return - 0 good. -1 failure
+     */
+    public int loadTrainFromTrainInfo(TrainInfo info) {
+        return loadTrainFromTrainInfo(info, "NONE", "");
+    }
+
+    /**
+     * Loads a train into the Dispatcher
+     *
+     * @param info - a completed TrainInfo class.
+     * @param overRideType - "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue - "" , dccAddress, RosterEntryName or Operations
+     *            trainname.
+     * @return - 0 good. -1 failure
+     */
+    public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
+
+        log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
+                info.getStartBlockName(), info.getDestinationBlockName());
+        // create a new Active Train
+
+        //set updefaults from traininfo
+        int tSource = ActiveTrain.ROSTER;
+        if (info.getTrainFromTrains()) {
+            tSource = ActiveTrain.OPERATIONS;
+        } else if (info.getTrainFromUser()) {
+            tSource = ActiveTrain.USER;
+        }
+        String dccAddressToUse = info.getDccAddress();
+        String trainNameToUse = info.getTrainName();
+
+        //process override
+        switch (overRideType) {
+            case "":
+            case OVERRIDETYPE_NONE:
+                break;
+            case OVERRIDETYPE_USER:
+            case OVERRIDETYPE_DCCADDRESS:
+                tSource = ActiveTrain.USER;
+                dccAddressToUse = overRideValue;
+                trainNameToUse = overRideValue;
+                break;
+            case OVERRIDETYPE_OPERATIONS:
+                tSource = ActiveTrain.OPERATIONS;
+                trainNameToUse = overRideValue;
+                break;
+            case OVERRIDETYPE_ROSTER:
+                tSource = ActiveTrain.ROSTER;
+                trainNameToUse = overRideValue;
+                break;
+            default:
+                /* just leave as in traininfo */
+        }
+
+        ActiveTrain at = createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
+                info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
+                info.getDestinationBlockSeq(),
+                info.getAutoRun(), dccAddressToUse, info.getPriority(),
+                info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
+        if (at != null) {
+            if (tSource == ActiveTrain.ROSTER) {
+                RosterEntry re = Roster.getDefault().getEntryForId(trainNameToUse);
+                at.setRosterEntry(re);
+                at.setDccAddress(re.getDccAddress());
+            }
+            at.setAllocateMethod(info.getAllocationMethod());
+            at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+            at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
+            at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
+            at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+            at.setRestartDelay(info.getRestartDelayMin()); //this is number of minutes to delay between runs
+            at.setDelaySensor(info.getDelaySensor());
+            if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) &&
+                    info.getDelayedStart() != ActiveTrain.SENSORDELAY) ||
+                    info.getDelayedStart() == ActiveTrain.NODELAY) {
+                at.setStarted();
+            }
+            at.setRestartSensor(info.getRestartSensor());
+            at.setTrainType(info.getTrainType());
+            at.setTerminateWhenDone(info.getTerminateWhenDone());
+            if (info.getAutoRun()) {
+                AutoActiveTrain aat = new AutoActiveTrain(at);
+                aat.setSpeedFactor(info.getSpeedFactor());
+                aat.setMaxSpeed(info.getMaxSpeed());
+                aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
+                aat.setResistanceWheels(info.getResistanceWheels());
+                aat.setRunInReverse(info.getRunInReverse());
+                aat.setSoundDecoder(info.getSoundDecoder());
+                aat.setMaxTrainLength(info.getMaxTrainLength());
+                aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
+                aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
+                aat.setUseSpeedProfile(info.getUseSpeedProfile());
+                if (!aat.initialize()) {
+                    log.error("ERROR initializing autorunning for train {}", at.getTrainName());
+                    JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
+                            "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return -1;
+                }
+                getAutoTrainsFrame().addAutoActiveTrain(aat);
+            }
+            allocateNewActiveTrain(at);
+            newTrainDone(at);
+
+        } else {
+            log.warn("failed to create create Active Train {}", info.getTrainName());
+            return -1;
+        }
+        return 0;
     }
 
     // Dispatcher options (saved to disk if user requests, and restored if present)
@@ -296,49 +410,72 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             contentPane.add(p11);
             JPanel p12 = new JPanel();
             p12.setLayout(new FlowLayout());
-            activeTrainsTableModel = new ActiveTrainsTableModel();
+            p12.setLayout(new BorderLayout());
+             activeTrainsTableModel = new ActiveTrainsTableModel();
             JTable activeTrainsTable = new JTable(activeTrainsTableModel);
             activeTrainsTable.setRowSelectionAllowed(false);
             activeTrainsTable.setPreferredScrollableViewportSize(new java.awt.Dimension(950, 160));
             TableColumnModel activeTrainsColumnModel = activeTrainsTable.getColumnModel();
             TableColumn transitColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TRANSIT_COLUMN);
             transitColumn.setResizable(true);
-            transitColumn.setMinWidth(140);
-            transitColumn.setMaxWidth(220);
+            //transitColumn.setMinWidth(140);
+            //transitColumn.setMaxWidth(220);
             TableColumn trainColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TRAIN_COLUMN);
             trainColumn.setResizable(true);
-            trainColumn.setMinWidth(90);
-            trainColumn.setMaxWidth(160);
+            //trainColumn.setMinWidth(90);
+            //trainColumn.setMaxWidth(160);
             TableColumn typeColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TYPE_COLUMN);
             typeColumn.setResizable(true);
-            typeColumn.setMinWidth(130);
-            typeColumn.setMaxWidth(190);
+            //typeColumn.setMinWidth(130);
+            //typeColumn.setMaxWidth(190);
             TableColumn statusColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.STATUS_COLUMN);
             statusColumn.setResizable(true);
-            statusColumn.setMinWidth(90);
-            statusColumn.setMaxWidth(140);
+            //statusColumn.setMinWidth(90);
+            //statusColumn.setMaxWidth(140);
             TableColumn modeColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.MODE_COLUMN);
             modeColumn.setResizable(true);
-            modeColumn.setMinWidth(90);
-            modeColumn.setMaxWidth(140);
+            //modeColumn.setMinWidth(90);
+            //modeColumn.setMaxWidth(140);
             TableColumn allocatedColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.ALLOCATED_COLUMN);
             allocatedColumn.setResizable(true);
-            allocatedColumn.setMinWidth(120);
-            allocatedColumn.setMaxWidth(200);
+            //allocatedColumn.setMinWidth(120);
+            //allocatedColumn.setMaxWidth(200);
             TableColumn nextSectionColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.NEXTSECTION_COLUMN);
             nextSectionColumn.setResizable(true);
-            nextSectionColumn.setMinWidth(120);
-            nextSectionColumn.setMaxWidth(200);
+            //nextSectionColumn.setMinWidth(120);
+            //nextSectionColumn.setMaxWidth(200);
             TableColumn allocateButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.ALLOCATEBUTTON_COLUMN);
             allocateButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
-            allocateButtonColumn.setMinWidth(110);
-            allocateButtonColumn.setMaxWidth(190);
-            allocateButtonColumn.setResizable(false);
+            //allocateButtonColumn.setMinWidth(110);
+            //allocateButtonColumn.setMaxWidth(190);
+            allocateButtonColumn.setResizable(true);
             ButtonRenderer buttonRenderer = new ButtonRenderer();
             activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
-            JButton sampleButton = new JButton(Bundle.getMessage("AllocateButtonName"));
+            JButton sampleButton = new JButton("WWW..."); //by default 3 letters and elipse
             activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
             allocateButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+            TableColumn releaseButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TERMINATEBUTTON_COLUMN);
+            releaseButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
+            //releaseButtonColumn.setMinWidth(110);
+            //releaseButtonColumn.setMaxWidth(190);
+            releaseButtonColumn.setResizable(true);
+            buttonRenderer = new ButtonRenderer();
+            activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
+            sampleButton = new JButton("WWW...");
+            activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
+            releaseButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+
+            TableColumn cancelResetButtonColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.CANCELRESTARTBUTTON_COLUMN);
+            //cancelResetButtonColumn.setCellEditor(new CheckButtonEditor(new JButton()));
+            //cancelResetButtonColumn.setMinWidth(110);
+            //cancelResetButtonColumn.setMaxWidth(190);
+            cancelResetButtonColumn.setResizable(true);
+            buttonRenderer = new ButtonRenderer();
+            activeTrainsTable.setDefaultRenderer(JButton.class, buttonRenderer);
+            sampleButton = new JButton("WWW...");
+            activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
+            cancelResetButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+
             JScrollPane activeTrainsTableScrollPane = new JScrollPane(activeTrainsTable);
             p12.add(activeTrainsTableScrollPane, BorderLayout.CENTER);
             contentPane.add(p12);
@@ -406,10 +543,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             contentPane.add(new JSeparator());
             JPanel p21 = new JPanel();
             p21.setLayout(new FlowLayout());
+            p21.setLayout(new BorderLayout());
             p21.add(new JLabel(Bundle.getMessage("RequestedAllocationsTableTitle")));
             contentPane.add(p21);
             JPanel p22 = new JPanel();
             p22.setLayout(new FlowLayout());
+            p22.setLayout(new BorderLayout());
             allocationRequestTableModel = new AllocationRequestTableModel();
             JTable allocationRequestTable = new JTable(allocationRequestTableModel);
             allocationRequestTable.setRowSelectionAllowed(false);
@@ -417,46 +556,46 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             TableColumnModel allocationRequestColumnModel = allocationRequestTable.getColumnModel();
             TableColumn activeColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.ACTIVE_COLUMN);
             activeColumn.setResizable(true);
-            activeColumn.setMinWidth(210);
-            activeColumn.setMaxWidth(260);
+            //activeColumn.setMinWidth(210);
+            //activeColumn.setMaxWidth(260);
             TableColumn priorityColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.PRIORITY_COLUMN);
             priorityColumn.setResizable(true);
-            priorityColumn.setMinWidth(40);
-            priorityColumn.setMaxWidth(60);
+            //priorityColumn.setMinWidth(40);
+            //priorityColumn.setMaxWidth(60);
             TableColumn trainTypColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.TRAINTYPE_COLUMN);
             trainTypColumn.setResizable(true);
-            trainTypColumn.setMinWidth(130);
-            trainTypColumn.setMaxWidth(190);
+            //trainTypColumn.setMinWidth(130);
+            //trainTypColumn.setMaxWidth(190);
             TableColumn sectionColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.SECTION_COLUMN);
             sectionColumn.setResizable(true);
-            sectionColumn.setMinWidth(140);
-            sectionColumn.setMaxWidth(210);
+            //sectionColumn.setMinWidth(140);
+            //sectionColumn.setMaxWidth(210);
             TableColumn secStatusColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.STATUS_COLUMN);
             secStatusColumn.setResizable(true);
-            secStatusColumn.setMinWidth(90);
-            secStatusColumn.setMaxWidth(150);
+            //secStatusColumn.setMinWidth(90);
+            //secStatusColumn.setMaxWidth(150);
             TableColumn occupancyColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.OCCUPANCY_COLUMN);
             occupancyColumn.setResizable(true);
-            occupancyColumn.setMinWidth(80);
-            occupancyColumn.setMaxWidth(130);
+            //occupancyColumn.setMinWidth(80);
+            //occupancyColumn.setMaxWidth(130);
             TableColumn secLengthColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.SECTIONLENGTH_COLUMN);
             secLengthColumn.setResizable(true);
-            secLengthColumn.setMinWidth(40);
-            secLengthColumn.setMaxWidth(60);
+            //secLengthColumn.setMinWidth(40);
+            //secLengthColumn.setMaxWidth(60);
             TableColumn allocateColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.ALLOCATEBUTTON_COLUMN);
             allocateColumn.setCellEditor(new ButtonEditor(new JButton()));
-            allocateColumn.setMinWidth(90);
-            allocateColumn.setMaxWidth(170);
-            allocateColumn.setResizable(false);
+            //allocateColumn.setMinWidth(90);
+            //allocateColumn.setMaxWidth(170);
+            allocateColumn.setResizable(true);
             allocationRequestTable.setDefaultRenderer(JButton.class, buttonRenderer);
             sampleButton = new JButton(Bundle.getMessage("AllocateButton"));
             allocationRequestTable.setRowHeight(sampleButton.getPreferredSize().height);
             allocateColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
             TableColumn cancelButtonColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.CANCELBUTTON_COLUMN);
             cancelButtonColumn.setCellEditor(new ButtonEditor(new JButton()));
-            cancelButtonColumn.setMinWidth(75);
-            cancelButtonColumn.setMaxWidth(170);
-            cancelButtonColumn.setResizable(false);
+            //cancelButtonColumn.setMinWidth(75);
+            //cancelButtonColumn.setMaxWidth(170);
+            cancelButtonColumn.setResizable(true);
             cancelButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
             JScrollPane allocationRequestTableScrollPane = new JScrollPane(allocationRequestTable);
             p22.add(allocationRequestTableScrollPane, BorderLayout.CENTER);
@@ -1485,12 +1624,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // Programming
             // Note: if ns is not null, the program will not check for end Block, but will use ns.
             // Calling code must do all validity checks on a non-null ns.
+            log.debug("A");
             if (ns != null) {
                 nextSection = ns;
+                log.debug("B");
             } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
                     && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
                     && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
                 // not at either end - determine the next section
+                log.debug("C");
                 int seqNum = ar.getSectionSeqNumber();
                 if (at.isAllocationReversed()) {
                     seqNum -= 1;
@@ -1512,6 +1654,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             } else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s == at.getEndBlockSection())
                     && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())) {
                 // need to reverse Transit direction when train is in the last Section, set next section.
+                log.debug("D");
                 nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
                 at.setAllocationReversed(true);
                 List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
@@ -1529,13 +1672,24 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     || (at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1))) {
                 // request to allocate the last block in the Transit, or the Transit is reversed and
                 //      has reached the beginning of the Transit--check for automatic restart
+                log.debug("F");
                 if (at.getResetWhenDone()) {
+                    log.debug("G");
                     if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
                         at.holdAllocation(true);
+                        log.debug("H");
                     }
                     nextSection = at.getSecondAllocatedSection();
                     nextSectionSeqNo = 2;
                     at.setAllocationReversed(false);
+//                } else if ((at.isAllocationReversed() && ar.getSectionSeqNumber() == 1)) {
+                    //nextSection = at.getSecondAllocatedSection();
+                    //nextSectionSeqNo = 2;
+//                    nextSection = ar.getSection();
+//                    nextSectionSeqNo = 1;
+//                    log.debug("I");
+                    //at.holdAllocation(true);
+                    //at.setAllocationReversed(false);
                 }
             }
 
@@ -2436,7 +2590,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int ALLOCATED_COLUMN = 5;
         public static final int NEXTSECTION_COLUMN = 6;
         public static final int ALLOCATEBUTTON_COLUMN = 7;
-
+        public static final int TERMINATEBUTTON_COLUMN = 8;
+        public static final int CANCELRESTARTBUTTON_COLUMN = 9;
+        public static final int MAX_ACTIVE_TRAIN_COLUMN = 9;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -2450,15 +2606,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == ALLOCATEBUTTON_COLUMN) {
+            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN) {
                 return JButton.class;
+            }
+            if (c == CANCELRESTARTBUTTON_COLUMN) {
+                return Boolean.class;
             }
             return String.class;
         }
 
         @Override
         public int getColumnCount() {
-            return ALLOCATEBUTTON_COLUMN + 1;
+            return MAX_ACTIVE_TRAIN_COLUMN + 1;
         }
 
         @Override
@@ -2468,7 +2627,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            if (c == ALLOCATEBUTTON_COLUMN) {
+            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN || c == CANCELRESTARTBUTTON_COLUMN) {
                 return (true);
             }
             return (false);
@@ -2491,7 +2650,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return Bundle.getMessage("AllocatedSectionColumnTitle");
                 case NEXTSECTION_COLUMN:
                     return Bundle.getMessage("NextSectionColumnTitle");
+                case CANCELRESTARTBUTTON_COLUMN:
+                    return("Restart");
                 case ALLOCATEBUTTON_COLUMN:
+                case TERMINATEBUTTON_COLUMN:
                     return (" "); // button columns have no names
                 default:
                     return "";
@@ -2517,7 +2679,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case NEXTSECTION_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
                 case ALLOCATEBUTTON_COLUMN:
-                    return new JTextField(12).getPreferredSize().width;
+                case TERMINATEBUTTON_COLUMN:
+                case CANCELRESTARTBUTTON_COLUMN:
+                    return new JTextField(5).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2549,6 +2713,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return (at.getNextSectionToAllocateName());
                 case ALLOCATEBUTTON_COLUMN:
                     return Bundle.getMessage("AllocateButtonName");
+                case TERMINATEBUTTON_COLUMN:
+                    return Bundle.getMessage("TerminateTrain");
+                case CANCELRESTARTBUTTON_COLUMN:
+                    return at.getResetWhenDone();
                 default:
                     return (" ");
             }
@@ -2559,6 +2727,30 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (col == ALLOCATEBUTTON_COLUMN) {
                 // open an allocate window
                 allocateNextRequested(row);
+            }
+            if (col == TERMINATEBUTTON_COLUMN) {
+                if (activeTrainsList.get(row) != null) {
+                    terminateActiveTrain(activeTrainsList.get(row));
+                }
+            }
+            if (col == CANCELRESTARTBUTTON_COLUMN) {
+                ActiveTrain at = null;
+                at = activeTrainsList.get(row);
+                if (activeTrainsList.get(row) != null) {
+                    if (!at.getResetWhenDone()) {
+                        at.setResetWhenDone(true);
+                        return;
+                    }
+                    at.setResetWhenDone(false);
+                    for (int j = restartingTrainsList.size(); j > 0; j--) {
+                        if (restartingTrainsList.get(j - 1) == at) {
+                            log.info("Remove");
+                            restartingTrainsList.remove(j - 1);
+                            return;
+                        }
+                    }
+                    log.info("Not In List");
+                }
             }
         }
     }
@@ -2578,6 +2770,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int SECTIONLENGTH_COLUMN = 6;
         public static final int ALLOCATEBUTTON_COLUMN = 7;
         public static final int CANCELBUTTON_COLUMN = 8;
+        //public static final int CANCELRESTART_COLUMN = 9;
 
         public AllocationRequestTableModel() {
             super();
@@ -2598,6 +2791,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (c == ALLOCATEBUTTON_COLUMN) {
                 return JButton.class;
             }
+            //if (c == CANCELRESTART_COLUMN) {
+            //    return JButton.class;
+            //}
             return String.class;
         }
 
