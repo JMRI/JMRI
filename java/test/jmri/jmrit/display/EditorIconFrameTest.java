@@ -86,8 +86,8 @@ public class EditorIconFrameTest {
     public void tearDown(){
        if(!GraphicsEnvironment.isHeadless()) {
           jfo.requestClose();
+          JUnitUtil.dispose(e);
        }
-       JUnitUtil.dispose(e);
        e = null;
        JUnitUtil.setUp();
     }
