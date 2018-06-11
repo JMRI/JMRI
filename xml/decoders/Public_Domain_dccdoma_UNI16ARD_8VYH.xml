@@ -24,7 +24,7 @@
     <decoder>
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
-            <model model="UNI16ARD-8VYH" lowVersionID="40" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+            <model model="UNI16ARD-8VYH" lowVersionID="40" highVersionID="49" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
         </family>
 
         <programming direct="yes" paged="yes" register="no" ops="no" />

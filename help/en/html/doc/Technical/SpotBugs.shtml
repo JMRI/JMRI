@@ -23,7 +23,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -377,7 +377,7 @@ ant spotbugs
       <p>If you are checking code in to the JMRI repository, please
       check the CI server and make sure that your changes do not
       introduce new errors.</p>
-       <!--#include virtual="/Footer" -->
+       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

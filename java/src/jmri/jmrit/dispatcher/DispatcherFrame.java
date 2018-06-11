@@ -98,98 +98,212 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
+    /***
+     *  reads thru all the traininfo files found in the dispatcher directory
+     *  and loads the ones flagged as "loadAtStartup"
+     */
     public void loadAtStartup() {
         log.debug("Loading saved trains flagged as LoadAtStartup");
         TrainInfoFile tif = new TrainInfoFile();
         String[] names = tif.getTrainInfoFileNames();
-        boolean pathsInited = false;
+        log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class)
+                .initializeLayoutBlockPaths();
         if (names.length > 0) {
             for (int i = 0; i < names.length; i++) {
-                //read xml data from selected filename and move it into the new train dialog box
                 TrainInfo info = null;
                 try {
                     info = tif.readTrainInfo(names[i]);
                 } catch (java.io.IOException ioe) {
                     log.error("IO Exception when reading train info file {}: {}", names[i], ioe);
+                    continue;
                 } catch (org.jdom2.JDOMException jde) {
                     log.error("JDOM Exception when reading train info file {}: {}", names[i], jde);
+                    continue;
                 }
                 if (info != null && info.getLoadAtStartup()) {
-                    log.debug("restoring train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
-                            info.getStartBlockName(), info.getDestinationBlockName());
-                    // create a new Active Train
-                    int tSource = ActiveTrain.ROSTER;
-                    if (info.getTrainFromTrains()) {
-                        tSource = ActiveTrain.OPERATIONS;
-                    } else if (info.getTrainFromUser()) {
-                        tSource = ActiveTrain.USER;
-                    }
-
-                    if (!pathsInited) { //only init the layoutblockpaths once here
-                        log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
-                        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-                    }
-                    ActiveTrain at = createActiveTrain(info.getTransitId(), info.getTrainName(), tSource,
-                            info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(), info.getDestinationBlockSeq(),
-                            info.getAutoRun(), info.getDccAddress(), info.getPriority(),
-                            info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
-                    if (at != null) {
-                        if (tSource == ActiveTrain.ROSTER) {
-                            RosterEntry re = Roster.getDefault().getEntryForId(info.getTrainName());
-                            at.setRosterEntry(re);
-                            at.setDccAddress(re.getDccAddress());
-                        }
-                        at.setAllocateMethod(info.getAllocationMethod());
-                        at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
-                        at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
-                        at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
-                        at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
-                        at.setRestartDelay(info.getRestartDelayMin());  //this is number of minutes to delay between runs
-                        at.setDelaySensor(info.getDelaySensor());
-                        if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) && info.getDelayedStart() != ActiveTrain.SENSORDELAY)
-                                || info.getDelayedStart() == ActiveTrain.NODELAY) {
-                            at.setStarted();
-                        }
-                        at.setRestartSensor(info.getRestartSensor());
-                        at.setTrainType(info.getTrainType());
-                        at.setTerminateWhenDone(info.getTerminateWhenDone());
-                        if (info.getAutoRun()) {
-                            AutoActiveTrain aat = new AutoActiveTrain(at);
-                            aat.setSpeedFactor(info.getSpeedFactor());
-                            aat.setMaxSpeed(info.getMaxSpeed());
-                            aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
-                            aat.setResistanceWheels(info.getResistanceWheels());
-                            aat.setRunInReverse(info.getRunInReverse());
-                            aat.setSoundDecoder(info.getSoundDecoder());
-                            aat.setMaxTrainLength(info.getMaxTrainLength());
-                            aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
-                            aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
-                            aat.setUseSpeedProfile(info.getUseSpeedProfile());
-                            if (!aat.initialize()) {
-                                log.error("ERROR initializing autorunning for train {}", at.getTrainName());
-                                JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
-                                        "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
-                                        JOptionPane.INFORMATION_MESSAGE);
-                            }
-                            getAutoTrainsFrame().addAutoActiveTrain(aat);
-                        }
-                        allocateNewActiveTrain(at);
-                        newTrainDone(at);
-
+                    if (loadTrainFromTrainInfo(info) != 0) {
+                        /*
+                         * Error loading occurred The error will have already
+                         * been sent to the log and to screen
+                         */
                     } else {
-                        log.warn("failed to create create Active Train {}", info.getTrainName());
-                    }
-                    // give time for throttles to be allocated.
-                    try {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException e) {
-                        log.warn("Sleep Interupted in loading trains, likely being stopped",e);
+                        /* give time to set up throttles etc */
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            log.warn("Sleep Interupted in loading trains, likely being stopped", e);
+                        }
                     }
                 }
-
             }
         }
+    }
+
+    /**
+     * Constants for the override type
+     */
+    public static final String OVERRIDETYPE_NONE = "NONE";
+    public static final String OVERRIDETYPE_USER = "USER";
+    public static final String OVERRIDETYPE_DCCADDRESS = "DCCADDRESS";
+    public static final String OVERRIDETYPE_OPERATIONS = "OPERATIONS";
+    public static final String OVERRIDETYPE_ROSTER = "ROSTER";
+
+    /**
+     * Loads a train into the Dispatcher from a traininfo file
+     *
+     * @param traininfoFileName - the file name of a traininfo file.
+     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     */
+    public int loadTrainFromTrainInfo(String traininfoFileName) {
+        return loadTrainFromTrainInfo(traininfoFileName, "NONE", "");
+    }
+
+    /**
+     * Loads a train into the Dispatcher from a traininfo file, overriding
+     * dccaddress
+     *
+     * @param traininfoFileName - the file name of a traininfo file.
+     * @param overRideType - "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue - "" , dccAddress, RosterEntryName or Operations
+     *            trainname.
+     * @return - 0 good. -1 create failure, -2 -3 file errors, -9 bother.
+     */
+    public int loadTrainFromTrainInfo(String traininfoFileName, String overRideType, String overRideValue) {
+        //read xml data from selected filename and move it into trainfo
+        try {
+            // maybe called from jthon protect our selves
+            TrainInfoFile tif = new TrainInfoFile();
+            TrainInfo info = null;
+            try {
+                info = tif.readTrainInfo(traininfoFileName);
+            } catch (java.io.IOException ioe) {
+                log.error("IO Exception when reading train info file {}: {}", traininfoFileName, ioe);
+                return -2;
+            } catch (org.jdom2.JDOMException jde) {
+                log.error("JDOM Exception when reading train info file {}: {}", traininfoFileName, jde);
+                return -3;
+            }
+            return loadTrainFromTrainInfo(info, overRideType, overRideValue);
+        } catch (Exception ex) {
+            log.error("Unexpected, uncaught exception loading traininfofile [{}]", traininfoFileName, ex);
+            return -9;
+        }
+    }
+
+    /**
+     * Loads a train into the Dispatcher
+     *
+     * @param info - a completed TrainInfo class.
+     * @return - 0 good. -1 failure
+     */
+    public int loadTrainFromTrainInfo(TrainInfo info) {
+        return loadTrainFromTrainInfo(info, "NONE", "");
+    }
+
+    /**
+     * Loads a train into the Dispatcher
+     *
+     * @param info - a completed TrainInfo class.
+     * @param overRideType - "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue - "" , dccAddress, RosterEntryName or Operations
+     *            trainname.
+     * @return - 0 good. -1 failure
+     */
+    public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
+
+        log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
+                info.getStartBlockName(), info.getDestinationBlockName());
+        // create a new Active Train
+
+        //set updefaults from traininfo
+        int tSource = ActiveTrain.ROSTER;
+        if (info.getTrainFromTrains()) {
+            tSource = ActiveTrain.OPERATIONS;
+        } else if (info.getTrainFromUser()) {
+            tSource = ActiveTrain.USER;
+        }
+        String dccAddressToUse = info.getDccAddress();
+        String trainNameToUse = info.getTrainName();
+
+        //process override
+        switch (overRideType) {
+            case "":
+            case OVERRIDETYPE_NONE:
+                break;
+            case OVERRIDETYPE_USER:
+            case OVERRIDETYPE_DCCADDRESS:
+                tSource = ActiveTrain.USER;
+                dccAddressToUse = overRideValue;
+                trainNameToUse = overRideValue;
+                break;
+            case OVERRIDETYPE_OPERATIONS:
+                tSource = ActiveTrain.OPERATIONS;
+                trainNameToUse = overRideValue;
+                break;
+            case OVERRIDETYPE_ROSTER:
+                tSource = ActiveTrain.ROSTER;
+                trainNameToUse = overRideValue;
+                break;
+            default:
+                /* just leave as in traininfo */
+        }
+
+        ActiveTrain at = createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
+                info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
+                info.getDestinationBlockSeq(),
+                info.getAutoRun(), dccAddressToUse, info.getPriority(),
+                info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
+        if (at != null) {
+            if (tSource == ActiveTrain.ROSTER) {
+                RosterEntry re = Roster.getDefault().getEntryForId(trainNameToUse);
+                at.setRosterEntry(re);
+                at.setDccAddress(re.getDccAddress());
+            }
+            at.setAllocateMethod(info.getAllocationMethod());
+            at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+            at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
+            at.setDepartureTimeMin(info.getDepartureTimeMin()); //minute of hour to start this train
+            at.setDelayedRestart(info.getDelayedRestart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
+            at.setRestartDelay(info.getRestartDelayMin()); //this is number of minutes to delay between runs
+            at.setDelaySensor(info.getDelaySensor());
+            if ((isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin()) &&
+                    info.getDelayedStart() != ActiveTrain.SENSORDELAY) ||
+                    info.getDelayedStart() == ActiveTrain.NODELAY) {
+                at.setStarted();
+            }
+            at.setRestartSensor(info.getRestartSensor());
+            at.setTrainType(info.getTrainType());
+            at.setTerminateWhenDone(info.getTerminateWhenDone());
+            if (info.getAutoRun()) {
+                AutoActiveTrain aat = new AutoActiveTrain(at);
+                aat.setSpeedFactor(info.getSpeedFactor());
+                aat.setMaxSpeed(info.getMaxSpeed());
+                aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
+                aat.setResistanceWheels(info.getResistanceWheels());
+                aat.setRunInReverse(info.getRunInReverse());
+                aat.setSoundDecoder(info.getSoundDecoder());
+                aat.setMaxTrainLength(info.getMaxTrainLength());
+                aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
+                aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
+                aat.setUseSpeedProfile(info.getUseSpeedProfile());
+                if (!aat.initialize()) {
+                    log.error("ERROR initializing autorunning for train {}", at.getTrainName());
+                    JOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
+                            "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return -1;
+                }
+                getAutoTrainsFrame().addAutoActiveTrain(aat);
+            }
+            allocateNewActiveTrain(at);
+            newTrainDone(at);
+
+        } else {
+            log.warn("failed to create create Active Train {}", info.getTrainName());
+            return -1;
+        }
+        return 0;
     }
 
     // Dispatcher options (saved to disk if user requests, and restored if present)
