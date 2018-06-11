@@ -52,6 +52,11 @@ public class SimpleServerTest {
             });
         t.setName("simpleserver client test thread");
         t.start();
+        try {
+           t.join();
+        } catch (InterruptedException ie) {
+           // we just want to continue, so do nothing.
+        }
     }
 
     // The minimal setup for log4J
