@@ -55,10 +55,12 @@ public class NodeIdentityTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetNodeIdentity();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.resetNodeIdentity();
         JUnitUtil.tearDown();
     }
 
