@@ -12,7 +12,6 @@ import org.junit.Test;
  * Tests for LnTcpServer class.
  *
  * @author Paul Bender Copyright (C) 2016
- *
  */
 public class LnTcpServerTest {
 
@@ -20,24 +19,23 @@ public class LnTcpServerTest {
 
     @Test
     public void getInstanceTest() {
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        lnis.setSystemConnectionMemo(memo);
-        memo.setLnTrafficController(lnis);
         Assert.assertNotNull("Server getInstance", LnTcpServer.getDefault());
         LnTcpServer.getDefault().disable();  // turn the server off after enabled during creation.
-        memo.dispose();
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        lnis = new LocoNetInterfaceScaffold();
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        // provide a memo in order to later use InstanceManager.getDefault()
+        lnis = new LocoNetInterfaceScaffold(memo);
+        // memo.setLnTrafficController(lnis);
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();
     }
 
