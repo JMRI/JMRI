@@ -27,10 +27,15 @@ public class DirectoryService extends ResourceService {
     @Override
     protected void sendDirectory(HttpServletRequest request, HttpServletResponse response, Resource resource, String pathInContext) throws IOException {
         if (this.isDirAllowed()) {
-            log.error("Sending {} for {} in context {}", request.getRequestURI(), resource.getName(), pathInContext);
+            log.debug("Sending !! {} for {} in context {}", request.getRequestURI(), resource.getName(), pathInContext);
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType(ServletUtil.UTF8_TEXT_HTML);
-            response.getWriter().print((new DirectoryResource(request.getLocale(), resource)).getListHTML(request.getRequestURI(), request.getPathInfo().lastIndexOf('/') > 0)); // NOI18N
+
+            String dir = (new DirectoryResource(request.getLocale(), resource)).getListHTML(request.getRequestURI(), request.getPathInfo().lastIndexOf('/') > 0);
+            
+            byte[] data = dir.getBytes("utf-8");
+            response.setContentLength(data.length);
+            response.getOutputStream().write(data);
         } else {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }

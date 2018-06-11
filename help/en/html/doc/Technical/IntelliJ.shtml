@@ -10,8 +10,8 @@
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content=
   "JMRI technical code IntelliJ IDEA 2017.2 IDE">
-  <!--#include virtual="/Style" -->
-</head><!--#include virtual="/Header" -->
+  <!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -670,7 +670,7 @@
       reference</a> and other <a href=
       "https://www.jetbrains.com/idea/help/using-online-resources.html">
       resources</a> for more information on using this IDE.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

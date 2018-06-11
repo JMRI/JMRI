@@ -11795,13 +11795,13 @@
         </model>
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_8VYH.xml">
-        <model model="UNI16ARD-8VYH" lowVersionID="40" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-8VYH" lowVersionID="40" highVersionID="49" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV.xml">
-        <model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-NAV" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_EXT.xml">
-        <model model="UNI16ARD-NAV-EXT" lowVersionID="10" productID="16843011" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="UNI16ARD-NAV-EXT" lowVersionID="10" highVersionID="19" productID="16843011" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" file="QSI_Articulated_Steam.xml">
         <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403">
