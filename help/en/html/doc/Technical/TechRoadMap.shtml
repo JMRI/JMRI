@@ -23,7 +23,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -66,7 +66,7 @@
 
           <td></td>
 
-          <td>1.8</td>
+          <td>1.6</td>
 
           <td>1.8</td>
         </tr>
@@ -227,15 +227,59 @@
           <td>1.8</td>
         </tr>
 
+        <tr>
+          <td>4.16</td>
+
+          <td>Production version, culmination of 4.15.* series</td>
+
+          <td>July 2019</td>
+
+          <td>1.8</td>
+
+          <td>1.8</td>
+        </tr>
+
+        <tr>
+          <td>??</td>
+
+          <td>Production version, culmination of Fall 2019 series</td>
+
+          <td>December 2019</td>
+
+          <td>??</td>
+
+          <td>??</td>
+        </tr>
+
       </table>
 
-      <h4>JMRI during and after 2016</h4>The 4.1.* series of test
+      <h4>JMRI in the Near Future</h4>The 4.1.* series of test
       releases in Fall 2015 started the requirement for Java 8,
       also known as Java 1.8.
       This has continued through the following release series.
-      The December 2017 release, notionally JMRI 4.10 will
+      The June 2018 release, notionally JMRI 4.12 will
       remain with Java 8, but may involve other updates.
+      
+      <p>The next long-term-support Java release will be
+      Java 11 in Fall of 2018.  Because some people will
+      need to have that on their computers for other purposes, 
+      we intend to support JMRI running on Java 8 through 11
+      by JMRI 4.14 in December 2018.
+      
+      <p>
+      At some point, the Java version required by JMRI has to move forward.
+      We don't know what that point is, but the earliest it will be is Fall 109.
+      Allowing for migration and
+      development time, and depending on development plans, JMRI's December 2019 release
+      might require Java 11 (in which case it would be called JMRI 5.1)
+      or stay with requiring Java 8 or later (in which case it would be called JMRI 4.18).
+      Releases before Fall 2019 are intended to stay fully compatible Java 8.
 
+      <p>
+      There are also smaller migration issues. These don't directly
+      affect JMRI users in the way that Java version changes do, but 
+      they may effect external users of the JMRI libraries.
+      
       <ul>
         <li>At some point, we have to migrate away from <a href=
         "Help.shtml">JavaHelp and JHelpDev</a>. At a minimum, we'll
@@ -310,7 +354,7 @@
       parameters and return values. This means you can remove (now
       redundant) casts in many places. Jenkins will warn about
       those.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
