@@ -290,9 +290,11 @@ public class NodeIdentity {
         long leastSigBits = 0;
         long time;
 
-        for (byte b : mac) {
-            leastSigBits = leastSigBits << 8;
-            leastSigBits = leastSigBits | (b & 0xFF);
+        if(mac!=null) {
+            for (byte b : mac) {
+                leastSigBits = leastSigBits << 8;
+                leastSigBits = leastSigBits | (b & 0xFF);
+            }
         }
         leastSigBits = leastSigBits & Long.parseUnsignedLong("0000FFFFFFFFFFFF", 16); // just to be sure no overflow from node
         leastSigBits = leastSigBits | Long.parseUnsignedLong("8000000000000000", 16); // variant 2
