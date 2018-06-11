@@ -15,8 +15,8 @@
   <!-- easily replace the common header/footer code for all the web pages -->
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
-  <!--#include virtual="/Style" -->
-</head><!--#include virtual="/Header" -->
+  <!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -150,7 +150,7 @@
         be overridden once.
       </p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

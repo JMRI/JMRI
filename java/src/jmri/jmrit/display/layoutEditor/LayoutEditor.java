@@ -9452,10 +9452,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //these are convenience methods to return circles used to draw onscreen
     //
-    //compute the control point rect at inPoint
+    //compute the control point rect at inPoint; use the turnout circle size
     public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
-        return new Ellipse2D.Double(inPoint.getX() - SIZE,
-                inPoint.getY() - SIZE, SIZE2, SIZE2);
+        return trackControlCircleAt(inPoint);
     }
 
     //compute the turnout circle at inPoint (used for drawing)

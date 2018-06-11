@@ -19,7 +19,7 @@
         <link rel="icon" href="/images/jmri.ico" type="image/png">
         <link rel="home" title="Home" href="/">
         <!-- /Style -->
-    </head><!--#include virtual="/Header" -->
+    </head><!--#include virtual="/Header.shtml" -->
 
     <body>
         <div id="mBody">
@@ -84,7 +84,7 @@
                     <li><strong><a href="http://jmri.org/jython/zeroconf-preferences.js">zeroconf-preferences.js</a></strong> - Working JavaScript or ECMAScript script that controls some ZeroConf network preferences</li>
                 </ul>
 
-                <!--#include virtual="/Footer" -->
+                <!--#include virtual="/Footer.shtml" -->
             </div><!-- closes #mainContent-->
         </div><!-- closes #mBody-->
     </body>

@@ -73,7 +73,7 @@ public class LnTcpServer {
      */
     public static synchronized LnTcpServer getDefault() {
         return InstanceManager.getOptionalDefault(LnTcpServer.class).orElseGet(() -> {
-            LnTcpServer server = new LnTcpServer(new LocoNetSystemConnectionMemo());
+            LnTcpServer server = new LnTcpServer(jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
             return InstanceManager.setDefault(LnTcpServer.class, server);
         });
     }

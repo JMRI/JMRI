@@ -3693,7 +3693,7 @@ public class TrainBuilder extends TrainCommon {
                         .getLocation().getName());
                 continue;
             }
-            // the following method sets the load generated from staging boolean
+            // the following method sets the Car load generated from staging boolean
             if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
                 // test to see if destination is reachable by this train
                 if (router.setDestination(car, _train, _buildReport) && car.getDestination() != null) {
@@ -3716,7 +3716,9 @@ public class TrainBuilder extends TrainCommon {
                 generateLoadCarDepartingAndTerminatingIntoStaging(car, _terminateStageTrack)) {
             return true;
         }
-
+        
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoStagingForCarCustom"),
+                new Object[]{car.toString()}));
         return false;
     }
 
@@ -3967,7 +3969,7 @@ public class TrainBuilder extends TrainCommon {
      * Checks to see if car has a destination and tries to add car to train
      *
      * @param rl the car's route location
-     * @param routeIndex where in the route the car pick up is
+     * @param routeIndex where in the route to start search
      * @return true if car has a destination. Need to check if car has a train
      *         assignment.
      * @throws BuildFailedException if destination was staging and can't place
@@ -3981,7 +3983,7 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarHasAssignedDest"), new Object[]{
                 car.toString(), (car.getDestinationName() + ", " + car.getDestinationTrackName())}));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
-        // Code check, router doesn't set a car's destination if not carried by train being built 
+        // code check, router doesn't set a car's destination if not carried by train being built 
         if (rld == null) {
             // car has a destination that isn't serviced by this train
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildExcludeCarDestNotPartRoute"),
@@ -4766,7 +4768,12 @@ public class TrainBuilder extends TrainCommon {
             if (status.equals(Track.OKAY) || (status.startsWith(Track.LENGTH) && stageTrack != _terminateStageTrack)) {
                 car.setLoadGeneratedFromStaging(true);
                 car.setFinalDestination(stageTrack.getLocation());
-                car.setFinalDestinationTrack(null); // don't assign the track, that will be done later
+                // don't set track assignment unless the car is going to this train's staging
+                if (stageTrack == _terminateStageTrack) {
+                    car.setFinalDestinationTrack(stageTrack);
+                } else {
+                    car.setFinalDestinationTrack(null); // don't assign the track, that will be done later
+                }
                 car.updateKernel(); // is car part of kernel?
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildAddingScheduleLoad"),
                         new Object[]{car.getLoadName(), car.toString()}));
