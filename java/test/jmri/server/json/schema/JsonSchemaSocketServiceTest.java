@@ -16,7 +16,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -39,13 +38,13 @@ public class JsonSchemaSocketServiceTest {
 
     /**
      * Test that schema are gettable, but not modifiable.
+     * Note: This test will fail if json-schema.org is unreachable.
      *
      * @throws IOException   on unexpected exception
      * @throws JmriException on unexpected exception
      * @throws JsonException on unexpected exception
      */
     @Test
-    @Ignore("Failing due to json-schema.org being unavailable")
     public void testOnMessage() throws IOException, JmriException, JsonException {
         String type = JSON.SCHEMA;
         ObjectNode data = mapper.createObjectNode();
