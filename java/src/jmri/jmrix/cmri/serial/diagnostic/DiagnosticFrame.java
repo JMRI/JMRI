@@ -217,7 +217,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 				}
 			});
 	panelTest1.add(haltPollButton);
-        haltpollButtonActionPerformed();
+        SerialTrafficController stc = _memo.getTrafficController();
+         if (stc.getPollNetwork())
+            haltPollButton.setText(Bundle.getMessage("HaltPollButtonText"));
+         else
+            haltPollButton.setText(Bundle.getMessage("ResumePollButtonText"));
         
         panelTest.add(panelTest1);
         
@@ -808,11 +812,11 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
      */
     public void haltpollButtonActionPerformed() {
          SerialTrafficController stc = _memo.getTrafficController();
+         stc.setPollNetwork(!stc.getPollNetwork());
          if (stc.getPollNetwork())
             haltPollButton.setText(Bundle.getMessage("HaltPollButtonText"));
          else
             haltPollButton.setText(Bundle.getMessage("ResumePollButtonText"));
-         stc.setPollNetwork(!stc.getPollNetwork());
     }
 /**
      * Initialize an Output Test.
