@@ -35,6 +35,7 @@ public class LnTcpServerTest {
 
     @After
     public void tearDown() {
+        lnis = null;
         JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();
     }

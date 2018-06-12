@@ -37,6 +37,7 @@ public class ClientRxHandlerTest {
 
     @After
     public void tearDown() {
+        lnis = null;
         JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();
     }

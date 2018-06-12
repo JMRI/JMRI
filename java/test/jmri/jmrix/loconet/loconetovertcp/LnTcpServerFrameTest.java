@@ -47,8 +47,8 @@ public class LnTcpServerFrameTest {
 
     @After
     public void tearDown() {
-        memo.dispose();
         lnis = null;
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 
