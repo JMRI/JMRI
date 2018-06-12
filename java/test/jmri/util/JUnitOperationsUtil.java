@@ -183,10 +183,10 @@ public class JUnitOperationsUtil {
 
         // get departure staging and tracks
         Location locationNorthEnd = lmanager.getLocationById("1");
-        Track l1staging1 = locationNorthEnd.getTrackById("1s1");
-        Track l1staging2 = locationNorthEnd.getTrackById("1s2");
-        Assert.assertNotNull(l1staging1);
-        Assert.assertNotNull(l1staging2);
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+        Track northEndStaging2 = locationNorthEnd.getTrackById("1s2");
+        Assert.assertNotNull(northEndStaging1);
+        Assert.assertNotNull(northEndStaging2);
 
         // termination staging
         Location locationSouthEnd = lmanager.getLocationById("3");
@@ -196,14 +196,14 @@ public class JUnitOperationsUtil {
         // Place Cabooses on Staging tracks
         // Place 4 Boxcars on Staging tracks
         // Place 2 Boxcars and 2 Flats in yard
-        Car c1 = createAndPlaceCar("CP", "C10099", rb.getString("Caboose"), "32", "AT", "1980", l1staging1, 23);
+        Car c1 = createAndPlaceCar("CP", "C10099", rb.getString("Caboose"), "32", "AT", "1980", northEndStaging1, 23);
         c1.setCaboose(true);
-        Car c2 = createAndPlaceCar("CP", "C20099", rb.getString("Caboose"), "32", "DAB", "1984", l1staging1, 54);
+        Car c2 = createAndPlaceCar("CP", "C20099", rb.getString("Caboose"), "32", "DAB", "1984", northEndStaging1, 54);
         c2.setCaboose(true);
-        createAndPlaceCar("CP", "X10001", "Boxcar", "40", "DAB", "1984", l1staging1, 0);
-        createAndPlaceCar("CP", "X10002", "Boxcar", "40", "AT", "1-84", l1staging1, 4444);
-        createAndPlaceCar("CP", "X20001", "Boxcar", "40", "DAB", "1980", l1staging2, 0);
-        createAndPlaceCar("CP", "X20002", "Boxcar", "40", "DAB", "1978", l1staging2, 0);
+        createAndPlaceCar("CP", "X10001", "Boxcar", "40", "DAB", "1984", northEndStaging1, 0);
+        createAndPlaceCar("CP", "X10002", "Boxcar", "40", "AT", "1-84", northEndStaging1, 4444);
+        createAndPlaceCar("CP", "X20001", "Boxcar", "40", "DAB", "1980", northEndStaging2, 0);
+        createAndPlaceCar("CP", "X20002", "Boxcar", "40", "DAB", "1978", northEndStaging2, 0);
         createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l20yard1, 6);
         createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
         createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);

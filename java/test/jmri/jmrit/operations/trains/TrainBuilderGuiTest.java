@@ -377,27 +377,25 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         tmanager.setBuildMessagesEnabled(true);
-        
-        Engine e1 = emanager.getByRoadAndNumber("PC", "5016");
-        Engine e2 = emanager.getByRoadAndNumber("PC", "5019");
 
         Location northend = lmanager.getLocationById("1");
 
         Track northendStaging1 = northend.getTrackById("1s1");
-
-        // Place Engines on Staging tracks
-        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(northend, northendStaging1));
-        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(northend, northendStaging1));
         
         // 4 cars in staging, 2 cabooses, and 2 Boxcars
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099");
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099");
         Car c3 = cmanager.getByRoadAndNumber("CP", "X10001");
         Car c4 = cmanager.getByRoadAndNumber("CP", "X10002");
+        Car c11 = JUnitOperationsUtil.createAndPlaceCar("A", "110", "Boxcar", "40", northendStaging1, 1);
+        
+        // increase test code coverage by placing cars in a kernel
+        Kernel k2 = cmanager.newKernel("2 Boxcars");
+        c3.setKernel(k2);
+        c4.setKernel(k2);
         
         // Route Northend-NI-Southend
         Train train2 = tmanager.getTrainById("2");
-        train2.setNumberEngines("2");
         Route route = train2.getRoute();
                
         RouteLocation rlNI = route.getRouteLocationBySequenceNumber(2);
@@ -439,8 +437,6 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         Assert.assertFalse("Train status", train2.isBuilt());
         
         //confirm that engines and cars are released from train
-        Assert.assertEquals("Train assignment", null, e1.getTrain());
-        Assert.assertEquals("Train assignment", null, e2.getTrain());
         Assert.assertEquals("Train assignment", null, c1.getTrain());
         Assert.assertEquals("Train assignment", null, c2.getTrain());
         
@@ -449,6 +445,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         
         Assert.assertEquals("Track assignment", null, c3.getTrack());
         Assert.assertEquals("Track assignment", null, c4.getTrack());
+        Assert.assertEquals("Track assignment", null, c11.getTrack());
     }
     
     /**
