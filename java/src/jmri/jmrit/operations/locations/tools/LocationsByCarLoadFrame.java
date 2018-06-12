@@ -42,7 +42,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     LocationManager locationManager;
 
     // checkboxes track id as the checkbox name
-    ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<JCheckBox>();
+    ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<>();
     JPanel locationCheckBoxes = new JPanel();
 
     // panels
@@ -290,8 +290,14 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 
     private void selectCheckboxes(boolean select) {
         for (JCheckBox cb : trackCheckBoxList) {
-            if (cb.isEnabled()) {
-                cb.setSelected(select);
+            if (select) {
+                if (cb.isEnabled() && !cb.isSelected()) {
+                    cb.doClick();
+                }
+            } else {
+                if (cb.isEnabled() && cb.isSelected()) {
+                    cb.doClick();
+                }
             }
         }
     }

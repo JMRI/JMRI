@@ -52,9 +52,9 @@ public class TrainBuilder extends TrainCommon {
     protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
     protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 
-    private static final int DISPLAY_CAR_LIMIT_20 = 20; // build exception out of staging
-    private static final int DISPLAY_CAR_LIMIT_50 = 50;
-    private static final int DISPLAY_CAR_LIMIT_100 = 100;
+    protected static final int DISPLAY_CAR_LIMIT_20 = 20; // build exception out of staging
+    protected static final int DISPLAY_CAR_LIMIT_50 = 50;
+    protected static final int DISPLAY_CAR_LIMIT_100 = 100;
 
     // build variables shared between local routines
     Date _startTime; // when the build report started
