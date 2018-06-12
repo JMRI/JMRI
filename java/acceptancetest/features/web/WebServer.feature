@@ -20,6 +20,7 @@ Scenario Outline: Basic Http requests
    | firefox | http://localhost:12080/dist/ | Directory: /dist/ \| My JMRI Railroad |
    | firefox | http://localhost:12080/images/ | Directory: /images/ \| My JMRI Railroad |
    | firefox | http://localhost:12080/xml/signals/ | Directory: /xml/signals/ \| My JMRI Railroad |
+   | firefox | http://localhost:12080/about/ | About JMRI |
 
    @chrome
    Examples: Chrome Tests
@@ -35,3 +36,4 @@ Scenario Outline: Basic Http requests
    | chrome  | http://localhost:12080/dist/ | Directory: /dist/ \| My JMRI Railroad |
    | chrome  | http://localhost:12080/images/ | Directory: /images/ \| My JMRI Railroad |
    | chrome  | http://localhost:12080/xml/signals/ | Directory: /xml/signals/ \| My JMRI Railroad |
+   | chrome  | http://localhost:12080/about/ | About JMRI |
