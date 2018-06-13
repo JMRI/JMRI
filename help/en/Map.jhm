@@ -182,6 +182,8 @@
 
 <mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml"/>
 
+<mapID target="html.setup.git" url="html/setup/git.shtml"/>
+
 <mapID target="html.doc.Technical.JUnit_threads" url="html/doc/Technical/JUnit.shtml#threads"/>
 
 <mapID target="html.hardware.oaktree.OakTree" url="html/hardware/oaktree/OakTree.shtml"/>
@@ -2116,6 +2118,12 @@
 
 <mapID target="html.hardware.XPressNet.XNetAddressing" url="html/hardware/XPressNet/XNetAddressing.shtml"/>
 
+<mapID target="html.hardware.cmri.CMRI_L627" url="html/hardware/cmri/CMRI.shtml#L627"/>
+
+<mapID target="html.hardware.cmri.CMRI_L626" url="html/hardware/cmri/CMRI.shtml#L626"/>
+
+<mapID target="html.hardware.cmri.CMRI_L625" url="html/hardware/cmri/CMRI.shtml#L625"/>
+
 <mapID target="html.doc.Technical.XmlUsage" url="html/doc/Technical/XmlUsage.shtml"/>
 
 <mapID target="html.hardware.cmri.CMRI_L624" url="html/hardware/cmri/CMRI.shtml#L624"/>
@@ -3052,8 +3060,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_Locomotives" url="package/jmri/jmrit/operations/Operations.shtml#Locomotives"/>
 
-<mapID target="html.hardware.cmri.CMRI_L737" url="html/hardware/cmri/CMRI.shtml#L737"/>
-
 <mapID target="html.hardware.loconet.KeyspanUSB" url="html/hardware/loconet/KeyspanUSB.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_BuildReport" url="package/jmri/jmrit/operations/Operations.shtml#BuildReport"/>
@@ -3467,8 +3473,6 @@
 <mapID target="html.hardware.cmri.CMRI_L391" url="html/hardware/cmri/CMRI.shtml#L391"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Cars_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Cars.shtml#Top"/>
-
-<mapID target="html.hardware.cmri.CMRI_documentation" url="html/hardware/cmri/CMRI.shtml#documentation"/>
 
 <mapID target="html.hardware.cmri.CMRI_L395" url="html/hardware/cmri/CMRI.shtml#L395"/>
 

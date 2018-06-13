@@ -40,16 +40,15 @@ public class LnTcpServerFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        lnis = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo();
-        lnis.setSystemConnectionMemo(memo);
+        lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
     }
 
     @After
     public void tearDown() {
-        memo.dispose();
         lnis = null;
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 
