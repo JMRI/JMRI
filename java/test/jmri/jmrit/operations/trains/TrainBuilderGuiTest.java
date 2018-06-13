@@ -252,6 +252,14 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
+        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
@@ -341,6 +349,14 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
+        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         },"wait for prompt");
@@ -422,6 +438,14 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         // dialog "remove cars from staging" or continue by pressing "OK"
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("buttonRemoveCars"));
+        
+        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
@@ -512,6 +536,14 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
+        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
         },"wait for prompt");
@@ -595,6 +627,14 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         // dialog remove engines from staging or continue by pressing OK
         pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
                 new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
+        
+        // thread can go from RUNNABLE to WAITING to RUNNABLE to WAITING .....
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.WAITING);
