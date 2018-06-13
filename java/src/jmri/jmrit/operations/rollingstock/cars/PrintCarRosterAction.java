@@ -109,6 +109,7 @@ public class PrintCarRosterAction extends AbstractAction {
         String last = "";
         String wait = "";
         String schedule = "";
+        String status = "";
         String comment = "";
 
         try {
@@ -225,6 +226,9 @@ public class PrintCarRosterAction extends AbstractAction {
                             .getMaxLocationAndTrackNameLength() +
                             3);
                 }
+                if (printCarStatus.isSelected()) {
+                    status = padAttribute(car.getStatus(), Bundle.getMessage("Status").length());
+                }
                 if (printCarComment.isSelected()) {
                     comment = car.getComment().trim();
                 }
@@ -249,6 +253,7 @@ public class PrintCarRosterAction extends AbstractAction {
                         destination +
                         finalDestination +
                         returnWhenEmpty +
+                        status +
                         comment;
 
                 if (s.length() > numberCharPerLine) {
@@ -289,8 +294,10 @@ public class PrintCarRosterAction extends AbstractAction {
                         (printCarLast.isSelected() ? Bundle.getMessage("LastMoved") + " " : "") +
                         (printCarWait.isSelected() ? Bundle.getMessage("Wait") + " " : "") +
                         (printCarPickup.isSelected() ? padAttribute(Bundle.getMessage("Pickup"), 10) : "") +
-                        (printCarValue.isSelected() ? Setup.getValueLabel() + "        " : "") +
-                        (printCarRfid.isSelected() ? Setup.getRfidLabel() + "        " : "") +
+                        (printCarValue.isSelected()
+                                ? padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute) : "") +
+                        (printCarRfid.isSelected() ? padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute)
+                                : "") +
                         (printCarLocation.isSelected() ? padAttribute(Bundle.getMessage("Location"),
                                 InstanceManager.getDefault(LocationManager.class)
                                         .getMaxLocationAndTrackNameLength() +
@@ -312,6 +319,7 @@ public class PrintCarRosterAction extends AbstractAction {
                                         .getMaxLocationAndTrackNameLength() +
                                         3)
                                 : "") +
+                        (printCarStatus.isSelected() ? Bundle.getMessage("Status") + " " : "") +
                         (printCarComment.isSelected() ? Bundle.getMessage("Comment") : "");
         if (s.length() > numberCharPerLine) {
             s = s.substring(0, numberCharPerLine);
@@ -354,6 +362,7 @@ public class PrintCarRosterAction extends AbstractAction {
     JCheckBox printCarDestination = new JCheckBox(Bundle.getMessage("PrintCarDestination"));
     JCheckBox printCarFinalDestination = new JCheckBox(Bundle.getMessage("PrintCarFinalDestination"));
     JCheckBox printCarRWE = new JCheckBox(Bundle.getMessage("PrintCarReturnWhenEmpty"));
+    JCheckBox printCarStatus = new JCheckBox(Bundle.getMessage("PrintCarStatus"));
     JCheckBox printCarComment = new JCheckBox(Bundle.getMessage("PrintCarComment"));
     JCheckBox printSpace = new JCheckBox(Bundle.getMessage("PrintSpace"));
     JCheckBox printPage = new JCheckBox(Bundle.getMessage("PrintPage"));
@@ -419,9 +428,10 @@ public class PrintCarRosterAction extends AbstractAction {
             addItemLeft(pPanel, printCarDestination, 0, 15);
             addItemLeft(pPanel, printCarFinalDestination, 0, 16);
             addItemLeft(pPanel, printCarRWE, 0, 17);
-            addItemLeft(pPanel, printCarComment, 0, 18);
-            addItemLeft(pPanel, printSpace, 0, 19);
-            addItemLeft(pPanel, printPage, 0, 20);
+            addItemLeft(pPanel, printCarStatus, 0, 18);
+            addItemLeft(pPanel, printCarComment, 0, 19);
+            addItemLeft(pPanel, printSpace, 0, 20);
+            addItemLeft(pPanel, printPage, 0, 21);
 
             // set defaults
             printCarsWithLocation.setSelected(false);
@@ -442,6 +452,7 @@ public class PrintCarRosterAction extends AbstractAction {
             printCarDestination.setSelected(false);
             printCarFinalDestination.setSelected(false);
             printCarRWE.setSelected(false);
+            printCarStatus.setSelected(false);
             printCarComment.setSelected(false);
             printSpace.setSelected(false);
             printPage.setSelected(false);
