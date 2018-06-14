@@ -48,10 +48,10 @@ public class ImportCars extends ImportRollingStock {
     private boolean autoAdjustTrackLength = false;
     private boolean autoForceCar = false;
 
-    private boolean autoCreateRoads = true;
-    private boolean autoCreateLengths = true;
-    private boolean autoCreateColors = true;
-    private boolean autoCreateOwners = true;
+    private final boolean autoCreateRoads = true;
+    private final boolean autoCreateLengths = true;
+    private final boolean autoCreateColors = true;
+    private final boolean autoCreateOwners = true;
 
     private static final String LOCATION_TRACK_SEPARATOR = "-";
 
@@ -107,10 +107,10 @@ public class ImportCars extends ImportRollingStock {
         String carColor = "";
         String carOwner = "";
         String carBuilt = "";
-        String carLocation = "";
-        String carTrack = "";
-        String carLoad = "";
-        String carKernel = "";
+        String carLocationName = "";
+        String carTrackName = "";
+        String carLoadName = "";
+        String carKernelName = "";
         int carMoves = 0;
         String carValue = "";
         String carComment = "";
@@ -183,10 +183,10 @@ public class ImportCars extends ImportRollingStock {
                 carColor = "";
                 carOwner = "";
                 carBuilt = "";
-                carLocation = "";
-                carTrack = "";
-                carLoad = InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName();
-                carKernel = "";
+                carLocationName = "";
+                carTrackName = "";
+                carLoadName = InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName();
+                carKernelName = "";
                 carMoves = 0;
                 carValue = "";
                 carComment = "";
@@ -333,47 +333,49 @@ public class ImportCars extends ImportRollingStock {
                         }
                     }
                     if (inputLine.length > base + CAR_LOCATION) {
-                        carLocation = inputLine[base + CAR_LOCATION];
+                        carLocationName = inputLine[base + CAR_LOCATION];
 
                     }
                     // Location name can be one to three words
                     if (inputLine.length > base + CAR_LOCATION_TRACK_SEPARATOR) {
-                        if (!inputLine[base + CAR_LOCATION_TRACK_SEPARATOR].equals(LOCATION_TRACK_SEPARATOR)) {
-                            carLocation = carLocation + " " + inputLine[base + 9];
-                            if (inputLine.length > base + 10) {
-                                if (!inputLine[base + 10].equals(LOCATION_TRACK_SEPARATOR)) {
-                                    carLocation = carLocation + " " + inputLine[base + 10];
-                                }
+                        if(!inputLine[base + CAR_LOCATION_TRACK_SEPARATOR].equals(LOCATION_TRACK_SEPARATOR)) {
+                            carLocationName = carLocationName + " " + inputLine[base + CAR_LOCATION + 1];
+                            if (inputLine.length > base + CAR_LOCATION + 2 &&
+                                !inputLine[base + CAR_LOCATION + 2].equals(LOCATION_TRACK_SEPARATOR)) {
+                                    carLocationName = carLocationName + " " + inputLine[base + CAR_LOCATION + 2];
                             }
                         }
-                        log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocation);
-                        // now get the track name
+                        log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
+                        // now get the track name, no more than 3 words to describe track name when importing a space delimited file
                         boolean foundLocationTrackSeparator = false;
-                        for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
+                        for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < base + CAR_LOCATION_TRACK_SEPARATOR + 6; i++) {
                             if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
                                 foundLocationTrackSeparator = true;
                                 if (inputLine.length > i + 1) {
-                                    carTrack = inputLine[++i];
+                                    carTrackName = inputLine[++i];
+                                    if (comma) {
+                                        break;
+                                    }
                                 }
-                            } else if (foundLocationTrackSeparator && !comma) {
-                                carTrack = carTrack + " " + inputLine[i];
+                            } else if (foundLocationTrackSeparator && inputLine.length > i) {
+                                carTrackName = carTrackName + " " + inputLine[i];
                             }
                         }
-                        if (carTrack == null) {
-                            carTrack = "";
+                        if (carTrackName == null) {
+                            carTrackName = "";
                         }
-                        log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrack);
+                        log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrackName);
                     }
 
                     // is there a load name?
                     if (comma && inputLine.length > base + CAR_LOAD) {
-                        carLoad = inputLine[CAR_LOAD];
-                        log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoad);
+                        carLoadName = inputLine[CAR_LOAD];
+                        log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoadName);
                     }
                     // is there a kernel name?
                     if (comma && inputLine.length > base + CAR_KERNEL) {
-                        carKernel = inputLine[CAR_KERNEL];
-                        log.debug("Car ({} {}) has kernel name ({})", carRoad, carNumber, carKernel);
+                        carKernelName = inputLine[CAR_KERNEL];
+                        log.debug("Car ({} {}) has kernel name ({})", carRoad, carNumber, carKernelName);
                     }
                     // is the a move count?
                     if (comma && inputLine.length > base + CAR_MOVES) {
@@ -393,42 +395,42 @@ public class ImportCars extends ImportRollingStock {
                         carComment = inputLine[CAR_COMMENT];
                     }
 
-                    if (carLocation.length() > Control.max_len_string_location_name) {
+                    if (carLocationName.length() > Control.max_len_string_location_name) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("CarLocationNameTooLong"), new Object[]{(carRoad + " " + carNumber),
-                                        carLocation}),
+                                        carLocationName}),
                                 MessageFormat.format(Bundle.getMessage("carAttribute"),
                                         new Object[]{Control.max_len_string_location_name}),
                                 JOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    if (carTrack.length() > Control.max_len_string_track_name) {
+                    if (carTrackName.length() > Control.max_len_string_track_name) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("CarTrackNameTooLong"), new Object[]{(carRoad + " " + carNumber),
-                                        carTrack}),
+                                        carTrackName}),
                                 MessageFormat.format(Bundle.getMessage("carAttribute"),
                                         new Object[]{Control.max_len_string_track_name}),
                                 JOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName(carLocation);
+                    Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName(carLocationName);
                     Track track = null;
-                    if (location == null && !carLocation.equals("")) {
+                    if (location == null && !carLocationName.equals("")) {
                         if (autoCreateLocations) {
-                            log.debug("Create location ({})", carLocation);
-                            location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocation);
+                            log.debug("Create location ({})", carLocationName);
+                            location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
                         } else {
                             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                     .getMessage("CarLocationDoesNotExist"), new Object[]{(carRoad + " " + carNumber),
-                                            carLocation}),
+                                            carLocationName}),
                                     Bundle.getMessage("carLocation"), JOptionPane.ERROR_MESSAGE);
                             int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("DoYouWantToCreateLoc"), new Object[]{carLocation}), Bundle
+                                    .getMessage("DoYouWantToCreateLoc"), new Object[]{carLocationName}), Bundle
                                             .getMessage("carLocation"),
                                     JOptionPane.YES_NO_OPTION);
                             if (results == JOptionPane.YES_OPTION) {
-                                log.debug("Create location ({})", carLocation);
-                                location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocation);
+                                log.debug("Create location ({})", carLocationName);
+                                location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
                                 if (askAutoCreateLocations) {
                                     results = JOptionPane.showConfirmDialog(null, Bundle
                                             .getMessage("DoYouWantToAutoCreateLoc"),
@@ -443,34 +445,34 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     }
-                    if (location != null && !carTrack.equals("")) {
-                        track = location.getTrackByName(carTrack, null);
+                    if (location != null && !carTrackName.equals("")) {
+                        track = location.getTrackByName(carTrackName, null);
                         if (track == null) {
                             if (autoCreateTracks) {
                                 if (location.getLocationOps() == Location.NORMAL) {
-                                    log.debug("Create 1000 foot yard track ({})", carTrack);
-                                    track = location.addTrack(carTrack, Track.YARD);
+                                    log.debug("Create 1000 foot yard track ({})", carTrackName);
+                                    track = location.addTrack(carTrackName, Track.YARD);
                                 } else {
-                                    log.debug("Create 1000 foot staging track ({})", carTrack);
-                                    track = location.addTrack(carTrack, Track.STAGING);
+                                    log.debug("Create 1000 foot staging track ({})", carTrackName);
+                                    track = location.addTrack(carTrackName, Track.STAGING);
                                 }
                                 track.setLength(1000);
                             } else {
                                 JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                         .getMessage("CarTrackDoesNotExist"), new Object[]{
-                                                (carRoad + " " + carNumber), carTrack, carLocation}),
+                                                (carRoad + " " + carNumber), carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"),
                                         JOptionPane.ERROR_MESSAGE);
                                 int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                        .getMessage("DoYouWantToCreateTrack"), new Object[]{carTrack, carLocation}),
+                                        .getMessage("DoYouWantToCreateTrack"), new Object[]{carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.YES_NO_OPTION);
                                 if (results == JOptionPane.YES_OPTION) {
                                     if (location.getLocationOps() == Location.NORMAL) {
-                                        log.debug("Create 1000 foot yard track ({})", carTrack);
-                                        track = location.addTrack(carTrack, Track.YARD);
+                                        log.debug("Create 1000 foot yard track ({})", carTrackName);
+                                        track = location.addTrack(carTrackName, Track.YARD);
                                     } else {
-                                        log.debug("Create 1000 foot staging track ({})", carTrack);
-                                        track = location.addTrack(carTrack, Track.STAGING);
+                                        log.debug("Create 1000 foot staging track ({})", carTrackName);
+                                        track = location.addTrack(carTrackName, Track.STAGING);
                                     }
                                     track.setLength(1000);
                                     if (askAutoCreateTracks) {
@@ -491,7 +493,7 @@ public class ImportCars extends ImportRollingStock {
                     }
 
                     log.debug("Add car ({} {}) owner ({}) built ({}) location ({}, {})", carRoad, carNumber, carOwner,
-                            carBuilt, carLocation, carTrack);
+                            carBuilt, carLocationName, carTrackName);
                     Car car = manager.newCar(carRoad, carNumber);
                     car.setTypeName(carType);
                     car.setLength(carLength);
@@ -499,8 +501,8 @@ public class ImportCars extends ImportRollingStock {
                     car.setColor(carColor);
                     car.setOwner(carOwner);
                     car.setBuilt(carBuilt);
-                    car.setLoadName(carLoad);
-                    car.setKernel(manager.newKernel(carKernel));
+                    car.setLoadName(carLoadName);
+                    car.setKernel(manager.newKernel(carKernelName));
                     car.setMoves(carMoves);
                     car.setValue(carValue);
                     car.setComment(carComment);
@@ -613,12 +615,12 @@ public class ImportCars extends ImportRollingStock {
                                 } else {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"), new Object[]{
-                                                    (carRoad + " " + carNumber), carType, carLocation, carTrack,
+                                                    (carRoad + " " + carNumber), carType, carLocationName, carTrackName,
                                                     status}),
                                             Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                                     int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                            .getMessage("DoYouWantToAllowService"), new Object[]{carLocation,
-                                                    carTrack, (carRoad + " " + carNumber), carType}),
+                                            .getMessage("DoYouWantToAllowService"), new Object[]{carLocationName,
+                                                    carTrackName, (carRoad + " " + carNumber), carType}),
                                             Bundle
                                                     .getMessage("ServiceCarType"),
                                             JOptionPane.YES_NO_OPTION);
@@ -650,11 +652,11 @@ public class ImportCars extends ImportRollingStock {
                                 } else {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"), new Object[]{
-                                                    (carRoad + " " + carNumber), carType, carLocation, carTrack,
+                                                    (carRoad + " " + carNumber), carType, carLocationName, carTrackName,
                                                     status}),
                                             Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                                     int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                            .getMessage("DoYouWantIncreaseLength"), new Object[]{carTrack}), Bundle
+                                            .getMessage("DoYouWantIncreaseLength"), new Object[]{carTrackName}), Bundle
                                                     .getMessage("TrackLength"),
                                             JOptionPane.YES_NO_OPTION);
                                     if (results == JOptionPane.YES_OPTION) {
@@ -682,12 +684,12 @@ public class ImportCars extends ImportRollingStock {
                                 } else {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"), new Object[]{
-                                                    (carRoad + " " + carNumber), carType, carLocation, carTrack,
+                                                    (carRoad + " " + carNumber), carType, carLocationName, carTrackName,
                                                     status}),
                                             Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                                     int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                             .getMessage("DoYouWantToForceCar"), new Object[]{
-                                                    (carRoad + " " + carNumber), carLocation, carTrack}),
+                                                    (carRoad + " " + carNumber), carLocationName, carTrackName}),
                                             Bundle
                                                     .getMessage("OverRide"),
                                             JOptionPane.YES_NO_OPTION);
@@ -738,25 +740,29 @@ public class ImportCars extends ImportRollingStock {
                         JOptionPane.ERROR_MESSAGE);
                 break;
             }
-        }
-        try {
-            in.close();
-        } catch (IOException e) {
-        }
+        }try
 
-        // kill status panel
-        fstatus.dispose();
-
-        if (importOkay) {
-            JOptionPane
-                    .showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
-                            new Object[]{carsAdded}), Bundle.getMessage("SuccessfulImport"),
-                            JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
-                    new Object[]{carsAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
-        }
+    {
+        in.close();
+    }catch(
+    IOException e)
+    {
     }
+
+    // kill status panel
+    fstatus.dispose();
+
+    if(importOkay)
+    {
+        JOptionPane
+                .showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
+                        new Object[]{carsAdded}), Bundle.getMessage("SuccessfulImport"),
+                        JOptionPane.INFORMATION_MESSAGE);
+    }else
+    {
+        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
+                new Object[]{carsAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+    }}
 
     private final static Logger log = LoggerFactory.getLogger(ImportCars.class);
 }
