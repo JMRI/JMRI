@@ -23,6 +23,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -157,7 +158,8 @@ public class NodeIdentity {
             Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
             while (enumeration.hasMoreElements()) {
                 NetworkInterface nic = enumeration.nextElement();
-                if (!nic.isVirtual() && !nic.isLoopback()) {
+                if (!nic.isVirtual() && !nic.isLoopback() && 
+                    (nic.getHardwareAddress()!=null)) {
                     String nicIdentity = this.createIdentity(nic.getHardwareAddress());
                     if (nicIdentity != null && nicIdentity.equals(identity)) {
                         return true;
@@ -191,7 +193,8 @@ public class NodeIdentity {
                     Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
                         NetworkInterface nic = nics.nextElement();
-                        if (!nic.isLoopback() && !nic.isVirtual()) {
+                        if (!nic.isLoopback() && !nic.isVirtual() && 
+                            (nic.getHardwareAddress()!=null)) {
                             this.identity = this.createIdentity(nic.getHardwareAddress());
                             if (this.identity != null) {
                                 break;
@@ -259,6 +262,10 @@ public class NodeIdentity {
      * @return An identity or null if input is null.
      */
     private String createIdentity(byte[] mac) {
+        if(mac == null){
+           return null;
+        }
+
         if (this.uuid == null) {
             UUID uu = generateUuid(mac);
             log.info("Original UUID= {}", uu.toString());
@@ -282,15 +289,20 @@ public class NodeIdentity {
      * Once generated, this should be stored in {@code nodeIdentity.xml} and
      * always used for all profiles.
      *
-     * @param mac the MAC address of any interface on this computer.
+     * @param seed a seed for UUID generation, typically the MAC address of 
+     *             any interface on this computer.
      * @return the UUID
      */
-    public static UUID generateUuid(byte[] mac) {
+    public static UUID generateUuid(@Nonnull byte[] seed) {
         long mostSigBits = 0;
         long leastSigBits = 0;
         long time;
 
-        for (byte b : mac) {
+        if(seed==null) {
+           throw new IllegalArgumentException("Uuid seed cannot be null");
+        }
+
+        for (byte b : seed) {
             leastSigBits = leastSigBits << 8;
             leastSigBits = leastSigBits | (b & 0xFF);
         }

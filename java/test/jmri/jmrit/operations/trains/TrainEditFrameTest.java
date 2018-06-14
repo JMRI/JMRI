@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
@@ -22,9 +23,9 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        TrainEditFrame t = new TrainEditFrame(train1);
-        Assert.assertNotNull("exists", t);
-        JUnitUtil.dispose(t);
+        TrainEditFrame f = new TrainEditFrame(train1);
+        Assert.assertNotNull("exists", f);
+        JUnitUtil.dispose(f);
     }
 
     @Test
@@ -222,6 +223,43 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull("train added", t);
 
+        JUnitUtil.dispose(trainEditFrame);
+    }
+    
+    /**
+     * Test the reset train button
+     */
+    @Test
+    public void testTrainEditFrameReset() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainById("1");
+        Assert.assertNotNull(train1);
+        
+        train1.build();
+        Assert.assertTrue("Train status", train1.isBuilt());
+        
+        TrainEditFrame trainEditFrame = new TrainEditFrame(train1);
+        trainEditFrame.setTitle("Test Reset Train Frame");
+
+        enterClickAndLeave(trainEditFrame.resetButton);
+        Assert.assertFalse("Train status", train1.isBuilt());
+        
+        // now test trying to reset a train that is en-route
+        train1.build();
+        Assert.assertTrue("Train status", train1.isBuilt());
+        train1.move();
+        
+        // should fail
+        enterClickAndLeave(trainEditFrame.resetButton);
+        
+        // clear the error dialogue
+        pressDialogButton(trainEditFrame, Bundle.getMessage("CanNotResetTrain"), "OK");
+        
+        Assert.assertTrue("Train status", train1.isBuilt());
+ 
         JUnitUtil.dispose(trainEditFrame);
     }
 
