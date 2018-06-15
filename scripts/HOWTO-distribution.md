@@ -19,7 +19,7 @@ So our releases procedure is, in outline:
 
 * Jenkins build from release-n.n.n branch.  
 
-* If needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that. 
+* If needed, fetch and merge again from master to get necessary updates. This means that the test release is always from the HEAD of master. 
 
 * After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
 
@@ -33,9 +33,6 @@ So our releases procedure is, in outline:
 
 
 ### Issues
-
-
-- [ ] How best to deal with bringing additional commits into the branch from master - do we 'cherry-pick' or 'merge'? Everybody is using pull requests, which makes it pretty easy to get the hash numbers needed for cherry-pick (that can be messy with direct commits, because you’re not always sure which commits go together). We can play this by ear, but if somebody says “can you include PR 123?” I think that lends itself to a cherry pick pretty nicely. Best of all - get people to do their work on a branch, which can be separately merged.
 
 - [ ] It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.4 (and 4.4.1) branch around throughout the 4.5.x phase and then prune it when moving to 4.6. Each 4.5.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’. How about the case near the end of a development cycle when we’re doing incremental releases? E.g. 4.5.9 might be 4.5.8+deltas?  Should that be a branch from a branch? We'll need to develop and document this as needed.
 
@@ -180,9 +177,9 @@ git push github
 - Pull back to make sure your repository is fully up to date
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
-````
+```
 https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+no%3Amilestone
-````
+```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
 - (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the current release:
@@ -208,9 +205,10 @@ From now on, please document your changes in the [jmri4.11.8.shtml](https://gith
 Maintainers, please set the 4.11.8 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.7/)
-````
+```
 
 FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
+
 ```
 The release-4.11.7 branch has been created. 
 
@@ -220,7 +218,7 @@ Maintainers, please set the 4.11.8 milestone on pulls from now on, as that will 
 
 Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.7/)
 
-If you're developing any additional (post-4.11.7) changes that you want in the JMRI 4.10 production release, please start from this branch, i.e. do
+If you're developing any additional (post-4.11.7) changes that you want in the JMRI 4.12 production release, please start from this branch, i.e. do
 ```
 git checkout -b release-4.11.7
 ```
@@ -311,19 +309,23 @@ This has the nice property that if multiple things arise, they can definitely be
 
 ====================================================================================
 ## Create zipped .properties (experimental)
+ 
+The following will take several minutes, so be patient:
 
+```
 ant realclean compile
 cd target
 rm -f properties.4.11.7.zip
 
-# the following will take several minutes
 foreach x ( `find classes -name \*.properties` )
 printf '%s\n' 0a '# from tag v4.11.7' . x | ex $x
 end
 
 find classes -name \*.properties | zip -@ properties.4.11.7.zip
+cd ..
+```
 
-Then decide what to do with it. Tentatively, we're just attaching the properties.4.11.7.zip file to the release without further mention.
+Then decide what to do with the properties.4.11.7.zip file. Tentatively, we're just attaching the properties.4.11.7.zip file to the release without further mention.
 
 ====================================================================================
 ## Format file-release information
@@ -704,9 +706,10 @@ This step uploads the Linux, Mac OS X and Windows files to the SourceForge file 
     (cd xml/XSLT; ant xslt upload)
 ```
 
-  Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
+   Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
 
 - Wait until the downloads have propagated to the SourceForge mirrors; check by trying to download each file
+
 ================================================================================
 ================================================================================
 
@@ -723,7 +726,8 @@ Instructions for uploading javadoc, XSLT if not being done automatically
     (cd xml/XSLT; ant xslt upload)
 ```
 
-  Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
+Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
+
 ================================================================================
 ================================================================================
 
