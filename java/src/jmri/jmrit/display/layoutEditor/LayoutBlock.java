@@ -45,7 +45,7 @@ import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1112,19 +1112,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             trackColorChooser = new JColorChooser(blockTrackColor);
             trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel trackColorPanels[] = {new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel trackColorPanels[] = {new SplitButtonColorChooserPanel()};
             trackColorChooser.setChooserPanels(trackColorPanels);
             layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             occupiedColorChooser = new JColorChooser(blockOccupiedColor);
             occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel occupiedColorPanels[] = {new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel occupiedColorPanels[] = {new SplitButtonColorChooserPanel()};
             occupiedColorChooser.setChooserPanels(occupiedColorPanels);
             layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             extraColorChooser = new JColorChooser(blockExtraColor);
             extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel extraColorPanels[] = {new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel extraColorPanels[] = {new SplitButtonColorChooserPanel()};
             extraColorChooser.setChooserPanels(extraColorPanels);
             layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
