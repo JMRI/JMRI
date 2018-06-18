@@ -40,7 +40,9 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         g.setColor(Color.black);
         g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
 
-        setButton.setImage(image);
+        //setButton.setImage(image);
+        ImageIcon icon = new ImageIcon(image); 
+        setButton.setIcon(icon);
 
         g.dispose();
     }
@@ -67,6 +69,8 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
                 getColorSelectionModel().setSelectedColor(desiredColor);
             }
         });
+
+        //setButton.setImage(image);
         add(setButton);
     }
 
