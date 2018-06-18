@@ -66,6 +66,7 @@ public class NodeIdentity {
     private static final String UUID = "uuid"; // NOI18N
     private static final String NODE_IDENTITY = "nodeIdentity"; // NOI18N
     private static final String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
+    private static final String IDENTITY_PREFIX = "jmri-";
 
     /**
      * A string of 64 URL compatible characters.
@@ -98,7 +99,7 @@ public class NodeIdentity {
                     this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
                 });
                 if (!this.validateIdentity(id)) {
-                    log.debug("Node identity {} is invalid. Generating new node identity.", id);
+                    log.warn("Node identity {} is invalid. Generating new node identity.", id);
                     this.formerIdentities.add(id);
                     this.getIdentity(true);
                 } else {
@@ -151,25 +152,13 @@ public class NodeIdentity {
     /**
      * Verify that the current identity is a valid identity for this hardware.
      *
-     * @return true if the identity is based on this hardware.
+     * @param ident an identity to check.
+     *
+     * @return true if the identity is based on the current UUID.
      */
-    synchronized private boolean validateIdentity(String identity) {
-        try {
-            Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
-            while (enumeration.hasMoreElements()) {
-                NetworkInterface nic = enumeration.nextElement();
-                if (!nic.isVirtual() && !nic.isLoopback() && 
-                    (nic.getHardwareAddress()!=null)) {
-                    String nicIdentity = this.createIdentity(nic.getHardwareAddress());
-                    if (nicIdentity != null && nicIdentity.equals(identity)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-            log.error("Error accessing interface: {}", ex.getLocalizedMessage(), ex);
-        }
-        return false;
+    private synchronized boolean validateIdentity(String ident) {
+        log.debug("Validating Node identity {}.", ident);
+        return (this.uuid != null && ((IDENTITY_PREFIX + this.uuid).equals(ident)));
     }
 
     /**
@@ -268,13 +257,13 @@ public class NodeIdentity {
 
         if (this.uuid == null) {
             UUID uu = generateUuid(mac);
-            log.info("Original UUID= {}", uu.toString());
+            log.debug("Original UUID= {}", uu.toString());
 
             this.uuid = uuidToCompactString(uu);
-            log.info("Compact string ='{}'", this.uuid);
+            log.debug("Compact string ='{}'", this.uuid);
         }
 
-        StringBuilder sb = new StringBuilder("jmri-"); // NOI18N
+        StringBuilder sb = new StringBuilder(IDENTITY_PREFIX); // NOI18N
         sb.append(this.uuid);
         return sb.toString();
     }
