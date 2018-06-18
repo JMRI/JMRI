@@ -747,7 +747,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void deselectSelectionGroup() {
+    public void deselectSelectionGroup() {
         if (_selectionGroup == null) {
             return;
         }
