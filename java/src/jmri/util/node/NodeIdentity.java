@@ -414,22 +414,32 @@ public class NodeIdentity {
         } catch (NullPointerException ex) {
             uniqueId += ProfileManager.createUniqueId();
         }
-        List<String> temp = NodeIdentity.formerIdentities();
-        if (temp.size() < 1) {
+        List<String> formerIdList = NodeIdentity.formerIdentities();
+        int listSize = formerIdList.size();
+        if (listSize < 1) {
             log.warn("Unable to copy from a former identity; no former identities found.");
             return false;
         }
-        String lastIdentity = temp.get(temp.size() - 1);
-        File lastDir = new File(oldPath, lastIdentity + uniqueId);
-        try {
-            log.info("Copying from old node \"{}\"", lastDir.toString());
-            log.info("  to new node \"{}\"", newPath.toString());
-            FileUtil.copy(lastDir, newPath);
-        } catch (IOException ex) {
-            log.warn("Unable to copy \"{}\" to \"{}\"", lastDir.toString(), newPath.toString());
-            return false;
+        log.debug("{} former identies found", listSize);
+        for (int i = (listSize - 1); i >= 0; i--) {
+            String theIdentity = formerIdList.get(i);
+            log.debug("Trying to copy former identity {}, \"{}\"", i + 1, theIdentity);
+            File theDir = new File(oldPath, theIdentity + uniqueId);
+            if (theDir.exists()) {
+                try {
+                    log.info("Copying from old node \"{}\"", theDir.toString());
+                    log.info("  to new node \"{}\"", newPath.toString());
+                    FileUtil.copy(theDir, newPath);
+                } catch (IOException ex) {
+                    log.warn("Unable to copy \"{}\" to \"{}\"", theDir.toString(), newPath.toString());
+                    return false;
+                }
+                return true;
+            } else {
+                log.warn("Non-existent old node \"{}\"", theDir);
+            }
         }
-        return true;
+        return false;
     }
 
     /**
