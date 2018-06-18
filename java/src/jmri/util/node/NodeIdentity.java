@@ -81,7 +81,7 @@ public class NodeIdentity {
         init(); // init as a method so the init can be synchronized.
     }
 
-    synchronized private void init() {
+    private synchronized void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
             try {
@@ -122,7 +122,7 @@ public class NodeIdentity {
      * <i>jmri-MACADDRESS-profileId</i>, this identity should be considered
      * unreliable and subject to change across JMRI restarts.
      */
-    synchronized public static String identity() {
+    public static synchronized String identity() {
         String uniqueId = "-";
         try {
             uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
@@ -141,7 +141,7 @@ public class NodeIdentity {
      *
      * @return A list of other identities this node may have had in the past.
      */
-    synchronized public static List<String> formerIdentities() {
+    public static synchronized List<String> formerIdentities() {
         if (instance == null) {
             instance = new NodeIdentity();
             log.info("Using {} as the JMRI Node identity", instance.getIdentity());
@@ -163,9 +163,11 @@ public class NodeIdentity {
 
     /**
      * Get a node identity from the current hardware.
+     *
+     * @param save whether to save this identity or not
      * <p>
      */
-    synchronized private void getIdentity(boolean save) {
+    private synchronized void getIdentity(boolean save) {
         try {
             try {
                 try {
@@ -182,8 +184,8 @@ public class NodeIdentity {
                     Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
                         NetworkInterface nic = nics.nextElement();
-                        if (!nic.isLoopback() && !nic.isVirtual() && 
-                            (nic.getHardwareAddress()!=null)) {
+                        if (!nic.isLoopback() && !nic.isVirtual()
+                                && (nic.getHardwareAddress() != null)) {
                             this.identity = this.createIdentity(nic.getHardwareAddress());
                             if (this.identity != null) {
                                 break;
@@ -251,8 +253,8 @@ public class NodeIdentity {
      * @return An identity or null if input is null.
      */
     private String createIdentity(byte[] mac) {
-        if(mac == null){
-           return null;
+        if (mac == null) {
+            return null;
         }
 
         if (this.uuid == null) {
@@ -278,8 +280,8 @@ public class NodeIdentity {
      * Once generated, this should be stored in {@code nodeIdentity.xml} and
      * always used for all profiles.
      *
-     * @param seed a seed for UUID generation, typically the MAC address of 
-     *             any interface on this computer.
+     * @param seed a seed for UUID generation, typically the MAC address of any
+     *             interface on this computer.
      * @return the UUID
      */
     public static UUID generateUuid(@Nonnull byte[] seed) {
@@ -287,8 +289,8 @@ public class NodeIdentity {
         long leastSigBits = 0;
         long time;
 
-        if(seed==null) {
-           throw new IllegalArgumentException("Uuid seed cannot be null");
+        if (seed == null) {
+            throw new IllegalArgumentException("Uuid seed cannot be null");
         }
 
         for (byte b : seed) {
