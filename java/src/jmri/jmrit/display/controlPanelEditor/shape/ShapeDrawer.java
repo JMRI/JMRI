@@ -139,37 +139,7 @@ public class ShapeDrawer {
      * @param event the event to process
      * @param pos   the item to check
      * @return true if creating or editing; false otherwise
-     *
-    public boolean doMousePressed(MouseEvent event, Positionable pos) {
-        log.debug("Mouse Pressed _drawFrame= {}, _currentSelection= {}",
-               (_drawFrame==null ? "null" : _drawFrame.getTitle()),
-               (_currentSelection == null ? "null" :_currentSelection.getClass().getName()));
-        if (_drawFrame instanceof DrawPolygon) {
-            ((DrawPolygon) _drawFrame).anchorPoint(event.getX(), event.getY());
-            if (pos instanceof PositionableShape && _drawFrame._shape != null) {
-                _currentSelection = (PositionableShape) pos;
-            }
-        } else if (pos instanceof PositionableShape && _editor.isEditable()) {
-            if (!pos.equals(_currentSelection)) {
-                if (_currentSelection != null) {
-                    _currentSelection.removeHandles();                        
-                }
-                if (_drawFrame != null && _drawFrame._shape == null) {
-                    // creation of a shape is in progress.  Don't change _drawFrame
-                    return false;
-                }
-                _currentSelection = (PositionableShape) pos;
-                _drawFrame = _currentSelection.getEditFrame();
-                _currentSelection.drawHandles();
-            }
-            return true;
-        }
-        if (_currentSelection != null) {
-            _currentSelection.removeHandles();                        
-            _currentSelection = null;
-        }
-        return false;
-    }*/
+     */
     public boolean doMousePressed(MouseEvent event, Positionable pos) {
         log.debug("Mouse Pressed _drawFrame= {}, _currentSelection= {}",
                (_drawFrame==null ? "null" : _drawFrame.getTitle()),
