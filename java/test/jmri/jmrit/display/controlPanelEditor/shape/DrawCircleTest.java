@@ -29,8 +29,7 @@ public class DrawCircleTest {
     }
 
     public void testCTorEdit() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor();
+       ControlPanelEditor frame = new ControlPanelEditor();
         PositionableCircle ps =  new PositionableCircle(frame);
         DrawRectangle t = new DrawRoundRect("editShape", "Circle", ps, editor, true);
         Assert.assertNotNull("exists", t);
@@ -42,6 +41,7 @@ public class DrawCircleTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         editor = new EditorScaffold();
     }
 

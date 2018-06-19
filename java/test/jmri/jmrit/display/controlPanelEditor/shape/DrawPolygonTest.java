@@ -42,6 +42,7 @@ public class DrawPolygonTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         editor = new EditorScaffold();
     }
 
