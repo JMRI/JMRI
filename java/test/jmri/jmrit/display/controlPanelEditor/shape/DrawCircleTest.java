@@ -19,7 +19,7 @@ public class DrawCircleTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawCircle t = new DrawCircle("newShape", "Circle", null);
+        DrawCircle t = new DrawCircle("newShape", "Circle", null, null, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -29,7 +29,7 @@ public class DrawCircleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         PositionableCircle ps =  new PositionableCircle(frame);
-        DrawRectangle t = new DrawRoundRect("editShape", "Circle", ps);
+        DrawRectangle t = new DrawRoundRect("editShape", "Circle", ps, null, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

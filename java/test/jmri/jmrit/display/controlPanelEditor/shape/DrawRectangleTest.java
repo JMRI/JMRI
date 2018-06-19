@@ -19,7 +19,7 @@ public class DrawRectangleTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null);
+        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null, null, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -29,7 +29,7 @@ public class DrawRectangleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         PositionableRectangle ps =  new PositionableRectangle(frame);
-        DrawRectangle t = new DrawRoundRect("editShape", "Rectangle", ps);
+        DrawRectangle t = new DrawRoundRect("editShape", "Rectangle", ps, null, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
