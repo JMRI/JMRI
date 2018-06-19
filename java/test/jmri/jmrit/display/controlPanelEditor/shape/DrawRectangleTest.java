@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -15,11 +16,13 @@ import org.junit.Test;
  */
 public class DrawRectangleTest {
 
+    EditorScaffold editor;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null, null, false);
+        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null, editor, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -29,7 +32,7 @@ public class DrawRectangleTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
         PositionableRectangle ps =  new PositionableRectangle(frame);
-        DrawRectangle t = new DrawRoundRect("editShape", "Rectangle", ps, null, true);
+        DrawRectangle t = new DrawRoundRect("editShape", "Rectangle", ps, editor, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -39,6 +42,7 @@ public class DrawRectangleTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        editor = new EditorScaffold();
     }
 
     @After
