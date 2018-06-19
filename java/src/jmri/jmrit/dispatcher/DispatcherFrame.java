@@ -409,6 +409,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             dispatcherFrame.addHelpMenu("package.jmri.jmrit.dispatcher.Dispatcher", true);
             contentPane = dispatcherFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
             // set up active trains table
             JPanel p11 = new JPanel();
             p11.setLayout(new FlowLayout());
@@ -418,7 +419,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             p12.setLayout(new BorderLayout());
              activeTrainsTableModel = new ActiveTrainsTableModel();
             JTable activeTrainsTable = new JTable(activeTrainsTableModel);
-            activeTrainsTable.setName("activeTrainsTable");
+            activeTrainsTable.setName(this.getClass().getName().concat(":activeTrainsTableModel"));
             activeTrainsTable.setRowSelectionAllowed(false);
             activeTrainsTable.setPreferredScrollableViewportSize(new java.awt.Dimension(950, 160));
             activeTrainsTable.setColumnModel(new XTableColumnModel());
@@ -441,10 +442,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             sampleButton = new JButton("WWW...");
             activeTrainsTable.setRowHeight(sampleButton.getPreferredSize().height);
             terminateTrainButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
+
             addMouseListenerToHeader(activeTrainsTable);
+
             JScrollPane activeTrainsTableScrollPane = new JScrollPane(activeTrainsTable);
             p12.add(activeTrainsTableScrollPane, BorderLayout.CENTER);
             contentPane.add(p12);
+
             JPanel p13 = new JPanel();
             p13.setLayout(new FlowLayout());
             p13.add(addTrainButton = new JButton(Bundle.getMessage("InitiateTrain") + "..."));
@@ -523,7 +527,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             p22.setLayout(new BorderLayout());
             allocationRequestTableModel = new AllocationRequestTableModel();
             JTable allocationRequestTable = new JTable(allocationRequestTableModel);
-            allocationRequestTable.setName("allocationRequestTable");;
+            allocationRequestTable.setName(this.getClass().getName().concat(":allocationRequestTable"));;
             allocationRequestTable.setRowSelectionAllowed(false);
             allocationRequestTable.setPreferredScrollableViewportSize(new java.awt.Dimension(950, 100));
             allocationRequestTable.setColumnModel(new XTableColumnModel());
@@ -582,7 +586,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             p31.setLayout(new BorderLayout());
             allocatedSectionTableModel = new AllocatedSectionTableModel();
             JTable allocatedSectionTable = new JTable(allocatedSectionTableModel);
-            allocatedSectionTable.setName("allocatedSectionTable");
+            allocatedSectionTable.setName(this.getClass().getName().concat(":allocatedSectionTable"));
             allocatedSectionTable.setRowSelectionAllowed(false);
             allocatedSectionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(730, 200));
             allocatedSectionTable.setColumnModel(new XTableColumnModel());
@@ -2532,7 +2536,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int ALLOCATEBUTTON_COLUMN = 10;
         public static final int TERMINATEBUTTON_COLUMN = 11;
         public static final int RESTARTCHECKBOX_COLUMN = 12;
-        public static final int MAX_ACTIVE_TRAIN_COLUMN = 13;
+        public static final int MAX_COLUMN = 12;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -2557,7 +2561,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public int getColumnCount() {
-            return MAX_ACTIVE_TRAIN_COLUMN + 1;
+            return MAX_COLUMN + 1;
         }
 
         @Override
@@ -2613,7 +2617,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             switch (col) {
                 case TRANSIT_COLUMN:
                 case TRANSIT_COLUMN_U:
-                    return new JTextField(17).getPreferredSize().width;
                 case TRAIN_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
                 case TYPE_COLUMN:
@@ -2729,93 +2732,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
-    }     
-        protected void showTableHeaderPopup(MouseEvent e, JTable table) {
-            JPopupMenu popupMenu = new JPopupMenu();
-            XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-            for (int i = 0; i < tcm.getColumnCount(false); i++) {
-                TableColumn tc = tcm.getColumnByModelIndex(i);
-                String columnName = table.getModel().getColumnName(i);
-                if (columnName != null && !columnName.equals("")) {
-                    JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
-                    menuItem.addActionListener(new HeaderActionListener(tc, tcm));
-                    popupMenu.add(menuItem);
-                }
-
-            }
-            popupMenu.show(e.getComponent(), e.getX(), e.getY());
-        }
-
-        protected void addMouseListenerToHeader(JTable table) {
-            MouseListener mouseHeaderListener = new TableHeaderListener(table);
-            table.getTableHeader().addMouseListener(mouseHeaderListener);
-        }
-        
-        protected class HeaderActionListener implements ActionListener {
-
-            TableColumn tc;
-            XTableColumnModel tcm;
-
-            HeaderActionListener(TableColumn tc, XTableColumnModel tcm) {
-                this.tc = tc;
-                this.tcm = tcm;
-            }
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
-                //Do not allow the last column to be hidden
-                if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
-                    return;
-                }
-                tcm.setColumnVisible(tc, check.isSelected());
-            }
-        }
-        
-        class TableHeaderListener extends MouseAdapter {
-
-            JTable table;
-
-            TableHeaderListener(JTable tbl) {
-                super();
-                table = tbl;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    showTableHeaderPopup(e, table);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    showTableHeaderPopup(e, table);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.isPopupTrigger()) {
-                    showTableHeaderPopup(e, table);
-                }
-            }
-        }
-
-
-
-
-    
+    }
 
     /**
      * Table model for Allocation Request Table in Dispatcher window
@@ -2835,6 +2752,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int SECTIONLENGTH_COLUMN = 9;
         public static final int ALLOCATEBUTTON_COLUMN = 10;
         public static final int CANCELBUTTON_COLUMN = 11;
+        public static final int MAX_COLUMN = 11;
 
         public AllocationRequestTableModel() {
             super();
@@ -2863,7 +2781,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public int getColumnCount() {
-            return CANCELBUTTON_COLUMN + 1;
+            return MAX_COLUMN + 1;
         }
 
         @Override
@@ -2919,7 +2837,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case TRANSIT_COLUMN:
                 case TRANSIT_COLUMN_U:
                 case TRAIN_COLUMN:
-                    return new JTextField(15).getPreferredSize().width;
+                    return new JTextField(17).getPreferredSize().width;
                 case PRIORITY_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
                 case TRAINTYPE_COLUMN:
@@ -3020,12 +2938,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     public class AllocatedSectionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
 
-        public static final int ACTIVE_COLUMN = 0;
-        public static final int SECTION_COLUMN = 1;
-        public static final int SECTION_COLUMN_U = 2;
-        public static final int OCCUPANCY_COLUMN = 3;
-        public static final int USESTATUS_COLUMN = 4;
-        public static final int RELEASEBUTTON_COLUMN = 5;
+        public static final int TRANSIT_COLUMN = 0;
+        public static final int TRANSIT_COLUMN_U = 1;
+        public static final int TRAIN_COLUMN = 2;
+        public static final int SECTION_COLUMN = 3;
+        public static final int SECTION_COLUMN_U = 4;
+        public static final int OCCUPANCY_COLUMN = 5;
+        public static final int USESTATUS_COLUMN = 6;
+        public static final int RELEASEBUTTON_COLUMN = 7;
+        public static final int MAX_COLUMN = 7;
 
         public AllocatedSectionTableModel() {
             super();
@@ -3048,7 +2969,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public int getColumnCount() {
-            return RELEASEBUTTON_COLUMN + 1;
+            return MAX_COLUMN + 1;
         }
 
         @Override
@@ -3067,8 +2988,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         @Override
         public String getColumnName(int col) {
             switch (col) {
-                case ACTIVE_COLUMN:
-                    return Bundle.getMessage("ActiveColumnTitle");
+                case TRANSIT_COLUMN:
+                    return Bundle.getMessage("TransitColumnSysTitle");
+                case TRANSIT_COLUMN_U:
+                    return Bundle.getMessage("TransitColumnTitle");
+                case TRAIN_COLUMN:
+                    return Bundle.getMessage("TrainColumnTitle");
                 case SECTION_COLUMN:
                     return Bundle.getMessage("AllocatedSectionColumnSysTitle");
                 case SECTION_COLUMN_U:
@@ -3078,7 +3003,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case USESTATUS_COLUMN:
                     return Bundle.getMessage("UseStatusColumnTitle");
                 case RELEASEBUTTON_COLUMN:
-                    return Bundle.getMessage("ReleaseButton"); 
+                    return Bundle.getMessage("ReleaseButton");
                 default:
                     return "";
             }
@@ -3086,8 +3011,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         public int getPreferredWidth(int col) {
             switch (col) {
-                case ACTIVE_COLUMN:
-                    return new JTextField(30).getPreferredSize().width;
+                case TRANSIT_COLUMN:
+                case TRANSIT_COLUMN_U:
+                case TRAIN_COLUMN:
+                    return new JTextField(17).getPreferredSize().width;
                 case SECTION_COLUMN:
                 case SECTION_COLUMN_U:
                     return new JTextField(25).getPreferredSize().width;
@@ -3112,16 +3039,29 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             AllocatedSection as = allocatedSections.get(rx);
             switch (c) {
-                case ACTIVE_COLUMN:
-                    if (_ShortActiveTrainNames) {
-                        return (as.getActiveTrain().getTrainName());
+                case TRANSIT_COLUMN:
+                    return (as.getActiveTrain().getTransit().getSystemName());
+                case TRANSIT_COLUMN_U:
+                    if (as.getActiveTrain().getTransit() != null && as.getActiveTrain().getTransit().getUserName() != null) {
+                        return (as.getActiveTrain().getTransit().getUserName());
+                    } else {
+                        return "";
                     }
-                    return (as.getActiveTrainName());
+                case TRAIN_COLUMN:
+                    return (as.getActiveTrain().getTrainName());
                 case SECTION_COLUMN:
-                    return (as.getSectionName());
+                    if (as.getSection() != null) {
+                        return (as.getSection().getSystemName());
+                    } else {
+                        return "<none>";
+                    }
                 case SECTION_COLUMN_U:
-                    return (as.getSectionName());
-               case OCCUPANCY_COLUMN:
+                    if (as.getSection() != null && as.getSection().getUserName() != null) {
+                        return (as.getSection().getUserName());
+                    } else {
+                        return "<none>";
+                    }
+                case OCCUPANCY_COLUMN:
                     if (!_HasOccupancyDetection) {
                         return Bundle.getMessage("UNKNOWN");
                     }
@@ -3148,6 +3088,104 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public void setValueAt(Object value, int row, int col) {
             if (col == RELEASEBUTTON_COLUMN) {
                 releaseAllocatedSectionFromTable(row);
+            }
+        }
+    }
+
+    /*
+     * Mouse popup stuff
+     */
+
+    /**
+     * Process the column header click
+     * @param e     the evnt data
+     * @param table the JTable
+     */
+    protected void showTableHeaderPopup(MouseEvent e, JTable table) {
+        JPopupMenu popupMenu = new JPopupMenu();
+        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
+        for (int i = 0; i < tcm.getColumnCount(false); i++) {
+            TableColumn tc = tcm.getColumnByModelIndex(i);
+            String columnName = table.getModel().getColumnName(i);
+            if (columnName != null && !columnName.equals("")) {
+                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
+                menuItem.addActionListener(new HeaderActionListener(tc, tcm));
+                popupMenu.add(menuItem);
+            }
+
+        }
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    /**
+     * Adds the column header pop listener to a JTable using XTableColumnModel
+     * @param table The JTable effected.
+     */
+    protected void addMouseListenerToHeader(JTable table) {
+        MouseListener mouseHeaderListener = new TableHeaderListener(table);
+        table.getTableHeader().addMouseListener(mouseHeaderListener);
+    }
+
+    protected class HeaderActionListener implements ActionListener {
+
+        TableColumn tc;
+        XTableColumnModel tcm;
+
+        HeaderActionListener(TableColumn tc, XTableColumnModel tcm) {
+            this.tc = tc;
+            this.tcm = tcm;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
+            //Do not allow the last column to be hidden
+            if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
+                return;
+            }
+            tcm.setColumnVisible(tc, check.isSelected());
+        }
+    }
+
+    /**
+     * Class to support Columnheader popup menu on XTableColum model.
+     */
+    class TableHeaderListener extends MouseAdapter {
+
+        JTable table;
+
+        TableHeaderListener(JTable tbl) {
+            super();
+            table = tbl;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
             }
         }
     }
