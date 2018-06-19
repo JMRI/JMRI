@@ -378,6 +378,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
      * Attach a named sensor to a PositionableShape.
      *
      * @param pName Used as a system/user name to lookup the sensor object
+     * @return errror message or null
      */
     public String setControlSensor(String pName) {
         String msg = null;
