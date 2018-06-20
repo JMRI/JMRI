@@ -1,4 +1,4 @@
-package jmri.jmrix.openlcb;
+package jmri.jmrix.openlcb.swing;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.signalmast.SignalMastAddPane;
