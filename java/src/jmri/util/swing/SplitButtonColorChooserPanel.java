@@ -44,7 +44,7 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         //setButton.setImage(image);
         ImageIcon icon = new ImageIcon(image); 
         setButton.setIcon(icon);
-        setButton.setPopupMenu(new ColorListPopupMenu());
+        setButton.setPopupMenu(new ColorListPopupMenu(getColorSelectionModel()));
         g.dispose();
     }
 
@@ -84,7 +84,7 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         });
 
         //setButton.setImage(image);
-        setButton.setPopupMenu(new ColorListPopupMenu());
+        setButton.setPopupMenu(new ColorListPopupMenu(getColorSelectionModel()));
         add(setButton);
     }
 

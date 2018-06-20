@@ -1,10 +1,11 @@
 package jmri.util.swing;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import javax.swing.colorchooser.ColorSelectionModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -30,9 +31,11 @@ public class ColorListPopupMenu extends JPopupMenu {
        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
        Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
     private int numColors = 13; //number of entries in the above arrays
+    private ColorSelectionModel model;
 
-    public ColorListPopupMenu(){
+    public ColorListPopupMenu(ColorSelectionModel m){
         super();
+        model = m;
         addRecentColors();
         addSeparator();
         addStandardColors();
@@ -47,22 +50,31 @@ public class ColorListPopupMenu extends JPopupMenu {
         // build the menu.
         add(new JLabel(Bundle.getMessage("StandardColorLabel")));
         for (int i = 0; i < numColors; i++) {
-           // update the Swatch to have the right color showing.
-           BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
-                BufferedImage.TYPE_INT_RGB);
-
-           Graphics g = image.getGraphics();
-           // fill it with its representative color
-           g.setColor(colorCode[i]);
-           g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
-           // draw a black border around it
-           g.setColor(Color.black);
-           g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
-
-           ImageIcon icon = new ImageIcon(image); 
-  
-            g.dispose();
-            add(new JMenuItem(Bundle.getMessage(colorText[i]),icon));   
+            add(createMenuItem(Bundle.getMessage(colorText[i]),colorCode[i]));   
         }
     }
+
+    private JMenuItem createMenuItem(String itemText,Color swatchColor){
+        // update the Swatch to have the right color showing.
+        BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
+             BufferedImage.TYPE_INT_RGB);
+
+        Graphics g = image.getGraphics();
+        // fill it with its representative color
+        g.setColor(swatchColor);
+        g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
+        // draw a black border around it
+        g.setColor(Color.black);
+        g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
+
+        ImageIcon icon = new ImageIcon(image); 
+  
+        g.dispose();
+        JMenuItem colorMenuItem = new JMenuItem(itemText,icon);   
+        colorMenuItem.addActionListener((ActionEvent e) -> {
+           model.setSelectedColor(swatchColor);
+        });
+        return colorMenuItem;
+    }
+
 }
