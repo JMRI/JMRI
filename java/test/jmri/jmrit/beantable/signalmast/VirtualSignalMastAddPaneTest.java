@@ -4,12 +4,12 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 
-import org.netbeans.jemmy.operators.*;
-
 import java.util.*;
 import javax.swing.*;
 
 import org.junit.*;
+
+import org.netbeans.jemmy.operators.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2018
