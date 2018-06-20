@@ -1,8 +1,5 @@
 package jmri.implementation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * SignalMast implemented via one SignalHead object.
  * <p>
@@ -80,5 +77,5 @@ public class VirtualSignalMast extends AbstractSignalMast {
 
     protected static int lastRef = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMast.class);
 }
