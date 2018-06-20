@@ -28,7 +28,7 @@ public class SignallingGuiTools {
         int n = JOptionPane.showOptionDialog(frame,
                 java.text.MessageFormat.format(Bundle.getMessage("UpdateLogic"),  // NOI18N
                         new Object[]{oldMast.getDisplayName(), newMast.getDisplayName()}),
-                "Update Logic",  // NOI18N
+                Bundle.getMessage("UpdateLogicTitle"),
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,

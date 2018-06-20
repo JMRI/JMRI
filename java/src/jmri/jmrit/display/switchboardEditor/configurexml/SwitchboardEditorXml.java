@@ -71,7 +71,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
 
         // include contents (not used to store Switchboards on disk as
-        // all config is stored at Panel level.
+        // all config is stored at Panel level).
         return panel;
     }
 
@@ -82,7 +82,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
     /**
      * Create a SwitchboardEditor object, then register and fill it, then pop it
-     * in a JFrame
+     * in a JFrame.
      *
      * @param shared Top level Element to unpack.
      * @return true if successful
@@ -228,7 +228,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via " + adapterName);
+            log.debug("load via {}", adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
                 // and do it

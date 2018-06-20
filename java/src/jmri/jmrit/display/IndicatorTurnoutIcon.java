@@ -61,7 +61,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     static HashMap<String, HashMap<Integer, NamedIcon>> initMaps() {
-        HashMap<String, HashMap<Integer, NamedIcon>> iconMaps = new HashMap<String, HashMap<Integer, NamedIcon>>();
+        HashMap<String, HashMap<Integer, NamedIcon>> iconMaps = new HashMap<>();
         iconMaps.put("ClearTrack", new HashMap<Integer, NamedIcon>());
         iconMaps.put("OccupiedTrack", new HashMap<Integer, NamedIcon>());
         iconMaps.put("PositionTrack", new HashMap<Integer, NamedIcon>());
@@ -442,7 +442,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     @Override
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                 PickListModel.turnoutPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -453,7 +453,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         };
         // Convert _iconMaps state (ints) to Palette's bean names
         HashMap<String, HashMap<String, NamedIcon>> iconMaps
-                = new HashMap<String, HashMap<String, NamedIcon>>();
+                = new HashMap<>();
         iconMaps.put("ClearTrack", new HashMap<String, NamedIcon>());
         iconMaps.put("OccupiedTrack", new HashMap<String, NamedIcon>());
         iconMaps.put("PositionTrack", new HashMap<String, NamedIcon>());
@@ -485,9 +485,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
         _TOPanel.setShowTrainName(_pathUtil.showTrain());
         _TOPanel.setPaths(_pathUtil.getPaths());
-        _paletteFrame.add(_TOPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_paletteFrame, _TOPanel);
     }
 
     @Override
@@ -522,11 +520,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 }
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _TOPanel.dispose();
-        _TOPanel = null;
+        finishItemUpdate(_paletteFrame, _TOPanel);
         displayState(turnoutState());
     }
 

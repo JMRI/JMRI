@@ -28,7 +28,7 @@ public class OlcbTestInterface {
     public OlcbTestInterface() {
         tc = new TestTrafficController();
         nodeID = new NodeID("02.01.0D.00.00.01");
-        canInterface = OlcbConfigurationManager.createOlcbCanInterface(nodeID, tc);
+        canInterface = OlcbConfigurationManagerScaffold.createOlcbCanInterface(nodeID, tc);
         iface = canInterface.getInterface();
     }
 
@@ -139,7 +139,7 @@ public class OlcbTestInterface {
      */
     public OlcbConfigurationManager createConfigurationManager() {
         OlcbSystemConnectionMemo memo = createSystemConnectionMemo();
-        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
+        OlcbConfigurationManager t = new OlcbConfigurationManagerScaffold(memo);
         t.configureManagers();
         return t;
     }
@@ -149,4 +149,11 @@ public class OlcbTestInterface {
     public CanInterface canInterface;
     public OlcbInterface iface;
     public OlcbConfigurationManager configurationManager;
+
+    public void dispose(){
+      // terminate the OlcbInterface (and terminate thread)
+      new Thread(() -> { iface.dispose();},"OLCB Interface dispose thread").start();
+    }
+
+
 }

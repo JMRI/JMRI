@@ -22,13 +22,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H2>Consist Tool</H2>
+<h1>Consist Tool</h1>
 
-	</a><h2>Using the Consist Tool</h2>
+	<h2>Using the Consist Tool</h2>
 	<p>
 	When you first open the consist tool, you will see a screen similar to the following:
         </p>
-	<image src=images/ConsistTool.jpg alt="Blank Consist Tool">
+	<img src=images/ConsistTool.jpg alt="Blank Consist Tool">
         <p>
 	   The buttons on the top row are used to select between an Advanced (or 
            Decoder Assisted) Consist and a Command Station Assisted 
@@ -48,19 +48,19 @@
            Adding a typical ID for a Decoder Assisted Consist should look 
            like the following:
         </p>
-	   <image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool - ID Added">
+	   <img src=images/ConsistTool-IDAdded.jpg alt="Consist Tool - ID Added">
         <p>
 	   The second line of the consisting tool is used to add locomotives.
            A locomotive may be added either by entering it's number in the 
            box next to <b>New Locomotive</b> or by selecting it's number 
            from the roster drop down box.
         </p>
-           <image src=images/ConsistTool-LeadLoco.jpg alt="Lead Locomotive Selected">
+           <img src=images/ConsistTool-LeadLoco.jpg alt="Lead Locomotive Selected">
         <p>
           Clicking the <b>add</b> button will add a locomotive to the 
           consist, and it will appear in the list below the second line.
         </p>
-          <image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
+          <img src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
         <p>
           Clicking the <b>reset</b> button will clear the information for 
           this locomotive.
@@ -76,18 +76,18 @@
            subsequent locomotives, you can check this box to indicate the
            direction of the locomotive relative to the lead locomotive.
         </p>
-           <image src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed">
+           <img src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed">
         <p>
            After adding the second locomotive to the consist, with the
            direction reversed, you should see something like the following:
         </p>
-           <image src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
+           <img src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
         <p>
            If you made a mistake, and add a second locomotive to the 
            consist with the wrong direction, you can change it's direction 
            simply by clicking on the checkbox in the Direction Normal column.
 	</p>
-           <image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive - Direction Change">
+           <img src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive - Direction Change">
         <p>
            The direction of the lead locomotive cannot be changed once 
            added.
@@ -109,21 +109,21 @@
            To Add a new consist, you can select the blank entry in the 
            drop-down box next to the current consist's ID.
         </p>
-	   <image src=images/ConsistTool-NewConsist.jpg alt="Select New Consist">
+	   <img src=images/ConsistTool-NewConsist.jpg alt="Select New Consist">
         <p>
            To Recall an existing consist, you can select the appropriate 
            entry from the drop-down box next to the current consist's ID.
         </p>
-	   <image src=images/ConsistTool-SelectConsist.jpg alt="Select a Consist">
+	   <img src=images/ConsistTool-SelectConsist.jpg alt="Select a Consist">
 
   <p>
-    
-For more information on consisting and the JMRI consist tool, please
+  For more information on consisting and the JMRI consist tool, please
 see the main
 <a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool">consisting page</a>.
-<p>
-Location package\jmri\jmrit\consisttool
+  </p>
+
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>
-

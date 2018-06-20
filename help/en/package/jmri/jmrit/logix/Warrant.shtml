@@ -44,8 +44,8 @@
 
       <p><b>Warrants</b> depend on having an accurate description
       of the layout in terms of <b>OBlocks</b>, <b>Portals</b> and
-      <b>OPaths</b>. These elements are created by entering data
-      into the
+      <b>OPaths</b>.<br><span class="since">since 2.7.8</span>
+      These elements are created by entering data into the
       <b><a href="OBlockTable.shtml">Occupancy Block Tables</a></b>
       or by using the graphical interface of the
       <b>Circuit Builder</b>, part of Control Panel Editor. Initially
@@ -88,7 +88,8 @@
       </ul>
 
       <h2>The Circuit Builder Tool</h2>
-      Circuit Builder is an interactive tool that creates OBlocks,
+      <span class="since">since 2.12</span>
+      <p>Circuit Builder is an interactive tool that creates OBlocks,
       Portals and Paths graphically. In order to use the tool, you
       need to have a track diagram of your layout expressed with
       track icons (track segments and turnout icons) in a Control
@@ -100,8 +101,8 @@
       represent by color, i.e. whether the track circuit of the OBlock
       is Occupied or Unoccupied, whether a Warrant has allocated it
       or whether a Train under Warrant currently is proceeding over
-      the circuit. Details are found at <a href=
-      "../display/CircuitBuilder.shtml">The Circuit Builder</a>,
+      the circuit. Details are found in the <a href=
+      "../display/CircuitBuilder.shtml">Circuit Builder</a> Help.</p>
 
       <h3>Compatibility with Layout Editor</h3>
       <p>OBlocks, Portals and OPaths can be used with Layout Editor.
@@ -149,9 +150,9 @@
         temporary eNtry/eXit (NX) Warrant. This is discussed
         in <a href="NXWarrant.shtml">About NX Warrants</a>.</li>
 
-        <li><b>Open Session Log</b> - Opens a window to name a file
-        that records the Warrant and train tracking status
-        messages.</li>
+        <li><b>Open Session Log</b> - <span class="since">since
+        3.7.3</span> Opens a window to name a file that records
+        the Warrant and train tracking status messages.</li>
       </ul>
 
 	  <h3>Warrants without Occupancy Detection</h3>
@@ -245,7 +246,7 @@
       and a Path on which to end the route. Optionally, you may
       also choose a <b>Via</b> Block, that is, a Block the route
       <i>must</i> include and an <b>Avoid</b> Block, that is, a
-      Block the the route <i>must not</i> include. Blocks are
+      Block the route <i>must not</i> include. Blocks are
       inserted by typing in the block name or dragging it from a
       displayed OBlock Table. Blocks can also be selected in Control
       Panel Editor by clicking on track icons that represent these
@@ -462,6 +463,10 @@
         <li>JMRI <a href=
         "../../../../html/tools/automation/index.shtml">Automation
         in General</a></li>
+        <li>For a step-by-step instruction on Warrants and Circuit Builder, check out the
+        <a href="http://jmri.org/community/clinics/">clinic</a> presentation by Dick Bronson on <a
+        href="http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014 Control Panel Editor
+        plus Warrants</a>.</li>
       </ul>
 
       <!--#include virtual="/Footer" -->

@@ -23,6 +23,7 @@ import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * <dt>preInit<dd>Initialize log4j, invoked from the main()
  * <dt>ctor<dd>
  * </dl>
- * <P>
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  */
@@ -263,6 +263,14 @@ public abstract class AppsBase {
             return;
         }
         preferenceFileExists = true;
+
+        // ensure the UserPreferencesManager has loaded. Done on GUI
+        // thread as it can modify GUI objects
+        ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        });
+
+        // now (attempt to) load the config file
         try {
             ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm != null) {

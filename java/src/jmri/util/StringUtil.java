@@ -271,42 +271,6 @@ public class StringUtil {
     }
 
     /**
-     * Join a collection of strings, separated by a delimiter
-     *
-     * @param s	        collection of strings
-     * @param delimiter the delimiter
-     * @return the results of
-     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
-     * @deprecated since 4.7.2; use
-     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.Iterable)}
-     * instead
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    public static String join(@Nonnull Collection<String> s, @Nonnull String delimiter) {
-        return String.join(delimiter, s);
-    }
-
-    /**
-     * Join an array of strings, separated by a delimiter
-     *
-     * @param s	        collection of strings
-     * @param delimiter the delimiter
-     * @return the results of
-     *         {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
-     * @deprecated since 4.5.6; use
-     * {@link java.lang.String#join(java.lang.CharSequence, java.lang.CharSequence...)}
-     * instead
-     */
-    @CheckReturnValue
-    @Deprecated
-    @Nonnull
-    public static String join(@Nonnull String[] s, @Nonnull String delimiter) {
-        return String.join(delimiter, s);
-    }
-
-    /**
      * Split a string into an array of Strings, at a particular divider. This is
      * similar to the new String.split method, except that this does not provide
      * regular expression handling; the divider string is just a string.
@@ -315,7 +279,9 @@ public class StringUtil {
      * @param divider Where to divide the input; this does not appear in output
      * @return an array of Strings
      * @deprecated since 4.5.6; use
-     * {@link java.lang.String#split(java.lang.String)} instead
+     *      {@link java.lang.String#split(java.lang.String)} instead, but note
+     *      that takes a regex, not just a character; 
+     *      you have to use "\\." to split at each period.
      */
     @CheckReturnValue
     @Nonnull
@@ -570,4 +536,22 @@ public class StringUtil {
         }
         return new String(retval);
     }
+
+    /**
+     * Trim a text string to length provided and (if shorter) pad with trailing spaces.
+     * Removes 1 extra character to the right for clear column view.
+     *
+     * @param value contents to process
+     * @param length trimming length
+     * @return trimmed string, left aligned by padding to the right
+     */
+    @CheckReturnValue
+    static public String padString (String value, int length) {
+        if (length > 1) {
+            return String.format("%-" + length + "s", value.substring(0, Math.min(value.length(), length - 1)));
+        } else {
+            return value;
+        }
+    }
+
 }

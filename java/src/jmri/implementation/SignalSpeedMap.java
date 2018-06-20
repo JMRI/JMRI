@@ -79,6 +79,7 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
         };
     }
 
+    @Override
     public void initialize() {
         InstanceManager.getOptionalDefault(WarrantPreferences.class).ifPresent((wp) -> {
             wp.addPropertyChangeListener(this.warrantPreferencesListener);

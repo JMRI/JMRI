@@ -61,7 +61,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     boolean[] isReserved = new boolean[MAX_OPTION];
 
     /**
-     * Ctor
+     * Create a new instance of a Command Station Configuration Pane
      */
     public CmdStnConfigPane() {
         super();
@@ -115,8 +115,8 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         }
         log.debug("Constants: {} {} {}", CONFIG_SLOT, MIN_OPTION, MAX_OPTION); // NOI18N
 
-        labelT = Bundle.getMessage("LabelT");
-        labelC = Bundle.getMessage("LabelC");
+        labelT = Bundle.getMessage("StateThrownShort");
+        labelC = Bundle.getMessage("StateClosedShort");
         labelTop = rb.getString("LabelTop");
         read = Bundle.getMessage("ButtonRead");
         write = Bundle.getMessage("ButtonWrite");

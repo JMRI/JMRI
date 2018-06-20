@@ -38,7 +38,7 @@ public class RpsPositionIconTest {
         Editor e = Editor.getEditor("RPS Location Test Editor");
         Assert.assertNotNull("has target frame", e.getTargetFrame());
         Assert.assertEquals("RPS Location Test", e.getTargetFrame().getTitle());
-        e.dispose(true);
+        e.dispose();
     }
 
     @Before

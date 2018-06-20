@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     /**
-     * Ctor
+     * Create a new TMCC SerialTrafficController instance.
      *
      * @param adaptermemo the associated SystemConnectionMemo
      */
@@ -131,8 +131,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * Handles initialization, output and polling for TMCC from within the
-     * running thread
+     * Handle initialization, output and polling for TMCC from within the
+     * running thread.
      */
     @Override
     protected synchronized AbstractMRMessage pollMessage() {

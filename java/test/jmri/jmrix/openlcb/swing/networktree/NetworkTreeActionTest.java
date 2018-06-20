@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import jmri.jmrix.can.TestTrafficController;
 /**
  * @author Bob Jacobsen Copyright 2013
  * @author Paul Bender Copyright(C) 2016
@@ -28,10 +29,9 @@ public class NetworkTreeActionTest {
     public void setUp() {
         JUnitUtil.setUp();
 
-        memo = new jmri.jmrix.can.CanSystemConnectionMemo();
-        tc = new jmri.jmrix.can.adapters.loopback.LoopbackTrafficController();
+        memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
+        TestTrafficController tc = new TestTrafficController();
         memo.setTrafficController(tc);
-        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
 
     }
 

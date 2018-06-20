@@ -17,8 +17,8 @@ public class HexFileServer {
 
     // member declarations
     // to find and remember the log file
-//    final javax.swing.JFileChooser inputFileChooser =
-//            jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
+    // final javax.swing.JFileChooser inputFileChooser =
+    // jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
     public HexFileServer() {
     }
 
@@ -35,23 +35,23 @@ public class HexFileServer {
             return;
         }
         // connect to a packetizing LnTrafficController
-        packets = new LnPacketizer();
+        packets = new LnPacketizer(port.getSystemConnectionMemo());
         packets.connectPort(port);
         connected = true;
 
-        // create memo
+        // set tc in memo
         port.getSystemConnectionMemo().setLnTrafficController(packets);
 
         // do the common manager config
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
-                false, false);
+                false, false, false);
         port.getSystemConnectionMemo().configureManagers();
 
         // Install a debug programmer, replacing the existing LocoNet one
         port.getSystemConnectionMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         if (port.getSystemConnectionMemo().getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(port.getSystemConnectionMemo().getProgrammerManager());
+            jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (port.getSystemConnectionMemo().getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), GlobalProgrammerManager.class);
@@ -64,7 +64,7 @@ public class HexFileServer {
 
         // start operation of packetizer
         packets.startThreads();
-        sourceThread = new Thread(port);
+        sourceThread = new Thread(port, "LocoNet HexFileServer");
         sourceThread.start();
     }
 

@@ -111,7 +111,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _layoutScales.setPreferredSize(dim);
         _layoutScales.addItemListener(this);
         _layoutScales.setToolTipText(Bundle.getMessage("ToolTipLayoutScale"));
-        JLabel label = new JLabel(Bundle.getMessage("LabelLayoutScale"));
+        JLabel label = new JLabel(Bundle.getMessage("LabelLayoutScale")); // shared key in jmrit.Bundle.properties
         label.setToolTipText(Bundle.getMessage("ToolTipLayoutScale"));
         panel.add(label);
         JPanel p = new JPanel();
@@ -551,7 +551,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         if (tce != null) {
             tce.stopCellEditing();
         }
-        if (preferences.getSpeedNamesSize() != _speedNameMap.size()) {
+        if (preferences.getSpeedNames().size() != _speedNameMap.size()) {
             different = true;
         } else {
             for (int i = 0; i < _speedNameMap.size(); i++) {
@@ -631,7 +631,6 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     public void savePreferences() {
         setValues();
         if (_isDirty) {
-            WarrantPreferences.getDefault().apply();
             WarrantPreferences.getDefault().save();
             _isDirty = false;
         }

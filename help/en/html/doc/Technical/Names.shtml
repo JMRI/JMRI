@@ -24,7 +24,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -66,33 +66,21 @@
 
       <ul>
         <li>Aspects for signals</li>
-
         <li>Blocks (track segments)</li>
-
         <li>Conditionals (for logiX, although these are not entirely named beans)</li>
-
         <li>signal mast Groups</li>
-        
         <li>signal Heads</li>
-        
         <li>signal masts (F, for some reason)</li>
-
         <li>Lights (a type of output)</li>
-
+        <li>eNtry/exit destiNation points</li>
         <li>Memories</li>
-
         <li>Outputs</li>
-
         <li>Power districts and subdistricts</li>
-
-        <li>Routes</li>
-
+        <li>Reporters</li>
+        <li>Routes (shared for historical reasons with Reporters)</li>
         <li>input Sensors</li>
-
         <li>Turnouts</li>
-
         <li>logiX</li>
-        
         <li>Sections (Y, for some reason)</li>
         
       </ul>Some of these are associated with a specific hardware
@@ -324,6 +312,8 @@
         <li>L Light - another form of output, used to e.g. control
         lights on a layout</li>
 
+        <li>N eNtry/exit destination points</li>
+
         <li>P Power manager i.e. layout, district, subdistrict; not
         all systems distinguish between these, so the device type
         letter doesn't either. The system-specific part of the name
@@ -336,12 +326,15 @@
         identification from some transponding hardware, RFID tag
         numbers, etc.</li>
 
+        <li>R Routes - a tool for setting multiple Turnout states at once.
+        The "R" letter is shared with Reporters for historical reasons.</li>
+
         <li>S Sensors - general purpose input sensors that can
         generally be either ACTIVE or INACTIVE. This is most
         commonly used for block occupancy detectors.</li>
 
         <li>Y Sections - holds a map of trackwork.
-        Section</b> system names are all upper case, have no trailing whitespace and start with IY.</li>
+        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
         
         <li>SignalGroups - hold a set of signal heads or masts.
             SignalGroup system names are all upper case and have no trailing whitespace.
@@ -1039,7 +1032,7 @@ SENSOR GROUP:my group:LS2
         For an example, see the bottom of jmri.jmrix.cmri.serial.SerialTurnout
         and jmri.jmrix.cmri.serial.SerialTurnoutTest.
       
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

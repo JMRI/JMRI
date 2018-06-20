@@ -404,6 +404,107 @@ public class LocoNetSlotTest {
         Assert.assertEquals("Element 12",0x02,lm2.getElement(12));
     }
 
+    @Test
+    public void testConsistingStateVsSpeedAccept() throws LocoNetException {
+        int ia[]={0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
+			0x00, 0x2B, 0x00, 0x00, 0x00, 0x60 };
+        LocoNetMessage lm =new LocoNetMessage(ia);
+        LocoNetSlot t = new LocoNetSlot(lm);
+        Assert.assertEquals("Consist-mode is unconsisted", LnConstants.CONSIST_NO, t.consistStatus());
+        Assert.assertEquals("Speed Set from slot read",0, t.speed());
+        int ib[] = {0xA0, 1, 14, 0};
+        lm = new LocoNetMessage(ib);
+        t.setSlot(lm);
+        Assert.assertEquals("Speed Set for Unconsisted slot",14, t.speed());
+        int id[] = {0xA1, 1, 2, 0};
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Function 1 set for Unconsisted slot",2, t.dirf());
+        id[2] = 0x20;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Change direction and F1 for unconsisted slot", 0x20, t.dirf());
+
+        int ic[] = {0xE7, 0x0E, 0x01, 0x0b, 0x28, 0x12, 0x02, 0x47,
+			0x00, 0x2B, 0x00, 0x00, 0x00, 0x60 };   // make slot consist_top
+        lm = new LocoNetMessage(ic);
+        t.setSlot(lm);
+        Assert.assertEquals("Consist-mode is consist-top", LnConstants.CONSIST_TOP, t.consistStatus());
+        Assert.assertEquals("Speed Set for consist-top from slot read",18, t.speed());
+        Assert.assertEquals("OPC_LOCO_SPD from slot read for consist-top",2, t.dirf());
+
+        ib[2] = 3;
+        lm = new LocoNetMessage(ib);
+        t.setSlot(lm);
+        Assert.assertEquals("OPC_LOCO_SPD accepted for consist-top",3, t.speed());
+        id[2] = 7;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Function F1-F3 set for consist-top slot",7, t.dirf());
+        id[2] = 0x22;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Change direction and F1 & F3 for consist-top slot", 0x22, t.dirf());
+        
+        ic[3] = 0x4b;   // make slot consist_mid, common
+        lm = new LocoNetMessage(ic);
+        t.setSlot(lm);
+        Assert.assertEquals("Consist-mode is consist-mid", LnConstants.CONSIST_MID, t.consistStatus());
+        Assert.assertEquals("'Speed' (slot pointer) set for consist-mid from slot read",18, t.speed());
+        ib[2] = 7;
+        lm = new LocoNetMessage(ib);
+        t.setSlot(lm);
+        Assert.assertEquals("OPC_LOCO_SPD ignored when consist-mid",18, t.speed());
+        id[2] = 19;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Function F0, F2, F1 set for consist-mid slot",19, t.dirf());
+        id[2] = 0x27;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Change F0, F3 but NOT direction for consist-mid slot", 0x07, t.dirf());
+        
+        ic[3] = 0x43;   // make slot consist_sub, common
+        ic[6] = 0x28;   // DIRF: reverse, F4 on
+        lm = new LocoNetMessage(ic);
+        t.setSlot(lm);
+        Assert.assertEquals("Consist-mode is consist-sub", LnConstants.CONSIST_SUB, t.consistStatus());
+        Assert.assertEquals("'Speed' (slot pointer) set for consist-sub from slot read",18, t.speed());
+        Assert.assertEquals("DIRF for consist-sub from slot read", 0x28, t.dirf());
+        ib[2] = 9;
+        lm = new LocoNetMessage(ib);
+        t.setSlot(lm);
+        Assert.assertEquals("OPC_LOCO_SPD ignored when consist-mid",18, t.speed());
+        id[2] = 0x3f;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Functions F0, F4-F1 set but not direction for consist-mid slot",63, t.dirf());
+        id[2] = 0x02;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Change F0, F4-F3, F1 for consist-top slot", 0x22, t.dirf());
+        
+        ic[6] = 0x27;   // make slot DIRF direction reversed, F3-F1 on
+        lm = new LocoNetMessage(ic);
+        t.setSlot(lm);
+        Assert.assertEquals("Consist-mode is consist-sub", LnConstants.CONSIST_SUB, t.consistStatus());
+        Assert.assertEquals("'Speed' (slot pointer) set for consist-sub from slot read",18, t.speed());
+        Assert.assertEquals("dirf is 0x27 from slot read", 0x27, t.dirf());
+        ib[2] = 9;
+        lm = new LocoNetMessage(ib);
+        t.setSlot(lm);
+        Assert.assertEquals("OPC_LOCO_SPD ignored when consist-mid",18, t.speed());
+        id[2] = 0x00;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Functions F0, F4-F1 set but not direction for consist-mid slot",0x20, t.dirf());
+        id[2] = 0x3F;
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Change F0, F4-F1, for consist-top slot", 0x3F, t.dirf());
+        
+    }
+
     LocoNetInterfaceScaffold lnis;
 
     // The minimal setup for log4J

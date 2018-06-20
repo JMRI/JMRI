@@ -1,17 +1,19 @@
 package jmri.jmrix.direct;
 
+import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottleManager;
+import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Direct DCC implementation of a ThrottleManager.
- * <P>
+ * <p>
  * When the traffic manager doesn't have anything else to do, it comes here to
  * get a command to send.
- * <P>
+ * <p>
  * This is a partial implementation, which can only handle one Throttle at a
  * time. It also is missing logic to alternate sending speed and function
  * commands; right now it only sends the first group of function packets.
@@ -20,14 +22,14 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
-    private jmri.CommandStation tc = null;
+    private CommandStation tc = null;
     /**
-     * Constructor.
+     * Constructor for a Direct ThrottleManager.
      */
-    public ThrottleManager(jmri.CommandStation tcl) {
-        super();
-        tc = tcl;
-        jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class,this);
+    public ThrottleManager(DirectSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getTrafficController();
+        jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class, this);
     }
 
     /**
@@ -46,12 +48,11 @@ public class ThrottleManager extends AbstractThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         if (currentThrottle != null) {
-            log.error("DCC direct cannot handle more than one throttle now");
+            log.error("DCC Direct cannot handle more than one throttle");
             failedThrottleRequest((DccLocoAddress) address, "DCC direct cannot handle more than one throttle " + address);
             return;
         }
-        log.warn("requestThrottleSetup should preserve actual address object, not use ints");
-        currentThrottle = new Throttle(((DccLocoAddress) address).getNumber(),tc);
+        currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object
         notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
     }
 
@@ -72,7 +73,7 @@ public class ThrottleManager extends AbstractThrottleManager {
 
     /**
      * Invoked when a throttle is released, this updates the local data
-     * structures
+     * structures.
      */
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {

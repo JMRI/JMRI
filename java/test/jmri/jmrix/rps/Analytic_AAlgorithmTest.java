@@ -18,28 +18,28 @@ public class Analytic_AAlgorithmTest extends AbstractAlgorithmTestBase {
     }
 
     @Test
-    @Ignore // fails for unknown reasons
+    @Ignore("fails for unknown reasons")
     @Override
     public void testCalc4() {
         super.testCalc4();
     }
 
     @Test
-    @Ignore // fails for unknown reasons
+    @Ignore("fails for unknown reasons")
     @Override
     public void testCalc5() {
         super.testCalc5();
     }
 
     @Test
-    @Ignore // fails for unknown reasons
+    @Ignore("fails for unknown reasons")
     @Override
     public void testCalc6() {
         super.testCalc6();
     }
 
     @Test
-    @Ignore // fails for unknown reasons
+    @Ignore("fails for unknown reasons")
     @Override
     public void testCalc7() {
         super.testCalc7();

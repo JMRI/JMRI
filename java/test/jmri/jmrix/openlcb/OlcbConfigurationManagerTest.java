@@ -1,9 +1,10 @@
 package jmri.jmrix.openlcb;
 
+import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -11,31 +12,36 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class OlcbConfigurationManagerTest {
+        
+    private static OlcbSystemConnectionMemo scm;
 
     @Test
     public void testCTor() {
-        OlcbConfigurationManager t = new OlcbConfigurationManager(new OlcbSystemConnectionMemo());
+        OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testConfigureManagers() {
-        jmri.jmrix.can.TrafficController tc = new jmri.jmrix.can.TestTrafficController();
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
-        memo.setTrafficController(tc);
-        OlcbConfigurationManager t = new OlcbConfigurationManager(memo);
+        OlcbConfigurationManager t = new OlcbConfigurationManager(scm);
         // this tet verifies this does not throw an exception
         t.configureManagers(); 
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void preClassInit() {
         JUnitUtil.setUp();
+        scm = new OlcbSystemConnectionMemo();
+        TestTrafficController tc = new TestTrafficController();
+        scm.setTrafficController(tc);
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    public static void postClassTearDown() {
+        if(scm != null && scm.getInterface() !=null ) {
+           scm.getInterface().dispose();
+        }
+        scm = null;
         JUnitUtil.tearDown();
     }
 

@@ -27,9 +27,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonWebSocket;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
@@ -42,10 +44,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide JSON formatted responses for requests to requests for information
  * from the JMRI Web Server.
- *
+ * <p>
  * This server supports long polling in some GET requests, but also provides a
  * WebSocket to provide a more extensive control and monitoring capability.
- *
+ * <p>
  * This server responds to HTTP requests for objects in following manner:
  * <table>
  * <caption>HTTP methods handled by this servlet.</caption>
@@ -67,30 +69,32 @@ public class JsonServlet extends WebSocketServlet {
 
     private transient ObjectMapper mapper;
     private final transient HashMap<String, HashSet<JsonHttpService>> services = new HashMap<>();
+    private final transient JsonServerPreferences preferences = InstanceManager.getDefault(JsonServerPreferences.class);
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
 
     @Override
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
-        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+        for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
             JsonHttpService service = factory.getHttpService(this.mapper);
-            if (service != null) {
-                for (String type : factory.getTypes()) {
-                    HashSet<JsonHttpService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
-                    set.add(factory.getHttpService(this.mapper));
+            for (String type : factory.getTypes()) {
+                HashSet<JsonHttpService> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
                 }
+                set.add(service);
+            }
+            for (String type : factory.getReceivedTypes()) {
+                HashSet<JsonHttpService> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
+                }
+                set.add(service);
             }
         }
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
     }
 
     @Override
@@ -103,7 +107,7 @@ public class JsonServlet extends WebSocketServlet {
      * <ul>
      * <li>/json/sensor/IS22 (return data for sensor with system name
      * "IS22")</li>
-     * <li>/json/sensors (returns a list of all sensors known to JMRI)</li>
+     * <li>/json/sensor (returns a list of all sensors known to JMRI)</li>
      * </ul>
      * sample responses:
      * <ul>
@@ -127,11 +131,7 @@ public class JsonServlet extends WebSocketServlet {
         if (request.getAttribute("result") != null) {
             JsonNode result = (JsonNode) request.getAttribute("result");
             int code = result.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-            if (code == HttpServletResponse.SC_OK) {
-                response.getWriter().write(this.mapper.writeValueAsString(result));
-            } else {
-                this.sendError(response, code, this.mapper.writeValueAsString(result));
-            }
+            this.sendMessage(response, code, result);
             return;
         }
 
@@ -212,11 +212,7 @@ public class JsonServlet extends WebSocketServlet {
                 reply = ex.getJsonMessage();
             }
             int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-            if (code == HttpServletResponse.SC_OK) {
-                response.getWriter().write(this.mapper.writeValueAsString(reply));
-            } else {
-                this.sendError(response, code, this.mapper.writeValueAsString(reply));
-            }
+            this.sendMessage(response, code, reply);
         } else {
             response.setContentType(ServletUtil.UTF8_TEXT_HTML); // NOI18N
             response.getWriter().print(String.format(request.getLocale(),
@@ -314,11 +310,7 @@ public class JsonServlet extends WebSocketServlet {
             reply = ex.getJsonMessage();
         }
         int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-        if (code == HttpServletResponse.SC_OK) {
-            response.getWriter().write(this.mapper.writeValueAsString(reply));
-        } else {
-            this.sendError(response, code, this.mapper.writeValueAsString(reply));
-        }
+        this.sendMessage(response, code, reply);
     }
 
     @Override
@@ -391,11 +383,7 @@ public class JsonServlet extends WebSocketServlet {
             reply = ex.getJsonMessage();
         }
         int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
-        if (code == HttpServletResponse.SC_OK) {
-            response.getWriter().write(this.mapper.writeValueAsString(reply));
-        } else {
-            this.sendError(response, code, this.mapper.writeValueAsString(reply));
-        }
+        this.sendMessage(response, code, reply);
     }
 
     @Override
@@ -427,13 +415,49 @@ public class JsonServlet extends WebSocketServlet {
         int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
         // only include a response body if something went wrong
         if (code != HttpServletResponse.SC_OK) {
-            this.sendError(response, code, this.mapper.writeValueAsString(reply));
+            this.sendMessage(response, code, reply);
         }
     }
 
+    /**
+     * Send an error message in response to a request.
+     *
+     * @param response the HTTP response that will send the message
+     * @param code     the error code
+     * @param message  the error message
+     * @throws IOException if unable to send message
+     * @deprecated since 4.11.5 without public replacement
+     */
+    @Deprecated
     public void sendError(HttpServletResponse response, int code, String message) throws IOException {
         response.setStatus(code);
         response.getWriter().write(message);
     }
 
+    /**
+     * Send a message to the HTTP client in an HTTP response. This closes the
+     * response to future messages.
+     * <p>
+     * If {@link JsonServerPreferences#getValidateServerMessages()} is
+     * {@code true}, this may send an error message instead of {@code message}
+     * if the message is not schema valid.
+     *
+     * @param response the HTTP response
+     * @param code     the HTTP response code
+     * @param message  the message to send
+     * @throws IOException if unable to send
+     */
+    private void sendMessage(HttpServletResponse response, int code, JsonNode message) throws IOException {
+        if (this.preferences.getValidateServerMessages()) {
+            try {
+                InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(message, true, response.getLocale());
+            } catch (JsonException ex) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write(this.mapper.writeValueAsString(ex.getJsonMessage()));
+                return;
+            }
+        }
+        response.setStatus(code);
+        response.getWriter().write(this.mapper.writeValueAsString(message));
+    }
 }

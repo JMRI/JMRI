@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
   */
 abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
+    /**
+     * Create a new TrafficController instance. Simple implementation.
+     */
     public SerialTrafficController() {
         super();
         logDebug = log.isDebugEnabled();

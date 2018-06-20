@@ -13,8 +13,7 @@ import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
 /**
- *
- * @author given
+ * Tests for LocoNet CsOpSwAccess class.
  */
 public class CsOpSwAccessTest {
 
@@ -36,6 +35,7 @@ public class CsOpSwAccessTest {
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

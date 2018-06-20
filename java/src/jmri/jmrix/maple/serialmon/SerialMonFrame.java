@@ -6,33 +6,33 @@ import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) serial command messages
+ * Frame displaying (and logging) serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    private MapleSystemConnectionMemo memo = null;
+    private MapleSystemConnectionMemo _memo = null;
 
-    public SerialMonFrame(MapleSystemConnectionMemo _memo) {
+    public SerialMonFrame(MapleSystemConnectionMemo memo) {
         super();
-        memo = _memo;
+        _memo = memo;
     }
 
     @Override
     protected String title() {
         return "Maple Serial Command Monitor";
-    }
+    } // TODO I18N
 
     @Override
     protected void init() {
         // connect to TrafficController
-        memo.getTrafficController().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
     @Override
     public void dispose() {
-        memo.getTrafficController().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
@@ -45,13 +45,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     @Override
-    public synchronized void message(SerialMessage l) {  // receive a message and log it
+    public synchronized void message(SerialMessage l) { // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated message of length " + l.getNumDataElements() + "\n", l.toString());
         } else if (l.isPoll()) {
             if ((l.getNumDataElements() <= 6) && (l.getElement(0) == 15)) {
-                nextLine("Poll Reply - NAK (error)", l.toString());
+                nextLine("Poll Reply - NAK (error)", l.toString()); // TODO I18N
             } else {
                 nextLine("Poll node " + l.getUA() + "\n", l.toString());
             }

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Implements the jmri.Programmer interface via commands for the ECoS
  * programmer. This provides a service mode programmer.
  *
- * @author Karl Johan Lisby Copyright (C) 2015
+ * @author Karl Johan Lisby Copyright (C) 2015 and 2018
  */
 public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
@@ -21,6 +21,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     }
 
     EcosTrafficController tc;
+    int EcosObject = 5;
+    String ReadCommand  = "mode[readdccdirect]";
+    String WriteCommand = "mode[writedccdirect]";
     
     /**
      * @return list of programming modes implemented for ECoS
@@ -34,9 +37,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
     // members for handling the programmer interface
     int progState = 0;
-    static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1;  // waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
+    static final int NOTPROGRAMMING = 0; // is notProgramming
+    static final int MODESENT = 1;       // waiting reply to command to go into programming mode
+    static final int COMMANDSENT = 2;    // read/write command sent, waiting reply
     boolean _progRead = false;
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
@@ -61,7 +64,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         // format and send message to go to program mode
         // ECOS is in program mode by default but we need to subscribe to events
         EcosMessage m;
-        m = new EcosMessage("request(5,view)");
+        m = new EcosMessage("request("+EcosObject+",view)");
         tc.sendEcosMessage(m, this);
     }
 
@@ -88,7 +91,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         // format and send message to go to program mode
         // ECOS is in program mode by default but we need to subscribe to events
         EcosMessage m;
-        m = new EcosMessage("request(5,view)");
+        m = new EcosMessage("request("+EcosObject+",view)");
         tc.sendEcosMessage(m, this);
     }
     
@@ -125,7 +128,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         } else if (progState == MODESENT) {
             log.debug("reply in MODESENT state");
             // see if reply is the acknowledge of requesting view of events; if not, wait
-            if (reply.match("<REPLY request(5,view)>") == -1) {
+            if (reply.match("<REPLY request("+EcosObject+",view)>") == -1) {
                 return;
             }
             if (reply.match("<END 0 (OK)>") == -1) {
@@ -139,10 +142,10 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
                 EcosMessage m;
                 if (_progRead) {
                     // read was in progress - send read command
-                    m = new EcosMessage("set(5,mode[readdccdirect],cv["+_cv+"])");
+                    m = new EcosMessage("set("+EcosObject+","+ReadCommand+",cv["+_cv+"])");
                 } else {
                     // write was in progress - send write command
-                    m = new EcosMessage("set(5,mode[writedccdirect],cv["+_cv+","+_val+"])");
+                    m = new EcosMessage("set("+EcosObject+","+WriteCommand+",cv["+_cv+","+_val+"])");
                 }
                 tc.sendEcosMessage(m, this);
             } catch (Exception e) {
@@ -150,7 +153,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
                 log.error("program operation failed, exception " + e);
                 progState = NOTPROGRAMMING;
                 EcosMessage m;
-                m = new EcosMessage("release(5,view)");
+                m = new EcosMessage("release("+EcosObject+",view)");
                 tc.sendEcosMessage(m, this);
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
                 return;
@@ -160,14 +163,14 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
                 log.debug("reply in COMMANDSENT state");
             }
             // The real reply comes in an event; if this is not that event, wait
-            if (reply.match("<EVENT 5>") == -1) {
+            if (reply.match("<EVENT "+EcosObject+">") == -1) {
                 return;
             }
             // operation done, capture result, then leave programming mode
             progState = NOTPROGRAMMING;
             stopTimer();
             EcosMessage m;
-            m = new EcosMessage("release(5,view)");
+            m = new EcosMessage("release("+EcosObject+",view)");
             tc.sendEcosMessage(m, this);
             // check for errors
             if (reply.match("error") >= 0 || reply.match(",ok]") == -1) {
@@ -206,7 +209,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
             EcosMessage m;
-            m = new EcosMessage("release(5,view)");
+            m = new EcosMessage("release("+EcosObject+",view)");
             tc.sendEcosMessage(m, this);
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }

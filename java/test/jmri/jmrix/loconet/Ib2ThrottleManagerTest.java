@@ -12,21 +12,24 @@ import org.junit.Test;
  */
 public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
+    private LocoNetSystemConnectionMemo memo;
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tm = new Ib2ThrottleManager(new LocoNetSystemConnectionMemo());
+        memo = new LocoNetSystemConnectionMemo();
+        tm = new Ib2ThrottleManager(memo);
     }
 
     @After
     public void tearDown() {
         ((Ib2ThrottleManager)tm).dispose();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

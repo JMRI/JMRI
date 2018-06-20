@@ -1,6 +1,5 @@
 package jmri.server.json.light;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,119 +13,109 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender
  * @author Randall Wood
  */
-public class JsonLightSocketServiceTest extends TestCase {
+public class JsonLightSocketServiceTest {
 
-    public void testCtorSuccess() {
-        JsonLightSocketService service = new JsonLightSocketService(new JsonMockConnection((DataOutputStream) null));
-        Assert.assertNotNull(service);
+    @Test
+    public void testLightChange() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1");
+        JsonLightSocketService service = new JsonLightSocketService(connection);
+        LightManager manager = InstanceManager.getDefault(LightManager.class);
+        Light light1 = manager.provideLight("IL1");
+        Assert.assertEquals("Light has only one listener", 1, light1.getNumPropertyChangeListeners());
+        service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
+        Assert.assertEquals("Light is being listened to by service", 2, light1.getNumPropertyChangeListeners());
+        Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+        light1.setState(Light.ON);
+        JUnitUtil.waitFor(() -> {
+            return light1.getState() == Light.ON;
+        }, "Light to throw");
+        Assert.assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+        light1.setState(Light.OFF);
+        JUnitUtil.waitFor(() -> {
+            return light1.getState() == Light.OFF;
+        }, "Light to close");
+        Assert.assertEquals(Light.OFF, light1.getState());
+        Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+        // test IOException handling when listening by triggering execption and
+        // observing that light1 is no longer being listened to
+        connection.setThrowIOException(true);
+        light1.setState(Light.ON);
+        JUnitUtil.waitFor(() -> {
+            return light1.getState() == Light.ON;
+        }, "Light to close");
+        Assert.assertEquals(Light.ON, light1.getState());
+        Assert.assertEquals("Light is no longer listened to by service", 1, light1.getNumPropertyChangeListeners());
+        service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
+        Assert.assertEquals("Light is being listened to by service", 2, light1.getNumPropertyChangeListeners());
+        service.onClose();
+        Assert.assertEquals("Light is no longer listened to by service", 1, light1.getNumPropertyChangeListeners());
     }
 
-    public void testLightChange() {
+    @Test
+    public void testOnMessageChange() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message;
+        JsonLightSocketService service = new JsonLightSocketService(connection);
+        LightManager manager = InstanceManager.getDefault(LightManager.class);
+        Light light1 = manager.provideLight("IL1");
+        // Light OFF
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
+        service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
+        Assert.assertEquals(Light.OFF, light1.getState());
+        // Light ON
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
+        service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
+        Assert.assertEquals(Light.ON, light1.getState());
+        // Light UNKNOWN - remains ON
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
+        service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
+        Assert.assertEquals(Light.ON, light1.getState());
+        // Light Invalid State
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // invalid state
+        JsonException exception = null;
         try {
-            JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-            JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1");
-            JsonLightSocketService service = new JsonLightSocketService(connection);
-            LightManager manager = InstanceManager.getDefault(LightManager.class);
-            Light light1 = manager.provideLight("IL1");
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
-            // TODO: test that service is listener in LightManager
-            Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
-            light1.setState(Light.ON);
-            JUnitUtil.waitFor(() -> {
-                return light1.getState() == Light.ON;
-            }, "Light to throw");
-            Assert.assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
-            light1.setState(Light.OFF);
-            JUnitUtil.waitFor(() -> {
-                return light1.getState() == Light.OFF;
-            }, "Light to close");
-            Assert.assertEquals(Light.OFF, light1.getState());
-            Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
-            service.onClose();
-            // TODO: test that service is no longer a listener in LightManager
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail(ex.getMessage());
+            service.onMessage(JsonLight.LIGHT, message, JSON.POST, Locale.ENGLISH);
+        } catch (JsonException ex) {
+            exception = ex;
         }
+        Assert.assertEquals(Light.ON, light1.getState());
+        Assert.assertNotNull(exception);
+        Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
     }
 
-    public void testOnMessageChange() {
-        try {
-            JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-            JsonNode message;
-            JsonLightSocketService service = new JsonLightSocketService(connection);
-            LightManager manager = InstanceManager.getDefault(LightManager.class);
-            Light light1 = manager.provideLight("IL1");
-            // Light OFF
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
-            Assert.assertEquals(Light.OFF, light1.getState());
-            // Light ON
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
-            Assert.assertEquals(Light.ON, light1.getState());
-            // Light UNKNOWN - remains ON
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
-            Assert.assertEquals(Light.ON, light1.getState());
-            // Light Invalid State
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // invalid state
-            JsonException exception = null;
-            try {
-                service.onMessage(JsonLight.LIGHT, message, Locale.ENGLISH);
-            } catch (JsonException ex) {
-                exception = ex;
-            }
-            Assert.assertEquals(Light.ON, light1.getState());
-            Assert.assertNotNull(exception);
-            Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail(ex.getMessage());
-        }
+    @Test
+    public void testOnMessagePut() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message;
+        JsonLightSocketService service = new JsonLightSocketService(connection);
+        LightManager manager = InstanceManager.getDefault(LightManager.class);
+        // Light OFF
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
+        service.onMessage(JsonLight.LIGHT, message, JSON.PUT, Locale.ENGLISH);
+        Light light1 = manager.getBySystemName("IL1");
+        Assert.assertNotNull("Light was created by PUT", light1);
+        Assert.assertEquals(Light.OFF, light1.getState());
     }
 
-    // from here down is testing infrastructure
-    public JsonLightSocketServiceTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JsonLightSocketServiceTest.class.getName()};
-        TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JsonLightSocketServiceTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalLightManager();
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright (C) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonConsistServiceFactory implements JsonServiceFactory {
+public class JsonConsistServiceFactory implements JsonServiceFactory<JsonConsistHttpService, JsonConsistSocketService> {
 
 
     @Override

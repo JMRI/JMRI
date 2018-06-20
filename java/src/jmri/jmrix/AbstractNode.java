@@ -13,15 +13,17 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractNode {
 
     /**
-     * Creates a new instance of AbstractNode
+     * Create a new instance of AbstractNode.
      */
     public AbstractNode() {
     }
 
-    public int nodeAddress = 0; // Node address, range varies by subclass
+    public int nodeAddress = 0; // Node address, valid range varies by subclass
 
     /**
      * Public method to return the node address.
+     *
+     * @return node address number
      */
     public int getNodeAddress() {
         return (nodeAddress);
@@ -31,6 +33,7 @@ public abstract class AbstractNode {
      * Public method to set the node address. Address range is checked in
      * subclasses.
      *
+     * @param address address index to set in node
      * @throws IllegalArgumentException if out of range
      */
     public void setNodeAddress(int address) {
@@ -52,18 +55,21 @@ public abstract class AbstractNode {
 
     /**
      * Create the needed Initialization packet (AbstractMRMessage) for this
-     * node. Returns null if not needed.
+     * node.
+     *
+     * @return the packet, or 'null' if not needed
      */
     abstract public AbstractMRMessage createInitPacket();
 
     /**
-     * Create an Transmit packet (AbstractMRMessage) to send current state
+     * Create a Transmit packet (AbstractMRMessage) to send current state.
      */
     abstract public AbstractMRMessage createOutPacket();
 
     /**
-     * Are there sensors present, and hence this node will need to be polled?
-     * Note: returns 'true' if at least one sensor is active for this node
+     * Are any sensors present, and hence will this node need to be polled?
+     *
+     * @return 'true' if at least one sensor is active for this node
      */
     abstract public boolean getSensorsActive();
 
@@ -72,12 +78,14 @@ public abstract class AbstractNode {
      *
      * @param m message that didn't receive a reply
      * @param l listener that sent the message
-     * @return true if initialization required
+     * @return true if initialization is required
      */
     abstract public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l);
 
     /**
-     * A reply was received, so there was not timeout, do any needed processing.
+     * A reply was received, so there was no timeout, do any needed processing.
+     *
+     * @param m message received that has reset the timeout and is waiting to be handled
      */
     abstract public void resetTimeout(AbstractMRMessage m);
 

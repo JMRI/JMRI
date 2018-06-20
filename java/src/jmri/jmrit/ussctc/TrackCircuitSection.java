@@ -16,7 +16,6 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      */
     TrackCircuitSection() {}
     
-    
     /**
      * Create and configure.
      *
@@ -46,12 +45,12 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
 
     /**
      * Create and configure.
-     *
+     * <p>
      * Accepts user or system names. 
      *
      * @param inputSensor  Sensor for input from central CTC machine
      * @param panelOutput  Turnout name for maintainer call on layout
-     * @param station Station to which this Section belongs
+     * @param station      Station to which this Section belongs
      */
     public TrackCircuitSection(String inputSensor, String panelOutput, Station station) {
         this(inputSensor, panelOutput, station, null);
@@ -63,11 +62,14 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
     Bell bell;
 
     Station station;
+    @Override
     public Station getStation() { return station; }
+    @Override
     public String getName() { return "TC for "+hInputSensor.getBean().getDisplayName(); }
 
      /**
      * Start of sending code operation.
+      *
      * @return code line value to transmit
      */
     @Override
@@ -115,4 +117,5 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
     }
      
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackCircuitSection.class);
+
 }

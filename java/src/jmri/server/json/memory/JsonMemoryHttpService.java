@@ -1,10 +1,9 @@
 package jmri.server.json.memory;
 
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.JSON.VALUE;
+import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.server.json.JsonException;
@@ -33,7 +33,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
         ObjectNode data = this.getNamedBean(memory, name, type, locale);
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (memory != null) {
             if (memory.getValue() == null) {
                 data.putNull(VALUE);
@@ -50,12 +50,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
         if (memory == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            memory.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            memory.setComment(data.path(COMMENT).asText());
-        }
+        this.postNamedBean(memory, data, name, type, locale);
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -84,5 +79,19 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case MEMORY:
+            case MEMORIES:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/memory/memory-server.json",
+                        "jmri/server/json/memory/memory-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

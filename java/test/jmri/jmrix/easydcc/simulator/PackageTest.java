@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
    ConnectionConfigTest.class,
    SimulatorAdapterTest.class,
    jmri.jmrix.easydcc.simulator.configurexml.PackageTest.class,
-   BundleTest.class
+   BundleTest.class,
+   EasyDccSimulatorTrafficControllerTest.class
 })
 /**
  * Tests for the jmri.jmrix.easydcc.simulator package.

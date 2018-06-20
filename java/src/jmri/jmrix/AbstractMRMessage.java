@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
+    /**
+     * Create a new AbstractMRMessage instance.
+     */
     public AbstractMRMessage() {
         setBinary(false);
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
@@ -22,18 +25,26 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setRetries(0); // default to no retries
     }
 
-    // create a new one
+    /**
+     * Create a new AbstractMRMessage instance of a given byte size.
+     *
+     * @param i number of elements in message
+     */
     public AbstractMRMessage(int i) {
         this();
         if (i < 1) {
-            log.error("invalid length in call to ctor");
+            log.error("invalid length {} in call to ctor", i);
             throw new IllegalArgumentException("invalid length in call to ctor");
         }
         _nDataChars = i;
         _dataChars = new int[i];
     }
 
-    // copy one
+    /**
+     * Copy an AbstractMRMessage to a new instance.
+     *
+     * @param m the message to copy
+     */
     public AbstractMRMessage(@Nonnull AbstractMRMessage m) {
         this();
         Objects.requireNonNull(m, "copy ctor of null message");
@@ -45,7 +56,11 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setNeededMode(m.getNeededMode());
     }
 
-    // from String
+    /**
+     * Create a new Message instance from a string.
+     *
+     * @param s String to use as message content
+     */
     public AbstractMRMessage(String s) {
         this(s.length());
         for (int i = 0; i < _nDataChars; i++) {
@@ -89,7 +104,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * timeout is needed before the next message can be sent.
      * <p>
      * If this returns false, the transmit queue will immediately go on to
-     * transmitt the next message (if any).
+     * transmit the next message (if any).
      */
     public boolean replyExpected() {
         return true;

@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for SECSI serial systems
- * <P>
- * System names are "TLnnn", where nnn is the bit number without padding.
- * <P>
+ * <p>
+ * System names are "ViLnnn", where nnn is the bit number without padding.
+ * <p>
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
@@ -43,25 +43,25 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if (SerialAddress.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName,memo);
             if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
         }
         return lgt;
     }
 
     /**
-     * Public method to validate system name format.
+     * Validate system name format.
+     *
      * @return 'true' if system name has a valid format, else returns 'false'
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L'));
+        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
     /**
@@ -76,14 +76,14 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
+     * Normalize a system name.
      *
      * @return a normalized system name if system name has a valid format, else
      * returns ""
      */
     @Override
     public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName));
+        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -94,7 +94,16 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return (SerialAddress.convertSystemNameToAlternate(systemName));
+        return (SerialAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
     }
 
     /**

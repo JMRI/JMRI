@@ -5,7 +5,7 @@ import org.jdom2.Element;
 
 /**
  * Provides load and store functionality for configuring LnSensorManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *

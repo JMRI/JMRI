@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the SerialPortController class
- * <p>
+ * JUnit tests for the SerialPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -16,12 +15,12 @@ public class SerialPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       new SerialTrafficController(){
+        GrapevineSystemConnectionMemo memo = new GrapevineSystemConnectionMemo();
+        new SerialTrafficController(memo){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
        };
-       GrapevineSystemConnectionMemo memo = new GrapevineSystemConnectionMemo();
        apc = new SerialPortController(memo){
             @Override
             public boolean status(){

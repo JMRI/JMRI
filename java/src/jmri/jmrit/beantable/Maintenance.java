@@ -20,16 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import jmri.Block;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
+
+import javax.annotation.*;
+
+import jmri.*;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
@@ -326,220 +320,62 @@ public class Maintenance {
 
     /**
      * Find type of element and its names from a name that may be a user name or
-     * a system name. (Maybe this can be done at a generic manager level, but
-     * there seem to be two kinds of implementation of Managers and I don't know
-     * which is the preferred kind or why they need to be different.)
+     * a system name.
      * <p>
      * Searches each Manager for a reference to the "name".
      *
      * @param name string (name base) to look for
-     * @return 4 element String: {Type, userName, sysName, numListeners}
+     * @return 4 element String array: {Type, userName, sysName, numListeners}
      */
-    static String[] getTypeAndNames(String name) {
-        String userName = name.trim(); // N11N
-        String sysName = userName;
-        // String sysName = userName.toUpperCase();
-        boolean found = false;
-        if (log.isDebugEnabled()) {
-            log.debug("getTypeAndNames for \"" + name + "\"");
-        }
+    @Nonnull
+    static String[] getTypeAndNames(@Nonnull String name) {
+        log.debug("getTypeAndNames for \"{}\"", name);
+        
+        String[] result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(SensorManager.class), "Sensor", name);
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(TurnoutManager.class), "Turnout", name);
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(LightManager.class), "Light", name);
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(SignalHeadManager.class), "SignalHead", name);
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(ConditionalManager.class), "Conditional", name);
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(BlockManager.class), "Block", name);
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(SectionManager.class), "Section", name);  // old code has "Block" for type
+        if (result != null) return result;
+        
+        result = checkForOneTypeAndNames(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class), "OBlock", name);
+        if (result != null) return result;
+        
 
-        jmri.SensorManager sensorManager = InstanceManager.sensorManagerInstance();
-        Sensor sen = sensorManager.getBySystemName(sysName);
-        if (sen != null) {
-            userName = sen.getUserName();
-            found = true;
-        } else {
-            sen = sensorManager.getBySystemName(userName.toUpperCase());
-            if (sen != null) {
-                sysName = sen.getSystemName();
-                userName = sen.getUserName();
-                found = true;
-            } else {
-                sen = sensorManager.getByUserName(userName);
-                if (sen != null) {
-                    sysName = sen.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"Sensor", userName, sysName,
-                Integer.toString(sen.getNumPropertyChangeListeners())}); // NOI18N
-        }
-        jmri.TurnoutManager turnoutManager = InstanceManager.turnoutManagerInstance();
-        Turnout t = turnoutManager.getBySystemName(sysName);
-        if (t != null) {
-            userName = t.getUserName();
-            found = true;
-        } else {
-            t = turnoutManager.getBySystemName(userName.toUpperCase());
-            if (t != null) {
-                sysName = t.getSystemName();
-                userName = t.getUserName();
-                found = true;
-            } else {
-                t = turnoutManager.getByUserName(userName);
-                if (t != null) {
-                    sysName = t.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"Turnout", userName, sysName,
-                Integer.toString(t.getNumPropertyChangeListeners())}); // NOI18N
-        }
-
-        jmri.LightManager lightManager = InstanceManager.lightManagerInstance();
-        Light l = lightManager.getBySystemName(sysName);
-        if (l != null) {
-            userName = l.getUserName();
-            found = true;
-        } else {
-            l = lightManager.getBySystemName(userName.toUpperCase());
-            if (l != null) {
-                sysName = l.getSystemName();
-                userName = l.getUserName();
-                found = true;
-            } else {
-                l = lightManager.getByUserName(userName);
-                if (l != null) {
-                    sysName = l.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"Light", userName, sysName,
-                Integer.toString(l.getNumPropertyChangeListeners())}); // NOI18N
-        }
-
-        jmri.SignalHeadManager signalManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        SignalHead sh = signalManager.getBySystemName(sysName);
-        if (sh != null) {
-            userName = sh.getUserName();
-            found = true;
-        } else {
-            sh = signalManager.getBySystemName(userName.toUpperCase());
-            if (sh != null) {
-                sysName = sh.getSystemName();
-                userName = sh.getUserName();
-                found = true;
-            } else {
-                sh = signalManager.getByUserName(userName);
-                if (sh != null) {
-                    sysName = sh.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"SignalHead", userName, sysName,
-                Integer.toString(sh.getNumPropertyChangeListeners())}); // NOI18N
-        }
-
-        jmri.ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
-        Conditional c = cm.getBySystemName(sysName);
-        if (c != null) {
-            userName = c.getUserName();
-            found = true;
-        } else {
-            c = cm.getBySystemName(userName.toUpperCase());
-            if (c != null) {
-                sysName = c.getSystemName();
-                userName = c.getUserName();
-                found = true;
-            } else {
-                c = cm.getByUserName(userName);
-                if (c != null) {
-                    sysName = c.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"Conditional", userName, sysName,
-                Integer.toString(c.getNumPropertyChangeListeners())}); // NOI18N
-        }
-
-        jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
-        jmri.Block b = blockManager.getBySystemName(sysName);
-        if (b != null) {
-            userName = b.getUserName();
-            found = true;
-        } else {
-            b = blockManager.getBySystemName(userName.toUpperCase());
-            if (b != null) {
-                sysName = b.getSystemName();
-                userName = b.getUserName();
-                found = true;
-            } else {
-                b = blockManager.getByUserName(userName);
-                if (b != null) {
-                    sysName = b.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"Block", userName, sysName,
-                Integer.toString(b.getNumPropertyChangeListeners())}); // NOI18N
-        }
-
-        jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
-        jmri.Section sec = sectionManager.getBySystemName(sysName);
-        if (sec != null) {
-            userName = sec.getUserName();
-            found = true;
-        } else {
-            sec = sectionManager.getBySystemName(userName.toUpperCase());
-            if (sec != null) {
-                sysName = sec.getSystemName();
-                userName = sec.getUserName();
-                found = true;
-            } else {
-                sec = sectionManager.getByUserName(userName);
-                if (sec != null) {
-                    sysName = sec.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"Block", userName, sysName,
-                Integer.toString(sec.getNumPropertyChangeListeners())}); // NOI18N
-        }
-        log.warn(" No type found for " + userName + " (" + sysName + ").");
-
-        jmri.jmrit.logix.OBlockManager oBlockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-        jmri.jmrit.logix.OBlock blk = oBlockManager.getBySystemName(sysName);
-        if (sec != null) {
-            userName = blk.getUserName();
-            found = true;
-        } else {
-            blk = oBlockManager.getBySystemName(userName.toUpperCase());
-            if (blk != null) {
-                sysName = blk.getSystemName();
-                userName = blk.getUserName();
-                found = true;
-            } else {
-                blk = oBlockManager.getByUserName(userName);
-                if (blk != null) {
-                    sysName = blk.getSystemName();
-                    found = true;
-                }
-            }
-        }
-        if (found) {
-            return (new String[]{"OBlock", userName, sysName,
-                Integer.toString(blk.getNumPropertyChangeListeners())}); // NOI18N
-        }
-        log.warn(" No type found for " + userName + " (" + sysName + ").");
-
-        return (new String[]{"", userName, sysName, "0"});
+        return new String[]{"", name, name, "0"};
+        
     }
+    // captive for above
+    static private String[] checkForOneTypeAndNames( @Nonnull Manager<? extends NamedBean> manager, @Nonnull String type, @Nonnull String beanName) {
+        NamedBean bean = manager.getBeanBySystemName(beanName);
+        if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
+        
+        // special case  - check for upper case system name - not recommended, but here for historical reasons
+        bean = manager.getBeanBySystemName(beanName.toUpperCase());
+        if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
+        bean = manager.getBeanByUserName(beanName);
+        if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
+
+        return null;
+    }
+    
     /**
      * Check if a given string is either a user or a system name.
      *
@@ -1446,6 +1282,5 @@ public class Maintenance {
         dialog.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(Maintenance.class);
+    private final static Logger log = LoggerFactory.getLogger(Maintenance.class);
 }

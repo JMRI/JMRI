@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -63,10 +63,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     protected SensorManager senManager = InstanceManager.sensorManagerInstance();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setManager(@Nonnull Manager<Sensor> s) {
-        senManager = (SensorManager)s;
+        senManager = (SensorManager) s;
         if (m != null) {
             m.setManager(senManager);
         }
@@ -81,13 +83,17 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(senManager);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleSensorTable"));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
@@ -98,7 +104,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     // initially allow any 20 char string, updated by prefixBox selection
     JTextField userName = new JTextField(40);
-    JComboBox<String> prefixBox = new JComboBox<String>();
+    JComboBox<String> prefixBox = new JComboBox<>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
@@ -111,7 +117,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPressed(ActionEvent e) {
         p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -141,9 +149,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             };
             if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {
                 jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
-                List<Manager<Sensor>> managerList = proxy.getManagerList();
-                for (int x = 0; x < managerList.size(); x++) {
-                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
+                List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
+                for (Manager<Sensor> manager : managerList) {
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
                     Boolean addToPrefix = true;
                     // Simple test not to add a system with a duplicate System prefix
                     for (int i = 0; i < prefixBox.getItemCount(); i++) {
@@ -167,6 +175,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             addButton.addActionListener(createListener);
             // Define PropertyChangeListener
             colorChangeListener = new PropertyChangeListener() {
+                @Override
                 public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                     String property = propertyChangeEvent.getPropertyName();
                     if ("background".equals(property)) {
@@ -275,12 +284,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             }
 
             String user = userName.getText().trim();
-            if ((x != 0) && user != null && !user.equals("")) {
+            if ((x != 0) && !user.isEmpty()) {
                 user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
             }
-            if (user != null && !user.equals("") && (InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
+            if (!user.isEmpty() && (InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                 s.setUserName(user);
-            } else if (user != null && !user.equals("") && InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+            } else if (!user.isEmpty() && InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
             }
@@ -306,7 +315,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
-        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        p.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -329,12 +338,11 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
-            List<Manager<Sensor>> managerList = proxy.getManagerList();
+            List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-            for (int x = 0; x < managerList.size(); x++) {
-                jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
+            for (Manager<Sensor> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
-                    range.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
+                    range.setEnabled( ((SensorManager)mgr).allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxySensorManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("S add box enabled1");
@@ -385,7 +393,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         //We will allow the sensor manager to handle checking if the values have changed
         try {
-            long goingActive = Long.valueOf(activeField.getText());
+            long goingActive = Long.parseLong(activeField.getText());
             senManager.setDefaultSensorDebounceGoingActive(goingActive);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + activeField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -402,7 +410,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     protected void setDefaultState(JFrame _who) {
         String[] sensorStates = new String[]{Bundle.getMessage("BeanStateUnknown"), Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive"), Bundle.getMessage("BeanStateInconsistent")};
-        JComboBox<String> stateCombo = new JComboBox<String>(sensorStates);
+        JComboBox<String> stateCombo = new JComboBox<>(sensorStates);
         switch (jmri.managers.InternalSensorManager.getDefaultStateForNewSensors()) {
             case jmri.Sensor.ACTIVE:
                 stateCombo.setSelectedItem(Bundle.getMessage("SensorStateActive"));
@@ -479,10 +487,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             });
             int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenus before 'Window' and 'Help'
             int offset = 1;
-            log.debug("setMenuBar number of menu items = " + pos);
+            log.debug("setMenuBar number of menu items = {}", pos);
             for (int i = 0; i <= pos; i++) {
                 if (menuBar.getComponent(i) instanceof JMenu) {
-                    if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                    if (((AbstractButton) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
                         offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
                     }
                 }
@@ -510,7 +518,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     JCheckBox showPullUpBox = new JCheckBox(Bundle.getMessage("SensorPullUpCheckBox"));
     JCheckBox showStateForgetAndQueryBox = new JCheckBox(Bundle.getMessage("ShowStateForgetAndQuery"));
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
@@ -541,7 +551,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         showStateForgetAndQueryChanged();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addToPanel(AbstractTableTabAction f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
@@ -576,10 +588,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         showStateForgetAndQueryChanged();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMessagePreferencesDetails() {
-        InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
@@ -625,8 +639,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         /**
          * Validate the field information. Does not make any GUI changes.
          * <p>
-         * During validation, logging is capped at the Error level to keep the Console clean from repeated validation.
-         * This is reset to default level afterwards.
+         * During validation, logging is capped at the Error level to keep the
+         * Console clean from repeated validation. This is reset to default
+         * level afterwards.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -646,11 +661,11 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 return true;
             } else {
                 boolean validFormat = false;
-                    // try {
-                    validFormat = (InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value) == Manager.NameValidity.VALID);
-                    // } catch (jmri.JmriException e) {
-                    // use it for the status bar?
-                    // }
+                // try {
+                validFormat = (InstanceManager.sensorManagerInstance().validSystemNameFormat(prefix + "S" + value) == Manager.NameValidity.VALID);
+                // } catch (jmri.JmriException e) {
+                // use it for the status bar?
+                // }
                 if (validFormat) {
                     addButton.setEnabled(true); // directly update Create button
                     return true;
@@ -671,7 +686,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // set default background color for invalid field data
             Color mark = Color.orange;
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -690,17 +707,21 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
-                    return ((CheckedTextField) input).isValid();
+                    return input.isValid();
                 } else {
                     return false;
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JTextField source = (JTextField) e.getSource();
@@ -710,13 +731,17 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getClassName() {
         return SensorTableAction.class.getName();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");

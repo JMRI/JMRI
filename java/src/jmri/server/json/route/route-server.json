@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-route-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"route\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the route"
+        },
+        "userName": {
+            "type": ["string", "null"],
+            "description": "User name of the route"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the route"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the route",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the route",
+            "enum": [0, 2, 4, 8]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "state"]
+}

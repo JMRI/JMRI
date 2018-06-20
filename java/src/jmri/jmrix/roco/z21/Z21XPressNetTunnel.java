@@ -104,7 +104,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private XNetMessage loadChars() throws java.io.IOException {
@@ -261,7 +261,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
        try {
           sourceThread.join();
        } catch (InterruptedException ie){
-          // interrupted durring cleanup.
+          // interrupted during cleanup.
        }
     }
 

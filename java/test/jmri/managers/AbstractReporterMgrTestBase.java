@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractReporterMgrTestBase {
+public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBase<ReporterManager, Reporter> {
 
     /**
      * Max number of Reporters supported.  Override to return 1 if
@@ -33,8 +33,6 @@ public abstract class AbstractReporterMgrTestBase {
     abstract public void setUp();    	// load l with actual object; create scaffolds as needed, tag @Before
 
     abstract public String getSystemName(String i);
-
-    protected ReporterManager l = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -59,6 +57,15 @@ public abstract class AbstractReporterMgrTestBase {
     }
 
     @Test
+    public void testProvideName() {
+        // Create
+        Reporter t = l.provide("" + getNameToTest1());
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
+    }
+
+
+    @Test
     public void testReporterProvideReporter() {
         // Create
         Reporter t = l.provideReporter("" + getNameToTest1());
@@ -74,9 +81,13 @@ public abstract class AbstractReporterMgrTestBase {
     }
 
     @Test(expected=IllegalArgumentException.class)
-    @Ignore("Not currently functional")
     public void testProvideFailure() {
-        l.provideReporter("..");
+        try {
+            l.provideReporter("");
+        } catch (IllegalArgumentException ex) {
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for reporter: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          throw ex;
+        }
     }
 
     @Test

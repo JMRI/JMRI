@@ -5,13 +5,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.Enumeration;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -78,7 +77,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getValue(String name) {
         Sensor sen = senManager.getBySystemName(name);
@@ -116,7 +117,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         updateNameList();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Manager<Sensor> getManager() {
         if (senManager == null) {
@@ -125,25 +128,33 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         return senManager;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Sensor getBySystemName(String name) {
         return senManager.getBySystemName(name);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Sensor getByUserName(String name) {
         return InstanceManager.getDefault(SensorManager.class).getByUserName(name);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getMasterClassName() {
         return getClassName();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void clickOn(Sensor t) {
         try {
@@ -154,101 +165,113 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 t.setKnownState(Sensor.INACTIVE);
             }
         } catch (JmriException e) {
-            log.warn("Error setting state: " + e);
+            log.warn("Error setting state", e);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnCount() {
         return QUERYCOL + getPropertyColumnCount() + 1;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getColumnName(int col) {
-        switch(col) {
-           case INVERTCOL:
-              return Bundle.getMessage("Inverted");
-           case EDITCOL:
-              return "";
-           case USEGLOBALDELAY:
-              return Bundle.getMessage("SensorUseGlobalDebounce");
-           case ACTIVEDELAY:
-              return Bundle.getMessage("SensorActiveDebounce");
-           case INACTIVEDELAY:
-              return Bundle.getMessage("SensorInActiveDebounce");
-           case PULLUPCOL:
-              return Bundle.getMessage("SensorPullUp");
-           case FORGETCOL:
-              return Bundle.getMessage("StateForgetHeader");
-           case QUERYCOL:
-              return Bundle.getMessage("StateQueryHeader");
-           default:
-              return super.getColumnName(col);
+        switch (col) {
+            case INVERTCOL:
+                return Bundle.getMessage("Inverted");
+            case EDITCOL:
+                return "";
+            case USEGLOBALDELAY:
+                return Bundle.getMessage("SensorUseGlobalDebounce");
+            case ACTIVEDELAY:
+                return Bundle.getMessage("SensorActiveDebounce");
+            case INACTIVEDELAY:
+                return Bundle.getMessage("SensorInActiveDebounce");
+            case PULLUPCOL:
+                return Bundle.getMessage("SensorPullUp");
+            case FORGETCOL:
+                return Bundle.getMessage("StateForgetHeader");
+            case QUERYCOL:
+                return Bundle.getMessage("StateQueryHeader");
+            default:
+                return super.getColumnName(col);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Class<?> getColumnClass(int col) {
-        switch(col) {
-           case INVERTCOL:
-              return Boolean.class;
-           case EDITCOL:
-              return JButton.class;
-           case USEGLOBALDELAY:
-              return Boolean.class;
-           case ACTIVEDELAY:
-              return String.class;
-           case INACTIVEDELAY:
-              return String.class;
-           case PULLUPCOL:
-              return JComboBox.class;
-           case FORGETCOL:
-               return JButton.class;
-           case QUERYCOL:
-               return JButton.class;
-           case VALUECOL:
-               if (_graphicState) {
+        switch (col) {
+            case INVERTCOL:
+                return Boolean.class;
+            case EDITCOL:
+                return JButton.class;
+            case USEGLOBALDELAY:
+                return Boolean.class;
+            case ACTIVEDELAY:
+                return String.class;
+            case INACTIVEDELAY:
+                return String.class;
+            case PULLUPCOL:
+                return JComboBox.class;
+            case FORGETCOL:
+                return JButton.class;
+            case QUERYCOL:
+                return JButton.class;
+            case VALUECOL:
+                if (_graphicState) {
                     return JLabel.class; // use an image to show sensor state
-               } else {
+                } else {
                     return super.getColumnClass(col);
-               }
-           default:
-              return super.getColumnClass(col);
+                }
+            default:
+                return super.getColumnClass(col);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getPreferredWidth(int col) {
-        if (col == INVERTCOL) {
-            return new JTextField(4).getPreferredSize().width;
-        }
-        if (col == USEGLOBALDELAY || col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            return new JTextField(8).getPreferredSize().width;
-        }
-        if (col == EDITCOL) {
-            return new JTextField(7).getPreferredSize().width;
-        } else if (col == FORGETCOL) {
-            return new JButton(Bundle.getMessage("StateForgetButton"))
-                    .getPreferredSize().width;
-        } else if (col == QUERYCOL) {
-            return new JButton(Bundle.getMessage("StateQueryButton"))
-                    .getPreferredSize()
-                    .width;
-        } else {
-            return super.getPreferredWidth(col);
+        switch (col) {
+            case INVERTCOL:
+                return new JTextField(4).getPreferredSize().width;
+            case USEGLOBALDELAY:
+            case ACTIVEDELAY:
+            case INACTIVEDELAY:
+                return new JTextField(8).getPreferredSize().width;
+            case EDITCOL:
+                return new JTextField(7).getPreferredSize().width;
+            case FORGETCOL:
+                return new JButton(Bundle.getMessage("StateForgetButton"))
+                        .getPreferredSize().width;
+            case QUERYCOL:
+                return new JButton(Bundle.getMessage("StateQueryButton"))
+                        .getPreferredSize().width;
+            default:
+                return super.getPreferredWidth(col);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         String name = sysNameList.get(row);
         Sensor sen = senManager.getBySystemName(name);
-        if (sen == null) return false;
+        if (sen == null) {
+            return false;
+        }
         if (col == INVERTCOL) {
             return sen.canInvert();
         }
@@ -260,11 +283,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         }
         //Need to do something here to make it disable
         if (col == ACTIVEDELAY || col == INACTIVEDELAY) {
-            if (sen.getUseDefaultTimerSettings()) {
-                return false;
-            } else {
-                return true;
-            }
+            return !sen.getUseDefaultTimerSettings();
         }
         if (col == PULLUPCOL) {
             return (senManager.isPullResistanceConfigurable());
@@ -278,7 +297,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         return super.isCellEditable(row, col);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getValueAt(int row, int col) {
         if (row >= sysNameList.size()) {
@@ -291,38 +312,36 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             log.debug("error null sensor!");
             return "error";
         }
-        if (col == INVERTCOL) {
-            boolean val = s.getInverted();
-            return Boolean.valueOf(val);
-        } else if (col == USEGLOBALDELAY) {
-            boolean val = s.getUseDefaultTimerSettings();
-            return Boolean.valueOf(val);
-        } else if (col == ACTIVEDELAY) {
-            return s.getSensorDebounceGoingActiveTimer();
-        } else if (col == INACTIVEDELAY) {
-            return s.getSensorDebounceGoingInActiveTimer();
-        } else if (col == EDITCOL) {
-            return Bundle.getMessage("ButtonEdit");
-        } else if (col == PULLUPCOL) {
-            JComboBox<Sensor.PullResistance> c = new JComboBox<Sensor.PullResistance>(Sensor.PullResistance.values());
-            c.setSelectedItem(s.getPullResistance());
-            c.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                   comboBoxAction(e);
-                }
-            });
-            return c;
-        } else if (col == FORGETCOL) {
-            return Bundle.getMessage("StateForgetButton");
-        } else if (col == QUERYCOL) {
-            return Bundle.getMessage("StateQueryButton");
-        } else {
-            return super.getValueAt(row, col);
+        switch (col) {
+            case INVERTCOL:
+                return s.getInverted();
+            case USEGLOBALDELAY:
+                return s.getUseDefaultTimerSettings();
+            case ACTIVEDELAY:
+                return s.getSensorDebounceGoingActiveTimer();
+            case INACTIVEDELAY:
+                return s.getSensorDebounceGoingInActiveTimer();
+            case EDITCOL:
+                return Bundle.getMessage("ButtonEdit");
+            case PULLUPCOL:
+                JComboBox<Sensor.PullResistance> c = new JComboBox<>(Sensor.PullResistance.values());
+                c.setSelectedItem(s.getPullResistance());
+                c.addActionListener((ActionEvent e) -> {
+                    comboBoxAction(e);
+                });
+                return c;
+            case FORGETCOL:
+                return Bundle.getMessage("StateForgetButton");
+            case QUERYCOL:
+                return Bundle.getMessage("StateQueryButton");
+            default:
+                return super.getValueAt(row, col);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (row >= sysNameList.size()) {
@@ -335,71 +354,72 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             log.debug("error null sensor!");
             return;
         }
-        if (col == INVERTCOL) {
-            boolean b = ((Boolean) value).booleanValue();
-            s.setInverted(b);
-        } else if (col == USEGLOBALDELAY) {
-            boolean b = ((Boolean) value).booleanValue();
-            s.setUseDefaultTimerSettings(b);
-        } else if (col == ACTIVEDELAY) {
-            String val = (String) value;
-            long goingActive = Long.valueOf(val);
-            s.setSensorDebounceGoingActiveTimer(goingActive);
-        } else if (col == INACTIVEDELAY) {
-            String val = (String) value;
-            long goingInActive = Long.valueOf(val);
-            s.setSensorDebounceGoingInActiveTimer(goingInActive);
-        } else if (col == EDITCOL) {
-            class WindowMaker implements Runnable {
-
-                Sensor s;
-
-                WindowMaker(Sensor s) {
-                    this.s = s;
-                }
-
-                @Override
-                public void run() {
+        switch (col) {
+            case INVERTCOL:
+                s.setInverted(((Boolean) value));
+                break;
+            case USEGLOBALDELAY:
+                s.setUseDefaultTimerSettings(((Boolean) value));
+                break;
+            case ACTIVEDELAY:
+                s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                break;
+            case INACTIVEDELAY:
+                s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                break;
+            case EDITCOL:
+                javax.swing.SwingUtilities.invokeLater(() -> {
                     editButton(s);
+                });
+                break;
+            case PULLUPCOL:
+                JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
+                s.setPullResistance((Sensor.PullResistance) cb.getSelectedItem());
+                break;
+            case FORGETCOL:
+                try {
+                    s.setKnownState(Sensor.UNKNOWN);
+                } catch (JmriException e) {
+                    log.warn("Failed to set state to UNKNOWN: ", e);
                 }
-            }
-            WindowMaker w = new WindowMaker(s);
-            javax.swing.SwingUtilities.invokeLater(w);
-        } else if (col == PULLUPCOL) {
-            JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
-            s.setPullResistance((Sensor.PullResistance)cb.getSelectedItem());
-        } else if (col == FORGETCOL) {
-            try {
-                s.setKnownState(Sensor.UNKNOWN);
-            } catch (JmriException e) {
-                log.warn("Failed to set state to UNKNOWN: ", e);
-            }
-        } else if (col == QUERYCOL) {
-            try {
-                s.setKnownState(Sensor.UNKNOWN);
-            } catch (JmriException e) {
-                log.warn("Failed to set state to UNKNOWN: ", e);
-            }
-            s.requestUpdateFromLayout();
-        } else if (col == VALUECOL && _graphicState) { // respond to clicking on ImageIconRenderer CellEditor
-            clickOn(s);
-            fireTableRowsUpdated(row, row);
-        } else {
-            super.setValueAt(value, row, col);
+                break;
+            case QUERYCOL:
+                try {
+                    s.setKnownState(Sensor.UNKNOWN);
+                } catch (JmriException e) {
+                    log.warn("Failed to set state to UNKNOWN: ", e);
+                }
+                s.requestUpdateFromLayout();
+                break;
+            case VALUECOL:
+                if (_graphicState) { // respond to clicking on ImageIconRenderer CellEditor
+                    clickOn(s);
+                    fireTableRowsUpdated(row, row);
+                } else {
+                    super.setValueAt(value, row, col);
+                }
+                break;
+            default:
+                super.setValueAt(value, row, col);
+                break;
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getBeanType() {
         return Bundle.getMessage("BeanNameSensor");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        if ((e.getPropertyName().indexOf("inverted") >= 0) || (e.getPropertyName().indexOf("GlobalTimer") >= 0)
-                || (e.getPropertyName().indexOf("ActiveTimer") >= 0) || (e.getPropertyName().indexOf("InActiveTimer") >= 0)) {
+        if ((e.getPropertyName().contains("inverted")) || (e.getPropertyName().contains("GlobalTimer"))
+                || (e.getPropertyName().contains("ActiveTimer")) || (e.getPropertyName().contains("InActiveTimer"))) {
             return true;
         } else {
             return super.matchPropertyName(e);
@@ -407,9 +427,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     }
 
     /**
-     * Customize the sensor table Value (State) column to show an appropriate graphic for the sensor state
-     * if _graphicState = true, or (default) just show the localized state text
-     * when the TableDataModel is being called from ListedTableAction.
+     * Customize the sensor table Value (State) column to show an appropriate
+     * graphic for the sensor state if _graphicState = true, or (default) just
+     * show the localized state text when the TableDataModel is being called
+     * from ListedTableAction.
      *
      * @param table a JTable of Sensors
      */
@@ -418,7 +439,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         // have the value column hold a JPanel (icon)
         //setColumnToHoldButton(table, VALUECOL, new JLabel("1234")); // for small round icon, but cannot be converted to JButton
         // add extras, override BeanTableDataModel
-        log.debug("Sensor configValueColumn (I am {})", super.toString());
+        log.debug("Sensor configValueColumn (I am {})", this);
         if (_graphicState) { // load icons, only once
             table.setDefaultEditor(JLabel.class, new ImageIconRenderer()); // editor
             table.setDefaultRenderer(JLabel.class, new ImageIconRenderer()); // item class copied from SwitchboardEditor panel
@@ -429,8 +450,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
 
     /**
      * Visualize state in table as a graphic, customized for Sensors (2 states).
-     * Renderer and Editor are identical, as the cell contents are not actually edited,
-     * only used to toggle state using {@link #clickOn(NamedBean)}.
+     * Renderer and Editor are identical, as the cell contents are not actually
+     * edited, only used to toggle state using {@link #clickOn(NamedBean)}.
+     *
      * @see jmri.jmrit.beantable.BlockTableAction#createModel()
      * @see jmri.jmrit.beantable.LightTableAction#createModel()
      * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
@@ -448,7 +470,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         protected ImageIcon offIcon;
         protected int iconHeight = -1;
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Component getTableCellRendererComponent(
                 JTable table, Object value, boolean isSelected,
@@ -461,7 +485,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             return updateLabel((String) value, row);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Component getTableCellEditorComponent(
                 JTable table, Object value, boolean isSelected,
@@ -501,11 +527,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 iconHeight = 0;
             }
             label.setToolTipText(value);
-            label.addMouseListener (new MouseAdapter ()
-            {
+            label.addMouseListener(new MouseAdapter() {
                 @Override
-                public final void mousePressed (MouseEvent evt)
-                {
+                public final void mousePressed(MouseEvent evt) {
                     log.debug("Clicked on icon in row {}", row);
                     stopCellEditing();
                 }
@@ -513,15 +537,18 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             return label;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Object getCellEditorValue() {
-            log.debug("getCellEditorValue, me = {})", this.toString());
+            log.debug("getCellEditorValue, me = {})", this);
             return this.toString();
         }
 
         /**
          * Read and buffer graphics. Only called once for this table.
+         *
          * @see #getTableCellEditorComponent(JTable, Object, boolean, int, int)
          */
         protected void loadIcons() {
@@ -544,7 +571,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
 
     } // end of ImageIconRenderer class
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void configureTable(JTable table) {
         this.table = table;
@@ -593,18 +622,41 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     }
 
 //    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-
     public String getClassDescription() {
         return Bundle.getMessage("TitleSensorTable");
     }
 
     public void comboBoxAction(ActionEvent e) {
-       if (log.isDebugEnabled()) {
-          log.debug("Combobox change");
-       }
-       if (table != null && table.getCellEditor() != null) {
-          table.getCellEditor().stopCellEditing();
-       }
+        if (log.isDebugEnabled()) {
+            log.debug("Combobox change");
+        }
+        if (table != null && table.getCellEditor() != null) {
+            table.getCellEditor().stopCellEditing();
+        }
+    }
+
+    @Override
+    protected void setColumnIdentities(JTable table) {
+        super.setColumnIdentities(table);
+        Enumeration<TableColumn> columns;
+        if (table.getColumnModel() instanceof XTableColumnModel) {
+            columns = ((XTableColumnModel) table.getColumnModel()).getColumns(false);
+        } else {
+            columns = table.getColumnModel().getColumns();
+        }
+        while (columns.hasMoreElements()) {
+            TableColumn column = columns.nextElement();
+            switch (column.getModelIndex()) {
+                case FORGETCOL:
+                    column.setIdentifier("ForgetState");
+                    break;
+                case QUERYCOL:
+                    column.setIdentifier("QueryState");
+                    break;
+                default:
+                // use existing value
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableDataModel.class);

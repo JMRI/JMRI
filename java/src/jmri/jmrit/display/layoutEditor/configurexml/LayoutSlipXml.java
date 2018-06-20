@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutSlipXml extends AbstractXmlAdapter {
 

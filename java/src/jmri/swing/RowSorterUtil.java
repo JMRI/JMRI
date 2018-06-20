@@ -76,12 +76,13 @@ public final class RowSorterUtil {
             @Override
             public void sorterChanged(RowSorterEvent e) {
                 if (e.getType().equals(RowSorterEvent.Type.SORT_ORDER_CHANGED)) {
-                    List<? extends SortKey> newSortKeys = new ArrayList<>(e.getSource().getSortKeys());
+                    RowSorter<?> source = e.getSource();
+                    List<? extends SortKey> newSortKeys = new ArrayList<>(source.getSortKeys());
                     newSortKeys.removeAll(priorSortKeys);
                     if (!newSortKeys.isEmpty()) {
                         priorSortKeys = newSortKeys;
-                        e.getSource().setSortKeys(priorSortKeys);
-                        e.getSource().allRowsChanged();
+                        source.setSortKeys(priorSortKeys);
+                        source.allRowsChanged();
                     }
                 }
             }

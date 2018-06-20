@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialPortController;
+import jmri.jmrix.grapevine.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -25,19 +26,25 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     SerialPort activeSerialPort = null;
 
+    /**
+     * Create a new SerialDriverAdapter.
+     */
     public SerialDriverAdapter() {
         // needs to provide a SystemConnectionMemo
         super(new GrapevineSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = (SerialPort) portID.open(appName, 2000); // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -45,15 +52,16 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set timeout; no framing in Grapevine
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}",
+                        activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: " + et);
             }
@@ -78,8 +86,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug("port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -90,7 +98,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
+            log.error("Unexpected exception while opening port {}: ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -98,23 +106,35 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Can the port accept additional characters? Yes, always
+     * Can the port accept additional characters?
+     *
+     * @return Yes, always
      */
     public boolean okToSend() {
         return true;
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
+        log.debug("SerialDriverAdapter configure() with prefix = {}", this.getSystemConnectionMemo().getSystemPrefix());
         // connect to the traffic controller
-        ((GrapevineSystemConnectionMemo)getSystemConnectionMemo()).getTrafficController().connectPort(this);
-        ((GrapevineSystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
+        SerialTrafficController control = new SerialTrafficController(this.getSystemConnectionMemo());
+        control.connectPort(this);
+        control.setSystemConnectionMemo(this.getSystemConnectionMemo());
+        log.debug("SimulatorAdapter configure() set tc for memo {}", getSystemConnectionMemo().getUserName());
+        this.getSystemConnectionMemo().setTrafficController(control);
+        // do the common manager config
+        getSystemConnectionMemo().configureManagers();
     }
 
     // base class methods for the SerialPortController interface
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -124,6 +144,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -132,18 +155,21 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -171,12 +197,12 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
+        log.debug("configureBaudRate: {}", rate);
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"38,400 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{38400};
     protected String selectedSpeed = validSpeeds[0];
 
@@ -184,11 +210,12 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.11.3 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
+        return null;
     }
     static SerialDriverAdapter mInstance = null;
 

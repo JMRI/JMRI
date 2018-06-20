@@ -17,21 +17,21 @@ public class TrainManagerTest extends OperationsTestCase {
 
     // test train manager
     public void testTrainManager() {
-        TrainManager manager = InstanceManager.getDefault(TrainManager.class);
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
         // test defaults
-        Assert.assertTrue("Build Messages", manager.isBuildMessagesEnabled());
-        Assert.assertFalse("Build Reports", manager.isBuildReportEnabled());
-        Assert.assertFalse("Print Preview", manager.isPrintPreviewEnabled());
+        Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
+        Assert.assertFalse("Build Reports", tmanager.isBuildReportEnabled());
+        Assert.assertFalse("Print Preview", tmanager.isPrintPreviewEnabled());
 
         // Swap them
-        manager.setBuildMessagesEnabled(false);
-        manager.setBuildReportEnabled(true);
-        manager.setPrintPreviewEnabled(true);
+        tmanager.setBuildMessagesEnabled(false);
+        tmanager.setBuildReportEnabled(true);
+        tmanager.setPrintPreviewEnabled(true);
 
-        Assert.assertFalse("Build Messages", manager.isBuildMessagesEnabled());
-        Assert.assertTrue("Build Reports", manager.isBuildReportEnabled());
-        Assert.assertTrue("Print Preview", manager.isPrintPreviewEnabled());
+        Assert.assertFalse("Build Messages", tmanager.isBuildMessagesEnabled());
+        Assert.assertTrue("Build Reports", tmanager.isBuildReportEnabled());
+        Assert.assertTrue("Print Preview", tmanager.isPrintPreviewEnabled());
 
     }
 

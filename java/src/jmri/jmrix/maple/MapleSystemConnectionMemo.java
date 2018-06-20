@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Minimum required SystemConnectionMemo for Maple.
+ * Expanded for multichar/multiconnection support.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
@@ -56,6 +57,11 @@ public class MapleSystemConnectionMemo extends SystemConnectionMemo {
         return tc;
     }
 
+    /**
+     * Provide menu strings.
+     *
+     * @return null as there is no menu for Maple connections
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
@@ -63,8 +69,11 @@ public class MapleSystemConnectionMemo extends SystemConnectionMemo {
 
     public void configureManagers(){
         setTurnoutManager(new SerialTurnoutManager(this));
+        InstanceManager.setTurnoutManager(getTurnoutManager());
         setLightManager(new SerialLightManager(this));
+        InstanceManager.setLightManager(getLightManager());
         setSensorManager(new SerialSensorManager(this));
+        InstanceManager.setSensorManager(getSensorManager());
     }
 
     /**
@@ -145,6 +154,8 @@ public class MapleSystemConnectionMemo extends SystemConnectionMemo {
         }
         return super.get(T);
     }
+
+    // no dispose() for Maple
 
     private final static Logger log = LoggerFactory.getLogger(MapleSystemConnectionMemo.class);
 

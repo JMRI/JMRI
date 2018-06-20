@@ -23,7 +23,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -370,15 +370,16 @@ name space:
       </ol>We need to understand how the developers of Jython
       intended this to be done.
 
-      <h3>Termination</h3>
+    <h3>Termination</h3>
       <p>Once the JMRI main thread (or Swing GUI
       thread?) has started, ^D is not sufficient to exist the
       program. You have to select "Quit" from the actual file menu,
       or ^C the program.</p>
 
       <p>It would be good to understand what's preventing the
-      program from stopping when it gets the <pre>^D</pre>.</p>
-      <!--#include virtual="/Footer" -->
+      program from stopping when it gets the <code>^D</code>.</p>
+      
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

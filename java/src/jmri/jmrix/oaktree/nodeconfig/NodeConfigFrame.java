@@ -7,6 +7,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.SerialNode;
@@ -15,14 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user configuration of serial nodes
+ * Frame for user configuration of OakTree serial nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
+    protected JSpinner nodeAddrSpinner;
     protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
     protected javax.swing.JComboBox<String> nodeTypeBox;
 
@@ -59,7 +61,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * Constructor method
      */
     public NodeConfigFrame(OakTreeSystemConnectionMemo memo) {
-
         super();
         _memo = memo;
 
@@ -67,11 +68,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Initialize the config window
+     * Initialize the config window.
      */
     @Override
     public void initComponents() {
-        setTitle(Bundle.getMessage("WindowTitle"));
+        setTitle(Bundle.getMessage("ConfigNodesTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -84,9 +85,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
         panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
-        panel11.add(nodeAddrField);
-        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
-        nodeAddrField.setText("0");
+        nodeAddrSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 255, 1)); // start value 1, as 0 causes NPE upan [Add Node]
+        panel11.add(nodeAddrSpinner);
+        nodeAddrSpinner.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   " + Bundle.getMessage("LabelNodeType") + " "));
@@ -198,7 +199,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle add button
+     * Handle Add button
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -209,8 +210,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get a SerialNode corresponding to this node address if one exists
         curNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode != null) {
-            statusText1.setText(Bundle.getMessage("Error1") + Integer.toString(nodeAddress)
-                    + Bundle.getMessage("Error2"));
+            statusText1.setText(Bundle.getMessage("Error1", Integer.toString(nodeAddress)));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -219,7 +219,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeType = nodeTypeBox.getSelectedIndex();
 
         // all ready, create the new node
-        curNode = new SerialNode(nodeAddress, nodeType,_memo);
+        curNode = new SerialNode(nodeAddress, nodeType, _memo);
         if (curNode == null) {
             statusText1.setText(Bundle.getMessage("Error3"));
             statusText1.setVisible(true);
@@ -230,9 +230,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // configure the new node
         setNodeParameters();
+        log.debug("config node {} ready", nodeAddress);
         // register any orphan sensors that this node may have
         ((SerialSensorManager)_memo.getSensorManager()).registerSensorsForNode(curNode);
-        // reset after succefully adding node
+        // reset after succesfully adding node
         resetNotes();
         changedNode = true;
         // provide user feedback
@@ -242,7 +243,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle edit button
+     * Handle Edit button
      */
     public void editButtonActionPerformed() {
         // Find Serial Node address
@@ -261,7 +262,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // Set up static node address
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
-        nodeAddrField.setVisible(false);
+        nodeAddrSpinner.setVisible(false);
         nodeAddrStatic.setVisible(true);
         // get information for this node and set up combo box
         nodeType = curNode.getNodeType();
@@ -281,7 +282,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle delete button
+     * Handle Delete button
      */
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
@@ -319,7 +320,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle done button
+     * Handle Done button
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
@@ -333,13 +334,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             doneButton.setVisible(true);
             updateButton.setVisible(false);
             cancelButton.setVisible(false);
-            nodeAddrField.setVisible(true);
+            nodeAddrSpinner.setVisible(true);
             nodeAddrStatic.setVisible(false);
         }
         if (changedNode) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
@@ -348,7 +349,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle update button
+     * Handle Update button
      */
     public void updateButtonActionPerformed() {
         // update node information
@@ -371,7 +372,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
         // make node address editable again 
-        nodeAddrField.setVisible(true);
+        nodeAddrSpinner.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
         statusText2.setText(stdStatus2);
@@ -383,7 +384,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle cancel button
+     * Handle Cancel button
      */
     public void cancelButtonActionPerformed() {
         // Reset 
@@ -397,7 +398,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
         // make node address editable again 
-        nodeAddrField.setVisible(true);
+        nodeAddrSpinner.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
         statusText1.setText(stdStatus1);
@@ -414,7 +415,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to set node parameters The node must exist, and be in 'curNode'
+     * Set node parameters. The node must exist, and be in 'curNode'
      * Also, the node type must be set and in 'nodeType'
      */
     void setNodeParameters() {
@@ -454,28 +455,13 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address and check for legal range If successful, a node address
-     * in the range 0-255 is returned. If not successful, -1 is returned and an
-     * appropriate error message is placed in statusText1.
+     * Read node address and check for legal range, If successful, a node address
+     * in the range 0-255 is returned. Note address 0 causes an NPE when clicking Add!
      */
     private int readNodeAddress() {
         int addr = -1;
-        try {
-            addr = Integer.parseInt(nodeAddrField.getText());
-        } catch (Exception e) {
-            statusText1.setText(Bundle.getMessage("Error5"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
-        }
-        if ((addr < 0) || (addr > 255)) {
-            statusText1.setText(Bundle.getMessage("Error6"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
-        }
+        addr = (Integer) nodeAddrSpinner.getValue();
+        log.debug("addr = {}", addr);
         return (addr);
     }
 

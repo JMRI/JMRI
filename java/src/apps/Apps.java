@@ -84,6 +84,7 @@ import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.Log4JUtil;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.swing.FontComboUtil;
@@ -245,6 +246,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             file = singleConfig;
         }
+        
+        // ensure the UserPreferencesManager has loaded. Done on GUI
+        // thread as it can modify GUI objects
+        ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        });
+        
+        // now (attempt to) load the config file
         log.debug("Using config file(s) {}", file.getPath());
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
@@ -524,7 +533,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         systemsMenu(menuBar, wi);
         scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi);
-        menuBar.add(new WindowMenu(wi)); // * GT 28-AUG-2008 Added window menu
+        menuBar.add(new WindowMenu(wi));
         helpMenu(menuBar, wi);
         log.debug("end building menus");
     }
@@ -658,6 +667,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
+
+        d.add(new JSeparator());
+        d.add(new apps.TrainCrew.InstallFromURL());
+        
+        // add final to menu bar
         menuBar.add(d);
 
     }
@@ -1081,6 +1095,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Create menu categories and add to the menu bar, add actions to menus
         containedPane.createMenus(containedPane.menuBar, wi);
+        // connect Help target now that globalHelpBroker has been instantiated
+        containedPane.attachHelp();
 
         // invoke plugin, if any
         JmriPlugin.start(frame, containedPane.menuBar);
@@ -1211,5 +1227,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
+    /**
+     * Attach Help target to Help button on Main Screen.
+     */
+    protected void attachHelp() {
+    }
+
     private final static Logger log = LoggerFactory.getLogger(Apps.class);
+
 }

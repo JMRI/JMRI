@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -73,7 +74,7 @@
       model shown below.</p>
 
       <p><a href="./images/TurnoutSignalModel.gif"><img src=
-      "./images/TurnoutSignalModel.gif" align="center" width="225"
+      "./images/TurnoutSignalModel.gif" width="225"
       height="75" hspace="0" vspace="0"></a></p>
 
       <p>If a signal head is entered for <b>Throat - Diverging</b>,
@@ -164,7 +165,9 @@
       Layout Editor's <b>Tools</b> menu.</p>
 
       <p><b>Please remember to save your panel after using this
-      tool.</b></p><!--#include virtual="/Footer" -->
+      tool.</b></p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

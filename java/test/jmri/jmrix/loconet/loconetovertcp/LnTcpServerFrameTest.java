@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,6 +16,9 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class LnTcpServerFrameTest {
+
+    private LocoNetInterfaceScaffold lnis;
+    private LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testGetDefault() {
@@ -35,8 +40,16 @@ public class LnTcpServerFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        memo = new LocoNetSystemConnectionMemo();
+        lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        lnis = null;
+        memo.dispose();
+        JUnitUtil.tearDown();
+    }
+
 }

@@ -1,7 +1,9 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.FontMetrics;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -26,10 +28,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DragJLabel;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
@@ -44,15 +46,15 @@ import org.slf4j.LoggerFactory;
  * Does NOT use IconDialog class to add, replace or delete icons.
  * @see ItemPanel palette class diagram
  */
-public class IconItemPanel extends ItemPanel implements MouseListener {
+public class IconItemPanel extends ItemPanel {
 
     HashMap<String, NamedIcon> _iconMap;
     HashMap<String, NamedIcon> _tmpIconMap;
     ImagePanel _iconPanel;
     JButton _catalogButton;
+    JButton _deleteIconButton;
     CatalogPanel _catalog;
-    JLabel _selectedIcon;
-    JButton deleteIconButton;
+    IconDisplayPanel _selectedIcon;
     protected int _level = Editor.ICONS; // sub classes can override (e.g. Background)
 
     /**
@@ -70,27 +72,35 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     @Override
     public void init() {
         if (!_initialized) {
-            Thread.yield();
-            init(false);
-            setSize(getPreferredSize());
+            add(instructions());
+            initIconFamiliesPanel();
+            initLinkPanel();
+            makeBottomPanel(null);
+            _catalog = makeCatalog();
+            add(_catalog);
             super.init();
         }
     }
 
-    public void init(boolean isBackGround) {
-        add(instructions(isBackGround));
+    /**
+     * Init for update of existing palette item type.
+     * _bottom3Panel has an [Update Panel] button put onto _bottom1Panel.
+     *
+     * @param doneAction doneAction
+     */
+    @Override
+    public void init(ActionListener doneAction) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
+        _update = true;
+        _suppressDragging = true; // no dragging when updating
+        add(new JLabel(Bundle.getMessage("ToUpdateIcon", Bundle.getMessage("updateButton"))));
         initIconFamiliesPanel();
-        if (!isBackGround) {
-            initLinkPanel();
-        }
-        initButtonPanel();
-        _catalog = CatalogPanel.makeDefaultCatalog();
+        makeBottomPanel(doneAction);
+        _catalog = makeCatalog();
         add(_catalog);
-        _catalog.setVisible(false);
-        _catalog.setToolTipText(Bundle.getMessage("ToolTipDragCatalog"));
     }
 
-    protected JPanel instructions(boolean isBackGround) {
+    protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
@@ -98,19 +108,35 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
         blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog", Bundle.getMessage("ButtonShowCatalog"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify")));
-        blurb.add(new JLabel(Bundle.getMessage("ToChangeName")));
-        blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", Bundle.getMessage("deleteIcon"))));
-        if (!isBackGround) {
-            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", Bundle.getMessage("Icon"))));
-            blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
-            blurb.add(new JLabel(Bundle.getMessage("enterURL")));
-        }
+        blurb.add(new JLabel(Bundle.getMessage("ToSelectIcon")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
         return panel;
+    }
+
+    private CatalogPanel makeCatalog() {
+        CatalogPanel catalog = CatalogPanel.makeDefaultCatalog(false, false, !_update);
+        ImagePanel panel = catalog.getPreviewPanel();
+        if (!isUpdate()) {
+            panel.setImage(_backgrounds[getParentFrame().getPreviewBg()]);
+        } else {
+            panel.setImage(_backgrounds[0]);   //update always should be the panel background
+            catalog.setParent(this);
+        }
+        catalog.setToolTipText(Bundle.getMessage("ToolTipDragCatalog"));
+        catalog.setVisible(false);
+        return catalog;
+    }
+
+    @Override
+    protected void setPreviewBg(int index) {
+        if (_catalog != null) {
+            ImagePanel iconPanel = _catalog.getPreviewPanel();
+            if (iconPanel != null) {
+                iconPanel.setImage(_backgrounds[index]);
+            }
+        }
     }
 
     /**
@@ -118,6 +144,13 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * Override for plain icon {@literal &} background and put all icons here.
      */
     protected void initIconFamiliesPanel() {
+        if (_iconPanel == null) { // create a new one
+            _iconPanel = new ImagePanel();
+            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+            add(makePreviewPanel(_iconPanel, null), 1);
+            _iconPanel.addMouseListener(new IconListener());
+        }
+
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
             if (families.size() != 1) {
@@ -141,75 +174,35 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
      * @param iconMap set of icons to add to panel
      */
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        updateBackgrounds(); // create array of backgrounds
 
-        if (_iconPanel == null) { // create a new one
+        if (_iconPanel == null) {
             _iconPanel = new ImagePanel();
-            _iconPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1),
-                    Bundle.getMessage("PreviewBorderTitle")));
-        } else { // clear existing to keep connection to combo
+            add(makePreviewPanel(_iconPanel, null), 1);            
+            log.error("setFamily called with _iconPanel == null typs= {}", _itemType);
+       } else {
             _iconPanel.removeAll();
         }
-        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
-
-        JPanel iPanel = new JPanel();
-        iPanel.setOpaque(false);
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
-            JPanel panel = new JPanel();
-            panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
-            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                    borderName));
-            try {
-                JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
-                label.setOpaque(false);
-                label.setName(borderName);
-                label.setToolTipText(icon.getName());
-                panel.add(label);
-                if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
-                    label.setText(Bundle.getMessage("invisibleIcon"));
-                    label.setForeground(Color.lightGray);
-                } else {
-                    icon.reduceTo(50, 80, 0.2);
-                }
-                label.setIcon(icon);
-                int width = Math.max(100, panel.getPreferredSize().width);
-                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-            } catch (java.lang.ClassNotFoundException cnfe) {
-                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
-            }
-            iPanel.add(panel);
+            IconDisplayPanel panel = new IconDisplayPanel(borderName, icon);
+            _iconPanel.add(panel);
         }
-        _iconPanel.add(iPanel);
-        add(_iconPanel, 1);
-        _iconPanel.addMouseListener(this);
+//        _iconPanel.setPreferredSize(new Dimension((iconMap.size()+1)*100, 100));
     }
 
     @Override
     protected void setEditor(Editor ed) {
         super.setEditor(ed);
         if (_initialized) {
-            removeIconFamiliesPanel(); // clean up by replacing
             addIconsToPanel(_iconMap);
-        }
-    }
-
-    /*
-     * For plain icons and backgrounds, families panel is the icon panel of just one family.
-     */
-    protected void removeIconFamiliesPanel() {
-        if (_iconPanel != null) {
-            _iconPanel.removeMouseListener(this);
-            remove(_iconPanel);
         }
     }
 
     protected void updateFamiliesPanel() {
         log.debug("updateFamiliesPanel for {}", _itemType);
-        removeIconFamiliesPanel();
         initIconFamiliesPanel();
         validate();
     }
@@ -217,7 +210,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     /**
      * SOUTH Panel
      */
-    public void initButtonPanel() {
+    private void makeBottomPanel(ActionListener doneAction) {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
 
@@ -228,51 +221,84 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                 if (_catalog.isVisible()) {
                     hideCatalog();
                 } else {
-                    _catalog.setVisible(true);
-                    _catalogButton.setText(Bundle.getMessage("HideCatalog"));
+                    showCatalog();
                 }
-                repaint();
             }
         });
         _catalogButton.setToolTipText(Bundle.getMessage("ToolTipCatalog"));
         bottomPanel.add(_catalogButton);
 
-        JButton addIconButton = new JButton(Bundle.getMessage("addIcon"));
-        addIconButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addNewIcon();
-            }
-        });
-        addIconButton.setToolTipText(Bundle.getMessage("ToolTipAddIcon"));
-        bottomPanel.add(addIconButton);
+        if (doneAction == null) {
+            JButton renameButton = new JButton(Bundle.getMessage("RenameIcon"));
+            renameButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    renameIcon();
+                }
+            });
+            bottomPanel.add(renameButton);
 
-        add(bottomPanel);
+            JButton addIconButton = new JButton(Bundle.getMessage("addIcon"));
+            addIconButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    addNewIcon();
+                }
+            });
+            addIconButton.setToolTipText(Bundle.getMessage("ToolTipAddIcon"));
+            bottomPanel.add(addIconButton);
 
-        deleteIconButton = new JButton(Bundle.getMessage("deleteIcon"));
-        deleteIconButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                deleteIcon();
-            }
-        });
-        deleteIconButton.setToolTipText(Bundle.getMessage("ToolTipDeleteIcon"));
-        bottomPanel.add(deleteIconButton);
-        deleteIconButton.setEnabled(false);
-
-        if (makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame) != null) {
-            bottomPanel.add(makeBgButtonPanel(_iconPanel, null, _backgrounds, _paletteFrame)); // to enable returning null for Backgrounds
+            _deleteIconButton = new JButton(Bundle.getMessage("deleteIcon"));
+            _deleteIconButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    deleteIcon();
+                }
+            });
+            _deleteIconButton.setToolTipText(Bundle.getMessage("ToolTipDeleteIcon"));
+            bottomPanel.add(_deleteIconButton);
+            _deleteIconButton.setEnabled(false);
+        } else {
+            JButton updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
+            updateButton.addActionListener(doneAction);
+            bottomPanel.add(updateButton);
         }
         add(bottomPanel);
     }
 
     void hideCatalog() {
+        Dimension oldDim = getSize();
+        boolean isPalette = (_paletteFrame instanceof ItemPalette); 
+        Dimension totalDim;
+        if (isPalette) {
+            totalDim = ItemPalette._tabPane.getSize();
+        } else {
+            totalDim = _paletteFrame.getSize();            
+        }
         _catalog.setVisible(false);
+        _catalog.invalidate();
+        reSizeDisplay(isPalette, oldDim, totalDim);
         _catalogButton.setText(Bundle.getMessage("ButtonShowCatalog"));
+    }
+    
+    void showCatalog() {
+        Dimension oldDim = getSize();
+        boolean isPalette = (_paletteFrame instanceof ItemPalette); 
+        Dimension totalDim;
+        if (isPalette) {
+            totalDim = ItemPalette._tabPane.getSize();
+        } else {
+            totalDim = _paletteFrame.getSize();            
+        }
+//        _catalog.setWidth(oldDim.width);
+        _catalog.setVisible(true);
+        _catalog.invalidate();
+        reSizeDisplay(isPalette, oldDim, totalDim);
+        _catalogButton.setText(Bundle.getMessage("HideCatalog"));
     }
 
     /**
-     * Action item for initButtonPanel.
+     * Action item for makeBottomPanel.
      */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) {
@@ -297,25 +323,71 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         putIcon(name, icon);
     }
 
-    private void putIcon(String name, NamedIcon icon) {
+    protected void putIcon(String name, NamedIcon icon) {
         _iconMap.put(name, icon);
-        removeIconFamiliesPanel();
         addIconsToPanel(_iconMap);
         validate();
     }
 
     /**
-     * Action item for initButtonPanel.
+     * Action item for makeBottomPanel.
      */
     protected void deleteIcon() {
         if (_selectedIcon == null) {
+            JOptionPane.showMessageDialog(_paletteFrame, Bundle.getMessage("ToSelectIcon"),
+                    Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (_iconMap.remove(_selectedIcon.getName()) != null) {
-            removeIconFamiliesPanel();
-            addIconsToPanel(_iconMap);
-            deleteIconButton.setEnabled(false);
-            validate();
+        _iconMap.remove(_selectedIcon.getIconName());
+        addIconsToPanel(_iconMap);
+        _deleteIconButton.setEnabled(false);
+        _selectedIcon = null;
+        validate();
+    }
+ 
+    private void renameIcon() {
+        if (_selectedIcon != null) {
+            String name = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoIconName"),
+                    Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
+            if (name != null) {
+                _iconMap.remove(_selectedIcon._borderName);
+                putIcon(name, _selectedIcon.getIcon());
+                _deleteIconButton.setEnabled(false);
+                deselectIcon();
+            }
+        } else {
+            JOptionPane.showMessageDialog(_paletteFrame, Bundle.getMessage("ToSelectIcon"),
+                    Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    protected void setSelection(IconDisplayPanel panel) {
+        if (_selectedIcon != null && !panel.equals(_selectedIcon)) {
+            deselectIcon();
+            setDeleteIconButton(false);
+        }
+        if (panel._borderName != null) {
+            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.red, 2), panel._borderName));
+            _selectedIcon = panel;
+            _catalog.deselectIcon();
+            setDeleteIconButton(true);
+        } else {    // click not on an "icon"
+            _selectedIcon = null;
+            setDeleteIconButton(false);
+        }
+    }
+
+    public void deselectIcon() {
+        if (_selectedIcon != null) {
+            _selectedIcon.setBorder(BorderFactory.createTitledBorder(
+                    BorderFactory.createLineBorder(Color.black, 1), _selectedIcon.getIconName()));
+            _selectedIcon = null;
+        }
+    }
+
+    private void setDeleteIconButton(boolean set) {
+        if (!_update) {
+            _deleteIconButton.setEnabled(set);
         }
     }
 
@@ -338,65 +410,20 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         return name;
     }
 
-    private void clickEvent(MouseEvent event) {
-        java.awt.Component[] comp = _iconPanel.getComponents();
-        for (int i = 0; i < comp.length; i++) {
-            if (comp[i] instanceof JPanel) {
-                JPanel panel = (JPanel) comp[i];
-                java.awt.Component[] com = panel.getComponents();
-                for (int k = 0; k < com.length; k++) {
-                    if (com[k] instanceof IconDragJLabel) {
-                        JLabel icon = (JLabel) com[k];
-                        java.awt.Rectangle r = panel.getBounds();
-                        if (r.contains(event.getX(), event.getY())) {
-                            if (event.getClickCount() > 1) {
-                                String name = setIconName(icon.getName());
-                                if (name != null) {
-                                    _iconMap.remove(icon.getName());
-                                    putIcon(name, (NamedIcon) icon.getIcon());
-                                }
-                                return;
-                            }
-                            if (icon.equals(_selectedIcon)) {
-                                panel.setBorder(BorderFactory.createTitledBorder(
-                                        BorderFactory.createLineBorder(Color.black),
-                                        icon.getName()));
-                                _selectedIcon = null;
-                                deleteIconButton.setEnabled(false);
-                            } else {
-                                panel.setBorder(BorderFactory.createTitledBorder(
-                                        BorderFactory.createLineBorder(Color.red),
-                                        icon.getName()));
-                                deleteIconButton.setEnabled(true);
-                                _selectedIcon = icon;
-                            }
-                            return;
-                        }
-                    }
-                }
+    public NamedIcon getIcon() {
+        NamedIcon icon = null;
+        if (_selectedIcon != null) {
+            icon = _selectedIcon.getIcon();
+        }
+        if (icon == null) {
+            icon = _catalog.getIcon();
+            if (icon == null) {
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("ToSelectIcon"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent event) {
-        clickEvent(event);
-    }
-
-    @Override
-    public void mousePressed(MouseEvent event) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent event) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent event) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent event) {
+        return icon;
     }
 
     public class IconDragJLabel extends DragJLabel implements DropTargetListener {
@@ -406,9 +433,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         public IconDragJLabel(DataFlavor flavor, int zLevel) {
             super(flavor);
             level = zLevel;
-
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            log.debug("DropJLabel ctor");
         }
 
         @Override
@@ -445,7 +470,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
 
         @Override
         public void dragExit(DropTargetEvent dte) {
-            //if (log.isDebugEnabled()) log.debug("DropJLabel.dragExit ");
+            //if (log.isDebugEnabled()) log.debug("IconDragJLabel.dragExit ");
         }
 
         @Override
@@ -468,22 +493,22 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             try {
                 Transferable tr = e.getTransferable();
                 if (e.isDataFlavorSupported(_dataFlavor)) {
-                    NamedIcon newIcon = new NamedIcon((NamedIcon) tr.getTransferData(_dataFlavor));
-                    accept(e, newIcon);
+                    PositionableLabel label = (PositionableLabel)tr.getTransferData(_dataFlavor);
+                    accept(e, (NamedIcon)label.getIcon());
                 } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
                     log.debug("drop for stringFlavor {}", text);
                     NamedIcon newIcon = new NamedIcon(text, text);
                     accept(e, newIcon);
                 } else {
-                    log.debug("DropJLabel.drop REJECTED!");
+                    log.debug("IconDragJLabel.drop REJECTED!");
                     e.rejectDrop();
                 }
             } catch (IOException ioe) {
-                log.debug("DropPanel.drop REJECTED!");
+                log.debug("IconDragJLabel.drop REJECTED!");
                 e.rejectDrop();
             } catch (UnsupportedFlavorException ufe) {
-                log.debug("DropJLabel.drop REJECTED!");
+                log.debug("IconDragJLabel.drop REJECTED!");
                 e.rejectDrop();
             }
         }
@@ -499,20 +524,140 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
                 label.setText(Bundle.getMessage("invisibleIcon"));
                 label.setForeground(Color.lightGray);
             } else {
-                newIcon.reduceTo(100, 100, 0.2);
+//                newIcon.reduceTo(100, 100, 0.2);
                 label.setText(null);
             }
             _iconMap.put(label.getName(), newIcon);
             if (!_update) {  // only prompt for save from palette
-                InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             }
-            removeIconFamiliesPanel();
             addIconsToPanel(_iconMap);
             e.dropComplete(true);
             if (log.isDebugEnabled()) {
-                log.debug("DropJLabel.drop COMPLETED for {}, {}", label.getName(),
+                log.debug("IconDragJLabel.drop COMPLETED for {}, {}", label.getName(),
                         (newIcon != null ? newIcon.getURL() : " newIcon==null "));
             }
+        }
+    }
+    
+    public class IconDisplayPanel extends JPanel implements MouseListener{
+        String _borderName;
+        NamedIcon _icon;
+
+        public IconDisplayPanel(String borderName, NamedIcon icon) {
+            super();
+            _borderName = borderName;
+            _icon = icon;
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            setOpaque(false);
+            if (borderName != null) {
+                setBorderAndIcon(icon);
+            }
+            addMouseListener(new IconListener());
+        }
+        
+        String getBorderName() {
+            return _borderName;
+        }
+        
+        NamedIcon getIcon() {
+            return _icon;
+        }
+
+        void setBorderAndIcon(NamedIcon icon) {
+            if (icon == null) {
+                log.error("IconDisplayPanel: No icon for \"{}\"", _borderName);
+                return;
+            }
+            try {
+                JLabel image;
+                if (_update) {
+                    image = new JLabel();
+                } else {
+                    image = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), _level);
+                }
+                image.setOpaque(false);
+                image.setName(_borderName);
+                image.setToolTipText(icon.getName());
+                double scale; 
+                if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
+                    image.setText(Bundle.getMessage("invisibleIcon"));
+                    image.setForeground(Color.lightGray);
+                    scale = 0;
+                } else {
+                    scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
+                }
+                image.setIcon(icon);
+                image.addMouseListener(this);
+                JPanel iPanel = new JPanel();
+                iPanel.setOpaque(false);
+                iPanel.add(image);
+                add(iPanel);
+                
+                String scaleMessage = Bundle.getMessage("scale", CatalogPanel.printDbl(scale, 2));
+                JLabel label = new JLabel(scaleMessage);
+                JPanel sPanel = new JPanel();
+                sPanel.setOpaque(false);
+                sPanel.add(label);
+                add(sPanel);
+                FontMetrics fm = getFontMetrics(getFont());
+                setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), _borderName));
+                int width = fm.stringWidth(_borderName) + 10;
+                width = Math.max(fm.stringWidth(scaleMessage), Math.max(width, CatalogPanel.ICON_WIDTH+10));
+                int height = getPreferredSize().height;
+                setPreferredSize(new Dimension(width, height));
+            } catch (java.lang.ClassNotFoundException cnfe) {
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
+            }
+        }
+
+        public String getIconName() {
+            return _borderName;
+        }
+        @Override
+        public void mouseClicked(MouseEvent event) {
+            if (event.getSource() instanceof JLabel) {
+                setSelection(this);
+            } else if (event.getSource() instanceof IconDisplayPanel) {
+                IconDisplayPanel panel = (IconDisplayPanel)event.getSource();
+                setSelection(panel);
+            }
+        }
+        @Override
+        public void mousePressed(MouseEvent event) {
+        }
+        @Override
+        public void mouseReleased(MouseEvent event) {
+        }
+        @Override
+        public void mouseEntered(MouseEvent event) {
+        }
+        @Override
+        public void mouseExited(MouseEvent event) {
+        }
+    }
+    
+    class IconListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent event) {
+            if (event.getSource() instanceof IconDisplayPanel) {
+                IconDisplayPanel panel = (IconDisplayPanel)event.getSource();
+                setSelection(panel);
+            } else if(event.getSource() instanceof ImagePanel) {
+                deselectIcon();
+           }
+        }
+        @Override
+        public void mousePressed(MouseEvent event) {
+        }
+        @Override
+        public void mouseReleased(MouseEvent event) {
+        }
+        @Override
+        public void mouseEntered(MouseEvent event) {
+        }
+        @Override
+        public void mouseExited(MouseEvent event) {
         }
     }
 

@@ -24,8 +24,10 @@ public class JsonReporter {
      */
     public static final String LAST_REPORT = "lastReport"; // NOI18N
 
-    // prevent documentation of constructor
+    /**
+     * Prevent instantiation, since this class only contains static values
+     */
     private JsonReporter() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
-
 }

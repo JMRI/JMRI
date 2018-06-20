@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * Note that <i>only</i> the payload, not the header or trailer, nor the padding
  * DLE characters are included. These are added during transmission.
  *
@@ -32,7 +32,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
-     *
      */
     public SerialMessage(String m) {
         super(m);
@@ -97,6 +96,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
+
     static public SerialMessage getPoll(int UA, int startAdd, int count) {
         if ((count <= 0) || (count > 99)) {
             log.error("Illegal count in Maple poll message - {}", count);
@@ -147,6 +147,11 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         }
         setElement(index + 1, secondChar);
     }
+
+//    public int maxSize() {
+//        return DEFAULTMAXSIZE;
+//    }
+//    static public final int DEFAULTMAXSIZE = 404; // Maple RR Request Docs page 9
 
     private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
 

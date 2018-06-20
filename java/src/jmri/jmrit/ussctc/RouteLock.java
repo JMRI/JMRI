@@ -88,6 +88,7 @@ public class RouteLock implements Lock {
      * Test the lock conditions
      * @return True if lock is clear and operation permitted
      */
+    @Override
     public boolean isLockClear() {
         InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         // if this route isn't in effect, then permitted

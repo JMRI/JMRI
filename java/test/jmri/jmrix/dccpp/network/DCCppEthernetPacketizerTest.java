@@ -28,6 +28,7 @@ public class DCCppEthernetPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketize
     @After
     @Override
     public void tearDown() {
+        tc.terminateThreads();
         JUnitUtil.tearDown();
     }
 

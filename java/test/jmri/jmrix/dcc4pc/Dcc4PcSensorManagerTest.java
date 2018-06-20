@@ -23,6 +23,7 @@ public class Dcc4PcSensorManagerTest {
 
        Dcc4PcSensorManager t = new Dcc4PcSensorManager(tc,memo);
        Assert.assertNotNull("exists",t);
+       t.dispose();
     }
 
     // The minimal setup for log4J

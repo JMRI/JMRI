@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LocoNet implementation of a ThrottleManager for the PR2
- * <P>
+ * LocoNet implementation of a ThrottleManager for the PR2.
+ * <p>
  * Does direct "push" writes to the extended slot in the PR2.
- * <P>
+ * <p>
  * The PR2 only allows a single locomotive address to be active, because it
  * implements a single-slot command station.
  *

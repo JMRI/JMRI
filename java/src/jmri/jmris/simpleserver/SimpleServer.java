@@ -71,7 +71,7 @@ public class SimpleServer extends JmriServer {
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
-        outStream.writeBytes("RAILROAD " + WebServerPreferences.getDefault().getRailroadName() + " \n");
+        outStream.writeBytes("RAILROAD " + InstanceManager.getDefault(WebServerPreferences.class).getRailroadName() + " \n");
         outStream.writeBytes("NODE " + NodeIdentity.identity() + " \n");
 
         while (true) {

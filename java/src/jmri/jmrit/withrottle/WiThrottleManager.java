@@ -12,6 +12,7 @@ public class WiThrottleManager implements InstanceManagerAutoDefault {
     private TurnoutController turnoutController = null;
     private RouteController routeController = null;
     private ConsistController consistController = null;
+    private FastClockController fastClockController = null;
 
     public WiThrottleManager() {
     }
@@ -42,6 +43,13 @@ public class WiThrottleManager implements InstanceManagerAutoDefault {
             consistController = new ConsistController();
         }
         return consistController;
+    }
+    
+    public FastClockController getFastClockController() {
+        if (fastClockController == null) {
+            fastClockController = new FastClockController();
+        }
+        return fastClockController;
     }
 
     /**

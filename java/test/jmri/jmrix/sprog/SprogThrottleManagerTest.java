@@ -36,6 +36,7 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     @After
     public void tearDown() {
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

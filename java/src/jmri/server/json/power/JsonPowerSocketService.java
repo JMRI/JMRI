@@ -19,18 +19,16 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-public class JsonPowerSocketService extends JsonSocketService implements PropertyChangeListener {
+public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpService> implements PropertyChangeListener {
 
     private boolean listening = false;
-    private final JsonPowerHttpService service;
 
     public JsonPowerSocketService(JsonConnection connection) {
-        super(connection);
-        this.service = new JsonPowerHttpService(connection.getObjectMapper());
+        super(connection, new JsonPowerHttpService(connection.getObjectMapper()));
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         if (!this.listening) {
             InstanceManager.getList(PowerManager.class).forEach((manager) -> {
                 manager.addPropertyChangeListener(this);

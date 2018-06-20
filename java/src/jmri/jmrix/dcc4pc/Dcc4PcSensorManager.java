@@ -179,10 +179,10 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     boolean stopPolling = true;
 
     protected void stopPolling() {
+        synchronized (this) {
+            stopPolling = true;
+        }
         if (pollThread != null) {
-            synchronized (this) {
-                stopPolling = true;
-            }
             // we want to wait for the polling thread to finish what it is currently working on.
             try {
                 pollThread.join();
@@ -539,7 +539,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void handleTimeout(Dcc4PcMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("timeout recieved to our last message " + m.toString());
+            log.debug("timeout received to our last message " + m.toString());
         }
         if (!stopPolling) {
             synchronized (this) {

@@ -74,6 +74,7 @@ import org.slf4j.LoggerFactory;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutEditorTools {
 
@@ -1199,55 +1200,40 @@ public class LayoutEditorTools {
     /**
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
+     *
+     * @deprecated since 4.11.6, use
+     * {@link #setSignalHeadOnPanel(double, String, int, int)} directly.
      */
+    @Deprecated
     public void setSignalHeadOnPanel(int rotation,
             @Nullable String signalHeadName,
             int xLoc, int yLoc) {
-        SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
-        l.setSignalHead(signalHeadName);
-        l.setIcon(Bundle.getMessage("SignalHeadStateRed"), signalIconEditor.getIcon(0));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
-        l.setIcon(Bundle.getMessage("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
-        l.setIcon(Bundle.getMessage("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
-        l.setIcon(Bundle.getMessage("SignalHeadStateDark"), signalIconEditor.getIcon(6));
-        l.setIcon(Bundle.getMessage("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
-        l.setIcon(Bundle.getMessage("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
-        l.setLocation(xLoc, yLoc);
-        if (rotation > 0) {
-            Iterator<String> e = l.getIconStateNames();
-            while (e.hasNext()) {
-                l.getIcon(e.next()).setRotation(rotation, l);
-            }
-        }
-        layoutEditor.putSignal(l);
+        setSignalHeadOnPanel((double)rotation,signalHeadName,xLoc,yLoc);
     }
 
     /**
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
+     *
+     * @param directionDEG rotation in degrees.
+     * @param signalHeadName name of a signal head.
+     * @param where coordinates for placing signal head on panel.
      */
     public void setSignalHeadOnPanel(double directionDEG, @Nonnull String signalHeadName, @Nonnull Point2D where) {
         setSignalHeadOnPanel(directionDEG, signalHeadName, (int) where.getX(), (int) where.getY());
     }
 
+    /**
+     * Places a signal head icon on the panel after rotation at the designated
+     * place, with all icons taken care of.
+     *
+     * @param directionDEG rotation in degrees.
+     * @param signalHeadName name of a signal head.
+     * @param xLoc x coordinate for placing signal head on panel.
+     * @param yLoc y coordinate for placing signal head on panel.
+     */
     public void setSignalHeadOnPanel(double directionDEG, @Nonnull String signalHeadName, int xLoc, int yLoc) {
-        SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
-
-        l.setSignalHead(signalHeadName);
-
-        l.setIcon(Bundle.getMessage("SignalHeadStateRed"), signalIconEditor.getIcon(0));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
-        l.setIcon(Bundle.getMessage("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
-        l.setIcon(Bundle.getMessage("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
-        l.setIcon(Bundle.getMessage("SignalHeadStateDark"), signalIconEditor.getIcon(6));
-        l.setIcon(Bundle.getMessage("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
-        l.setIcon(Bundle.getMessage("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
+        SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
 
         if (directionDEG > 0) {
             Iterator<String> e = l.getIconStateNames();
@@ -2666,7 +2652,8 @@ public class LayoutEditorTools {
                     xovers.add(layoutTurnout);
                 }
             }
-            JComboBox<LayoutTurnout> jcb = new JComboBox<>(xovers.toArray(new LayoutTurnout[xovers.size()]));
+            JComboBox<LayoutTurnout> jcb = new JComboBox<>(
+                    xovers.toArray(new LayoutTurnout[xovers.size()]));
             jcb.setEditable(true);
             JOptionPane.showMessageDialog(layoutEditor, jcb,
                     Bundle.getMessage("MakeLabel",
@@ -7572,7 +7559,7 @@ public class LayoutEditorTools {
                 index = i;
             }
         }
-        if (index != (-1) && h != null) {
+        if ((h != null) && (index != -1)) {
             layoutEditor.sensorList.remove(index);
             h.remove();
             h.dispose();
@@ -8113,11 +8100,11 @@ public class LayoutEditorTools {
         int index = -1;
         for (int i = 0; (i < layoutEditor.signalMastList.size()) && (index == -1); i++) {
             h = layoutEditor.signalMastList.get(i);
-            if (h.getSignalMast() == signalMast) {
+            if ((h != null) && (h.getSignalMast() == signalMast)) {
                 index = i;
             }
         }
-        if (index != (-1)) {
+        if ((h != null) && (index != -1)) {
             layoutEditor.signalMastList.remove(index);
             h.remove();
             h.dispose();
@@ -9520,7 +9507,6 @@ public class LayoutEditorTools {
         }
         setSignalMastsAtLayoutSlipFromMenuFlag = true;
         setSignalMastsAtLayoutSlip(theFrame);
-        setSignalMastsAtLayoutSlipFromMenuFlag = false;
     }
 
     //TODO: Add to Tools menu?
@@ -11453,10 +11439,11 @@ public class LayoutEditorTools {
             if (block2 == null || (block1 == block2)) {
                 // find the 1st positionablePoint that's connect1'ed to block1
                 for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                    if ((p.getType() == PositionablePoint.END_BUMPER)
-                            && (p.getConnect1().getLayoutBlock() == block1)) {
-                        boundary = p;
-                        break;
+                    if (p.getType() == PositionablePoint.END_BUMPER) {
+                        if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() == block1) {
+                            boundary = p;
+                            break;
+                        }
                     }
                 }
             }
@@ -13383,8 +13370,18 @@ public class LayoutEditorTools {
         }
     }
 
+
+    /**
+     * get a signal head icon for the given signal head
+     *
+     * @param signalName name of a signal head.
+     * @return a SignalHeadIcon for the signal.
+     */
     @CheckReturnValue
     public SignalHeadIcon getSignalHeadIcon(@Nonnull String signalName) {
+        if(signalIconEditor == null) {
+           signalIconEditor = layoutEditor.signalIconEditor;
+        }
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(signalName);
         l.setIcon(Bundle.getMessage("SignalHeadStateRed"), signalIconEditor.getIcon(0));

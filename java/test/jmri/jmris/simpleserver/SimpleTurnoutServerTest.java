@@ -11,24 +11,11 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleTurnoutServer class
  *
- * @author Paul Bender
+ * @author Paul Bender Copyright (C) 2012,2018
  */
-public class SimpleTurnoutServerTest{
+public class SimpleTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerTestBase {
 
-    @Test
-    public void testCtor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleTurnoutServer a = new SimpleTurnoutServer(input, output);
-        Assert.assertNotNull(a);
-    }
+    private StringBuilder sb = null;
 
     @Test
     public void testConnectionCtor() {
@@ -48,20 +35,10 @@ public class SimpleTurnoutServerTest{
     @Test
     // test sending a message.
     public void testSendMessage() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                        sb.append((char)b);
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleTurnoutServer a = new SimpleTurnoutServer(input, output);
         // NOTE: this test uses reflection to test a private method.
         java.lang.reflect.Method sendMessageMethod=null;
         try {
-          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+          sendMessageMethod = ts.getClass().getDeclaredMethod("sendMessage", String.class);
         } catch(java.lang.NoSuchMethodException nsm) {
           Assert.fail("Could not find method sendMessage in SimpleTurnoutServer class. " );
         }
@@ -70,7 +47,7 @@ public class SimpleTurnoutServerTest{
         Assert.assertNotNull(sendMessageMethod);
         sendMessageMethod.setAccessible(true);
         try {
-           sendMessageMethod.invoke(a,"Hello World");
+           sendMessageMethod.invoke(ts,"Hello World");
            Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleTurnoutServer class");
@@ -83,7 +60,6 @@ public class SimpleTurnoutServerTest{
     @Test
     // test sending a message.
     public void testSendMessageWithConnection() {
-        StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
@@ -115,11 +91,49 @@ public class SimpleTurnoutServerTest{
        } 
     }
 
+    /**
+     * {@inhertDoc} 
+     */
+    @Override
+    public void checkErrorStatusSent(){
+            Assert.assertEquals("Send Error Status check","TURNOUT ERROR\n",sb.toString());
+    }
 
-    @Test
-    // test sending an error message.
-    public void testSendErrorStatus() {
-        StringBuilder sb = new StringBuilder();
+    /**
+     * {@inhertDoc} 
+     */
+    @Override
+    public void checkTurnoutThrownSent(){
+            Assert.assertEquals("Send Thrown Status check","TURNOUT IT1 THROWN\n",sb.toString());
+    }
+
+    /**
+     * {@inhertDoc} 
+     */
+    @Override
+    public void checkTurnoutClosedSent() {
+            Assert.assertEquals("Send Closed Status check","TURNOUT IT1 CLOSED\n",sb.toString());
+    }
+
+    /**
+     * {@inhertDoc} 
+     */
+    @Override
+    public void checkTurnoutUnknownSent() {
+            Assert.assertEquals("Send Error Status check","TURNOUT IT1 UNKNOWN\n",sb.toString());
+    }
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+        sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
@@ -128,28 +142,13 @@ public class SimpleTurnoutServerTest{
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleTurnoutServer a = new SimpleTurnoutServer(input, output);
-        try {
-            a.sendErrorStatus("IT1");
-            Assert.assertEquals("sendErrorStatus check","TURNOUT ERROR\n",sb.toString());
-        } catch(java.io.IOException ioe){
-            Assert.fail("Exception sending Error Status");
-        }
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
+        ts = new SimpleTurnoutServer(input, output);
     }
 
     @After
     public void tearDown() throws Exception {
+        ts = null;
+        sb = null;
         JUnitUtil.tearDown();
     }
 

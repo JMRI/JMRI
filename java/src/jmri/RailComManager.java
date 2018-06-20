@@ -1,7 +1,6 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -28,6 +27,8 @@ public interface RailComManager extends Manager<RailCom> {
 
     /**
      *
+     * @param name the name of the tag to provide
+     * @return the generated tag
      * @throws IllegalArgumentException if requested object does not already
      *                                  exist and the manager cannot create it
      *                                  due to an illegal name or name that can

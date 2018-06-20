@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Oak Tree systems
- * <P>
+ * <p>
  * System names are "OTnnn", where nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
@@ -76,6 +76,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return true;
     }
 
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Allow access to SerialTurnoutManager.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
     @Deprecated
     static public SerialTurnoutManager instance() {
         return null;

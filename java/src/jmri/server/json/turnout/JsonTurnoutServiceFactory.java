@@ -2,8 +2,6 @@ package jmri.server.json.turnout;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -12,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
-public class JsonTurnoutServiceFactory implements JsonServiceFactory {
+public class JsonTurnoutServiceFactory implements JsonServiceFactory<JsonTurnoutHttpService, JsonTurnoutSocketService> {
 
     public static final String TURNOUT = "turnout"; // NOI18N
     public static final String TURNOUTS = "turnouts"; // NOI18N
@@ -23,12 +21,12 @@ public class JsonTurnoutServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonTurnoutSocketService getSocketService(JsonConnection connection) {
         return new JsonTurnoutSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTurnoutHttpService getHttpService(ObjectMapper mapper) {
         return new JsonTurnoutHttpService(mapper);
     }
 

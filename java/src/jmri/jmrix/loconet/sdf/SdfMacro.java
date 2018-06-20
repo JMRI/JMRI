@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common base for all the SDF macros defined by Digitrax for their sound
- * definition language
+ * definition language.
  * <p>
  * Each macro has a number of descriptive forms:
  * <dl>
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * within it.
  * <dt>name()<dd>
  * </dl>
- * <P>
+ *
  * SdfMacro and its subclasses don't do the notification needed to be Models in
  * an MVC edit paradyme. This is because there are a lot of SdfMacros in
  * realistic sound file, and the per-object overhead needed would be too large.
@@ -106,16 +106,12 @@ public abstract class SdfMacro implements SdfConstants {
         }
         return result;
     }
-    /**
-     * Local method contains comment text associated with this instruction
-     */
-    String comment;
 
     /**
      * Store into a buffer.
-     * <P>
+     * <p>
      * This provides a default implementation for children, but each subclass
-     * needs to store it's own data with setAtIndexAndInc()
+     * needs to store its own data with setAtIndexAndInc().
      *
      * @param buffer load with all children
      */
@@ -130,8 +126,8 @@ public abstract class SdfMacro implements SdfConstants {
     }
 
     /**
-     * Return the next instruction macro in a buffer.
-     * <P>
+     * Get the next instruction macro in a buffer.
+     * <p>
      * Note this uses the index contained in the SdfBuffer implementation, and
      * has the side-effect of bumping that forward.
      *
@@ -182,7 +178,7 @@ public abstract class SdfMacro implements SdfConstants {
     /**
      * Service method to unpack various bit-coded values for display, using a
      * mask array.
-     * <P>
+     * <p>
      * Note that multiple values can be returned, e.g. this can be used to scan
      * for individual bits set in a variable.
      *
@@ -218,6 +214,6 @@ public abstract class SdfMacro implements SdfConstants {
         return val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
+    // private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
 
 }

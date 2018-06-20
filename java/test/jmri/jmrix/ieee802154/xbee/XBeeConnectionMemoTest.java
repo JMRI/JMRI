@@ -5,12 +5,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
+import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import com.digi.xbee.api.XBeeNetwork;
+import com.digi.xbee.api.XBeeDevice;
 
 /**
  * XBeeConnectionMemoTest.java
@@ -20,8 +20,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+        
+    @Mock private XBeeTrafficController tc;
+    @Mock private XBeeNetwork xn;
+    private XBeeAdapter xa;
+    private XBeeDevice xb;
+
+    private XBeeConnectionMemo memo = null;
 
     @Override
     @Test
@@ -29,35 +36,32 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
        Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
-    @Override
-    @Test
-    @Ignore("PowerMockRunner treats assumption failure as an error")
-    public void getPowerManager(){
-    }
-
-    @Override
-    @Test
-    @Ignore("PowerMockRunner treats assumption failure as an error")
-    public void getThrottleManager(){
-    }
-
-    @Override
-    @Test
-    @Ignore("PowerMockRunner treats assumption failure as an error")
-    public void getReporterManager(){
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        XBeeConnectionMemo memo = new XBeeConnectionMemo();
-        memo.setTrafficController(new XBeeInterfaceScaffold());
+        jmri.util.JUnitUtil.setUp();
+        memo = new XBeeConnectionMemo();
+        memo.setTrafficController(tc);
+        xa= new XBeeAdapter(){
+           @Override
+           public boolean isOpen(){
+              return true;
+           }
+        };  
+        xb = new XBeeDevice(xa){
+           @Override
+           public XBeeNetwork getNetwork(){
+              return xn;
+           }
+        };
+        Mockito.when(tc.getXBee()).thenReturn(xb);
         memo.configureManagers();
         scm = memo;
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

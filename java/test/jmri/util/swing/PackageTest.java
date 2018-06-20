@@ -37,6 +37,10 @@ import org.junit.runners.Suite;
         ButtonSwatchColorChooserPanelTest.class,
         DrawSquaresTest.class,
         ImagePanelTest.class,
+        RegexFormatterTest.class,
+        ExceptionContextTest.class,
+        ExceptionDisplayFrameTest.class,
+        UnexpectedExceptionContextTest.class,
 })
 
 /**

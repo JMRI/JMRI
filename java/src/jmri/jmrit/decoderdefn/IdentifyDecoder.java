@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
  * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)
  * to 264 (highest) are a four byte ID</li>
+ * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is 
+ * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for 
+ * the Czech Republic</li>
  * </ul>
  *
  * TODO:
@@ -50,6 +53,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     int modelID = -1; // cv7
     int productIDhigh = -1;
     int productIDlow = -1;
+    int productIDhighest = -1;
+    int productIDlowest = -1;
     int productID = -1;
 
     // steps of the identification state machine
@@ -100,6 +105,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Set PI for Read productID");
             writeCV("31", 0);
             return false;
+        } else if (mfgID == 13) {  // DIY
+            statusUpdate("Read decoder product ID #1 CV 47");
+            readCV("47");
+            return false;
         }
         return true;
     }
@@ -140,6 +149,11 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Set SI for Read productID");
             writeCV("32", 255);
             return false;
+        } else if (mfgID == 13) {  // DIY
+            productIDhighest = value;
+            statusUpdate("Read decoder product ID #2 CV 48");
+            readCV("48");
+            return false;
         }
         log.error("unexpected step 4 reached with value: " + value);
         return true;
@@ -169,6 +183,11 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read productID Byte 1");
             readCV("261");
             return false;
+        } else if (mfgID == 13) {  // DIY
+            productIDhigh = value;
+            statusUpdate("Read decoder product ID #3 CV 49");
+            readCV("49");
+            return false;
         }
         log.error("unexpected step 5 reached with value: " + value);
         return true;
@@ -186,6 +205,11 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read productID Byte 2");
             readCV("262");
             return false;
+        } else if (mfgID == 13) {  // DIY
+            productIDlow = value;
+            statusUpdate("Read decoder product ID #4 CV 50");
+            readCV("50");
+            return false;
         }
         log.error("unexpected step 6 reached with value: " + value);
         return true;
@@ -202,6 +226,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read productID Byte 3");
             readCV("263");
             return false;
+        } else if (mfgID == 13) {  // DIY
+            productIDlowest = value;            
+            productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest ;
+            return true;
         }
         log.error("unexpected step 7 reached with value: " + value);
         return true;

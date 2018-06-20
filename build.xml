@@ -31,8 +31,6 @@
     <!-- local.properties file      (not an error if doesn't exist)                      -->
     <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
-    <!--    # Your SourceForge ID (used for Javadocs, distribution) if different         -->
-    <!--    sourceforge.userid=                                                          -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
     <!--    # paths to append to the classpath                                           -->
@@ -168,7 +166,7 @@
         <pathelement location="${libdir}/jdom.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
-        <pathelement location="${libdir}/jmdns-3.5.3.jar"/>
+        <pathelement location="${libdir}/jmdns-3.5.1.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
@@ -182,6 +180,7 @@
         <pathelement location="${libdir}/jna-4.4.0.jar"/>
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
+        <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.8.11.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.8.11.jar"/>
@@ -222,6 +221,8 @@
         <pathelement location="${libdir}/usb4java-1.2.0.jar"/>
         <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
+        <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-0.1.19.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -262,14 +263,11 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path refid="compile.class.path"/>
-        <!-- powermock and it's dependencies -->
-        <pathelement location="${libdir}/mockito-core-2.0.42-beta.jar"/>
-        <pathelement location="${libdir}/powermock-mockito2-1.6.5-full.jar"/>
-        <pathelement location="${libdir}/powermock-api-mockito-common-1.6.5.jar"/>
+        <pathelement location="${libdir}/mockito-core-2.13.0.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.7.10.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
-        <pathelement location="${libdir}/byte-buddy-1.2.1.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
@@ -340,6 +338,24 @@
         <exclude name="jmri/util/swing/SamplePane.class" />
         <exclude name="apps/tests/Log4JFixture.class" />
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
+        <exclude name="jmri/util/web/BrowserFactory.class" />
+        <!-- Exclude pure interfaces and classes only providing constants. -->
+        <exclude name="jmri/AddressedProgrammerManager.class" />
+        <exclude name="jmri/PhysicalLocationReporter.class" />
+        <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
+        <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
+        <exclude name="jmri/jmrit/audio/AudioSource.class" />
+        <exclude name="jmri/jmrit/operations/locations/Xml.class" />
+        <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
+        <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
+        <exclude name="jmri/jmrit/operations/trains/Xml.class" />
+        <exclude name="jmri/jmrit/ussctc/Lock.class" />
+        <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
+        <exclude name="jmri/server/json/reporter/JsonReporter.class" />
+        <exclude name="jmri/server/json/roster/JsonRoster.class" />
+        <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
+        <!-- Exclude deprecated classes. -->
+        <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
     </fileset>
 
 
@@ -423,34 +439,54 @@
     <target name="realclean"
             description="remove all non-respository files from a build"
             depends="clean">
-        <delete includeEmptyDirs="true" quiet="true">
-            <fileset dir="lib/cachedir"/>
-            <fileset dir="${coveragetarget}"/>
+        <delete dir="target"/>
+        <delete dir="release"/>
+        <delete dir="dist"/>
+        <delete dir="temp"/>
+        <delete dir="web/TrainCrew"/>
+        <delete dir="lib/cachedir"/>
+        <delete dir="${coveragetarget}"/>
+        <delete includeEmptyDirs="true" quiet="true" verbose="true">
+            <!-- .gitignore build artifacts -->
+            <fileset file="jmri.jar"/>
+            <fileset dir="java/docs"/>
+            <!-- .gitignore test artifacts -->
+            <fileset dir="." includes="junit*.properties"/>
+            <!-- .gitignore transient artifacts -->
+            <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
+            <fileset file="release.zip"/>
+            <fileset dir="." includes="hs_err_pid*.log"/>
         </delete>
     </target>
 
     <target name="clean"
             description="remove compilation results to force rebuild">
-        <delete includeEmptyDirs="true" quiet="true">
+        <delete dir="${doctarget}"/>
+        <delete dir="${maventarget}"/>
+        <delete dir="${javadir}/classes"/>
+        <delete dir="${javadir}/test-classes"/>
+        <delete dir="${dist}"/>
+        <delete dir="${genjavasrcdir}"/>
+        <delete dir="${tempdir}"/>
+        <delete includeEmptyDirs="true" quiet="true"  verbose="true">
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>
-            <fileset dir="${doctarget}"/>
-            <fileset dir="${maventarget}"/>
-            <fileset dir="${javadir}/classes"/>
-            <fileset dir="${javadir}/test-classes"/>
-            <fileset dir="${dist}"/>
-            <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
-            <fileset dir="${tempdir}"/>
+            <!-- .gitignore test artifacts -->
+            <fileset file="junit-results.xml"/>
             <fileset file="findbugs.html"/>
             <fileset file="findbugs.xml"/>
             <fileset file="spotbugs.html"/>
             <fileset file="spotbugs.xml"/>
-            <fileset file="junit-results.xml"/>
-            <fileset file="cucumber-results.xml"/>
-            <fileset file="jmri-fb.html"/>
             <fileset file="jacoco.exec"/>
+            <fileset file="jmri-fb.html"/>
+            <fileset file="coveragereport"/>
+            <fileset file="tests.log"/>
+            <fileset file="cucumber-results.xml"/>
+            <!-- .gitignore runtime artifacts -->
+            <fileset file="messages.log"/>
+            <fileset file="session.log"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
@@ -467,8 +503,7 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png"/>
-            <fileset dir="${source}" includes="META-INF/**"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json"/>
         </copy>
     </target>
 
@@ -651,6 +686,7 @@
              resources in ${target} (this is important for the Java ServiceLoader -->
         <copy todir="${testtarget}">
             <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="**/*.xml"/>
             <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
@@ -1287,6 +1323,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1453,6 +1492,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1479,6 +1521,9 @@
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
           </check>
        </jacoco:report>
     </target>
@@ -1504,6 +1549,9 @@
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
+              </rule>
+              <rule element="SOURCEFILE">
+                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
               </rule>
           </check>
        </jacoco:report>
@@ -1651,15 +1699,15 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
+                        <A href="http://www.tagadab.com"> 
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
+            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
@@ -1718,15 +1766,15 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
+                        <A href="http://www.tagadab.com"> 
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
+            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.11"/>
@@ -1799,15 +1847,15 @@
             <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                    <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
+                        <A href="http://www.tagadab.com"> 
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/>
+            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.11"/>
@@ -1840,12 +1888,14 @@
         </plantuml>
     </target>
 
+    <!-- This target requires access to the JMRI webserver -->
+    <!-- so it's only for use by JMRI maintainers -->
     <target name="uploadjavadoc" description="upload existing Javadocs to jmri.org without recreating">
         <exec executable="rsync">
             <arg value="-avz"/>
             <arg value="--delete"/>
             <arg value="${doctarget}"/>
-            <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
+            <arg value="jmri@webserver.jmri.net:htdocs/JavaDoc/"/>
         </exec>
     </target>
 
@@ -1856,6 +1906,16 @@
              includes="xml/decoders/*.xml"/>
     </target>
 
+    <target name="scanhelp"
+            description="scan English-language help for HTML errors">
+        <exec executable="./scripts/tidy-check.sh"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="help/en/*/*/"/>
+        </exec>
+            
+    </target>
+    
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
@@ -2154,7 +2214,7 @@
             <fileset dir="."
                      includes="python.properties,jmri.conf"/>
         </copy>
-        <copy todir="${dist.macosx}/JMRI/">
+        <copy todir="${dist.linux}/JMRI/">
             <fileset dir="." includesfile="web/app/package.files"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>

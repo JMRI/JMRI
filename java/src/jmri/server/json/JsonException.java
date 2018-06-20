@@ -29,7 +29,7 @@ public class JsonException extends Exception {
     public static final String MESSAGE = "message"; // NOI18N
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private int code = 500;
+    private final int code;
 
     public JsonException(int i, String s, Throwable t) {
         super(s, t);

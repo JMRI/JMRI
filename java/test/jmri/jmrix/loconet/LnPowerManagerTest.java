@@ -6,11 +6,13 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * tests for the Jmri package LnPowerManager
+ * Tests for the Jmri package LnPowerManager.
  *
  * @author	Bob Jacobsen Copyright 2001
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
+
+    private LocoNetSystemConnectionMemo memo;
 
     /**
      * service routines to simulate receiving on, off from interface
@@ -66,12 +68,14 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     @Override
     public void setUp() {
         controller = new LocoNetInterfaceScaffold();
-        p = pwr = new LnPowerManager(new LocoNetSystemConnectionMemo(controller, null));
+        memo = new LocoNetSystemConnectionMemo(controller, null);
+        p = pwr = new LnPowerManager(memo);
     }
 
     @After
     public void tearDown() {
         pwr.dispose();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

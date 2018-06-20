@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to C/MRI via a serial comm port. Normally controlled by the
+ * Provide access to Maple via a serial comm port. Normally controlled by the
  * maple.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
@@ -36,7 +36,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = (SerialPort) portID.open(appName, 2000); // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -44,26 +44,28 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set framing (end) character
             try {
                 activeSerialPort.enableReceiveFraming(0x03);
-                log.debug("Serial framing was observed as: " + activeSerialPort.isReceiveFramingEnabled()
-                        + " " + activeSerialPort.getReceiveFramingByte());
+                log.debug("Serial framing was observed as: {} {}",
+                        activeSerialPort.isReceiveFramingEnabled(),
+                        activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: ", ef);
             }
 
             // set timeout; framing should work before this anyway
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}",
+                        activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: ", et);
             }
 
             // get and save stream
@@ -86,8 +88,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -123,6 +125,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     // base class methods for the SerialPortController interface
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -132,6 +138,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -140,18 +149,21 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -179,12 +191,13 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
+        log.debug("configureBaudRate: {}", rate);
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "57,600 baud"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
+            Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 57600};
     protected String selectedSpeed = validSpeeds[0];
 
@@ -192,11 +205,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /**
+     * @deprecated JMRI Since 4.11.5 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
+        return null;
     }
     static SerialDriverAdapter mInstance = null;
 

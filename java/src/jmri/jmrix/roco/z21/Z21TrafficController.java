@@ -162,11 +162,11 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         if(!threadStopRequest) {
                            log.error("retry wait interupted");
                         } else {
-                           log.error("retry wait interupted durring thread stop");
+                           log.error("retry wait interupted during thread stop");
                         }
                     }
                 } else {
-                    log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
+                    log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                 }
             }
         } catch (Exception e) {

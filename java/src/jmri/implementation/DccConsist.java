@@ -262,14 +262,14 @@ public class DccConsist implements Consist, ProgListener {
 
         if (directionNormal) {
             try {
-                opsProg.writeCV(19, consistAddress.getNumber(), this);
+                opsProg.writeCV("19", consistAddress.getNumber(), this);
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
                 log.warn("Exception writing CV19 while adding from consist", e);
             }
         } else {
             try {
-                opsProg.writeCV(19, consistAddress.getNumber() + 128, this);
+                opsProg.writeCV("19", consistAddress.getNumber() + 128, this);
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
                 log.warn("Exception writing CV19 while adding to consist", e);
@@ -294,7 +294,7 @@ public class DccConsist implements Consist, ProgListener {
         }
 
         try {
-            opsProg.writeCV(19, 0, this);
+            opsProg.writeCV("19", 0, this);
         } catch (ProgrammerException e) {
             // Don't do anything with this yet
             log.warn("Exception writing CV19 while removing from consist", e);
@@ -492,7 +492,7 @@ public class DccConsist implements Consist, ProgListener {
     // include the programmingOpReply() function
     @Override
     public void programmingOpReply(int value, int status) {
-        log.debug("Programming Operation reply recieved, value is {}, status is {}", value, status);
+        log.debug("Programming Operation reply received, value is {}, status is {}", value, status);
         notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.OPERATION_SUCCESS);
     }
 

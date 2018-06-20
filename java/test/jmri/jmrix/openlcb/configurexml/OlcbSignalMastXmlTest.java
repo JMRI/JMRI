@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 import jmri.jmrix.openlcb.OlcbSignalMast;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbTestInterface;
 
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -11,7 +12,6 @@ import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -22,8 +22,10 @@ import org.openlcb.IdentifyEventsMessage;
 import org.jdom2.Element;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -34,6 +36,8 @@ import org.junit.Test;
  * @author   Bob Jacobsen Copyright (C) 2018
  */
 public class OlcbSignalMastXmlTest {
+        
+    static OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCtor(){
@@ -66,21 +70,24 @@ public class OlcbSignalMastXmlTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        Connection connection = new AbstractConnection() {
-            @Override
-            public void put(Message msg, Connection sender) {
-            }
-        };
-
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
-        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 
     @After
     public void tearDown() {
+    }
+
+    @BeforeClass
+    public static void preClassInit() {
+        JUnitUtil.setUp();
+        memo = OlcbTestInterface.createForLegacyTests();
+    }
+
+    @AfterClass
+    public static void postClassTearDown() {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
         JUnitUtil.tearDown();
     }
 

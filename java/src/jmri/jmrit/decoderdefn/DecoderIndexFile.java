@@ -333,10 +333,14 @@ public class DecoderIndexFile extends XmlFile {
         ArrayList<String> al = new ArrayList<>();
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
         File fp = new File(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
+    
         if (fp.exists()) {
-            for (String sp : fp.list()) {
-                if (sp.endsWith(".xml") || sp.endsWith(".XML")) {
-                    al.add(sp);
+            String[] list = fp.list();
+            if (list !=null) {
+                for (String sp : list) {
+                    if (sp.endsWith(".xml") || sp.endsWith(".XML")) {
+                        al.add(sp);
+                    }
                 }
             }
         } else {

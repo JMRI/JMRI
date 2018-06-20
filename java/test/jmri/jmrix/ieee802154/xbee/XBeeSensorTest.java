@@ -4,11 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.mockpolicies.Slf4jMockPolicy;
-import org.powermock.core.classloader.annotations.MockPolicy;
-import org.powermock.modules.junit4.PowerMockRunner;
-@MockPolicy(Slf4jMockPolicy.class)
 
 /**
  * XBeeSensorTest.java
@@ -17,7 +12,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-@RunWith(PowerMockRunner.class)
 public class XBeeSensorTest {
 
     XBeeTrafficController tc;
@@ -86,7 +80,7 @@ public class XBeeSensorTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        //apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
@@ -95,7 +89,8 @@ public class XBeeSensorTest {
 
     @After
     public void tearDown() {
-        //apps.tests.Log4JFixture.tearDown();
+        tc.terminate();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

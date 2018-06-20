@@ -1,20 +1,17 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
+import jmri.web.server.WebServerPreferences;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -65,24 +62,39 @@ public class JsonUtilSocketServiceTest {
     @Test
     public void testOnMessage() throws Exception {
         Locale locale = Locale.ENGLISH;
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
-        instance.onMessage(JSON.LOCALE, empty, locale);
-        assertNull(connection.getMessage());
+        instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale);
+        Assert.assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
-        instance.onMessage(JSON.PING, empty, locale);
+        instance.onMessage(JSON.PING, empty, JSON.POST, locale);
         JsonNode result = connection.getMessage().path(JSON.TYPE);
-        assertNotNull(result);
-        assertTrue(JsonNode.class.isInstance(result));
-        assertEquals(JSON.PONG, result.asText());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(JsonNode.class.isInstance(result));
+        Assert.assertEquals(JSON.PONG, result.asText());
+        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        // JSON.RAILROAD
+        WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
+        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale);
+        result = connection.getMessage().path(JSON.DATA);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
+        wsp.setRailroadName("test railroad");
+        result = connection.getMessage().path(JSON.DATA);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
         // JSON.GOODBYE
-        instance.onMessage(JSON.GOODBYE, empty, locale);
+        instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
         result = connection.getMessage().path(JSON.TYPE);
-        assertNotNull(result);
-        assertTrue(JsonNode.class.isInstance(result));
-        assertEquals(JSON.GOODBYE, result.asText());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(JsonNode.class.isInstance(result));
+        Assert.assertEquals(JSON.GOODBYE, result.asText());
+        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
     }
 
     /**
@@ -99,7 +111,7 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         instance.onList(JSON.METADATA, empty, locale);
         Assert.assertEquals(helper.getMetadata(locale), connection.getMessage());
         instance.onList(JSON.NETWORK_SERVICES, empty, locale);

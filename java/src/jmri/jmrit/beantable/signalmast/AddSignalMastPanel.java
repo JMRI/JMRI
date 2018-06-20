@@ -10,6 +10,26 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import jmri.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.NmraPacket;
+import jmri.SignalAppearanceMap;
+import jmri.SignalHead;
+import jmri.SignalMast;
+import jmri.SignalSystem;
+import jmri.SignalSystemManager;
+import jmri.Turnout;
 import jmri.implementation.DccSignalMast;
 import jmri.implementation.DefaultSignalAppearanceMap;
 import jmri.implementation.MatrixSignalMast;
@@ -178,9 +198,9 @@ public class AddSignalMastPanel extends JPanel {
         
         // load the list of signal systems
         SignalSystemManager man = InstanceManager.getDefault(SignalSystemManager.class);
-        String[] names = man.getSystemNameArray();
-        for (int i = 0; i < names.length; i++) {
-            sigSysBox.addItem(man.getSystem(names[i]).getUserName());
+        SortedSet<SignalSystem> systems = man.getNamedBeanSet();
+        for (SignalSystem system : systems) {
+            sigSysBox.addItem(system.getUserName());
         }
         if (prefs.getComboBoxLastSelection(systemSelectionCombo) != null) {
             sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));

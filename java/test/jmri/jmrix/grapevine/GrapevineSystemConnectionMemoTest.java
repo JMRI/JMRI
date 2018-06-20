@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the GrapevineSystemConnectionMemo class
- * <p>
+ * JUnit tests for the GrapevineSystemConnectionMemo class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -25,7 +24,7 @@ public class GrapevineSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
     public void setUp(){
        JUnitUtil.setUp();
        GrapevineSystemConnectionMemo memo = new GrapevineSystemConnectionMemo();
-       memo.setTrafficController(new SerialTrafficControlScaffold());
+       memo.setTrafficController(new SerialTrafficControlScaffold(memo));
        memo.configureManagers();
        scm = memo;
     }

@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @Nullable
-    private static final String name = null; // no local keys NOI18N
+    private static final String name = "jmri.jmrix.loconet.se8.SE8"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -39,7 +39,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
 
 
@@ -86,8 +86,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return name;
     }
 
-    @Override
-    protected jmri.Bundle getBundle() {
+    protected static jmri.Bundle getBundle() {
         return b;
     }
 

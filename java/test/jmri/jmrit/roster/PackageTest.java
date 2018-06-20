@@ -31,6 +31,7 @@ import org.junit.runners.Suite;
         PrintRosterEntryTest.class,
         UpdateDecoderDefinitionActionTest.class,
         RosterSpeedProfileTest.class,
+        PrintListActionTest.class,
 })
 
 /**

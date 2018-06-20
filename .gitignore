@@ -12,7 +12,10 @@ findbugs.html
 spotbugs.xml
 spotbugs.html
 jacoco.exec
+jmri-fb.html
 coveragereport
+tests.log
+cucumber-results.xml
 
 # runtime artifacts
 messages.log*
@@ -49,11 +52,12 @@ local.properties
 .metadata
 RemoteSystemsTempFiles
 
+# user-installed components
+/web/TrainCrew
+
 # CATS source, sometimes present for test
 /java/src/cats
 
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
-/jmri-fb.html
-cucumber-results.xml

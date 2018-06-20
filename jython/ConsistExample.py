@@ -37,7 +37,7 @@ class ConsistExample(jmri.jmrit.automat.AbstractAutomaton) :
 		self.throttle3.setSpeedSetting(0)
 
 		# create the consist
-		self.myConsist=jmri.InstanceManager.consistManagerInstance().getConsist(jmri.DccLocoAddress(24,False))
+		self.myConsist=jmri.InstanceManager.getDefault(jmri.ConsistManager).getConsist(jmri.DccLocoAddress(24,False))
 
 		# Add locomotive 1234 to the consist with it's forward as the 
 		# consist forward direction, and 5678 to the consist with its 			# normal forward direction as the reverse direction.
@@ -70,7 +70,7 @@ class ConsistExample(jmri.jmrit.automat.AbstractAutomaton) :
 		self.myConsist.remove(jmri.DccLocoAddress(5678,True))
 		
 		# and for good measure, delete the consist
-		self.myConsist=jmri.InstanceManager.consistManagerInstance().delConsist(jmri.DccLocoAddress(24,False))
+		self.myConsist=jmri.InstanceManager.getDefault(jmri.ConsistManager).delConsist(jmri.DccLocoAddress(24,False))
 
 		return 0	# to stop
 	

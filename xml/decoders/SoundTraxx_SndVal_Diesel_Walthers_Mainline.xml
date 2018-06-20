@@ -15,10 +15,14 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20171110"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20180103"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20180314"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20180410"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives        -->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel_Walthers.xml" Ver 6 file.              -->
   <!-- version 1.1 Specific UserID with tooltip indicating version number,
                   from SoundTraxx Product Identification guide Rev.B                         -->
+  <!-- version 2	Fix bug in CV57 and add missing cv19 and 217                               -->
+  <!-- version 3	Add ES44AC model, add manual RPM function mapping                          -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Sound Value Diesel Walthers Mainline OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Walthers Mainline Sound Value diesel decoders">
@@ -33,11 +37,31 @@
           <label xml:lang="it">Tromba</label>
         </output>
         <output name="Reserved"/>
-        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
         <output name="Dimming"/>
         <output name="Mute"/>
+        <output name="RPM" label="-"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="ES44AC" numOuts="3" numFns="14" connector="other" productID="ES">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="FX6|Rule 17"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="Reserved"/>
+        <output name="Short" label="Horn">
+          <label xml:lang="it">Tromba</label>
+        </output>
+        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="RPM" label="-"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Ditch</functionlabel>
         </functionlabels>
       </model>
       <model model="GP15" numOuts="3" numFns="14" connector="other" productID="GP15">
@@ -51,9 +75,10 @@
           <label xml:lang="it">Tromba</label>
         </output>
         <output name="Reserved"/>
-        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
         <output name="Dimming"/>
         <output name="Mute"/>
+        <output name="RPM" label="-"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
         </functionlabels>
@@ -69,9 +94,10 @@
           <label xml:lang="it">Tromba</label>
         </output>
         <output name="Reserved"/>
-        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
         <output name="Dimming"/>
         <output name="Mute"/>
+        <output name="RPM" label="-"/>
         <functionlabels>
           <functionlabel num="5" lockable="true">Beacon</functionlabel>
         </functionlabels>
@@ -87,11 +113,12 @@
           <label xml:lang="it">Tromba</label>
         </output>
         <output name="Reserved"/>
-        <output name="Reserved"/>
+        <output name="RPM" label="+"/>
         <output name="Dimming"/>
         <output name="Mute"/>
+        <output name="RPM" label="-"/>
         <functionlabels>
-          <functionlabel num="5" lockable="true">FX5</functionlabel>
+          <functionlabel num="5" lockable="true">Ditch</functionlabel>
         </functionlabels>
       </model>
       <functionlabels>
@@ -214,6 +241,7 @@
         <label>CV Lock ID Code (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
       <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
@@ -366,6 +394,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Short Horn</label>
       </variable>
+      <variable item="F3 controls output 10" CV="37" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Fans(+)</label>
+      </variable>
       <variable item="F3 controls output 11" CV="37" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output Dimming</label>
@@ -385,6 +417,10 @@
       <variable item="F4 controls output 8" CV="38" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Short Horn</label>
+      </variable>
+      <variable item="F4 controls output 10" CV="38" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Fans(+)</label>
       </variable>
       <variable item="F4 controls output 11" CV="38" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -414,6 +450,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Short Horn</label>
             </variable>
+            <variable item="F5 controls output 10" CV="39" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Fans(+)</label>
+            </variable>
             <variable item="F5 controls output 11" CV="39" mask="VXXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Dimming</label>
@@ -434,6 +474,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Short Horn</label>
             </variable>
+            <variable item="F6 controls output 10" CV="40" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Fans(+)</label>
+            </variable>
             <variable item="F6 controls output 11" CV="40" mask="VXXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Dimming</label>
@@ -441,6 +485,10 @@
             <variable item="F7 controls output 8" CV="41" mask="XXXXXXVX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Short Horn</label>
+            </variable>
+            <variable item="F7 controls output 10" CV="41" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Fans(+)</label>
             </variable>
             <variable item="F7 controls output 11" CV="41" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -450,9 +498,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Mute</label>
             </variable>
+            <variable item="F7 controls output 13" CV="41" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Comp(-)</label>
+            </variable>
             <variable item="F8 controls output 8" CV="42" mask="XXXXXXVX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Short Horn</label>
+            </variable>
+            <variable item="F8 controls output 10" CV="42" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Fans(+)</label>
             </variable>
             <variable item="F8 controls output 11" CV="42" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -462,11 +518,19 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Mute</label>
             </variable>
+            <variable item="F8 controls output 13" CV="42" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Comp(-)</label>
+            </variable>
             <!-- end normal function group 2 -->
             <!-- begin normal function group 3 -->
             <variable item="F9 controls output 8" CV="43" mask="XXXXXXVX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Short Horn</label>
+            </variable>
+            <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Fans(+)</label>
             </variable>
             <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -476,9 +540,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Mute</label>
             </variable>
+            <variable item="F9 controls output 13" CV="43" mask="XVXXXXXX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Comp(-)</label>
+            </variable>
             <variable item="F10 controls output 8" CV="44" mask="XXXXXXXV" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Short Horn</label>
+            </variable>
+            <variable item="F10 controls output 10" CV="44" mask="XXXXXVXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Fans(+)</label>
             </variable>
             <variable item="F10 controls output 11" CV="44" mask="XXXXVXXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -488,9 +560,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Mute</label>
             </variable>
+            <variable item="F10 controls output 13" CV="44" mask="XXVXXXXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Comp(-)</label>
+            </variable>
             <variable item="F11 controls output 8" CV="45" mask="XXXXXXXV" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Short Horn</label>
+            </variable>
+            <variable item="F11 controls output 10" CV="45" mask="XXXXXVXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Fans(+)</label>
             </variable>
             <variable item="F11 controls output 11" CV="45" mask="XXXXVXXX" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -500,9 +580,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Mute</label>
             </variable>
+            <variable item="F11 controls output 13" CV="45" mask="XXVXXXXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Comp(-)</label>
+            </variable>
             <variable item="F12 controls output 8" CV="46" mask="XXXXXXXV" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Short Horn</label>
+            </variable>
+            <variable item="F12 controls output 10" CV="46" mask="XXXXXVXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Fans(+)</label>
             </variable>
             <variable item="F12 controls output 11" CV="46" mask="XXXXVXXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -511,6 +599,10 @@
             <variable item="F12 controls output 12" CV="46" mask="XXXVXXXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Mute</label>
+            </variable>
+            <variable item="F12 controls output 13" CV="46" mask="XXVXXXXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Comp(-)</label>
             </variable>
         <!-- end normal function group 3 -->
       </variables>
@@ -537,6 +629,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Short Horn</label>
             </variable>
+            <variable item="F9 controls output 10(alt)" CV="39" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F9 controls output Fans(+)</label>
+            </variable>
             <variable item="F9 controls output 11(alt)" CV="39" mask="VXXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F9 controls output Dimming</label>
@@ -557,6 +653,10 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Short Horn</label>
             </variable>
+            <variable item="F10 controls output 10(alt)" CV="40" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F10 controls output Fans(+)</label>
+            </variable>
             <variable item="F10 controls output 11(alt)" CV="40" mask="VXXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F10 controls output Dimming</label>
@@ -564,6 +664,10 @@
             <variable item="F11 controls output 8(alt)" CV="41" mask="XXXXXXVX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Short Horn</label>
+            </variable>
+            <variable item="F11 controls output 10(alt)" CV="41" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Fans(+)</label>
             </variable>
             <variable item="F11 controls output 11(alt)" CV="41" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -573,9 +677,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F11 controls output Mute</label>
             </variable>
+            <variable item="F11 controls output 13(alt)" CV="41" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F11 controls output Comp(-)</label>
+            </variable>
             <variable item="F12 controls output 8(alt)" CV="42" mask="XXXXXXVX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Short Horn</label>
+            </variable>
+            <variable item="F12 controls output 10(alt)" CV="42" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Fans(+)</label>
             </variable>
             <variable item="F12 controls output 11(alt)" CV="42" mask="XXXVXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -585,11 +697,19 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Mute</label>
             </variable>
+            <variable item="F12 controls output 13(alt)" CV="42" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F12 controls output Comp(-)</label>
+            </variable>
           <!-- end exchanged function group 2 -->
           <!-- begin exchanged function group 3 -->
             <variable item="F5 controls output 8(alt)" CV="43" mask="XXXXXXVX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Short Horn</label>
+            </variable>
+            <variable item="F5 controls output 10(alt)" CV="43" mask="XXXXVXXX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Fans(+)</label>
             </variable>
             <variable item="F5 controls output 11(alt)" CV="43" mask="XXXVXXXX" default="0" minFn="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -599,9 +719,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F5 controls output Mute</label>
             </variable>
+            <variable item="F5 controls output 13(alt)" CV="43" mask="XVXXXXXX" default="0" minFn="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F5 controls output Comp(-)</label>
+            </variable>
             <variable item="F6 controls output 8(alt)" CV="44" mask="XXXXXXXV" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Short Horn</label>
+            </variable>
+            <variable item="F6 controls output 10(alt)" CV="44" mask="XXXXXVXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Fans(+)</label>
             </variable>
             <variable item="F6 controls output 11(alt)" CV="44" mask="XXXXVXXX" default="0" minFn="10">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -611,9 +739,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F6 controls output Mute</label>
             </variable>
+            <variable item="F6 controls output 13(alt)" CV="44" mask="XXVXXXXX" default="0" minFn="10">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F6 controls output Comp(-)</label>
+            </variable>
             <variable item="F7 controls output 8(alt)" CV="45" mask="XXXXXXXV" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Short Horn</label>
+            </variable>
+            <variable item="F7 controls output 10(alt)" CV="45" mask="XXXXXVXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Fans(+)</label>
             </variable>
             <variable item="F7 controls output 11(alt)" CV="45" mask="XXXXVXXX" default="0" minFn="11">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -623,9 +759,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F7 controls output Mute</label>
             </variable>
+            <variable item="F7 controls output 13(alt)" CV="45" mask="XXVXXXXX" default="0" minFn="11">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F7 controls output Comp(-)</label>
+            </variable>
             <variable item="F8 controls output 8(alt)" CV="46" mask="XXXXXXXV" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Short Horn</label>
+            </variable>
+            <variable item="F8 controls output 10(alt)" CV="46" mask="XXXXXVXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Fans(+)</label>
             </variable>
             <variable item="F8 controls output 11(alt)" CV="46" mask="XXXXVXXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -634,6 +778,10 @@
             <variable item="F8 controls output 12(alt)" CV="46" mask="XXXVXXXX" default="0" minFn="12">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F8 controls output Mute</label>
+            </variable>
+            <variable item="F8 controls output 13(alt)" CV="46" mask="XXVXXXXX" default="0" minFn="12">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>F8 controls output Comp(-)</label>
             </variable>
           <!-- end exchanged function group 3 -->
       </variables>
@@ -679,7 +827,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX5 light output" include="SD70ACe">
+      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX5 light output" include="ES,SD70ACe">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
       </variable>
@@ -703,11 +851,15 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
       </variable>
-      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" minOut="4" default="1" tooltip="Used to configure the directionality of FX5A function output">
+      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" minOut="3" default="1" tooltip="Used to configure the directionality of FX5A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Forward Directional Control</label>
       </variable>
-      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="4" default="1" tooltip="Used to configure the directionality of FX5A function output">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="3" default="0" include="ES,SD70ACe" tooltip="Used to configure the directionality of FX5A function output">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>FX5 Reverse Directional Control</label>
+      </variable>
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="3" default="1" exclude="ES,SD70ACe" tooltip="Used to configure the directionality of FX5A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
@@ -862,6 +1014,14 @@
       <variable CV="216" item="EMF Option 1" default="140" tooltip="Specifies the reference voltage for BEMF">
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
+      </variable>
+      <variable CV="217" mask="XXXXXXVX" item="EMF Enable" default="1" tooltip="Enable back-EMF motor control">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+          <label>Back-EMF Enable</label>
+      </variable>
+      <variable CV="217" mask="XXXXVXXX" item="Load Control" default="0" tooltip="Direction commands will bring the motor to a full stop for a duration of 500ms before the decoder changes locomotive direction">
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+          <label>Auto-Stop Enable</label>
       </variable>
       <variable CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="20">
         <decVal/>

@@ -84,7 +84,7 @@ public class OlcbSensor extends AbstractSensor {
         if (addrInactive == null) {
             pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
 
-            timer = new Timer(true);
+            timer = new Timer("OLCB Sensor Timer",true);
             sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
                 @Override
                 public void update(Boolean value) {
@@ -262,6 +262,7 @@ public class OlcbSensor extends AbstractSensor {
     public void dispose() {
         if (sensorListener != null) sensorListener.release();
         if (pc != null) pc.release();
+        if (timer!=null) timer.cancel();
         super.dispose();
     }
 
@@ -271,6 +272,7 @@ public class OlcbSensor extends AbstractSensor {
      * Sorts by decoded EventID(s)
      */
     @CheckReturnValue
+    @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
         return OlcbSystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
     }

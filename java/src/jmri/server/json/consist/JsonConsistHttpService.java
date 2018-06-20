@@ -10,6 +10,7 @@ import static jmri.server.json.JSON.POSITION;
 import static jmri.server.json.JSON.SIZE_LIMIT;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.consist.JsonConsist.CONSIST;
+import static jmri.server.json.consist.JsonConsist.CONSISTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +19,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.Consist;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.consisttool.ConsistFile;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -29,7 +31,7 @@ import jmri.server.json.util.JsonUtilHttpService;
 
 /**
  *
- * @author Randall Wood Copyright (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonConsistHttpService extends JsonHttpService {
 
@@ -54,7 +56,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      * Change the properties and locomotives of a consist.
      *
      * This method takes as input the JSON representation of a consist as
-     * provided by {@link #getConsist(Locale, jmri.DccLocoAddress) }.
+     * provided by {@link #getConsist(Locale, jmri.LocoAddress) }.
      *
      * If present in the JSON, this method sets the following consist
      * properties:
@@ -85,7 +87,7 @@ public class JsonConsistHttpService extends JsonHttpService {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
-        DccLocoAddress address;
+        LocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
             address = new DccLocoAddress(data.path(ADDRESS).asInt(), data.path(IS_LONG_ADDRESS).asBoolean(false));
         } else {
@@ -102,7 +104,7 @@ public class JsonConsistHttpService extends JsonHttpService {
             consist.setConsistType(data.path(TYPE).asInt());
         }
         if (data.path(ENGINES).isArray()) {
-            ArrayList<DccLocoAddress> engines = new ArrayList<>();
+            ArrayList<LocoAddress> engines = new ArrayList<>();
             // add every engine
             for (JsonNode engine : data.path(ENGINES)) {
                 DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
@@ -131,7 +133,7 @@ public class JsonConsistHttpService extends JsonHttpService {
         if (!this.manager.isConsistManager()) {
             throw new JsonException(503, Bundle.getMessage(locale, "ErrorNoConsistManager")); // NOI18N
         }
-        DccLocoAddress address;
+        LocoAddress address;
         if (data.path(ADDRESS).canConvertToInt()) {
             address = new DccLocoAddress(data.path(ADDRESS).asInt(), data.path(IS_LONG_ADDRESS).asBoolean(false));
         } else {
@@ -159,7 +161,7 @@ public class JsonConsistHttpService extends JsonHttpService {
         }
         ArrayNode root = mapper.createArrayNode();
         for (LocoAddress address : this.manager.getConsistList()) {
-            root.add(getConsist(locale, (DccLocoAddress) address));
+            root.add(getConsist(locale, address));
         }
         return root;
     }
@@ -192,7 +194,7 @@ public class JsonConsistHttpService extends JsonHttpService {
      * @throws JsonException This exception has code 404 if the consist does not
      *                       exist.
      */
-    public JsonNode getConsist(Locale locale, DccLocoAddress address) throws JsonException {
+    public JsonNode getConsist(Locale locale, LocoAddress address) throws JsonException {
         if (this.manager.getConsistList().contains(address)) {
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, CONSIST);
@@ -215,6 +217,20 @@ public class JsonConsistHttpService extends JsonHttpService {
             return root;
         } else {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", CONSIST, address.toString())); // NOI18N
+        }
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case CONSIST:
+            case CONSISTS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/consist/consist-server.json",
+                        "jmri/server/json/consist/consist-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
     }
 }
