@@ -1,6 +1,7 @@
 package jmri.util.swing;
 
 import com.alexandriasoftware.swing.JSplitButton;
+import com.alexandriasoftware.swing.action.SplitButtonActionListener;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  * JColorChooser launching.
  *
  * @author Paul Bender Copyright (C) 2018
- * @since 4.13.1
+ * @since 4.1.1
  */
 public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
 
@@ -43,7 +44,7 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         //setButton.setImage(image);
         ImageIcon icon = new ImageIcon(image); 
         setButton.setIcon(icon);
-
+        setButton.setPopupMenu(new ColorListPopupMenu());
         g.dispose();
     }
 
@@ -61,16 +62,29 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         g.dispose();
 
         setButton = new JSplitButton(Bundle.getMessage("SetColor"),icon);
-        setButton.addActionListener((ActionEvent e) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+        setButton.addSplitButtonActionListener(new SplitButtonActionListener(){
+            @Override
+            public void buttonClicked(ActionEvent e){
+               Color desiredColor = JColorChooser.showDialog(setButton.getParent(),
                                  Bundle.getMessage("SetColor"),
                                  getColorFromModel());
-            if (desiredColor!=null) {
-                getColorSelectionModel().setSelectedColor(desiredColor);
+               if (desiredColor!=null) {
+                   getColorSelectionModel().setSelectedColor(desiredColor);
+               }
+            }
+
+            @Override
+            public void splitButtonClicked(ActionEvent e){
+            //Color desiredColor = JColorChooser.showDialog(this,
+            //                     Bundle.getMessage("SetColor"),
+            //                     getColorFromModel());
+            //if (desiredColor!=null) {
+            //    getColorSelectionModel().setSelectedColor(desiredColor);
             }
         });
 
         //setButton.setImage(image);
+        setButton.setPopupMenu(new ColorListPopupMenu());
         add(setButton);
     }
 
