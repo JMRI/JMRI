@@ -464,7 +464,7 @@ git push github
 
 - Mail announcement to jmriusers@yahoogroups.com
 
-    Subject is "Test version 4.11.7 of JMRI/DecoderPro is available for download" or "JMRI 4.8 is available for download"
+    Subject is "Test version 4.11.7 of JMRI/DecoderPro is available for download" or "JMRI 4.10 is available for download"
 
     Content:
     
@@ -486,8 +486,7 @@ Note that JMRI is made available under the GNU General Public License. For more 
 The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
 <http://jmri.org/releasenotes/jmri4.11.7.shtml>
 
-
-- If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
+- Close the [GitHub issue](https://github.com/JMRI/JMRI/issues) with a comment that sums up the release-build experience
 
 - Wait a day for complaints
 
@@ -513,8 +512,6 @@ The download links, along with lots of other information which we hope you'll re
 ```
 
 - Commit back any changes made to this doc
-
-- Close the [GitHub issue](https://github.com/JMRI/JMRI/issues) with a comment that sums up the release-build experience
 
 - Take a break!
 
