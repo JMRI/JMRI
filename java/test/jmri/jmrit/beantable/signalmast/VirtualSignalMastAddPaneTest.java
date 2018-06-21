@@ -68,7 +68,7 @@ public class VirtualSignalMastAddPaneTest {
         JFrameOperator frameOp = new JFrameOperator("Add/Edit Signal Mast");
         JCheckBoxOperator bBox = new JCheckBoxOperator(frameOp, "Approach Medium");
         
-        // disable B
+        // disable Approach Medium
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             bBox.push();
             vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name 1");
