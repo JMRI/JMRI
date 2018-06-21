@@ -89,7 +89,13 @@ public class OlcbSignalMastAddPaneTest {
         Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1").isAspectDisabled("Clear"));
 
         // check correct eventid present
-        Assert.assertEquals(new OlcbAddress("01.02.03.04.05.06.07.08"), new OlcbAddress(((OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1")).getOutputForAppearance("Clear")));
+        OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1");
+        Assert.assertEquals(new OlcbAddress("01.02.03.04.05.06.07.08"), new OlcbAddress(foundMast.getOutputForAppearance("Clear")));
+
+        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getLitEventId()));
+        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getNotLitEventId()));
+        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getHeldEventId()));
+        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             frame.dispose();
@@ -102,6 +108,10 @@ public class OlcbSignalMastAddPaneTest {
         Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
         OlcbSignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight(0001)", "user name 2");
         mast.setOutputForAppearance("Approach", "01.01.01.01.01.01.01.01");
+        mast.setLitEventId("03.01.01.01.01.01.01.01");
+        mast.setNotLitEventId("04.01.01.01.01.01.01.01");
+        mast.setHeldEventId("05.01.01.01.01.01.01.01");
+        mast.setNotHeldEventId("06.01.01.01.01.01.01.01");
         InstanceManager.getDefault(jmri.SignalMastManager.class).register(mast);
         
         Assert.assertEquals(1, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
@@ -138,9 +148,15 @@ public class OlcbSignalMastAddPaneTest {
         Assert.assertTrue(! InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2").isAspectDisabled("Unlit"));
 
         // check correct eventid present
-        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(((OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2")).getOutputForAppearance("Stop")));
-        Assert.assertEquals(new OlcbAddress("01.02.03.04.05.06.07.08"), new OlcbAddress(((OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2")).getOutputForAppearance("Clear")));
-        Assert.assertEquals(new OlcbAddress("01.01.01.01.01.01.01.01"), new OlcbAddress(((OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2")).getOutputForAppearance("Approach")));
+        OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 2");
+        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getOutputForAppearance("Stop")));
+        Assert.assertEquals(new OlcbAddress("01.02.03.04.05.06.07.08"), new OlcbAddress(foundMast.getOutputForAppearance("Clear")));
+        Assert.assertEquals(new OlcbAddress("01.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getOutputForAppearance("Approach")));
+
+        Assert.assertEquals(new OlcbAddress("03.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getLitEventId()));
+        Assert.assertEquals(new OlcbAddress("04.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotLitEventId()));
+        Assert.assertEquals(new OlcbAddress("05.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getHeldEventId()));
+        Assert.assertEquals(new OlcbAddress("06.01.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             frame.dispose();
