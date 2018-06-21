@@ -66,6 +66,17 @@ public class OlcbSignalMastTest {
     }
  
     @Test
+    public void testUnsetEvents() {
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        
+        Assert.assertEquals("lit", "x0000000000000000", t.getLitEventId());
+        Assert.assertEquals("not lit", "x0000000000000000", t.getNotLitEventId());
+
+        Assert.assertEquals("held", "x0000000000000000", t.getHeldEventId());
+        Assert.assertEquals("lit", "x0000000000000000", t.getNotHeldEventId());  
+    }
+ 
+    @Test
     public void testReceiveLitPcerMessage() {
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
 
