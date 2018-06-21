@@ -398,7 +398,7 @@ public class AddSignalMastPanel extends JPanel {
     /**
      * Check of user name done when creating new SignalMast.
      * In case of error, it looks a message and (if not headless) shows a dialog.
-     * @ return true if OK to proceed
+     * @return true if OK to proceed
      */
     boolean checkUserName(String nam) {
         if (!((nam == null) || (nam.equals("")))) {

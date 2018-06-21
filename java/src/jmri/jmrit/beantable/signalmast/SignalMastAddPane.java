@@ -54,7 +54,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
 
     /**
      * Load this pane with information from a mast.
-     * Do not invoke this is {@link #canHandleMast()} on that mast returns false.
+     * Do not invoke this is {@link #canHandleMast(SignalMast)} on that mast returns false.
      *
      * @param mast the SignalMast to display or null to reset a previous setting
      * //+ should be abstract
