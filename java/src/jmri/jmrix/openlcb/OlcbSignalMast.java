@@ -154,6 +154,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
         aspectMachine.setEventForState(appearance, new OlcbAddress(event).toEventID());
     }
 
+    public boolean isOutputConfigured(String appearance) {
+        return aspectMachine.getEventForState(appearance) != null;
+    }
+    
     public String getOutputForAppearance(String appearance) {
         EventID retval = aspectMachine.getEventForState(appearance);
         if (retval == null) {
@@ -228,6 +232,15 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public boolean getHeld() {
         return heldMachine.getState();
     }
+
+    /**
+     * Provide the last used sequence number
+     */
+    public static int getLastRef() {
+        return lastRef;
+    }
+
+    protected static int lastRef = 0;
 
     public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
     public String getLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
