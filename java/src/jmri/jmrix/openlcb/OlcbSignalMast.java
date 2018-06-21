@@ -47,8 +47,7 @@ import org.slf4j.LoggerFactory;
  * <li>(123) - number distinguishing this from others
  * </ul>
  * <p>
- * EventIDs are returned in their CanonicalString form; using OlcbAddress.toString() instead
- * would return the format in which they were provided.
+ * EventIDs are returned in format in which they were provided.
  * <p>
  * To keep OpenLCB distributed state consistent, setAspect does not immediately
  * change the local aspect.  Instead, it produced the relevant EventId on the 
@@ -151,20 +150,20 @@ public class OlcbSignalMast extends AbstractSignalMast {
     int mastNumber; // used to tell them apart
     
     public void setOutputForAppearance(String appearance, String event) {
-        aspectMachine.setEventForState(appearance, new OlcbAddress(event).toEventID());
+        aspectMachine.setEventForState(appearance, event);
     }
 
     public boolean isOutputConfigured(String appearance) {
-        return aspectMachine.getEventForState(appearance) != null;
+        return aspectMachine.getEventStringForState(appearance) != null;
     }
     
     public String getOutputForAppearance(String appearance) {
-        EventID retval = aspectMachine.getEventForState(appearance);
+        String retval = aspectMachine.getEventStringForState(appearance);
         if (retval == null) {
             log.error("Trying to get appearance " + appearance + " but it has not been configured");
             return "";
         }
-        return new OlcbAddress(retval).toString();
+        return retval;
     }
 
     @Override
@@ -239,21 +238,27 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public static int getLastRef() {
         return lastRef;
     }
-
     protected static int lastRef = 0;
 
-    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
-    public String getLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
-    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.FALSE, new OlcbAddress(event).toEventID()); }
-    public String getNotLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.FALSE)).toCanonicalString(); }
+    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, event); }
+    public String getLitEventId() { return litMachine.getEventStringForState(Boolean.TRUE); }
+    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.FALSE, event); }
+    public String getNotLitEventId() { return litMachine.getEventStringForState(Boolean.FALSE); }
 
-    public void setHeldEventId(String event) { heldMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
-    public String getHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
-    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.FALSE, new OlcbAddress(event).toEventID()); }
-    public String getNotHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.FALSE)).toCanonicalString(); }
+    public void setHeldEventId(String event) { heldMachine.setEventForState(Boolean.TRUE, event); }
+    public String getHeldEventId() { return heldMachine.getEventStringForState(Boolean.TRUE); }
+    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.FALSE, event); }
+    public String getNotHeldEventId() { return heldMachine.getEventStringForState(Boolean.FALSE); }
 
     
 
+    /**
+     * Implement a general state machine where state transitions are 
+     * associated with the production and consumption of specific events.
+     * There's a one-to-one mapping between transitions and events.
+     * EventID storage is via Strings, so that the user-visible 
+     * eventID string is preserved.
+     */
     static class StateMachine<T> extends org.openlcb.MessageDecoder {
         public StateMachine(Connection connection, NodeID node, T start) {
             this.connection = connection;
@@ -265,28 +270,39 @@ public class OlcbSignalMast extends AbstractSignalMast {
         NodeID node;
         T state;
         boolean initizalized = false;
-        protected HashMap<T, EventID> stateToEvent = new HashMap<>();
+        protected HashMap<T, String> stateToEventString = new HashMap<>();
+        protected HashMap<T, EventID> stateToEventID = new HashMap<>();
         protected HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
         
         public void setState(@Nonnull T newState) {
-            log.debug("sending PCER to {}", getEventForState(newState));
+            log.debug("sending PCER to {}", getEventStringForState(newState));
             connection.put(
-                    new ProducerConsumerEventReportMessage(node, getEventForState(newState)),
+                    new ProducerConsumerEventReportMessage(node, getEventIDForState(newState)),
                     null);
         }
         
         @Nonnull
         public T getState() { return state; }
         
-        public void setEventForState(@Nonnull T key, @Nonnull EventID value) {
-            stateToEvent.put(key, value);
-            eventToState.put(value, key);
+        public void setEventForState(@Nonnull T key, @Nonnull String value) {
+            stateToEventString.put(key, value);
+
+            EventID eid = new EventID(value);
+            stateToEventID.put(key, eid);
+            
+            eventToState.put(eid, key);
         }
         
         @Nonnull
-        public EventID getEventForState(@Nonnull T key) {
-            EventID retval = stateToEvent.get(key);
+        public EventID getEventIDForState(@Nonnull T key) {
+            EventID retval = stateToEventID.get(key);
             if (retval == null) retval = new EventID("00.00.00.00.00.00.00.00");
+            return retval;
+        }
+        @Nonnull
+        public String getEventStringForState(@Nonnull T key) {
+            String retval = stateToEventString.get(key);
+            if (retval == null) retval = "00.00.00.00.00.00.00.00";
             return retval;
         }
 
@@ -294,7 +310,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * Internal method to determine the EventState for a reply
          * to an Identify* method
          */
-        EventState getEventState(EventID event) {
+        EventState getEventIDState(EventID event) {
             T value = eventToState.get(event);
             if (initizalized) {
                 if (value.equals(state)) {
@@ -359,10 +375,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
             for (Map.Entry<EventID,T> entry : set) {
                 EventID event = entry.getKey();
                 connection.put(
-                    new ConsumerIdentifiedMessage(node, event, getEventState(event)),
+                    new ConsumerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
                 connection.put(
-                    new ProducerIdentifiedMessage(node, event, getEventState(event)),
+                    new ProducerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
             }
         }
@@ -375,7 +391,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
             EventID event = msg.getEventID();
             if (eventToState.containsKey(event)) {
                 connection.put(
-                    new ProducerIdentifiedMessage(node, event, getEventState(event)),
+                    new ProducerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
             }
         }
@@ -388,7 +404,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
             EventID event = msg.getEventID();
             if (eventToState.containsKey(event)) {
                 connection.put(
-                    new ConsumerIdentifiedMessage(node, event, getEventState(event)),
+                    new ConsumerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
             }
         }

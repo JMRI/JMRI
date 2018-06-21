@@ -33,8 +33,6 @@ import org.junit.Test;
  */
 public class OlcbSignalMastTest {
         
-    private static OlcbSystemConnectionMemo memo;
-
     @Test
     public void testCtor1() {
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
@@ -47,7 +45,7 @@ public class OlcbSignalMastTest {
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.8");
 
-        Assert.assertEquals("Stop aspect event", "x0102030405060708", t.getOutputForAppearance("Stop"));
+        Assert.assertEquals("Stop aspect event", "1.2.3.4.5.6.7.8", t.getOutputForAppearance("Stop"));
     }
 
     @Test
@@ -55,25 +53,25 @@ public class OlcbSignalMastTest {
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
         
         t.setLitEventId("1.2.3.4.5.6.7.1");
-        Assert.assertEquals("lit", "x0102030405060701", t.getLitEventId());
+        Assert.assertEquals("lit", "1.2.3.4.5.6.7.1", t.getLitEventId());
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
-        Assert.assertEquals("not lit", "x0102030405060702", t.getNotLitEventId());
+        Assert.assertEquals("not lit", "1.2.3.4.5.6.7.2", t.getNotLitEventId());
 
         t.setHeldEventId("1.2.3.4.5.6.7.3");
-        Assert.assertEquals("held", "x0102030405060703", t.getHeldEventId());
+        Assert.assertEquals("held", "1.2.3.4.5.6.7.3", t.getHeldEventId());
         t.setNotHeldEventId("1.2.3.4.5.6.7.4");
-        Assert.assertEquals("lit", "x0102030405060704", t.getNotHeldEventId());  
+        Assert.assertEquals("lit", "1.2.3.4.5.6.7.4", t.getNotHeldEventId());  
     }
  
     @Test
     public void testUnsetEvents() {
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
         
-        Assert.assertEquals("lit", "x0000000000000000", t.getLitEventId());
-        Assert.assertEquals("not lit", "x0000000000000000", t.getNotLitEventId());
+        Assert.assertEquals("lit", "00.00.00.00.00.00.00.00", t.getLitEventId());
+        Assert.assertEquals("not lit", "00.00.00.00.00.00.00.00", t.getNotLitEventId());
 
-        Assert.assertEquals("held", "x0000000000000000", t.getHeldEventId());
-        Assert.assertEquals("lit", "x0000000000000000", t.getNotHeldEventId());  
+        Assert.assertEquals("held", "00.00.00.00.00.00.00.00", t.getHeldEventId());
+        Assert.assertEquals("lit", "00.00.00.00.00.00.00.00", t.getNotHeldEventId());  
     }
  
     @Test
@@ -180,11 +178,11 @@ public class OlcbSignalMastTest {
         
         Assert.assertEquals("starting state", States2.B, machine.getState());
         
-        machine.setEventForState(States2.A, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
-        machine.setEventForState(States2.B, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+        machine.setEventForState(States2.A, "01.00.00.00.00.00.01.00");
+        machine.setEventForState(States2.B, "01.00.00.00.00.00.02.00");
 
-        Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventForState(States2.A));
-        Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventForState(States2.B));
+        Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventIDForState(States2.A));
+        Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventIDForState(States2.B));
         
         machine.setState(States2.A);
         Assert.assertEquals("still starting state", States2.B, machine.getState());
@@ -202,8 +200,8 @@ public class OlcbSignalMastTest {
         
         OlcbSignalMast.StateMachine<States2> machine = new OlcbSignalMast.StateMachine<>(connection, nodeID, States2.B);
         
-        machine.setEventForState(States2.A, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
-        machine.setEventForState(States2.B, new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+        machine.setEventForState(States2.A, "01.00.00.00.00.00.01.00");
+        machine.setEventForState(States2.B, "01.00.00.00.00.00.02.00");
 
         Assert.assertEquals("none sent", 0, messages.size());
         
@@ -247,11 +245,11 @@ public class OlcbSignalMastTest {
         
         Assert.assertEquals("starting state", "B", machine.getState());
         
-        machine.setEventForState("A", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
-        machine.setEventForState("B", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+        machine.setEventForState("A", "01.00.00.00.00.00.01.00");
+        machine.setEventForState("B", "01.00.00.00.00.00.02.00");
 
-        Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventForState("A"));
-        Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventForState("B"));
+        Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventIDForState("A"));
+        Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventIDForState("B"));
         
         Assert.assertEquals("none sent", 0, messages.size());
         machine.setState("A");
@@ -270,8 +268,8 @@ public class OlcbSignalMastTest {
         
         OlcbSignalMast.StateMachine<String> machine = new OlcbSignalMast.StateMachine<>(connection, nodeID, "B");
         
-        machine.setEventForState("A", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}));
-        machine.setEventForState("B", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}));
+        machine.setEventForState("A", "01.00.00.00.00.00.01.00");
+        machine.setEventForState("B", "01.00.00.00.00.00.02.00");
 
         Assert.assertEquals("none sent", 0, messages.size());
 
@@ -309,6 +307,7 @@ public class OlcbSignalMastTest {
     }
 
     // from here down is testing infrastructure
+    private static OlcbSystemConnectionMemo memo;
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
