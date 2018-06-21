@@ -4,7 +4,7 @@ import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
-import org.openlcb.AbstractConnection;
+import org.openlcb.*;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
