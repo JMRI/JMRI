@@ -24,6 +24,25 @@ import org.openide.util.lookup.ServiceProvider;
  */
 public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
+    public VirtualSignalMastAddPane() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // lit/unlit controls
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "));
+        p.add(allowUnLit);
+        p.setAlignmentX(Component.LEFT_ALIGNMENT);
+        add(p);
+        
+        // disabled aspects controls
+        TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        disableborder.setTitle(Bundle.getMessage("DisableAspectsLabel"));
+        JScrollPane disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);
+        disabledAspectsScroll.setBorder(disableborder);
+        add(disabledAspectsScroll);
+
+    }
+
     /** {@inheritDoc} */
     @Override
     @Nonnull public String getPaneName() {
@@ -54,25 +73,6 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
         }
 
         disabledAspectsPanel.revalidate();
-    }
-
-    public VirtualSignalMastAddPane() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // lit/unlit controls
-        JPanel p = p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        p.add(new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "));
-        p.add(allowUnLit);
-        p.setAlignmentX(Component.LEFT_ALIGNMENT);
-        add(p);
-        
-        // disabled aspects controls
-        TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        disableborder.setTitle(Bundle.getMessage("DisableAspectsLabel"));
-        JScrollPane disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);
-        disabledAspectsScroll.setBorder(disableborder);
-        add(disabledAspectsScroll);
-
     }
 
     /** {@inheritDoc} */
