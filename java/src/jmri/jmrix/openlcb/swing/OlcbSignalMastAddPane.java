@@ -103,7 +103,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     @Nonnull public String getPaneName() {
-        return "OlcbSignalMast";
+        return Bundle.getMessage("OlcbSignalMastPane");
     }
 
 
@@ -260,7 +260,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         /** {@inheritDoc} */
         @Override
         @Nonnull public String getPaneName() {
-            return "OlcbSignalMast";
+            return Bundle.getMessage("OlcbSignalMastPane");
         }
 
         /** {@inheritDoc} */
