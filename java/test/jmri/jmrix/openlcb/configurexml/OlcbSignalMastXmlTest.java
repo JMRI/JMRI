@@ -61,10 +61,10 @@ public class OlcbSignalMastXmlTest {
         Element e = x.store(t);
         Assert.assertNotNull("Element", e);
         
-        Assert.assertEquals("x0102030405060701", e.getChild("lit").getChild("lit").getValue());
-        Assert.assertEquals("x0102030405060702", e.getChild("lit").getChild("notlit").getValue());
-        Assert.assertEquals("x0102030405060703", e.getChild("held").getChild("held").getValue());
-        Assert.assertEquals("x0102030405060704", e.getChild("held").getChild("notheld").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.1", e.getChild("lit").getChild("lit").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.2", e.getChild("lit").getChild("notlit").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.3", e.getChild("held").getChild("held").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.4", e.getChild("held").getChild("notheld").getValue());
     }
 
     // The minimal setup for log4J
