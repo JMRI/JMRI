@@ -1,10 +1,14 @@
 package jmri.jmrix.openlcb.configurexml;
 
 import jmri.configurexml.LoadAndStoreTestBase;
+import jmri.jmrix.openlcb.*;
+import jmri.util.*;
 
 import java.io.File;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openlcb.*;
 
 /**
  * Test that configuration files can be read and then stored again consistently.
@@ -30,5 +34,51 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     public LoadAndStoreTest(File file, boolean pass) {
         super(file, pass, SaveType.Config, false);
+    }
+
+    // from here down is testing infrastructure
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
+
+    @Before
+    @Override
+    static public void setUp() {
+        System.out.println("afterClass");
+        super.setUp();
+ 
+        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+        
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+        
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+    }
+
+    @After
+    @Override
+    public static void postClassTearDown() throws Exception {
+        System.out.println("afterClass");
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
+        connection = null;
+        nodeID = null;
+        super.tearDown();
     }
 }
