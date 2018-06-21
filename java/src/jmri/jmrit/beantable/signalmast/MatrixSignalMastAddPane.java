@@ -278,7 +278,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
          * @return A char[] of '1' and '0' elements with a length between 1 and
          *         5 corresponding with the number of outputs for this mast
          * @see jmri.implementation.MatrixSignalMast
-         * @see #okPressed(java.awt.event.ActionEvent)
          */
         char[] trimAspectBits() {
             try {
