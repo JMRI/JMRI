@@ -1174,7 +1174,7 @@ import org.junit.Test;
 </pre>
         </li>
 
-        <li>Finally, annotate the <code>setUp()</code> and
+        <li>Annotate the <code>setUp()</code> and
         <code>tearDown()</code> methods. Note: They have to be
         "public" methods, not "protected" or "private". They should
         end up looking like (plus your own content, of course):
@@ -1189,9 +1189,14 @@ import org.junit.Test;
           jmri.util.JUnitUtil.tearDown();
     }
 </pre>
-        <a name="super">Make sure no more references to the <code>super.</code></a>
+        <p><a name="super">Make sure no more references to the <code>super.</code></a>
         method remain in either setUp() or tearDown().
         Just remove those lines.
+        <p>A note on nesting:  If you have @Before and/or @After in both
+        a class and one its superclasses, they will be reliably invoked in 
+        the useful way:  First the @Before of the super class, then
+        the @Before of your class, then the test, then the @After of your class,
+        and finally the @After of the superclass.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was

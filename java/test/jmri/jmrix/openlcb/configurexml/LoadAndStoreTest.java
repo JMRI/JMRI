@@ -43,11 +43,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     static java.util.ArrayList<Message> messages;
 
     @Before
-    @Override
-    static public void setUp() {
-        System.out.println("afterClass");
-        super.setUp();
- 
+    public void localSetUp() {
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
         
         messages = new java.util.ArrayList<>();
@@ -70,15 +66,12 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     }
 
     @After
-    @Override
-    public static void postClassTearDown() throws Exception {
-        System.out.println("afterClass");
+    public void localTearDown() throws Exception {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
-        super.tearDown();
     }
 }
