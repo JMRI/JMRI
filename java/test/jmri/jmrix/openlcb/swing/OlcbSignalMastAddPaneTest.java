@@ -73,9 +73,24 @@ public class OlcbSignalMastAddPaneTest {
         frame.pack();
         frame.setVisible(true);
         
+        // check load
+        Assert.assertEquals("00.00.00.00.00.00.00.00", vp.litEventID.getText());
+        Assert.assertEquals("00.00.00.00.00.00.00.00", vp.notLitEventID.getText());
+        Assert.assertEquals("00.00.00.00.00.00.00.00", vp.heldEventID.getText());
+        Assert.assertEquals("00.00.00.00.00.00.00.00", vp.notHeldEventID.getText());
+
+        // disable Approach Medim, change some of the event IDs
+        // then build the mast, all on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            vp.aspectEventIDs.get("Clear").setText("01.02.03.04.05.06.07.08");
             vp.disabledAspects.get("Approach Medium").setSelected(true);
+
+            vp.aspectEventIDs.get("Clear").setText("01.02.03.04.05.06.07.08");
+            
+            vp.litEventID.setText(    "03.02.01.01.01.01.01.01");
+            vp.notLitEventID.setText( "04.02.01.01.01.01.01.01");
+            vp.heldEventID.setText(   "05.02.01.01.01.01.01.01");
+            vp.notHeldEventID.setText("06.02.01.01.01.01.01.01");
+            
             vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name 1");
         });
 
@@ -92,10 +107,10 @@ public class OlcbSignalMastAddPaneTest {
         OlcbSignalMast foundMast = (OlcbSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name 1");
         Assert.assertEquals(new OlcbAddress("01.02.03.04.05.06.07.08"), new OlcbAddress(foundMast.getOutputForAppearance("Clear")));
 
-        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getLitEventId()));
-        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getNotLitEventId()));
-        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getHeldEventId()));
-        Assert.assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00"), new OlcbAddress(foundMast.getNotHeldEventId()));
+        Assert.assertEquals(new OlcbAddress("03.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getLitEventId()));
+        Assert.assertEquals(new OlcbAddress("04.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotLitEventId()));
+        Assert.assertEquals(new OlcbAddress("05.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getHeldEventId()));
+        Assert.assertEquals(new OlcbAddress("06.02.01.01.01.01.01.01"), new OlcbAddress(foundMast.getNotHeldEventId()));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             frame.dispose();
@@ -128,11 +143,20 @@ public class OlcbSignalMastAddPaneTest {
         frame.pack();
         frame.setVisible(true);
         
-        // disable Approach, set Clear value
+        // check load
+        Assert.assertEquals(new OlcbAddress("03.01.01.01.01.01.01.01"), new OlcbAddress(vp.litEventID.getText()));
+        Assert.assertEquals(new OlcbAddress("04.01.01.01.01.01.01.01"), new OlcbAddress(vp.notLitEventID.getText()));
+        Assert.assertEquals(new OlcbAddress("05.01.01.01.01.01.01.01"), new OlcbAddress(vp.heldEventID.getText()));
+        Assert.assertEquals(new OlcbAddress("06.01.01.01.01.01.01.01"), new OlcbAddress(vp.notHeldEventID.getText()));
+        
+        // disable Approach, change some of the event IDs
+        // then build the mast, all on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            vp.aspectEventIDs.get("Clear").setText("01.02.03.04.05.06.07.08");
             vp.disabledAspects.get("Approach").setSelected(true);
             vp.disabledAspects.get("Unlit").setSelected(false);
+
+            vp.aspectEventIDs.get("Clear").setText("01.02.03.04.05.06.07.08");
+            
             vp.createMast("basic", "appearance-one-searchlight.xml", "user name 1");
         });
 

@@ -29,6 +29,12 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     public OlcbSignalMastAddPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        litEventID.setText("00.00.00.00.00.00.00.00");
+        notLitEventID.setText("00.00.00.00.00.00.00.00");
+        heldEventID.setText("00.00.00.00.00.00.00.00");
+        notHeldEventID.setText("00.00.00.00.00.00.00.00");
+
         // lit/unlit controls
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
@@ -43,6 +49,54 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         JScrollPane disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);
         disabledAspectsScroll.setBorder(disableborder);
         add(disabledAspectsScroll);
+        
+        JPanel p5;
+
+        // Lit
+        TitledBorder litborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        litborder.setTitle(Bundle.getMessage("LitUnLit"));
+        JPanel pLit = new JPanel();
+        pLit.setBorder(litborder);
+        pLit.setLayout(new BoxLayout(pLit, BoxLayout.Y_AXIS));
+        
+        p5 = new JPanel();
+        p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
+        p5.add(new JLabel(Bundle.getMessage("LitLabel")));
+        p5.add(Box.createHorizontalGlue());
+        pLit.add(p5);
+        pLit.add(litEventID);
+        
+        p5 = new JPanel();
+        p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
+        p5.add(new JLabel(Bundle.getMessage("NotLitLabel")));
+        p5.add(Box.createHorizontalGlue());
+        pLit.add(p5);
+        pLit.add(notLitEventID);
+        
+        add(pLit);
+       
+        // Held
+        TitledBorder heldborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        heldborder.setTitle(Bundle.getMessage("HeldUnHeld"));
+        JPanel pHeld= new JPanel();
+        pHeld.setBorder(heldborder);
+        pHeld.setLayout(new BoxLayout(pHeld, BoxLayout.Y_AXIS));
+        
+        p5 = new JPanel();
+        p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
+        p5.add(new JLabel(Bundle.getMessage("HeldLabel")));
+        p5.add(Box.createHorizontalGlue());
+        pHeld.add(p5);
+        pHeld.add(heldEventID);
+        
+        p5 = new JPanel();
+        p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
+        p5.add(new JLabel(Bundle.getMessage("NotHeldLabel")));
+        p5.add(Box.createHorizontalGlue());
+        pHeld.add(p5);
+        pHeld.add(notHeldEventID);
+        
+        add(pHeld);
 
     }
 
@@ -58,7 +112,11 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
     LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(14);
     LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(14);
     JPanel disabledAspectsPanel = new JPanel();
-    
+    EventIdTextField litEventID = new EventIdTextField();
+    EventIdTextField notLitEventID = new EventIdTextField();
+    EventIdTextField heldEventID = new EventIdTextField();
+    EventIdTextField notHeldEventID = new EventIdTextField();
+
     OlcbSignalMast currentMast = null;
 
     /** {@inheritDoc} */
@@ -88,6 +146,11 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             disabledAspects.get(aspect).setText(Bundle.getMessage("DisableAspect"));
             disabledAspectsPanel.add(p1);
         }
+
+        litEventID.setText("00.00.00.00.00.00.00.00");
+        notLitEventID.setText("00.00.00.00.00.00.00.00");
+        heldEventID.setText("00.00.00.00.00.00.00.00");
+        notHeldEventID.setText("00.00.00.00.00.00.00.00");
 
         disabledAspectsPanel.revalidate();
     }
@@ -128,11 +191,16 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
                 aspectEventIDs.put(aspect, eventID);
             }
             if (currentMast.isOutputConfigured(aspect)) {
-                aspectEventIDs.get(aspect).setText(new OlcbAddress(currentMast.getOutputForAppearance(aspect)).toDottedString());
+                aspectEventIDs.get(aspect).setText(currentMast.getOutputForAppearance(aspect));
             } else {
                 aspectEventIDs.get(aspect).setText("00.00.00.00.00.00.00.00");
             }
         }
+
+        litEventID.setText(currentMast.getLitEventId());
+        notLitEventID.setText(currentMast.getNotLitEventId());
+        heldEventID.setText(currentMast.getHeldEventId());
+        notHeldEventID.setText(currentMast.getNotHeldEventId());        
     }
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
@@ -162,6 +230,12 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             }
             currentMast.setOutputForAppearance(aspect, aspectEventIDs.get(aspect).getText());
         }
+        
+        currentMast.setLitEventId(litEventID.getText());
+        currentMast.setNotLitEventId(notLitEventID.getText());
+        currentMast.setHeldEventId(heldEventID.getText());
+        currentMast.setNotHeldEventId(notHeldEventID.getText());
+
         currentMast.setAllowUnLit(allowUnLit.isSelected());
     }
 
