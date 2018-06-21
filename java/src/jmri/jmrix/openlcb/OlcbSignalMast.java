@@ -274,14 +274,20 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     new ProducerConsumerEventReportMessage(node, getEventForState(newState)),
                     null);
         }
+        
+        @Nonnull
         public T getState() { return state; }
         
         public void setEventForState(@Nonnull T key, @Nonnull EventID value) {
             stateToEvent.put(key, value);
             eventToState.put(value, key);
         }
+        
+        @Nonnull
         public EventID getEventForState(@Nonnull T key) {
-            return stateToEvent.get(key);
+            EventID retval = stateToEvent.get(key);
+            if (retval == null) retval = new EventID("00.00.00.00.00.00.00.00");
+            return retval;
         }
 
         /**
@@ -305,7 +311,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
+        public void handleProducerConsumerEventReport(@Nonnull ProducerConsumerEventReportMessage msg, Connection sender){
             if (eventToState.containsKey(msg.getEventID())) {
                 initizalized = true;
                 state = eventToState.get(msg.getEventID());
@@ -315,7 +321,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
+        public void handleProducerIdentified(@Nonnull ProducerIdentifiedMessage msg, Connection sender){
             // process if for here and marked "valid"
             if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
                 initizalized = true;
@@ -326,7 +332,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
+        public void handleConsumerIdentified(@Nonnull ConsumerIdentifiedMessage msg, Connection sender){
             // process if for here and marked "valid"
             if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
                 initizalized = true;
@@ -338,7 +344,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyEvents(IdentifyEventsMessage msg, Connection sender){
+        public void handleIdentifyEvents(@Nonnull IdentifyEventsMessage msg, Connection sender){
             // ours?
             if (! node.equals(msg.getDestNodeID())) return;  // not to us
             sendAllIdentifiedMessages();
@@ -364,7 +370,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyProducers(IdentifyProducersMessage msg, Connection sender){
+        public void handleIdentifyProducers(@Nonnull IdentifyProducersMessage msg, Connection sender){
             // process if we have the event
             EventID event = msg.getEventID();
             if (eventToState.containsKey(event)) {
@@ -377,7 +383,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyConsumers(IdentifyConsumersMessage msg, Connection sender){
+        public void handleIdentifyConsumers(@Nonnull IdentifyConsumersMessage msg, Connection sender){
             // process if we have the event
             EventID event = msg.getEventID();
             if (eventToState.containsKey(event)) {
