@@ -226,6 +226,22 @@ public class AutoActiveTrain implements ThrottleListener {
         _stopBySpeedProfileAdjust = adjust;
     }
 
+    public String getCurrentSignal() {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            return  (_controllingSignal != null  ) ? "" : _controllingSignal.getSystemName() ;
+        } else {
+            return (_controllingSignalMast != null  ) ? "" : _controllingSignalMast.getSystemName();
+        }
+    }
+
+    public String getCurrentSignalUserName() {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            return  ( _controllingSignal == null || _controllingSignal.getUserName() == null) ? "" : _controllingSignal.getUserName();
+        } else {
+            return ( _controllingSignal == null || _controllingSignalMast.getUserName() == null) ? "" : _controllingSignalMast.getUserName();
+        }
+    }
+
     RosterEntry re = null;
     boolean useSpeedProfile = false;
 

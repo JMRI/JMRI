@@ -2536,7 +2536,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int ALLOCATEBUTTON_COLUMN = 10;
         public static final int TERMINATEBUTTON_COLUMN = 11;
         public static final int RESTARTCHECKBOX_COLUMN = 12;
-        public static final int MAX_COLUMN = 12;
+        public static final int ISAUTO_COLUMN = 13;
+        public static final int CURRENTSIGNAL_COLUMN = 14;
+        public static final int CURRENTSIGNAL_COLUMN_U = 15;
+        public static final int MAX_COLUMN = 15;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -2549,14 +2552,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
 
         @Override
-        public Class<?> getColumnClass(int c) {
-            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN) {
-                return JButton.class;
+        public Class<?> getColumnClass(int col) {
+            switch (col) {
+                case ALLOCATEBUTTON_COLUMN:
+                case TERMINATEBUTTON_COLUMN:
+                    return JButton.class;
+                case RESTARTCHECKBOX_COLUMN:
+                case ISAUTO_COLUMN:
+                    return Boolean.class;
+                default:
+                    return String.class;
             }
-            if (c == RESTARTCHECKBOX_COLUMN) {
-                return Boolean.class;
-            }
-            return String.class;
         }
 
         @Override
@@ -2570,11 +2576,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
 
         @Override
-        public boolean isCellEditable(int r, int c) {
-            if (c == ALLOCATEBUTTON_COLUMN || c == TERMINATEBUTTON_COLUMN || c == RESTARTCHECKBOX_COLUMN) {
-                return (true);
+        public boolean isCellEditable(int row, int col) {
+            switch (col) {
+                case ALLOCATEBUTTON_COLUMN:
+                case TERMINATEBUTTON_COLUMN:
+                case RESTARTCHECKBOX_COLUMN:
+                    return (true);
+                default:
+                    return (false);
             }
-            return (false);
         }
 
         @Override
@@ -2606,6 +2616,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return(Bundle.getMessage("AllocateButton"));
                 case TERMINATEBUTTON_COLUMN:
                     return(Bundle.getMessage("TerminateTrain"));
+                case ISAUTO_COLUMN:
+                    return(Bundle.getMessage("AutoColumnTitle"));
+                case CURRENTSIGNAL_COLUMN:
+                    return(Bundle.getMessage("CurrentSignalSysColumnTitle"));
+                case CURRENTSIGNAL_COLUMN_U:
+                    return(Bundle.getMessage("CurrentSignalColumnTitle"));
                 default:
                     return "";
             }
@@ -2634,6 +2650,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
                 case RESTARTCHECKBOX_COLUMN:
+                case ISAUTO_COLUMN:
+                case CURRENTSIGNAL_COLUMN:
+                case CURRENTSIGNAL_COLUMN_U:
                     return new JTextField(5).getPreferredSize().width;
                 default:
                     // fall through
@@ -2696,6 +2715,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return Bundle.getMessage("TerminateTrain");
                 case RESTARTCHECKBOX_COLUMN:
                     return at.getResetWhenDone();
+                case ISAUTO_COLUMN:
+                    return at.getAutoRun();
+                case CURRENTSIGNAL_COLUMN:
+                    if (at.getAutoRun()) {
+                        return(at.getAutoActiveTrain().getCurrentSignal());
+                    } else {
+                        return("NA");
+                    }
+                case CURRENTSIGNAL_COLUMN_U:
+                    if (at.getAutoRun()) {
+                        return(at.getAutoActiveTrain().getCurrentSignalUserName());
+                    } else {
+                        return("NA");
+                    }
                 default:
                     return (" ");
             }
