@@ -1,7 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import java.util.*;
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 import jmri.CommandStation;
 import jmri.InstanceManager;
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * <li>F$olm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>(123) - number distinguishing this from others
+ * <li>($123) - number distinguishing this from others
  * </ul>
  * <p>
  * EventIDs are returned in format in which they were provided.
@@ -120,11 +120,12 @@ public class OlcbSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
-        String tmp = parts[2].substring(parts[2].indexOf("(") + 1, parts[2].indexOf(")"));
+        String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")")); // +2 because we're looking for 2 characters
+        
         try {
             mastNumber = Integer.parseInt(tmp);
         } catch (NumberFormatException e) {
-            log.warn("Mast number of SystemName " + systemName + " is not in the correct format");
+            log.warn("Mast number of SystemName {} is not in the correct format: {} is not an integer", systemName, tmp);
         }
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
@@ -287,19 +288,19 @@ public class OlcbSignalMast extends AbstractSignalMast {
         public void setEventForState(@Nonnull T key, @Nonnull String value) {
             stateToEventString.put(key, value);
 
-            EventID eid = new EventID(value);
+            EventID eid = new OlcbAddress(value).toEventID();
             stateToEventID.put(key, eid);
             
             eventToState.put(eid, key);
         }
         
-        @Nonnull
+        @CheckForNull
         public EventID getEventIDForState(@Nonnull T key) {
             EventID retval = stateToEventID.get(key);
             if (retval == null) retval = new EventID("00.00.00.00.00.00.00.00");
             return retval;
         }
-        @Nonnull
+        @CheckForNull
         public String getEventStringForState(@Nonnull T key) {
             String retval = stateToEventString.get(key);
             if (retval == null) retval = "00.00.00.00.00.00.00.00";

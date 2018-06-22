@@ -63,7 +63,7 @@
       </disabledAspects>
     </virtualsignalmast>
     <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml">
-      <systemName>MF$olm:AAR-1946:PL-2-high(0001)</systemName>
+      <systemName>MF$olm:AAR-1946:PL-2-high($0001)</systemName>
       <userName>Olcb 1</userName>
       <lit>
         <lit>00.00.00.00.00.00.01.00</lit>

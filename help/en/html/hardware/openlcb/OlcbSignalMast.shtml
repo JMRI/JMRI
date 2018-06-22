@@ -41,6 +41,24 @@
       <p>There's also a separate <a href="SignalMast.pdf">technical summary</a> as a 
       <a href="SignalMast.pdf">PDF document</a>.
       
+      <h3>Names</h3>
+      
+      Valid OpenLCB Signal Mast system names look like:
+      
+      <ul>
+      <li>MF$olm:basic:one-searchlight($1)
+      </ul>
+      
+      where the parts are
+      <ul>
+      <li>M - The system connection; these need a specific connection ID to use
+      <li>F - Indicates signal mast
+      <li>$olm - indicates an OpenLCB mast
+      <li>basic - signal system
+      <li>one-searchlight - mast type
+      <li>$1 - 1st mast (The $ indicates automatically assigned)
+      </ul>
+      
       <h3>JMRI Help</h3>
 
       <p>Back to the <a href="index.shtml">main OpenLCB Helppage</a></p>

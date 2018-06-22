@@ -213,7 +213,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             String name = "MF$olm:"
                     + sigsysname
                     + ":" + mastname.substring(11, mastname.length() - 4);
-            name += "(" + (paddedNumber.format(OlcbSignalMast.getLastRef() + 1)) + ")";
+            name += "($" + (paddedNumber.format(OlcbSignalMast.getLastRef() + 1)) + ")";
             currentMast = new OlcbSignalMast(name);
             if (!username.equals("")) {
                 currentMast.setUserName(username);

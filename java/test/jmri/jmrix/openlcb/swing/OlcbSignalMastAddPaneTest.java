@@ -22,7 +22,7 @@ public class OlcbSignalMastAddPaneTest {
 
     @Test
     public void testSetMast() {
-        OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight(0001)", "user name");
+        OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name");
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
@@ -41,14 +41,14 @@ public class OlcbSignalMastAddPaneTest {
     @Test
     public void testCreateMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
-        new OlcbSignalMast("MF$olm:basic:one-searchlight(1)", "no user name"){
-            { lastRef = 4; } // reset references - this leads to (0005) below, just in case anybody else has created one
+        new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
+            { lastRef = 4; } // reset references - this leads to ($0005) below, just in case anybody else has created one
         };
         
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
                 
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName("MF$olm:AAR-1946:PL-2-high(0005)"));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName("MF$olm:AAR-1946:PL-2-high($0005)"));
         
     }
 
@@ -121,7 +121,7 @@ public class OlcbSignalMastAddPaneTest {
     public void testEditAndDisableViaGui() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
-        OlcbSignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight(0001)", "user name 2");
+        OlcbSignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name 2");
         mast.setOutputForAppearance("Approach", "01.01.01.01.01.01.01.01");
         mast.setLitEventId("03.01.01.01.01.01.01.01");
         mast.setNotLitEventId("04.01.01.01.01.01.01.01");

@@ -35,14 +35,14 @@ public class OlcbSignalMastTest {
         
     @Test
     public void testCtor1() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
 
-        Assert.assertEquals("system name", "MF$olm:AAR-1946:PL-1-high-abs(1)", t.getSystemName());
+        Assert.assertEquals("system name", "MF$olm:AAR-1946:PL-1-high-abs($1)", t.getSystemName());
     }
 
     @Test
     public void testStopAspect() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.8");
 
         Assert.assertEquals("Stop aspect event", "1.2.3.4.5.6.7.8", t.getOutputForAppearance("Stop"));
@@ -50,7 +50,7 @@ public class OlcbSignalMastTest {
 
     @Test
     public void testSetGetEvents() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
         
         t.setLitEventId("1.2.3.4.5.6.7.1");
         Assert.assertEquals("lit", "1.2.3.4.5.6.7.1", t.getLitEventId());
@@ -65,7 +65,7 @@ public class OlcbSignalMastTest {
  
     @Test
     public void testUnsetEvents() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
         
         Assert.assertEquals("lit", "00.00.00.00.00.00.00.00", t.getLitEventId());
         Assert.assertEquals("not lit", "00.00.00.00.00.00.00.00", t.getNotLitEventId());
@@ -76,7 +76,7 @@ public class OlcbSignalMastTest {
  
     @Test
     public void testReceiveLitPcerMessage() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
 
         t.setLitEventId("1.2.3.4.5.6.7.1");
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
@@ -103,7 +103,7 @@ public class OlcbSignalMastTest {
 
     @Test
     public void testReceiveIdProducerLitMessage() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
 
         t.setLitEventId("1.2.3.4.5.6.7.1");
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
@@ -127,7 +127,7 @@ public class OlcbSignalMastTest {
 
     @Test
     public void testReceiveLitProducerIdMessage() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
 
         t.setLitEventId("1.2.3.4.5.6.7.1");
         t.setNotLitEventId("1.2.3.4.5.6.7.2");

@@ -46,7 +46,7 @@ public class OlcbSignalMastXmlTest {
 
     @Test
     public void testStore(){
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
         t.setLitEventId("1.2.3.4.5.6.7.1");
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
         t.setHeldEventId("1.2.3.4.5.6.7.3");
