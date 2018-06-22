@@ -1131,6 +1131,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
+    public void newPanelDefaults() {
+        getLayoutTrackDrawingOptions().setMainRailWidth(2);
+        getLayoutTrackDrawingOptions().setSideRailWidth(1);
+    }
+
     private void createFloatingEditToolBox() {
         if (floatingEditToolBoxFrame == null) {
             if (floatingEditContentScrollPane == null) {
