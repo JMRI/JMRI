@@ -192,7 +192,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         if (!litBefore.equals(litMachine.getState())) firePropertyChange("Lit", litBefore, litMachine.getState());
         if (!heldBefore.equals(heldMachine.getState())) firePropertyChange("Held", heldBefore, heldMachine.getState());
         
-        if ((!aspectBefore.equals(aspectMachine.getState()) ) ) updateState(aspectMachine.getState());
+        if ( (aspectBefore==null && aspectMachine.getState()!=null) || (aspectBefore!=null && !aspectBefore.equals(aspectMachine.getState()) ) ) updateState(aspectMachine.getState());
 
     }
     
