@@ -228,9 +228,9 @@ public class AutoActiveTrain implements ThrottleListener {
 
     public String getCurrentSignal() {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
-            return  (_controllingSignal != null  ) ? "" : _controllingSignal.getSystemName() ;
+            return  (_controllingSignal == null  ) ? "" : _controllingSignal.getSystemName() ;
         } else {
-            return (_controllingSignalMast != null  ) ? "" : _controllingSignalMast.getSystemName();
+            return (_controllingSignalMast == null  ) ? "" : _controllingSignalMast.getSystemName();
         }
     }
 
