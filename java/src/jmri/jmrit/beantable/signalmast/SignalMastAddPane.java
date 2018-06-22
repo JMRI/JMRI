@@ -125,7 +125,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
 
         }
 
-        static Map<String, SignalMastAddPaneProvider> instanceMap = null;
+        static volatile Map<String, SignalMastAddPaneProvider> instanceMap = null;
     }
     
 }

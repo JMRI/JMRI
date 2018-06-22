@@ -192,7 +192,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         if (!litBefore.equals(litMachine.getState())) firePropertyChange("Lit", litBefore, litMachine.getState());
         if (!heldBefore.equals(heldMachine.getState())) firePropertyChange("Held", heldBefore, heldMachine.getState());
         
-        if ( (aspectBefore==null && aspectMachine.getState()!=null) || (aspectBefore!=null && !aspectBefore.equals(aspectMachine.getState()) ) ) updateState(aspectMachine.getState());
+        if ((!aspectBefore.equals(aspectMachine.getState()) ) ) updateState(aspectMachine.getState());
 
     }
     
@@ -261,10 +261,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
      * eventID string is preserved.
      */
     static class StateMachine<T> extends org.openlcb.MessageDecoder {
-        public StateMachine(Connection connection, NodeID node, T start) {
+        public StateMachine(@Nonnull Connection connection, @Nonnull NodeID node, @Nonnull T start) {
             this.connection = connection;
             this.node = node;
-            if (start != null) this.state = start;
+            this.state = start;
         }
         
         Connection connection;
