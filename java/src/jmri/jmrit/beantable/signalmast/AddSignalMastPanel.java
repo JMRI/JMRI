@@ -274,6 +274,8 @@ public class AddSignalMastPanel extends JPanel {
                 currentPane = pane;
                 selection(pane.getPaneName());
                 pane.setMast(mast);
+                // set the driver combobox
+                signalMastDriver.setSelectedItem(pane.getPaneName());
                 break;
             }
         }
