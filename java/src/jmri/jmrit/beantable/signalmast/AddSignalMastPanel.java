@@ -441,7 +441,7 @@ public class AddSignalMastPanel extends JPanel {
     void okPressed() {
         // get and validate entered global information 
         String mastname = mastNames.get(mastBox.getSelectedIndex()).getName();
-        String user = NamedBean.normalizeUserName(userName.getText());
+        String user = userName.getText() != null ? NamedBean.normalizeUserName(userName.getText()) : "";
         if (!GraphicsEnvironment.isHeadless()) {
             if (user.equals("")) {
                 int i = JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",
