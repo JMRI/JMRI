@@ -454,8 +454,16 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         // ask top-most pane to make a signal
-        currentPane.createMast(sigsysname,mastname,user);
-        
+        try {
+            currentPane.createMast(sigsysname,mastname,user);
+        } catch (RuntimeException ex) {
+            // This is intrinsically swing, so pop a dialog
+            JOptionPane.showMessageDialog(this,
+                Bundle.getMessage("DialogFailMessage", ex.toString()),
+                Bundle.getMessage("DialogFailTitle"),  // title of box
+                JOptionPane.ERROR_MESSAGE);
+            return; // without clearing panel, so user can try again
+        }
         clearPanel();
     }
 
