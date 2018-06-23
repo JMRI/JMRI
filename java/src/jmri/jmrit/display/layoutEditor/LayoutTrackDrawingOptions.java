@@ -7,6 +7,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
 import javax.annotation.Nonnull;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  *
@@ -74,6 +75,7 @@ public class LayoutTrackDrawingOptions {
 
     public void setSideBallastColor(@Nonnull Color val) {
         sideBallastColor = val;
+        JmriColorChooser.addRecentColor(val);
     }
 
     private int sideTieLength = 0;
@@ -94,6 +96,7 @@ public class LayoutTrackDrawingOptions {
 
     public void setSideTieColor(@Nonnull Color val) {
         sideTieColor = val;
+        JmriColorChooser.addRecentColor(val);
     }
 
     private int sideTieWidth = 0;
@@ -154,6 +157,7 @@ public class LayoutTrackDrawingOptions {
 
     public void setSideRailColor(@Nonnull Color val) {
         sideRailColor = val;
+        JmriColorChooser.addRecentColor(val);
     }
 
     private int sideBlockLineDashPercentageX10 = 0;
@@ -194,6 +198,7 @@ public class LayoutTrackDrawingOptions {
 
     public void setMainBallastColor(@Nonnull Color val) {
         mainBallastColor = val;
+        JmriColorChooser.addRecentColor(val);
     }
 
     private int mainTieLength = 0;
@@ -214,6 +219,7 @@ public class LayoutTrackDrawingOptions {
 
     public void setMainTieColor(@Nonnull Color val) {
         mainTieColor = val;
+        JmriColorChooser.addRecentColor(val);
     }
 
     private int mainTieWidth = 0;
@@ -274,6 +280,7 @@ public class LayoutTrackDrawingOptions {
 
     public void setMainRailColor(@Nonnull Color val) {
         mainRailColor = val;
+        JmriColorChooser.addRecentColor(val);
     }
 
     private int mainBlockLineDashPercentageX10 = 0;

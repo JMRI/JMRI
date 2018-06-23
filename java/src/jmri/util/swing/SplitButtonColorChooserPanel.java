@@ -14,7 +14,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /**
  * Abstract Color Chooser extension that presents a split button
- * to set the color. Clicking the button results in a 
+ * to set the color. Clicking the button results in a
  * JColorChooser launching.
  *
  * @author Paul Bender Copyright (C) 2018
@@ -42,7 +42,7 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
 
         //setButton.setImage(image);
-        ImageIcon icon = new ImageIcon(image); 
+        ImageIcon icon = new ImageIcon(image);
         setButton.setIcon(icon);
         setButton.setPopupMenu(new ColorListPopupMenu(getColorSelectionModel()));
         g.dispose();
@@ -58,15 +58,15 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
         g.setColor(getColorFromModel());
         g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
 
-        ImageIcon icon = new ImageIcon(image); 
+        ImageIcon icon = new ImageIcon(image);
         g.dispose();
 
-        setButton = new JSplitButton(Bundle.getMessage("SetColor"),icon);
+        setButton = new JSplitButton(Bundle.getMessage("SetColor") + "      ",icon);  // NOI18N
         setButton.addSplitButtonActionListener(new SplitButtonActionListener(){
             @Override
             public void buttonClicked(ActionEvent e){
                Color desiredColor = JColorChooser.showDialog(setButton.getParent(),
-                                 Bundle.getMessage("SetColor"),
+                                 Bundle.getMessage("SetColor"),  // NOI18N
                                  getColorFromModel());
                if (desiredColor!=null) {
                    getColorSelectionModel().setSelectedColor(desiredColor);
@@ -90,7 +90,7 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
 
     @Override
     public String getDisplayName() {
-         return Bundle.getMessage("SplitButtonColorChooserName");
+         return Bundle.getMessage("SplitButtonColorChooserName");  // NOI18N
     }
 
     @Override

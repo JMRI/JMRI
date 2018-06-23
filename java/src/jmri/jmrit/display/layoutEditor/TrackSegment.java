@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -35,6 +34,7 @@ import jmri.util.ColorUtil;
 import jmri.util.FileUtil;
 import jmri.util.MathUtil;
 import jmri.util.QuickPromptUtil;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1016,7 +1016,7 @@ public class TrackSegment extends LayoutTrack {
         jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            Color newColor = JColorChooser.showDialog(null, "Choose a color", arrowColor);
+            Color newColor = JmriColorChooser.showDialog(null, "Choose a color", arrowColor);
             if ((newColor != null) && !newColor.equals(arrowColor)) {
                 setArrowColor(newColor);
             }
@@ -1150,7 +1150,7 @@ public class TrackSegment extends LayoutTrack {
         jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            Color newColor = JColorChooser.showDialog(null, "Choose a color", bridgeColor);
+            Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bridgeColor);
             if ((newColor != null) && !newColor.equals(bridgeColor)) {
                 setBridgeColor(newColor);
             }
@@ -1235,7 +1235,7 @@ public class TrackSegment extends LayoutTrack {
         jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            Color newColor = JColorChooser.showDialog(null, "Choose a color", bumperColor);
+            Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bumperColor);
             if ((newColor != null) && !newColor.equals(bumperColor)) {
                 setBumperColor(newColor);
             }
@@ -1357,7 +1357,7 @@ public class TrackSegment extends LayoutTrack {
         jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-            Color newColor = JColorChooser.showDialog(null, "Choose a color", tunnelColor);
+            Color newColor = JmriColorChooser.showDialog(null, "Choose a color", tunnelColor);
             if ((newColor != null) && !newColor.equals(tunnelColor)) {
                 setTunnelColor(newColor);
             }
@@ -3253,6 +3253,7 @@ public class TrackSegment extends LayoutTrack {
     public void setArrowColor(Color newVal) {
         if (arrowColor != newVal) {
             arrowColor = newVal;
+            JmriColorChooser.addRecentColor(newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3360,6 +3361,7 @@ public class TrackSegment extends LayoutTrack {
     public void setBridgeColor(Color newVal) {
         if (bridgeColor != newVal) {
             bridgeColor = newVal;
+            JmriColorChooser.addRecentColor(newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3441,6 +3443,7 @@ public class TrackSegment extends LayoutTrack {
     public void setBumperColor(Color newVal) {
         if (bumperColor != newVal) {
             bumperColor = newVal;
+            JmriColorChooser.addRecentColor(newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3548,6 +3551,7 @@ public class TrackSegment extends LayoutTrack {
     public void setTunnelColor(Color newVal) {
         if (tunnelColor != newVal) {
             tunnelColor = newVal;
+            JmriColorChooser.addRecentColor(newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
