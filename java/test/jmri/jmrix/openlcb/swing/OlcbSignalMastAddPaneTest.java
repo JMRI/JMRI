@@ -48,6 +48,7 @@ public class OlcbSignalMastAddPaneTest {
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
                 
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name"));
+        Assert.assertEquals("PL-2-high", InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName("user name").getMastType());
         Assert.assertNotNull(InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName("MF$olm:AAR-1946:PL-2-high($0005)"));
         
     }

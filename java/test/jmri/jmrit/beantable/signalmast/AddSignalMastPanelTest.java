@@ -33,6 +33,28 @@ public class AddSignalMastPanelTest {
     }
 
     @Test
+    public void testShowErrorDialogs() {
+        // show and cancel each of the error dialogs
+        AddSignalMastPanel a = new AddSignalMastPanel();
+
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> { a.issueWarningUserName("user name");});
+        new JDialogOperator("Warning").close();
+        JUnitAppender.assertErrorMessage("User Name \"user name\" is already in use");
+        
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> { a.issueWarningUserNameAsSystem("user name");});
+        new JButtonOperator(new JDialogOperator("Warning"), "OK").push();
+        JUnitAppender.assertErrorMessage("User Name \"user name\" already exists as a System name");
+        
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> { a.issueNoUserNameGiven();}); // a ConfirmDialog
+        new JButtonOperator(new JDialogOperator("No UserName Given"), "Yes").push();
+
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> { a.issueDialogFailMessage(new IllegalArgumentException("for testing"));});
+        new JButtonOperator(new JDialogOperator("Mast Not Updated"), "OK").push();
+        JUnitAppender.assertErrorMessage("Failed during createMast");
+                
+    }
+    
+    @Test
     public void testSearch() throws Exception {
         try {
             AddSignalMastPanel a = new AddSignalMastPanel();

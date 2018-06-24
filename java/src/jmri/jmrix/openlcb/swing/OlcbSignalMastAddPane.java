@@ -218,6 +218,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             if (!username.equals("")) {
                 currentMast.setUserName(username);
             }
+            currentMast.setMastType(mastname.substring(11, mastname.length() - 4));
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
         
