@@ -35,7 +35,7 @@ public class Log4JFixture {
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", unexpectedMessageSeen);
+        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted", unexpectedMessageSeen);
         
         // checkThreads(false);  // true means stop on 1st extra thread
     }
