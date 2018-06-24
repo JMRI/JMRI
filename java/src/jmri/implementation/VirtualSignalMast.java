@@ -44,6 +44,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
         String mast = parts[2];
         // new style
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);

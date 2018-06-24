@@ -167,6 +167,13 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     /**
+     * {@inheritDoc }
+     */
+    public String getMastType() { return mastType; }
+    public void setMastType(String type) { mastType = type; }
+    String mastType;
+
+    /**
      * Get a list of all the known aspects for this mast, including those that
      * have been disabled.
      *

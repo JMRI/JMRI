@@ -120,6 +120,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")")); // +2 because we're looking for 2 characters
         
         try {
