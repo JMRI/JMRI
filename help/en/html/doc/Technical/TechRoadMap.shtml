@@ -314,7 +314,7 @@
         new capabilities, see the <a href="JUnit.shtml#junit4">JMRI
         JUnit page</a>. At some point, perhaps in 2019, we'll want to migrate to
         <a href="https://junit.org/junit5/">JUnit 5</a> to get access to 
-        <a hre=f"https://developer.ibm.com/dwblog/2017/top-five-reasons-to-use-junit-5-java/">new testing tools</a>,
+        <a href="https://developer.ibm.com/dwblog/2017/top-five-reasons-to-use-junit-5-java/">new testing tools</a>,
         particularly for parameterized tests.
         We also need to complete the conversion from JFCUnit to Jemmy for
         Swing testing.</li>
