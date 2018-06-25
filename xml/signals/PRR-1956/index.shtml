@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- Copyright ($Author: bronson $) 2018 -->
+<title>JMRI: PRR-1956 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: PRR-1956 Signaling Definition
+</h1>
+
+<p>This directory contains signaling definitions corresponding to
+the 1956 PRR rules as described in the 
+August 1956 version of the 
+PRR publication "RULES FOR CONDUCTING TRANSPORTATION ", 
+Signals.</p>
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-PL-1-high-abs.xml">Single position light high absolute signal</a>
+<li><a href="appearance-PL-1-high-pbs.xml">Single position light high permissive signal</a>
+<li><a href="appearance-PL-2-high.xml">Double position light high signal</a>
+<li><a href="appearance-PL-1-low.xml">Single position light dwarf signal</a>
+<li><a href="appearance-PL-2-low.xml">Double position light dwarf signal</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
