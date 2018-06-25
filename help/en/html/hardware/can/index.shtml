@@ -78,7 +78,7 @@
       Electronic Railway Group (<a href=
       "https://www.merg.org.uk/">MERG</a>), following years of 
       development by MERG members.
-      <br />
+      <br >
       Their intention was to develop a system for comprehensive 
       layout control based on a general purpose Layout Control Bus (LCB).</p>
       
@@ -101,7 +101,7 @@
       "https://www.merg.org.uk/merg_resources/cbus.php">Extensive
       documentation</a> is available for the CBUS protocol, with 
       many MERG module kits available for running a layout.
-      <br />
+      <br >
       The 3,000+ MERG members are encouraged to to build and design their 
       own CBUS modules, and with MERG being over 50 years old, 
       there is a strong peer review process behind CBUS.
@@ -117,7 +117,7 @@
       </p>
       
       
-      <a name="hardware" id="hardware"><h2>Supported Hardware</h2></a>
+      <h2><a name="hardware" id="hardware">Supported Hardware</a></h2>
       <h3>Computer Interfaces</h3>
 
       <h4>Various CAN-USB adapters are available:</h4>
@@ -146,7 +146,7 @@
         
         <dd><a href="https://www.merg.org.uk/kits.php">MERG CANUSB4</a>
         A CBUS to USB interface, available in kit form to MERG members.
-        <br />
+        <br >
         JMRI can connect directly to the CANUSB4, alternatively CBUS 
         Server is a <a href="https://nodejs.org/en/">Node.js</a> 
         program to allow multiple network connections to a MERG CANUSB4, 
@@ -172,8 +172,9 @@
         <dd> The <a href="https://wiki.rocrail.net/doku.php?id=can-gca1e-en">
         CAN-GC1e Ethernet module</a>
         can connect to JMRI via MERG Network Interface</dd>
+        </dl>
 
-      <a name="connect" id="connect"><h2>Connecting</h2></a>
+      <h2><a name="connect" id="connect">Connecting</a></h2>
       
 
       <p>JMRI can provide the usual Sensor and Turnout features,
@@ -191,7 +192,7 @@
       baud rate under Advanced Preferences.<br>
       The TCH Technology adapter does this automatically, so no
       setting is required.
-      <br />
+      <br>
       To connect a MERG CANUSB4, select "MERG" as system manufacturer,
       then "CAN via MERG CAN-RS or CAN-USB" as system connection.
       No additional connection settings are required.
