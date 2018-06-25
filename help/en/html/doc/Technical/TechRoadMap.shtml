@@ -305,12 +305,12 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>Our use of JUnit has been migrated to the <a href=
-        "http://junit.org">JUnit 4 release</a>, currently 4.12.
+        <li>Our use of JUnit has been migrated to the 
+        <a href="http://junit.org">JUnit 4 release</a>, 
+        currently 4.12.
         Among other improvements, this can allow use of the Java
-        <a href=
-        "http://stackoverflow.com/questions/3806173/assert-keyword-in-java">
-        assert keyword</a>. We're working on how best to use the
+        <a href="http://stackoverflow.com/questions/3806173/assert-keyword-in-java">assert keyword</a>. 
+        We're working on how best to use the
         new capabilities, see the <a href="JUnit.shtml#junit4">JMRI
         JUnit page</a>. At some point, perhaps in 2019, we'll want to migrate to
         <a href="https://junit.org/junit5/">JUnit 5</a> to get access to 
