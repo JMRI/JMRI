@@ -321,23 +321,27 @@ public class AddSignalMastPanel extends JPanel {
             URL path = FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED);
             if (path != null) {
                 File[] apps = new File(path.toURI()).listFiles();
-                for (File app : apps) {
-                    if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
-                        log.debug("   found file: {}", app.getName());
-                        // load it and get name
-                        mastFiles.add(app);
-                        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-                        };
-                        Element root = xf.rootFromFile(app);
-                        String name = root.getChild("name").getText();
-                        log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name);
-                        mastBox.addItem(name);
-                        mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name);
-                        mapNameToShowSize.put(name, root.getChild("appearances")
-                                .getChild("appearance")
-                                .getChildren("show")
-                                .size());
+                if (apps !=null) {
+                    for (File app : apps) {
+                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
+                            log.debug("   found file: {}", app.getName());
+                            // load it and get name
+                            mastFiles.add(app);
+                            jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
+                            };
+                            Element root = xf.rootFromFile(app);
+                            String name = root.getChild("name").getText();
+                            log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name);
+                            mastBox.addItem(name);
+                            mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name);
+                            mapNameToShowSize.put(name, root.getChild("appearances")
+                                    .getChild("appearance")
+                                    .getChildren("show")
+                                    .size());
+                        }
                     }
+                } else {
+                    log.error("Unexpected null list of signal definition files");
                 }
             }
         } catch (org.jdom2.JDOMException e) {
@@ -352,27 +356,31 @@ public class AddSignalMastPanel extends JPanel {
             URL path = FileUtil.findURL("signals/" + sigsysname, FileUtil.Location.USER, "xml", "resources");
             if (path != null) {
                 File[] apps = new File(path.toURI()).listFiles();
-                for (File app : apps) {
-                    if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
-                        log.debug("   found file: {}", app.getName());
-                        // load it and get name
-                        // If the mast file name already exists no point in re-adding it
-                        if (!mastFiles.contains(app)) {
-                            mastFiles.add(app);
-                            jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-                            };
-                            Element root = xf.rootFromFile(app);
-                            String name = root.getChild("name").getText();
-                            //if the mast name already exist no point in readding it.
-                            if (!mapNameToShowSize.containsKey(name)) {
-                                mastBox.addItem(name);
-                                mapNameToShowSize.put(name, root.getChild("appearances")
-                                        .getChild("appearance")
-                                        .getChildren("show")
-                                        .size());
+                if (apps != null) {
+                    for (File app : apps) {
+                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
+                            log.debug("   found file: {}", app.getName());
+                            // load it and get name
+                            // If the mast file name already exists no point in re-adding it
+                            if (!mastFiles.contains(app)) {
+                                mastFiles.add(app);
+                                jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
+                                };
+                                Element root = xf.rootFromFile(app);
+                                String name = root.getChild("name").getText();
+                                //if the mast name already exist no point in readding it.
+                                if (!mapNameToShowSize.containsKey(name)) {
+                                    mastBox.addItem(name);
+                                    mapNameToShowSize.put(name, root.getChild("appearances")
+                                            .getChild("appearance")
+                                            .getChildren("show")
+                                            .size());
+                                }
                             }
                         }
                     }
+                } else {
+                    log.warn("No mast definition files found");
                 }
             }
         } catch (org.jdom2.JDOMException | java.io.IOException | URISyntaxException e) {
@@ -404,7 +412,7 @@ public class AddSignalMastPanel extends JPanel {
         currentPane.setAspectNames(sigMap.getAspects());
         
         validate();
-        if (getTopLevelAncestor() != null) {
+        if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame) getTopLevelAncestor()).getPreferredSize());
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).pack();
         }
@@ -465,7 +473,7 @@ public class AddSignalMastPanel extends JPanel {
         String mastname = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String user = (userName.getText() != null ? NamedBean.normalizeUserName(userName.getText()) : "");
         if (!GraphicsEnvironment.isHeadless()) {
-            if (user.equals("")) {
+            if (user == null || user.isEmpty()) {
                 int i = issueNoUserNameGiven();
                 if (i != 0) {
                     return;
@@ -527,7 +535,11 @@ public class AddSignalMastPanel extends JPanel {
      * Called at end of okPressed() and from Cancel
      */
     void clearPanel() {
-        ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
+        if (getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {
+            ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
+        } else {
+            log.warn("Unexpected top level ancestor: {}", getTopLevelAncestor());
+        }
         userName.setText(""); // clear user name
     }
 

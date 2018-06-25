@@ -240,7 +240,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public static int getLastRef() {
         return lastRef;
     }
-    protected static int lastRef = 0;
+    protected static volatile int lastRef = 0;
 
     public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, event); }
     public String getLitEventId() { return litMachine.getEventStringForState(Boolean.TRUE); }

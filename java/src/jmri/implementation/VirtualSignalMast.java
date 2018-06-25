@@ -48,8 +48,10 @@ public class VirtualSignalMast extends AbstractSignalMast {
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
-            if (autoNumber > lastRef) {
-                lastRef = autoNumber;
+            synchronized (VirtualSignalMast.class) {
+                if (autoNumber > lastRef) {
+                    lastRef = autoNumber;
+                }
             }
         } catch (NumberFormatException e) {
             log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
@@ -76,7 +78,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
         return lastRef;
     }
 
-    protected static int lastRef = 0;
+    protected static volatile int lastRef = 0;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMast.class);
 }
