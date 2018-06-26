@@ -1131,6 +1131,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
+    public void newPanelDefaults() {
+        getLayoutTrackDrawingOptions().setMainRailWidth(2);
+        getLayoutTrackDrawingOptions().setSideRailWidth(1);
+    }
+
     private void createFloatingEditToolBox() {
         if (floatingEditToolBoxFrame == null) {
             if (floatingEditContentScrollPane == null) {
@@ -2811,10 +2816,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             // integrate LayoutEditor drawing options with previous drawing options
             layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
-            //layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
-            //layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
-            //layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
-            //layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
