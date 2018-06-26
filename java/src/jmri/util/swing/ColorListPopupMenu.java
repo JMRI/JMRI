@@ -13,7 +13,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 
 /**
- * Popup menu for displaying recently selected colors along with standard 
+ * Popup menu for displaying recently selected colors along with standard
  * java colors.
  *
  * @author Paul Bender Copyright (C) 2018
@@ -23,10 +23,7 @@ public class ColorListPopupMenu extends JPopupMenu {
 
     private static final int ICON_DIMENSION = 20;
 
-    // Standard Colors 
-    private String[] colorText = {"Black", "DarkGray", "Gray",
-       "LightGray", "White", "Red", "Pink", "Orange",
-       "Yellow", "Green", "Blue", "Magenta", "Cyan"};    //NOI18N
+    // Standard Colors
     private Color[] colorCode = {Color.black, Color.darkGray, Color.gray,
        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
        Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
@@ -44,17 +41,20 @@ public class ColorListPopupMenu extends JPopupMenu {
     private void addRecentColors(){
         // build the menu.
         add(new JLabel(Bundle.getMessage("RecentColorLabel")));
+        for (Color color : JmriColorChooser.getRecentColors()) {
+            add(createMenuItem(color, false));
+        }
     }
 
     private void addStandardColors(){
         // build the menu.
         add(new JLabel(Bundle.getMessage("StandardColorLabel")));
         for (int i = 0; i < numColors; i++) {
-            add(createMenuItem(Bundle.getMessage(colorText[i]),colorCode[i]));   
+            add(createMenuItem(colorCode[i], true));
         }
     }
 
-    private JMenuItem createMenuItem(String itemText,Color swatchColor){
+    private JMenuItem createMenuItem(Color swatchColor, boolean isStdColor){
         // update the Swatch to have the right color showing.
         BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
              BufferedImage.TYPE_INT_RGB);
@@ -67,10 +67,18 @@ public class ColorListPopupMenu extends JPopupMenu {
         g.setColor(Color.black);
         g.drawRect(0, 0, ICON_DIMENSION - 1, ICON_DIMENSION - 1);
 
-        ImageIcon icon = new ImageIcon(image); 
-  
+        ImageIcon icon = new ImageIcon(image);
+
         g.dispose();
-        JMenuItem colorMenuItem = new JMenuItem(itemText,icon);   
+
+        String colorName;
+        if (isStdColor) {
+            colorName = jmri.util.ColorUtil.colorToLocalizedName(swatchColor);
+        } else {
+            colorName = swatchColor.toString().substring(14);
+        }
+
+        JMenuItem colorMenuItem = new JMenuItem(colorName,icon);
         colorMenuItem.addActionListener((ActionEvent e) -> {
            model.setSelectedColor(swatchColor);
         });

@@ -46,6 +46,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.SplitButtonColorChooserPanel;
+import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -225,6 +226,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     public void setBlockTrackColor(Color color) {
         blockTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBlockOccupiedColor() {
@@ -233,6 +235,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     public void setBlockOccupiedColor(Color color) {
         blockOccupiedColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBlockExtraColor() {
@@ -241,6 +244,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     public void setBlockExtraColor(Color color) {
         blockExtraColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     //TODO: @Deprecated // Java standard pattern for boolean getters is "UseExtraColor()"
@@ -1149,18 +1153,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     blockTrackColor = trackColorChooser.getColor();
                     if (oldColor != blockTrackColor) {
                         needsRedraw = true;
+                        JmriColorChooser.addRecentColor(blockTrackColor);
                     }
                     //check if occupied color changed
                     oldColor = blockOccupiedColor;
                     blockOccupiedColor = occupiedColorChooser.getColor();
                     if (oldColor != blockOccupiedColor) {
                         needsRedraw = true;
+                        JmriColorChooser.addRecentColor(blockOccupiedColor);
                     }
                     //check if extra color changed
                     oldColor = blockExtraColor;
                     blockExtraColor = extraColorChooser.getColor();
                     if (oldColor != blockExtraColor) {
                         needsRedraw = true;
+                        JmriColorChooser.addRecentColor(blockExtraColor);
                     }
                     //check if Memory changed
                     String newName = memoryComboBox.getDisplayName();
