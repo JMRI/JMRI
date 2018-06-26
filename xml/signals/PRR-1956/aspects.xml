@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>PRR 1956</name>
+  <date>1956</date>
+  <reference>As described in the October 28, 1956 version of the PRR publication "Rules for conducting transportation", Signal Rules.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><year>2018</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <email>dick@rr-cirkits.com</email>
+    </author>    
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2009-12-21</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2009-12-27</date>
+        <authorinitials>DB, RGJ</authorinitials>
+        <revremark>Fix consistency, more aspects</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>More appearances</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Add author and revision info</revremark>
+    </revision>    
+    <revision>
+         <revnumber>2.2</revnumber>
+        <date>2010-01-11</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Typo Correction</revremark>
+    </revision>
+    <revision>
+         <revnumber>2.3</revnumber>
+        <date>2011-06-23</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Add speed and route information</revremark>
+    </revision>
+    <revision>
+         <revnumber>2.4</revnumber>
+        <date>2011-12-06</date>
+        <authorinitials>KC</authorinitials>
+        <revremark>Normalize all aspect names to not have hyphens</revremark>
+    </revision>
+    <revision>
+         <revnumber>2.5</revnumber>
+        <date>2018-06-22</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Update to match PRR 1956 rules</revremark>
+    </revision>
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear Block</name>
+      <rule>Rule 280</rule>
+      <indication>Proceed, manual block clear</indication>
+      <reference>Page 53</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed</indication>
+      <reference>Page 54</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed approaching next signal at Medium speed</indication>
+      <reference>Page 55</reference>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed; Medium speed within interlocking limits</indication>
+      <reference>Page 56</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule 283A</rule>
+      <indication>Proceed at Medium speed prepared to stop at next signal. Train exceeding Medium speed must at once reduce to that speed</indication>
+      <reference>Page 57</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
+      <reference>Page 58</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed prepared to stop at next signal. Train exceeding Medium speed must at once reduce to that speed.</indication>
+      <reference>Page 59</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Caution</name>
+      <rule>Rule 285A</rule>
+      <indication>Train exceeding Medium speed must at once reduce to that speed. Where a facing switch is connected with the signal, approach that switch prepared to stop. Approach next signal prepared to stop. </indication>
+      <reference>Page 60</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed; Slow speed within interlocking limits.</indication>
+      <reference>Page 61</reference>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed prepared to stop at next signal; Slow speed within interlocking limits.</indication>
+      <reference>Page 62</reference>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Permissive Block</name>
+      <rule>Rule 289</rule>
+      <indication>Block occupied;  for passenger trains, stop; for trains other than passenger trains, proceed prepared to stop short of a train or obstruction, but not exceeding 15 miles per hour. </indication>
+      <reference>Page 63</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 64</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop; then proceed at Restricted speed.</indication>
+      <reference>Page 65</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <reference>Page 66</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-PL-1-high-abs.xml"/>
+    <appearancefile href="appearance-PL-1-high-pbs.xml"/>
+    <appearancefile href="appearance-PL-1-low.xml"/>
+    <appearancefile href="appearance-PL-2-high.xml"/>
+    <appearancefile href="appearance-PL-2-high-west.xml"/>
+    <appearancefile href="appearance-PL-2-low.xml"/>
+  </appearancefiles>
+  
+</aspecttable>
+  

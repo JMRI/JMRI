@@ -149,6 +149,16 @@
           <td>Note: not working</td>
           <td> </td>
         </tr>
+        <tr>
+          <td>both</td>
+          <td>+N2E18;-N2E18</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MT+N2E18;-N2E18</td>
+          <td></td>
+          <td></td>
+          <td>Note: Works</td>
+          <td> </td>
+        </tr>
         </tbody></table>
       <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
@@ -272,7 +282,7 @@
         Event Table</a></li>
 
         <li><a href=
-        "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+        "../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
         Node Config Tool</a></li>
       </ul>
       <a name="documentation" id="documentation"></a>

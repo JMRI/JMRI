@@ -105,7 +105,7 @@
         <tr>
           <td>TRACE</td>
 
-          <td>log.debug(..)</td>
+          <td>log.trace(..)</td>
 
           <td>Very detailed messages, even more than DEBUG, used
           for voluminous debugging (e.g. every character in a
