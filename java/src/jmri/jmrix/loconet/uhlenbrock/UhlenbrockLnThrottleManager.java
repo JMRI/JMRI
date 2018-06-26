@@ -15,14 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LocoNet implementation of a ThrottleManager.
- * <P>
+ * LocoNet implementation of a ThrottleManager for Uhlenbrock.
+ * <p>
  * Works in cooperation with the SlotManager, which actually handles the
  * communications.
  *
  * @see jmri.jmrix.loconet.SlotManager
  * @author Bob Jacobsen Copyright (C) 2001
- * 
  */
 public class UhlenbrockLnThrottleManager extends LnThrottleManager implements ThrottleManager, SlotListener {
 
@@ -63,10 +62,10 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
                         return;
                     }
                     slotManager.slotFromLocoAddress(address.getNumber(), list);
-                    log.warn("No response to requesting loco " + address + ", will try again " + count);
+                    log.warn("No response to requesting loco {}, will try again {}", address, count);
                     count++;
                 }
-                log.error("No response to requesting loco " + address + " after " + count + " attempts, will cancel the request");
+                log.error("No response to requesting loco {} after {} attempts; will cancel the request", address, count);
                 failedThrottleRequest(address, "Failed to get response from command station");
             }
         }
@@ -105,7 +104,7 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
     }
 
     /**
-     * Cancel a request for a throttle
+     * Cancel a request for a throttle.
      *
      * @param address The decoder address desired.
      * @param isLong  True if this is a request for a DCC long (extended)
@@ -122,4 +121,5 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
     }
 
     private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class);
+
 }

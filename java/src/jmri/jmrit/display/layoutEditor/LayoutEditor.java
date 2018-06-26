@@ -1131,6 +1131,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
 
+    public void newPanelDefaults() {
+        getLayoutTrackDrawingOptions().setMainRailWidth(2);
+        getLayoutTrackDrawingOptions().setSideRailWidth(1);
+    }
+
     private void createFloatingEditToolBox() {
         if (floatingEditToolBoxFrame == null) {
             if (floatingEditContentScrollPane == null) {
@@ -2811,10 +2816,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             // integrate LayoutEditor drawing options with previous drawing options
             layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
-            //layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
-            //layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
-            //layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
-            //layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
@@ -9452,10 +9457,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //these are convenience methods to return circles used to draw onscreen
     //
-    //compute the control point rect at inPoint
+    //compute the control point rect at inPoint; use the turnout circle size
     public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
-        return new Ellipse2D.Double(inPoint.getX() - SIZE,
-                inPoint.getY() - SIZE, SIZE2, SIZE2);
+        return trackControlCircleAt(inPoint);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
@@ -9546,11 +9550,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         draw1(g2, main, block, hidden, dashed = true);
 
         //setup for drawing mainline rails
+        main = true;
         g2.setColor(ltdo.getMainRailColor());
         g2.setStroke(stroke);
         draw1(g2, main, block, hidden, dashed = false);
         g2.setStroke(dashedStroke);
-        draw1(g2, main, block, hidden, dashed = true);
+        dashed = true;
+        draw1(g2, main, block, hidden, dashed);
     }
 
     //
@@ -9620,7 +9626,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(ltdo.getMainBallastColor());
-            draw1(g2, main = true, block, hidden, dashed);
+            main = true;
+            draw1(g2, main, block, hidden, dashed);
         }
     }
 
@@ -9701,7 +9708,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     railWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(railColor);
-            draw1(g2, main, block, hidden, dashed = false);
+            dashed = false;
+            draw1(g2, main, block, hidden, dashed);
         }
     }   // drawLayoutTracksRails
 
@@ -9768,7 +9776,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //note: color is set in layout track's draw1 when isBlock is true
         draw1(g2, main = true, block, hidden, dashed = true);
         g2.setStroke(blockLineStroke);
-        draw1(g2, main, block, hidden, dashed = false);
+        dashed = false;
+        draw1(g2, main, block, hidden, dashed);
     }
 
     // isDashed defaults to false

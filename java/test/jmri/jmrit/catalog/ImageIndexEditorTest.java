@@ -26,10 +26,10 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(JFrameOperator.waitJFrame(Bundle.getMessage("editIndexFrame"), true, true));
 
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            indexEditor.addNode();
+            indexEditor.addNode(null);
         });
         flushAWT();
-        java.awt.Container pane = findContainer(Bundle.getMessage("MessageTitle"));
+        java.awt.Container pane = findContainer(Bundle.getMessage("QuestionTitle"));
         Assert.assertNotNull("Select node prompt not found", pane);
         pressButton(pane, Bundle.getMessage("ButtonOK"));
         junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor, this);

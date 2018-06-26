@@ -261,16 +261,16 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
         {
             final XpaMessage thisMsg = msg;
-            final XpaTrafficController thisTC = this;
+            final XpaTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
                 XpaMessage msgForLater = thisMsg;
-                XpaTrafficController myTC = thisTC;
+                XpaTrafficController myTc = thisTc;
 
                 @Override
                 public void run() {
                     log.debug("Delayed notify starts");
-                    myTC.notifyReply(msgForLater);
+                    myTc.notifyReply(msgForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);

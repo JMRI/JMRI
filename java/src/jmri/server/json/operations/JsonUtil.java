@@ -260,7 +260,7 @@ public class JsonUtil {
             rln.put(NAME, rl.getName());
             rln.put(DIRECTION, rl.getTrainDirectionString());
             rln.put(COMMENT, rl.getComment());
-            rln.put(SEQUENCE, rl.getSequenceId());
+            rln.put(SEQUENCE, rl.getSequenceNumber());
             rln.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             rln.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
             rln.set(LOCATION, getLocation(locale, rl.getLocation().getId()).get(DATA));

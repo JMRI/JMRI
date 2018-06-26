@@ -19,9 +19,12 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
@@ -29,7 +32,10 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +60,10 @@ public class PrintLocationsAction extends AbstractAction {
 
     static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
-    LocationManager manager = InstanceManager.getDefault(LocationManager.class);
+    LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+    CarTypes cts = InstanceManager.getDefault(CarTypes.class);
+    CarLoads cls = InstanceManager.getDefault(CarLoads.class);
+    CarRoads crs = InstanceManager.getDefault(CarRoads.class);
 
     public PrintLocationsAction(String actionName, boolean isPreview) {
         super(actionName);
@@ -141,7 +150,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     // Loop through the Roster, printing as needed
     private void printLocationsSelected() throws IOException {
-        List<Location> locations = manager.getLocationsByNameList();
+        List<Location> locations = lmanager.getLocationsByNameList();
         int totalLength = 0;
         int usedLength = 0;
         int numberRS = 0;
@@ -265,7 +274,7 @@ public class PrintLocationsAction extends AbstractAction {
     }
 
     private void printSchedulesSelected() throws IOException {
-        List<Location> locations = manager.getLocationsByNameList();
+        List<Location> locations = lmanager.getLocationsByNameList();
         String s = padOutString(Bundle.getMessage("Schedules"), MAX_NAME_LENGTH) +
                 " " +
                 Bundle.getMessage("Location") +
@@ -336,6 +345,56 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
         }
+        // now show the contents of each schedule     
+        for (Schedule schedule : schedules) {
+            writer.write(FORM_FEED);
+            s = schedule.getName() + NEW_LINE;
+            writer.write(s);
+
+            for (ScheduleItem si : schedule.getItemsBySequenceList()) {
+                s = padOutString(Bundle.getMessage("Type"), cts.getMaxNameLength() + 1) +
+                        padOutString(Bundle.getMessage("Receive"), cls.getMaxNameLength() + 1) +
+                        padOutString(Bundle.getMessage("Ship"), cls.getMaxNameLength() + 1) +
+                        padOutString(Bundle.getMessage("Destination"), lmanager.getMaxLocationNameLength() + 1) +
+                        Bundle.getMessage("Track") +
+                        NEW_LINE;
+                writer.write(s);
+                s = padOutString(si.getTypeName(), cts.getMaxNameLength() + 1) +
+                        padOutString(si.getReceiveLoadName(), cls.getMaxNameLength() + 1) +
+                        padOutString(si.getShipLoadName(), cls.getMaxNameLength() + 1) +
+                        padOutString(si.getDestinationName(), lmanager.getMaxLocationNameLength() + 1) +
+                        si.getDestinationTrackName() +
+                        NEW_LINE;
+                writer.write(s);
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+                        .getScheduleById(si.getSetoutTrainScheduleId());
+                String setoutDay = "";
+                if (sch != null) {
+                    setoutDay = sch.getName();
+                }
+                sch = InstanceManager.getDefault(TrainScheduleManager.class)
+                        .getScheduleById(si.getPickupTrainScheduleId());
+                String pickupDay = "";
+                if (sch != null) {
+                    pickupDay = sch.getName();
+                }
+
+                s = padOutString("", cts.getMaxNameLength() + 1) +
+                        padOutString(Bundle.getMessage("Random"), Bundle.getMessage("Random").length() + 1) +
+                        padOutString(Bundle.getMessage("Delivery"), Bundle.getMessage("Delivery").length() + 1) +
+                        padOutString(Bundle.getMessage("Road"), crs.getMaxNameLength() + 1) +
+                        Bundle.getMessage("Pickup") +
+                        NEW_LINE;
+                writer.write(s);
+                s = padOutString("", cts.getMaxNameLength() + 1) +
+                        padOutString(si.getRandom(), Bundle.getMessage("Random").length() + 1) +
+                        padOutString(setoutDay, Bundle.getMessage("Delivery").length() + 1) +
+                        padOutString(si.getRoadName(), crs.getMaxNameLength() + 1) +
+                        pickupDay +
+                        NEW_LINE;
+                writer.write(s);
+            }
+        }
         if (printComments.isSelected() ||
                 printDetails.isSelected() ||
                 printAnalysis.isSelected() ||
@@ -347,7 +406,7 @@ public class PrintLocationsAction extends AbstractAction {
     private void printCommentsSelected() throws IOException {
         String s = Bundle.getMessage("PrintComments") + NEW_LINE + NEW_LINE;
         writer.write(s);
-        List<Location> locations = manager.getLocationsByNameList();
+        List<Location> locations = lmanager.getLocationsByNameList();
         for (Location location : locations) {
             if (_location != null && location != _location) {
                 continue;
@@ -396,7 +455,7 @@ public class PrintLocationsAction extends AbstractAction {
     }
 
     private void printDetailsSelected() throws IOException {
-        List<Location> locations = manager.getLocationsByNameList();
+        List<Location> locations = lmanager.getLocationsByNameList();
         String s = Bundle.getMessage("DetailedReport") + NEW_LINE;
         writer.write(s);
         for (Location location : locations) {
@@ -450,9 +509,9 @@ public class PrintLocationsAction extends AbstractAction {
 
     private void printAnalysisSelected() throws IOException {
         CarManager carManager = InstanceManager.getDefault(CarManager.class);
-        List<Location> locations = manager.getLocationsByNameList();
+        List<Location> locations = lmanager.getLocationsByNameList();
         List<Car> cars = carManager.getByLocationList();
-        String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
+        String[] carTypes = cts.getNames();
 
         String s = Bundle.getMessage("TrackAnalysis") + NEW_LINE;
         writer.write(s);
@@ -541,7 +600,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     private void printErrorAnalysisSelected() throws IOException {
         writer.write(Bundle.getMessage("TrackErrorAnalysis") + NEW_LINE);
-        List<Location> locations = manager.getLocationsByNameList();
+        List<Location> locations = lmanager.getLocationsByNameList();
         for (Location location : locations) {
             if (_location != null && location != _location) {
                 continue;
@@ -646,7 +705,7 @@ public class PrintLocationsAction extends AbstractAction {
         int charCount = 0;
         int typeCount = 0;
 
-        for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
+        for (String type : cts.getNames()) {
             if (location.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
@@ -672,7 +731,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
         } // does this location accept all types?
-        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length +
+        if (typeCount == cts.getNames().length +
                 InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("LocationAcceptsAllTypes"));
         }
@@ -685,7 +744,7 @@ public class PrintLocationsAction extends AbstractAction {
         int charCount = 0;
         int typeCount = 0;
 
-        for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
+        for (String type : cts.getNames()) {
             if (track.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
@@ -711,7 +770,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
         } // does this track accept all types?
-        if (typeCount == InstanceManager.getDefault(CarTypes.class).getNames().length +
+        if (typeCount == cts.getNames().length +
                 InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllTypes"));
         }
@@ -950,7 +1009,7 @@ public class PrintLocationsAction extends AbstractAction {
         if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
             op = Bundle.getMessage("Exclude") +
                     " " +
-                    (InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() -
+                    (lmanager.getNumberOfLocations() -
                             track.getDestinationListSize()) +
                     " " +
                     Bundle.getMessage("Destinations") +
@@ -960,7 +1019,7 @@ public class PrintLocationsAction extends AbstractAction {
         String[] destIds = track.getDestinationIds();
         int charCount = 0;
         for (String id : destIds) {
-            Location location = manager.getLocationById(id);
+            Location location = lmanager.getLocationById(id);
             if (location == null) {
                 continue;
             }
@@ -1006,11 +1065,7 @@ public class PrintLocationsAction extends AbstractAction {
     }
 
     private String padOutString(String s, int length) {
-        StringBuffer buf = new StringBuffer(s);
-        for (int n = s.length(); n < length; n++) {
-            buf.append(" ");
-        }
-        return buf.toString();
+        return TrainCommon.padAndTruncateString(s, length, true);
     }
 
     JCheckBox printLocations = new JCheckBox(Bundle.getMessage("PrintLocations"));
@@ -1041,7 +1096,7 @@ public class PrintLocationsAction extends AbstractAction {
             addItemLeft(pPanel, printErrorAnalysis, 0, 11);
             // set defaults
             printLocations.setSelected(true);
-            printSchedules.setSelected(true);
+            printSchedules.setSelected(false);
             printComments.setSelected(false);
             printDetails.setSelected(false);
             printAnalysis.setSelected(false);

@@ -505,6 +505,21 @@ public class JUnitUtil {
         }
     }
 
+    /*
+     * Use reflection to reset the jmri.util.node.NodeIdentity instance
+     */
+    public static void resetNodeIdentity() {
+        try {
+            Class<?> c = jmri.util.node.NodeIdentity.class;
+            java.lang.reflect.Field f = c.getDeclaredField("instance");
+            f.setAccessible(true);
+            f.set(c, null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset jmri.util.node.NodeIdentity static field", x);
+        }
+    }
+
+
     public static void initGuiLafPreferencesManager() {
         GuiLafPreferencesManager m = new GuiLafPreferencesManager();
         InstanceManager.setDefault(GuiLafPreferencesManager.class, m);
@@ -698,6 +713,8 @@ public class JUnitUtil {
      * @param window the window to dispose of
      */
     public static void dispose(@Nonnull Window window) {
+        java.util.Objects.requireNonNull(window, "Window cannot be null");
+        
         ThreadingUtil.runOnGUI(() -> {
             window.dispose();
         });

@@ -48,9 +48,9 @@
 
       <h2>Limitations</h2>
 
-      <p>Programming is supported by the ECoS from firmware version
-      4.1. However this works only on the programming track.
-      Programming on main is only available directly from your ECoS.
+      <p>Programming on the programming track is supported by the 
+      ECoS from firmware version 4.1. Programming on main is 
+      available from firmware version 4.2.3.
       Additional information on the ECoS can be found on the
       <a href="http://www.esu.eu/en/support/tips-tricks/ecos/">ESU web
       site</a>.</p>

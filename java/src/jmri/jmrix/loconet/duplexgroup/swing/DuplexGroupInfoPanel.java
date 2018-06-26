@@ -14,11 +14,11 @@ import jmri.util.swing.ValidatedTextField;
  * Provides a JPanel for querying and configuring Digitrax Duplex (radio)
  * network identification. Provides useful function if one or more UR92 devices
  * are connected to LocoNet.
- *
+ * <p>
  * This tool works equally well with UR92 and UR92CE devices. The UR92 and
  * UR92CE behave identically with respect to this tool. For the purpose of
  * clarity, only the term UR92 is used herein.
- *
+ * <p>
  * This tool makes use of LocoNet messages which have not been publicly
  * documented by Digitrax. This tool is made possible by the reverse-
  * engineering efforts of B. Milhaupt. Because these messages have been
@@ -40,7 +40,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     ValidatedTextField swingIdValueField = new ValidatedTextField(1, false, "a", "b");
     JLabel swingNumUr92Label;
     JLabel swingStatusValueLabel;
-    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroup");
     private int numUr92;
 
     private LnDplxGrpInfoImpl duplexGroupImplementation;
@@ -71,7 +70,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         JLabel swingTempLabel;
 
         try {
-            minWindowWidth = Integer.parseInt(rb.getString("MinimumWidthForWindow"), 10);
+            minWindowWidth = Integer.parseInt(Bundle.getMessage("MinimumWidthForWindow"), 10);
         } catch (RuntimeException e) {
             minWindowWidth = DEFAULT_WINDOW_WIDTH;
         }
@@ -81,28 +80,28 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingStatusValueLabel.setName("ProcessingInitialStatusMessage");  //this string is used as a reference to a .properties file entry; internationalization is handled there.
         swingStatusValueLabel.setText(convertToHtml(swingStatusValueLabel.getName(), minWindowWidth));
 
-        swingNameValueField.setText(rb.getString("ValueUnknownGroupName"));
-        swingNameValueField.setToolTipText(rb.getString("ToolTipGroupName"));
-        swingNameValueField.setLastQueriedValue(rb.getString("ValueUnknownGroupName"));
+        swingNameValueField.setText(Bundle.getMessage("ValueUnknownGroupName"));
+        swingNameValueField.setToolTipText(Bundle.getMessage("ToolTipGroupName"));
+        swingNameValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupName"));
 
-        swingChannelValueField.setText(rb.getString("ValueUnknownGroupChannel"));
-        swingChannelValueField.setToolTipText(rb.getString("ToolTipGroupChannel"));
-        swingChannelValueField.setLastQueriedValue(rb.getString("ValueUnknownGroupChannel"));
+        swingChannelValueField.setText(Bundle.getMessage("ValueUnknownGroupChannel"));
+        swingChannelValueField.setToolTipText(Bundle.getMessage("ToolTipGroupChannel"));
+        swingChannelValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupChannel"));
 
-        swingPasswordValueField.setText(rb.getString("ValueUnknownGroupPassword"));
-        swingPasswordValueField.setToolTipText(rb.getString("ToolTipGroupPassword"));
-        swingPasswordValueField.setLastQueriedValue(rb.getString("ValueUnknownGroupPassword"));
+        swingPasswordValueField.setText(Bundle.getMessage("ValueUnknownGroupPassword"));
+        swingPasswordValueField.setToolTipText(Bundle.getMessage("ToolTipGroupPassword"));
+        swingPasswordValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupPassword"));
 
-        swingIdValueField.setText(rb.getString("ValueUnknownGroupID"));
-        swingIdValueField.setToolTipText(rb.getString("ToolTipGroupID"));
-        swingIdValueField.setLastQueriedValue(rb.getString("ValueUnknownGroupID"));
+        swingIdValueField.setText(Bundle.getMessage("ValueUnknownGroupID"));
+        swingIdValueField.setToolTipText(Bundle.getMessage("ToolTipGroupID"));
+        swingIdValueField.setLastQueriedValue(Bundle.getMessage("ValueUnknownGroupID"));
 
         // Want to force space in the GUI for N lines of status, where N comes
         // from a value in the DuplexGroup.properties file;
         // assume 2 if not able to parse the variable from the .properties file.
         int numLinesForStatus = 2;
         try {
-            numLinesForStatus = Integer.parseInt(rb.getString("FixedLinesForStatus"));
+            numLinesForStatus = Integer.parseInt(Bundle.getMessage("FixedLinesForStatus"));
         } catch (RuntimeException e) {
             numLinesForStatus = 2;
         }
@@ -110,36 +109,36 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         swingStatusValueLabel.setPreferredSize(new java.awt.Dimension(minWindowWidth,
                 numLinesForStatus * (int) swingStatusValueLabel.getMaximumSize().getHeight()));
 
-        swingReadButton = new JButton(rb.getString("ButtonRead"));
-        swingSetButton = new JButton(rb.getString("ButtonSet"));
+        swingReadButton = new JButton(Bundle.getMessage("ButtonRead"));
+        swingSetButton = new JButton(Bundle.getMessage("ButtonSet"));
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));  // need to override the default layout of FlowLayout (horizontal layout)
         swingReadButton.hasFocus();
 
         JPanel swingTempPanel = new JPanel();
         swingTempPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 3));
-        swingTempPanel.add(swingTempLabel = new JLabel(rb.getString("LabelDuplexName")));
+        swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexName")));
         swingTempPanel.add(swingNameValueField);
         swingTempLabel.setLabelFor(swingNameValueField); // for "assistive technology" per JLabel on-line documentation
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
         swingTempPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 3));
-        swingTempPanel.add(swingTempLabel = new JLabel(rb.getString("LabelDuplexChannel")));
+        swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexChannel")));
         swingTempPanel.add(swingChannelValueField);
         swingTempLabel.setLabelFor(swingChannelValueField); // for "assistive technology" per JLabel on-line documentation
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
         swingTempPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 3));
-        swingTempPanel.add(swingTempLabel = new JLabel(rb.getString("LabelDuplexPassword")));
+        swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexPassword")));
         swingTempPanel.add(swingPasswordValueField);
         swingTempLabel.setLabelFor(swingPasswordValueField); // for "assistive technology" per JLabel on-line documentation
         add(swingTempPanel);
 
         swingTempPanel = new JPanel();
         swingTempPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 3));
-        swingTempPanel.add(swingTempLabel = new JLabel(rb.getString("LabelDuplexGroupID")));
+        swingTempPanel.add(swingTempLabel = new JLabel(Bundle.getMessage("LabelDuplexGroupID")));
         swingTempPanel.add(swingIdValueField);
         swingTempLabel.setLabelFor(swingIdValueField); // for "assistive technology" per JLabel on-line documentation
         add(swingTempPanel);
@@ -185,7 +184,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     @Override
     public String getTitle() {
-        return rb.getString("Title");
+        return Bundle.getMessage("Title");
     }
 
     @Override
@@ -198,7 +197,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Updates GUI status then generates LocoNet message used to count the
+     * Update GUI status then generates LocoNet message used to count the
      * available UR92 devices.
      */
     private void scanButtonActionPerformed() {
@@ -208,7 +207,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Modifies GUI to show that displayed Duplex network information is not
+     * Modify GUI to show that displayed Duplex network information is not
      * currently valid. Creates and sends LocoNet traffic to query any available
      * UR92(s) for Duplex network identity information.
      */
@@ -218,24 +217,24 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             return;
         }
 
-        swingNameValueField.setForeground(COLOR_OK);    // set foreground to default color
-        swingChannelValueField.setForeground(COLOR_OK);    // set foreground to default color
-        swingPasswordValueField.setForeground(COLOR_OK);    // set foreground to default color
-        swingIdValueField.setForeground(COLOR_OK);    // set foreground to default color
-        swingNameValueField.setText(rb.getString("ValueUnknownGroupName"));
-        swingChannelValueField.setText(rb.getString("ValueUnknownGroupChannel"));
-        swingPasswordValueField.setText(rb.getString("ValueUnknownGroupPassword"));
-        swingIdValueField.setText(rb.getString("ValueUnknownGroupID"));
+        swingNameValueField.setForeground(COLOR_OK);     // set foreground to default color
+        swingChannelValueField.setForeground(COLOR_OK);  // set foreground to default color
+        swingPasswordValueField.setForeground(COLOR_OK); // set foreground to default color
+        swingIdValueField.setForeground(COLOR_OK);       // set foreground to default color
+        swingNameValueField.setText(Bundle.getMessage("ValueUnknownGroupName"));
+        swingChannelValueField.setText(Bundle.getMessage("ValueUnknownGroupChannel"));
+        swingPasswordValueField.setText(Bundle.getMessage("ValueUnknownGroupPassword"));
+        swingIdValueField.setText(Bundle.getMessage("ValueUnknownGroupID"));
         updateStatusLineMessage("ProcessingReadingInfo", COLOR_STATUS_OK);
         duplexGroupImplementation.queryDuplexGroupIdentity();
         updateStatusLineMessage("ProcessingWaitingForReport", COLOR_STATUS_OK);
     }
 
     /**
-     * Validates the Duplex group name currently specified in the GUI. If the
+     * Validate the Duplex group name currently specified in the GUI. If the
      * group name is invalid, the GUI status line is updated with an appropriate
      * message.
-     * <p>
+     *
      * @return true if current swingNameValueField is a valid Duplex group name
      */
     private boolean validateGroupNameField() {
@@ -246,7 +245,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Validates the Duplex group channel number currently specified in the GUI.
      * If the group channel number is invalid, the GUI status line is updated
      * with an appropriate message.
-     * <p>
+     *
      * @return true if current swingChannelValueField is a valid Duplex group
      *         channel
      */
@@ -255,10 +254,10 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Validates the Duplex group ID number currently specified in the GUI. If
+     * Validate the Duplex group ID number currently specified in the GUI. If
      * the group ID number is invalid, the GUI status line is updated with an
      * appropriate message.
-     * <p>
+     *
      * @return true if current swingIdValueField is a valid Duplex group ID
      *         number
      */
@@ -267,8 +266,8 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Validates the Duplex group password currently specified in the GUI.
-     * <p>
+     * Validate the Duplex group password currently specified in the GUI.
+     *
      * @return true if current swingNameValueField is a valid Duplex group
      *         password
      */
@@ -277,7 +276,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Performs actions required when the Set Group Information button is
+     * Perform actions required when the Set Group Information button is
      * clicked.
      * <p>
      * First validates the Duplex group name, channel, password, and group ID.
@@ -364,10 +363,10 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      *
-     * @param s     - Name of tag in .properties file for string to be converted
+     * @param s     Name of tag in .properties file for string to be converted
      *              to HTML
-     * @param width - Width of resulting HTML, in Swing dimensional units
-     * @return String - String containing HTML for input string s
+     * @param width Width of resulting HTML, in Swing dimensional units
+     * @return String containing HTML for input string s
      */
     private String convertToHtml(String s, int width) {
         String result = "<html><body><div align=center style='width: "; // NOI18N
@@ -376,13 +375,13 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             result = " ";
         } else {
             result = result + width + "'>" +  // NOI18N
-                    rb.getString(s);
+                    Bundle.getMessage(s);
         }
         return result;
     }
 
     /**
-     * update the GUI label showing the number of UR92 devices
+     * Update the GUI label showing the number of UR92 devices.
      */
     private void updateDisplayOfUr92Count() {
         Object[] messageArguments = {
@@ -392,11 +391,12 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         java.text.MessageFormat formatter = new java.text.MessageFormat("");
 
         try {
-            formatter.applyPattern(rb.getString("LabelDeviceCountUR92"));
+            formatter.applyPattern(Bundle.getMessage("LabelDeviceCountUR92"));
             double[] pluralLimits = {0, 1, 2};
-            String[] devicePlurals = {rb.getString("LabelDeviceCountUR92Plural0"),
-                rb.getString("LabelDeviceCountUR92Plural1"),
-                rb.getString("LabelDeviceCountUR92Plural2")
+            String[] devicePlurals = {
+                    Bundle.getMessage("LabelDeviceCountUR92Plural0"),
+                    Bundle.getMessage("LabelDeviceCountUR92Plural1"),
+                    Bundle.getMessage("LabelDeviceCountUR92Plural2")
             };
             java.text.ChoiceFormat pluralForm = new java.text.ChoiceFormat(pluralLimits, devicePlurals);
             java.text.Format[] messageFormats = {
@@ -407,8 +407,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             String ur92CountString = formatter.format(messageArguments);
             swingNumUr92Label.setText(ur92CountString);
         } catch (RuntimeException e) {
-            String s = "Found " + numUr92 + " UR92(s)";
-            swingNumUr92Label.setText(s);
+            swingNumUr92Label.setText(Bundle.getMessage("LabelDeviceCountUR92Except", numUr92));
             // eat the exception and show a simple, gramatically ambiguous message
         }
         swingNumUr92Label.repaint();
@@ -428,10 +427,13 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Process the "property change" events from LnDplxGrpInfoImpl and
-     * ValidatedTextField object. Includes processing of: ValidatedTextField -
-     * ValidatedTextField.VTF_PC_STAT_LN_UPDATE LnDplxGrpInfoImpl -
-     * StatusDontBlastError, StatusLineUpdate, NumberOfUr92sUpdate,
-     *
+     * ValidatedTextField object. Includes processing of:
+     * <ul>
+     *     <li>ValidatedTextField - ValidatedTextField.VTF_PC_STAT_LN_UPDATE
+     *     <li>LnDplxGrpInfoImpl - StatusDontBlastError
+     *     <li>StatusLineUpdate
+     *     <li>NumberOfUr92sUpdate
+     * </ul>
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -470,10 +472,10 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
                 return;
             } else {
                 java.awt.Color fgColor = COLOR_STATUS_OK;
-                if (statusMessage.startsWith("ERROR:")) {
+                if (statusMessage.startsWith("ERROR:")) { // NOI18N
                     fgColor = COLOR_STATUS_ERROR;
                     statusMessage = statusMessage.substring(6);
-                } else if (statusMessage.startsWith("Error")) {
+                } else if (statusMessage.startsWith("Error")) { // NOI18N
                     fgColor = COLOR_STATUS_ERROR;
                 }
                 updateStatusLineMessage(statusMessage, fgColor);
@@ -648,4 +650,5 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     //    private final static Logger log = LoggerFactory.getLogger(DuplexGroupInfoPanel.class);
+    
 }

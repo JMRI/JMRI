@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * The input file is expected to have one message per line. Each line can
  * contain as many bytes as needed, each represented by two Hex characters and
- * separated by a space. Variable whitespace is not (yet) supported
+ * separated by a space. Variable whitespace is not (yet) supported.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -31,14 +31,18 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     volatile BufferedReader sFile = null;
 
     public LnHexFilePort() {
-        super(new LocoNetSystemConnectionMemo());
+        this(new LocoNetSystemConnectionMemo());
+    }
+
+    public LnHexFilePort(LocoNetSystemConnectionMemo memo) {
+        super(memo);
         try {
             PipedInputStream tempPipe = new PipedInputStream();
             pin = new DataInputStream(tempPipe);
             outpipe = new DataOutputStream(new PipedOutputStream(tempPipe));
             pout = outpipe;
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         options.put("SensorDefaultState", // NOI18N
                 new Option(Bundle.getMessage("DefaultSensorState")
@@ -48,7 +52,9 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                             Bundle.getMessage("SensorStateActive")}, true));
     }
 
-    /* load(File) fills the contents from a file */
+    /**
+     * Fill the contents from a file.
+     */
     public void load(File file) {
         if (log.isDebugEnabled()) {
             log.debug("file: " + file); // NOI18N
@@ -59,7 +65,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         try {
             sFile = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
         } catch (Exception e) {
-            log.error("load (pipe): Exception: " + e.toString()); // NOI18N
+            log.error("load (pipe): Exception: {}", e.toString()); // NOI18N
         }
     }
 
@@ -72,16 +78,14 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("starting HexFileFrame exception: "+ex.toString());
+            log.warn("starting HexFileFrame exception: {}", ex.toString());
         }
         f.configure();
     }
 
     @Override
     public void run() { // invoked in a new thread
-        if (log.isInfoEnabled()) {
-            log.info("LocoNet Simulator Started"); // NOI18N
-        }
+        log.info("LocoNet Simulator Started"); // NOI18N
         while (true) {
             while (sFile == null) {
                 // Wait for a file to be available. We have nothing else to do, so we can sleep
@@ -142,7 +146,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
                     return;
                 }
             } catch (Exception e) {
-                log.error("run: Exception: " + e.toString()); // NOI18N
+                log.error("run: Exception: {}", e.toString()); // NOI18N
             }
             _running = false;
         }
@@ -201,7 +205,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
-    //private DataInputStream inpipe = null; // feed pout
+    //private DataInputStream inpipe = null;  // feed pout
 
     @Override
     public boolean okToSend() {
@@ -243,11 +247,12 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      * @return the options
      */
     public String[] validOption3() {
-        return new String[]{"Normal", "Spread", "One Only", "Both"}; // TODO I18N
+        return new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")}; // I18N
+
     }
 
     /**
-     * Get a String that says what Option 3 represents May be an empty string,
+     * Get a String that says what Option 3 represents. May be an empty string,
      * but will not be null
      */
     public String option3Name() {
@@ -256,12 +261,12 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     /**
      * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
-        log.debug("configureOption3: " + value); // NOI18N
+        log.debug("configureOption3: {}", value); // NOI18N
         setTurnoutHandling(value);
     }
 

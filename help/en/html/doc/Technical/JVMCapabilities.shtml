@@ -19,7 +19,7 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -47,7 +47,7 @@
       development and migration path. Much discussion is necessary.
       
       <p>As of February 2018, Oracle has scheduled end-of-life for Java 8 in
-      January 2019, and intendeds to release the next Long Term Support version 
+      January 2019, and intends to release the next Long Term Support version 
       (notionally known as both Java 11 and Java 18.9) in September of 2018.  
       Given that some users will need to move forward for other applications
       once Java 8 is EOL, at a minimum we'll have to have JMRI running under
@@ -112,7 +112,7 @@
         </tr>
 
         <tr>
-          <td>JMRI uses several com.sun classes that will, at some point.
+          <td>JMRI uses several com.sun classes that will, at some point,
           no longer be accessible.  This was originally scheduled as part of JPMS for
           1.9, but was later removed.  At some point, we will
           need to migrate away from these before using a more 
@@ -154,6 +154,14 @@
           <td>?</td>
 
           <td>10</td>
+        </tr>
+ 
+        <tr>
+          <td>Improved String <a href="http://marxsoftware.blogspot.com/2018/05/jdk-11-string-methods.html">whitespace support</a></td>
+
+          <td>?</td>
+
+          <td>11</td>
         </tr>
 
 
@@ -202,6 +210,11 @@
         <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
       </ul>
 
+    <p>In May 2018 Oracle announced that 
+        <a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, expected out at the end of calendar 2018,
+        will be a "Long Term Support" release.  Java 9 and 10 will not be.
+        
+        
       <P>As of April 2018, Java 10 only runs on 64-bit Windows versions (no 32-bit).
 
       <table border="1">
@@ -566,7 +579,7 @@
         </tbody>
       </table>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

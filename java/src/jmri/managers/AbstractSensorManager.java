@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.util.Enumeration;
+import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
@@ -79,6 +80,20 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return _tsys.get(name);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
+    }
+
     /** {@inheritDoc} */
     @Override
     protected Sensor getInstanceBySystemName(String systemName) {
@@ -94,13 +109,10 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
-        log.debug(" newSensor(\"{}\", \"{}\"", sysName, userName);
+        log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
         String systemName = normalizeSystemName(sysName);
-        if (log.isDebugEnabled()) {
-            log.debug("newSensor:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+        log.debug("    normalized name: \"{}\"", systemName);
+
         java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with "+systemName);
 
         // is system name in correct format?

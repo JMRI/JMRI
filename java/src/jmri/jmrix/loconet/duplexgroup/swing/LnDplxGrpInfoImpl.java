@@ -9,57 +9,60 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a low-level interface to Digitrax Duplex Group Identity information
- *
+ * Provides a low-level interface to Digitrax Duplex Group Identity information.
+ * <p>
  * Implements the following "Property Change" events, which are defined as
- * static strings in DuplexGropuIdentityImplConstants: DPLX_PC_STAT_LN_UPDATE -
- * Indicates that a GUI status line could be updated using provided string
- *
- * DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR - Indicates that a GUI status
- * line could be updated using the provided string UNLESS the status line is
- * currently showing an error
- *
- * NumberOfUr92sUpdate - Indicates that the class has counted the number of UR92
- * devices
- *
- * DPLX_PC_NAME_UPDATE - Indicates that a LocoNet message has reported the
- * Duplex Group Name
- *
- * DPLX_PC_CHANNEL_UPDATE - Indicates that a LocoNet message has reported the
- * Duplex Group Channel
- *
- * DPLX_PC_PASSWORD_UPDATE - Indicates that a LocoNet message has reported the
- * Duplex Group Password
- *
- * DPLX_PC_ID_UPDATE - Indicates that a LocoNet message has reported the Duplex
- * Group Id
- *
- * DPLX_PC_NAME_VALIDITY - Indicates that the validity of GUI field showing the
- * Duplex Group Name should be changed. NewValue() is true if a valid Duplex
- * Group Name is available; is false if the Duplex Group Name should be
- * considered invalid.
- *
- * DPLX_PC_CHANNEL_VALIDITY - Indicates that the validity of GUI field showing
- * the Duplex Group Channel should be changed. NewValue() is true if a valid
- * Duplex Group Channel is available; is false if the Duplex Group Channel
- * should be considered invalid.
- *
- * DPLX_PC_PASSWORD_VALIDITY - Indicates that the validity of GUI field showing
- * the Duplex Group Password should be changed. NewValue() is true if a valid
- * Duplex Group Password is available; is false if the Duplex Group Password
- * should be considered invalid.
- *
- * DPLX_PC_ID_VALIDITY - Indicates that the validity of GUI field showing the
- * Duplex Group Id should be changed. NewValue() is true if a valid Duplex Group
- * Id is available; is false if the Duplex Group Id should be considered
- * invalid.
- *
- * DPLX_PC_RCD_DPLX_IDENTITY_QUERY - Indicates that a LocoNet message which
- * queries the Duplex Group identity has been received.
- *
- * DPLX_PC_RCD_DPLX_IDENTITY_REPORT - Indicates that a LocoNet message which
- * reports the Duplex Group identity has been received.
- *
+ * static strings in {@link jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants}:
+ * <ul>
+ * <li>
+ *   DPLX_PC_STAT_LN_UPDATE -
+ *   Indicates that a GUI status line could be updated using provided string.
+ * <li>
+ *   DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR - Indicates that a GUI status
+ *   line could be updated using the provided string UNLESS the status line is
+ *   currently showing an error.
+ * <li>
+ *   NumberOfUr92sUpdate - Indicates that the class has counted the number of UR92
+ *   devices
+ * <li>
+ *   DPLX_PC_NAME_UPDATE - Indicates that a LocoNet message has reported the
+ *   Duplex Group Name
+ * <li>
+ *   DPLX_PC_CHANNEL_UPDATE - Indicates that a LocoNet message has reported the
+ *   Duplex Group Channel
+ * <li>
+ *   DPLX_PC_PASSWORD_UPDATE - Indicates that a LocoNet message has reported the
+ *   Duplex Group Password
+ * <li>
+ *   DPLX_PC_ID_UPDATE - Indicates that a LocoNet message has reported the Duplex
+ *   Group Id
+ * <li>
+ *   DPLX_PC_NAME_VALIDITY - Indicates that the validity of GUI field showing the
+ *   Duplex Group Name should be changed. NewValue() is true if a valid Duplex
+ *   Group Name is available; is false if the Duplex Group Name should be
+ *   considered invalid.
+ * <li>
+ *   DPLX_PC_CHANNEL_VALIDITY - Indicates that the validity of GUI field showing
+ *   the Duplex Group Channel should be changed. NewValue() is true if a valid
+ *   Duplex Group Channel is available; is false if the Duplex Group Channel
+ *   should be considered invalid.
+ * <li>
+ *   DPLX_PC_PASSWORD_VALIDITY - Indicates that the validity of GUI field showing
+ *   the Duplex Group Password should be changed. NewValue() is true if a valid
+ *   Duplex Group Password is available; is false if the Duplex Group Password
+ *   should be considered invalid.
+ * <li>
+ *   DPLX_PC_ID_VALIDITY - Indicates that the validity of GUI field showing the
+ *   Duplex Group Id should be changed. NewValue() is true if a valid Duplex Group
+ *   Id is available; is false if the Duplex Group Id should be considered
+ *   invalid.
+ * <li>
+ *   DPLX_PC_RCD_DPLX_IDENTITY_QUERY - Indicates that a LocoNet message which
+ *   queries the Duplex Group identity has been received.
+ * <li>
+ *   DPLX_PC_RCD_DPLX_IDENTITY_REPORT - Indicates that a LocoNet message which
+ *   reports the Duplex Group identity has been received.
+ * </ul>
  * This tool works equally well with UR92 and UR92CE devices. The UR92 and
  * UR92CE behave identically with respect to this tool. For the purpose of
  * clarity, only the term UR92 is used herein.
@@ -139,7 +142,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Reports whether Duplex Group Password must only be numeric, or if
+     * Report whether Duplex Group Password must only be numeric, or if
      * Password is allowed to include characters 'A', 'B', and/or 'C'.
      *
      * @return true if Password may only include digits.
@@ -149,11 +152,11 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Validates a Duplex Group Name.
+     * Validate a Duplex Group Name.
      * <p>
      * A valid Duplex Group Name is an 8 character string. The calling method
      * should append spaces or truncate to give correct length if necessary.
-     * <p>
+     *
      * @return true if and only if groupName is a valid Duplex Group Name
      */
     public static final boolean validateGroupName(String sGroupName) {
@@ -164,13 +167,13 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Validates a Duplex Group Password.
+     * Validate a Duplex Group Password.
      * <p>
      * Note that the password must be four digits if only numeric values are
      * allowed, or must be four characters, each of pattern [0-9A-C] if
      * alphanumeric values are allowed. (See private field
      * limitPasswordToNumericCharacters.)
-     * <p>
+     *
      * @return true if and only if sGroupPassword is a valid Duplex Group
      *         Password.
      */
@@ -187,7 +190,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Validates a Duplex Group Channel Number.
+     * Validate a Duplex Group Channel Number.
      *
      * @return true if and only if iGroupChannel is a valid Duplex Group
      *         Channel.
@@ -202,7 +205,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Validates the parameter as a Duplex Group ID number.
+     * Validate the parameter as a Duplex Group ID number.
      *
      * @return true if and only if iGroupId is a valid Duplex Group ID.
      */
@@ -217,7 +220,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Creates a LocoNet packet which queries UR92(s) for Duplex group
+     * Create a LocoNet packet which queries UR92(s) for Duplex group
      * identification information. The invoking method is responsible for
      * sending the message to LocoNet.
      *
@@ -243,7 +246,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * <p>
      * Throws an exception if s provides a 0-length group name string. If s is
      * too short, it is padded with spaces at the end of the string.
-     * <p>
+     *
      * @param sGroupName is the desired group name value as a string
      * @return The LocoNet packet which writes the Group Name to the UR92
      *         device(s)
@@ -309,7 +312,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * If s provides a 0-length group name, a bogus LocoNet message is returned.
      * If s does not define an integer is too short, it is padded with spaces at
      * the end of the string.
-     * <p>
+     *
      * @param iChannelNumber The desired group channel number value as an
      *                       integer
      * @return The packet which writes the Group Channel Number to the UR92
@@ -348,7 +351,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * If s provides anything other than a 4 character length group password
      * which uses only valid group ID characters (0-9, A-C), a bogus
      * LocoNet message is returned.
-     * <p>
+     *
      * @param sGroupPassword The desired group password as a string
      * @return The packet which writes the Group Password to the UR92 device(s)
      * @throws jmri.jmrix.loconet.LocoNetException in case of invalid sGrooupPassword
@@ -401,7 +404,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * <p>
      * If s provides anything other than a numeric value between 0 and 127, a
      * bogus LocoNet message is returned.
-     * <p>
+     *
      * @param s The desired group ID number as a string
      * @return The packet which writes the Group ID Number to the UR92 device(s)
      */
@@ -467,7 +470,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * Classifies a LocoNet Message to see if it is a Duplex Group Identity
      * message
      *
-     * @param m - a LocoNetMessage
+     * @param m a LocoNetMessage
      * @return DuplexGroupMessageType, encoded as one of the following
      *         NOT_A_DUPLEX_GROUP_MESSAGE DUPLEX_GROUP_CHANNEL_QUERY_MESSAGE
      *         DUPLEX_GROUP_CHANNEL_REPORT_MESSAGE
@@ -1166,7 +1169,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     /**
-     * Break connection with the LnTrafficController and stop timers
+     * Break connection with the LnTrafficController and stop timers.
      */
     public void dispose() {
         if (swingTmrIplQuery != null) {
@@ -1179,6 +1182,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImpl.class);
 
 }

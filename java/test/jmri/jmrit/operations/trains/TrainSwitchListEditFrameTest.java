@@ -1,7 +1,14 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -12,7 +19,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainSwitchListEditFrameTest {
+public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
 
     @Test
     public void testCTor() {
@@ -21,16 +28,84 @@ public class TrainSwitchListEditFrameTest {
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }
+    
+    @Test
+    public void testTrainSwitchListEditFrame() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // check defaults
+        Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
+        Assert.assertTrue("Real Time", Setup.isSwitchListRealTime());
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+        TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents();
+        });
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        List<Location> locations = lmanager.getLocationsByNameList();
+
+        // default switch list will print all locations
+        for (int i = 0; i < locations.size(); i++) {
+            Location l = locations.get(i);
+            Assert.assertTrue("print switchlist 1", l.isSwitchListEnabled());
+        }
+        // now clear all locations
+        enterClickAndLeave(f.clearButton);
+
+        enterClickAndLeave(f.saveButton);
+
+        for (int i = 0; i < locations.size(); i++) {
+            Location l = locations.get(i);
+            Assert.assertFalse("print switchlist 2", l.isSwitchListEnabled());
+        }
+        // now set all locations
+        enterClickAndLeave(f.setButton);
+        enterClickAndLeave(f.saveButton);
+
+        for (int i = 0; i < locations.size(); i++) {
+            Location l = locations.get(i);
+            Assert.assertTrue("print switchlist 3", l.isSwitchListEnabled());
+        }
+
+        // test the two check box options
+        enterClickAndLeave(f.switchListRealTimeCheckBox);
+        enterClickAndLeave(f.saveButton);
+
+        Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
+        Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+
+        enterClickAndLeave(f.switchListAllTrainsCheckBox);
+        enterClickAndLeave(f.saveButton);
+
+        Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
+        Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+
+        // TODO add test for combo box
+        //      enterClickAndLeave(f.switchListPageComboBox);
+        //      enterClickAndLeave(f.saveButton);
+        //      Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        //      Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
+        //      Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+        ThreadingUtil.runOnGUI(() -> {
+            JUnitUtil.dispose(f);
+        });
     }
 
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        loadTrains();
+    }
+
+    @Override
     @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrameTest.class);

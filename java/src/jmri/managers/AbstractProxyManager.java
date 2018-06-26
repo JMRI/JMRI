@@ -216,13 +216,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Override
     public E getBeanBySystemName(String systemName) {
-        for (Manager<E> m : this.mgrs) {
-            E b = m.getBeanBySystemName(systemName);
-            if (b != null) {
-                return b;
-            }
+        // System names can be matched to managers by system and type at front of name
+        int index = matchTentative(systemName);
+        if (index >= 0) {
+            Manager<E> m = getMgr(index);
+            return m.getBeanBySystemName(m.normalizeSystemName(systemName));
         }
-        return null;
+        log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
+        return getDefaultManager().getBeanBySystemName(getDefaultManager().normalizeSystemName(systemName));
     }
 
     /** {@inheritDoc} */

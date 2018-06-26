@@ -23,13 +23,13 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 
 /**
  * Pane for editing Digitrax SDF files.
- * <P>
+ * <p>
  * The GUI consists of a tree of instructions on the left, and on the right an
  * edit panel. The edit panel has a small detailed view of the instruction over
  * a larger detailed view.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
-  */
+ */
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
     // GUI member declarations

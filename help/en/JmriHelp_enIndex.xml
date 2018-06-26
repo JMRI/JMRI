@@ -280,6 +280,8 @@
  </indexitem>
  <indexitem text="MacOS Serial Ports " target="html.hardware.MacintoshSerialPorts"/>
 
+ <indexitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
+
  <indexitem text="Manuals " target="manual.index"/>
 
  <indexitem text="Marklin " target="html.hardware.marklin.index"/>
@@ -531,6 +533,8 @@
 
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
+
+ <indexitem text="TrainCrew " target="html.apps.TrainCrew.index"/>
 
  <indexitem text="Transits ">
   <indexitem text="Add/Edit a Transit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>

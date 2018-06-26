@@ -213,6 +213,8 @@
 
        <ul>
         <li><a href="#CopyLocation">Copy Location</a></li>
+        
+        <li><a href="#CopyTrack">Copy Track</a></li>
 
         <li><a href="#LocationSchedules">Schedules</a></li>
 
@@ -646,8 +648,8 @@
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
     this document that covers that window's capabilities. Help is also available at the <a
-     href="http://groups.yahoo.com/group/jmriusers/">JMRI users</a> which is part of the Yahoo
-    groups. Another good source for help is a series of articles written by David Haynes <a
+     href="https://groups.io/g/jmriusers">JMRI users</a> which is part of the Groups.io. 
+     Another good source for help is a series of articles written by David Haynes <a
      href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
      http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
     "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
@@ -1383,7 +1385,7 @@
 
    <p>
     You can find some examples of custom manifests at <a
-     href="http://groups.yahoo.com/group/jmriusers/files/Operations">http://groups.yahoo.com/group/jmriusers/files/Operations.</a>
+     href="https://groups.io/g/jmriusers/files/Operations">https://groups.io/g/jmriusers/files/Operations</a>.
    </p>
 
    <a name="GenerateCsvSwitchLists" id="GenerateCsvSwitchLists"></a>
@@ -1880,16 +1882,17 @@
 
    <a name="LocationTools" id="LocationTools"></a>
    <h3>Location Tools</h3>
+   
+   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
+   The first is "Copy Track".
 
    <a name="CopyTrack" id="CopyTrack"></a>
    <h4>Copy Track</h4>
-   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
-   The first is "Copy Track". From the copy track window, you can select any existing track and
-   create a new track with the same attributes as the existing one. You can also transfer all of the
-   rolling stock from the existing track to the new track, and if you wish, delete the original
-   track. Select the operations you want and then press the "Copy" button to create a new track,
-   move cars and locos, and delete the original track. If you're pleased with the results, press the
-   "Save" button to make your copy permanent.
+   The copy track tool allows you to select an existing track and create a new track with the same attributes as the
+   original. You can also transfer all of the rolling stock from the original track to the new track, and if you
+   wish, delete the copied track. Select the operations you want and then press the "Copy" button to create a new
+   track, move cars and locos, and delete the original track. If you're pleased with the results, press the "Save"
+   button to make your copy permanent.
 
    <p>When using the copy track feature, it is recommended that you reset or terminate any built
     trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
@@ -2863,6 +2866,9 @@
     location's tracks, select the checkbox "Move Rolling Stock to New Track". You can also delete
     all of the tracks at the location being copied, but you must also select the "Move Rolling Stock
     to New Track" option.</p>
+    
+    <h4>Copy Track</h4>
+    See <a href="#CopyTrack">Copy Track</a> under Location tools.
 
    <a name="LocationSchedules" id="LocationSchedules"></a>
    <h4>Schedules</h4>
@@ -4724,8 +4730,8 @@
    <h4>Setup Excel Program (Manifest Creator)</h4>
    The ability to configure an Excel program to create custom manifests can be found under Trains
    -&gt; Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator" and
-   "Switch List Creator". You can find a copies of the programs at the <a
-    href="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations"> Yahoo.com JMRI users
+   "Switch List Creator". You can find a copies of the programs at <a
+    href="https://groups.io/g/jmriusers/files/Operations">  JMRI users
     files Operations.</a> Place the program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files
    needed in the JMRI/operations/csvManifest directory. You can of course create your own program
    and also install it in the csvManifest directory.
@@ -5059,7 +5065,7 @@
     An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
      href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and switch
     list for locations Lakeview and Bakersfield using <a
-     href="http://groups.yahoo.com/group/jmriusers/files/Operations">Dan Foltz's Switch List
+     href="https://groups.io/g/jmriusers/files/Operations">Dan Foltz's Switch List
      Creator version 1.2 (SLC4JMRI.xlsm)</a>. This particular custom format allows you to use a half
     sheet of paper for your crew. Note that the <a href="#CarTypes">Car Types</a> was changed in the
     <a href="#Settings">Settings</a> window from "Descriptive" to "AAR Codes" before using Dan's

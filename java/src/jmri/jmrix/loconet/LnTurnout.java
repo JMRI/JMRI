@@ -9,31 +9,30 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractTurnout for LocoNet layouts
- * <P>
+ * <p>
  * This implementation implements the "SENT" feedback, where LocoNet messages
  * originating on the layout can change both KnownState and CommandedState. We
  * change both because we consider a LocoNet message to reflect how the turnout
  * should be, even if its a readback status message. E.g. if you use a DS54
  * local input to change the state, resulting in a status message, we still
  * consider that to be a commanded state change.
- * <P>
+ * <p>
  * Adds several additional feedback modes:
- * <UL>
- * <LI>MONITORING - listen to the LocoNet, so that commands from other LocoNet
- * sources (e.g. throttles) are properly reflected in the turnout state. This is
- * the default for LnTurnout objects as created.
- * <LI>INDIRECT - listen to the LocoNet for messages back from a DS54 that has a
- * microswitch attached to its Switch input.
- * <LI>EXACT - listen to the LocoNet for messages back from a DS54 that has two
- * microswitches, one connected to the Switch input and one to the Aux input.
- * </UL>
- * <P>
+ * <ul>
+ *   <li>MONITORING - listen to the LocoNet, so that commands from other LocoNet
+ *   sources (e.g. throttles) are properly reflected in the turnout state. This is
+ *   the default for LnTurnout objects as created.
+ *   <li>INDIRECT - listen to the LocoNet for messages back from a DS54 that has a
+ *   microswitch attached to its Switch input.
+ *   <li>EXACT - listen to the LocoNet for messages back from a DS54 that has two
+ *   microswitches, one connected to the Switch input and one to the Aux input.
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -397,7 +396,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     // data members
-    int _number;   // loconet turnout number
+    int _number;   // LocoNet Turnout number
 
     private boolean myAddress(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering
@@ -411,8 +410,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     /**
-     * Method which takes a turnout state as a parameter and adjusts it as necessary
-     * to reflect the turnout invert property.
+     * Take a turnout state as a parameter and adjusts it as necessary
+     * to reflect the turnout "Invert" property.
      *
      * @param rawState "original" turnout state before optional inverting
      */

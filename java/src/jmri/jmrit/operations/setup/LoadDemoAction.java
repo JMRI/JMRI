@@ -6,10 +6,10 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.ExceptionContext;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.swing.ExceptionContext;
+import jmri.util.swing.ExceptionDisplayFrame;
 
 /**
  * Swing action to load the operation demo files.

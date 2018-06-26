@@ -33,11 +33,11 @@
             <a href="#LocoNetConnect">Supported Hardware</a>
 
             <ul>
-              <li><a href="#Programmer">PR2, PR3, and PR4 Programmers</a></li>
+              <li><a href="#Programmer">PR2, PR3, and PR4 acting as Decoder Programmers</a></li>
             </ul>
           </li>
 
-          <li><a href="#Limitation">Limitations</a></li>
+          <li><a href="#Limitation">Hardware Interface and Command Station Limitations</a></li>
 
           <li>
             <a href="#Setup">Connecting</a>
@@ -82,8 +82,13 @@
             </ul>
           </li>
 
-          <li><a href="#SeeAlso">Documentation</a></li>
+          <li><a href="#SeeAlso">JMRI information and tools for LocoNet-specific hardware and features</a>
+          <ul>
+              <li><a href="#devicetoolhelp">JMRI LocoNet-specific Help pages</a>
 
+              <li><a href="#loconetRoster">Configuring some LocoNet devices via "Roster" entries</a></li>
+              <li><a href="#devicetoollimits">Some JMRI LocoNet-specific device and feature limitations</a></li>
+          </ul></li>
           <li><a href="#Support">Support</a></li>
         </ul>
       </div><a name="LocoNetConnect" id=
@@ -180,7 +185,7 @@
 
       <p>Generally, any of these can be used with any type of
       computer to communicate with any type of command station.
-      Currently, the LocoBuffer-USB and PR3 are the recommended
+      Currently, the LocoBuffer-USB , PR3, and PR4 are the recommended
       computer interface solutions. The LocoBuffer II and original
       LocoBuffer are no longer commercially available; their
       primary advantage now is that they use a traditional serial
@@ -198,7 +203,7 @@
       connection; there's a <a href="Uhlenbrock.shtml">separate
       page</a> on how to do this.</p>
 
-      <h4><a name="Programmer" id="Programmer">PR2, PR3, and PR4
+      <h4><a name="Programmer" id="Programmer">PR2, PR3, and PR4 acting as Decoder
       Programmers</a></h4>JMRI can also use a <a title=
       "Digitrax programmer" href="PR2.shtml">Digitrax PR2</a>, the 
       <a title="Digitrax Programmer/USB interface" href=
@@ -213,9 +218,9 @@
       is more information on the <a href="PR3.shtml">PR3 setup
           page</a> and the <a href="PR4.shtml">PR4 setup page</a>.
 
-      <h2><a name="Limitation" id="Limitation">Limitations</a></h2>
+      <h2><a name="Limitation" id="Limitation">Hardware Interface and Command Station Limitations</a></h2>
 
-      <p><b>Uhlenbrock Intellibox</b> - The Intellibox has two
+      <p><strong>Uhlenbrock Intellibox</strong> - The Intellibox has two
       LocoNet connections, called LocoNet-T and LocoNet-B. The
       LocoNet-T connection can drive more devices, but does not
       provide the Rail-Synch signals that some LocoNet devices
@@ -223,7 +228,7 @@
       require. A LocoBuffer should be connected to the LocoNet-T
       connection.</p>
 
-      <p><b>Uhlenbrock Intellibox II and IB-Com</b> - The
+      <p><strong>Uhlenbrock Intellibox II and IB-Com</strong> - The
       Intellibox II and IB-Com have two LocoNet connections, called
       LocoNet-T and LocoNet-B. The LocoNet-T connection can drive
       more devices, but does not provide the Rail-Synch signals
@@ -236,15 +241,15 @@
       supports decoder programming either via the PR3 as a
       stand-alone programmer or via a command station.</p>
 
-      <p><b>Mac OS X and the MS100</b> - Because Mac OS X can't
+      <p><strong>Mac OS X and the MS100</strong> - Because Mac OS X can't
       communicate at the special baud rate used by the MS100, the
       MS100 won't work with Mac OS X. You should get a
       LocoBuffer-USB instead.</p>
 
-      <p><b>Microsoft Vista and the MS100</b> - It has been
+      <p><strong>Microsoft Vista and the MS100</strong> - It has been
       reported that Vista does not support the special baud rate
       used by the MS100. If you find that your MS100 does not work
-      on your Vista machine you should get a LocoBuffer-USB or PR3
+      on your Vista machine you should get a LocoBuffer-USB, PR3, or PR4
       instead.</p><a name="Setup" id="Setup"></a>
 
       <h2>Connecting</h2>
@@ -252,7 +257,8 @@
       <p>To connect your computer to a Digitrax DCC system, you
       need a <a title="RR-CirKits USB interface" href=
       "LocoBufferUSB.shtml">LocoBuffer-USB</a>, <a title=
-      "Digitrax USB interface" href="PR3.shtml">PR3</a>, <a title=
+      "Digitrax PR3 USB interface" href="PR3.shtml">PR3</a>, <a title=
+      "Digitrax PR4 USB interface" href="PR4.shtml">PR4</a>, <a title=
       "RR-CirKits Serial interface" href=
       "LocoBufferII.shtml">LocoBuffer-II</a>, <a title=
       "Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a>
@@ -261,16 +267,17 @@
       more information on these. The LocoBuffer-USB is highly
       recommended.</p>
 
-      <p>Note that except for the PR3, these are only LocoNet
-      interfaces, not stand alone programmers like the Digitrax PR2
-      and PR3. Readback of decoder CVs is possible when using a
-      programming track controlled by a PR3 (in stand-alone
-      programming mode) or a programming track controlled by a
-      Chief or Zephyr command station. The Empire Builder command
-      station does not allow Readback of decoder CVs; users of the
-      Empire Builder can add CV Readback capability by using a
-      programming track connected to a PR3 operating in stand-alone
-      programming mode.</p>
+      <p>Note that except for the PR3 and PR4, these are only LocoNet
+      interfaces, not stand alone programmers like the Digitrax PR2.  
+      The Digitrax PR3 and PR4 devices may act either as a standalone
+      programmer or as a LocoNet interface.  Readback of decoder CVs 
+      is possible when using a programming track controlled by a PR3 or PR4 
+      (in stand-alone programming mode) or when using a programming track 
+      controlled by a Chief, Zephyr, Advanced (DCS210) or Evolution (DCS240) 
+      command station. The Empire Builder (DB150) command station does not allow 
+      Readback of decoder CVs; users of the Empire Builder can add CV Readback 
+      capability by using a programming track connected to a PR3 or PR4 when 
+      operating in stand-alone programming mode.</p>
 
       <p>The steps below show how to add a connection to JMRI
       (DecoderPro, PanelPro, etc.) for a LocoNet-based system.</p>
@@ -314,12 +321,12 @@
 
         <li>Select the appropriate "Command Station Type":
 
-          <p>When the "Connection Type" is set for the PR3, the
-          "Command Station Type" can be set to "PR3 in stand-alone
+          <p>When the "Connection Type" is set for the PR3 or PR4, the
+          "Command Station Type" can be set to "PRx in stand-alone
           programming mode" or set to one of the command station
-          types. When set for stand-alone programming, the PR3 will
+          types. When set for stand-alone programming, the PR3/PR4 will
           not communicate with LocoNet. When set for a specific
-          command station type, the PR3 programming track is not
+          command station type, the PR3/PR4 programming track is not
           used; instead, decoder programming is done through the
           mechanisms provided by the selected command station.</p>
 
@@ -328,16 +335,18 @@
           mechanisms. The DB150 is not capable of reading decoder
           CV values, so JMRI will not be able to read decoder CV
           values via the DB150 programming mechanisms. Empire
-          Builder users can use a PR3 in stand-alone programmer
+          Builder users can use a PR3/PR4 in stand-alone programmer
           mode, instead of the Empire Builder programming track, to
           allow decoder CV readback. Some users configure
-          DecoderPro for programming decoders using the PR3 in
+          DecoderPro for programming decoders using the PR3/PR4 in
           stand-alone programming mode, and then configure PanelPro
-          to use the PR3 in LocoNet interface mode (also called
+          to use the PR3/PR4 in LocoNet interface mode (also called
           "MS100 mode") to allow PanelPro to communicate with the
           Empire Builder command station and LocoNet-connected
           peripherals. More PR3 setup information can be found on
-          the <a href="PR3.shtml">PR3 setup page</a>.</p>
+          the <a href="PR3.shtml">PR3 setup page</a>.  More PR4 setup 
+          information can be found on the <a href="PR4.shtml">PR4 
+          setup page</a>.</p>
         </li>
 
         <li>The "Connection Prefix" is used to help JMRI
@@ -376,7 +385,7 @@
             available, this must be set to match the needs of the
             particular hardware adapter specified in the "System
             Connection" setting. This setting will be pre-set and
-            unchangeable you have selected a LocoBuffer-USB, PR3,
+            unchangeable you have selected a LocoBuffer-USB, PR3, PR4,
             or MS100 "System Connection". There are two speed
             choices for the LocoBuffer and LocoBuffer-II; select
             the one that corresponds to the jumper settings on your
@@ -406,7 +415,7 @@
             being improperly set up, in which case you might want
             to try to bypass that by selecting "no flow control".
             This box will be blank if you've selected
-            LocoBuffer-USB, PR3 or MS100.</li>
+            LocoBuffer-USB, PR3, PR4 or MS100.</li>
           </ul>
         </li>
 
@@ -425,7 +434,7 @@
       commands the LocoNet can handle each second, which can cause
       significant delays when you're controlling signals, etc. To
       disable it, you can use the "Configure Command Station" tool
-      in the <b>LocoNet</b> menu, or the Roster-based mechanism, or 
+      in the <strong>LocoNet</strong> menu, or the Roster-based mechanism, or 
       the throttle-based programming mechanisms as described in the
       manual for your command station.  The command station may not 
       immediately accept OpSw setting changes, so it may be necessary 
@@ -555,8 +564,8 @@
             decoder's CV values.</li>
 
             <li>A programming booster, such as the
-            <i>SoundTraxx</i> <b>PTB-100</b> or the <i>DCC
-            Specialties</i> <b>Power Pax</b> can often be used
+            <i>SoundTraxx</i> <strong>PTB-100</strong> or the <i>DCC
+            Specialties</i> <strong>Power Pax</strong> can often be used
             between the command station programming track
             connections and the programming track to allow
             successful read and write access of CVs on mobile
@@ -741,14 +750,14 @@
       </ul>
 
       <a name="SeeAlso" id="SeeAlso"></a>
-      <h2>Documentation</h2>
-
-      <h3>JMRI Help</h3>
-
-      <p>JMRI provides specific support for the a variety of
-      Digitrax and 3rd-party LocoNet-based hardware, as well as a
-      variety of tools to configure LocoNet hardware.<br>
-      Some links:</p>
+      <h2>JMRI information and tools for LocoNet-specific hardware and features</h2>
+      
+      <p>JMRI supports a wide variety of LocoNet hardware and features.  JMRI provides 
+      a wide variety of hardware-specific tools to assist in configuring the devices.
+      And JMRI provides a number of tools to monitor the operation of LocoNet.  Most
+      of these features are described in the JMRI "Help" pages linked below.</p>
+      
+      <a name="devicetoolhelp" id="devicetoolhelp"></a><h3>JMRI LocoNet-specific Help pages</h3>
 
       <ul>
         <li>Computer-to-LocoNet&reg; Interface Hardware
@@ -761,6 +770,8 @@
             LocoBuffer-II</a></li>
 
             <li><a href="LocoBuffer.shtml">LocoBuffer</a></li>
+
+            <li><a href="PR4.shtml">Digitrax PR4</a></li>
 
             <li><a href="PR3.shtml">Digitrax PR3</a></li>
 
@@ -828,7 +839,7 @@
 
             <li><a href=
             "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">
-            Configure Duplex Group</a></li>
+            Configure Duplex Group</a>.  (Note that this tool can have an effect on LNWI devices.)</li>
 
             <li><a href=
             "../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">
@@ -873,9 +884,6 @@
             <li><a href="LocoNetSim.shtml">LocoNet&reg;
             Simulator</a></li>
 
-            <li><a href="LocoNetClasses.shtml">JMRI High-level
-            Structures for LocoNet&reg; Interfacing</a></li>
-
             <li>
               <a href="LocoNetworking.shtml">Connecting multiple
               computers to a LocoNet&reg; layout</a>
@@ -890,16 +898,93 @@
               </ul>
             </li>
 
+            <li><a href="StandaloneLocoNet.shtml">Standalone
+            LocoNet</a></li>
+
+            <li><a href="LocoNetClasses.shtml">JMRI High-level
+            Structures for LocoNet&reg; Interfacing</a></li>
+
             <li>A technically-oriented study of <a href=
             "DigitraxPower/index.shtml">Power Supply issues</a> in
             some Digitrax products</li>
 
-            <li><a href="StandaloneLocoNet.shtml">Standalone
-            LocoNet</a></li>
           </ul>
         </li>
-      </ul><a name="Support" id="Support"></a>
+      </ul>
+      <a name="loconetRoster" id="loconetRoster"></a><h3>Configuring some LocoNet 
+          devices via "Roster" entries</h3>
+      <p>Some LocoNet devices can be configured via JMRI a "roster" entry.  Simply 
+          select the appropriate "decoder" name when creating a new roster entry.
+          These include:</p>
+      <ul>
+          <li>DCS100/DCS200/DCS50/DCS51/DB150/DCS210/DCS240 (only when acting as 
+              a command station)</li>
+          <li>BDL16/BDL162/BDL168</li>
+          <li>DS64</li>
+          <li>PM4/PM42</li>
+          <li>SE8C</li>
+      </ul>
+      <p>Often, these "decoder" definitions have some limitations on which features
+          can be configured, and, where appropriate, limitations on the supported
+          range of "board id" values.  These limitations are documented on a "Notes" 
+          tab within the "comprehensive" programmer window.
 
+      <p>Note that JMRI generally provides other (historical) tools which are able to 
+        configure the same set of features via tools in the "LocoNet" menu.  Any 
+        changes made to device configuration using the historical tools will 
+        <strong>not</strong> be reflected in a roster entry for the device.  If you wish to
+        keep the roster updated with any changes made via historical tools or using
+        other tools or processes, it will be necessary to manually update the
+        roster entry.</p>
+
+      <a name="devicetoollimits" id="devicetoollimits"></a><h3>Some JMRI LocoNet-specific device and feature limitations</h3>
+
+      <ul>
+          
+          <li><p>At this time, Digitrax "expanded" slots are not directly supported.  
+                  This has several implicaitons:
+              <ul>
+                  <li>The
+           <a href=
+            "../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">
+            Monitor Slots</a> tool is only able to display information for "standard"
+      slots.  It is possible when using a DCS240 that a loco can be shown as 
+      occupying a "standard" slot when it actually is being controlled by an 
+      "extended" slot.  When this occurs, the display will generallly be "corrected" within a few minutes.</li>
+                  <li>JMRI can have difficulty acquiring and/or dispatching a loco
+                      when the loco has been acquired into an "expanded" slot by
+                      a throttle with enabled "expanded" slot capability.</li>
+              </ul>
+              <p>As such, many users find that disabling DCS240 "expanded" slot 
+              capability can improve some aspects of JMRI "throttle" functionality,
+              including WiThrottle Server funcitonality.</p></li>
+ 
+          
+          <li><p>At this time, the Digitrax BXP88 and BXPA1 devices do not support a 
+      mechanism to allow JMRI to program individual device OpSw settings via 
+      LocoNet messaging.</p>
+              <p>While JMRI cannot provide mechanisms to configure these 
+      devices, for their block detection and transponding features, their 
+      behavior is similar to the BDL16x device.  JMRI's existing support for 
+      BDL16x block detection and transponding features provides appropriate 
+      support for the BXP88/BXPA1 detection and transponding operational 
+      features.  JMRI's existing support for PM4x power management features 
+      provides appropriate support for the BXP88/BXPA1 power management 
+      operational features.</p></li>
+
+          <li><p> The LNWI similarly does not provide mechanisms to allow JMRI configuration
+            of individual LNWI OpSw settings.  However, some LNWI "SSID" information 
+            may be influenced by the operations performed by the <a href=
+            "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">
+            Configure Duplex Group</a> 
+            tool.  Note that some specific LNWI OpSw settings are able to block the effect
+            of that tool upon the LNWI's SSID configuration.</p></li>
+          <li>LocoNet does not provide any good way to allow JMRI to configure the 
+            settings of any "booster".  Configure boosters using the mechanisms
+            documented by the booster manufacturer.</li>
+      </ul>
+
+      <a name="Support" id="Support"></a>
       <h3>Third Party/Support</h3>
 
       <p>Support for Digitrax hardware products is available
@@ -910,8 +995,8 @@
 
       <p>Many knowledgeable Digitrax users contribute to the
       <a href=
-      "https://groups.yahoo.com/neo/groups/Digitrax/info">Digitrax
-      users Yahoo group</a>. If you have a problem with Digitrax
+      "https://groups.io/g/Digitrax-Users">Digitrax
+      users "groups.io" group</a>. If you have a problem with Digitrax
       equipment, this is a good place to pose your
       Digitrax-specific problems. This user's group is run by and
       for Digitrax users. It is not directly supported by
@@ -919,8 +1004,8 @@
 
       <p>For JMRI-specific questions, including questions about how
       JMRI and Digitrax hardware interact, the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users Yahoo group</a> is very helpful.</p>
+      "https://groups.io/g/jmriusers">JMRI
+      users "groups.io" group</a> is very helpful.</p>
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
