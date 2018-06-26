@@ -462,7 +462,7 @@ git push github
 ====================================================================================
 ## Announcement and Post-release Steps
 
-- Mail announcement to jmriusers@yahoogroups.com
+- Mail announcement to jmriusers@yahoogroups.com + Groups.io
 
     Subject is "Test version 4.11.7 of JMRI/DecoderPro is available for download" or "JMRI 4.8 is available for download"
 

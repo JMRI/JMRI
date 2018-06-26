@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Jan Boen
  */
 
-// May 2018 - adjust so it works properly in synchronous mode.
+// May/June 2018 - adjust so it works properly in synchronous mode.
 
 public class TamsTrafficController extends AbstractMRTrafficController implements TamsInterface, CommandStation {
 
@@ -38,6 +38,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     public TamsTrafficController() {
         super();
         log.debug("creating a new TamsTrafficController object");
+        log.debug("Just a silly change to force an staged change");        
         // set as command station too
         jmri.InstanceManager.store(this, jmri.CommandStation.class);
         super.setAllowUnexpectedReply(false);        
