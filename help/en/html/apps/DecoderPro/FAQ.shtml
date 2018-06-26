@@ -40,10 +40,10 @@
         <dd class="first">
                     <p>A completely new decoder needs a new or updated
           configuration file. You can <a href=
-          "CreateDecoder.shtml">create your own</a> or ask on the
+          "CreateDecoder.shtml">create your own</a> or ask on
           <a href=
-          "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-          users Yahoo group</a> for somebody to create one for
+          "https://groups.io/g/jmriusers">JMRI
+          users</a> for somebody to create one for
           you.</p>
 
           <p>In many cases, you can use an existing decoder that's
@@ -100,16 +100,15 @@
 
           <p>While people are working on decoder definitions, they
           often put their draft definitions in the <a href=
-          "https://groups.yahoo.com/neo/groups/jmriusers/files">"Files"
-          area of the JMRI users Yahoo group</a> (log in to
+          "https://groups.io/g/jmriusers/files">"Files"
+          area of JMRI users </a> (log in to
           access). You can <a href=
-          "https://groups.yahoo.com/neo/groups/jmriusers/files/Decoder%20files">
+          "https://groups.io/g/jmriusers/files/Decoder%20files">
           download them from the Decoder Files folder</a>.<br>
           Note that as an anti-spam measure, you will have to
           <a href=
-          "https://groups.yahoo.com/neo/groups/jmriusers/info?showJoinPopup=true">
-          join the group</a> to be able to download the files; that
-          will require that you have a (free) Yahoo account.</p>
+          "https://groups.io/g/jmriusers/join">
+          join the group</a> to be able to download the files.</p>
         </dd>
 
         <dt class="left"><a name="lb-xp" id="lb-xp">Why does my
