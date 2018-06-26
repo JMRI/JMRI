@@ -105,6 +105,11 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
+    @Test
+    public void testProvideAddressAndPin() {
+        Assert.assertNotNull("Sensor XS99:3 provided",l.provideSensor("XS99:3"));
+    }
+
     // from here down is testing infrastructure
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 

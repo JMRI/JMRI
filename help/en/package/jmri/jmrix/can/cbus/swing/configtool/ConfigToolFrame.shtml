@@ -26,7 +26,7 @@
       <h1>JMRI: CBUS Event Capture Tool</h1>
       <a href="../../../../../../../html/hardware/can/images/MergEventCapture.png">
       <img src="../../../../../../../html/hardware/can/images/MergEventCapture.png"
-      width="157" height="94" alt="Event Capture Tool screenshot" align="right"></a>
+       alt="Event Capture Tool screenshot" align="right"></a>
 
       <p>The CBUS Event Capture tool can simplify configuring JMRI
       to work well with your <a href=
