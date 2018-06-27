@@ -8,7 +8,7 @@
 
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help send loconet packets">
+  <meta name="keywords" content="JMRI help send CBUS packets">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">

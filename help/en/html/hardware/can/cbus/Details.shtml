@@ -31,32 +31,70 @@
       <p>This page describes technical details of JMRI's <a href=
       "index.shtml">CBUS</a> support.</p>
 
-      <h2>CAN Adapters</h2>JMRI's general approach is to support as
+      <h2>CAN Adapters</h2>
+      <a href="../images/merg-system-connection.jpg"><img src="../images/merg-system-connection.jpg"
+      width="250" height="130" alt="JMRI MERG System Connections" align=
+      "right"></a>
+      
+      <p>JMRI's general approach is to support as
       many hardware combinations as possible. By supporting as many
       people and their hardware desires as possible, we can create
       a growing community of developers, hence more code.
-
-      <p>As part of this, the JMRI CAN support is designed to use
+      <br>
+      As part of this, the JMRI CAN support is designed to use
       as many CAN adapter types as possible.</p>
+      
+      <h3>CBUS CAN ( CBUS module ) network ID</h3>
+      
+      <p>All CBUS modules need a CBUS CAN ID, and JMRI is no exception.</p>
 
       <p>The MERG CAN-RS can do "enumeration" for CBUS, but many
       other adapters can't because of their intrinsic latency.
-      Their slow replies effectively make them invisible.</p>
-
-      <p>Therefore, Mike Bolton , one of the CBUS developers
+      Their slow replies effectively make them invisible.
+      <br>
+      Therefore, Mike Bolton , one of the CBUS developers
       suggested that JMRI use a CBUS ID of 126. Currently, that's a
-      fixed value. <a name="documentation" id=
-      "documentation"></a></p>
+      fixed value in some systems.</p>
+      
 
-      <h2>Documentation</h2>
+      <h2><a name="documentation" id="documentation">Documentation</a></h2>
 
+      
+      <h3>Connecting to JMRI via</h3>
+      <h4>CAN via MERG CAN-RS or CAN-USB</h4>
+      
+      <p>CANUSB4 does not require drivers installing on modern operating systems.</p>
+      <h4>CAN via MERG Network Interface</h4>
+<ul>
+<li>PiCAP</li>
+      <li>CANether</li>
+    </ul>  
+
+      <h4>CAN via GridConnect adapter</h4>
+      <h4>CAN via GridConnect Network Interface</h4>
+      <h4>CAN via Lawicell CANUSB</h4>
+      <h4>CAN Simulation</h4>
+      <p>Known issue - Does not simulate sending DCC commands, see <a href="https://github.com/JMRI/JMRI/issues/2065">https://github.com/JMRI/JMRI/issues/2065</a></p>
+      <h4>Direct Serial Connection</h4>
+      
+      
+      
+      <li> </li>
+      </ul>
+      
+      
+      <h3>DCC Options</h3>
+      <p>To send DCC instructions over CBUS to a command station ( eg. CANCMD ), </p>
+      
+      <h4>Consisting</h4>
+      <p>This is currently unsupported in MERG connections within JMRI, ensure set to internal.</p>
+      
+      
       <h3>JMRI Help</h3>
 
-      <p>Back to the <a href="index.shtml">Main CBUS Help
-      page</a></p>
+      <p><a href="index.shtml">Main CBUS Help page</a></p>
 
-      <p>Also read JMRI's <a href="../index.shtml">general CAN
-      support</a></p>
+      <p><a href="../index.shtml">JMRI's general CAN support</a></p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

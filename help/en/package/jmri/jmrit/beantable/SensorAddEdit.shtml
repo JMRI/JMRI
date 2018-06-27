@@ -173,6 +173,12 @@
           The feedback address you will use is 787.</p>
         </dd>
       </dl>
+      
+      <h3>MERG CBUS CAN Sensor Mapping</h3>
+      <p>Short event 18 on and off : "18".</p>
+      <p>Short event 18 on, short event 21 off : "+18;-21".</p> 
+      <p>Long event Node 2 Event 18 on and off: "+N2E18;-N2E18".</p>
+      <p>Full details <a href="../../../../html/hardware/can/cbus/Names.shtml">within MERG documentation</a>.</p>
 
       <h3>Maple and C/MRI Sensor to JMRI Sensor Mapping</h3>
 
