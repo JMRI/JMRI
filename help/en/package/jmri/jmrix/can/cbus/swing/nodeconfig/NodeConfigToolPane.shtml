@@ -25,7 +25,7 @@
       <h1>JMRI: CBUS Node Configuration Tool</h1>
       <a href="../../../../../../../html/hardware/can/images/MergNodeConfig.png">
       <img src="../../../../../../../html/hardware/can/images/MergNodeConfig.png"
-      width="157" height="94" alt="Merg Node Configuration Tool screenshot"
+      width="315" height="188" alt="Merg Node Configuration Tool screenshot"
       align="right"></a>
       <p>The CBUS Node Configuration tool (under development) is intended to program
       Variables in a CBUS MERG module using the modules' Node number.</p>
