@@ -218,7 +218,7 @@
       number which should (usually) be ignored.</p>
 
       
-      <h3><a name="hex" id="hex">Sending hex strings</h3>
+      <h3><a name="hex" id="hex">Sending hex strings</a></h3>
       
       <p>It's possible to connect a Sensor to arbitrary
       CAN frames by specifying their data content as a hex string,

@@ -174,13 +174,12 @@
         <dd>Clears the data entry fields and preloads the priority
         values.</dd>
         
-        
-
+        </dl>
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
         
         
         
-      </dl><!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

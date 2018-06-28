@@ -289,16 +289,13 @@
         <tr>
           <td>+N2E18;-N2E18</td>
           <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-<<<<<<< HEAD
           <td>Sensor</td>
           <td>MS+N2E18;-N2E18</td>
-=======
           <td>MT+N2E18;-N2E18</td>
           <td></td>
           <td></td>
           <td>Note: Works</td>
           <td> </td>
->>>>>>> 5d3ec788db8c28ea78853d2d41da9cfa28e522a0
         </tr>
         </tbody></table>
         
