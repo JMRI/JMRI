@@ -5,7 +5,7 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="keywords" content="JMRI help MERG CBUS NODE CONFIG TOOL configuration">
   <title>JMRI: CBUS Node Config Tool</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -40,6 +40,10 @@
       the value stored in the given Variable.<br>
       Change or enter e new value for (the contents of) the variable an click [Write].</p>
 
+      
+      
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

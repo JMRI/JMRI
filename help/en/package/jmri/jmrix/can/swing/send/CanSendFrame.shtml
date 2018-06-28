@@ -8,7 +8,7 @@
 
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help send CBUS packets">
+  <meta name="keywords" content="JMRI help send CBUS packets long short can events frames event hex">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -47,7 +47,7 @@
       characters or "[ ]" characters for a standard or extended
       header, respectively.<br>
       You can also enter packets in <a href=
-      "../../../../../../html/hardware/can/cbus/index.shtml">CBUS
+      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS
       address format</a>, e.g. "+n4e1". Once you've entered the
       packet, just click "send".</p>
 
@@ -56,6 +56,11 @@
       delays in between. Press the "Go" button to start the
       transmission sequence, and press it again to stop the
       sequence.</p>
+      
+     <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
+
+      
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

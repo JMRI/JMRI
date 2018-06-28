@@ -5,7 +5,7 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="keywords" content="JMRI help MERG CBUS naming long short events event add sensor hex">
   <title>JMRI Hardware Support - CBUS - Naming</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -28,10 +28,21 @@
       <p>This page describes how JMRI uses System Names to access
       CBUS-attached resources.</p>
 
+      <ul>
+      
+      <li>
+      <a href="#summary">Summary of Events</a>
+      </li>
+      
+      <li>
+      <a href="#hex">Sending hex strings</a>
+      
+      </li>
+      </ul>
       
         <!--
         A big chunk of text discussing naming options + naming table 
-        + sensors copied from to /help/en/html/hardware/can/cbus/index.shtml
+        + sensors moved here from /help/en/html/hardware/can/cbus/index.shtml
         @icklesteve June 2018
         -->      
       
@@ -53,14 +64,12 @@
       command and length information, followed optionally by
       additional data bytes. In it's most simple form, this is used
       to send identifiable "events". In turn, events come in two
-      types: "ON" and "OFF".<a name="documentation" id=
-      "documentation"></a>
-
-      <h2>Documentation</h2>
-
-      <h3>Summary of CBUS events</h3>
+      types: "ON" and "OFF".
       
-      <table>
+      
+      <h2><a name="summary" id="summary">Summary of CBUS events</a></h2>
+      
+      <table border="1">
         <tbody><tr>
           <th>In/Out</th>
           <th>Entry</th>
@@ -153,7 +162,12 @@
         </tr>
         </tbody></table>
         
-
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+        
+        
+        
       <h3>Sensors</h3>
 
       <p>CBUS messages coming into JMRI applications can be
@@ -203,7 +217,10 @@
       short events, where parts of the packet include the node
       number which should (usually) be ignored.</p>
 
-      <p>Finally, it's possible to connect a Sensor to arbitrary
+      
+      <h3><a name="hex" id="hex">Sending hex strings</h3>
+      
+      <p>It's possible to connect a Sensor to arbitrary
       CAN frames by specifying their data content as a hex string,
       indicated by "X":<br>
       <code>MSX9100000000000012;X9100000000000019</code><br>
@@ -212,18 +229,22 @@
       on the layout.</p>
       
       
+      <p>
+      The CAN frames can send CBUS opscodes in the hex form of the code you require.
+      <br>
+      eg, to set up a sensor to send an DCC emergency stop / resume opscode over CBUS you would use <code>X0A;X05</code>
+      </p>
       
-      
-      
-      
-      
-      
-      
+      <p>Check the CBUS wiki and developers guide for more info and absolute specification.</p>
       
       
       <h3>JMRI Help</h3>
 
-      <p>Back to the <a href="index.shtml">Main CBUS Help page</a>.</p>
+      <p><a href="index.shtml">Main JMRI CBUS Help page</a>.</p>
+      
+      <h3>Third Party Help</h3>
+      <p><a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG CBUS intoduction page</a> For the CBUS developers guide, follow link at bottom of the page.</p>
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

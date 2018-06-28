@@ -69,9 +69,12 @@
 
 
       <h3><a href="cbus/index.shtml">MERG CBUS</a></h3>
+
       <img src=
       "https://www.merg.org.uk/merg_images/merg_logo.png" align=
       "right" alt="MERG logo" height="45" width="100">
+      
+      
       
       <p>
       CBUS is hosted under the umbrella of the Model
@@ -82,7 +85,8 @@
       Their intention was to develop a system for comprehensive 
       layout control based on a general purpose Layout Control Bus (LCB).
       </p>
-      
+
+
       <p>
       3 wires run between a minimum of 2 modules : Low, Hi and Ground.
       CBUS modules can be thought of as </p>
@@ -98,6 +102,8 @@
       events on servo start moving, servo mid-point, also sending an 
       event when completing moving the servo to its final position.</li>
       </ul>
+            <img src="http://mergcbus.sourceforge.net/cbus.png" align=
+      "right" alt="CBUS logo" height="50" width="100">
       
       <p>
       <a href=
