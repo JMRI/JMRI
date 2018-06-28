@@ -268,8 +268,9 @@
         receiving CAN frames. These can be very useful in testing
         hardware, etc.</li>
 
-        <li>OpenLCB <a href="../../../package/jmri/jmrix/openlcb\swing\send\OpenLcbCanSendFrame.shtml">
-        Send Frame tool </a> The "Send OpenLCB Frame" tool lets you directly send 
+        <li>OpenLCB
+        <a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">
+        Send Frame tool</a> The "Send OpenLCB Frame" tool lets you directly send 
         CAN frames, and certain kinds of OpenLCB messages, eg "Verify Node" and 
         "Send Request Consumers"
         </li>
