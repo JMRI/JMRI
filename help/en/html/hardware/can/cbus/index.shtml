@@ -107,10 +107,10 @@
         </li>
       </ul>      
       
-      <p>Other CBUS JMRI Help Pages : </p>
+      <p>Other JMRI CBUS Help Pages : </p>
       <ul>
-        <li><a href="Names.shtml">Naming of CBUS inputs and outputs</a> - Adding CBUS events to JMRI sensor / turnout tables.</li>
-        <li><a href="Details.shtml">Connection Details</a> - MERG connection options in the main JMRI preferences.</li>
+        <li><a href="Names.shtml">Naming of CBUS inputs and outputs</a> - Naming conventions - Adding CBUS events to JMRI sensor / turnout tables.</li>
+        <li><a href="Details.shtml">Connection Details</a> - MERG CAN connection options in the main JMRI preferences.</li>
         <li><a href="../index.shtml">Main CAN Support Help page</a></li>
       </ul>
       
@@ -291,11 +291,6 @@
           <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
           <td>Sensor</td>
           <td>MS+N2E18;-N2E18</td>
-          <td>MT+N2E18;-N2E18</td>
-          <td></td>
-          <td></td>
-          <td>Note: Works</td>
-          <td> </td>
         </tr>
         </tbody></table>
         
