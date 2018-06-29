@@ -66,6 +66,7 @@ public class NodeIdentity {
     private static final String UUID = "uuid"; // NOI18N
     private static final String NODE_IDENTITY = "nodeIdentity"; // NOI18N
     private static final String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
+    private static final String IDENTITY_PREFIX = "jmri-";
 
     /**
      * A string of 64 URL compatible characters.
@@ -80,7 +81,7 @@ public class NodeIdentity {
         init(); // init as a method so the init can be synchronized.
     }
 
-    synchronized private void init() {
+    private synchronized void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
             try {
@@ -98,7 +99,7 @@ public class NodeIdentity {
                     this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
                 });
                 if (!this.validateIdentity(id)) {
-                    log.debug("Node identity {} is invalid. Generating new node identity.", id);
+                    log.warn("Node identity {} is invalid. Generating new node identity.", id);
                     this.formerIdentities.add(id);
                     this.getIdentity(true);
                 } else {
@@ -121,7 +122,7 @@ public class NodeIdentity {
      * <i>jmri-MACADDRESS-profileId</i>, this identity should be considered
      * unreliable and subject to change across JMRI restarts.
      */
-    synchronized public static String identity() {
+    public static synchronized String identity() {
         String uniqueId = "-";
         try {
             uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
@@ -140,7 +141,7 @@ public class NodeIdentity {
      *
      * @return A list of other identities this node may have had in the past.
      */
-    synchronized public static List<String> formerIdentities() {
+    public static synchronized List<String> formerIdentities() {
         if (instance == null) {
             instance = new NodeIdentity();
             log.info("Using {} as the JMRI Node identity", instance.getIdentity());
@@ -151,32 +152,22 @@ public class NodeIdentity {
     /**
      * Verify that the current identity is a valid identity for this hardware.
      *
-     * @return true if the identity is based on this hardware.
+     * @param ident an identity to check.
+     *
+     * @return true if the identity is based on the current UUID.
      */
-    synchronized private boolean validateIdentity(String identity) {
-        try {
-            Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
-            while (enumeration.hasMoreElements()) {
-                NetworkInterface nic = enumeration.nextElement();
-                if (!nic.isVirtual() && !nic.isLoopback() && 
-                    (nic.getHardwareAddress()!=null)) {
-                    String nicIdentity = this.createIdentity(nic.getHardwareAddress());
-                    if (nicIdentity != null && nicIdentity.equals(identity)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-            log.error("Error accessing interface: {}", ex.getLocalizedMessage(), ex);
-        }
-        return false;
+    private synchronized boolean validateIdentity(String ident) {
+        log.debug("Validating Node identity {}.", ident);
+        return (this.uuid != null && ((IDENTITY_PREFIX + this.uuid).equals(ident)));
     }
 
     /**
      * Get a node identity from the current hardware.
+     *
+     * @param save whether to save this identity or not
      * <p>
      */
-    synchronized private void getIdentity(boolean save) {
+    private synchronized void getIdentity(boolean save) {
         try {
             try {
                 try {
@@ -193,8 +184,8 @@ public class NodeIdentity {
                     Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
                         NetworkInterface nic = nics.nextElement();
-                        if (!nic.isLoopback() && !nic.isVirtual() && 
-                            (nic.getHardwareAddress()!=null)) {
+                        if (!nic.isLoopback() && !nic.isVirtual()
+                                && (nic.getHardwareAddress() != null)) {
                             this.identity = this.createIdentity(nic.getHardwareAddress());
                             if (this.identity != null) {
                                 break;
@@ -262,19 +253,19 @@ public class NodeIdentity {
      * @return An identity or null if input is null.
      */
     private String createIdentity(byte[] mac) {
-        if(mac == null){
-           return null;
+        if (mac == null) {
+            return null;
         }
 
         if (this.uuid == null) {
             UUID uu = generateUuid(mac);
-            log.info("Original UUID= {}", uu.toString());
+            log.debug("Original UUID= {}", uu.toString());
 
             this.uuid = uuidToCompactString(uu);
-            log.info("Compact string ='{}'", this.uuid);
+            log.debug("Compact string ='{}'", this.uuid);
         }
 
-        StringBuilder sb = new StringBuilder("jmri-"); // NOI18N
+        StringBuilder sb = new StringBuilder(IDENTITY_PREFIX); // NOI18N
         sb.append(this.uuid);
         return sb.toString();
     }
@@ -289,8 +280,8 @@ public class NodeIdentity {
      * Once generated, this should be stored in {@code nodeIdentity.xml} and
      * always used for all profiles.
      *
-     * @param seed a seed for UUID generation, typically the MAC address of 
-     *             any interface on this computer.
+     * @param seed a seed for UUID generation, typically the MAC address of any
+     *             interface on this computer.
      * @return the UUID
      */
     public static UUID generateUuid(@Nonnull byte[] seed) {
@@ -298,8 +289,8 @@ public class NodeIdentity {
         long leastSigBits = 0;
         long time;
 
-        if(seed==null) {
-           throw new IllegalArgumentException("Uuid seed cannot be null");
+        if (seed == null) {
+            throw new IllegalArgumentException("Uuid seed cannot be null");
         }
 
         for (byte b : seed) {
@@ -425,22 +416,32 @@ public class NodeIdentity {
         } catch (NullPointerException ex) {
             uniqueId += ProfileManager.createUniqueId();
         }
-        List<String> temp = NodeIdentity.formerIdentities();
-        if (temp.size() < 1) {
+        List<String> formerIdList = NodeIdentity.formerIdentities();
+        int listSize = formerIdList.size();
+        if (listSize < 1) {
             log.warn("Unable to copy from a former identity; no former identities found.");
             return false;
         }
-        String lastIdentity = temp.get(temp.size() - 1);
-        File lastDir = new File(oldPath, lastIdentity + uniqueId);
-        try {
-            log.info("Copying from old node \"{}\"", lastDir.toString());
-            log.info("  to new node \"{}\"", newPath.toString());
-            FileUtil.copy(lastDir, newPath);
-        } catch (IOException ex) {
-            log.warn("Unable to copy \"{}\" to \"{}\"", lastDir.toString(), newPath.toString());
-            return false;
+        log.debug("{} former identies found", listSize);
+        for (int i = (listSize - 1); i >= 0; i--) {
+            String theIdentity = formerIdList.get(i);
+            log.debug("Trying to copy former identity {}, \"{}\"", i + 1, theIdentity);
+            File theDir = new File(oldPath, theIdentity + uniqueId);
+            if (theDir.exists()) {
+                try {
+                    log.info("Copying from old node \"{}\"", theDir.toString());
+                    log.info("  to new node \"{}\"", newPath.toString());
+                    FileUtil.copy(theDir, newPath);
+                } catch (IOException ex) {
+                    log.warn("Unable to copy \"{}\" to \"{}\"", theDir.toString(), newPath.toString());
+                    return false;
+                }
+                return true;
+            } else {
+                log.warn("Non-existent old node \"{}\"", theDir);
+            }
         }
-        return true;
+        return false;
     }
 
     /**
