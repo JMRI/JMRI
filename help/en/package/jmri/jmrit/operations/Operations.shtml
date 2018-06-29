@@ -648,8 +648,8 @@
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
     this document that covers that window's capabilities. Help is also available at the <a
-     href="http://groups.yahoo.com/group/jmriusers/">JMRI users</a> which is part of the Yahoo
-    groups. Another good source for help is a series of articles written by David Haynes <a
+     href="https://groups.io/g/jmriusers">JMRI users</a> which is part of the Groups.io. 
+     Another good source for help is a series of articles written by David Haynes <a
      href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
      http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
     "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
@@ -1385,7 +1385,7 @@
 
    <p>
     You can find some examples of custom manifests at <a
-     href="http://groups.yahoo.com/group/jmriusers/files/Operations">http://groups.yahoo.com/group/jmriusers/files/Operations.</a>
+     href="https://groups.io/g/jmriusers/files/Operations">https://groups.io/g/jmriusers/files/Operations</a>.
    </p>
 
    <a name="GenerateCsvSwitchLists" id="GenerateCsvSwitchLists"></a>
@@ -4730,8 +4730,8 @@
    <h4>Setup Excel Program (Manifest Creator)</h4>
    The ability to configure an Excel program to create custom manifests can be found under Trains
    -&gt; Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator" and
-   "Switch List Creator". You can find a copies of the programs at the <a
-    href="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations"> Yahoo.com JMRI users
+   "Switch List Creator". You can find a copies of the programs at <a
+    href="https://groups.io/g/jmriusers/files/Operations">  JMRI users
     files Operations.</a> Place the program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files
    needed in the JMRI/operations/csvManifest directory. You can of course create your own program
    and also install it in the csvManifest directory.
@@ -5065,7 +5065,7 @@
     An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
      href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and switch
     list for locations Lakeview and Bakersfield using <a
-     href="http://groups.yahoo.com/group/jmriusers/files/Operations">Dan Foltz's Switch List
+     href="https://groups.io/g/jmriusers/files/Operations">Dan Foltz's Switch List
      Creator version 1.2 (SLC4JMRI.xlsm)</a>. This particular custom format allows you to use a half
     sheet of paper for your crew. Note that the <a href="#CarTypes">Car Types</a> was changed in the
     <a href="#Settings">Settings</a> window from "Descriptive" to "AAR Codes" before using Dan's
