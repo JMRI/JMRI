@@ -129,7 +129,7 @@
       <br>
       Plug in, and after being recognised they just work :-) </li>
       <li>Install JMRI</li>
-      <li>Connection Preferences - Select MERG connection, set options as appropriate, use "CAN via MERG CAN-RS or CAN-USB" for a CANUSB4, generally no need to diverge from defaults.</li>
+      <li><a href="Details.shtml">Connection Preferences</a> - Select MERG connection, set options as appropriate, use "CAN via MERG CAN-RS or CAN-USB" for a CANUSB4, generally no need to diverge from defaults.</li>
       <li>Save / Restart JMRI</li>
       <li>If you are using DCC over the MERG connection, check that JMRI Preferences > Defaults are set correctly, though leave consisting set to internal, see <a href="#dcc">DCC over CBUS</a>.
       </li>
