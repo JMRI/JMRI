@@ -292,6 +292,12 @@
         "../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">
         Send Frame tool</a> can be used for sending CBUS events both manually and repeatedly, great for testing.</li>
         
+        
+        
+        
+        
+        
+
       </ul>
       
       <a name="documentation" id="documentation"></a>
@@ -303,9 +309,7 @@
       <p><a href="../openlcb/index.shtml">OpenLCB</a> Help</p>
 
       <p><a href="cbus/index.shtml">CBUS</a> Help</p>
-      
-      <p><a href="../../tools/scripting/Examples.shtml">CanExample.py</a> - Sample script to show how to send and receive CAN Frames</p>
-      
+
       <h3>Third Party info</h3>
 
       <p><a href="http://www.openlcb.org">OpenLCB.org</a></p>

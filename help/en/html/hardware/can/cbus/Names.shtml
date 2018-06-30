@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
@@ -25,77 +25,50 @@
     <div id="mainContent">
       <h1>Hardware Support: CBUS - Naming</h1>
 
+      <p>This page describes how JMRI uses System Names to access
+      CBUS-attached resources.</p>
 
-
-        <ul class="nav">
-        <li><a href="#automatic">Sensors - Automatic Creation</a></li>
-        <li><a href="#sysname">System Names</a></li>
-        <li><a href="#summary">Summary of CBUS Events</a></li>
-        <li><a href="#namingspec">Event Naming Specification</a></li>
-        <li><a href="#hex">Sending hex strings</a></li>
-        </ul>
+      <ul>
+      
+      <li>
+      <a href="#summary">Summary of Events</a>
+      </li>
+      
+      <li>
+      <a href="#hex">Sending hex strings</a>
+      
+      </li>
+      </ul>
       
         <!--
         A big chunk of text discussing naming options + naming table 
         + sensors moved here from /help/en/html/hardware/can/cbus/index.shtml
         @icklesteve June 2018
         -->      
-        <p>This page describes how JMRI uses System Names to access
-        CBUS-attached resources.</p>
-      
-      <h2><a name="automatic" id="automatic">Sensors - Automatic Creation</a></h2>
-
-        <p>JMRI automatically attempts to create Sensor objects from
-        the traffic that it hears on the CBUS.</p>
-        <p>When JMRI hears an ON
-        or OFF event on the CBUS, it creates a Sensor using the
-        corresponding event ID.</p>
-        <p>This automatically-created sensor
-        defaults to the ON event setting the Sensor ACTIVE and the
-        OFF event setting INACTIVE.</p>
-    
-        <p>Because events are not intrinsically associated with
-        specific hardware objects, and because people can use event
-        IDs in many ways, this doesn't do what's desired.</p>
-        <p>When it
-        doesn't, you can manually create the proper Sensors using the
-        <a href=
-        "../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
-        Add...</a> button on the <a href=
-        "../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
-        Table</a>.</p>
-    
-        <p>Note that there's a <a href=
-        "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
-        CBUS Event Capture Tool</a> that can help you create Turnouts
-        and Sensor names without having to directly work out the
-        System Names.</p>
       
       
-      <h2><a name="sysname" id="sysname">System Names</a></h2>
+      
+      <h2>System Names</h2>
 
       <p>JMRI provides an interface to the real layout via internal
       objects such as Turnouts, Sensors, etc. that are closely
-      mapped to corresponding physical devices.</p>
-      
-      <p>This mapping is
+      mapped to corresponding physical devices. This mapping is
       done via "System Names", which both identify the how to
       access a particular device, and are the key to looking up the
       corresponding object in JMRI.</p>
 
-      <p>The <a href=
+      <h2>CBUS Events</h2>The <a href=
       "http://www.merg.org.uk/">MERG</a> <a href=
       "http://www.merg.org.uk/merg_resources/cbus.php">CBUS</a>
       communicates via messages with a fixed format: One byte of
       command and length information, followed optionally by
-      additional data bytes.</p>
-      <p>In it's most simple form, this is used
+      additional data bytes. In it's most simple form, this is used
       to send identifiable "events". In turn, events come in two
-      types: "ON" and "OFF".</p>
+      types: "ON" and "OFF".
       
       
       <h2><a name="summary" id="summary">Summary of CBUS events</a></h2>
-      <p>Min / Max event values are what JMRI (4.12) accepts as a valid input value, hence not necessarily to CBUS Specification.</p>
+      
       <table border="1">
         <tbody><tr>
           <th>In/Out</th>
@@ -134,8 +107,8 @@
           <td>MT18</td>
           <td>integer</td>
           <td>+18;-18</td>
-          <td>10</td>
-          <td>2,147,483,647</td>
+          <td> </td>
+          <td> </td>
         </tr>
         <tr>
           <td>both</td>
@@ -193,14 +166,13 @@
       based on information from the Hardware help pages
       by Egbert Broerse @silverailscolo July 2017 -->
         
-      
-      
-      <h2><a name="namingspec" id="namingspec">Event Naming Specification</a></h2>
-      
+        
+        
+      <h3>Sensors</h3>
 
       <p>CBUS messages coming into JMRI applications can be
       accessed via JMRI Sensor objects. The Sensor's <a href=
-      "../../../doc/Technical/Names.shtml">JMRI System Name</a> determines which CBUS
+      "Names.shtml">System Name</a> determines which CBUS
       message(s) it corresponds to. A Sensor is defined by two
       events: The one that sets it ACTIVE, and the one that sets it
       INACTIVE. If these are mapped to ON and OFF frames with the
@@ -246,7 +218,7 @@
       number which should (usually) be ignored.</p>
 
       
-      <h2><a name="hex" id="hex">Sending hex strings</a></h2>
+      <h3><a name="hex" id="hex">Sending hex strings</a></h3>
       
       <p>It's possible to connect a Sensor to arbitrary
       CAN frames by specifying their data content as a hex string,
@@ -260,7 +232,7 @@
       <p>
       The CAN frames can send CBUS opscodes in the hex form of the code you require.
       <br>
-      eg, to set up a sensor to send an DCC emergency stop / resume opscode over CBUS you could use <code>X0A;X05</code>
+      eg, to set up a sensor to send an DCC emergency stop / resume opscode over CBUS you would use <code>X0A;X05</code>
       </p>
       
       <p>Check the CBUS wiki and developers guide for more info and absolute specification.</p>
@@ -268,9 +240,7 @@
       
       <h3>JMRI Help</h3>
 
-      <p><a href="../../../tools/scripting/Examples.shtml">CanExample.py</a> - Sample script to show how to send and receive CAN Frames</p>
-      
-      <p><a href="index.shtml">Main JMRI CBUS Support page</a>.</p>
+      <p><a href="index.shtml">Main JMRI CBUS Help page</a>.</p>
       
       <h3>Third Party Help</h3>
       <p><a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG CBUS intoduction page</a> For the CBUS developers guide, follow link at bottom of the page.</p>
