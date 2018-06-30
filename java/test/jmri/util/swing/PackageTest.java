@@ -42,6 +42,8 @@ import org.junit.runners.Suite;
         ExceptionDisplayFrameTest.class,
         UnexpectedExceptionContextTest.class,
         SplitButtonColorChooserPanelTest.class,
+        JmriColorChooserPanelTest.class,
+        JmriColorChooserTest.class,
 })
 
 /**

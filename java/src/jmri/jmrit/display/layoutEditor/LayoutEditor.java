@@ -63,7 +63,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -145,6 +144,7 @@ import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1127,6 +1127,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             }
         });
+    }
+
+    @Override
+    public void newPanelDefaults() {
+        getLayoutTrackDrawingOptions().setMainRailWidth(2);
+        getLayoutTrackDrawingOptions().setSideRailWidth(1);
+        setBackgroundColor(defaultBackgroundColor);
+        JmriColorChooser.addRecentColor(defaultTrackColor);
+        JmriColorChooser.addRecentColor(defaultOccupiedTrackColor);
+        JmriColorChooser.addRecentColor(defaultAlternativeTrackColor);
+        JmriColorChooser.addRecentColor(defaultBackgroundColor);
+        JmriColorChooser.addRecentColor(defaultTextColor);
     }
 
     private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
@@ -2505,7 +2517,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         optionMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("SetBackgroundColor", ""),
                     defaultBackgroundColor);
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
@@ -2522,7 +2534,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         optionMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultTextColor", ""),
                     defaultTextColor);
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
@@ -2677,7 +2689,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem trackColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTrackColor"));
         trkColourMenu.add(trackColorMenuItem);
         trackColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultTrackColor"),
                     defaultTrackColor);
             if (desiredColor != null && !defaultTrackColor.equals(desiredColor)) {
@@ -2690,7 +2702,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
         trkColourMenu.add(trackOccupiedColorMenuItem);
         trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultOccupiedTrackColor"),
                     defaultOccupiedTrackColor);
             if (desiredColor != null && !defaultOccupiedTrackColor.equals(desiredColor)) {
@@ -2703,7 +2715,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem trackAlternativeColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultAlternativeTrackColor"));
         trkColourMenu.add(trackAlternativeColorMenuItem);
         trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultAlternativeTrackColor"),
                     defaultAlternativeTrackColor);
             if (desiredColor != null && !defaultAlternativeTrackColor.equals(desiredColor)) {
@@ -2766,7 +2778,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem turnoutCircleColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleColor"));
 
         turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("TurnoutCircleColor"),
                     turnoutCircleColor);
             if (desiredColor != null && !turnoutCircleColor.equals(desiredColor)) {
@@ -9055,6 +9067,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9071,6 +9084,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9087,6 +9101,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9109,6 +9124,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
         } else {
             turnoutCircleColor = color;
+            JmriColorChooser.addRecentColor(color);
         }
     }
 
@@ -9143,6 +9159,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9159,6 +9176,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultBackgroundColor(@Nonnull Color color) {
         defaultBackgroundColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     public void setXScale(double xSc) {
