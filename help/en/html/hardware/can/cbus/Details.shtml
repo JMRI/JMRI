@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 <head>
@@ -24,11 +24,16 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>Hardware Support: CBUS - Connection Details</h1>
-      
-      <em>The
-      support on this page is rapidly evolving; the actual code
-      might be ahead or behind the documentation on any given
-      day.</em>
+        <ul class="nav">
+        <li><a href="#canid">CBUS CAN Network ID</a></li>
+        <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
+        <li><a href="#c2">CAN via MERG Network Interface</a></li>
+        <li><a href="#c3">CAN via GridConnect adapter</a></li>
+        <li><a href="#c4">CAN via GridConnect Network Interface</a></li>
+        <li><a href="#c5">CAN via Lawicell CANUSB</a></li>
+        <li><a href="#c6">CAN Simulation</a></li>
+        <li><a href="#c7">Direct Serial Connection</a></li>
+       </ul>
 
       <p>This page describes technical details of JMRI's <a href=
       "index.shtml">CBUS</a> connection support.</p>
@@ -59,7 +64,7 @@
       <li><a href="#c7">Direct Serial Connection</a></li>
       </ul>
       
-      <h3>CBUS CAN Network ID</h3>
+      <h2><a name="canid" id="canid">CBUS CAN Network ID</a></h2>
       
         <p>All CBUS modules need a CBUS CAN ID, and JMRI is no exception.</p>
         
@@ -75,26 +80,36 @@
         suggested that JMRI use a CBUS ID of 126. That's a
         fixed value in some systems.</p>
       
-        <p>Default setting shown on right hand side after the " : " </p>
+
       
-      <h3>Connecting to JMRI via</h3>
-      <h4><a name="c1" id="c1">CAN via MERG CAN-RS or CAN-USB</a></h4>
+      <h3><a name="c1" id="c1">CAN via MERG CAN-RS or CAN-USB</a></h3>
       
         <a href="../images/merg-connection-canrs-canusb-350x250.jpg"><img src="../images/merg-connection-canrs-canusb-350x250.jpg"
       width="350" height="250" alt="JMRI MERG Connection canrd canusb canusb4 adapter" align=
       "right"></a>
-      
+
+        <p>Default setting shown on right hand side after the " : " </p>
       
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
-        <p>Baud Rate : 57,600 ( higher speeds selectable on dropdown )</p>
+        <em>Additional Connection Settings shown when box checked</em>
+        <p>Baud Rate Select</p>
+        
+        <ul>
+        <li>57,600 ( default )</li>
+        <li>115,200</li>
+        <li>230,400</li>
+        <li>250,000</li>
+        <li>333,333</li>
+        <li>460,800</li>
+        </ul>
+
         <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
         <p>nb, CANUSB4 - does not require drivers installing on modern operating systems.</p>
       
-      <h4><a name="c2" id="c2">CAN via MERG Network Interface</a></h4>
+      <h3><a name="c2" id="c2">CAN via MERG Network Interface</a></h3>
       <a href="../images/merg-connection-network-interface-278-358.jpg"><img src="../images/merg-connection-network-interface-278-358.jpg"
       width="278" height="358" alt="JMRI MERG Connection network interface" align=
       "right"></a>
@@ -117,26 +132,39 @@
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
+        <em>Additional Connection Settings shown when box checked</em>
         <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
         <p>Gateway : Pass All ( Filtering also selectable )</p>        
  
  
-      <h4><a name="c3" id="c3">CAN via GridConnect adapter</a></h4>
+      <h3><a name="c3" id="c3">CAN via GridConnect adapter</a></h3>
       <a href="../images/merg-connection-gridconnect-adapter-343x223.jpg"><img src="../images/merg-connection-gridconnect-adapter-343x223.jpg"
-      width="200" height="131" alt="JMRI MERG GridConnect Adapter" align=
+      width="343" height="223" alt="JMRI MERG GridConnect Adapter" align=
       "right"></a>
       
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
-        <p>Baud Rate : 57,600 ( higher speeds selectable on dropdown )</p>
+        <em>Additional Connection Settings shown when box checked</em>
+        <p>Baud Rate Select</p>
+        
+        <ul>
+        <li>57,600 ( default )</li>
+        <li>115,200</li>
+        <li>230,400</li>
+        <li>250,000</li>
+        <li>288,000</li>
+        <li>333,333</li>
+        <li>460,800</li>
+        </ul>
+
+        
+        
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>
       
       
       
-      <h4><a name="c4" id="c4">CAN via GridConnect Network Interface</a></h4>
+      <h3><a name="c4" id="c4">CAN via GridConnect Network Interface</a></h3>
         <a href="../images/merg-connection-gridconnect-network-interface-280x329.jpg"><img src="../images/merg-connection-gridconnect-network-interface-280x329.jpg"
       width="200" height="235" alt="JMRI MERG GridConnect Network Interface" align=
       "right"></a>
@@ -145,26 +173,37 @@
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
+        <em>Additional Connection Settings shown when box checked</em>
         <p>Gateway : Pass All ( Filtering also selectable )</p>  
       
       
-      <h4><a name="c5" id="c5">CAN via Lawicell CANUSB</a></h4>
+      <h3><a name="c5" id="c5">CAN via Lawicell CANUSB</a></h3>
       <a href="../images/merg-connection-lawicell-340x358.jpg"><img src="../images/merg-connection-lawicell-340x358.jpg"
       width="200" height="211" alt="JMRI MERG Lawicell USB Connection" align=
       "right"></a>
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
-        <p>Baud Rate : 57,600 ( higher speeds selectable on dropdown )</p>
+        <em>Additional Connection Settings shown when box checked</em>
+        <p>Baud Rate Select</p>
+        
+        <ul>
+        <li>57,600 ( default )</li>
+        <li>115,200</li>
+        <li>230,400</li>
+        <li>250,000</li>
+        <li>333,333</li>
+        <li>460,800</li>
+        <li>500,000</li>
+        </ul>
+        
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
       
       
       
-      <h4><a name="c6" id="c6">CAN Simulation</a></h4>
+      <h3><a name="c6" id="c6">CAN Simulation</a></h3>
       
-             <a href="../images/merg-connection-simulation-343x363.jpg"><img src="../images/merg-connection-simulation-343x363.jpg"
+         <a href="../images/merg-connection-simulation-343x363.jpg"><img src="../images/merg-connection-simulation-343x363.jpg"
       width="200" height="211" alt="JMRI MERG CAN Simulation Connection" align="right"></a>
       
       
@@ -173,13 +212,13 @@
         <p>Serial port : ( none )</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
+        <em>Additional Connection Settings shown when box checked</em>
         <p>Baud Rate : None ( grayed out dropdown unselectable )</p>
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>       
       
       
       
-      <h4><a name="c7" id="c7">Direct Serial Connection</a></h4>
+      <h3><a name="c7" id="c7">Direct Serial Connection</a></h3>
       
         <a href="../images/merg-connection-direct-serial-335x323.jpg"><img src="../images/merg-connection-direct-serial-335x323.jpg"
       width="335" height="323" alt="JMRI MERG Direct Serial Connection RfID" align=
@@ -197,14 +236,14 @@
         </p>
         <p>Connection Prefix : "F"</p>
         <p>Connection Name : Rfid</p>
-        <h5>Additional Connection Settings shown when box checked</h5>
+        <em>Additional Connection Settings shown when box checked</em>
         <p>Baud rate Select : automatic ( unselectable, grayed out select box )</p>
       
 
       
-      <h3>JMRI Help</h3>
+      <h2>JMRI Help</h2>
 
-        <p><a href="index.shtml">Main JMRI CBUS Help page</a></p>
+        <p><a href="index.shtml">Main JMRI CBUS Support page</a></p>
 
         <p><a href="../index.shtml">JMRI's general CAN support</a></p>
       <!--#include virtual="/Footer" -->
