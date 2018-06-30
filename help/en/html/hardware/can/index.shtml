@@ -69,20 +69,27 @@
 
 
       <h3><a href="cbus/index.shtml">MERG CBUS</a></h3>
+
       <img src=
       "https://www.merg.org.uk/merg_images/merg_logo.png" align=
       "right" alt="MERG logo" height="45" width="100">
+      
+      
       
       <p>
       CBUS is hosted under the umbrella of the Model
       Electronic Railway Group (<a href=
       "https://www.merg.org.uk/">MERG</a>), following years of 
-      development by MERG members.
+      development by MERG members Mike Bolton and Gil Fuchs.
       <br >
       Their intention was to develop a system for comprehensive 
-      layout control based on a general purpose Layout Control Bus (LCB).</p>
-      
-      <p>CBUS modules can be thought of as </p>
+      layout control based on a general purpose Layout Control Bus (LCB).
+      </p>
+
+
+      <p>
+      3 wires run between a minimum of 2 modules : Low, Hi and Ground.
+      CBUS modules can be thought of as </p>
       <ul>
       <li>Consumers eg. a CANSOL solenoid module listening on the CANBUS for 
       a taught event to throw a turnout</li>
@@ -95,6 +102,8 @@
       events on servo start moving, servo mid-point, also sending an 
       event when completing moving the servo to its final position.</li>
       </ul>
+            <img src="http://mergcbus.sourceforge.net/cbus.png" align=
+      "right" alt="CBUS logo" height="50" width="100">
       
       <p>
       <a href=
@@ -105,6 +114,8 @@
       The 3,000+ MERG members are encouraged to to build and design their 
       own CBUS modules, and with MERG being over 50 years old, 
       there is a strong peer review process behind CBUS.
+      <br>
+      Module firmware updates can be performed over the CBUS network 
       </p>
       
       <p>JMRI includes full <a href="cbus/index.shtml">support for
@@ -150,7 +161,7 @@
         JMRI can connect directly to the CANUSB4, alternatively CBUS 
         Server is a <a href="https://nodejs.org/en/">Node.js</a> 
         program to allow multiple network connections to a MERG CANUSB4, 
-        enabling multiple JMRI instances to connect to the CAN network.
+        enabling multiple interfaces to connect to the CAN network.
         <a href="https://github.com/phillipsnj/mergCbusServer">MERG CBUS Server</a>
         </dd>
         
@@ -245,15 +256,25 @@
       </ul>
       
       
-      <a name="tools" id="tools"></a>
 
-      <h2>JMRI CAN Tools</h2>
+      <h2><a name="tools" id="tools">JMRI CAN Tools</a></h2>
       <ul>
         <li>JMRI provides a basic <a href=
         "../../../package/jmri/jmrix/AbstractMonFrame.shtml">Monitor
         tool</a> for watching traffic on a CAN bus.</li>
+        
+        <li>For development, there are <a href=
+        "scripting.shtml">CAN Scripting tools</a> for sending and
+        receiving CAN frames. These can be very useful in testing
+        hardware, etc.</li>
 
-
+        <li>OpenLCB
+        <a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">
+        Send Frame tool</a> The "Send OpenLCB Frame" tool lets you directly send 
+        CAN frames, and certain kinds of OpenLCB messages, eg "Verify Node" and 
+        "Send Request Consumers"
+        </li>
+        
         
         <li><img src=
       "images/MERG_Menu.png" alt="MERG menu" align="right"
@@ -267,15 +288,16 @@
         </ul>
         </li>
         
-        <li>There's also a <a href=
+        <li>CBUS <a href=
         "../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">
-        Send Frame tool</a> for sending CAN frames manually and in
-        sequences.</li>
+        Send Frame tool</a> can be used for sending CBUS events both manually and repeatedly, great for testing.</li>
         
-        <li>For development, there are <a href=
-        "scripting.shtml">CAN Scripting tools</a> for sending and
-        receiving CAN frames. These can be very useful in testing
-        hardware, etc.</li>
+        
+        
+        
+        
+        
+
       </ul>
       
       <a name="documentation" id="documentation"></a>
@@ -291,8 +313,8 @@
       <h3>Third Party info</h3>
 
       <p><a href="http://www.openlcb.org">OpenLCB.org</a></p>
-      <p><a href="https://www.merg.org.uk">https://www.merg.org.uk</a></p>
-      <p><a href="https://en.wikipedia.org/wiki/CAN_bus">https://en.wikipedia.org/wiki/CAN_bus</a></p>
+      <p><a href="https://www.merg.org.uk">merg.org.uk</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/CAN_bus">wikipedia.org/wiki/CAN_bus</a></p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
