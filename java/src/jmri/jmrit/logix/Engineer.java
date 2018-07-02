@@ -964,8 +964,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (msg != null) {
                 warrant.stopWarrant(true);
             } else {
-                msg = "Launching warrant \"" + warrant.getDisplayName() +
-                        "\" from warrant \"" + _warrant.getDisplayName() + "\".";
+                msg = Bundle.getMessage("linkedLaunch", warrant.getDisplayName(), _warrant.getDisplayName());
             }
         }
         f.setStatusText(msg, java.awt.Color.red, true);
