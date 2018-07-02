@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.pr3;
 
+import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
@@ -7,6 +8,7 @@ import jmri.ThrottleManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetConsistManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetThrottledTransmitter;
@@ -178,6 +180,20 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         return powerManager;
     }
 
+    @Override
+    public LocoNetConsistManager getConsistManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (mode == MS100MODE) {
+//            return super.getPowerManager();
+        }
+        if (consistManager == null) {
+            consistManager = new LocoNetConsistManager(this);
+        }
+        return consistManager;
+    }
+    private LocoNetConsistManager consistManager = null;
     /**
      * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
      */
@@ -196,6 +212,8 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         InstanceManager.setSensorManager(getSensorManager());
 
         InstanceManager.setThrottleManager(super.getThrottleManager());
+        
+        InstanceManager.store(getConsistManager(), jmri.ConsistManager.class );
 
         if (getProgrammerManager().isAddressedModePossible()) {
             InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
