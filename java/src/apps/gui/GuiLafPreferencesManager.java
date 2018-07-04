@@ -459,6 +459,21 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             }
         }
     }
+    
+    /**
+     * Stand-alone service routine to 
+     * set the default Locale.
+     *
+     * Intended to be invoked early, as soon as a profile is
+     * available, to ensure the correct language is set as 
+     * startup proceeds. Must be followed eventually
+     * by a complete {@link #setLocale}.
+     */
+    public static void setLocaleMinimally(Profile profile) {
+        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found
+        log.debug("language found {}", name);
+        Locale.setDefault(new Locale(name));
+    }
 
     /**
      * @return a new calculated font size based on difference between default
