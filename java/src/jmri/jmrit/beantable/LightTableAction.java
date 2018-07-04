@@ -1454,15 +1454,15 @@ public class LightTableAction extends AbstractTableAction<Light> {
             turnoutBox.setFirstItemBlank(true);
             panel32.add(turnoutBox);
             panel32.add(sensorOnBox);
-            sensor1Box.setSelectedIndex(0);
-            sensor2Box.setSelectedIndex(0);
+            if (sensor1Box.getItemCount() > 0) sensor1Box.setSelectedIndex(0);
+            if (sensor2Box.getItemCount() > 0) sensor2Box.setSelectedIndex(0);
             fastHourSpinner1.setValue(0);  // reset needed
             fastMinuteSpinner1.setValue(0); // reset needed
-            sensorOnBox.setSelectedIndex(0);
+            if (sensorOnBox.getItemCount() > 0) sensorOnBox.setSelectedIndex(0);
             fastHourSpinner1.setVisible(false);
             clockSep.setVisible(false);
             fastMinuteSpinner1.setVisible(false);
-            turnoutBox.setSelectedIndex(0);
+            if (turnoutBox.getItemCount() > 0) turnoutBox.setSelectedIndex(0);
             turnoutBox.setVisible(false);
             sensorOnBox.setVisible(false);
             sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
