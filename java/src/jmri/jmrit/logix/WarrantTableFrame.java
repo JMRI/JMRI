@@ -474,6 +474,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         msg = w.setRoute(0, null);
         setStatusText(msg, WarrantTableModel.myGold, false);
         if (msg != null) {
+            w.deAllocate();
             setStatusText(msg, Color.red, false);
             return msg;
         }
