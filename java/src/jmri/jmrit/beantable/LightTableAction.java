@@ -1351,11 +1351,11 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private final JmriBeanComboBox sensor2Box = new JmriBeanComboBox( // Sensor 2
             InstanceManager.sensorManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
-    SpinnerNumberModel hourSpinner1 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
-    private final JSpinner fastHourSpinner1 = new JSpinner(hourSpinner1); // Fast Clock1 hours
-    SpinnerNumberModel minuteSpinner1 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
-    private final JSpinner fastMinuteSpinner1 = new JSpinner(minuteSpinner1); // Fast Clock1 minutes
-    private final JLabel clockSep = new JLabel(" : ");
+    SpinnerNumberModel fastHourSpinnerModel1 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
+    private final JSpinner fastHourSpinner1 = new JSpinner(fastHourSpinnerModel1); // Fast Clock1 hours
+    SpinnerNumberModel fastMinuteSpinnerModel1 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
+    private final JSpinner fastMinuteSpinner1 = new JSpinner(fastMinuteSpinnerModel1); // Fast Clock1 minutes
+    private final JLabel clockSep1 = new JLabel(" : ");
 
     private final JmriBeanComboBox turnoutBox = new JmriBeanComboBox( // Turnout
             InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
@@ -1364,14 +1364,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // for 1 sensor
     private final JLabel f1aLabel = new JLabel(Bundle.getMessage("MakeLabel", "2")); // for 2nd sensor
 
-    SpinnerNumberModel hourSpinner2 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
-    private final JSpinner fastHourSpinner2 = new JSpinner(hourSpinner2); // Fast Clock2 hours
-    SpinnerNumberModel minuteSpinner2 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
-    private final JSpinner fastMinuteSpinner2 = new JSpinner(minuteSpinner2); // Fast Clock2 minutes
+    SpinnerNumberModel fastHourSpinnerModel2 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
+    private final JSpinner fastHourSpinner2 = new JSpinner(fastHourSpinnerModel2); // Fast Clock2 hours
+    SpinnerNumberModel fastMinuteSpinnerModel2 = new SpinnerNumberModel(0, 0, 59, 1); // 0 - 59 min
+    private final JSpinner fastMinuteSpinner2 = new JSpinner(fastMinuteSpinnerModel2); // Fast Clock2 minutes
     private final JLabel clockSep2 = new JLabel(" : ");
 
-    SpinnerNumberModel timedOnSpinner = new SpinnerNumberModel(0, 0, 1000000, 1); // 0 - 1,000,000 msec
-    private final JSpinner spinner2b = new JSpinner(timedOnSpinner); // Timed ON
+    SpinnerNumberModel timedOnSpinnerModel = new SpinnerNumberModel(0, 0, 1000000, 1); // 0 - 1,000,000 msec
+    private final JSpinner timedOnSpinner = new JSpinner(timedOnSpinnerModel); // Timed ON
     private final JLabel f2Label = new JLabel(Bundle.getMessage("LightSensorSense"));
     private JComboBox<String> stateBox;
     private int sensorActiveIndex;
@@ -1445,28 +1445,32 @@ public class LightTableAction extends AbstractTableAction<Light> {
             JSpinner.NumberEditor ne1b = new JSpinner.NumberEditor(fastHourSpinner1, "00"); // 2 digits "01" format
             fastHourSpinner1.setEditor(ne1b);
             panel32.add(fastHourSpinner1);  // hours ON
-            panel32.add(clockSep);
+            panel32.add(clockSep1);
             JSpinner.NumberEditor ne1b1 = new JSpinner.NumberEditor(fastMinuteSpinner1, "00"); // 2 digits "01" format
             fastMinuteSpinner1.setEditor(ne1b1);
             panel32.add(fastMinuteSpinner1); // minutes OFF
-            sensor1Box.setFirstItemBlank(true);
-            sensor2Box.setFirstItemBlank(true);
-            turnoutBox.setFirstItemBlank(true);
             panel32.add(turnoutBox);
             panel32.add(sensorOnBox);
-            if (sensor1Box.getItemCount() > 0) sensor1Box.setSelectedIndex(0);
-            if (sensor2Box.getItemCount() > 0) sensor2Box.setSelectedIndex(0);
-            fastHourSpinner1.setValue(0);  // reset needed
-            fastMinuteSpinner1.setValue(0); // reset needed
-            if (sensorOnBox.getItemCount() > 0) sensorOnBox.setSelectedIndex(0);
-            fastHourSpinner1.setVisible(false);
-            clockSep.setVisible(false);
-            fastMinuteSpinner1.setVisible(false);
-            if (turnoutBox.getItemCount() > 0) turnoutBox.setSelectedIndex(0);
-            turnoutBox.setVisible(false);
-            sensorOnBox.setVisible(false);
+
+            sensor1Box.setFirstItemBlank(true);
             sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            
+            sensor2Box.setFirstItemBlank(true);
             sensor2Box.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
+            
+            fastHourSpinner1.setValue(0);  // reset needed
+            fastHourSpinner1.setVisible(false);
+            fastMinuteSpinner1.setValue(0); // reset needed
+            fastMinuteSpinner1.setVisible(false);
+            
+            sensorOnBox.setFirstItemBlank(true);
+            sensorOnBox.setVisible(false);
+            
+            clockSep1.setVisible(false);
+
+            turnoutBox.setFirstItemBlank(true);
+            turnoutBox.setSelectedIndex(0);
+            turnoutBox.setVisible(false);
 
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
@@ -1481,15 +1485,18 @@ public class LightTableAction extends AbstractTableAction<Light> {
             JSpinner.NumberEditor ne2a1 = new JSpinner.NumberEditor(fastMinuteSpinner2, "00"); // 2 digits "01" format
             fastMinuteSpinner2.setEditor(ne2a1);
             panel33.add(fastMinuteSpinner2); // minutes OFF
-            panel33.add(spinner2b);
+            panel33.add(timedOnSpinner);
+            
             fastHourSpinner2.setValue(0);  // reset needed
-            fastMinuteSpinner2.setValue(0); // reset needed
-            spinner2b.setValue(0);  // reset needed
             fastHourSpinner2.setVisible(false);
-            clockSep2.setVisible(false);
+            fastMinuteSpinner2.setValue(0); // reset needed
             fastMinuteSpinner2.setVisible(false);
-            spinner2b.setVisible(false);
-
+            
+            timedOnSpinner.setValue(0);  // reset needed
+            timedOnSpinner.setVisible(false);
+            
+            clockSep2.setVisible(false);
+            
             panel3.add(panel31);
             panel3.add(panel32);
             panel3.add(panel33);
@@ -1553,14 +1560,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensor2Box.setVisible(false);
             sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
             fastHourSpinner1.setVisible(false);
-            clockSep.setVisible(false);
+            clockSep1.setVisible(false);
             fastMinuteSpinner1.setVisible(false);
             turnoutBox.setVisible(false);
             sensorOnBox.setVisible(false);
             fastHourSpinner2.setVisible(false);
             clockSep2.setVisible(false);
             fastMinuteSpinner2.setVisible(false);
-            spinner2b.setVisible(false);
+            timedOnSpinner.setVisible(false);
             stateBox.setVisible(true);
             defaultControlIndex = sensorControlIndex;
         } else if (fastClockControl.equals(ctype)) {
@@ -1576,14 +1583,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensor1Box.setVisible(false);
             sensor2Box.setVisible(false);
             fastHourSpinner1.setVisible(true);
-            clockSep.setVisible(true);
+            clockSep1.setVisible(true);
             fastMinuteSpinner1.setVisible(true);
             turnoutBox.setVisible(false);
             sensorOnBox.setVisible(false);
             fastHourSpinner2.setVisible(true);
             clockSep2.setVisible(true);
             fastMinuteSpinner2.setVisible(true);
-            spinner2b.setVisible(false);
+            timedOnSpinner.setVisible(false);
             stateBox.setVisible(false);
             defaultControlIndex = fastClockControlIndex;
         } else if (turnoutStatusControl.equals(ctype)) {
@@ -1602,14 +1609,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensor1Box.setVisible(false);
             sensor2Box.setVisible(false);
             fastHourSpinner1.setVisible(false);
-            clockSep.setVisible(false);
+            clockSep1.setVisible(false);
             fastMinuteSpinner1.setVisible(false);
             turnoutBox.setVisible(true);
             sensorOnBox.setVisible(false);
             fastHourSpinner2.setVisible(false);
             clockSep2.setVisible(false);
             fastMinuteSpinner2.setVisible(false);
-            spinner2b.setVisible(false);
+            timedOnSpinner.setVisible(false);
             stateBox.setVisible(true);
             defaultControlIndex = turnoutStatusControlIndex;
         } else if (timedOnControl.equals(ctype)) {
@@ -1618,19 +1625,19 @@ public class LightTableAction extends AbstractTableAction<Light> {
             f1aLabel.setVisible(false);
             sensorOnBox.setToolTipText(Bundle.getMessage("LightTimedSensorHint"));
             f2Label.setText(Bundle.getMessage("LightTimedDurationOn"));
-            spinner2b.setToolTipText(Bundle.getMessage("LightTimedDurationOnHint"));
+            timedOnSpinner.setToolTipText(Bundle.getMessage("LightTimedDurationOnHint"));
             f2Label.setVisible(true);
             sensor1Box.setVisible(false);
             sensor2Box.setVisible(false);
             fastHourSpinner1.setVisible(false);
-            clockSep.setVisible(false);
+            clockSep1.setVisible(false);
             fastMinuteSpinner1.setVisible(false);
             turnoutBox.setVisible(false);
             sensorOnBox.setVisible(true);
             fastHourSpinner2.setVisible(false);
             clockSep2.setVisible(false);
             fastMinuteSpinner2.setVisible(false);
-            spinner2b.setVisible(true);
+            timedOnSpinner.setVisible(true);
             stateBox.setVisible(false);
             defaultControlIndex = timedOnControlIndex;
         } else if (twoSensorControl.equals(ctype)) {
@@ -1650,14 +1657,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensor2Box.setVisible(true);
             sensor1Box.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
             fastHourSpinner1.setVisible(false);
-            clockSep.setVisible(false);
+            clockSep1.setVisible(false);
             fastMinuteSpinner1.setVisible(false);
             turnoutBox.setVisible(false);
             sensorOnBox.setVisible(false);
             fastHourSpinner2.setVisible(false);
             clockSep2.setVisible(false);
             fastMinuteSpinner2.setVisible(false);
-            spinner2b.setVisible(false);
+            timedOnSpinner.setVisible(false);
             stateBox.setVisible(true);
             defaultControlIndex = twoSensorControlIndex;
         } else if (noControl.equals(ctype)) {
@@ -1668,14 +1675,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensor1Box.setVisible(false);
             sensor2Box.setVisible(false);
             fastHourSpinner1.setVisible(false);
-            clockSep.setVisible(false);
+            clockSep1.setVisible(false);
             fastMinuteSpinner1.setVisible(false);
             turnoutBox.setVisible(false);
             sensorOnBox.setVisible(false);
             fastHourSpinner2.setVisible(false);
             clockSep2.setVisible(false);
             fastMinuteSpinner2.setVisible(false);
-            spinner2b.setVisible(false);
+            timedOnSpinner.setVisible(false);
             stateBox.setVisible(false);
             defaultControlIndex = noControlIndex;
         } else {
@@ -1886,7 +1893,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
             g.setControlTimedOnSensorName(triggerSensorName);
-            int dur = (Integer) spinner2b.getValue();
+            int dur = (Integer) timedOnSpinner.getValue();
             g.setTimedOnDuration(dur);
             if (s == null) {
                 status1.setText(Bundle.getMessage("LightWarn8"));
@@ -2080,7 +2087,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 typeBox.setSelectedIndex(timedOnControlIndex);
                 int duration = lc.getTimedOnDuration();
                 sensorOnBox.setSelectedItem(lc.getControlTimedOnSensorName());
-                spinner2b.setValue(duration);
+                timedOnSpinner.setValue(duration);
                 break;
             case Light.TWO_SENSOR_CONTROL:
                 setUpControlType(twoSensorControl);
