@@ -1469,7 +1469,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             clockSep1.setVisible(false);
 
             turnoutBox.setFirstItemBlank(true);
-            turnoutBox.setSelectedIndex(0);
             turnoutBox.setVisible(false);
 
             JPanel panel33 = new JPanel();
@@ -2103,7 +2102,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 // Set up as "None"
                 setUpControlType(noControl);
                 typeBox.setSelectedIndex(noControlIndex);
-                sensor1Box.setSelectedIndex(0);
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 break;
             default:
