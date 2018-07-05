@@ -336,7 +336,6 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         int row = _table.getSelectedRow();
         log.debug("Table valueChanged: row= {}", row);
-        if (row < 0) return;
 
         // update the family icons
         _iconPanel.removeAll();
