@@ -105,24 +105,6 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(blockElement);
                             }
-                /*            blocks = sm.getAutoBlocks(dest);
-                            if (blocks.size() > 0) {
-                                Element blockElement = new Element("blocks");
-                                for (int j = 0; j < blocks.size(); j++) {
-                                    Element bloc = new Element("block");
-                                    bloc.addContent(new Element("blockName").addContent(blocks.get(j).getDisplayName()));
-                                    String blkState = "anyState";
-                                    if (sm.getAutoBlockState(blocks.get(j), dest) == Block.OCCUPIED) {
-                                        blkState = "occupied";
-                                    } else if (sm.getAutoBlockState(blocks.get(j), dest) == Block.UNOCCUPIED) {
-                                        blkState = "unoccupied";
-                                    }
-                                    bloc.addContent(new Element("blockState").addContent(blkState));
-                                    blockElement.addContent(bloc);
-                                }
-                                elem.addContent(blockElement);
-                            } */
-
                             List<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
                             if (turnouts.size() > 0) {
                                 Element turnoutElement = new Element("turnouts");
@@ -138,22 +120,6 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(turnoutElement);
                             }
-     /*                       List<Turnout> aturnouts = sm.getAutoTurnouts(dest);
-                            if (aturnouts.size() > 0) {
-                                Element turnoutElement = new Element("turnouts");
-                                for (int j = 0; j < aturnouts.size(); j++) {
-                                    Element turn = new Element("turnout");
-                                    turn.addContent(new Element("turnoutName").addContent(aturnouts.get(j).getDisplayName()));
-                                    String turnState = "thrown";
-                                    if (sm.getAutoTurnoutState(aturnouts.get(j), dest) == Turnout.CLOSED) {
-                                        turnState = "closed";
-                                    }
-                                    turn.addContent(new Element("turnoutState").addContent(turnState));
-                                    turnoutElement.addContent(turn);
-                                }
-                                elem.addContent(turnoutElement);
-                            }
-                            */
                             List<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
                             if (sensors.size() > 0) {
                                 Element sensorElement = new Element("sensors");
