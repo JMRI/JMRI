@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * FamilyItemPanel extension for placing of CPE item types that come from tool Tables
  * - e.g. Turnouts, Sensors, Lights, Signal Heads, etc.
- * 
+ *
  * @author Pete Cressman Copyright (c) 2010, 2011
  */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
@@ -258,7 +258,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         if (row < 0) {
             return null;
         }
-        return _model.getBeanAt(row);
+        return _model.getBySystemName((String) _table.getValueAt(row, 0));
     }
 
     /** {@inheritDoc} */
@@ -275,7 +275,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             super(flavor, icon);
             iMap = map;
         }
-        
+
         /** {@inheritDoc} */
         @Override
         protected boolean okToDrag() {
@@ -298,7 +298,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             if (bean == null) {
                 return null;
             }
-            
+
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("Turnout")) {
                     TurnoutIcon t = new TurnoutIcon(_editor);
@@ -340,7 +340,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 sb.append("\"");
                 return  sb.toString();
             }
-            return null;                
+            return null;
         }
     }
 
