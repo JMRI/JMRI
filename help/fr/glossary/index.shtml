@@ -48,8 +48,8 @@ table.sortable th {
 
       <p>[Feel free to submit suggestions for improvements or
       additions to the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users</a> Yahoo group, titled "Glossary".<br>
+      "https://groups.io/g/jmriusers">JMRI
+      users</a> group, titled "Glossary".<br>
       Click a heading to sort the list up or down.]</p>
 
       <table class="sortable">
@@ -2367,9 +2367,11 @@ table.sortable th {
 JMRI: Glossaire
 </h1>
 
-<p>Cette page est le Glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de termes sp&#233;cifiques JMRI, et des liens vers des renseignements suppl&#233;mentaires.</p>
+<p>Cette page est le Glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de 
+termes sp&#233;cifiques JMRI, et des liens vers des renseignements suppl&#233;mentaires.</p>
 <p>
-N'h&#233;sitez pas &#225; soumettre des suggestions pour des am&#233;liorations ou des ajouts &#225; <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group, titled &quot;Glossary&quot;.<br>
+N'h&#233;sitez pas &#225; soumettre des suggestions pour des am&#233;liorations ou des ajouts &#225; 
+<a href="https://groups.io/g/jmriusers">JMRI users</a> group, titled &quot;Glossary&quot;.<br>
 Cliquer sur un titre pour trier la liste vers le haut ou le bas .</p>
 
 <table class="sortable">

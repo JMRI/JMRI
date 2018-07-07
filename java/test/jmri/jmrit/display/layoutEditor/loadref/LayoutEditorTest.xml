@@ -209,10 +209,10 @@
       <mainBallastWidth>0</mainBallastWidth>
       <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
       <mainBlockLineWidth>4</mainBlockLineWidth>
-      <mainRailColor>#808080</mainRailColor>
+      <mainRailColor>#000000</mainRailColor>
       <mainRailCount>1</mainRailCount>
       <mainRailGap>0</mainRailGap>
-      <mainRailWidth>2</mainRailWidth>
+      <mainRailWidth>4</mainRailWidth>
       <mainTieColor>#000000</mainTieColor>
       <mainTieGap>0</mainTieGap>
       <mainTieLength>0</mainTieLength>
@@ -221,10 +221,10 @@
       <sideBallastWidth>0</sideBallastWidth>
       <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
       <sideBlockLineWidth>2</sideBlockLineWidth>
-      <sideRailColor>#808080</sideRailColor>
+      <sideRailColor>#000000</sideRailColor>
       <sideRailCount>1</sideRailCount>
       <sideRailGap>0</sideRailGap>
-      <sideRailWidth>1</sideRailWidth>
+      <sideRailWidth>2</sideRailWidth>
       <sideTieColor>#000000</sideTieColor>
       <sideTieGap>0</sideTieGap>
       <sideTieLength>0</sideTieLength>

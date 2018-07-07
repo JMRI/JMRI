@@ -5,7 +5,7 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="keywords" content="JMRI CBUS help support event table tool">
   <title>JMRI: CBUS Event Table</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -24,16 +24,16 @@
     <div id="mainContent">
       <h1>JMRI: CBUS Event Table</h1><a href=
       "../../../../../../../html/hardware/can/images/CbusEventTable.png"><img src="../../../../../../../html/hardware/can/images/CbusEventTable.png"
-      width="238" height="82" alt="Event Table Screen" align=
+      width="476" height="165" alt="Event Table Screen" align=
       "right"></a>
 
       <p>The CBUS Event Table displays event information received on your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       connection.</p>
 
-      <h3>Columns</h3>
+    <h3>Columns</h3>
       <p>The Event Table displays the information in 5 columns (the column
-      order can be rearranged by dragging a header, so it could differ on your system):</p>
+      order can be rearranged by dragging a header, so it could differ on your system). : </p>
       <ul>
         <li>CAN ID</li>
         <li>Node</li>
@@ -43,15 +43,22 @@
         <li>Comment</li>
       </ul>
 
-      <h3>Printing and Export</h3>
-      <p>From the File menu, choose Export to op en file save dialog and save
+    <h3>Printing and Export</h3>
+      <p>From the File menu, choose Export to open file save dialog and save
       the contents of the table in a CVS (comma separated values) text file.</p>
-      <p>Choose tne Print (Preview) menu to create a
+      <p>Choose the Print (Preview) menu to create a
       hard copy of the Event Table.</p>
 
+    <h3>JMRI Help</h3>
+      
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Event Table window.</p>
+      
       <p>The <a href="../console/CbusConsoleFrame.shtml">CBUS
       Console</a> can help you figure out what events are happening
       on your layout.</p>
+      
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
+        
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
