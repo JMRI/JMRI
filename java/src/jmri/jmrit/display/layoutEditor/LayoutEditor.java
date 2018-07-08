@@ -2493,6 +2493,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     } else {
                         setTitle(newName);
                         setLayoutName(newName);
+                        getLayoutTrackDrawingOptions().setName(newName);
                         InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(LayoutEditor.this);
                         setDirty();
 

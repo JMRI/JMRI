@@ -52,6 +52,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         initComponents();
         setLocationRelativeTo(layoutEditor);
         definePresets();
+        pack();
     }
 
     /**
