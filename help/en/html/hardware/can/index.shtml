@@ -22,7 +22,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: CAN Networks</h1>
+      <h1>Hardware Support: CAN: Controller Area Networks</h1>
 
       <ul class="snav">
         <!-- TOC -->
@@ -38,7 +38,7 @@
 
       <p>There's an emerging trend to develop model-railroad
       control systems that are based on standard 
-      <a href="https://en.wikipedia.org/wiki/CAN_bus">CAN network</a>
+      <a href="https://en.wikipedia.org/wiki/CAN_bus">CAN</a>
       technology. JMRI provides support for the development and use
       of these. Two systems are described below.</p>
 
