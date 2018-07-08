@@ -52,7 +52,10 @@
       a growing community of developers, hence more code.
       <br>
       As part of this, the JMRI CAN support is designed to use
-      as many CAN adapter types as possible.</p>
+      as many CAN adapter types as possible.
+      <br>
+      Not many PCs have a RS232 serial port now, however is still supported.
+      </p>
       
       <ul>
       <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
@@ -63,6 +66,10 @@
       <li><a href="#c6">CAN Simulation</a></li>
       <li><a href="#c7">Direct Serial Connection</a></li>
       </ul>
+      
+      
+      <p>Where USB interfaces are used, the Baud rate is irrelevant.</p>
+      
       
       <h2><a name="canid" id="canid">MERGCBUS CAN Network ID</a></h2>
       

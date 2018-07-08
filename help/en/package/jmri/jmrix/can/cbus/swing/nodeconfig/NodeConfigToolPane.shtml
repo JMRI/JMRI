@@ -28,7 +28,7 @@
       width="315" height="188" alt="Merg Node Configuration Tool screenshot"
       align="right"></a>
 
-      <p>CV : Configuration Variable</p>
+      <p>NV : Node Variable</p>
       <p>Node : Each MERGCBUS module in FLIM operation has a node number.</p>
 
       <p>The MERGCBUS Node Configuration tool programs

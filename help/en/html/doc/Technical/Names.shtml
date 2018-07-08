@@ -664,12 +664,12 @@
           <td>MERG-CBUS</td>
           <td>io</td>
           <td>18</td>
-          <td>event 18 On; 18 Off</td>
-          <td>MT18</td>
+          <td>Event 18 On; 18 Off</td>
+          <td>MT+18</td>
           <td>integer</td>
           <td>+18;-18</td>
           <td>01</td>
-          <td>2147483647</td>
+          <td>65535</td>
         </tr>
         <tr>
           <td>MERG-CBUS</td>
@@ -696,58 +696,48 @@
         </tr>
         <tr>
           <td>MERG-CBUS</td>
-          <td>i</td>
-          <td>X91012;X91019</td>
-          <td>hex CAN frame msg. Active; Inactive</td>
-          <td>MSX91012;X91019</td>
+          <td>io</td>
+          <td>X9000020012;X91FFFFFFFE</td>
+          <td>hex CAN frame msg. Active; Inactive
+          <br>N2 E18 active; N65535 E65534 inactive
+          </td>
+          <td>MSX9000020012;X91FFFFFFFE</td>
           <td>hex ; hex</td>
           <td>N/A</td>
-          <td> </td>
-          <td> </td>
+          <td colspan="2">Depends on Opscode</td>
         </tr>
         <tr>
           <td>MERG-CBUS</td>
           <td>io</td>
-          <td>18;21</td>
-          <td>event 18 On; 21 On</td>
+          <td>+18;+21</td>
+          <td>Event 18 On; 21 On</td>
           <td>MT18;21</td>
           <td>integer ; integer</td>
           <td>+18;+21</td>
-          <td> </td>
-          <td> </td>
+          <td>1;1</td>
+          <td>65535;65535</td>
         </tr>
         <tr>
           <td>MERG-CBUS</td>
           <td>io</td>
           <td>+18;-21</td>
-          <td>event 18 On; 21 Off</td>
-          <td>MT+18;-21</td>
+          <td>Event 18 On; 21 Off</td>
+          <td>ML+18;-21</td>
           <td>idem signed</td>
           <td>N/A</td>
-          <td> </td>
-          <td> </td>
+          <td>1;1</td>
+          <td>65535,65535</td>
         </tr>
         <tr>
           <td>MERG-CBUS</td>
           <td>io</td>
-          <td>2000018</td>
+          <td>200018</td>
           <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MT200018</td>
+          <td>MS+200018</td>
           <td>node + (5 digits)</td>
           <td>N2E18</td>
-          <td>Note: not working</td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>MERG-CBUS</td>
-          <td>io</td>
-          <td>N2E18</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MTN2E18</td>
-          <td>N + number + E + number</td>
-          <td>2000018</td>
-          <td>Note: not working</td>
-          <td> </td>
+          <td>100001</td>
+          <td>6553565535</td>
         </tr>
         <tr>
           <td>NCE</td>

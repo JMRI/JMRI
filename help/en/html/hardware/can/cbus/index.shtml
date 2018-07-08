@@ -96,8 +96,9 @@
             <li><a href="Details.shtml#c7">Direct Serial Connection</a></li>
             </ul>
         </li>
-        <li><a href="../index.shtml">Main CAN Support Help page</a></li>
-      </ul>
+        <li><a href="../index.shtml">JMRI CAN Support</a></li>
+        <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
+        </ul>
       
     <h3>JMRI MERGCBUS Tools Support Pages</h3>
       <img src=
@@ -143,7 +144,7 @@
 
         <li><a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
-        Node Config Tool</a> - For MERGCBUS node configuration and editing CV values.
+        Node Config Tool</a> - For MERGCBUS node configuration and editing Node Variables.
         </li>
       </ul>
       
@@ -169,13 +170,13 @@
         "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Send CAN Frame tool</a>.  
       <br>
       Set the test event, eg Frame packets "+1" and / or "-2" ( without the quotation marks ), 
-      then waiting 1,000 msec and click Start Sending to generate some steady MERGCBUS network traffic.
+      waiting 500 msec and click Start Sending to generate steady MERGCBUS network traffic.
       <br>
       Check that these events are actually being sent over the MERGCBUS network by using a module such as a CANACT.</li>
       <li>Use an external producer module to test connectivity receiving events, confirming they appear in the <a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">MERG CBUS console</a>.
       </li>
-      <li>The JMRI System Console is a good tool for diagnosing issues during setup and operation of both JMRI PanelPro and JMRI DecoderPro. </li>
+      <li>The <a href="../../../../package/apps/SystemConsole.shtml">JMRI System Console</a> is a good tool for diagnosing issues during setup and operation. </li>
       </ul>
 
       
@@ -270,20 +271,20 @@
     
       <p>MERGCBUS events are stored as </p>
       <ul>
-      <li><a href="../../../tools/Sensors.shtml">JMRI Sensors</a> ( Inputs ) 
+      <li><a href="../../../tools/Sensors.shtml" title="JMRI Sensors">JMRI Sensors</a> ( Inputs ) 
       </li>
       <li><a href=
-      "../../../tools/Turnouts.shtml">JMRI Turnouts</a> ( Outputs )
+      "../../../tools/Turnouts.shtml" title="JMRI Turnouts">JMRI Turnouts</a> ( Outputs )
       </li>
       <li><a href=
-      "../../../tools/Lights.shtml">JMRI Lights</a> ( Outputs ).</li>
+      "../../../tools/Lights.shtml" title="JMRI Lights">JMRI Lights</a> ( Outputs ).</li>
       </ul>
       
       <p>These are accessed via JMRI Tables, ie PanelPro > Tools > Tables > (
 
-       <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors</a>,
-       <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts</a> or
-       <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Lights</a> ) .
+       <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml" title="JMRI Sensor Table">Sensors</a>,
+       <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml" title="JMRI Turnout Table">Turnouts</a> or
+       <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml" title="JMRI Light Table">Lights</a> ) .
 
 
       <br>When the table loads, click on " Add... " button at bottom left to create an item.</p>
@@ -347,7 +348,8 @@
         <p>You will need to enter the Hardware Address in a JMRI recognised format to create the event.
         <br>If the create button is grayed out, check your hardware naming format.</p>
         
-        <p>Short events 1-9 may need to be entered with a leading zero, eg 03 for event 3.</p>
+        <p>Short events 1-9 may need to be entered with a leading zero, eg 03 for event 3.<br>
+        This could also be entered as a hardware address of +3 .</p>
         
         
         <p>Adding a User Name ( using any characters ) when creating a table item may 
@@ -374,7 +376,7 @@
       
         <p>JMRI will send the DCC events over the MERGCBUS network and can be monitored within the MERG CBUS console</p>
 
-        <p>The MERG system allows for consists to be set (advanced consisting only) using CANCMD and CANCABs.</p>
+        <p>The MERG system allows for advanced consisting to be set using CANCMD and CANCABs.</p>
         
         
         <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" 
@@ -385,23 +387,22 @@
         <p>Primary Address Consists are supported however.</p>
       
       
-
-      
-      
       <h3>Connecting a MERG DCC Command Station CANCMD</h3>
         
         <p>Make sure that main <a href="../../../../package/apps/TabbedPreferences.shtml#Defaults">JMRI Preferences Defaults</a> are set to your MERG connection for 
         Throttles, Power Control, Command Station, Service Programmer and Ops Mode Programmer.</p>
         <p>Although the CANCMD supports Advanced Consisting, this has not been implemented within JMRI at present.</p>
       
-        <p>You can use an existing DCC command station, or have a separate DCC command station for a programming track by setting these options.</p>
+        <p>You can use an existing DCC command station, 
+        or have a separate DCC command station for a programming track 
+        ( eg. a <a href="../../../../html/hardware/sprog/SPROG.shtml">Sprog</a> ) by setting these options.</p>
 
         <p>Events do not need to be set up to connect a MERG DCC Command Station CANCMD.</p>
         
-        <p>DCC Accessory Decoders can be controlled over MERGCBUS and a CANCMD by creating turnouts with explicit RDCCx commands, 
-        see <a href="Names.shtml#hex">MERGCBUS event naming</a>.
+        <p>DCC Accessory Decoders can be controlled over MERGCBUS and a CANCMD by creating turnouts with explicit RDCCx Opscode commands, 
+        see <a href="Names.shtml#hex">MERGCBUS hex event naming</a>.
         <br>
-        This is also discussed within the <a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG hosted MERGCBUS public WIKI</a> documentation.</p>
+        This is also discussed within the <a href="#thirdparty">MERGCBUS WIKI</a> documentation.</p>
         
       <h3>Programming Train CV's</h3>
     
@@ -412,10 +413,14 @@
 
     <h2><a id="signalling" name="signalling">Signalling</a></h2>
       
-      <p>There are multiple ways to interface <a href="../../../../html/tools/signaling/index.shtml">JMRI signalling</a> with MERGCBUS modules.</p>
-      <p>You are strongly advised to let JMRI control your signal logic, however linking JMRI with 3rd party signalling over cbus is also discussed.</p>
+      <p>There are multiple ways to interface 
+      <a href="../../../../html/tools/signaling/index.shtml">JMRI signalling</a> with MERGCBUS modules.</p>
+      <p>You are strongly advised to let JMRI control your signal logic, 
+      however it's also possible to link JMRI with 3rd party signalling over MERGCBUS.</p>
       
-      <p>JMRI includes various UK signalling definitions, a popular choice being <a href="../../../../../../xml/signals/BR-2003/index.shtml">BR2003</a>, however for some layouts <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> or <a 
+      <p>JMRI includes various UK signalling definitions, a popular choice being 
+      <a href="../../../../../../xml/signals/BR-2003/index.shtml">BR2003</a>, however 
+      for some layouts <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> or <a 
       href="../../../../../../xml/signals/GWR-1931/index.shtml">GWR 1931</a> may be more appropriate.</p>
       
         <p>Once you've got basic signalling setup, you can customise your layout with things like the UK East Coast Main Line flashing green aspects.
@@ -487,12 +492,6 @@
 
     <h2><a id="thirdparty" name="thirdparty">Third Party / Support</a></h2>
     
-    
-    <p>Originally named CBUS by co-founder Gil Fuchs, MERGCBUS isn't a MERG project and is " open source " or public domain.
-    <br>In 2007, when the scheme was being developed, MERG had a website willing to host the project and organised the kits ( many designed by the other MERGCBUS co-founder Mike Bolton ).
-    <br>The scheme is now called MERGCBUS to avoid conflict with a home automation system which has trademark on a similar name.
-    </p>
-
       <ul>
         <li><a href="https://www.merg.org.uk/merg_resources/cbus.php"
         >https://www.merg.org.uk/merg_resources/cbus.php</a>
@@ -526,26 +525,26 @@
         If you wish to learn about electronics and their application in a model railway environment however, 
         the member resources available are many and varied!
         </li>
+
+        <li>Please ask for help by other <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>, 
+        or if a MERG member on the very active MERG members forum.
+        </li>
         
         <li><a href="https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg"
         >https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg</a> 
-        Current known ( open ) issues relating to MERG connections by the JMRI developers on Github, the JMRI development platform.</li>
-        
-        <li>Github is <b>not</b> a support tool.
-        <br>Please ask for help by other <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>, 
-        or if a MERG member on the very active MERG members forum.
-        </li>
+        Current known ( open ) issues relating to MERG by the JMRI developers on Github.
+        <br>Github is <b>not</b> a support tool.</li>
         
         <li><a href="https://github.com/MERG-DEV">https://github.com/MERG-DEV</a>
         MERG CBUS Development on Github - Much of it is licensed under the GNU General Public License v3.0.
         </li>
         
         <li><a href="https://github.com/phillipsnj/mergCbusServer">https://github.com/phillipsnj/mergCbusServer</a> 
-        MERGCBUS Server - enables multiple network connections to a MERG CANUSB4 using <a href="https://nodejs.org">Node.js</a>.
+        MERGCBUS Server - enables multiple network connections to a MERG CANUSB4 using <a href="https://nodejs.org">Node.js</a> , MIT License.
         </li>
         
         <li><a href="https://github.com/amaurial/mergCanBus">https://github.com/amaurial/mergCanBus</a>
-        MERGCBUS implementation for Arduino.
+        MERGCBUS implementation for Arduino. ( + have a look at Amauria's other MERGCBUS Github projects )
         </li>
         
         
@@ -564,8 +563,53 @@
         <li><a href="http://www.rickdavis.co.uk/rail/control-cbus.php">http://www.rickdavis.co.uk/rail/control-cbus.php</a>
         Middle Earth Model Railway has over 70 MERGCBUS modules installed on it and uses JMRI.
         </li>
+
+        </ul>
         
-      </ul>
+        
+    <p>Originally named CBUS by co-founder Gil Fuchs, MERGCBUS isn't a MERG project and is "open source" or public domain.
+    <br>In 2007, when the scheme was being developed, MERG had a website willing to host the project and organised the kits ( many designed by the other MERGCBUS co-founder Mike Bolton ).
+    <br>The scheme is now called MERGCBUS to avoid conflict with a home automation system which has trademark on a similar name.
+    </p>
+    
+    <p>MERGCBUS co-founders : Gil Fuchs, Mike Bolton</p>
+    <p>Mike Bolton designed hardware and coded firmware for many of the initial modules, 
+    lead for CAN-RS module and code </p>
+    
+    
+    
+    
+    <p>The standalone MERG DCC programmer was the inspiration behind the popular 
+    <a href="../../../../html/hardware/sprog/SPROG.shtml">SPROG DCC programmer</a>, which is fully supported in JMRI.</p>
+    
+    <p>Andrew Crosland has been heavily involved with JMRI through both SPROG and MERGCBUS, 
+    writing much code to enable JMRI to support MERGCBUS. 
+    <br>Anything to do with CANUSB, CANUSB4 and Gridconnect etc, he's an expert! 
+    <br>Andrew also he wrote the MERG CANCMD code and designed the MERG CANUSB4</p>
+    <p>Kevin Dickerson was instrumental in writing the original JMRI to MERGCBUS interfaces, supported by Andrew.</p>
+    
+    
+    <p>Pete Brownlow has updated the CANCMD firmware, also lead for the CANEther module, and the MERG JMRI go-to person!</p>
+    
+    
+    
+    <p>Amauri Albuquerque has been the main SW writer for the CANPiWi ( based on the RPi Zero W and is an interface between ED/ WiThrottle and CBUS ), and CANPi.
+    <br>CANPi is a version of this for a RPi 3B ( with Ian Hart's CAP.)
+    </p>
+    
+    <p>Ian Hart designed the Pi CAP, also the popular CANMIO range of modules.</p>
+    
+    <p>Roger Healey is also key to the MERGCBUS success story being lead developer on the FCU, 
+    a Windows configuration utility for setting up FLiM modules ( independent of JMRI ) </p>
+
+    <p>N J Philips established the mergCbusServer and keeps it up to date.</p>
+    
+    <p>The MERG kit elves who package the kit parts are amazing, 
+    having enabled thousands of MERGCBUS module kits to be sent out to members.</p>
+    
+    <p>The JMRI developers do a fantastic job of keeping updates flowing, making JMRI easier to use on each release :-)</p>
+    
+    <p>Apologies to anyone missed out or inaccuracies, let us know and I'll gladly edit the page! - SY</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
