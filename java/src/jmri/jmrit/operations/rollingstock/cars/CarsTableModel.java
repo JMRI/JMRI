@@ -1,9 +1,11 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.MediaTracker;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -54,8 +56,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int LAST_COLUMN = 23;
     private static final int SET_COLUMN = 24;
     private static final int EDIT_COLUMN = 25;
+    private static final int PICTURE_COLUMN = 26;
 
-    private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
+    private static final int HIGHESTCOLUMN = PICTURE_COLUMN + 1;
 
     public final int SORTBY_NUMBER = 0;
     public final int SORTBY_ROAD = 1;
@@ -388,7 +391,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     // Cars frame table column widths, starts with Select column and ends with Edit
     private final int[] tableColumnWidths =
             {60, 60, 60, 65, 35, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 65, 50, 50, 50, 50, 100,
-                    50, 100, 100, 65, 70};
+                    50, 100, 100, 65, 70, 80};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -499,6 +502,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit"); // titles above all columns
+            case PICTURE_COLUMN:
+                return "Picture";
             default:
                 return "unknown"; // NOI18N
         }
@@ -516,6 +521,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case MOVES_COLUMN:
             case WAIT_COLUMN:
                 return Integer.class;
+            case PICTURE_COLUMN:
+                return ImageIcon.class;
             default:
                 return String.class;
         }
@@ -635,6 +642,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
+            case PICTURE_COLUMN:
+                ImageIcon    icon = new ImageIcon("/home/sg/JMRI-Files/JMRI-Pictures/CN1026-GMD.gif", "Hello");
+                    icon.setImage(icon.getImage().getScaledInstance(-1, 20, java.awt.Image.SCALE_FAST));
+                    if (icon.getImageLoadStatus() != MediaTracker.COMPLETE ) {
+                        log.info("AHHH");
+                    }
+                return icon;
+
             default:
                 return "unknown " + col; // NOI18N
         }

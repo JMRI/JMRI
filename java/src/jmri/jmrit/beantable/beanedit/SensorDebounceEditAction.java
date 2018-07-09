@@ -78,14 +78,14 @@ public class SensorDebounceEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("SensorDebounceText")));
         basic.addItem(new BeanEditItem(sensorDebounceGlobalCheck, Bundle.getMessage("SensorDebounceUseGlobalText"), null));
         sensorDebounceInactiveSpinner.setModel(
-                new SpinnerNumberModel(Long.valueOf(0L), Long.valueOf(0L), Long.valueOf(1000L), Long.valueOf(1L)));
+                new SpinnerNumberModel(Long.valueOf(0L), Long.valueOf(0L), Long.valueOf(Sensor.MAX_DEBOUNCE), Long.valueOf(1L)));
 //        sensorDebounceInactiveSpinner.setValue(Long.valueOf(0L)); // reset from possible previous use
-        sensorDebounceInactiveSpinner.setPreferredSize(new JTextField(5).getPreferredSize());
+        sensorDebounceInactiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
         basic.addItem(new BeanEditItem(sensorDebounceInactiveSpinner, Bundle.getMessage("SensorInActiveDebounce"), Bundle.getMessage("SensorInActiveDebounceText")));
         sensorDebounceActiveSpinner.setModel(
-                new SpinnerNumberModel(Long.valueOf(0L), Long.valueOf(0L), Long.valueOf(1000L), Long.valueOf(1L)));
+                new SpinnerNumberModel(Long.valueOf(0L), Long.valueOf(0L), Long.valueOf(Sensor.MAX_DEBOUNCE), Long.valueOf(1L)));
 //        sensorDebounceActiveSpinner.setValue(0L); // reset from possible previous use
-        sensorDebounceActiveSpinner.setPreferredSize(new JTextField(5).getPreferredSize());
+        sensorDebounceActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
         basic.addItem(new BeanEditItem(sensorDebounceActiveSpinner, Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
 
         basic.setSaveItem(new AbstractAction() {
