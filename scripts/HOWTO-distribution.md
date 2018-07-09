@@ -323,6 +323,8 @@ end
 
 find classes -name \*.properties | zip -@ properties.4.11.8.zip
 cd ..
+mkdir release
+mv target/properties.4.11.8.zip release/
 ```
 
 Then decide what to do with the properties.4.11.8.zip file. Tentatively, we're just attaching the properties.4.11.8.zip file to the release without further mention.
@@ -345,8 +347,6 @@ Note on file names:  Our filenames are generated with proper [semantic versionin
 Note: Once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
 - Disable the Jenkins release-build job; this is so it doesn't fail after later steps
-
-- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
 
 - on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
 ```
@@ -375,17 +375,21 @@ File | SHA256 checksum
 
 ```
 
-- Attach files by selecting them or dragging them in (you might have to have downloaded them above via e.g. a separate 
+- Attach files by selecting them or dragging them in. You might have downloaded them above or do it now via e.g. 
 
 ```
 curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.8/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
-and expansion; it's slow to upload from a typical home connection, though, so wish we had a way to cross-load from somewhere fast
+and expansion; 
+
+- [ ] it's slow to upload from a typical home connection, so wish we had a way to cross-load them from Jenkins
 
 Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all three files show.
     
 - Click "Publish Release"
 - Wait for completion, which might be a while with big uploads
+
+- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
 
 ====================================================================================
 ## Check for Unmerged Changes
