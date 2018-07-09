@@ -92,7 +92,6 @@ public abstract class AbstractSensorTestBase {
         // check
         Assert.assertEquals("state 1", Sensor.INACTIVE, t.getState());
         Assert.assertEquals("state 2", "Inactive", t.describeState(t.getState()));
-        checkOffMsgSent();
     }
 
     @Test
@@ -101,7 +100,6 @@ public abstract class AbstractSensorTestBase {
         // check
         Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
         Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
-        checkOnMsgSent();
     }
 
     @Test
@@ -112,7 +110,6 @@ public abstract class AbstractSensorTestBase {
         // check
         Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
         Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
-        checkOnMsgSent();
     }
 
     @Test
@@ -123,7 +120,6 @@ public abstract class AbstractSensorTestBase {
         // check
         Assert.assertEquals("state 1", Sensor.INACTIVE, t.getState());
         Assert.assertEquals("state 2", "Inactive", t.describeState(t.getState()));
-        checkOffMsgSent();
     }
 
     @Test
