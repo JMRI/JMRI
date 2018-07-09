@@ -204,6 +204,9 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         s.finishLoad();
 
 	t = s;  // give t a value so the test teardown functions.
+	ti.flush();
+        ti.tc.rcvMessage = null;
+
         ti.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
                 ":X19547C4CN0102030405060708;");
 
@@ -212,7 +215,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(Sensor.ACTIVE, s.getKnownState());
         ti.assertSentMessage(":X195B4c4cN0102030405060708;");
 
-        ((OlcbSensor)t).addPropertyChangeListener(l);
+        s.addPropertyChangeListener(l);
 
         ti.sendMessageAndExpectResponse(":X19914123N0102030405060708;",
                 ":X19544C4CN0102030405060708;");
@@ -223,7 +226,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(Sensor.ACTIVE, s.getKnownState());
 
         // Resets the turnout to unknown state
-        t.setState(Sensor.UNKNOWN);
+        s.setState(Sensor.UNKNOWN);
         JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
         Assert.assertEquals("called once",1,l.getCallCount());
         l.resetPropertyChanged();
@@ -248,12 +251,6 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals("no call",0,l.getCallCount());
         l.resetPropertyChanged();
         Assert.assertEquals(Sensor.INACTIVE, s.getKnownState());
-    }
-
-    @Test
-    public void testQueryState() {
-        ti.tc.rcvMessage = null;
-        t.requestUpdateFromLayout();
     }
 
     @Test
