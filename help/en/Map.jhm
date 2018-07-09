@@ -612,6 +612,8 @@
 
 <mapID target="package.jmri.jmrix.maple.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml"/>
 
+<mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_DuplexLnWiChannels" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#DuplexLnWiChannels"/>
+
 <mapID target="package.jmri.jmrit.beantable.SignalGroupTable_add" url="package/jmri/jmrit/beantable/SignalGroupTable.shtml#add"/>
 
 <mapID target="manual.DecoderPro.Main_CMRI" url="manual/DecoderPro/Main_CMRI.shtml"/>
@@ -867,6 +869,8 @@
 <mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_update" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#update"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_PromptDepartureTrack" url="package/jmri/jmrit/operations/Operations.shtml#PromptDepartureTrack"/>
+
+<mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_LNWISideEffects" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#LNWISideEffects"/>
 
 <mapID target="html.tools.throttle.RostersMediaPane" url="html/tools/throttle/RostersMediaPane.shtml"/>
 
@@ -1880,6 +1884,8 @@
 
 <mapID target="html.hardware.roco.z21.index_hardware" url="html/hardware/roco/z21/index.shtml#hardware"/>
 
+<mapID target="html.hardware.loconet.Digitrax_loconetRoster" url="html/hardware/loconet/Digitrax.shtml#loconetRoster"/>
+
 <mapID target="manual.DecoderPro3.Comp_Speed_Talble_gotchas" url="manual/DecoderPro3/Comp_Speed_Talble.shtml#gotchas"/>
 
 <mapID target="package.jmri.jmrit.beantable.IdTagTable" url="package/jmri/jmrit/beantable/IdTagTable.shtml"/>
@@ -2786,6 +2792,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml"/>
 
+<mapID target="html.hardware.loconet.Digitrax_devicetoolhelp" url="html/hardware/loconet/Digitrax.shtml#devicetoolhelp"/>
+
 <mapID target="package.jmri.jmrit.beantable.LightAddEdit_addLight" url="package/jmri/jmrit/beantable/LightAddEdit.shtml#addLight"/>
 
 <mapID target="html.doc.Technical.IntelliJ_tricks" url="html/doc/Technical/IntelliJ.shtml#tricks"/>
@@ -3007,6 +3015,8 @@
 <mapID target="manual.DecoderPro3.Main_SPROG_Console" url="manual/DecoderPro3/Main_SPROG.shtml#Console"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CarTypeLengthWeight" url="package/jmri/jmrit/operations/Operations.shtml#CarTypeLengthWeight"/>
+
+<mapID target="html.hardware.loconet.Digitrax_devicetoollimits" url="html/hardware/loconet/Digitrax.shtml#devicetoollimits"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings_unit" url="manual/JMRI_OPS_UsersGuide/Ops_Settings.shtml#unit"/>
 

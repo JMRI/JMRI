@@ -382,7 +382,11 @@
         <li><a href=
         "../../hardware/XPressNet/XNetAddressing.shtml">Lenz
         XPressNet</a></li>
-
+        
+        <li><a href=
+        "../../hardware/can/cbus/Names.shtml">MERG
+        CBUS</a></li>
+        
         <li><a href=
         "../../hardware/nce/NCE.shtml#names">NCE</a></li>
 
@@ -688,8 +692,8 @@
           <td>MT18</td>
           <td>integer</td>
           <td>+18;-18</td>
-          <td> </td>
-          <td> </td>
+          <td>10</td>
+          <td></td>
         </tr>
         <tr>
           <td>MERG CBUS</td>
@@ -733,6 +737,17 @@
           <td>N + number + E + number</td>
           <td>2000018</td>
           <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>MERG CBUS</td>
+          <td>io</td>
+          <td>+N2E18;-N2E18;</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MT+N2E18;-N2E18</td>
+          <td></td>
+          <td></td>
+          <td>Note: Works</td>
           <td> </td>
         </tr>
         <tr>
