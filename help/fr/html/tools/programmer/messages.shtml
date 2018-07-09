@@ -47,7 +47,7 @@ Cette page liste les message d'erreur qui peuvent en r&#233;sulter, le num&#233;
 <p>Cela signifie que JMRI a demand&#233; &#224; la centrale de commande de faire quelque chose qu'elle ne prend pas en charge.</P>
 </dd>
 <dd>
-<p>Ce n'est pas cens&#233; se produire, car JMRI doit d&#233;sactiver les modes de programmation que la centrale de commande ne peut pas fournir. Si vous voyez ce message, s'il vous pla&#238;t signaler les circonstances au <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">Groupe Yahoo des utilisateurs de JMRI</a>.</p>
+<p>Ce n'est pas cens&#233; se produire, car JMRI doit d&#233;sactiver les modes de programmation que la centrale de commande ne peut pas fournir. Si vous voyez ce message, s'il vous pla&#238;t signaler les circonstances au <a href="https://groups.io/g/jmriusers">Groupe des utilisateurs de JMRI</a>.</p>
 </dd>
  <dt><strong>304 &#8212; Interrompu par l'utilisateur</strong></dt>
 <dd>
