@@ -30,6 +30,8 @@ public abstract class AbstractSensorTestBase {
 
     abstract public void checkOffMsgSent();
 
+    abstract public void checkStatusRequestMsgSent();
+
     // load t with actual object; create scaffolds as needed
     @Before
     abstract public void setUp();
@@ -140,6 +142,14 @@ public abstract class AbstractSensorTestBase {
     public void testGetPullResistance(){
        // default is off, override this test if this is supported.
        Assert.assertEquals("Pull Direction",jmri.Sensor.PullResistance.PULL_OFF,t.getPullResistance());
+    }
+
+    // Test outgoing status request
+    @Test
+    public void testXNetSensorStatusRequest() {
+        t.requestUpdateFromLayout();
+        // check that the correct message was sent
+        checkStatusRequestMsgSent();
     }
 
 

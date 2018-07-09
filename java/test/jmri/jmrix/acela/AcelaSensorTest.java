@@ -10,28 +10,39 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AcelaSensorTest {
+public class AcelaSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    @Test
-    public void testCTor() {
-        AcelaSensor t = new AcelaSensor("AS1");
-        Assert.assertNotNull("exists",t);
-    }
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
 
     @Test
     public void test2StringCTor() {
-        AcelaSensor t = new AcelaSensor("AS1","test");
-        Assert.assertNotNull("exists",t);
+        AcelaSensor t2 = new AcelaSensor("AS1","test");
+        Assert.assertNotNull("exists",t2);
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        t = new AcelaSensor("AS1");
     }
 
+    @Override
     @After
     public void tearDown() {
+	t.dispose();
         JUnitUtil.tearDown();
     }
 

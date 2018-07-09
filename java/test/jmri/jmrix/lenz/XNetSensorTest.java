@@ -26,6 +26,11 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override
     public void checkOffMsgSent() {}
+        
+    @Override
+    public void checkStatusRequestMsgSent(){
+        Assert.assertEquals("Sensor Status Request Sent", "42 05 80 C7", xnis.outbound.elementAt(0).toString());
+    }
 
     // XNetSensor test for incoming status message
     @Test
@@ -67,15 +72,6 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.ACTIVE);
         t.setKnownState(jmri.Sensor.INACTIVE);
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.INACTIVE);
-    }
-
-    // XNetSensor test for outgoing status request
-    @Test
-    public void testXNetSensorStatusRequest() {
-        t.requestUpdateFromLayout();
-        // check that the correct message was sent
-        Assert.assertEquals("Sensor Status Request Sent", "42 05 80 C7", xnis.outbound.elementAt(0).toString());
-
     }
 
     // XNetSensor test for outgoing status request

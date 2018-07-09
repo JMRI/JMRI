@@ -28,6 +28,9 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     @Override
     public void checkOffMsgSent() {}
 
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
     // load t with actual object; create scaffolds as needed
     @Override
     @Before
