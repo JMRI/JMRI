@@ -105,6 +105,28 @@ public abstract class AbstractSensorTestBase {
     }
 
     @Test
+    public void testInvertAfterInactive() throws JmriException {
+        Assume.assumeTrue(t.canInvert());
+        t.setState(Sensor.INACTIVE);
+	t.setInverted(true);
+        // check
+        Assert.assertEquals("state 1", Sensor.ACTIVE, t.getState());
+        Assert.assertEquals("state 2", "Active", t.describeState(t.getState()));
+        checkOnMsgSent();
+    }
+
+    @Test
+    public void testInvertAfterActive() throws JmriException {
+        Assume.assumeTrue(t.canInvert());
+        t.setState(Sensor.ACTIVE);
+	t.setInverted(true);
+        // check
+        Assert.assertEquals("state 1", Sensor.INACTIVE, t.getState());
+        Assert.assertEquals("state 2", "Inactive", t.describeState(t.getState()));
+        checkOffMsgSent();
+    }
+
+    @Test
     public void testDebounceSettings() throws JmriException {
         t.setSensorDebounceGoingActiveTimer(81L);
         Assert.assertEquals("timer", 81L, t.getSensorDebounceGoingActiveTimer());

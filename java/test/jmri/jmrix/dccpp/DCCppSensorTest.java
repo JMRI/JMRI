@@ -34,6 +34,7 @@ public class DCCppSensorTest extends jmri.implementation.AbstractSensorTestBase 
     private DCCppInterfaceScaffold xnis = null;
 
     // DCCppSensor test for incoming status message
+    @Test
     public void testDCCppSensorStatusMsg() {
         DCCppReply m;
 
@@ -53,6 +54,7 @@ public class DCCppSensorTest extends jmri.implementation.AbstractSensorTestBase 
     }
 
     // DCCppSensor test for incoming status message
+    @Test
     public void testDCCppSensorInvertStatusMsg() {
         DCCppReply m;
 

@@ -34,6 +34,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void checkStatusRequestMsgSent() {}
 
+    @Test
     public void testIncomingChange() {
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
