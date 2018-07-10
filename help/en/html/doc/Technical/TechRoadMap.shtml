@@ -261,19 +261,31 @@
       remain with Java 8, but may involve other updates.
       
       <p>The next long-term-support Java release will be
-      Java 11 in Fall of 2018.  Because some people will
+      Java 11 in Fall of 2018.  Oracle intendes to 
+      <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">align their Java and the OpenJDK at that point</a>.
+      Because some people will
       need to have that on their computers for other purposes, 
-      we intend to support JMRI running on Java 8 through 11
+      we intend to support JMRI running on Oracle Java 8 through 11
+      and OpenJDK version 11
       by JMRI 4.14 in December 2018.
       
       <p>
       At some point, the Java version required by JMRI has to move forward.
-      We don't know what that point is, but the earliest it will be is Fall 109.
+      We don't know what that point is, but the earliest it will be is Fall 2019.
       Allowing for migration and
       development time, and depending on development plans, JMRI's December 2019 release
       might require Java 11 (in which case it would be called JMRI 5.1)
       or stay with requiring Java 8 or later (in which case it would be called JMRI 4.18).
       Releases before Fall 2019 are intended to stay fully compatible Java 8.
+      
+      <p>
+      It's possible that, as an intermediate step,
+      JMRI development will move to a later Java version
+      without requiring that JMRI users move to a later version.  
+      For example, it's remotely possible that JMRI will require Java 11
+      to compile and build distributions, which would still be able to
+      work on Java 8.  We prefer to do that to keep older hardware working,
+      but we can't always possible.
 
       <p>
       There are also smaller migration issues. These don't directly
@@ -293,14 +305,19 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>Our use of JUnit has been migrated to the current <a href=
-        "http://junit.org">JUnit 4 release</a>, currently 4.12.
+        <li>Our use of JUnit has been migrated to the 
+        <a href="http://junit.org">JUnit 4 release</a>, 
+        currently 4.12.
         Among other improvements, this can allow use of the Java
-        <a href=
-        "http://stackoverflow.com/questions/3806173/assert-keyword-in-java">
-        assert keyword</a>. We're working on how best to use the
+        <a href="http://stackoverflow.com/questions/3806173/assert-keyword-in-java">assert keyword</a>. 
+        We're working on how best to use the
         new capabilities, see the <a href="JUnit.shtml#junit4">JMRI
-        JUnit page</a>.</li>
+        JUnit page</a>. At some point, perhaps in 2019, we'll want to migrate to
+        <a href="https://junit.org/junit5/">JUnit 5</a> to get access to 
+        <a href="https://developer.ibm.com/dwblog/2017/top-five-reasons-to-use-junit-5-java/">new testing tools</a>,
+        particularly for parameterized tests.
+        We also need to complete the conversion from JFCUnit to Jemmy for
+        Swing testing.</li>
 
         <li>USB access technology has advanced a lot since support
         for some basic libraries was added to JMRI. At some point,
@@ -313,8 +330,6 @@
         most recent addition). It's likely that we'll eventually
         simplify that.</li>
 
-        <li>JMRI 4.7.5 migrated from RXTX to PureJavaComm (PJC);
-        there may be follow-on work from that.</li>
       </ul>
 
       <h3>Java Release and Operating System Support</h3>More
@@ -324,8 +339,6 @@
 
       <h2>Migration Notes</h2>This is a section of notes for
       various code migrations that are in progress or contemplated.
-      See also the related section on the <a href=
-      "JVMCapabilities.shtml">migration to Java 1.8</a>.
 
       <a id="junit4" name="junit4"></a><h3>From JUnit 3 to JUnit 4</h3>
       JMRI's
