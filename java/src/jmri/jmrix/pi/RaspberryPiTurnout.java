@@ -83,6 +83,16 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    }
 
    @Override
+   public void dispose() {
+       try {
+           gpio.unprovisionPin(pin);
+       } catch ( com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe ){
+           log.trace("Pin not provisioned, was this turnout already disposed?");
+       }	
+       super.dispose();
+   }
+
+   @Override
    protected void turnoutPushbuttonLockout(boolean locked){
    }
 
