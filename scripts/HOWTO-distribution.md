@@ -425,12 +425,14 @@ If there are any changes in other files, do both of:
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.13.1". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.12 cycle. It's intended to be released around May 12 from HEAD of master.
+This is the next release in the 4.14 cycle. It's intended to be released around July 12 from HEAD of master.
 ```
 
 - Confirm that the tag for the current release (v4.11.9 for release 4.11.9) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.11.9) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
+
+- If this is a production release, update the "Downloads" badge in the JMRI/JMRI README.md file and commit back.
 
 ====================================================================================
 ## Branches for preparation of Production Releases
