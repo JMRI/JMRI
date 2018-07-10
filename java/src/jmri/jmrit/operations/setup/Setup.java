@@ -14,6 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
+import jmri.util.swing.JmriColorChooser;
 import jmri.web.server.WebServerPreferences;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -504,7 +505,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     /**
      * Controls staging track selection, when true, the terminus staging track
      * has to have the same characteristics as the train.
-     * 
+     *
      * @param enabled when true, the terminal staging track must service the
      *            same car types, loads, etc. as the train
      */
@@ -718,7 +719,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     /**
-     * Sets the report level for the car router.  
+     * Sets the report level for the car router.
      * @param level BUILD_REPORT_NORMAL, BUILD_REPORT_DETAILED, BUILD_REPORT_VERY_DETAILED
      */
     public static void setRouterBuildReportLevel(String level) {
@@ -816,7 +817,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
      * Used to determine if there's spaces or form feed between trains and
      * locations when printing switch lists. see
      * getSwitchListPageFormatComboBox()
-     * 
+     *
      * @param format PAGE_NORMAL, PAGE_PER_TRAIN, or PAGE_PER_VISIT
      */
     public static void setSwitchListPageFormat(String format) {
@@ -1455,11 +1456,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setDropTextColor(String color) {
-        getDefault().dropColor = ColorUtil.stringToColor(color);
+        setDropColor(ColorUtil.stringToColor(color));
     }
 
     public static void setDropColor(Color c) {
         getDefault().dropColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static String getPickupTextColor() {
@@ -1467,11 +1469,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setPickupTextColor(String color) {
-        getDefault().pickupColor = ColorUtil.stringToColor(color);
+        setPickupColor(ColorUtil.stringToColor(color));
     }
 
     public static void setPickupColor(Color c) {
         getDefault().pickupColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static String getLocalTextColor() {
@@ -1479,11 +1482,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setLocalTextColor(String color) {
-        getDefault().localColor = ColorUtil.stringToColor(color);
+        setLocalColor(ColorUtil.stringToColor(color));
     }
 
     public static void setLocalColor(Color c) {
         getDefault().localColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static Color getPickupColor() {
@@ -1652,7 +1656,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     /**
      *
      * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
      */
     @Deprecated
     public static JComboBox<String> getPrintColorComboBox() {
@@ -1799,7 +1803,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static Element store() {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
- 
+
         // only store railroad name if it doesn't match the preferences railroad name
         if (!InstanceManager.getDefault(WebServerPreferences.class).getRailroadName().equals(getRailroadName())) {
             e.addContent(values = new Element(Xml.RAIL_ROAD));
