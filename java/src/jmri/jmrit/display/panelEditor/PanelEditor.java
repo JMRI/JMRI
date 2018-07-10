@@ -25,7 +25,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -51,6 +50,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriColorChooser;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1291,9 +1291,10 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     public void setBackgroundMenu(JPopupMenu popup) {
+        // Panel background, not text background
         JMenuItem edit = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
         edit.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("FontBackgroundColor"),
                                  getBackgroundColor());
             if (desiredColor!=null ) {
@@ -1304,5 +1305,5 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
-    
+
 }

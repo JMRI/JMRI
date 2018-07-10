@@ -76,6 +76,26 @@ public class ColorUtil {
     }
 
     /**
+     * Returns localized color name or hex value in form #RRGGBB.
+     *
+     * @since 4.13.1
+     * @param color the color object
+     * @return the localized name or hex value of color; returns null if color is null
+     */
+    @CheckForNull
+    public static String colorToLocalizedName(@Nullable Color color) {
+        if (color == null) {
+            return null;
+        }
+        String colorName = colorToName(color);
+        if (colorName != null) {
+            colorName = Character.toUpperCase(colorName.charAt(0)) + colorName.substring(1);
+            return Bundle.getMessage(colorName);
+        }
+        return colorToHexString(color);
+    }
+
+    /**
      * @param string Either a hexadecimal representation of the rgb value of a
      * color or a color name defined as a constant.
      */
