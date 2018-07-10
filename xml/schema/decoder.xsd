@@ -431,8 +431,8 @@
               <xs:annotation><xs:documentation>
               Number of physical outputs (wires) on the decoder.
               For example, a decoder with three wires and two sounds would have this as 3.
-              It does not affect the number of columns displayed.
-              The JMRI code only shows used columns and is not affected by this setting.
+              It does not affect the number of columns displayed,
+              the JMRI code shows all used columns.
               </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="lowVersionID" type="xs:int" />
