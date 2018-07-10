@@ -94,6 +94,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (countryAttr != null && langAttr != null && varAttr != null) {
             Locale locale = new Locale(langAttr.getValue(), countryAttr.getValue(), varAttr.getValue());
             
+            log.debug("About to setDefault Locale", new Exception(""));
             Locale.setDefault(locale);
             javax.swing.JComponent.setDefaultLocale(locale);
             javax.swing.JOptionPane.setDefaultLocale(locale);

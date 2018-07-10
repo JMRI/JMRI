@@ -1702,6 +1702,10 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     break;
                 case BLOCK_COLUMN:
+                    if (ts==null || ts.getCommand()==null ) {
+                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
+                        break;
+                    }
                     cmd = ts.getCommand().toUpperCase();
                     if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         try {

@@ -77,6 +77,8 @@ public class AllocatedSection {
                     || (mActiveTrain.getResetWhenDone()
                     && (mSequence == mActiveTrain.getStartBlockSectionSequenceNumber())))) {
                 initializeMonitorBlockOccupancy();
+            } else if (mSequence == mActiveTrain.getEndBlockSectionSequenceNumber()) {
+                initializeMonitorBlockOccupancy();
             }
         } else {
             // monitor block occupancy for all Sections of automatially running trains
@@ -384,9 +386,13 @@ public class AllocatedSection {
                     if ((_block == mActiveTrain.getEndBlock()) && mActiveTrain.getReverseAtEnd()) {
                         // reverse direction of Allocated Sections
                         mActiveTrain.reverseAllAllocatedSections();
+                        mActiveTrain.setRestart();
                     } else if ((_block == mActiveTrain.getStartBlock()) && mActiveTrain.getResetWhenDone()) {
                         // reset the direction of Allocated Sections
                         mActiveTrain.resetAllAllocatedSections();
+                        mActiveTrain.setRestart();
+                    } else if (_block == mActiveTrain.getEndBlock() || _block == mActiveTrain.getStartBlock() ) {
+                        mActiveTrain.setStatus(ActiveTrain.DONE);
                     }
                 }
             }

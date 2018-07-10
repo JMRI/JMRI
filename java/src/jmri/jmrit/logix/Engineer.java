@@ -950,25 +950,38 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ts.setValue(Integer.toString(num));
         }
         String msg;
+        java.awt.Color color = WarrantTableModel.myGreen;
         WarrantTableFrame f = WarrantTableFrame.getDefault();
         if (_warrant.equals(warrant)) {
             _idxCurrentCommand = 0;
-            warrant.startupWarrant();
-            msg = "Launching warrant \"" + _warrant.getDisplayName() + "\" again.";
-        } else {
-            if (_speedUtil.getDccAddress().equals(_speedUtil.getDccAddress())) {
+            OBlock block = _warrant.getBlockAt(0);
+            if (block.equals(_warrant.getCurrentBlockOrder().getBlock())) {
+                warrant.startupWarrant();
+                msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
+            } else {
+                msg = Bundle.getMessage("warnStart",  _warrant.getTrainName(), block.getDisplayName());
+                color = java.awt.Color.red;
+            }
+        } else {    //_warrant.getCurrentOrderIndex()
+            if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
+                // same train is continuing on linked warrant
                 OBlock block = warrant.getfirstOrder().getBlock();
-                block.deAllocate(_warrant);     // insure w can start
+                block.deAllocate(_warrant);     // insure warrant can start
             }
             msg = f.runTrain(warrant, Warrant.MODE_RUN);
             if (msg != null) {
-                warrant.stopWarrant(true);
+                msg = Bundle.getMessage("UnableToAllocate",
+                        warrant.getDisplayName()) + msg;
+                color = java.awt.Color.red;
             } else {
-                msg = "Launching warrant \"" + warrant.getDisplayName() +
-                        "\" from warrant \"" + _warrant.getDisplayName() + "\".";
+                msg = Bundle.getMessage("linkedLaunch", warrant.getDisplayName(), _warrant.getDisplayName());
             }
         }
-        f.setStatusText(msg, java.awt.Color.red, true);
+        final String m = msg;
+        java.awt.Color c = color;
+        ThreadingUtil.runOnLayout(()->{
+            f.setStatusText(m, c, true);
+        });
         if (log.isDebugEnabled()) log.debug(msg);
     }
 

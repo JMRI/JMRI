@@ -69,7 +69,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {halt, resume, ramp, retry, stop, abort};
+    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort};
 
     public static int _maxHistorySize = 40;
 
@@ -103,7 +103,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             WarrantTableFrame newInstance = InstanceManager.setDefault(WarrantTableFrame.class, new WarrantTableFrame());
             try {
                 newInstance.initComponents();
-                if (log.isDebugEnabled()) log.debug("newInstance");
             } catch (Exception ex) {
                 log.error("Unable to initilize Warrant Table Frame", ex);
             }
@@ -147,9 +146,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         if (log.isDebugEnabled()) log.debug("initComponents");
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??
         JTable table = new JTable(_model);
-        ComboBoxCellEditor comboEd;
         TableRowSorter<WarrantTableModel> sorter = new TableRowSorter<>(_model);
-        comboEd = new ComboBoxCellEditor(new JComboBox<>());
         table.setRowSorter(sorter);
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
@@ -158,12 +155,15 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         table.createDefaultColumnsFromModel();
         _model.addHeaderListener(table);
 
+        JComboBox<String> cbox = new JComboBox<>();
+        RouteBoxCellEditor comboEd = new RouteBoxCellEditor(cbox);
+        ControlBoxCellEditor controlEd = new ControlBoxCellEditor(new JComboBox<>(controls));
+
         table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        JComboBox<String> box = new JComboBox<>(controls);
-        box.setFont(new Font(null, Font.PLAIN, 12));
-        table.getColumnModel().getColumn(WarrantTableModel.CONTROL_COLUMN).setCellEditor(new DefaultCellEditor(box));
+
+        table.getColumnModel().getColumn(WarrantTableModel.CONTROL_COLUMN).setCellEditor(controlEd);
         table.getColumnModel().getColumn(WarrantTableModel.ROUTE_COLUMN).setCellEditor(comboEd);
         table.getColumnModel().getColumn(WarrantTableModel.ALLOCATE_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
         table.getColumnModel().getColumn(WarrantTableModel.ALLOCATE_COLUMN).setCellRenderer(new ButtonRenderer());
@@ -186,7 +186,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WarrantTableModel.MANUAL_RUN_COLUMN), false);
 
-        int rowHeight = box.getPreferredSize().height;
+        int rowHeight = comboEd.getComponent().getPreferredSize().height;
         table.setRowHeight(rowHeight);
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
@@ -368,9 +368,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     /**
      * *********************** Table ***************************************
      */
-    static public class ComboBoxCellEditor extends DefaultCellEditor {
+    static public class RouteBoxCellEditor extends DefaultCellEditor {
 
-        ComboBoxCellEditor(JComboBox<String> comboBox) {
+        RouteBoxCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
             comboBox.setFont(new Font(null, Font.PLAIN, 12));
         }
@@ -396,14 +396,14 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             if (model != null) {
                 warrant = model.getWarrantAt(row);
             }
+            if (warrant == null) {
+                log.warn("getWarrantAt row= {}, Warrant is null!", row);
+                return getComponent();
+            }
             Component component = getComponent();
             if (component instanceof JComboBox<?>) {
                 @SuppressWarnings("unchecked")
                 JComboBox<String> comboBox = (JComboBox<String>) component;
-                if (warrant == null) {
-                    log.warn("getWarrantAt row= " + row + " Warrant is null!");
-                    return comboBox;
-                }
                 comboBox.removeAllItems();
 
                 List<BlockOrder> orders = warrant.getBlockOrders();
@@ -417,6 +417,44 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return component;
         }
     }
+
+
+    static public class ControlBoxCellEditor extends DefaultCellEditor {
+
+        ControlBoxCellEditor(JComboBox<String> comboBox) {
+            super(comboBox);
+            comboBox.setFont(new Font(null, Font.PLAIN, 12));
+         }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int r, int column) {
+            // If table has been sorted, table row no longer is the same as array index
+            int row = r;
+            if (table.getRowSorter() != null) {
+                row = table.convertRowIndexToModel(row);
+            }
+            Component component = getComponent();
+            if (component instanceof JComboBox<?>) {
+                @SuppressWarnings("unchecked")
+                JComboBox<String> comboBox = (JComboBox<String>) component;
+                comboBox.removeItemAt(0);
+                comboBox.insertItemAt((String)value, 0);
+                comboBox.setSelectedIndex(0);
+                if (log.isDebugEnabled()) {
+                    TableModel m = table.getModel();
+                    WarrantTableModel model = (WarrantTableModel)table.getModel();
+                    Warrant warrant = model.getWarrantAt(row);
+                    log.debug("getTableCellEditorComponent warrant= {}, selection= {}", 
+                            warrant.getDisplayName(), comboBox.getSelectedItem());
+                }
+            } else {
+                log.error("Unexpected editor component of class: {}", component.getClass().getName());
+            }
+            return component;
+        }
+    }
+
 
     /**
      * Return error message if warrant cannot be run.
@@ -432,9 +470,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);
             return msg;
         }
+        w.deAllocate();
         msg = w.setRoute(0, null);
         setStatusText(msg, WarrantTableModel.myGold, false);
         if (msg != null) {
+            w.deAllocate();
             setStatusText(msg, Color.red, false);
             return msg;
         }
@@ -493,15 +533,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     @Override
     public void mousePressed(MouseEvent event) {
     }
-
     @Override
     public void mouseEntered(MouseEvent event) {
     }
-
     @Override
     public void mouseExited(MouseEvent event) {
     }
-
     @Override
     public void mouseReleased(MouseEvent event) {
     }

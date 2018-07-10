@@ -26,6 +26,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.SystemType;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -142,6 +143,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
             c = Color.black;
         }
         _lineColor = c;
+        JmriColorChooser.addRecentColor(c);
         invalidateShape();
     }
 
@@ -152,6 +154,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
     public void setFillColor(Color c) {
         if (c != null) {
             _fillColor = c;
+            JmriColorChooser.addRecentColor(c);
         }
         invalidateShape();
     }

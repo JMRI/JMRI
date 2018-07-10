@@ -130,6 +130,7 @@
 
           <td>9</td>
         </tr>
+
         <tr>
           <td>UTF-8 Properties files (simplifies I18N)</td>
 
@@ -148,6 +149,14 @@
           <td>9</td>
         </tr>
 
+        <tr>
+          <td>JLink - improve packaging, faster startup</td>
+
+          <td>?</td>
+
+          <td>9</td>
+        </tr>
+        
         <tr>
           <td>Even better support for immutable collections</td>
 
