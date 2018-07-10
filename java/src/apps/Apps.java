@@ -178,6 +178,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             log.info("Starting with profile {}", (profile != null ? profile.getId() : "<none>"));
+            
+            // rapid language set; must follow up later with full setting as part of preferences
+            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
@@ -249,10 +252,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         
         // ensure the UserPreferencesManager has loaded. Done on GUI
         // thread as it can modify GUI objects
+        log.debug("*** About to getDefault(jmri.UserPreferencesManager.class)");
         ThreadingUtil.runOnGUI(() -> {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         });
-        
+        log.debug("*** Done");
+
         // now (attempt to) load the config file
         log.debug("Using config file(s) {}", file.getPath());
         if (file.exists()) {

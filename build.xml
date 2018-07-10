@@ -1045,7 +1045,7 @@
     <target name="locale"
             description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">
-        <java classname="apps.DecoderPro.DecoderPro" dir="." fork="yes">
+        <java classname="apps.PanelPro.PanelPro" dir="." fork="yes">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
