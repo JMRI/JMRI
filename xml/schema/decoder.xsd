@@ -421,14 +421,18 @@
           <xs:attribute name="comment" type="xs:string" />
           <xs:attribute name="numFns" type="xs:int">
               <xs:annotation><xs:documentation>
-              Number of functions that the decoder will respond to, 
-              counting F0F and F0R. For example, a decoder that goes to F12 would have this as 14.
+              This is a legacy attribute that limits the total number of function mapping lines displayed. 
+              It is no longer required as there are many optional variations as well as
+              the original F0F, F0R &amp; F1-F28.
+              Hence the JMRI code now automatically suppresses unused lines.
               </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="numOuts" type="xs:int" >
               <xs:annotation><xs:documentation>
-              Number of separate outputs that can be mapped to functions.
-              For example, a decoder with three wires and two sounds would have this as 5.
+              Number of physical outputs (wires) on the decoder.
+              For example, a decoder with three wires and two sounds would have this as 3.
+              It does not affect the number of columns displayed.
+              The JMRI code only shows used columns and is not affected by this setting.
               </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="lowVersionID" type="xs:int" />
