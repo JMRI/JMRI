@@ -34,7 +34,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -180,7 +180,7 @@ public class PositionablePropertiesUtil {
 
             JColorChooser txtColorChooser = new JColorChooser(defaultForeground);
             txtColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel txtColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel txtColorPanels[] = { new SplitButtonColorChooserPanel()};
             txtColorChooser.setChooserPanels(txtColorPanels);
             txtColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
             txtPanel.add(txtColorChooser);
@@ -197,7 +197,7 @@ public class PositionablePropertiesUtil {
             defaultBackground = _parent.getBackground();
             JColorChooser txtBackColorChooser = new JColorChooser(defaultBackground);
             txtBackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel txtBackColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel txtBackColorPanels[] = { new SplitButtonColorChooserPanel()};
             txtBackColorChooser.setChooserPanels(txtBackColorPanels);
             txtBackColorChooser.getSelectionModel().addChangeListener(previewChangeListener);
             txtPanel.add(txtBackColorChooser);
@@ -277,7 +277,7 @@ public class PositionablePropertiesUtil {
         JPanel borderPanel = new JPanel();
 
         borderColorChooser = new JColorChooser(defaultBorderColor);
-        AbstractColorChooserPanel borderColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel borderColorPanels[] = { new SplitButtonColorChooserPanel()};
         borderColorChooser.setChooserPanels(borderColorPanels);
         borderColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
 

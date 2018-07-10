@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -173,7 +173,7 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
         _lineColorButon.setSelected(true);
         panel.add(p);
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
-        AbstractColorChooserPanel _chooserColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel _chooserColorPanels[] = { new SplitButtonColorChooserPanel()};
         _chooser.setChooserPanels(_chooserColorPanels);
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
             colorChange();
