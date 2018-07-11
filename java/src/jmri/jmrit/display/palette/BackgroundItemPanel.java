@@ -18,6 +18,7 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  * JPanels for the Panel Backgrounds.
@@ -98,7 +99,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout(5, 5));
 
-            _chooser = new JColorChooser(editor.getTargetPanel().getBackground());
+            _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(editor.getTargetPanel().getBackground()));
             _chooser.getSelectionModel().addChangeListener(this);
             _preview = new JPanel();
             _preview.setBackground(_editor.getTargetPanel().getBackground());

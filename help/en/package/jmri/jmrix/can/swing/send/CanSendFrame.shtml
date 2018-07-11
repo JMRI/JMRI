@@ -8,7 +8,7 @@
 
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help send loconet packets">
+  <meta name="keywords" content="JMRI help send CBUS packets long short can events frames event hex">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -25,9 +25,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Send CAN Frame</h1><a href=
+     <h1>Send CAN Frame</h1>
+      <a href=
       "../../../../../../html/hardware/can/images/SendFrame.jpg"><img src="../../../../../../html/hardware/can/images/SendFrame.jpg"
-      width="268" height="168" alt="Send Frame Tool" align=
+      width="536" height="335" alt="JMRI MERG CBUS Send Frame Tool" align=
       "right"></a>
 
       <p>The "Send CAN Frame" tool lets you directly send <a href=
@@ -42,20 +43,34 @@
 
       <p>The top section of the window lets you send a single
       frame. Just type the packet's data contents as hexadecimal
-      numbers, for example "83 7C". If you want to specify header
+      numbers, for example "83 7C".</p>
+      
+      <p>If you want to specify header
       contents, precede the packet data with the header in "( )"
       characters or "[ ]" characters for a standard or extended
-      header, respectively.<br>
-      You can also enter packets in <a href=
-      "../../../../../../html/hardware/can/cbus/index.shtml">CBUS
-      address format</a>, e.g. "+n4e1". Once you've entered the
-      packet, just click "send".</p>
+      header, respectively.</p>
+      
+      <p>You can also enter packets in <a href=
+      "../../../../../../html/hardware/can/cbus/Names.shtml">CBUS
+      address format</a>, e.g. "+1", "-2" or "+n4e1" ( without the quotation marks ). 
+      
+      Once you've entered the packet, just click "send".</p>
 
       <p>The bottom section lets you enter from one to four frames
       that will be repeatedly sent in sequence, with user-defined
-      delays in between. Press the "Go" button to start the
+      delays in between.</p>
+      
+      <p>Press the "Go" button to start the
       transmission sequence, and press it again to stop the
       sequence.</p>
+      
+     <h3>JMRI Help</h3>
+      
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Send CAN Frame window.</p>
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
+
+      
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

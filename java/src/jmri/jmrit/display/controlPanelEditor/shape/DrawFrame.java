@@ -21,14 +21,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.util.swing.ButtonSwatchColorChooserPanel;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,6 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     protected PositionableShape _shape;       // for use while editing
     private PositionableShape _originalShape; // saved for use if cancelled
     protected boolean _create;
-    protected boolean _defaultChooser;
 
     int _lineWidth;
     Color _lineColor;
@@ -173,14 +171,11 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         _lineColorButon.setSelected(true);
         panel.add(p);
         _chooser = new JColorChooser(Color.LIGHT_GRAY);
-        if (_defaultChooser) {
-            AbstractColorChooserPanel _chooserColorPanels[] = { new ButtonSwatchColorChooserPanel()};
-            _chooser.setChooserPanels(_chooserColorPanels);
-        }
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
             colorChange();
         });
         _chooser.setPreviewPanel(new JPanel());
+        _chooser = JmriColorChooser.extendColorChooser(_chooser);
         panel.add(_chooser);
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -384,9 +379,11 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
 
     private void buttonChange() {
         if (_lineColorButon.isSelected()) {
+            JmriColorChooser.addRecentColor(_fillColor);
             _chooser.getSelectionModel().setSelectedColor(_lineColor);
             _alphaSlider.setValue(_lineColor.getAlpha());
         } else if (_fillColor != null) {
+            JmriColorChooser.addRecentColor(_lineColor);
             _chooser.getSelectionModel().setSelectedColor(_fillColor);
             _alphaSlider.setValue(_fillColor.getAlpha());
         } else {
