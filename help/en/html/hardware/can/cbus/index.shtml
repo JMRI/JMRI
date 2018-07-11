@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="MERG CBUS supports JMRI help support">
-  <title>JMRI Hardware Support - MERG CBUS</title><!-- Style -->
+  <meta name="keywords" content="MERGCBUS supports JMRI help support">
+  <title>JMRI Hardware Support - MERGCBUS Main Support</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,7 +22,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: MERG CBUS JMRI Main Support Page</h1>
+      <h1>JMRI Hardware Support: MERGCBUS Main Support Page</h1>
 
       <ul class="snav">
         <!-- TOC -->
@@ -31,9 +31,9 @@
         
         <li><a href="#connecting">Connecting</a></li>
 
-        <li><a href="#cbusevents">CBUS Events</a></li>
+        <li><a href="#cbusevents">MERGCBUS Events</a></li>
         
-        <li><a href="#dcc">DCC over CBUS</a></li>
+        <li><a href="#dcc">DCC over MERGCBUS</a></li>
         
         <li><a href="#signalling">Signalling</a></li>
         
@@ -43,57 +43,48 @@
       
       
         <img src="http://mergcbus.sourceforge.net/cbus.png" align=
-      "right" alt="CBUS logo" height="45" width="90">
+      "right" alt="MERGCBUS logo" height="45" width="90">
       
         <img src=
       "https://www.merg.org.uk/merg_images/merg_logo.png" align=
       "right" alt="MERG logo" height="50" width="106">
       
-      
-      
-
       <h2><a name="documentation" id="documentation">JMRI Documentation</a></h2>
       
-      <p>As support for MERG CBUS continues to evolve, 
-      this is not a definitive CBUS network guide.
-      Although a stable platform, the JMRI documentation  
-      might be ahead or behind the actual code.
-      </p>
+      <p>As support for MERGCBUS continues to evolve, 
+      this is not a definitive MERGCBUS network guide. </p>
       
-      <p>
-      The latest developers guide and full specification for CBUS is held on a 
-      public wiki hosted by MERG, follow the link right 
-      at the bottom of the <a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG CBUS entry page</a> for complete CBUS documentation.
-      </p>
+      <p>These JMRI user guides contain considerable simplification of the MERGCBUS scheme, 
+      and are aimed at helping new users to JMRI or MERGCBUS, not systems developers. </p>
       
+      <p> The latest developers guide and full specification is held on the
+      <a href="#thirdparty" >MERGCBUS wiki</a> hosted by MERG.</p>
       
-      
-      <h3>JMRI CBUS Support Pages</h3>
+      <h3>JMRI MERGCBUS Support Pages</h3>
       <ul>
-      <li><a href="index.shtml">JMRI CBUS Support</a> This Page
+      <li><a href="index.shtml">JMRI MERGCBUS Support</a> This Page
       
             <ul>
             <li><a href="#documentation">JMRI Documentation</a></li>
             <li><a href="#connecting">Connecting</a></li>
-            <li><a href="#cbusevents">CBUS Events</a></li>
-            <li><a href="#dcc">DCC over CBUS</a></li>
+            <li><a href="#cbusevents">MERGCBUS Events</a></li>
+            <li><a href="#dcc">DCC over MERGCBUS</a></li>
             <li><a href="#signalling">Signalling</a></li>
             <li><a href="#thirdparty">3rd Party / Support</a></li>
             </ul>
       </li>
-      <li><a href="Names.shtml">Naming of CBUS inputs and outputs</a> - Naming conventions - Adding CBUS events to JMRI sensor / turnout tables.
+      <li><a href="Names.shtml">Naming events in JMRI</a>
         
             <ul>
-            <li><a href="Names.shtml#automatic">Sensors - Automatic Creation</a></li>
+            <li><a href="Names.shtml#events">Event Name and Numbering</a></li>
             <li><a href="Names.shtml#sysname">System Names</a></li>
-            <li><a href="Names.shtml#summary">Summary of CBUS Events</a></li>
+            <li><a href="Names.shtml#summary">Summary of MERGCBUS Events</a></li>
             <li><a href="Names.shtml#namingspec">Event Naming Specification</a></li>
             <li><a href="Names.shtml#hex">Sending hex strings</a></li>
             </ul>        
         
         </li>
         <li><a href="Details.shtml">Connection Details</a> - MERG CAN connection options in the main JMRI preferences.
-        
         
             <ul>
             <li><a href="Details.shtml#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
@@ -105,11 +96,11 @@
             <li><a href="Details.shtml#c7">Direct Serial Connection</a></li>
             </ul>
         </li>
-        <li><a href="../index.shtml">Main CAN Support Help page</a></li>
-      </ul>
+        <li><a href="../index.shtml">JMRI CAN Support</a></li>
+        <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
+        </ul>
       
-      
-    <h3>JMRI MERG CBUS Tools Support Pages</h3>
+    <h3>JMRI MERGCBUS Tools Support Pages</h3>
       <img src=
       "../images/MERG_Menu.png" alt="MERG menu" align="right"
       height="134" width="188">
@@ -117,7 +108,7 @@
       <ul>
         <li><a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
-        Console</a> - Tool for viewing and sending CAN frames / cbus events.
+        Console</a> - Tool for viewing and sending CAN frames / events.
             <ul>
             <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#logtofile"
             >Logging to a File</a></li>
@@ -130,12 +121,11 @@
             </ul>
         </li>
 
-        
         <li><a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml"
-        >Send Frame</a> - Send CAN frames or CBUS events repeatedly in a loop</li>
+        >Send Frame</a> - Send CAN frames or MERGCBUS events repeatedly in a loop</li>
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
-        >Event Capture Tool</a> - Capture CBUS events
+        >Event Capture Tool</a> - Capture MERGCBUS events
 
               <ul>
                 <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml#examinemultipleevents"
@@ -149,318 +139,385 @@
         </li>
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
-        Event Table</a> - Logs CBUS events and presents them in a table
+        Event Table</a> - Logs MERGCBUS events and presents them in a table
         </li>
 
         <li><a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
-        Node Config Tool</a> - For CBUS node configuration and editing CV values.
+        Node Config Tool</a> - For MERGCBUS node configuration and editing Node Variables.
         </li>
-      </ul>      
+      </ul>
       
-
-      
-      
-      
-
-
-
-      
-      <h2><a name="connecting" id="connecting">Connecting</a></h2>
-      
+    <h2><a name="connecting" id="connecting">Connecting</a></h2>
       
       <h3>Typical first-time Connection Steps</h3>
       <ul>
-      <li>Many Modern Operating Systems do not require device drivers to be installed when connecting a CANUSB4.
-      <br>
-      Plug in, and after being recognised they just work :-) </li>
+      <li>Many Modern Operating Systems do not require device drivers to be installed when connecting a MERG CANUSB4 to a computer.
+      <br>Plug in, and check that no major error messages appear. </li>
       <li>Install JMRI</li>
       <li><a href="Details.shtml">Connection Preferences</a> - Select MERG connection, 
-      set options as appropriate, 
-      use "CAN via MERG CAN-RS or CAN-USB" for a CANUSB4, generally no need to diverge from defaults.</li>
+      use "CAN via MERG CAN-RS or CAN-USB" for a CANUSB4 with default settings.
+      <br>You could also choose CAN Simulation if you have no physical connection to a MERGCBUS network.
+      </li>
       <li>Save / Restart JMRI</li>
       <li>If you are using DCC over the MERG connection, check that JMRI Preferences > Defaults 
-      are set correctly, though leave consisting set to internal, see <a href="#dcc">DCC over CBUS</a>.
+      are set correctly, see <a href="#dcc">DCC over MERGCBUS</a>.
       <br>Restart JMRI a few times, checking that the default connection preferences have stuck.
       </li>
       <li>A new menu item MERG appears in the PanelPro or DecoderPro window, containing the MERG tools.
-      <br>
-      Open the tools up and have a play.</li>
-      <li>Test CBUS events can be sent from the MERG <a href=
+      <br>Help > Window Help will show relevant info in the tools and any JMRI window.</li>
+      <li>Test events can be sent from the MERG <a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Send CAN Frame tool</a>.  
       <br>
       Set the test event, eg Frame packets "+1" and / or "-2" ( without the quotation marks ), 
-      then waiting 1,000 msec and click Start Sending to generate some steady cbus network traffic.
+      waiting 500 msec and click Start Sending to generate steady MERGCBUS network traffic.
       <br>
-      Check that these events are actually being sent over the CBUS network by using a CBUS module such as a CANACT.</li>
+      Check that these events are actually being sent over the MERGCBUS network by using a module such as a CANACT.</li>
       <li>Use an external producer module to test connectivity receiving events, confirming they appear in the <a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">MERG CBUS console</a>.
       </li>
+      <li>The <a href="../../../../package/apps/SystemConsole.shtml">JMRI System Console</a> is a good tool for diagnosing issues during setup and operation. </li>
       </ul>
 
       
-      <h2><a name="cbusevents" id="cbusevents">CBUS Events</a></h2>
+      <h2><a name="cbusevents" id="cbusevents">MERGCBUS Events</a></h2>
       
       
-      <p>An overview of CBUS Event and object names are described
-      below, see full Naming details on <a href=
-      "Names.shtml">this page</a>.</p>      
-      <p>CBUS modules can be thought of as </p>
-      <ul>
-      <li>Consumers eg. a CANSOL solenoid module listening on the CANBUS for 
-      a taught event to throw a turnout</li>
-      <li>Producers, eg. a  CANACE3 Control Panel Switch sensing module,
-      sending a CBUS event when a physical control panel button is 
-      pressed or a toggle switch changed ( multiplexing allows 128 
-      switches on 1 module)</li>
-      <li>Or both, eg a CANMIO Servo module listening for taught 
-      CBUS events to change turnout positions, then sending its own 
-      events on servo start moving, servo mid-point, also sending an 
-      event when completing moving the servo to its final position.</li>
-      </ul>
+      <p>MERGCBUS events are transmitted as a one-to-many network, 
+      connected modules receive all network data then choose whether or not to act on them.
+      <br>This enables multiple modules to act on a single event, eg : </p>
+      
+      
+            <ul>
+            <li>A physical turnout ( UK - point ) microswitch sensor is wired to a 
+            MERGCBUS <b>producer</b> module . 
+            <br>The module has been taught to send a particular event when the switch is closed.</li>
+            <li>This event is received by a relay driver ( <b>consumer</b> ), which changes the frog polarity.</li>
+            <li>The event is also received by an LED module which has not been taught the event, so does nothing.</li>
+            <li>The event is also received by an LED module ( <b>consumer</b> ), lighting a LED on a mimic panel.</li>
+            <li>The event is also received by JMRI ( <b>consumer</b> )
+            
+            <li>A <a href="../../../tools/Sensors.shtml">JMRI sensor</a> has been created with the event number, causing the sensor status to change
+            <br>A <a href="../../../tools/Turnouts.shtml">JMRI turnout</a> ( point ) has its 
+            <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback">turnout feedback</a> set by this sensor.
+            <br>
+            <a href="../../../apps/PanelPro/PanelPro.shtml">JMRI panel(s)</a> 
+            update to reflect the new point position.</li>
+            
+            <li><a href="../../../tools/signaling/SignalMastLogic.shtml"
+            >JMRI Signalling Logic</a> recalculates, and on the JMRI panel, 
+            a signal protecting the point changes from Red to Green.
+            </li>
+            
+            
+            <li>The <a 
+            href="../../../tools/signaling/SignalMasts.shtml">JMRI Signal Mast</a> 
+            mapping is checked and the relevant MERGCBUS event is sent to change that on the layout ( <b>producer</b> ) </li>
+            <li>This event is received by a LED ( or servo ) module which changes a physical on-layout signal ( <b>consumer</b> ) </li>
+            <li>This event is also received by a LED module which changes a signal on a mimic panel ( <b>consumer</b> )</li>
+            
+            <li>A train, controlled by (  <a href="../../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"
+            >JMRI DispatcherPro</a> for a <a href="../../../../package/jmri/jmrit/display/LayoutEditor.shtml">JMRI Layout Editor</a> Panel ) or ( 
+            <a href="../../../../package/jmri/jmrit/logix/Warrant.shtml">JMRI Warrants</a> for a <a 
+            href="../../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">JMRI Control Panel Editor</a> panel ),<br> sees that the signal ahead has cleared and can increase its speed.
+            
 
-      <p>CBUS events are transmitted as a one-to-many network, consumer modules receive all network data then choose whether or not to act on them.
-      <br>This enables multiple interfaces to act on a single event, eg : </p>
+            <br>DCC commands are generated from JMRI and sent over MERGCBUS using special events ( <b>producer</b> ) </li>
+
+            <li>These MERGCBUS events are received by a MERG CANCMD ( <b>consumer</b> ), 
+            which then sends the actual DCC command out to the track or boosters.
+            <br>
+            
+            <br>This train had requested the section ahead of it, JMRI Dispactcher/Warrants had allocated it ( after checking occupancy and other rules ), then sent the turnout event ( <b>producer</b> ) to change the points.
+            <br>The event was received by a Servo or solenoid module ( <b>consumer</b> ) which had triggered correctly, changing the point sensor right at the top of this example.
+            
+            <br>
+            
+            <br>
+            
+            </li>
+            
+
+            
+            <li>You can start small and think big, 
+            adding more modules as your time and experience allows.
+
+            <br>Many people use MERGCBUS and JMRI purely for displaying turnout positions, adding things like track occupancy, on-layout signals, mimic panels etc. at a later date.
+            
+            
+            <br>If you anticipate adding track occupancy, 
+            especially track circuit electrical block ( Train On Track Indicators ),
+            ideally plan the electrical scheme for this on your layout at any early stage.
+            
+            </li>
+
+            </ul>
+      
+      
+      <p>MERGCBUS events generally come in two types: "ON" and "OFF".</p>
+      
+      <p>Events can be short ( SLiM ) events, eg <code>+11</code> for event 11 on.</p>
+      
+      <p>Events can be long ( FLiM ) events, eg <code>-N2E7</code> for node 2 event 7 off.</p>
+      
+      <p>JMRI, being both a <b>consumer</b> and <b>producer</b> of events, can send and receive on any node number and any event.</p>
+      
+      
+      
+    <h3>Adding events to JMRI</h3>
+    
+
+      <a href="../images/merg-add-light-short-588x308.jpg" title="Click for larger"><img src="../images/merg-add-light-short-588x308.jpg" align="right" alt="merg cbus add light" width="400" height="209"></a>
+    
+      <p>MERGCBUS events are stored as </p>
       <ul>
-      <li>A physical turnout( UK - point ) microswitch sensor wired to a 
-      CBUS producer module sends a CBUS ON event when thrown.</li>
-      <li>This event is received by a relay driver ( consumer ), which changes the frog polarity.</li>
-      <li>The event is also received by an LED module ( consumer ), switching an LED on or off on a control panel.</li>
-      <li>The event is also received by JMRI ( acting as a consumer ), 
-      which checks for any bounce or debounce actions associated with that sensor event, or associated logix.</li>
-      <li>JMRI recognises that the sensor is linked to a particular turnout then updates JMRI PanelPro Panels,
-        this may start a chain of signal changes and further events.
+      <li><a href="../../../tools/Sensors.shtml" title="JMRI Sensors">JMRI Sensors</a> ( Inputs ) 
       </li>
+      <li><a href=
+      "../../../tools/Turnouts.shtml" title="JMRI Turnouts">JMRI Turnouts</a> ( Outputs )
+      </li>
+      <li><a href=
+      "../../../tools/Lights.shtml" title="JMRI Lights">JMRI Lights</a> ( Outputs ).</li>
       </ul>
       
-      <p>JMRI can be used to de-bounce sensors by receiving the event, selecting debounce or logix options, 
-      and then sending a turnout output event. 
-      This is best done, however, as close to the source of the event creation as possible, ideally on or before the producer module.</p>
+      <p>These are accessed via JMRI Tables, ie PanelPro > Tools > Tables > (
+
+       <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml" title="JMRI Sensor Table">Sensors</a>,
+       <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml" title="JMRI Turnout Table">Turnouts</a> or
+       <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml" title="JMRI Light Table">Lights</a> ) .
+
+
+      <br>When the table loads, click on " Add... " button at bottom left to create an item.</p>
       
-      
-      <p>CBUS events can be short events, eg <code>7</code> for event 7 off and on.</p>
-      <p>You can also use long events which generally specify which node they are from, 
-      eg event 7 sent on and off from node 2 : <code>+N2E7;-N2E7</code> . </p>
-      <p>Short events appear in the MERG CBUS Console with a node number of 0.</p>
-      <p>Some modules may only broadcast their events via Long Events, no short event option.</p>
-      <p>JMRI, being both a consumer and producer, can send and receive on any node number and any event, 
-      however it would be good for you to determine a suitable convetion, then stick with it.</p>
-      <p>Node numbers are for CBUS long events, CAN ID's are purely for the CAN protocol transmission and are irrelevant in JMRI processing CBUS events.</p>
-      
-      
-    <h3>Sensors, Turnouts and Lights</h3>
+      <img src="../images/merg-add-sensor-short-646x176.jpg" alt="merg cbus add sensor" width="646" height="176">
     
-    
-      <p>CBUS events are stored by JMRI 
-      <a href="../../../tools/Sensors.shtml">Sensors</a> ( inputs to JMRI, both on or off ), <a href=
-      "../../../tools/Turnouts.shtml">Turnouts</a> ( general purpose JMRI on or off outputs ) and <a href=
-      "../../../tools/Lights.shtml">Lights</a> ( JMRI outputs ).</p>
-
-
-        
-        
-        <p>The 1st letter of a sensor, turnout or light system name is the <a href="../../../doc/Technical/Names.shtml">JMRI system
-        letter</a>, generally "M" for MERG connections.
-        </p>
-        
-        
-        <p>JMRI associates CBUS events with individual JMRI objects
-        (Sensors, Turnouts, Lights, etc.) via the JMRI System Names.
-        </p>
-        
-        <p>The system name ( M ), and event type ( S, T or L ) are added automatically when creating a new table entry.</p>
-
-        <p>Depending on which CBUS event IDs are used on a
-        particular layout, these system names can get very long, in
-        which case the "user names" become much more useful.</p>
-        
-       <h4>Sensors</h4>
+      <p>For most short events, you just need to enter the number. Here's a few examples : </p>
       
-        <p>CBUS messages coming into JMRI applications can be
-        accessed via JMRI Sensor objects. The Sensor's <a href=
-        "Names.shtml">System Name</a> determines which CBUS
-        message(s) it corresponds to.</p>
       
-        <p>A System Name like "<code>MS+123;-345</code>" defines a
-        Sensor that follows the "123 ON" and "345 OFF" CBUS short events to
-        change state. </p>
-        
-       <h4>Turnouts</h4>
-        <p>JMRI turnouts emit the CBUS frames instead of
-        receiving them, and the type letter is "T" instead of "S",
-        e.g. <code>MT-18;+21</code>)
-        </p>
-
-
-      <h4>Lights</h4>
-        <p>The scheme for <a href="../../../tools/Lights.shtml">JMRI Lights</a> is "L" instead of "T", e.g.
-        <code>ML-18;+21</code>)</p>
+      <a href="../images/merg-add-turnout-long-622x176.jpg" title="Click for larger"><img src="../images/merg-add-turnout-long-622x176.jpg" align="right" alt="merg cbus add turnout" width="400" height="113"></a>
       
-      <h3>Adding an item to a table</h3>
-      <p>When you add an item to the JMRI
-       <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor table</a>,
-       <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout table</a> or
-       <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Light table</a>,
-      
-      many times you only
-      have to fill in the numbers to have JMRI construct
-      the complete system name.</p>
-
-      <p>Here's a few examples : </p>
       
       <table border="1">
         <tbody>
         <tr>
           
-          <th>Entry</th>
+          <th>Hardware Address</th>
           <th>Meaning</th>
-          <th>Table Added to</th>
-          <th>Makes System Name</th>
+          <th>Event Consumed<br>as Sensor</th>
+          <th>Event Produced<br>as Turnout</th>
+          <th>Event Produced<br>as Light turned</th>
         </tr>
         <tr>
           
           <td><code>18</code></td>
-          <td>event 18 On; 18 Off</td>
-          <td>Turnout</td>
-          <td><code>MT18</code></td>
+          <td>Event 18 On
+          <br>Event 18 Off</td>
+          <td>Sets sensor Active<br>Sets sensor Inactive</td>
+          <td>Thrown<br>Closed</td>
+          <td>On<br>Off</td>
         </tr>
         <tr>
 
           <td><code>18;21</code></td>
-          <td>event 18 On; 21 On</td>
-          <td>Sensor</td>
-          <td><code>MS18;21</code></td>
+          <td>Event 18 On
+          <br>Event 21 On</td>
+          <td>Sets sensor Active<br>Sets sensor Inactive</td>
+          <td>Thrown<br>Closed</td>
+          <td>On<br>Off</td>
         </tr>
         <tr>
           <td><code>+18;-21</code></td>
-          <td>event 18 On; 21 Off</td>
-          <td>Turnout</td>
-          <td><code>MT+18;-21</code></td>
+          <td>Event 18 On 
+          <br>Event 21 Off</td>
+          <td>Sets sensor Active<br>Sets sensor Inactive</td>
+          <td>Thrown<br>Closed</td>
+          <td>On<br>Off</td>
         </tr>
         <tr>
           <td><code>+N2E18;-N2E18</code></td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>Sensor</td>
-          <td><code>MS+N2E18;-N2E18</code></td>
+          <td>Node 2 Event 18 On
+          <br>Node 2 Event 18 Off</td>
+          <td>Sets sensor Active<br>Sets sensor Inactive</td>
+          <td>Thrown<br>Closed</td>
+          <td>On<br>Off</td>
         </tr>
         </tbody></table>
         
-        <p>See <a href="Names.shtml">Naming of CBUS inputs and outputs</a> for Masks, Hex and full details.</p> 
+    <a href="../images/merg-add-sensor-invalid-622x245.jpg" title="Click for larger"><img src="../images/merg-add-sensor-invalid-622x245.jpg" align="right" alt="merg cbus add new invalid name" width="400" height="156"></a>
+    
+        <p>You will need to enter the Hardware Address in a JMRI recognised format to create the event.
+        <br>If the create button is grayed out, check your hardware naming format.</p>
         
-
+        <p>Short events 1-9 may need to be entered with a leading zero, eg 03 for event 3.<br>
+        This could also be entered as a hardware address of +3 .</p>
+        
+        
+        <p>Adding a User Name ( using any characters ) when creating a table item may 
+        make accessing it easier in JMRI. </p>  
+        <p>Remember to save your tables!</p>
+        
+        <p>For more on events, see 
+        <a href="Names.shtml">JMRI system naming with MERGCBUS</a>.</p> 
+        
         <!--
         A big chunk of text discussing naming options + naming table moved to /help/en/html/hardware/can/cbus/Names.shtml
         @icklesteve June 2018
         -->
         
-
+      <h2><a name="dcc" id="dcc">DCC over MERGCBUS</a></h2>
       
-      <h2><a name="dcc" id="dcc">DCC over CBUS</a></h2>
-      
-      <h3>Connecting a MERG DCC Command Station CANCMD</h3>
-        <a href="../images/merg-jmri-preferences-defaults-800x409.jpg"><img src="../images/merg-jmri-preferences-defaults-800x409.jpg"
+        <a href="../images/merg-jmri-preferences-defaults-800x409.jpg" title="Click for larger"><img src="../images/merg-jmri-preferences-defaults-800x409.jpg"
         width="400" height="204" alt="JMRI MERG CONNECTION DCC DEFAULT PREFERENCES" align=
         "right"></a>
+      
+        <p>DCC is not a requirement for MERGCBUS or JMRI. Many DC layouts use 
+        MERGCBUS + JMRI for route setting, signalling and track occupancy purposes.
+        </p>      
+      
+        <p>JMRI will send the DCC events over the MERGCBUS network and can be monitored within the MERG CBUS console</p>
+
+        <p>The MERG system allows for advanced consisting to be set using CANCMD and CANCABs.</p>
         
-        <p>Make sure that main JMRI Preferences > Defaults are set to your MERG connection for 
+        
+        <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" 
+        title="JMRI Consisting">JMRI Consisting</a> 
+        : Advanced Decoder Consisting is currently unsupported in JMRI MERGCBUS connections, ensure set to internal.
+        <br>Double-heading or consisting is not as common in the UK, with generally much shorter trains than continental prototypes.</p>
+        
+        <p>Primary Address Consists are supported however.</p>
+      
+      
+      <h3>Connecting a MERG DCC Command Station CANCMD</h3>
+        
+        <p>Make sure that main <a href="../../../../package/apps/TabbedPreferences.shtml#Defaults">JMRI Preferences Defaults</a> are set to your MERG connection for 
         Throttles, Power Control, Command Station, Service Programmer and Ops Mode Programmer.</p>
+        <p>Although the CANCMD supports Advanced Consisting, this has not been implemented within JMRI at present.</p>
       
-        <p>You can use an existing DCC command station, or have a separate DCC command station for a programming track by setting these options.</p>
-        <p>Consisting is currently unsupported in MERG connections within JMRI, ensure set to internal.</p>
-        <p>More info on what these options do can be found in <a href="../../../../package/apps/TabbedPreferences.shtml#Defaults">JMRI preferences help</a>
-        </p>
-      
+        <p>You can use an existing DCC command station, 
+        or have a separate DCC command station for a programming track 
+        ( eg. a <a href="../../../../html/hardware/sprog/SPROG.shtml">Sprog</a> ) by setting these options.</p>
+
         <p>Events do not need to be set up to connect a MERG DCC Command Station CANCMD.</p>
-        <p>JMRI will send the DCC events over the CBUS network and can be monitored within the MERG CBUS console</p>
         
-        <p>DCC Accessory Decoders can be controlled via a CANCMD by creating turnouts with explicit RDCCx commands, 
-        as discussed in <a href="Names.shtml#hex">CBUS event naming</a>.
+        <p>DCC Accessory Decoders can be controlled over MERGCBUS and a CANCMD by creating turnouts with explicit RDCCx Opscode commands, 
+        see <a href="Names.shtml#hex">MERGCBUS hex event naming</a>.
         <br>
-        Examples of this are within the <a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG hosted CBUS public WIKI</a> documentation.</p>
+        This is also discussed within the <a href="#thirdparty">MERGCBUS WIKI</a> documentation.</p>
         
-        <p>DCC is not a requirement for CBUS or JMRI, many DC layouts use CBUS + JMRI for signalling purposes.
-        <br>Adding CBUS / JMRI to an existing DC layout is a good advisory route and may ease the learning curve of getting used to DCC at the same time!</p>
+      <h3>Programming Train CV's</h3>
+    
+        <p>Program train CV's using DecoderPro</p>
+        
+        <p>CANCMD fully supports DCC CV programming.</p>
 
 
     <h2><a id="signalling" name="signalling">Signalling</a></h2>
       
-      <p>There are multiple ways to interface <a href="../../../../html/tools/signaling/index.shtml">JMRI signalling</a> with CBUS modules.</p>
-      <p>You are strongly advised to let JMRI control your signal logic, however linking JMRI with 3rd party signalling over cbus is also discussed.</p>
+      <p>There are multiple ways to interface 
+      <a href="../../../../html/tools/signaling/index.shtml">JMRI signalling</a> with MERGCBUS modules.</p>
+      <p>You are strongly advised to let JMRI control your signal logic, 
+      however it's also possible to link JMRI with 3rd party signalling over MERGCBUS.</p>
       
-      <h4>JMRI Controlled Signal Logic</h4>
+      <p>JMRI includes various UK signalling definitions, a popular choice being 
+      <a href="../../../../../../xml/signals/BR-2003/index.shtml">BR2003</a>, however 
+      for some layouts <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> or <a 
+      href="../../../../../../xml/signals/GWR-1931/index.shtml">GWR 1931</a> may be more appropriate.</p>
       
-      <p>There are multiple ways of sending cbus events from JMRI out to LED or servo signal control modules, this is just one approach.
-      </p>
+        <p>Once you've got basic signalling setup, you can customise your layout with things like the UK East Coast Main Line flashing green aspects.
+        <br>Add JMRI Logix to listen for the correct conditions to display the aspect and send events to the layout.
+        </p>
       
-      <ul>
-      <li>Add all aspects to the signal in question to the Turnout Table, eg
-        <br>Signal1Red : Hardware address : <code>+N126E412</code> ( Set Node to whatever your JMRI node is, only uses the ON event )
-        <br>Signal1Flashing Precautionary : Hardware address : <code>+N126E416</code>
-        <br>Signals which can only display 2 aspects ( eg a Servo controlling a semaphore signal ) can be setup with 1 cbus event, using the ON and OFF status, eg Signal5RedGreen : <code>+N126E418;-N126E418</code> .      
-      </li>
       
-      <li>It's also worth creating an internal turnout named something like DummySignalOutput.
-      <br>You can use this output for signals which have not yet been installed with CAN events but may have in future.
-      </li>
+      
+      <h3>Sending JMRI Controlled Signal Logic to your layout</h3>
+      
+        <a href="../images/signal-mast-turnout-contolled-540x613.jpg" title="Click for larger"><img src="../images/signal-mast-turnout-contolled-540x613.jpg"
+        width="400" height="454" alt="JMRI signal mast turnout controlled" align=
+        "right"></a>
+      
+      
+        <p>There are multiple ways of sending cbus events from JMRI out to LED or servo signal control modules, this is just one approach.
+        </p>
+        
+        <ul>
+        <li>Add all aspects to the signal in question to the Turnout Table, eg
+            <br>Signal1Red : Hardware address : <code>+N126E412</code> ( Set Node to whatever your JMRI node is, only uses the ON event )
+            <br>Signal1Flashing Precautionary : Hardware address : <code>+N126E416</code>
+            <br>Signals which can only display 2 aspects ( eg a Servo controlling a semaphore signal ) can be setup with 1 MERGCBUS event, using the ON and OFF status, eg Signal5RedGreen : <code>+N126E418;-N126E418</code> .
+        </li>
+        
+        <li>It's also worth creating an internal turnout named something like DummySignalOutput.
+        <br>You can use this output for signals which have not yet been installed with CAN events but may have in future.
+        </li>
 
 
-      <li>Add the Signal Mast via the Signal Mast Table</li>
-      <li>Specify type : Turnout Controlled</li>
-      <li>Specify which turnout ( aka CBUS message output ) you 
-      wish to show to show for each aspect, eg. Signal1Red Thrown.
-      </li>
+        <li>Add the Signal Mast via the Signal Mast Table</li>
+        <li>Specify type : Turnout Controlled</li>
+        <li>Specify which turnout ( aka JMRI message output ) you 
+        wish to show to show for each aspect, eg. Signal1Red Thrown.
+        </li>
+        
+        <li> 
+        For virtual signal masts which are not yet physically installed on your layout, 
+        use the DummySignalOutput internal turnout created earlier.
+        </li>
+        </ul>
+    
+        <p>With this approach, you can easily add and edit which MERGCBUS events are sent 
+        from a JMRI controlled signal without editing or re-creating the underlying signal logic.</p>
+        <p>It also ensures that only 1 MERGCBUS message is sent for flashing aspects, 
+        specify this flashing in the module board, not JMRI!  
+        Some Signal Mast types send 1 MERGCBUS message for each flash.
+        <br>A layout with 20 quad aspect signals could send 40 odd cbus events every 0.5seconds, 4,800 events per minute. 
+        This could make network diagnosis awkward, although very unlikely to swamp a MERGCBUS network.</p>
+        <p>As stated previously, this is just one approach. 
+        There are may ways of interfacing JMRI with MERGCBUS signalling systems.</p>
       
-     <li> 
-     For virtual signal masts which are not yet physically installed on your layout, 
-     use the DummySignalOutput internal turnout created earlier.
-     </li>
-    </ul>
-
-      <p>With this approach, you can easily add and edit which CBUS events are sent 
-      from a JMRI controlled signal without editing or re-creating the underlying signal logic.</p>
-      <p>It also ensures that only 1 cbus messages is sent for flashing aspects, 
-      specify this flashing in the module board, not JMRI!  
-      Some Signal Mast types send 1 cbus message for each flash. </p>
-      <p>A layout with 20 quad aspect signals could send 40 odd cbus events every 0.5seconds, 4,800 events per minute. 
-      This could make network diagnosis awkward, although very unlikely to swamp a CBUS network.</p>
-      <p>As stated previously, this is just one approach. 
-      There are may ways of interfacing JMRI with CBUS signalling systems.</p>
       
-      
-      <h4>Receiving Module supplied or existing Signal Logic into JMRI</h4>
+      <h3>Receiving Module supplied or existing Signal Logic into JMRI</h3>
       <p>This is normally done the other way round, however people may have 
       existing systems in place which they do not want to change.</p>
       
-      <ul>
-      <li>Create a virtual Signal Mast, named something like SignalMast7</li>
-      <li>Create incoming CBUS event(s) as sensor(s), eg "SignalMast7Red".</li>
-      <li>For each signal state ( eg. Stop or Proceed ), 
-      create a new <a href="../../../tools/Logix.shtml">JMRI Logix</a> 
-      in the <a href="../../../../package/jmri/jmrit/beantable/LogixTable.shtml">JMRI Logix Table</a> to set the signal head or mast as appropriate, similar to
-      <br>
-      If SignalMast7Red is active, set SignalMast7 to Stop
-      </li>
-      <li>Repeat for each signal state</li>
-      </ul>
+        <ul>
+        <li>Create a virtual Signal Mast, named something like SignalMast7</li>
+        <li>Create incoming MERGCBUS event(s) as sensor(s), eg "SignalMast7Red".</li>
+        <li>For each signal state ( eg. Stop or Proceed ), 
+        create a new <a href="../../../tools/Logix.shtml">JMRI Logix</a> 
+        in the <a href="../../../../package/jmri/jmrit/beantable/LogixTable.shtml">JMRI Logix Table</a> to set the signal head or mast as appropriate, similar to
+        <br>
+        If SignalMast7Red is active, set SignalMast7 to Stop
+        </li>
+        <li>Repeat for each signal state</li>
+        </ul>
 
     <h2><a id="thirdparty" name="thirdparty">Third Party / Support</a></h2>
+    
       <ul>
+        <li><a href="https://www.merg.org.uk/merg_resources/cbus.php"
+        >https://www.merg.org.uk/merg_resources/cbus.php</a>
+        The Model Electronic Ralway Group MERGCBUS introduction page.
+        </li>
+        
+        <li><a href="https://www.merg.org.uk/merg_wiki/doku.php?id=public:cbuspublic:start"
+        >https://www.merg.org.uk/merg_wiki/doku.php?id=public:cbuspublic:start</a>
+        The Model Electronic Ralway Group MERGCBUS Wiki with full protocol specification.
+        </li>
       
-      <li><a href="https://www.merg.org.uk/merg_resources/cbus.php">https://www.merg.org.uk/merg_resources/cbus.php</a>
-      The Model Electronic Ralway Group CBUS help page ( see bottom of page for link to CBUS WIKI + full CBUS specification ).
-      </li>
       
-        <li><a href="https://www.merg.org.uk/merg_resources/cbus-dcc.php">https://www.merg.org.uk/merg_resources/cbus-dcc.php</a> 
+      
+        <li><a href="https://www.merg.org.uk/merg_resources/cbus-dcc.php"
+        >https://www.merg.org.uk/merg_resources/cbus-dcc.php</a> 
         The Model Electronic Railway Group MERG-DCC help page.
         </li>
         
         
-        <li><a href="https://www.merg.org.uk/kits.php#sect35">https://www.merg.org.uk/kits.php</a>
-        MERG CBUS kits. 
+        <li><a href="https://www.merg.org.uk/kits.php#sect35"
+        >https://www.merg.org.uk/kits.php</a>
+        MERGCBUS kits. Constructing kits may not be an easy task for all, it requires a certain amount of technical ability, and foremost the willingness to learn.
         <br>
-        Classic CBUS refers to a 15v AC kit power supply ( most are very easily adaptable for 12v DC ), CBUS 2G are all 12v DC kits.
+        Classic refers to a 15v AC kit power supply ( most <i>easily</i> adaptable for 12v DC ), 2G are all 12v DC kits.
         <br>
-        Classic and 2G modules can both be on the same cbus network with an element of care, seek further advice if in any doubt, do not guess!
+        Classic and 2G modules can both be on the same network with an element of care, seek further advice if in any doubt, do not guess!
         <br>
         Reliabiliy soldering MERG kits together may not be the best cbus route for all. 
         If you are in the least bit impatient, you may be better suited to a commercial offering.
@@ -468,44 +525,91 @@
         If you wish to learn about electronics and their application in a model railway environment however, 
         the member resources available are many and varied!
         </li>
+
+        <li>Please ask for help by other <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>, 
+        or if a MERG member on the very active MERG members forum.
+        </li>
         
         <li><a href="https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg"
         >https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg</a> 
-        Current known ( open ) issues relating to MERG connections by the JMRI developers on Github, the JMRI development platform.</li>
-        <li>Github is <b>not</b> a support tool.
-        <br>Please ask for help by other <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>, 
-        or if a MERG member on the very active MERG members forum.
-        </li>
+        Current known ( open ) issues relating to MERG by the JMRI developers on Github.
+        <br>Github is <b>not</b> a support tool.</li>
+        
         <li><a href="https://github.com/MERG-DEV">https://github.com/MERG-DEV</a>
-        Merg CBUS Development on Github - Much of it is licensed under the GNU General Public License v3.0.
+        MERG CBUS Development on Github - Much of it is licensed under the GNU General Public License v3.0.
         </li>
         
         <li><a href="https://github.com/phillipsnj/mergCbusServer">https://github.com/phillipsnj/mergCbusServer</a> 
-        Merg Cbus Server - enables multiple network connections to a MERG CANUSB4 using <a href="https://nodejs.org">Node.js</a>.
+        MERGCBUS Server - enables multiple network connections to a MERG CANUSB4 using <a href="https://nodejs.org">Node.js</a> , MIT License.
         </li>
         
         <li><a href="https://github.com/amaurial/mergCanBus">https://github.com/amaurial/mergCanBus</a>
-        MergCBUS implementation for Arduino.
+        MERGCBUS implementation for Arduino. ( + have a look at Amauria's other MERGCBUS Github projects )
         </li>
         
         
         
         <li><a href="http://www.oscale.net/?q=en/cbus">http://www.oscale.net/?q=en/cbus</a>
-        CBUS on an Arduino using CAN BUS shields - See download links at bottom ( in English + German )
+        MERGCBUS on an Arduino using CAN BUS shields - See download links at bottom ( in English + German )
         </li>
         
 
 
         <li><a href="https://www.npmjs.com/search?q=keywords:MERG">https://www.npmjs.com/search?q=keywords:MERG</a>
-        nodejs modules to create a MERG cbus module + Class to create a Cbus module conneted via ethernet.
+        node.js modules to create a MERG CBUS module + Class to create a MERG CBUS module conneted via ethernet.
         </li>
 
 
         <li><a href="http://www.rickdavis.co.uk/rail/control-cbus.php">http://www.rickdavis.co.uk/rail/control-cbus.php</a>
-        Middle Earth Model Railway has over 70 CBUS modules installed on it and uses JMRI.
+        Middle Earth Model Railway has over 70 MERGCBUS modules installed on it and uses JMRI.
         </li>
+
+        </ul>
         
-      </ul>
+        
+    <p>Originally named CBUS by co-founder Gil Fuchs, MERGCBUS isn't a MERG project and is "open source" or public domain.
+    <br>In 2007, when the scheme was being developed, MERG had a website willing to host the project and organised the kits ( many designed by the other MERGCBUS co-founder Mike Bolton ).
+    <br>The scheme is now called MERGCBUS to avoid conflict with a home automation system which has trademark on a similar name.
+    </p>
+    
+    <p>MERGCBUS co-founders : Gil Fuchs, Mike Bolton</p>
+    <p>Mike Bolton designed hardware and coded firmware for many of the initial modules, 
+    lead for CAN-RS module and code </p>
+    
+    
+    
+    
+    <p>The standalone MERG DCC programmer was the inspiration behind the popular 
+    <a href="../../../../html/hardware/sprog/SPROG.shtml">SPROG DCC programmer</a>, which is fully supported in JMRI.</p>
+    
+    <p>Andrew Crosland has been heavily involved with JMRI through both SPROG and MERGCBUS, 
+    writing much code to enable JMRI to support MERGCBUS. 
+    <br>Anything to do with CANUSB, CANUSB4 and Gridconnect etc, he's an expert! 
+    <br>Andrew also he wrote the MERG CANCMD code and designed the MERG CANUSB4</p>
+    <p>Kevin Dickerson was instrumental in writing the original JMRI to MERGCBUS interfaces, supported by Andrew.</p>
+    
+    
+    <p>Pete Brownlow has updated the CANCMD firmware, also lead for the CANEther module, and the MERG JMRI go-to person!</p>
+    
+    
+    
+    <p>Amauri Albuquerque has been the main SW writer for the CANPiWi ( based on the RPi Zero W and is an interface between ED/ WiThrottle and CBUS ), and CANPi.
+    <br>CANPi is a version of this for a RPi 3B ( with Ian Hart's CAP.)
+    </p>
+    
+    <p>Ian Hart designed the Pi CAP, also the popular CANMIO range of modules.</p>
+    
+    <p>Roger Healey is also key to the MERGCBUS success story being lead developer on the FCU, 
+    a Windows configuration utility for setting up FLiM modules ( independent of JMRI ) </p>
+
+    <p>N J Philips established the mergCbusServer and keeps it up to date.</p>
+    
+    <p>The MERG kit elves who package the kit parts are amazing, 
+    having enabled thousands of MERGCBUS module kits to be sent out to members.</p>
+    
+    <p>The JMRI developers do a fantastic job of keeping updates flowing, making JMRI easier to use on each release :-)</p>
+    
+    <p>Apologies to anyone missed out or inaccuracies, let us know and I'll gladly edit the page! - SY</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
