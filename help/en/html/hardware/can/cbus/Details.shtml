@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS Connecting connection canusb4 network">
-  <title>JMRI Hardware Support - CBUS - Tech Details</title>
+  <meta name="keywords" content="JMRI help MERGCBUS Connecting connection canusb4 network">
+  <title>JMRI Hardware Support - MERGCBUS - Tech Details</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,8 +23,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: CBUS - Connection Details</h1>
-        <ul class="nav">
+      <h1>Hardware Support: MERGCBUS - Connection Details</h1>
+        <ul class="snav">
         <li><a href="#canid">CBUS CAN Network ID</a></li>
         <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
         <li><a href="#c2">CAN via MERG Network Interface</a></li>
@@ -35,8 +35,8 @@
         <li><a href="#c7">Direct Serial Connection</a></li>
        </ul>
 
-      <p>This page describes technical details of JMRI's <a href=
-      "index.shtml">CBUS</a> connection support.</p>
+      <p>This page describes technical details of JMRI's MERGCBUS
+      connection support.</p>
 
       <h2>CAN Adapters</h2>
       
@@ -52,7 +52,10 @@
       a growing community of developers, hence more code.
       <br>
       As part of this, the JMRI CAN support is designed to use
-      as many CAN adapter types as possible.</p>
+      as many CAN adapter types as possible.
+      <br>
+      Not many PCs have a RS232 serial port now, however is still supported.
+      </p>
       
       <ul>
       <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
@@ -64,21 +67,38 @@
       <li><a href="#c7">Direct Serial Connection</a></li>
       </ul>
       
-      <h2><a name="canid" id="canid">CBUS CAN Network ID</a></h2>
       
-        <p>All CBUS modules need a CBUS CAN ID, and JMRI is no exception.</p>
+      <p>Where USB interfaces are used, the Baud rate is irrelevant.</p>
+      
+      
+      <h2><a name="canid" id="canid">MERGCBUS CAN Network ID</a></h2>
+      
+        <p>All MERGCBUS modules need a CAN ID, and JMRI is no exception.</p>
         
         <p>Modules must not have a duplicate CAN ID</p>
         
-        <p>The CAN ID is separate to any NODE ID's used in Long Events.</p>
+        <p>The CAN ID is separate to any NODE ID's used in MERGCBUS Long Events.</p>
 
-        <p>The MERG CAN-RS can do "enumeration" for CBUS, but many
+        <p>Node numbers are for MERGCBUS long events, CAN ID's are purely for the CAN protocol transmission 
+        and are largely irrelevant in JMRI processing MERGCBUS events.</p>
+      
+
+        
+        
+        <p>Most MERG modules can do "enumeration" for MERGCBUS, 
+        but some
         other adapters can't because of their intrinsic latency.
         Their slow replies effectively make them invisible.
         <br>
-        Therefore Mike Bolton, one of the CBUS developers
-        suggested that JMRI use a CBUS ID of 126. That's a
+        Therefore Mike Bolton, one of the MERGCBUS developers
+        suggested that JMRI use a CAN ID of 126. That's a
         fixed value in some systems.</p>
+      
+      
+      <p>If you have multiple copies of JMRI attached to a MERGCBUS network,
+      be sure to give these unique CAN ID's.</p>
+      
+      
       
 
       
@@ -107,7 +127,7 @@
 
         <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
-        <p>nb, CANUSB4 - does not require drivers installing on modern operating systems.</p>
+        <p>nb, CANUSB4 - may not require drivers installing on modern operating systems.</p>
       
       <h3><a name="c2" id="c2">CAN via MERG Network Interface</a></h3>
       <a href="../images/merg-connection-network-interface-278-358.jpg"><img src="../images/merg-connection-network-interface-278-358.jpg"
@@ -243,9 +263,15 @@
       
       <h2>JMRI Help</h2>
 
-        <p><a href="index.shtml">Main JMRI CBUS Support page</a></p>
+        <p><a href="index.shtml">Main JMRI MERGCBUS Support page</a></p>
 
         <p><a href="../index.shtml">JMRI's general CAN support</a></p>
+        
+        <p><a href="../../rfid/index.shtml">JMRI RFID Support</a></p>
+        
+        <p><a href="index.shtml#thirdparty">MERGCBUS 3rd Party Links</a> See link for the MERGCBUS Developers Guide</p>
+        
+        
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

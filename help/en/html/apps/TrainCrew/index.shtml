@@ -7,6 +7,8 @@
   <title>JMRI: TrainCrew connection</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
+    <meta name="keywords" content=
+  "JMRI install host traincrew">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -37,9 +39,14 @@
      from the JMRI Debug menu.  
      Note that you'll need an active internet connection
      when you do this.  But you won't need one to run
-     TrainCrew after that.
+     TrainCrew after that.</p>
      
-     
+     <p>Windows users will probably need to run JMRI with 
+     Administrative permissions
+     ( eg. right click on PanelPro desktop link, 
+     Run as Administrator) to install.
+     <br>it is not recommended to run JMRI like 
+     this all of the time, just to install TrainCrew.</p>
      
       <!--#include virtual="/Footer" -->
     </div><!-- close #mainContent -->
