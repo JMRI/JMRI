@@ -88,7 +88,9 @@ public class PM4Panel extends AbstractBoardProgPanel {
         appendLine(provideStatusLine());
         setStatus(Bundle.getMessage("Status1"));
 
-        setTypeWord(0x70);  // configure PM4 message type
+        setTypeWord(0x70); // configure PM4 message type
+
+        panelToScroll();
 
     }
 
