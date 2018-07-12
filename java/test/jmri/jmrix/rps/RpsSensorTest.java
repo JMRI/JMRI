@@ -2,23 +2,32 @@ package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
 import jmri.Sensor;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the RPS Sensor class.
  *
  * @author	Bob Jacobsen Copyright 2007
   */
-public class RpsSensorTest extends TestCase {
+public class RpsSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    public void testCtor() {
-        Sensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
-        Assert.assertNotNull("exists", s);
-    }
+    @Override
+    public int numListeners() {return 0;}
 
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
+    @Test
     public void testPoints() {
         Region r1 = new Region(new Point3d[]{
             new Point3d(0., 0., 0.),
@@ -32,6 +41,7 @@ public class RpsSensorTest extends TestCase {
         Assert.assertTrue("sensor matches region", r1.equals(s.getRegion()));
     }
 
+    @Test
     public void testOperation() {
         RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
 
@@ -47,6 +57,7 @@ public class RpsSensorTest extends TestCase {
         Assert.assertTrue("3: inactive", s.getKnownState() == Sensor.INACTIVE);
     }
 
+    @Test
     public void testTwoLocos() {
         RpsSensor s = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
 
@@ -74,6 +85,7 @@ public class RpsSensorTest extends TestCase {
         Assert.assertTrue("5: inactive", s.getKnownState() == Sensor.INACTIVE);
     }
 
+    @Test
     public void testModel() {
         // clear Model to create a new one
         new Model() {
@@ -92,21 +104,19 @@ public class RpsSensorTest extends TestCase {
         );
     }
 
-    // from here down is testing infrastructure
-    public RpsSensorTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp(){
+        JUnitUtil.setUp();	
+        t = new RpsSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {RpsSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RpsSensorTest.class);
-        return suite;
+    @Override
+    @After
+    public void tearDown(){
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }
+

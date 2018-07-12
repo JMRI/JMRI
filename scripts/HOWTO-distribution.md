@@ -425,12 +425,14 @@ If there are any changes in other files, do both of:
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.13.1". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.12 cycle. It's intended to be released around May 12 from HEAD of master.
+This is the next release in the 4.14 cycle. It's intended to be released around July 12 from HEAD of master.
 ```
 
 - Confirm that the tag for the current release (v4.11.9 for release 4.11.9) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.11.9) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
+
+- If this is a production release, update the "Downloads" badge in the JMRI/JMRI README.md file and commit back.
 
 ====================================================================================
 ## Branches for preparation of Production Releases
@@ -466,9 +468,9 @@ git push github
 ====================================================================================
 ## Announcement and Post-release Steps
 
-- Mail announcement to jmriusers@yahoogroups.com + Groups.io
+- Mail announcement to jmriusers@groups.io
 
-    Subject is "Test version 4.11.9 of JMRI/DecoderPro is available for download" or "JMRI 4.8 is available for download"
+    Subject is "Test version 4.11.9 of JMRI/DecoderPro is available for download" or "JMRI 4.12 is available for download"
 
     Content:
     
@@ -490,8 +492,7 @@ Note that JMRI is made available under the GNU General Public License. For more 
 The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
 <http://jmri.org/releasenotes/jmri4.11.9.shtml>
 
-
-- If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
+- Close the [GitHub issue](https://github.com/JMRI/JMRI/issues) with a comment that sums up the release-build experience
 
 - Wait a day for complaints
 
@@ -517,8 +518,6 @@ The download links, along with lots of other information which we hope you'll re
 ```
 
 - Commit back any changes made to this doc
-
-- Close the [GitHub issue](https://github.com/JMRI/JMRI/issues) with a comment that sums up the release-build experience
 
 - Take a break!
 

@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS naming long short events event add sensor hex">
-  <title>JMRI Hardware Support - CBUS - Naming</title>
+  <meta name="keywords" content="JMRI help MERGCBUS naming long short events event add sensor hex">
+  <title>JMRI Hardware Support - MERGCBUS - Naming</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,14 +23,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: CBUS - Naming</h1>
+      <h1>JMRI Hardware Support: MERGCBUS - Naming</h1>
 
-
-
-        <ul class="nav">
-        <li><a href="#automatic">Sensors - Automatic Creation</a></li>
-        <li><a href="#sysname">System Names</a></li>
-        <li><a href="#summary">Summary of CBUS Events</a></li>
+        <ul class="snav">
+        <li><a href="#events">Event Name and Numbering</a></li>
+        <li><a href="#sysname">System Names</a></li>        
+        <li><a href="#summary">Summary of MERGCBUS Events</a></li>
         <li><a href="#namingspec">Event Naming Specification</a></li>
         <li><a href="#hex">Sending hex strings</a></li>
         </ul>
@@ -41,14 +39,80 @@
         @icklesteve June 2018
         -->      
         <p>This page describes how JMRI uses System Names to access
-        CBUS-attached resources.</p>
+        MERGCBUS-attached resources.</p>
       
-      <h2><a name="automatic" id="automatic">Sensors - Automatic Creation</a></h2>
+      
+      <h2><a name="events" id="events">Event Name and Numbering</a></h2>
+      
+            
+      
+        <h3>Event Conventions</h3>
+
+
+
+            <p>Suggestion from Mike Bolton : <br>
+            His club has adopted the convention of 1 to 9999 for turnouts 
+            and 10000 upwards for sensors. 
+            <br>
+            This prevents the possibility of sending sensor events from 
+            their CANCABs (9999 max) 
+            <br>but they tie any relevant sensors to the turnout numbers 
+            e.g. 
+            <br>TO_1 is +1 and the feedback from this is +10001 for one 
+            way and +11001 for the other way. 
+            <br>
+            Using short events (or device numbers) this way makes life 
+            very simple with JMRI. 
+            <br>They control the turnouts from the CANCABs as well (also 
+            Smartphone throttles), this is reflected in the JMRI panel and works a treat!
+            <br>Their layout control panel is on a touchscreen monitor 
+            connected to a RPi 3B running JMRI,
+            with additional control panels through 
+            <a href="../../../web/index.shtml">JMRI Web Server</a>.
+            </p>
+            
+            
+            
+            
+            <p>Another use of event segmentation could be for modular club layouts, 
+            
+            where various club members building a section at home, 
+            then bringing it together into 1 big super layout.
+            <br>
+            Module 1 would have events 1,000 > 1,999 Module 2 would have 2,000 > 2,999 etc.
+            </p>
+
+
+            
+            <h3>Event Polarity</h3>
+            
+            <p>You can invert the polarity of ON and OFF events</p>
+      <ul>
+      <li>on the initial producer module </li>
+      <li>Hardware naming format when entered as a JMRI sensor, turnout or light</li>
+      <li>Sensor or turnout settings within JMRI</li>
+      </ul>
+
+        <h3>Start of Day Events</h3>
+        
+        <p>When JMRI is started, it doesn't presume that all sensors, turnouts and 
+        lights are active or inactive, they have an unknown status.</p>
+        
+        <p> The vast majority of MERG module kits can send the current status of their 
+        inputs or outputs in response to a SOD event taught to that module.</p>
+        
+        <p>JMRI can store cross-session information such as Memory Variables and 
+        Block Values ( Train Describer value )
+        <br>The block will need to be occupied ( active sensor ) on panel 
+        startup for a TD to cross-session.
+        </p>      
+      
+      <h3><a name="automatic" id="automatic">Sensors - JMRI Automatic Creation</a></h3>
 
         <p>JMRI automatically attempts to create Sensor objects from
-        the traffic that it hears on the CBUS.</p>
+        the traffic that it hears on the MERGCBUS network.</p>
         <p>When JMRI hears an ON
-        or OFF event on the CBUS, it creates a Sensor using the
+        or OFF event, it creates a Sensor using the
         corresponding event ID.</p>
         <p>This automatically-created sensor
         defaults to the ON event setting the Sensor ACTIVE and the
@@ -67,45 +131,118 @@
     
         <p>Note that there's a <a href=
         "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
-        CBUS Event Capture Tool</a> that can help you create Turnouts
-        and Sensor names without having to directly work out the
-        System Names.</p>
+        MERGCBUS Event Capture Tool</a>. </p>
+      
       
       
       <h2><a name="sysname" id="sysname">System Names</a></h2>
 
-      <p>JMRI provides an interface to the real layout via internal
-      objects such as Turnouts, Sensors, etc. that are closely
-      mapped to corresponding physical devices.</p>
-      
-      <p>This mapping is
-      done via "System Names", which both identify the how to
-      access a particular device, and are the key to looking up the
-      corresponding object in JMRI.</p>
+     <p>When adding an item to your JMRI
+     
+           <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>,
+       <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table</a> or
+       <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Lights Table</a>,
 
-      <p>The <a href=
-      "http://www.merg.org.uk/">MERG</a> <a href=
-      "http://www.merg.org.uk/merg_resources/cbus.php">CBUS</a>
-      communicates via messages with a fixed format: One byte of
-      command and length information, followed optionally by
-      additional data bytes.</p>
-      <p>In it's most simple form, this is used
-      to send identifiable "events". In turn, events come in two
-      types: "ON" and "OFF".</p>
+        a JMRI system name is automatically created from the hardware address you input.
+        </p>
       
       
-      <h2><a name="summary" id="summary">Summary of CBUS events</a></h2>
-      <p>Min / Max event values are what JMRI (4.12) accepts as a valid input value, hence not necessarily to CBUS Specification.</p>
+      
+        <p>JMRI internally associates MERGCBUS events with individual JMRI objects
+        (Sensors, Turnouts, Lights, etc.) via the <a href="../../../doc/Technical/Names.shtml">JMRI System Names</a>.
+        </p>        
+
+
+        <p>Depending on which MERGCBUS event IDs are used on a
+        particular layout, these system names can get very long, in
+        which case the "user names" are much more useful.</p>
+        
+        
+
+
+
+
+        <p>The 1st letter of a sensor, turnout or light system name is the JMRI system
+        letter, generally "M" for MERG connections.
+        </p>
+        
+
+
+        <ul>
+        <li><a href="../../../tools/Sensors.shtml">JMRI sensors</a> use the type letter "S", 
+        e.g. <code>MS+123;-345</code>" defines a
+        Sensor that follows the "123 ON" and "345 OFF" events to change state. </li>
+        <li><a href="../../../tools/Turnouts.shtml">JMRI turnouts</a> use the type letter "T",
+        e.g. <code>MT+123;-345</code>  </li>
+        <li><a href="../../../tools/Lights.shtml">JMRI Lights</a> use the type letter "L", e.g.
+        <code>ML+123;-345</code></li>
+        </ul>         
+      
+      
+      <h2><a name="summary" id="summary">Summary of MERGCBUS events</a></h2>
+      
       <table border="1">
         <tbody><tr>
           <th>In/Out</th>
-          <th>Entry</th>
+          <th>Entered as Hardware Address</th>
           <th>Meaning</th>
           <th>makes System Name</th>
           <th>Mask</th>
           <th>Equivalent</th>
-          <th>Minimum</th>
-          <th>Maximum</th>
+          <th>Min.</th>
+          <th>Max.</th>
+          <th>Notes</th>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18</td>
+          <td>event 18 On;
+            <br>event  18 Off</td>
+          <td>MT+18</td>
+          <td>integer</td>
+          <td>+18;-18</td>
+          <td>01</td>
+          <td>65535
+          </td>
+          <td>SLiM Short Events ASON / ASOF
+          </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>+N2E18;-N2E18</td>
+          <td>Node 2 Event 18; On Event = Active; 
+          <br>Off Event = Inactive</td>
+          <td>MT+N2E18;-N2E18</td>
+          <td></td>
+          <td></td>
+          <td>N1E1;<br>N1E1</td>
+          <td>N 65535 E 65535 ;
+          <br>N 65535 E 65535</td>
+          <td>FLiM Long Events ACON / ACOF</td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18;21</td>
+          <td>event 18 On;
+          <br>event 21 On</td>
+          <td>MT18;21</td>
+          <td>integer;integer</td>
+          <td>+18;+21</td>
+          <td> 1 ; 1</td>
+          <td> 65535; 65535</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>+18;-21</td>
+          <td>event 18 On; 
+          <br>event21 Off</td>
+          <td>MT+18;-21</td>
+          <td>idem signed</td>
+          <td>+18;-21</td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
         </tr>
         <tr>
           <td>in</td>
@@ -116,97 +253,99 @@
           <td>N/A</td>
           <td> </td>
           <td> </td>
-        </tr>
-        <tr>
-          <td>in</td>
-          <td>X91012;X91019</td>
-          <td>hex CAN frame msg. Active; Inactive</td>
-          <td>MTX91012;X91019</td>
-          <td>hex ; hex</td>
-          <td>N/A</td>
-          <td> </td>
           <td> </td>
         </tr>
         <tr>
           <td>both</td>
-          <td>18</td>
-          <td>event 18 On; 18 Off</td>
-          <td>MT18</td>
-          <td>integer</td>
+          <td>X90002D002E;X91FFFFFFFE</td>
+          <td>hex CAN frame msg. Active;
+          <br>hex CAN frame msg. Inactive</td>
+          <td>MTX90002D002E;X91FFFFFFFE</td>
+          <td>hex;hex</td>
+          <td>N/A</td>
+          <td colspan="2">Depends on Opscode</td>
+          <td>In eg. Thrown sends Long Event N 45 E 46 <br>Closed sends Long Event N 65535 E 65534 </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>+18</td>
+          <td>event 18 On;
+          <br>event 18 Off</td>
+          <td>MT+18</td>
+          <td></td>
           <td>+18;-18</td>
-          <td>10</td>
-          <td>2,147,483,647</td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>18;21</td>
-          <td>event 18 On; 21 On</td>
-          <td>MT18;21</td>
-          <td>integer ; integer</td>
-          <td>+18;+21</td>
+          <td> </td>
           <td> </td>
           <td> </td>
         </tr>
         <tr>
           <td>both</td>
-          <td>+18;-21</td>
-          <td>event 18 On; 21 Off</td>
-          <td>MT+18;-21</td>
-          <td>idem signed</td>
-          <td>N/A</td>
+          <td>018</td>
+          <td>event 18 On;
+          <br>event 18 Off</td>
+          <td>MT+018</td>
+          <td></td>
+          <td>+18;-18</td>
+          <td> </td>
           <td> </td>
           <td> </td>
         </tr>
         <tr>
           <td>both</td>
-          <td>2000018</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MT200018</td>
+          <td>200018</td>
+          <td>Node 2 Event 18; On Event = Active; 
+          <br>Off Event = Inactive</td>
+          <td>MS200018</td>
           <td>node + (5 digits)</td>
           <td>N2E18</td>
-          <td>Note: not working</td>
-          <td> </td>
+          <td> 100001</td>
+          <td> 6553565535</td>
+          <td> Current max. that can be entered (JMRI 4.12) is 2147483647</td>
         </tr>
         <tr>
           <td>both</td>
-          <td>N2E18</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td><del>N2E18</del></td>
+          <td>Node 2 Event 18; On Event = Active; 
+          <br>Off Event = Inactive</td>
           <td>MTN2E18</td>
           <td>N + number + E + number</td>
           <td>2000018</td>
-          <td>Note: not working</td>
           <td> </td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>+N2E18;-N2E18</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MT+N2E18;-N2E18</td>
-          <td></td>
-          <td></td>
-          <td>Works</td>
           <td> </td>
+          <td>NOT WORKING
+          <br>See if able to add / edit logic as mix of 2 top table rows?
+          </td>
         </tr>
         </tbody></table>
         
       <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
       based on information from the Hardware help pages
-      by Egbert Broerse @silverailscolo July 2017 -->
+      by Egbert Broerse @silverailscolo July 2017 
+      
+      
+      Please also update this page when adding / improving names which will and won't work
+      
+      
+      -->
         
-      
-      
+        <p>65,536 nodes and 65,535 events gives approx 4,294,901,760 event combinations.</p>
+        
+        <p>65,535 is unrealistic for events within a node but does allow for useful segmentation of event ranges.</p>
+        <p>MERG module kits can use the whole CBUS range of event numbers, on a reset startup operating in SLiM short event mode.
+        <br>A MERG CANLED kit can support up to 255 taught events</p>
+
+
+
       <h2><a name="namingspec" id="namingspec">Event Naming Specification</a></h2>
       
 
-      <p>CBUS messages coming into JMRI applications can be
-      accessed via JMRI Sensor objects. The Sensor's <a href=
-      "../../../doc/Technical/Names.shtml">JMRI System Name</a> determines which CBUS
-      message(s) it corresponds to. A Sensor is defined by two
+      <p>A Sensor is defined by two
       events: The one that sets it ACTIVE, and the one that sets it
-      INACTIVE. If these are mapped to ON and OFF frames with the
+      INACTIVE. 
+      <br>If these are mapped to ON and OFF frames with the
       same event ID number, respectively, only the event ID number
       need be specified:<br>
-      <code>MS18</code><br>
+      <code>MS18</code> 
       The number is decimal.</p>
 
       <p>To increase versatility, it's possible to use different
@@ -215,18 +354,22 @@
       frame):<br>
       <code>MS18;21</code></p>
 
-      <p>The ON and OFF coding of CBUS is not entirely consistent
-      with the event model, and it may be useful to connect the
+      <p>The ON and OFF coding of MERGCBUS is not entirely consistent
+      with the event model, 
+      <br>it may be useful to connect the
       ACTIVE or INACTIVE transition of a JMRI Sensor to an OFF or
-      ON CBUS frame respectively. Leading "+" and "-" characters
+      ON MERGCBUS frame respectively. 
+      <br>Leading "+" and "-" characters
       can do this. For example,<br>
       <code>MS-18;+21</code><br>
       defines a sensor that goes ACTIVE when an OFF frame with ID
-      number 18 is received, and goes INACTIVE when an ON frame
+      number 18 is received,
+      <br>and goes INACTIVE when an ON frame
       with ID number 21 is received.</p>
 
-      <p>CBUS event numbers (usually) contain a node number in
-      their most-significant bytes. You can specify the node number
+      <p>MERGCBUS event numbers (usually) contain a node number in
+      their most-significant bytes. 
+      <br>You can specify the node number
       either by using a full 5 decimal digits for the event number
       itself, preceded by the node number:<br>
       <code>MS200018</code><br>
@@ -234,46 +377,227 @@
       parts:<br>
       <code>MSN2E18</code><br></p>
 
-      <p>You can mask off part of the CBUS packet, so any values in
+      <p>You can mask off part of the MERGCBUS packet, so any values in
       the masked part will still match, using the "M" format
       letter.<br>
       <code>MS200018M07</code><br>
       "M" indicates the start of a hexadecimal mask that will be
       applied, where 1 bits in the mask will be zero bits in the
-      resulting value. In the example above, "18" through "1F" will
-      match. This is particularly useful for matching e.g. CBUS
+      resulting value.
+      
+      <br>In the example above, "18" through "1F" will
+      match. 
+      <br>This is particularly useful for matching e.g. MERGCBUS
       short events, where parts of the packet include the node
       number which should (usually) be ignored.</p>
+
+
+       
 
       
       <h2><a name="hex" id="hex">Sending hex strings</a></h2>
       
+      
+      <p>Hexadcimal numbering is based on the power of 16, using 0-9, then A-F.</p>
+      
+      
+      <p>MERGCBUS modules
+      communicate by messages with a fixed format: One byte of
+      command and length information, followed optionally by
+      additional data bytes.</p>
+
+      <p>In it's most simple form, this is used
+      to send identifiable "events". In turn, events come in two
+      types: "ON" and "OFF", with two forms, short ( SLiM ), and long ( FiLM ).</p>
+      
+      
+      <p>These are actually sent across a MERGCBUS network in the form of an Opscode, the command information.</p>
+      
+      <p>There are 255 ops codes, the length of the data string following the Opscode changes depending on which Opscode is used.</p>
+      
+      <p>There are multiple Opscodes for events, Controlling and programming DCC devices, DCC consisting, Programming nodes with Node Variables, Programming nodes with events, Fast clock and temperature information, RfID reader data, and many more.</p>
+      
+      <p>Four of these are the common Opscodes for events :</p>
+      
+      <table border="1">
+      <tr>
+      <th>Ops Code Name 
+      <br>( MERG console log ) </th>
+      <th>Decimal
+      <br>Opscode</th>
+      <th>Hexadecimal
+      <br>Opscode</th>
+      <th></th>
+      </tr>
+      <tr>
+      <td>ASON</td>
+      <td>152</td>
+      <td>98</td>
+      <td>Short Event On</td>
+      </tr>
+      <tr>
+      <td>ASOF</td>
+      <td>153</td>
+      <td>99</td>
+      <td>Short Event Off</td>
+      </tr>
+      <tr>
+      <td>ACON</td>
+      <td>144</td>
+      <td>90</td>
+      <td>Long Event On</td>
+      </tr>
+      <tr>
+      <td>ACOF</td>
+      <td>145</td>
+      <td>91</td>
+      <td>Long Event Off</td>
+      </tr>      
+      </table>
+      
+      
+      
       <p>It's possible to connect a Sensor to arbitrary
       CAN frames by specifying their data content as a hex string,
-      indicated by "X":<br>
-      <code>MSX9100000000000012;X9100000000000019</code><br>
-      This allows the Sensor to disregard any intrinsic meaning to
-      "ON" and "OFF" events, and allows it to respond to any frame
+      indicated by "X".</p>
+      
+      <p>This allows a Sensor or Turnout to disregard any intrinsic meaning to
+      "ON" and "OFF" events, and allows it to respond to, or emit any frame
       on the layout.</p>
       
       
+      <p>These particular event Opscodes use a Hex string 4 digits long, split into High then Low :</p>
+      
+      <img src="../images/merg-add-turnout-hex-620x173.jpg" align="right" alt="merg cbus add new turnout hexadecimal hex" width="620" height="173">
+      
+      <table border="1">
+      <tr>
+      <th>Entered as Hex</th>
+      <th>Ops Code</th>
+      <th>Remaining Hex</th>
+      <th>Node Decimal</th>
+      <th>Event Decimal</th>
+      </tr>
+      <tr>
+      <td><code>X9900000013</code></td>
+      <td>ASOF</td>
+      <td><code>00 00 00 13</code></td>
+      <td>0</td>
+      <td>19</td>
+      </tr>
+      <tr>
+      <td><code>X980000002D</code></td>
+      <td>ASON</td>
+      <td><code>00 00 00 2D</code></td>
+      <td>0</td>
+      <td>45</td>
+      </tr>
+      <tr>
+      <td><code>X980000BD2A</code></td>
+      <td>ASON</td>
+      <td><code>00 00 BD 2A</code></td>
+      <td>0</td>
+      <td>48426</td>
+      </tr>      
+      <tr>
+      <td><code>X990000FFFF</code></td>
+      <td>ASOF</td>
+      <td><code>00 00 FF FF</code></td>
+      <td>0</td>
+      <td>65535</td>
+      </tr>
+      <tr>
+      <td><code>X9100130013</code></td>
+      <td>ACOF</td>
+      <td><code>00 14 00 13</code></td>
+      <td>20</td>
+      <td>19</td>
+      </tr>
+      <tr>
+      <td><code>X90002D002E</code></td>
+      <td>ACON</td>
+      <td><code>00 2D 00 2E</code></td>
+      <td>45</td>
+      <td>46</td>
+      </tr>
+      <tr>
+      <td><code>X90BD2BBD2A</code></td>
+      <td>ACON</td>
+      <td><code>BD 2B BD 2A</code></td>
+      <td>48427</td>
+      <td>48426</td>
+      </tr>      
+      <tr>
+      <td><code>X91FFFFFFFE</code></td>
+      <td>ACOF</td>
+      <td><code>FF FF FF FE</code></td>
+      <td>65535</td>
+      <td>65534</td>
+      </tr>
+      </table>
+      
+      <a href="../images/merg-cbus-server-649x416.jpg" title="Click for larger"><img src="../images/merg-cbus-server-649x416.jpg"
+        width="400" height="256" alt="merg cbus server" align=
+        "right"></a>
+      
+      <p>Ensure you use the right opscode, eg if you include Nodes for a FiLM address, use ACON instead of ASON.</p>
+      
+      <p>For system development, you may prefer to view the actual full packet in an application such as MERG CBUS SERVER.</p>
+      
+      <p>The <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">JMRI MERGCBUS Console Tool</a> can be very useful in seeing what is being sent across the network by the hardware addresses you create.
+      <br>The console is intended to be a tool to help users monitor packets using short and long events, and may attempt to beautify the output.</p>
+      
       <p>
-      The CAN frames can send CBUS opscodes in the hex form of the code you require.
+      The CAN frames can send MERGCBUS opscodes in the hex form of the code you require.
       <br>
-      eg, to set up a sensor to send an DCC emergency stop / resume opscode over CBUS you could use <code>X0A;X05</code>
+      eg, to set up a sensor to send ( DCC emergency stop / Track power on ) opscodes over MERG CBUS, 
+      <br>you could use a hardware address of <code>X0A;X05</code>
+      </p>
+
+
+      <table border="1">
+      <tr>
+      <th>Entered as Hex</th>
+      <th>Viewed in JMRI MERG CONSOLE</th>
+      <th>Viewed in CBUS SERVER</th>
+      <th>Ops Code</th>
+      </tr>
+      <tr>
+      <td><code>X0A</code></td>
+      <td><code>[x[7f]0A]</code></td>
+      <td><code>S0FE0N0A;</code></td>
+      <td>(RESTP) Request Emergency Stop ALL trains
+      <br>A MERG CANCMD confirms request with an ESTOP 06 Opscode.</td>
+      </tr> 
+      <tr>
+      <td><code>X05</code></td>
+      <td><code>[x[7f]05]</code></td>
+      <td><code>S0FE0N05;</code></td>
+      <td>(TON) Track Power On, normally broadcast from a command station</td>
+      </tr> 
+      </table>
+
+      
+      
+      <p>
+      All of these Opscode messages are sent with the Standard CAN event frame, however the protocol also allows for access to extended CAN frames.
+      <br>These frames enable bootloading of modules ( firmware updates ), while future uses of this may also be for local media streaming ( eg. transferring pictures of trains or sound files between modules. )
+      <br>The extended frames do not interfere with the standard frames, hence modules can be targetted for boatloading by module number, without affecting Standard CAN event frames.
       </p>
       
-      <p>Check the CBUS wiki and developers guide for more info and absolute specification.</p>
+      <p>Although module firmware updates are not currently available within JMRI, full support for this is available via 3rd party software ( FCU - FLiM Configuration Utility ), available free for MERG members to download.
+      </p>
       
+      <p>Check the MERGCBUS wiki and developers guide for more info and absolute specification.</p>
       
       <h3>JMRI Help</h3>
-
-      <p><a href="../../../tools/scripting/Examples.shtml">CanExample.py</a> - Sample script to show how to send and receive CAN Frames</p>
       
-      <p><a href="index.shtml">Main JMRI CBUS Support page</a>.</p>
+      <p><a href="index.shtml">Main JMRI MERGCBUS Support page</a>.</p>
       
-      <h3>Third Party Help</h3>
-      <p><a href="https://www.merg.org.uk/merg_resources/cbus.php">MERG CBUS intoduction page</a> For the CBUS developers guide, follow link at bottom of the page.</p>
+      <p><a href="../scripting.shtml">JMRI Scripting</a> for CAN frames with CanExample.py</p>
+      
+      <p><a href="index.shtml#thirdparty">MERGCBUS 3rd Party Links</a> See link for the MERGCBUS Developers Guide</p>
+      
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

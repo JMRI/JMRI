@@ -5308,7 +5308,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             double w = 10.0;
             double h = 5.0;
 
-            if (s.isIcon() || s.isRotated()) {
+            if (s.isIcon() || s.isRotated() || s.getPopupUtility().getOrientation() != PositionablePopupUtil.HORIZONTAL) {
                 w = s.maxWidth();
                 h = s.maxHeight();
             } else if (s.isText()) {

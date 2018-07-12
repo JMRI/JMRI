@@ -10,15 +10,21 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SerialSensorTest {
+public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     //private OakTreeSystemConnectionMemo _memo = null;
 
-    @Test
-    public void testCTor() {
-        SerialSensor t = new SerialSensor("OS1"); // does not need the _memo
-        Assert.assertNotNull("exists",t);
-    }
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
 
     @Test
     public void testCTor2() {
@@ -27,15 +33,19 @@ public class SerialSensorTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
         //_memo = new OakTreeSystemConnectionMemo("O", "Oaktree");
+        t = new SerialSensor("OS1"); // does not need the _memo
     }
 
+    @Override
     @After
     public void tearDown() {
+	t.dispose();
         JUnitUtil.tearDown();
     }
 
