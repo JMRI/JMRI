@@ -97,15 +97,26 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         } else {
             Dimension screen = getToolkit().getScreenSize();
             int screenX = screen.width;
-            Dimension frame = getPreferredSize();
-            int frameX = frame.width;
+            Dimension edDim = _editor.getPreferredSize();
+            Dimension frDim = getPreferredSize();
+            // try along side entire frame
             loc = _shape.getLocation();
-            int xr = edLoc.x + loc.x + _shape.getWidth() + 20;
-            int xl = edLoc.x + loc.x - 20 - frameX;
-            if ((xr + frameX > screenX) && (xl > 0)) {
-                loc = new Point(xl, edLoc.y);                                
-            } else {    
+            int xr = edLoc.x + edDim.width;
+            int xl = edLoc.x - frDim.width;;
+            if (xr + frDim.width <= screenX) {
                 loc = new Point(xr, edLoc.y);                                
+            } else if (xl >= 0) {    
+                loc = new Point(xl, edLoc.y);                                
+            } else {
+                // try along side shape
+                Point shapeLoc = _shape.getLocation();
+                xr = edLoc.x + shapeLoc.x + _shape.getWidth() + 20;
+                xl = edLoc.x + shapeLoc.x - 20 - frDim.width;
+                if ((xr + frDim.width > screenX) && (xl > 0)) {
+                    loc = new Point(xl, edLoc.y);                                
+                } else {    
+                    loc = new Point(xr, edLoc.y);                                
+                }
             }
         }
         setLocation(loc);
@@ -381,10 +392,12 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         if (_lineColorButon.isSelected()) {
             JmriColorChooser.addRecentColor(_fillColor);
             _chooser.getSelectionModel().setSelectedColor(_lineColor);
-            _alphaSlider.setValue(_lineColor.getAlpha());
+            _chooser.setColor(_lineColor);
+//            _alphaSlider.setValue(_lineColor.getAlpha());
         } else if (_fillColor != null) {
             JmriColorChooser.addRecentColor(_lineColor);
-            _chooser.getSelectionModel().setSelectedColor(_fillColor);
+            _chooser.setColor(_fillColor);
+//            _chooser.getSelectionModel().setSelectedColor(_fillColor);
             _alphaSlider.setValue(_fillColor.getAlpha());
         } else {
             _alphaSlider.setValue(255);
