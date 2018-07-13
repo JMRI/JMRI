@@ -464,7 +464,7 @@
    "OperationsEngineRoster.xml" file is created when you enter your first locomotive into
    OperationsPro&trade;. The back up files are created when you make a change to one of the
    operation files.
-   <p>
+   <p></p>
    <table>
     <tr>
      <td>File Name</td>
@@ -509,7 +509,6 @@
     </tr>
 
    </table>
-
 
    <a name="demo" id="demo"></a> 
    <h3>Operations Demo Files</h3>
