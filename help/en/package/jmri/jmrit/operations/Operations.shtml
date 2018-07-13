@@ -454,6 +454,7 @@
    
   <a name="OperationFiles" id="OperationFiles"></a>
    <h3>Operations Files</h3>
+   <p>
    OperationsPro&trade; uses up to six XML files to store the operations database. You can find
    these files by selecting from the main menu bar, Help-&gt;Locations..., a new window should
    appear showing where your JMRI user files are. The operation files are stored in a directory
@@ -464,7 +465,8 @@
    "OperationsEngineRoster.xml" file is created when you enter your first locomotive into
    OperationsPro&trade;. The back up files are created when you make a change to one of the
    operation files.
-   <p></p>
+   </p>
+   
    <table>
     <tr>
      <td>File Name</td>
