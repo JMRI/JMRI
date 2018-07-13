@@ -74,6 +74,9 @@ public class SE8Panel extends AbstractBoardProgPanel {
         setStatus(Bundle.getMessage("Status1"));
 
         setTypeWord(0x72);  // configure SE8 message type
+
+        panelToScroll();
+
     }
 
     @Override

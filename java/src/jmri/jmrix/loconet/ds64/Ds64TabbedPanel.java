@@ -2667,6 +2667,9 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         responseTimer.addActionListener(routeResetResponseTimerListener);
         commandType.setToolTipText(Bundle.getMessage("ToolTipLabelAcceptedSwitchCommandTypes"));
         updateBasicOpSwTab();
+
+        panelToScroll();
+
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
