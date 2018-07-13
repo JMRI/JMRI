@@ -90,32 +90,50 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
             }
         });
         super.pack();
-        Point edLoc = _editor.getLocation();
+        Point edLoc = _editor.getLocationOnScreen();
         Point loc;
         if (_shape == null) {
             loc = new Point(edLoc.x + 200, edLoc.y);                                
         } else {
             Dimension screen = getToolkit().getScreenSize();
-            int screenX = screen.width;
-            Dimension edDim = _editor.getPreferredSize();
+            Dimension edDim = _editor.getSize();
             Dimension frDim = getPreferredSize();
-            // try along side entire frame
+            Point shapeLoc = _shape.getLocationOnScreen();
+            // try alongside entire frame
             loc = _shape.getLocation();
-            int xr = edLoc.x + edDim.width;
-            int xl = edLoc.x - frDim.width;;
-            if (xr + frDim.width <= screenX) {
-                loc = new Point(xr, edLoc.y);                                
+            int xr = edLoc.x + edDim.width - 20;
+            int xl = edLoc.x - frDim.width + 20;
+            if (xr + frDim.width <= screen.width) {
+                loc = new Point(xr, shapeLoc.y);                                
             } else if (xl >= 0) {    
-                loc = new Point(xl, edLoc.y);                                
+                loc = new Point(xl, shapeLoc.y);                                
             } else {
-                // try along side shape
-                Point shapeLoc = _shape.getLocation();
-                xr = edLoc.x + shapeLoc.x + _shape.getWidth() + 20;
-                xl = edLoc.x + shapeLoc.x - 20 - frDim.width;
-                if ((xr + frDim.width > screenX) && (xl > 0)) {
-                    loc = new Point(xl, edLoc.y);                                
-                } else {    
-                    loc = new Point(xr, edLoc.y);                                
+                // try below/above frame
+                int yb = edLoc.y + edDim.height - 20;
+                int ya = edLoc.y - frDim.height; 
+                if (yb + frDim.height -20 < screen.height) {
+                    loc = new Point(shapeLoc.x, yb);
+                } else if (yb + frDim.height -20 < screen.height) {
+                        loc = new Point(shapeLoc.x, ya);                                
+                } else {
+                    // try along side of shape 
+                    xr = shapeLoc.x + _shape.getWidth() + 20;
+                    xl = shapeLoc.x - frDim.width - 20;
+                    if ((xr + frDim.width <= screen.width)) {
+                        loc = new Point(xr, edLoc.y);                                
+                    } else if (xl >= 0) {    
+                        loc = new Point(xl, edLoc.y);                                
+                    } else {
+                        yb = shapeLoc.y + _shape.getHeight() + 20;
+                        ya = shapeLoc.y - frDim.height;
+                        if (yb + frDim.height <= screen.height) {
+                            loc = new Point(shapeLoc.x, yb);
+                        } else if (ya >= 0) {
+                            loc = new Point(shapeLoc.x, ya);
+                        } else {
+                            loc = new Point(screen.width - frDim.width, screen.height - frDim.height);
+                        }
+                    }
                 }
             }
         }
