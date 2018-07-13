@@ -65,8 +65,9 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      * CommandStation implementation, not yet supported.
      */
     @Override
-    public void sendPacket(byte[] packet, int count) {
+    public boolean sendPacket(byte[] packet, int count) {
 
+        return true;
     }
 
     /**
