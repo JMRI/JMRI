@@ -120,7 +120,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.can.cbus.CbusEventTablePane";
+        return "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
     }
 
     @Override
