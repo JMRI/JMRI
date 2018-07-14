@@ -55,6 +55,9 @@ public class AutoSave {
                     wait(60000); // wait another minute before saving
                 } catch (InterruptedException e) {
                 }
+                if (!Setup.isAutoSaveEnabled()) {
+                    break;
+                }
                 if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilding()) {
                     log.debug("Detected trains being built");
                     continue;

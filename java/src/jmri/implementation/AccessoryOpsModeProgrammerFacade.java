@@ -170,7 +170,12 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
                 programmingOpReply(val, ProgListener.UnknownError);
                 return;
         }
-        InstanceManager.getDefault(CommandStation.class).sendPacket(b, 2); // send two packets
+        boolean ret = InstanceManager.getDefault(CommandStation.class).sendPacket(b, 2); // send two packets
+        if (!ret) {
+                log.error("Unable to program cv={}, value={}: Operation not implemented in command station", Integer.parseInt(cv), val);
+                programmingOpReply(val, ProgListener.NotImplemented);
+                return;
+        }
 
         // set up a delayed completion reply
         new Thread(new Runnable() {

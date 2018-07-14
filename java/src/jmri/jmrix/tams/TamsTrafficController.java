@@ -94,8 +94,9 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
      * @param count  ignored, but needed for API compatibility
      */
     @Override
-    public void sendPacket(byte[] packet, int count) {
+    public boolean sendPacket(byte[] packet, int count) {
         log.trace("*** sendPacket ***");
+        return true;
     }
 
     /**

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * provided.
  * <p>
  * Internally, this is done by using an ordered list of all non-Internal managers, plus a
- * separate reference to the internal manager and default manager. 
+ * separate reference to the internal manager and default manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
@@ -76,7 +76,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     public List<Manager<E>> getDisplayOrderManagerList() {
         // make sure internal present
         initInternal();
-        
+
         ArrayList<Manager<E>> retval = new ArrayList<>();
         if (defaultManager != null) { retval.add(defaultManager); }
         for (Manager<E> manager : mgrs) {
@@ -84,7 +84,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
                 retval.add(manager);
             }
         }
-        if (internalManager != null) { retval.add(internalManager); }
+        if (internalManager != null && internalManager != defaultManager) {
+            retval.add(internalManager);
+        }
         return retval;
     }
 
@@ -98,8 +100,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
      */
     public Manager<E> getDefaultManager() {
         if (defaultManager != null) return defaultManager;
-        
-        return getInternalManager();     
+
+        return getInternalManager();
     }
 
     public void addManager(Manager<E> m) {
@@ -115,7 +117,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         mgrs.add(m);
 
         if (defaultManager == null) defaultManager = m;  // 1st one is default
-        
+
         propertyVetoListenerList.stream().forEach((l) -> {
             m.addVetoableChangeListener(l);
         });
@@ -453,7 +455,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @CheckReturnValue
-    public int getObjectCount() { 
+    public int getObjectCount() {
         int count = 0;
         for (Manager<E> m : mgrs) { count += m.getObjectCount(); }
         return count;
@@ -488,7 +490,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             addedOrderList.addAll(m.getSystemNameAddedOrderList());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public List<String> getSystemNameAddedOrderList() {
@@ -526,7 +528,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         updateNamedBeanSet();
         return Collections.unmodifiableSortedSet(namedBeanSet);
     }
-    
+
     /** {@inheritDoc} */
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
@@ -606,7 +608,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
             for (ManagerDataListener<E> listener : listeners) {
                 listener.contentsChanged(e);
-            }          
+            }
         }
         this.muted = m;
     }

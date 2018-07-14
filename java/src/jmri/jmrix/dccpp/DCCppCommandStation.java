@@ -140,11 +140,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission.
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
             log.error("Send Packet Called without setting traffic controller");
-            return;
+            return false;
         }
 
         int reg = 0;  // register 0, so this doesn't repeat
@@ -153,6 +153,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);
         }
+        return true;
     }
 
     /*
