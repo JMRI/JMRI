@@ -214,8 +214,7 @@
 
         <li>M Model railroad layout control buses, including
         <a href="../../hardware/openlcb/index.shtml">OpenLCB</a>
-        and <a href="../../hardware/can/cbus/index.shtml">MERG
-        CBUS</a>
+        and <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>
         <br><a href="../../hardware/mrc/index.shtml">Model Rectifier Corp (MRC)</a>
         <br><a href="../../hardware/marklin/index.shtml">Marklin CS2</a>
         </li>
@@ -384,8 +383,7 @@
         XPressNet</a></li>
         
         <li><a href=
-        "../../hardware/can/cbus/Names.shtml">MERG
-        CBUS</a></li>
+        "../../hardware/can/cbus/Names.shtml">MERG-CBUS</a></li>
         
         <li><a href=
         "../../hardware/nce/NCE.shtml#names">NCE</a></li>
@@ -663,7 +661,30 @@
           <td>8000</td>
         </tr>
         <tr>
-          <td>MERG CBUS</td>
+          <td>MERG-CBUS</td>
+          <td>io</td>
+          <td>18</td>
+          <td>Event 18 On; 18 Off</td>
+          <td>MT+18</td>
+          <td>integer</td>
+          <td>+18;-18</td>
+          <td>01</td>
+          <td>65535</td>
+        </tr>
+        <tr>
+          <td>MERG-CBUS</td>
+          <td>io</td>
+          <td>+N2E18;-N2E18;</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MS+N2E18;-N2E18</td>
+          <td></td>
+          <td> </td>
+          <td>Node 1 Event 1</td>
+          <td>Node 65535 Event 65535 </td>
+
+        </tr>
+        <tr>
+          <td>MERG-CBUS</td>
           <td>i</td>
           <td>200018M07</td>
           <td>listen to Events 18 .. 1F</td>
@@ -674,81 +695,49 @@
           <td> </td>
         </tr>
         <tr>
-          <td>MERG CBUS</td>
-          <td>i</td>
-          <td>X91012;X91019</td>
-          <td>hex CAN frame msg. Active; Inactive</td>
-          <td>MTX91012;X91019</td>
+          <td>MERG-CBUS</td>
+          <td>io</td>
+          <td>X9000020012;X91FFFFFFFE</td>
+          <td>hex CAN frame msg. Active; Inactive
+          <br>N2 E18 active; N65535 E65534 inactive
+          </td>
+          <td>MSX9000020012;X91FFFFFFFE</td>
           <td>hex ; hex</td>
           <td>N/A</td>
-          <td> </td>
-          <td> </td>
+          <td colspan="2">Depends on Opscode</td>
         </tr>
         <tr>
-          <td>MERG CBUS</td>
+          <td>MERG-CBUS</td>
           <td>io</td>
-          <td>18</td>
-          <td>event 18 On; 18 Off</td>
-          <td>MT18</td>
-          <td>integer</td>
-          <td>+18;-18</td>
-          <td>10</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>MERG CBUS</td>
-          <td>io</td>
-          <td>18;21</td>
-          <td>event 18 On; 21 On</td>
+          <td>+18;+21</td>
+          <td>Event 18 On; 21 On</td>
           <td>MT18;21</td>
           <td>integer ; integer</td>
           <td>+18;+21</td>
-          <td> </td>
-          <td> </td>
+          <td>1;1</td>
+          <td>65535;65535</td>
         </tr>
         <tr>
-          <td>MERG CBUS</td>
+          <td>MERG-CBUS</td>
           <td>io</td>
           <td>+18;-21</td>
-          <td>event 18 On; 21 Off</td>
-          <td>MT+18;-21</td>
+          <td>Event 18 On; 21 Off</td>
+          <td>ML+18;-21</td>
           <td>idem signed</td>
           <td>N/A</td>
-          <td> </td>
-          <td> </td>
+          <td>1;1</td>
+          <td>65535,65535</td>
         </tr>
         <tr>
-          <td>MERG CBUS</td>
+          <td>MERG-CBUS</td>
           <td>io</td>
-          <td>2000018</td>
+          <td>200018</td>
           <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MT200018</td>
+          <td>MS+200018</td>
           <td>node + (5 digits)</td>
           <td>N2E18</td>
-          <td>Note: not working</td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>MERG CBUS</td>
-          <td>io</td>
-          <td>N2E18</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MTN2E18</td>
-          <td>N + number + E + number</td>
-          <td>2000018</td>
-          <td>Note: not working</td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>MERG CBUS</td>
-          <td>io</td>
-          <td>+N2E18;-N2E18;</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MT+N2E18;-N2E18</td>
-          <td></td>
-          <td></td>
-          <td>Note: Works</td>
-          <td> </td>
+          <td>100001</td>
+          <td>6553565535</td>
         </tr>
         <tr>
           <td>NCE</td>
@@ -964,7 +953,7 @@ SENSOR GROUP:my group:LS2
         now:
         <ul>
         <li>JComboBox format:
-            <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75"/></a>
+            <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75" alt="combobox"></a>
             
 <pre style="font-family: monospace;">
         import jmri.util.swing.JmriBeanComboBox;
@@ -983,7 +972,7 @@ SENSOR GROUP:my group:LS2
 </pre>
 
         <li>Table format:
-            <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175"/></a>
+            <a href="images/TableSelector.png"><img src="images/TableSelector.png" align="right" height="119" width="175" alt="table selector"></a>
 <pre style="font-family: monospace;">
 
         import jmri.jmrit.picker.*;

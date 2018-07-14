@@ -1372,7 +1372,7 @@ public class Track {
                 }
             }
             // None of the trains servicing this track can pick up car type ({0})
-            status = MessageFormat.format(Bundle.getMessage("ErrorNoTrain"), new Object[]{carType});
+            status = MessageFormat.format(Bundle.getMessage("ErrorNoTrain"), new Object[]{getName(), carType});
             break;
         }
         return status;

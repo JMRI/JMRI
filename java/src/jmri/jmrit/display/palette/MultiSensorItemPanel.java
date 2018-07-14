@@ -283,7 +283,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             log.debug("clearSelection()");
             for (int i = 0; i < _positions.length; i++) {
                 if (_positions[i] >= 0) {
-                    _tableModel.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
+                    _table.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
                     super.setSelectionInterval(_positions[i], _positions[i]);
                     super.clearSelection();
                     _positions[i] = -1;
@@ -310,7 +310,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             if (log.isDebugEnabled()) {
                 log.debug("setSelectionInterval({}, {})", row, index1);
             }
-            NamedBean bean = _tableModel.getBeanAt(row);
+            NamedBean bean = _tableModel.getBySystemName((String) _table.getValueAt(row, 0));
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position != null && position.length() > 0) {
                 JOptionPane.showMessageDialog(_paletteFrame,
@@ -318,7 +318,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                                 new Object[]{bean.getDisplayName(), position}),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                _tableModel.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
+                _table.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
                 _positions[_nextPosition] = row;
                 _nextPosition++;
@@ -407,7 +407,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 }
                 return  sb.toString();
             }
-                
+
             return null;
         }
     }

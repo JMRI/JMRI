@@ -2,6 +2,8 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+import jmri.JmriException;
+import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,32 +15,74 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class RaspberryPiSensorTest {
+public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
+    @Override
     @Test
-    public void testCTor() {
-        RaspberryPiSensor t = new RaspberryPiSensor("PiS1");
-        Assert.assertNotNull("exists",t);
+    public void testCreate() {
+        // RaspberryPi Sensors always have a known state
+        Assert.assertEquals("initial state 1", Sensor.ACTIVE, t.getState());
+        Assert.assertEquals("initial state 2", "Active", t.describeState(t.getState()));
+    }
+
+    @Override
+    @Test
+    public void testDebounce() throws JmriException {
+        t.setSensorDebounceGoingActiveTimer(81L);
+        Assert.assertEquals("timer", 81L, t.getSensorDebounceGoingActiveTimer());
+
+        t.setSensorDebounceGoingInActiveTimer(31L);
+        Assert.assertEquals("timer", 31L, t.getSensorDebounceGoingInActiveTimer());
+
+        Assert.assertEquals("initial state", Sensor.ACTIVE, t.getState());
+        t.setOwnState(Sensor.INACTIVE); // next is considered to run immediately, before debounce
+        Assert.assertEquals("post-set state", Sensor.ACTIVE, t.getState());
+        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
+        Assert.assertEquals("2nd state", Sensor.INACTIVE, t.getState());
+
+	t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
+        Assert.assertEquals("post-set state", Sensor.INACTIVE, t.getState());
+        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
+        Assert.assertEquals("Final state", Sensor.ACTIVE, t.getState());
+    }
+
+    @Override
+    @Test
+    @Ignore("Base class test does not function correctly for RaspberryPi Sensors")
+    public void testAddListener() throws JmriException {
     }
 
     @Test
-    @Ignore("need to reset the provider")
-    public void testGetPullState() {
-        RaspberryPiSensor t = new RaspberryPiSensor("PiS1");
+    public void testGetPullResistance(){
         Assert.assertEquals("default pull state",jmri.Sensor.PullResistance.PULL_DOWN,t.getPullResistance());
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        t = new RaspberryPiSensor("PiS1");
     }
 
+    @Override
     @After
     public void tearDown() {
+	t.dispose();
         JUnitUtil.tearDown();
     }
 

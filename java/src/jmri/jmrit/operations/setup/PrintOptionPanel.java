@@ -25,7 +25,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
-import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -209,7 +209,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutPickupColor")));
         pickupColorChooser = new JColorChooser(Setup.getPickupColor());
-        AbstractColorChooserPanel pickupColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel pickupColorPanels[] = { new SplitButtonColorChooserPanel()};
         pickupColorChooser.setChooserPanels(pickupColorPanels);
         pickupColorChooser.setPreviewPanel(new JPanel());
         pPickupColor.add(pickupColorChooser);
@@ -217,7 +217,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         JPanel pDropColor = new JPanel();
         pDropColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDropColor")));
         dropColorChooser = new JColorChooser(Setup.getDropColor());
-        AbstractColorChooserPanel dropColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel dropColorPanels[] = { new SplitButtonColorChooserPanel()};
         dropColorChooser.setChooserPanels(dropColorPanels);
         dropColorChooser.setPreviewPanel(new JPanel());
         pDropColor.add(dropColorChooser);
@@ -226,7 +226,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutLocalColor")));
         localColorChooser = new JColorChooser(Setup.getLocalColor());
-        AbstractColorChooserPanel localColorPanels[] = { new ButtonSwatchColorChooserPanel()};
+        AbstractColorChooserPanel localColorPanels[] = { new SplitButtonColorChooserPanel()};
         localColorChooser.setChooserPanels(localColorPanels);
         localColorChooser.setPreviewPanel(new JPanel());
         pLocalColor.add(localColorChooser);

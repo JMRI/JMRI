@@ -1773,15 +1773,18 @@ public class Train implements java.beans.PropertyChangeListener {
                                 if (debugFlag) {
                                     log.debug("option send cars to terminal is enabled");
                                 }
-                                if (addToReport) {
+                                // check to see if local move allowed
+                                if (!isAllowLocalMovesEnabled() ||
+                                        isAllowLocalMovesEnabled() &&
+                                                !TrainCommon.splitString(car.getLocationName()).equals(
+                                                        TrainCommon.splitString(car.getDestinationName())))
+                                    if (addToReport) {
                                     TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
                                             .getMessage("trainCanNotCarryCarOption"), new Object[]{getName(),
                                         car.toString(), car.getLocationName(), car.getTrackName(),
                                         car.getDestinationName(), car.getDestinationTrackName()}));
+                                    continue;
                                 }
-
-                                continue;
-
                             }
                             // allow car to return to staging?
                             if (isAllowReturnToStagingEnabled()

@@ -715,8 +715,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     /**
-     * Makes a copy of an existing train. Only the train's description isn't
-     * copied.
+     * Makes a copy of an existing train.
      *
      * @param train     the train to copy
      * @param trainName the name of the new train

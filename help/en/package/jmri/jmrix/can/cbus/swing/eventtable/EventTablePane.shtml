@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI CBUS help support event table tool">
-  <title>JMRI: CBUS Event Table</title><!-- Style -->
+  <meta name="keywords" content="JMRI MERGCBUS help support event table tool">
+  <title>JMRI: MERGCBUS Event Table</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,12 +22,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: CBUS Event Table</h1><a href=
+      <h1>JMRI: MERGCBUS Event Table</h1><a href=
       "../../../../../../../html/hardware/can/images/CbusEventTable.png"><img src="../../../../../../../html/hardware/can/images/CbusEventTable.png"
       width="476" height="165" alt="Event Table Screen" align=
       "right"></a>
 
-      <p>The CBUS Event Table displays event information received on your <a href=
+      <p>The MERGCBUS Event Table displays event information received on your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       connection.</p>
 
@@ -57,7 +57,7 @@
       Console</a> can help you figure out what events are happening
       on your layout.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERGCBUS Help page</a>.</p>
         
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

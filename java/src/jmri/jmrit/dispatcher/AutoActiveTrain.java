@@ -72,7 +72,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public static final int NORMAL_SPEED = 0x06;     // Varies with road and location
     public static final int MAXIMUM_SPEED = 0x07;     // "full" throttle
 
-    private Float[] _speedRatio = {-1.0F, 0.0F, 0.25F, 0.35F, 0.50F, 0.65F, 0.8F, 1.15F};
+    private final Float[] _speedRatio = {-1.0F, 0.0F, 0.25F, 0.35F, 0.50F, 0.65F, 0.8F, 1.15F};
 
     /* The ramp rates below are in addition to what the decoder itself does
      */
@@ -226,6 +226,22 @@ public class AutoActiveTrain implements ThrottleListener {
         _stopBySpeedProfileAdjust = adjust;
     }
 
+    public String getCurrentSignal() {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            return  (_controllingSignal == null  ) ? "" : _controllingSignal.getSystemName() ;
+        } else {
+            return (_controllingSignalMast == null  ) ? "" : _controllingSignalMast.getSystemName();
+        }
+    }
+
+    public String getCurrentSignalUserName() {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            return  ( _controllingSignal == null || _controllingSignal.getUserName() == null) ? "" : _controllingSignal.getUserName();
+        } else {
+            return ( _controllingSignal == null || _controllingSignalMast.getUserName() == null) ? "" : _controllingSignalMast.getUserName();
+        }
+    }
+
     RosterEntry re = null;
     boolean useSpeedProfile = false;
 
@@ -333,7 +349,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     // more operational variables
-    private ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<>();
+    private final ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<>();
     private jmri.jmrit.display.layoutEditor.LayoutBlockManager _lbManager = null;
     private AllocatedSection _lastAllocatedSection = null;
 
