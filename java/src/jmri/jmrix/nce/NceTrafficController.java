@@ -55,7 +55,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * CommandStation implementation
      */
     @Override
-    public void sendPacket(byte[] packet, int count) {
+    public boolean sendPacket(byte[] packet, int count) {
         NceMessage m;
 
         boolean isUsb = ((getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
@@ -87,8 +87,12 @@ public class NceTrafficController extends AbstractMRTrafficController implements
             m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
         } else {
             m = NceMessage.sendPacketMessage(this, packet);
+            if (m == null) {
+                return false;
+            }
         }
         this.sendNceMessage(m, null);
+        return true;
     }
 
     /**
