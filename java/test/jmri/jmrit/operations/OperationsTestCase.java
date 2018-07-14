@@ -31,6 +31,7 @@ public class OperationsTestCase extends TestCase {
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager();
+        
         JUnitOperationsUtil.resetOperationsManager();
     }
 

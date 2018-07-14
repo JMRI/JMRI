@@ -313,7 +313,7 @@ This has the nice property that if multiple things arise, they can definitely be
 The following will take several minutes, so be patient:
 
 ```
-ant realclean compile
+ant clean compile
 cd target
 rm -f properties.4.11.9.zip
 
