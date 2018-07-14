@@ -25,6 +25,8 @@ public class ConfigToolPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        title = "Config Tool";
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
     }
 
     @After
