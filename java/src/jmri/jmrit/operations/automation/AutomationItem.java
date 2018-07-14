@@ -72,6 +72,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     protected RouteLocation _routeLocation = null;
     protected String _automationIdToRun = NONE;
     protected String _gotoAutomationItemId = NONE; // the goto automationItem
+    protected boolean _gotoAutomationBranched = false;
     protected String _trainScheduleId = NONE;
 
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
@@ -250,6 +251,14 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         return null;
     }
+    
+    public void setGotoBranched(boolean branched) {
+        _gotoAutomationBranched = branched;
+    }
+    
+    public boolean isGotoBranched() {
+        return _gotoAutomationBranched;
+    }
 
     public void setTrainSchedule(TrainSchedule trainSchedule) {
         String old = _trainScheduleId;
@@ -355,7 +364,12 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
         else
             return "unknown"; // NOI18N
-
+    }
+    
+    public void reset() {
+        setActionRan(false);
+        setActionSuccessful(false);
+        setGotoBranched(false);
     }
 
     /**
@@ -381,7 +395,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * @return list of automation actions
      */
     public List<Action> getActionList() {
-        List<Action> list = new ArrayList<Action>();
+        List<Action> list = new ArrayList<>();
         list.add(new NoAction());
         list.add(new BuildTrainAction());
         list.add(new BuildTrainIfSelectedAction());
@@ -468,6 +482,9 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             // in the process of loading automations, so we can't get them now, save id and get later.
             _gotoAutomationItemId = a.getValue();
         }
+        if ((a = e.getAttribute(Xml.GOTO_AUTOMATION_BRANCHED)) != null) {
+            _gotoAutomationBranched = a.getValue().equals(Xml.TRUE);
+        }
         if ((a = e.getAttribute(Xml.TRAIN_SCHEDULE_ID)) != null) {
             _trainScheduleId = a.getValue();
         }
@@ -510,6 +527,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         if (getGotoAutomationItem() != null) {
             e.setAttribute(Xml.GOTO_AUTOMATION_ID, getGotoAutomationItem().getId());
+            e.setAttribute(Xml.GOTO_AUTOMATION_BRANCHED, isGotoBranched() ? Xml.TRUE : Xml.FALSE);
         }
         if (getTrainSchedule() != null) {
             e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getTrainSchedule().getId());
