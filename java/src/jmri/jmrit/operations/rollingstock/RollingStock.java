@@ -68,6 +68,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected Location _whereLastSeen = null; // location reported by tag reader
     protected Date _whenLastSeen = null; // date reported by tag reader
 
+    protected String _ImagePath = NONE;
+
     public static final String LOCATION_UNKNOWN = "0";
 
     protected int number = 0; // used by rolling stock manager for sort by number
@@ -390,6 +392,18 @@ public class RollingStock implements java.beans.PropertyChangeListener {
             return _trackLocation.getId();
         }
         return NONE;
+    }
+
+    public void setImagePath(String imagePath) {
+        String oldImagePath = _ImagePath;
+        _ImagePath = imagePath;
+        if (!oldImagePath.contentEquals(imagePath)) {
+            setDirtyAndFirePropertyChange("car hazardous", oldImagePath, imagePath); // NOI18N
+        }
+    }
+
+    public String getImagePath() {
+        return _ImagePath;
     }
 
     /**
@@ -1282,7 +1296,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.LAST_LOCATION_ID)) != null) {
             _lastLocationId = a.getValue();
         }
-        if ((a = if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
+        if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
             setTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue()));
         } else if ((a = e.getAttribute(Xml.TRAIN)) != null) {
             setTrain(InstanceManager.getDefault(TrainManager.class).getTrainByName(a.getValue()));
@@ -1324,6 +1338,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
             _blocking = Integer.parseInt(a.getValue());
+        }
+        if ((a = e.getAttribute(Xml.IMAGE_PATH)) != null) {
+            _ImagePath = a.getValue();
         }
         // check for rolling stock without a track assignment
         if (getLocation() != null && getTrack() == null && getTrain() == null) {
@@ -1416,6 +1433,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (!getComment().equals(NONE)) {
             e.setAttribute(Xml.COMMENT, getComment());
+        }
+        if (!getImagePath().equals(NONE)) {
+            e.setAttribute(Xml.IMAGE_PATH, getImagePath());
         }
         return e;
     }
