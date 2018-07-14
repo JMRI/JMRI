@@ -1282,7 +1282,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.LAST_LOCATION_ID)) != null) {
             _lastLocationId = a.getValue();
         }
-        if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
+        if ((a = if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
             setTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue()));
         } else if ((a = e.getAttribute(Xml.TRAIN)) != null) {
             setTrain(InstanceManager.getDefault(TrainManager.class).getTrainByName(a.getValue()));

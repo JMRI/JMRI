@@ -2,6 +2,9 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.MediaTracker;
+import java.awt.Point;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -399,6 +402,17 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
 
+        _table.setDropTarget(new DropTarget(){
+            @Override
+            public synchronized void drop(DropTargetDropEvent dtde) {
+                Point point = dtde.getLocation();
+                int column = _table.columnAtPoint(point);
+                int row = _table.rowAtPoint(point);
+                // handle drop inside current table
+                super.drop(dtde);
+            }
+        });
+
         // Install the button handlers
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(SET_COLUMN).setCellRenderer(buttonRenderer);
@@ -538,6 +552,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case WAIT_COLUMN:
             case VALUE_COLUMN:
             case RFID_COLUMN:
+            case PICTURE_COLUMN:
                 return true;
             default:
                 return false;
@@ -643,13 +658,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
             case PICTURE_COLUMN:
-                ImageIcon    icon = new ImageIcon("/home/sg/JMRI-Files/JMRI-Pictures/CN1026-GMD.gif", "Hello");
+                if (!car.getImagePath().contentEquals("")) {
+                ImageIcon    icon = new ImageIcon(car.getImagePath(), "");
                     icon.setImage(icon.getImage().getScaledInstance(-1, 20, java.awt.Image.SCALE_FAST));
                     if (icon.getImageLoadStatus() != MediaTracker.COMPLETE ) {
-                        log.info("AHHH");
+                        log.info("AHHH[{}]",car.getImagePath());
                     }
                 return icon;
-
+                } else {
+                    return "";
+                }
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -720,6 +738,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 } catch (NumberFormatException e) {
                     log.error("wait count must be a number");
                 }
+                break;
+            case PICTURE_COLUMN:
+                String path = value.toString().substring(7).trim();
+                car.setImagePath(path);
                 break;
             case LAST_COLUMN:
                 // do nothing

@@ -46,6 +46,7 @@ public class Car extends RollingStock {
     protected String _previousScheduleId = NONE; // previous schedule id (for train resets)
     protected String _pickupScheduleId = NONE;
     protected String _nextPickupScheduleId = NONE; // when the car needs to be pulled
+    protected String _ImagePath = NONE;
 
     public static final String EXTENSION_REGEX = " ";
     public static final String CABOOSE_EXTENSION = Bundle.getMessage("(C)");
@@ -86,10 +87,23 @@ public class Car extends RollingStock {
         car.setOwner(getOwner());
         car.setRoadName(getRoadName());
         car.setTypeName(getTypeName());
+        car.setImagePath(getImagePath());
         car.loaded = true;
         return car;
     }
 
+    public void setImagePath(String imagePath) {
+        String oldImagePath = _ImagePath;
+        _ImagePath = imagePath;
+        if (!oldImagePath.contentEquals(imagePath)) {
+            setDirtyAndFirePropertyChange("car hazardous", oldImagePath , imagePath ); // NOI18N
+        }
+    }
+    
+    public String getImagePath() {
+        return _ImagePath;
+    }
+    
     public void setHazardous(boolean hazardous) {
         boolean old = _hazardous;
         _hazardous = hazardous;
