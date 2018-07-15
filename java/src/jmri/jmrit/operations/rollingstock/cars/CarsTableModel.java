@@ -3,10 +3,16 @@ package jmri.jmrit.operations.rollingstock.cars;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.MediaTracker;
 import java.awt.Point;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.FileUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -402,14 +409,45 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
 
-        _table.setDropTarget(new DropTarget(){
+        // Setup picture column for dropping 
+        _table.setDropTarget(new DropTarget() {
             @Override
             public synchronized void drop(DropTargetDropEvent dtde) {
                 Point point = dtde.getLocation();
                 int column = _table.columnAtPoint(point);
                 int row = _table.rowAtPoint(point);
-                // handle drop inside current table
-                super.drop(dtde);
+                if (column == PICTURE_COLUMN) {
+                    try {
+                        //get the Point where the drop occurred
+                        Point loc = dtde.getLocation();
+                        //get Transfer data
+                        dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+                        Transferable t = dtde.getTransferable();
+                        //get the Data flavors transferred with the Transferable
+                        DataFlavor[] d = t.getTransferDataFlavors();
+                        String imageFullPath = null;
+                        for (DataFlavor item : d) {
+                            log.info(item.getHumanPresentableName());
+                            if (item.equals(DataFlavor.javaFileListFlavor)) {
+                                List l = (List) t.getTransferData(DataFlavor.javaFileListFlavor);
+                                if (l.size() == 1) {
+                                    imageFullPath = ((File) l.get(0)).getCanonicalPath();
+                                }
+                            }
+                        }
+                        if (imageFullPath != null) {
+                            carList.get(row).setImagePath(imageFullPath);
+                        }
+                    } catch (UnsupportedFlavorException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    } catch (Exception ex) {
+                        log.info("Exception in drop", ex);
+                    } finally {
+                        dtde.dropComplete(true);
+                    }
+                }
             }
         });
 
@@ -517,7 +555,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit"); // titles above all columns
             case PICTURE_COLUMN:
-                return "Picture";
+                return Bundle.getMessage("CarImage");
             default:
                 return "unknown"; // NOI18N
         }
@@ -552,7 +590,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case WAIT_COLUMN:
             case VALUE_COLUMN:
             case RFID_COLUMN:
-            case PICTURE_COLUMN:
+            //case PICTURE_COLUMN:
                 return true;
             default:
                 return false;
@@ -659,12 +697,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("ButtonEdit");
             case PICTURE_COLUMN:
                 if (!car.getImagePath().contentEquals("")) {
-                ImageIcon    icon = new ImageIcon(car.getImagePath(), "");
-                    icon.setImage(icon.getImage().getScaledInstance(-1, 20, java.awt.Image.SCALE_FAST));
-                    if (icon.getImageLoadStatus() != MediaTracker.COMPLETE ) {
-                        log.info("AHHH[{}]",car.getImagePath());
+                    ImageIcon icon = new ImageIcon(FileUtil.getAbsoluteFilename(car.getImagePath()), "");
+                    icon.setImage(icon.getImage().getScaledInstance(-1, 200, java.awt.Image.SCALE_FAST));
+                    if (icon.getImageLoadStatus() != MediaTracker.COMPLETE) {
+                        log.info("Error loading car imagefile[{}]", car.getImagePath());
                     }
-                return icon;
+                    return icon;
                 } else {
                     return "";
                 }
@@ -740,7 +778,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 }
                 break;
             case PICTURE_COLUMN:
-                String path = value.toString().substring(7).trim();
+                String path = "";
+                if (value != null) {
+                    path =  FileUtil.getPortableFilename(value.toString());
+                }
                 car.setImagePath(path);
                 break;
             case LAST_COLUMN:

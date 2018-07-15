@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -9,6 +10,7 @@ import java.text.ParseException;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -27,6 +29,9 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.roster.LocoFile;
+import jmri.util.FileUtil;
+import jmri.util.swing.EditableResizableImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,6 +99,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     JComboBox<String> kernelComboBox = carManager.getKernelComboBox();
     JComboBox<IdTag> rfidComboBox = new JComboBox<>();
 
+    EditableResizableImagePanel carImage = new EditableResizableImagePanel();
+    
     // panels
     JPanel pBlocking = new JPanel();
 
@@ -308,6 +315,16 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         addItem(pComment, commentTextField, 1, 0);
         pOptional.add(pComment);
 
+        // row 24
+        JPanel pImage = new JPanel();
+        carImage = new EditableResizableImagePanel(null, 320, 240);
+        carImage.setDropFolder(LocoFile.getFileLocation());
+        carImage.setBorder(BorderFactory.createLineBorder(Color.blue));
+        pImage.setLayout(new GridBagLayout());
+        pImage.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CarImage")));
+        pImage.add(carImage);
+        pOptional.add(pImage);
+
         // button panel
         JPanel pButtons = new JPanel();
         pButtons.setLayout(new GridBagLayout());
@@ -445,6 +462,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         kernelComboBox.setSelectedItem(car.getKernelName());
 
         commentTextField.setText(car.getComment());
+        
+        carImage.setImagePath(car.getImagePath());
+        
         valueTextField.setText(car.getValue());
         rfidComboBox.setSelectedItem(car.getIdTag());
         autoTrackCheckBox.setEnabled(true);
@@ -811,6 +831,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             }
         }
         _car.setComment(commentTextField.getText());
+        _car.setImagePath(FileUtil.getPortableFilename(carImage.getImagePath()));
         _car.setValue(valueTextField.getText());
         // save the IdTag for this car
         IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
