@@ -313,7 +313,7 @@ This has the nice property that if multiple things arise, they can definitely be
 The following will take several minutes, so be patient:
 
 ```
-ant realclean compile
+ant clean compile
 cd target
 rm -f properties.4.11.9.zip
 
@@ -671,47 +671,6 @@ github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.11.9 -n "JMRI.4.1
 (It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )
     
 
-
-================================================================================
-================================================================================
-## Old section on "Release Files on SourceForge"
-
-This step uploads the Linux, Mac OS X and Windows files to the SourceForge file distribution system. In the process, it generates checksums and some useful text for announcements.  
-
-(replace "user" below with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
-
- - (The "./testrelease 4.11.9" local script on shell.sf.net does the following steps, except for the edit, of course)
-```
-    ssh user,jmri@shell.sf.net create
-    ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.11.9/ws/dist/release/*zip*/release.zip"
-        (use the following instead if building on second Jenkins server)
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.9/ws/dist/release/*zip*/release.zip"
-    rm release/JMRI*
-    unzip release.zip
-    cd release
-    sha256sum JMRI*   (use 'shasum -a 256' on shell.sf.net)
-        (add the calculated hashes for each file to the release note; if a prod release, also on on the direct link on index.html)
-    scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
-        (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
-        (for production release, use ".../production\ files/")
-    
-    (clean up and logout)
-```
-
-- Create and upload the Javadocs (As of May 2016, the [Jenkins server](http://builds.jmri.org/jenkins/job/WebSite/job/generate-website/) was updating these from git weekly, in which case just start a run of that Jenkins job. Note that if you're doing this locally, it this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
-```
-    ant javadoc-uml uploadjavadoc
-```
-
-- Create and upload the XSLT'd decoder pages
-```
-    (cd xml/XSLT; ant xslt upload)
-```
-
-   Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
-
-- Wait until the downloads have propagated to the SourceForge mirrors; check by trying to download each file
 
 ================================================================================
 ================================================================================
