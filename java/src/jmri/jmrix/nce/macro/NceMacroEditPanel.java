@@ -76,8 +76,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private int macroNum = 0;      // macro being worked
     private int replyLen = 0;      // expected byte length
     private int waiting = 0;      // to catch responses not intended for this module
-    private static final int firstTimeSleep = 3000;  // delay first operation to let panel build
-    private boolean firstTime = true; // wait for panel to display
+//    private static final int firstTimeSleep = 3000;  // delay first operation to let panel build
+//    private final boolean firstTime = true; // wait for panel to display
 
     private static final String QUESTION = Bundle.getMessage("Add");// The three possible states for a turnout
     private static final String CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
@@ -122,11 +122,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     JTextField macroTextField = new JTextField(4);
 
     // for padding out panel
-    JLabel space1 = new JLabel("                          ");
     JLabel space2 = new JLabel("                          ");
     JLabel space3 = new JLabel("                          ");
     JLabel space4 = new JLabel("                          ");
-    JLabel space5 = new JLabel("                          ");
     JLabel space15 = new JLabel(" ");
 
     // accessory row 1
@@ -304,63 +302,50 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         addItem(checkBoxNce, 4, 2);
 
         // row 3 padding for looks
-        //addItem(space1, 0,3);
         addItem(space2, 1, 3);
         addItem(space3, 2, 3);
         addItem(space4, 3, 3);
-  //addItem(space5, 4,3);
 
         // row 4 RFU
         int rNum = 5;
         // row 5 accessory 1
-        addAccyRow(num1, textAccy1, accyTextField1, cmdButton1, deleteButton1, rNum);
-        rNum++;
+        addAccyRow(num1, textAccy1, accyTextField1, cmdButton1, deleteButton1, rNum++);
 
         // row 6 accessory 2
-        addAccyRow(num2, textAccy2, accyTextField2, cmdButton2, deleteButton2, rNum);
-        rNum++;
+        addAccyRow(num2, textAccy2, accyTextField2, cmdButton2, deleteButton2, rNum++);
 
         // row 7 accessory 3
-        addAccyRow(num3, textAccy3, accyTextField3, cmdButton3, deleteButton3, rNum);
-        rNum++;
+        addAccyRow(num3, textAccy3, accyTextField3, cmdButton3, deleteButton3, rNum++);
 
         // row 8 accessory 4
-        addAccyRow(num4, textAccy4, accyTextField4, cmdButton4, deleteButton4, rNum);
-        rNum++;
+        addAccyRow(num4, textAccy4, accyTextField4, cmdButton4, deleteButton4, rNum++);
 
         // row 9 accessory 5
-        addAccyRow(num5, textAccy5, accyTextField5, cmdButton5, deleteButton5, rNum);
-        rNum++;
+        addAccyRow(num5, textAccy5, accyTextField5, cmdButton5, deleteButton5, rNum++);
 
         // row 10 accessory 6
-        addAccyRow(num6, textAccy6, accyTextField6, cmdButton6, deleteButton6, rNum);
-        rNum++;
+        addAccyRow(num6, textAccy6, accyTextField6, cmdButton6, deleteButton6, rNum++);
 
         // row 11 accessory 7
-        addAccyRow(num7, textAccy7, accyTextField7, cmdButton7, deleteButton7, rNum);
-        rNum++;
+        addAccyRow(num7, textAccy7, accyTextField7, cmdButton7, deleteButton7, rNum++);
 
         if (!isUsb) {
             // row 12 accessory 8
-            addAccyRow(num8, textAccy8, accyTextField8, cmdButton8, deleteButton8, rNum);
-            rNum++;
+            addAccyRow(num8, textAccy8, accyTextField8, cmdButton8, deleteButton8, rNum++);
 
             // row 13 accessory 9
-            addAccyRow(num9, textAccy9, accyTextField9, cmdButton9, deleteButton9, rNum);
-            rNum++;
+            addAccyRow(num9, textAccy9, accyTextField9, cmdButton9, deleteButton9, rNum++);
         }
 
         // row 14 accessory 10
         if (isUsb) {
-            addAccyRow(num8, textAccy10, accyTextField10, cmdButton10, deleteButton10, rNum);
+            addAccyRow(num8, textAccy10, accyTextField10, cmdButton10, deleteButton10, rNum++);
         } else {
-            addAccyRow(num10, textAccy10, accyTextField10, cmdButton10, deleteButton10, rNum);
+            addAccyRow(num10, textAccy10, accyTextField10, cmdButton10, deleteButton10, rNum++);
         }
-        rNum++;
 
         // row 15 padding for looks
-        addItem(space15, 2, rNum);
-        rNum++;
+        addItem(space15, 2, rNum++);
 
         // row 16
         addItem(saveButton, 2, rNum);
@@ -370,7 +355,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         addItem(backUpButton, 3, rNum);
         addItem(restoreButton, 4, rNum);
-        rNum++;
 
         // setup buttons
         addButtonAction(previousButton);
@@ -425,7 +409,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             boolean status = saveMacro();
             if (status) // was save successful?
             {
-                setSaveButton(false); // yes, clear save button
+                setSaveButton(false); // yes, disable save button
             }
             return;
         }
@@ -624,15 +608,15 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private int getMacro() {
         // Set all fields to default and build from there
         initAccyFields();
-        if (firstTime) {
-            try {
-                Thread.sleep(firstTimeSleep); // wait for panel to display
-            } catch (InterruptedException e) {
-                log.error("Thread unexpectedly interrupted", e);
-            }
-        }
-
-        firstTime = false;
+//        if (firstTime) {
+//            try {
+//                Thread.sleep(firstTimeSleep); // wait for panel to display
+//            } catch (InterruptedException e) {
+//                log.error("Thread unexpectedly interrupted", e);
+//            }
+//        }
+//
+//        firstTime = false;
         String m = macroTextField.getText();
         if (m.isEmpty()) {
             m = "0";
@@ -673,15 +657,15 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      *
      */
     private boolean saveMacro() {
-        if (firstTime) {
-            try {
-                Thread.sleep(firstTimeSleep); // wait for panel to display
-            } catch (InterruptedException e) {
-                log.error("Thread unexpectedly interrupted", e);
-            }
-        }
-
-        firstTime = false;
+//        if (firstTime) {
+//            try {
+//                Thread.sleep(firstTimeSleep); // wait for panel to display
+//            } catch (InterruptedException e) {
+//                log.error("Thread unexpectedly interrupted", e);
+//            }
+//        }
+//
+//        firstTime = false;
         byte[] macroAccy = new byte[macroSize];   // NCE Macro data
         int index = 0;
         int accyNum = 0;
@@ -767,6 +751,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private void processMemory(boolean doRead, boolean doWrite, int macroId, byte[] macroArray) {
         final byte[] macroData = new byte[macroSize];
         macroValid = false;
+        readRequested = false;
+        writeRequested = false;
+        
         if (doRead) {
             readRequested = true;
         }
@@ -776,6 +763,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 macroData[i] = macroArray[i];
             }
         }
+        
         // Set up a separate thread to access CS memory
         if (nceMemoryThread != null && nceMemoryThread.isAlive()) {
             return; // thread is already running
@@ -1138,11 +1126,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             int lowerByteH = (((accyNum ^ 0x0700) & 0x0700) >> 4);// 3 MSB 1s complement
             int lowerByteL = ((accyNum & 0x3) << 1);        // 2 LSB
             int lowerByte = (lowerByteH + lowerByteL + 0x88);
-            if (cmdButton.getText().equals(CLOSED)) // adjust for turnout command
-            {
-                lowerByte++;
-            }
-            if (cmdButton.getText().equals(CLOSED_NCE)) // adjust for turnout command
+            // adjust for turnout command
+            if (cmdButton.getText().equals(CLOSED) || cmdButton.getText().equals(CLOSED_NCE))
             {
                 lowerByte++;
             }
@@ -1526,24 +1511,26 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     // Write N bytes of NCE memory
-    private void writeSerialMemoryN(int nceMacroAddr, byte[] x, int len) {
+    private void writeSerialMemoryN(int nceMacroAddr, byte[] b, int len) {
         replyLen = NceMessage.REPLY_1;   // Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryWriteN(nceMacroAddr, len);
-        for (int i = 0; i < len; i++) {
-            bl[3 + i] = x[i];
+        int j = bl.length - NceBinaryCommand.BUFFER_SIZE_16;
+        for (int i = 0; i < len; i++, j++) {
+            bl[j] = b[i];
         }
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
 
     // Write 4 bytes of NCE memory
-    private void writeSerialMemory4(int nceMacroAddr, byte[] x) {
+    private void writeSerialMemory4(int nceMacroAddr, byte[] b) {
         replyLen = NceMessage.REPLY_1;   // Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryWrite4(nceMacroAddr);
-        for (int i = 0; i < 4; i++) {
-            bl[3 + i] = x[i];
+        int j = bl.length - NceBinaryCommand.BUFFER_SIZE_4;
+        for (int i = 0; i < NceBinaryCommand.BUFFER_SIZE_4; i++, j++) {
+            bl[j] = b[i];
         }
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);

@@ -230,12 +230,13 @@ public class NceBinaryCommand {
 
     }
 
+    public final static int BUFFER_SIZE_16 = 16;
     public static byte[] accMemoryWriteN(int address, int num) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[4 + 16];
+        byte[] retVal = new byte[4 + BUFFER_SIZE_16];
         retVal[0] = (byte) (WRITE_N_CMD); // write n bytes command
         retVal[1] = (byte) (addr_h);      // high address
         retVal[2] = (byte) (addr_l);      // low address
@@ -245,26 +246,27 @@ public class NceBinaryCommand {
 
     }
 
+    public final static int BUFFER_SIZE_8 = 8;
     public static byte[] accMemoryWrite8(int address) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[3 + 8];
+        byte[] retVal = new byte[3 + BUFFER_SIZE_8];
         retVal[0] = (byte) (WRITE8_CMD); // write 8 bytes command
         retVal[1] = (byte) (addr_h);     // high address
         retVal[2] = (byte) (addr_l);     // low address
 
         return retVal;
-
     }
 
+    public final static int BUFFER_SIZE_4 = 4;
     public static byte[] accMemoryWrite4(int address) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[3 + 4];
+        byte[] retVal = new byte[3 + BUFFER_SIZE_4];
         retVal[0] = (byte) (WRITE4_CMD); // write 4 bytes command
         retVal[1] = (byte) (addr_h);     // high address
         retVal[2] = (byte) (addr_l);     // low address
