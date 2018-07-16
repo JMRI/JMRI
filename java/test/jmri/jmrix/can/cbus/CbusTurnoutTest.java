@@ -49,35 +49,42 @@ public class CbusTurnoutTest {
         Assert.assertNotNull("exists",t);
     }
     
+    
     @Test
     public void testCTorHexEventTwoByte() {
         CbusTurnout t = new CbusTurnout("MT","X410001;X56FFFF",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
 
+    
     @Test
     public void testCTorHexEventThreeByte() {
         CbusTurnout t = new CbusTurnout("MT","X6000010001;X72FFFFFF",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }    
     
+    
+    
     @Test
     public void testCTorHexEventFourByte() {
         CbusTurnout t = new CbusTurnout("MT","X9000010001;X91FFFFFFFF",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
-    
+
+
     @Test
     public void testCTorHexEventFiveByte() {
         CbusTurnout t = new CbusTurnout("MT","XB00D60010001;XB1FFFAAFFFFF",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
 
+
     @Test
     public void testCTorHexEventSixByte() {
         CbusTurnout t = new CbusTurnout("MT","XD00D0060010001;XD1FFFAAAFFFFFE",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
+    
     
     @Test
     public void testCTorHexEventSevenByte() {

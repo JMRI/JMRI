@@ -156,6 +156,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     
     
+    
     // The minimal setup for log4J
     @Override
     @Before
