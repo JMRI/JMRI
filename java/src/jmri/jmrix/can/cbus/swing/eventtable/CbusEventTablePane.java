@@ -49,7 +49,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     public String getTitle() {
         if (memo != null) {
             return (memo.getUserName() + " " + Bundle.getMessage("MenuItemEventTable"));
-
         }
         return Bundle.getMessage("MenuItemEventTable");
     }
@@ -130,8 +129,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        JMenuItem openItem = new JMenuItem(rb.getString("MenuItemOpen"));
-        fileMenu.add(openItem);
+
+        // Not currently implemented
+        // JMenuItem openItem = new JMenuItem(rb.getString("MenuItemOpen"));
+        // fileMenu.add(openItem);
+
 
         JMenuItem saveItem = new JMenuItem(rb.getString("MenuItemSave"));
         fileMenu.add(saveItem);
