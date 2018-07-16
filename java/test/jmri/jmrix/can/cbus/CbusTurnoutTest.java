@@ -14,14 +14,14 @@ import org.junit.Test;
 public class CbusTurnoutTest {
     
     @Test
-    public void testCTorShortEvent() {
-        CbusTurnout t = new CbusTurnoutSingle("MT","+7",new TrafficControllerScaffold());
+    public void testCTorShortEventSingle() {
+        CbusTurnout t = new CbusTurnout("MT","+7",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
     
     @Test
-    public void testCTorShortEvent() {
-        CbusTurnout t = new CbusTurnoutDouble("MT","+1;-1",new TrafficControllerScaffold());
+    public void testCTorShortEventDouble() {
+        CbusTurnout t = new CbusTurnout("MT","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
     
