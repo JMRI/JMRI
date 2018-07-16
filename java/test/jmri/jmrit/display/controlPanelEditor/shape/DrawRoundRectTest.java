@@ -22,7 +22,9 @@ public class DrawRoundRectTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawRoundRect t = new DrawRoundRect("newShape", "roundRect", null, editor, false);
+        frame.pack();
+        frame.setVisible(true);
+        DrawRoundRect t = new DrawRoundRect("newShape", "roundRect", null, frame, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -31,8 +33,10 @@ public class DrawRoundRectTest {
     public void testCTorEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
+        frame.pack();
+        frame.setVisible(true);
         PositionableRoundRect ps =  new PositionableRoundRect(frame);
-        DrawRoundRect t = new DrawRoundRect("editShape", "roundRect", ps, editor, true);
+        DrawRoundRect t = new DrawRoundRect("editShape", "roundRect", ps, frame, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

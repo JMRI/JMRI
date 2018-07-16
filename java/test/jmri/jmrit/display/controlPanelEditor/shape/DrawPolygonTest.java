@@ -22,7 +22,9 @@ public class DrawPolygonTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawPolygon t = new DrawPolygon("newShape", "Polygon", null, editor, false);
+        frame.pack();
+        frame.setVisible(true);
+        DrawPolygon t = new DrawPolygon("newShape", "Polygon", null, frame, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -31,8 +33,10 @@ public class DrawPolygonTest {
     public void testCTorEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
+        frame.pack();
+        frame.setVisible(true);
         PositionablePolygon ps =  new PositionablePolygon(frame, null);
-        DrawRectangle t = new DrawRoundRect("editShape", "Polygon", ps, editor, true);
+        DrawPolygon t = new DrawPolygon("editShape", "Polygon", ps, frame, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);

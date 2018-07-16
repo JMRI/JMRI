@@ -22,7 +22,9 @@ public class DrawEllipseTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null, editor, false);
+        frame.pack();
+        frame.setVisible(true);
+        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null, frame, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -31,8 +33,10 @@ public class DrawEllipseTest {
     public void testCTorEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
+        frame.pack();
+        frame.setVisible(true);
         PositionableEllipse ps =  new PositionableEllipse(frame);
-        DrawRectangle t = new DrawRoundRect("editShape", "Ellipse", ps, editor, true);
+        DrawEllipse t = new DrawEllipse("editShape", "Ellipse", ps, frame, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
