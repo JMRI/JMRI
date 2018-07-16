@@ -76,10 +76,17 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     
     @Test
-    public void testCTorShortEvent() {
+    public void testCTorShortEventSingle() {
+        CbusSensor t = new CbusSensor("MS","+7",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCTorShortEventDouble() {
         CbusSensor t = new CbusSensor("MS","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
+    
     @Test
     public void testCTorLongEventSingle() {
         CbusSensor t = new CbusSensor("MS","+n654e321",new TrafficControllerScaffold());

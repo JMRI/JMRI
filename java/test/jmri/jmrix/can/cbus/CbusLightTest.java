@@ -14,10 +14,17 @@ import org.junit.Test;
 public class CbusLightTest {
 
     @Test
-    public void testCTorShortEvent() {
+    public void testCTorShortEventSingle() {
+        CbusLight t = new CbusLight("ML","+7",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCTorShortEventDouble() {
         CbusLight t = new CbusLight("ML","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
+    
     @Test
     public void testCTorLongEventSingle() {
         CbusLight t = new CbusLight("ML","+n654e321",new TrafficControllerScaffold());
