@@ -129,19 +129,19 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     Thread nceCabUpdateThread;
 
-    private int[] cabFlag1Array = new int[CAB_MAX_CABDATA];
-    private Calendar[] cabLastChangeArray = new Calendar[CAB_MAX_CABDATA];
-    private int[] cabSpeedArray = new int[CAB_MAX_CABDATA];
-    private int[] cabFlagsArray = new int[CAB_MAX_CABDATA];
-    private int[] cabLocoArray = new int[CAB_MAX_CABDATA];
-    private boolean[] cabLongShortArray = new boolean[CAB_MAX_CABDATA];
-    private int[] cabConsistArray = new int[CAB_MAX_CABDATA];
-    private int[] cabF0Array = new int[CAB_MAX_CABDATA];
-    private int[] cabF5Array = new int[CAB_MAX_CABDATA];
-    private int[] cabF13Array = new int[CAB_MAX_CABDATA];
-    private int[] cabF21Array = new int[CAB_MAX_CABDATA];
-    private int[][] cabLine1Array = new int[CAB_MAX_CABDATA][CAB_LINE_LEN];
-    private int[][] cabLine2Array = new int[CAB_MAX_CABDATA][CAB_LINE_LEN];
+    private final int[] cabFlag1Array = new int[CAB_MAX_CABDATA];
+    private final Calendar[] cabLastChangeArray = new Calendar[CAB_MAX_CABDATA];
+    private final int[] cabSpeedArray = new int[CAB_MAX_CABDATA];
+    private final int[] cabFlagsArray = new int[CAB_MAX_CABDATA];
+    private final int[] cabLocoArray = new int[CAB_MAX_CABDATA];
+    private final boolean[] cabLongShortArray = new boolean[CAB_MAX_CABDATA];
+    private final int[] cabConsistArray = new int[CAB_MAX_CABDATA];
+    private final int[] cabF0Array = new int[CAB_MAX_CABDATA];
+    private final int[] cabF5Array = new int[CAB_MAX_CABDATA];
+    private final int[] cabF13Array = new int[CAB_MAX_CABDATA];
+    private final int[] cabF21Array = new int[CAB_MAX_CABDATA];
+    private final int[][] cabLine1Array = new int[CAB_MAX_CABDATA][CAB_LINE_LEN];
+    private final int[][] cabLine2Array = new int[CAB_MAX_CABDATA][CAB_LINE_LEN];
 
     private boolean purgeRequested = false;
     private boolean updateRequested = false;
@@ -1588,8 +1588,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_1;   // Expect 1 byte response
         waiting++;
-        byte[] bl = NceBinaryCommand.accMemoryWrite1(nceCabAddr);
-        bl[3] = (byte) value;
+        byte[] bl = NceBinaryCommand.accMemoryWrite1(nceCabAddr, (byte) value);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
@@ -1749,7 +1748,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             this.cabData = cabDataPtr;
         }
 
-        private String[] columnNames1LineText = {
+        private final String[] columnNames1LineText = {
             Bundle.getMessage("ColHeaderCabId"),
             Bundle.getMessage("ColHeaderType"),
             Bundle.getMessage("ColHeaderPurge"),

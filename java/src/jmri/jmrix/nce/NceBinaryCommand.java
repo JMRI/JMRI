@@ -230,64 +230,85 @@ public class NceBinaryCommand {
 
     }
 
-    public final static int BUFFER_SIZE_16 = 16;
-    public static byte[] accMemoryWriteN(int address, int num) {
+    private final static int BUFFER_SIZE_16 = 16;
+    public static byte[] accMemoryWriteN(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[4 + BUFFER_SIZE_16];
-        retVal[0] = (byte) (WRITE_N_CMD); // write n bytes command
-        retVal[1] = (byte) (addr_h);      // high address
-        retVal[2] = (byte) (addr_l);      // low address
-        retVal[3] = (byte) num;           // number of bytes to write
+        int j = 0;
+        retVal[j++] = (byte) (WRITE_N_CMD); // write n bytes command
+        retVal[j++] = (byte) (addr_h);      // high address
+        retVal[j++] = (byte) (addr_l);      // low address
+        retVal[j++] = (byte) data.length;   // number of bytes to write
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
 
     }
 
-    public final static int BUFFER_SIZE_8 = 8;
-    public static byte[] accMemoryWrite8(int address) {
+    private final static int BUFFER_SIZE_8 = 8;
+    public static byte[] accMemoryWrite8(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + BUFFER_SIZE_8];
-        retVal[0] = (byte) (WRITE8_CMD); // write 8 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        int j = 0;
+        retVal[j++] = (byte) (WRITE8_CMD); // write 8 bytes command
+        retVal[j++] = (byte) (addr_h);     // high address
+        retVal[j++] = (byte) (addr_l);     // low address
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
     }
 
-    public final static int BUFFER_SIZE_4 = 4;
-    public static byte[] accMemoryWrite4(int address) {
+    private final static int BUFFER_SIZE_4 = 4;
+    public static byte[] accMemoryWrite4(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
         byte[] retVal = new byte[3 + BUFFER_SIZE_4];
-        retVal[0] = (byte) (WRITE4_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        int j = 0;
+        retVal[j++] = (byte) (WRITE4_CMD); // write 4 bytes command
+        retVal[j++] = (byte) (addr_h);     // high address
+        retVal[j++] = (byte) (addr_l);     // low address
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
     }
 
-    public static byte[] accMemoryWrite2(int address) {
+    private final static int BUFFER_SIZE_2 = 2;
+    public static byte[] accMemoryWrite2(int address, byte[] data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
 
-        byte[] retVal = new byte[3 + 2];
-        retVal[0] = (byte) (WRITE2_CMD); // write 4 bytes command
-        retVal[1] = (byte) (addr_h);     // high address
-        retVal[2] = (byte) (addr_l);     // low address
+        byte[] retVal = new byte[3 + BUFFER_SIZE_2];
+        int j = 0;
+        retVal[j++] = (byte) (WRITE2_CMD); // write 4 bytes command
+        retVal[j++] = (byte) (addr_h);     // high address
+        retVal[j++] = (byte) (addr_l);     // low address
+        
+        for (int i = 0; i < data.length; i++, j++) {
+            retVal[j] = data[i];
+        }
 
         return retVal;
     }
 
-    public static byte[] accMemoryWrite1(int address) {
+    public static byte[] accMemoryWrite1(int address, byte data) {
 
         int addr_h = address / 256;
         int addr_l = address & 0xFF;
@@ -296,6 +317,7 @@ public class NceBinaryCommand {
         retVal[0] = (byte) (WRITE1_CMD); // write 4 bytes command
         retVal[1] = (byte) (addr_h);     // high address
         retVal[2] = (byte) (addr_l);     // low address
+        retVal[3] = data;
 
         return retVal;
     }

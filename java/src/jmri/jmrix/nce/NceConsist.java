@@ -262,6 +262,8 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
 
     /**
      * Kills consist using lead loco address
+     * @param address loco address
+     * @param isLong true if long address
      */
     void killConsist(int address, boolean isLong) {
         if (isLong) {
