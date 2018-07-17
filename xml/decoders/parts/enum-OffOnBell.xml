@@ -19,6 +19,7 @@
   </enumChoice>
   <enumChoice choice="On with Bell">
     <choice>On with Bell</choice>
+	<choice xml:lang="da">On med Klokke</choice>
     <choice xml:lang="cs">Zapnout se zazvoněním</choice>
     <choice xml:lang="fr">Allumé avec la cloche</choice>
     <choice xml:lang="it">On con Campana</choice>
