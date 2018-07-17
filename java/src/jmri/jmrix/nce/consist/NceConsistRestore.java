@@ -184,14 +184,8 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
         replyLen = REPLY_1; // Expect 1 byte response
         waiting++;
-        byte[] bl;
 
-        bl = NceBinaryCommand.accMemoryWriteN(curConsist, NceBinaryCommand.BUFFER_SIZE_16);
-        int j = bl.length - NceBinaryCommand.BUFFER_SIZE_16;
-        for (int i = 0; i < NceBinaryCommand.BUFFER_SIZE_16; i++, j++) {
-            bl[j] = b[i];
-        }
-
+        byte[] bl = NceBinaryCommand.accMemoryWriteN(curConsist, b);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         return m;
     }
