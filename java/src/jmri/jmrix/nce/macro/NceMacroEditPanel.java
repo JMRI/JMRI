@@ -72,6 +72,12 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2013
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener {
+    
+    private NceTrafficController tc = null;
+    private int maxNumMacros = CabMemorySerial.CS_MAX_MACRO;
+    private int macroSize = CabMemorySerial.CS_MACRO_SIZE;
+    private int memBase = CabMemorySerial.CS_MACRO_MEM;
+    private boolean isUsb = false;
 
     private int macroNum = 0; // macro being worked
     private int replyLen = 0; // expected byte length
@@ -197,12 +203,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     JButton cmdButton10 = new JButton();
     JButton deleteButton10 = new JButton();
 
-    private NceTrafficController tc = null;
-    private int maxNumMacros = 0;
-    private int macroSize = 0;
-    private int memBase = -1;
-    private boolean isUsb = false;
-
     public NceMacroEditPanel() {
         super();
     }
@@ -248,10 +248,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         this.tc = memo.getNceTrafficController();
-        maxNumMacros = CabMemorySerial.CS_MAX_MACRO;
-        isUsb = false;
-        macroSize = CabMemorySerial.CS_MACRO_SIZE;
-        memBase = CabMemorySerial.CS_MACRO_MEM;
+
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
                 (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
             maxNumMacros = CabMemoryUsb.CS_MAX_MACRO;
@@ -1264,20 +1261,20 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         } else {
-            int nceMacroAddr = (macroNum * macroSize) + memBase;
-            byte[] buf = new byte[macroSize];
-            int i = 0;
-            for (; i < 16; i++) {
+            int nceMemoryAddr = (macroNum * macroSize) + memBase;
+            byte[] buf = new byte[16];            
+            for (int i = 0; i < 16; i++) {
                 buf[i] = b[i];
             }
-            writeSerialMemoryN(nceMacroAddr, buf);
+            writeSerialMemoryN(nceMemoryAddr, buf);
             if (!waitNce()) {
                 return false;
             }
-            for (; i < macroSize; i++) {
-                buf[i] = b[i];
+            buf = new byte[4];
+            for (int i = 0; i < 4; i++) {
+                buf[i] = b[i + 16];
             }
-            writeSerialMemory4(nceMacroAddr + 16, buf);
+            writeSerialMemory4(nceMemoryAddr + 16, buf);
             if (!waitNce()) {
                 return false;
             }
@@ -1413,31 +1410,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             macroReply.setText("error");
             return;
         }
-        // Read one byte
-        if (replyLen == NceMessage.REPLY_1) {
-            // Looking for proper response
-            recChar = r.getElement(0);
-        }
-        // Read two byte
-        if (replyLen == NceMessage.REPLY_2) {
-            // Looking for proper response
-            for (int i = 0; i < NceMessage.REPLY_2; i++) {
-                recChars[i] = r.getElement(i);
-            }
-        }
-        // Read four byte
-        if (replyLen == NceMessage.REPLY_4) {
-            // Looking for proper response
-            for (int i = 0; i < NceMessage.REPLY_4; i++) {
-                recChars[i] = r.getElement(i);
-            }
-        }
-        // Read 16 bytes
-        if (replyLen == NceMessage.REPLY_16) {
-            // Looking for proper response
-            for (int i = 0; i < NceMessage.REPLY_16; i++) {
-                recChars[i] = r.getElement(i);
-            }
+        for (int i = 0; i < replyLen; i++) {
+            recChars[i] = r.getElement(i);
         }
         // wake up thread
         synchronized (this) {
