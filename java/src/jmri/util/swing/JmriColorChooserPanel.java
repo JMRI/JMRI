@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -27,18 +28,23 @@ public class JmriColorChooserPanel extends AbstractColorChooserPanel {
 
     private Color[] colors = {Color.black, Color.darkGray, Color.gray,
        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
-       Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
-    private int numColors = 13; //number of entries in the above array
+       Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan,
+       jmri.util.ColorUtil.BROWN};
+    private int numColors = 14; //number of entries in the above array
     private JPanel recentPanel = new JPanel(new GridBagLayout());
 
     @Override
     public void updateChooser(){
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = java.awt.GridBagConstraints.WEST;
+        recentPanel.removeAll();
+
+        ArrayList<Color> colors = JmriColorChooser.getRecentColors();
+        int cols = Math.max(3, (int) Math.ceil((double)colors.size() / 7));
         int idx = 0;
-        for (Color recent : JmriColorChooser.getRecentColors()) {
-            c.gridx = idx % 2;
-            c.gridy = idx / 2;
+        for (Color recent : colors) {
+            c.gridx = idx % cols;
+            c.gridy = idx / cols;
             recentPanel.add(createColorButton(recent, false), c);
             idx++;
         }
@@ -61,10 +67,12 @@ public class JmriColorChooserPanel extends AbstractColorChooserPanel {
         stdColors.setVisible(true);
 
         recentPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RecentColorLabel")));  // NOI18N
+        ArrayList<Color> colors = JmriColorChooser.getRecentColors();
+        int cols = Math.max(3, (int) Math.ceil((double)colors.size() / 7));
         int idx = 0;
-        for (Color recent : JmriColorChooser.getRecentColors()) {
-            c.gridx = idx % 2;
-            c.gridy = idx / 2;
+        for (Color recent : colors) {
+            c.gridx = idx % cols;
+            c.gridy = idx / cols;
             recentPanel.add(createColorButton(recent, false), c);
             idx++;
         }
@@ -82,24 +90,25 @@ public class JmriColorChooserPanel extends AbstractColorChooserPanel {
      */
     JButton createColorButton(Color color, boolean stdcolor) {
         BufferedImage image = new BufferedImage(40, 15,
-                BufferedImage.TYPE_INT_RGB);
+                BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.getGraphics();
         // fill it with its representative color
-        g.setColor(color);
+        g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()));
         g.fillRect(0, 0, 40, 15);
         // draw a black border around it
         g.setColor(Color.black);
         g.drawRect(0, 0, 40 - 1, 15 - 1);
         ImageIcon icon = new ImageIcon(image);
 
-        String colorName;
+        String colorName = "";
         if (stdcolor) {
             colorName = jmri.util.ColorUtil.colorToLocalizedName(color);
-        } else {
-            colorName = color.toString().substring(14);
         }
+        String colorTip = String.format("r=%d, g=%d, b=%d, a=%d",
+                color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
         JButton colorButton = new JButton(colorName, icon);
+        colorButton.setToolTipText(colorTip);
         colorButton.addActionListener((ActionEvent e) -> {
             getColorSelectionModel().setSelectedColor(color);
         });

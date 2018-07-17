@@ -33,9 +33,11 @@ public class ColorUtil {
     public final static String ColorMagenta = "magenta";
     public final static String ColorCyan = "cyan";
     public final static String ColorClear = "clear";
+    public final static String ColorBrown = "brown";
 
     public final static Color clear = setAlpha(Color.BLACK, 0);
     public final static Color CLEAR = clear;
+    public final static Color BROWN = new Color(102, 51, 0);
 
     /**
      * Handles known colors plus special value for track.
@@ -130,6 +132,8 @@ public class ColorUtil {
                    return Color.magenta;
                case ColorCyan:
                    return Color.cyan;
+               case ColorBrown:
+                   return BROWN;
                case ColorTrack:
                    return null;
                default:
@@ -237,6 +241,8 @@ public class ColorUtil {
             return ColorMagenta;
         } else if (color.equals(Color.cyan)) {
             return ColorCyan;
+        } else if (color.equals(BROWN)) {
+            return ColorBrown;
         }
         return null;
     }
