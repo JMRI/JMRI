@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
  * Order stored: Number, Road, Model, Length, Owner, Built, Location,
- * -, Track, Consist, Moves, Last, Value, HP, Type, Comment, Misc.
+ * -, Track, Consist, Moves, Last, Value, HP, Weight, Type, Comment, Misc.
  *
  * @author Daniel Boudreau Copyright (C) 2010
  *
@@ -125,6 +125,8 @@ public class ExportEngines extends XmlFile {
                 del +
                 Bundle.getMessage("HP") +
                 del +
+                Bundle.getMessage("WeightTons") +
+                del +
                 Bundle.getMessage("Type") +
                 del +
                 Bundle.getMessage("Comment") +
@@ -183,6 +185,8 @@ public class ExportEngines extends XmlFile {
                     value +
                     del +
                     engine.getHp() +
+                    del +
+                    engine.getWeightTons() +
                     del +
                     engine.getTypeName() +
                     del +
