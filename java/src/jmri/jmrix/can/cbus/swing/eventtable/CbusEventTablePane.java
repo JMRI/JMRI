@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a Cbus event table. Menu code copied from BeanTableFrame.
- * <P>
  *
  * @author Andrew Crosland (C) 2009
  * @author Kevin Dickerson (C) 2012
@@ -101,7 +100,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         eventModel.configureTable(eventTable);
 
         // general GUI config
-        //setTitle("CBUS Event table");
+        //setTitle("CBUS Event table"); // TODO I18N
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add file menu items
@@ -115,12 +114,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         //pack();
         //pane1.setMaximumSize(pane1.getSize());
         //pack();
-        self = this;
     }
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.can.cbus.CbusEventTablePane";
+        return "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
     }
 
     @Override
@@ -242,7 +240,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
@@ -255,4 +253,5 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventTablePane.class);
+
 }
