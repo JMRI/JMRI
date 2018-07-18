@@ -17,7 +17,7 @@ import javax.swing.JMenuItem;
  * java colors.
  *
  * @author Paul Bender Copyright (C) 2018
- * @since 4.12.1
+ * @since 4.13.1
  */
 public class ColorListPopupMenu extends JPopupMenu {
 
@@ -26,8 +26,9 @@ public class ColorListPopupMenu extends JPopupMenu {
     // Standard Colors
     private Color[] colorCode = {Color.black, Color.darkGray, Color.gray,
        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
-       Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};
-    private int numColors = 13; //number of entries in the above arrays
+       Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan,
+       jmri.util.ColorUtil.BROWN};
+    private int numColors = 14; //number of entries in the above arrays
     private ColorSelectionModel model;
 
     public ColorListPopupMenu(ColorSelectionModel m){
@@ -57,11 +58,11 @@ public class ColorListPopupMenu extends JPopupMenu {
     private JMenuItem createMenuItem(Color swatchColor, boolean isStdColor){
         // update the Swatch to have the right color showing.
         BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
-             BufferedImage.TYPE_INT_RGB);
+             BufferedImage.TYPE_INT_ARGB);
 
         Graphics g = image.getGraphics();
         // fill it with its representative color
-        g.setColor(swatchColor);
+        g.setColor(new Color(swatchColor.getRed(), swatchColor.getGreen(), swatchColor.getBlue(), swatchColor.getAlpha()));
         g.fillRect(0, 0, ICON_DIMENSION, ICON_DIMENSION);
         // draw a black border around it
         g.setColor(Color.black);
@@ -71,14 +72,17 @@ public class ColorListPopupMenu extends JPopupMenu {
 
         g.dispose();
 
-        String colorName;
+        String colorName = "";
+        String colorTip = String.format("r=%d, g=%d, b=%d, a=%d",
+                swatchColor.getRed(), swatchColor.getGreen(), swatchColor.getBlue(), swatchColor.getAlpha());
         if (isStdColor) {
             colorName = jmri.util.ColorUtil.colorToLocalizedName(swatchColor);
         } else {
-            colorName = swatchColor.toString().substring(14);
+            colorName = colorTip;
         }
 
         JMenuItem colorMenuItem = new JMenuItem(colorName,icon);
+        if (isStdColor) colorMenuItem.setToolTipText(colorTip);
         colorMenuItem.addActionListener((ActionEvent e) -> {
            model.setSelectedColor(swatchColor);
         });

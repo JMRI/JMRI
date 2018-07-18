@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TestTrafficController;
+import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -73,6 +74,88 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertTrue("create MSX0A;+N15E6", null != new CbusSensor("MS", "X0A;+N15E6", tc));
     }
 
+    
+    @Test
+    public void testCTorShortEventSingle() {
+        CbusSensor t = new CbusSensor("MS","+7",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCTorShortEventDouble() {
+        CbusSensor t = new CbusSensor("MS","+1;-1",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCTorLongEventSingle() {
+        CbusSensor t = new CbusSensor("MS","+n654e321",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
+    
+    @Test
+    public void testCTorLongEventDouble() {
+        CbusSensor t = new CbusSensor("MS","+N299E17;-N123E456",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCTorHexEventJustOpsCode() {
+        CbusSensor t = new CbusSensor("MS","X04;X05",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testCTorHexEventOneByte() {
+        CbusSensor t = new CbusSensor("MS","X2301;X30FF",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    
+    @Test
+    public void testCTorHexEventTwoByte() {
+        CbusSensor t = new CbusSensor("MS","X410001;X56FFFF",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+
+    
+    @Test
+    public void testCTorHexEventThreeByte() {
+        CbusSensor t = new CbusSensor("MS","X6000010001;X72FFFFFF",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
+    
+    
+    
+    @Test
+    public void testCTorHexEventFourByte() {
+        CbusSensor t = new CbusSensor("MS","X9000010001;X91FFFFFFFF",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+
+
+    @Test
+    public void testCTorHexEventFiveByte() {
+        CbusSensor t = new CbusSensor("MS","XB00D60010001;XB1FFFAAFFFFF",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+
+
+    @Test
+    public void testCTorHexEventSixByte() {
+        CbusSensor t = new CbusSensor("MS","XD00D0060010001;XD1FFFAAAFFFFFE",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    
+    @Test
+    public void testCTorHexEventSevenByte() {
+        CbusSensor t = new CbusSensor("MS","XF00D0A0600100601;XF1FFFFAAFAFFFFFE",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+    
+    
+    
     // The minimal setup for log4J
     @Override
     @Before

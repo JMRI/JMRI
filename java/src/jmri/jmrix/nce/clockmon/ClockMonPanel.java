@@ -1591,10 +1591,11 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     private void issueClockSetMem(int hh, int mm, int ss) {
-        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(CS_CLOCK_MEM_ADDR + CS_CLOCK_SECONDS, 3);
-        cmd[4] = (byte) ss;
-        cmd[5] = (byte) mm;
-        cmd[6] = (byte) hh;
+        byte[] b = new byte[3];
+        b[0] = (byte) ss;
+        b[1] = (byte) mm;
+        b[2] = (byte) hh;
+        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(CS_CLOCK_MEM_ADDR + CS_CLOCK_SECONDS, b);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_MEM_SET_REPLY_SIZE);
         waiting++;
         waitingForCmdTime = true;
