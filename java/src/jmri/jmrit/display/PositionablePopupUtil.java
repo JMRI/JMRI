@@ -315,12 +315,12 @@ public class PositionablePopupUtil {
             setHasBackground(true);
             _textComponent.setBackground(color);
             _parent.setBackground(color);
+            JmriColorChooser.addRecentColor(color);
         }
         if (hasBackground()) {
             setMargin(margin);  //This rebuilds margin and sets it colour.
         }
         _parent.updateSize();
-        JmriColorChooser.addRecentColor(color);
     }
 
     public void setHasBackground(boolean set) {
