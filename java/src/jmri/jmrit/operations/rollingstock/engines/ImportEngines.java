@@ -18,9 +18,8 @@ import org.slf4j.LoggerFactory;
 /**
  * This routine will import engines into the operation database.
  *
- * Each field is space or comma delimited. Field order: Number Road Type Length
- * Owner Year Location
- *
+ * Each field is space or comma delimited. Field order: Number Road Model Length
+ * Owner Built Location - Track
  * @author Dan Boudreau Copyright (C) 2008, 2013
  */
 public class ImportEngines extends ImportRollingStock {
