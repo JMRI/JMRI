@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
@@ -307,52 +306,52 @@ public class SimulatorAdapter extends NcePortController implements
             return reply;
         }
         switch (command) {
-            case NceBinaryCommand.SW_REV_CMD:  // Get Eprom revision
+            case NceMessage.SW_REV_CMD:  // Get Eprom revision
                 reply.setElement(0, 0x06);    // Send Eprom revision 6 2 1
                 reply.setElement(1, 0x02);
                 reply.setElement(2, 0x01);
                 break;
-            case NceBinaryCommand.READ_CLOCK_CMD: // Read clock
+            case NceMessage.READ_CLOCK_CMD: // Read clock
                 reply.setElement(0, 0x12);   // Return fixed time
                 reply.setElement(1, 0x30);
                 break;
-            case NceBinaryCommand.READ_AUI4_CMD: // Read AUI 4 byte response
+            case NceMessage.READ_AUI4_CMD: // Read AUI 4 byte response
                 reply.setElement(0, 0xFF);   // fixed data for now
                 reply.setElement(1, 0xFF);   // fixed data for now
                 reply.setElement(2, 0x00);   // fixed data for now
                 reply.setElement(3, 0x00);   // fixed data for now
                 break;
-            case NceBinaryCommand.DUMMY_CMD:  // Dummy instruction
+            case NceMessage.DUMMY_CMD:  // Dummy instruction
                 reply.setElement(0, NCE_OKAY);  // return ! CR LF
                 reply.setElement(1, 0x0D);
                 reply.setElement(2, 0x0A);
                 break;
-            case NceBinaryCommand.READ16_CMD:  // Read 16 bytes
+            case NceMessage.READ16_CMD:  // Read 16 bytes
                 readMemory(m, reply, 16);
                 break;
-            case NceBinaryCommand.READ_AUI2_CMD: // Read AUI 2 byte response
+            case NceMessage.READ_AUI2_CMD: // Read AUI 2 byte response
                 reply.setElement(0, 0x00);   // fixed data for now
                 reply.setElement(1, 0x00);   // fixed data for now
                 break;
-            case NceBinaryCommand.READ1_CMD:  // Read 1 bytes
+            case NceMessage.READ1_CMD:  // Read 1 bytes
                 readMemory(m, reply, 1);
                 break;
-            case NceBinaryCommand.WRITE1_CMD:  // Write 1 bytes
+            case NceMessage.WRITE1_CMD:  // Write 1 bytes
                 writeMemory(m, reply, 1, false);
                 break;
-            case NceBinaryCommand.WRITE2_CMD:  // Write 2 bytes
+            case NceMessage.WRITE2_CMD:  // Write 2 bytes
                 writeMemory(m, reply, 2, false);
                 break;
-            case NceBinaryCommand.WRITE4_CMD:  // Write 4 bytes
+            case NceMessage.WRITE4_CMD:  // Write 4 bytes
                 writeMemory(m, reply, 4, false);
                 break;
-            case NceBinaryCommand.WRITE8_CMD:  // Write 8 bytes
+            case NceMessage.WRITE8_CMD:  // Write 8 bytes
                 writeMemory(m, reply, 8, false);
                 break;
-            case NceBinaryCommand.WRITE_N_CMD:  // Write n bytes
+            case NceMessage.WRITE_N_CMD:  // Write n bytes
                 writeMemory(m, reply, m.getElement(3), true);
                 break;
-            case NceBinaryCommand.ACC_CMD:   // accessory command
+            case NceMessage.SEND_ACC_SIG_MACRO_CMD:   // accessory command
                 accessoryCommand(m, reply);
                 break;
             case NceMessage.READ_DIR_CV_CMD:
@@ -389,9 +388,9 @@ public class SimulatorAdapter extends NcePortController implements
         }
     }
 
-    private byte[] turnoutMemory = new byte[256];
-    private byte[] macroMemory = new byte[256 * 20 + 16]; // and a little padding
-    private byte[] consistMemory = new byte[256 * 6 + 16]; // and a little padding
+    private final byte[] turnoutMemory = new byte[256];
+    private final byte[] macroMemory = new byte[256 * 20 + 16]; // and a little padding
+    private final byte[] consistMemory = new byte[256 * 6 + 16]; // and a little padding
 
     /* Read NCE memory.  This implementation simulates reading the NCE
      * command station memory.  There are three memory blocks that are

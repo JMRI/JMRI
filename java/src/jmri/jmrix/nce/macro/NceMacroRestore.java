@@ -224,22 +224,22 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         waiting++;
         byte[] bl;
 
-        // write next 4 bytes
         if (second) {
-            curMacro += 16; // adjust for second memory write
-            bl = NceBinaryCommand.accMemoryWrite4(curMacro);
-            int j = bl.length - NceBinaryCommand.BUFFER_SIZE_4;
-            for (int i = 0; i < NceBinaryCommand.BUFFER_SIZE_4; i++, j++) {
-                bl[j] = b[i + 16];
+            // write next 4 bytes
+            curMacro += 16; // adjust memory address for second memory write
+            byte[] data = new byte[4];
+            for (int i = 0; i < 4; i++) {
+                data[i] = b[i + 16];
             }
+            bl = NceBinaryCommand.accMemoryWrite4(curMacro, data);
 
-            // write 16 bytes
         } else {
-            bl = NceBinaryCommand.accMemoryWriteN(curMacro, NceBinaryCommand.BUFFER_SIZE_16);
-            int j = bl.length - NceBinaryCommand.BUFFER_SIZE_16;
-            for (int i = 0; i < NceBinaryCommand.BUFFER_SIZE_16; i++, j++) {
-                bl[j] = b[i];
+            // write first 16 bytes
+            byte[] data = new byte[16];
+            for (int i = 0; i < 16; i++) {
+                data[i] = b[i];
             }
+            bl = NceBinaryCommand.accMemoryWriteN(curMacro, data);
         }
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         return m;
