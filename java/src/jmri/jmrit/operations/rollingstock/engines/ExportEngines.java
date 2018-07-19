@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
+ * Order stored: Number, Road, Model, Length, Owner, Built, Location,
+ * -, Track, Consist, Moves, Last, Value, HP, Weight, Type, Comment, Misc.
  *
  * @author Daniel Boudreau Copyright (C) 2010
  *
@@ -89,6 +91,7 @@ public class ExportEngines extends XmlFile {
         String engineModel;
         String engineLocationName;
         String engineTrackName;
+        String engineConsistName;
         // assume delimiter in the value field
         String value;
         String comment;
@@ -111,17 +114,27 @@ public class ExportEngines extends XmlFile {
                 "-" +
                 del +
                 Bundle.getMessage("Track") +
+                del +              
+                Bundle.getMessage("Consist") +
                 del +
                 Bundle.getMessage("Moves") +
                 del +
+                Bundle.getMessage("Last") +
+                del + 
                 Setup.getValueLabel() +
+                del +
+                Bundle.getMessage("HP") +
+                del +
+                Bundle.getMessage("WeightTons") +
+                del +
+                Bundle.getMessage("Type") +
                 del +
                 Bundle.getMessage("Comment") +
                 del +
                 Bundle.getMessage("Miscellaneous");
         fileOut.println(header);
 
-        // store engine number, road, model, length, owner, built date, location and track
+        // store engine number, road, model, length, owner, built date, location - track
         for (Engine engine : engineList) {
             engineModel = engine.getModel();
             if (engineModel.contains(del)) {
@@ -134,6 +147,10 @@ public class ExportEngines extends XmlFile {
             engineTrackName = engine.getTrackName();
             if (engineTrackName.contains(del)) {
                 engineTrackName = ESC + engine.getTrackName() + ESC;
+            }
+            engineConsistName = engine.getConsistName();
+            if (engineConsistName.contains(del)) {
+                engineConsistName= ESC + engine.getConsistName() + ESC;
             }
             value = engine.getValue();
             if (value.contains(del)) {
@@ -157,12 +174,21 @@ public class ExportEngines extends XmlFile {
                     del +
                     engineLocationName +
                     ",-," +
-                    engineTrackName // NOI18N
-                    +
+                    engineTrackName +
+                    del +
+                    engineConsistName +
                     del +
                     engine.getMoves() +
                     del +
+                    engine.getLastDate() +
+                    del +
                     value +
+                    del +
+                    engine.getHp() +
+                    del +
+                    engine.getWeightTons() +
+                    del +
+                    engine.getTypeName() +
                     del +
                     comment +
                     del +
