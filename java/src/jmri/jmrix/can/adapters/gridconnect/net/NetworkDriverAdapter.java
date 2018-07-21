@@ -23,7 +23,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         option1Name = "Gateway"; // NOI18N
         options.put(option1Name, new Option("Gateway", new String[]{"Pass All", "Filtering"}));
         option2Name = "Protocol"; // NOI18N
-        options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         this.getSystemConnectionMemo().setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
     }
