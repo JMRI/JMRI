@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the OpenLCB system network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally controlled by the
  * NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2010
-  */
+ */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public NetworkDriverAdapter() {
@@ -29,8 +29,8 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     }
 
     /**
-     * set up all of the other objects to operate with the CAN bus connected via
-     * this TCP/IP link
+     * Set up all of the other objects to operate with the CAN bus connected via
+     * this TCP/IP link.
      */
     @Override
     public void configure() {
@@ -57,7 +57,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         // do central protocol-specific configuration    
         this.getSystemConnectionMemo().configureManagers();
         if (socketConn != null) {
-            log.info("Connection complete with " + socketConn.getInetAddress());
+            log.info("Connection complete with {}", socketConn.getInetAddress());
         }
     }
 

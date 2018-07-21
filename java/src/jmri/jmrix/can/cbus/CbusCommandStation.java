@@ -59,7 +59,7 @@ public class CbusCommandStation implements CommandStation, CanListener {
     }
 
     /**
-     * Release a session freeing up the slot for reuse
+     * Release a session freeing up the slot for reuse.
      *
      * @param handle the handle for the session to be released
      */
@@ -68,24 +68,24 @@ public class CbusCommandStation implements CommandStation, CanListener {
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_KLOC);
         msg.setElement(1, handle);
-        log.debug("Release session handle " + handle);
+        log.debug("Release session handle {}", handle);
         tc.sendCanMessage(msg, null);
     }
 
     /**
-     * Send keep alive (DKEEP) packet for a throttle
+     * Send keep alive (DKEEP) packet for a throttle.
      *
      */
     public void sendKeepAlive(int handle) {
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DKEEP);
         msg.setElement(1, handle);
-        log.debug("keep alive handle: " + handle);
+        log.debug("keep alive handle: {}", handle);
         tc.sendCanMessage(msg, null);
     }
 
     /**
-     * Set loco speed and direction
+     * Set loco speed and direction.
      *
      * @param handle    The handle of the session to which it applies
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
@@ -95,19 +95,19 @@ public class CbusCommandStation implements CommandStation, CanListener {
         msg.setOpCode(CbusConstants.CBUS_DSPD);
         msg.setElement(1, handle);
         msg.setElement(2, speed_dir);
-        log.debug("setSpeedDir session handle " + handle + " speedDir " + speed_dir);
+        log.debug("setSpeedDir session handle {} speedDir {}", handle, speed_dir);
         tc.sendCanMessage(msg, null);
     }
 
     /**
-     * Send a CBUS message to set functions
+     * Send a CBUS message to set functions.
      *
      * @param group     The function group
      * @param handle    The handle of the session for the loco being controlled
      * @param functions Function bits
      */
     protected void setFunctions(int group, int handle, int functions) {
-        log.debug("Set function group " + group + " Fns " + functions + " for session handle" + handle);
+        log.debug("Set function group {} Fns {} for session handle {}", group, functions, handle);
         CanMessage msg = new CanMessage(4, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DFUN);
         msg.setElement(1, handle);
@@ -117,12 +117,12 @@ public class CbusCommandStation implements CommandStation, CanListener {
     }
 
     /**
-     * Send a CBUS message to change the session speed step mode
+     * Send a CBUS message to change the session speed step mode.
      *
      * @param mode the speed step mode
      */
     protected void setSpeedSteps(int handle, int mode) {
-        log.debug("Set speed step mode " + mode + " for session handle" + handle);
+        log.debug("Set speed step mode {} for session handle {}", mode, handle);
         CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_STMOD);
         msg.setElement(1, handle);
@@ -149,4 +149,5 @@ public class CbusCommandStation implements CommandStation, CanListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class);
+
 }

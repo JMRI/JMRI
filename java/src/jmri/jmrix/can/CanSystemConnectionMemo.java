@@ -57,6 +57,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             if (mgr == null) return false;
             return mgr.isAddressedModePossible();
         }
+        if (type.equals(jmri.ConsistManager.class)) { // until a CAN ConsistManager is implemented, use Internal
+            return false;
+        }
         boolean result = manager.provides(type);
         if(result) {
            return result;
