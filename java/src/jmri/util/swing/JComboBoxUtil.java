@@ -35,6 +35,9 @@ public class JComboBoxUtil {
             Component c = renderer.getListCellRendererComponent(list, value, i, false, false);
             maxItemHeight = Math.max(maxItemHeight, c.getPreferredSize().height);
         }
+        // Compensate for slightly undersized cell height for macOS
+        // The last rows will be off the screen if the dock is hidden
+        if (jmri.util.SystemType.isMacOSX()) maxItemHeight++;
 
         int itemsPerScreen = inComboBox.getItemCount();
         // calculate the number of items that will fit on the screen
@@ -45,7 +48,8 @@ public class JComboBoxUtil {
             itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
         }
 
-        int c = Math.min(itemsPerScreen, inComboBox.getItemCount());
+        // Set the minimum size to 8 rows
+        int c = Math.max(Math.min(itemsPerScreen - 1, inComboBox.getItemCount()), 8);
         inComboBox.setMaximumRowCount(c);
     }
 
