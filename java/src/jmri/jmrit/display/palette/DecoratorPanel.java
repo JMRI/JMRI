@@ -41,11 +41,12 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 import jmri.util.swing.ImagePanel;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  * Panel for positionables with text and/or colored margins and borders.
  * @see ItemPanel palette class diagram
- * 
+ *
  * @author PeteCressman Copyright (C) 2009, 2015
  */
 public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
@@ -202,8 +203,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
     public void initDecoratorPanel(Positionable pos) {
-        Positionable item = pos.deepClone(); // copy of PositionableLabel being edited
+        Positionable item = pos.deepClone(); // need copy of PositionableJPanel in PopupUtility
         _util = item.getPopupUtility();
+        item.remove();      // don't need copy any more. Removes ghost image of PositionableJPanels
         makeFontPanels();
 
         if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
@@ -254,7 +256,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             if (pos instanceof PositionableLabel) {
                 sample.setText(((PositionableLabel)pos).getUnRotatedText());
                 if (pos instanceof jmri.jmrit.display.MemoryIcon) {
-                    addtextField = false;                    
+                    addtextField = false;
                 } else {
                     addtextField = true;
                 }
@@ -271,22 +273,23 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 sample.setText(field.getText());
                 addtextField = false;
             } else {
-                addtextField = true;                
+                addtextField = true;
             }
             doPopupUtility("Text", TEXT_FONT, sample, addtextField);
         }
         finishInit(false);
     }
-    
+
     private void finishInit(boolean addBgCombo) {
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(new JPanel());
+        _chooser = JmriColorChooser.extendColorChooser(_chooser);
         add(_chooser);
         _previewPanel.add(_samplePanel, BorderLayout.CENTER);
 
         // add a SetBackground combo
         if (addBgCombo) {
-            add(add(makeBgButtonPanel(_previewPanel, null, _backgrounds))); // no listener on this variant            
+            add(add(makeBgButtonPanel(_previewPanel, null, _backgrounds))); // no listener on this variant
         }
         add(_previewPanel);
         _previewPanel.setImage(_backgrounds[0]);
@@ -294,8 +297,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         updateSamples();
         setButtonSelected(_fontButton);
     }
-    
-    private void doPopupUtility(String type, int which, 
+
+    private void doPopupUtility(String type, int which,
             PositionableLabel sample, boolean editText) {
         PositionablePopupUtil util = sample.getPopupUtility();
         util.setJustification(_util.getJustification());
@@ -310,7 +313,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         util.setFontStyle(_util.getFontStyle());
         util.setOrientation(_util.getOrientation());
         sample.updateSize();
-       
+
         _sample.put(type, sample);
         this.add(makeTextPanel(type, sample, which, editText));
         _samplePanel.add(sample);
@@ -319,7 +322,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     protected void makeFontPanels() {
         JPanel fontPanel = new JPanel();
-        
+
         Font defaultFont = _util.getFont();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
@@ -336,7 +339,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _fontBox = new AJComboBox(fonts, FONT);
         fontPanel.add(makeBoxPanel("EditFont", _fontBox)); // NOI18N
         _fontBox.setSelectedItem(defaultFont);
-        
+
         _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
         fontPanel.add(makeBoxPanel("FontSize", _fontSizeBox)); // NOI18N
         int row = 4;
@@ -430,17 +433,17 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     updateSamples();
                 }
             }.init(sample));
-            p.add(textField);            
+            p.add(textField);
         }
         panel.add(p);
 
         p = new JPanel();
         _fontButton = new AJRadioButton(Bundle.getMessage("FontColor"), state);
         p.add(makeButton(_fontButton));
-        
+
         _backgroundButton = new AJRadioButton(Bundle.getMessage("FontBackgroundColor"), state + 10);
         p.add(makeButton(_backgroundButton));
-        
+
         AJRadioButton button = new AJRadioButton(Bundle.getMessage("transparentBack"), state + 20);
         _buttonGroup.add(button);
         p.add(button);
@@ -496,7 +499,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     int prevButton = _selectedButton;
                     _selectedButton = button.which;
                     if (Math.abs(prevButton-_selectedButton)<5) {
-                        changeColor();                        
+                        changeColor();
                     }
                 }
             }
@@ -506,15 +509,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 return this;
             }
         }.init(button));
-        _buttonGroup.add(button);            
+        _buttonGroup.add(button);
         return button;
     }
 
     protected void updateSamples() {
         if (_previewPanel == null) {
-            return;            
+            return;
         }
-        
+
         int mar = _util.getMargin();
         int bor = _util.getBorderSize();
         Border outlineBorder;
@@ -525,7 +528,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
         Font font = _util.getFont();
         int just = _util.getJustification();
-        
+
         Iterator<PositionableLabel> it = _sample.values().iterator();
         while (it.hasNext()) {
             PositionableLabel sam = it.next();
@@ -542,7 +545,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
             }
             sam.setBorder(new CompoundBorder(outlineBorder, borderMargin));
-            
+
             switch (just) {
                 case PositionablePopupUtil.LEFT:
                     sam.setHorizontalAlignment(JLabel.LEFT);
@@ -663,9 +666,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             SensorIcon icon = (SensorIcon) pos;
             PositionableLabel sample = _sample.get("Active");
             if (sample.isOpaque()) {
-                icon.setBackgroundActive(sample.getBackground());                
+                icon.setBackgroundActive(sample.getBackground());
             } else {
-                icon.setBackgroundActive(null);                
+                icon.setBackgroundActive(null);
             }
             icon.setTextActive(sample.getForeground());
             icon.setActiveText(sample.getText());
@@ -673,27 +676,27 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             sample = _sample.get("InActive");
             icon.setInactiveText(sample.getText());
             if (sample.isOpaque()) {
-                icon.setBackgroundInActive(sample.getBackground());                
+                icon.setBackgroundInActive(sample.getBackground());
             } else {
-                icon.setBackgroundInActive(null);                
+                icon.setBackgroundInActive(null);
             }
             icon.setTextInActive(sample.getForeground());
 
             sample = _sample.get("Unknown");
             icon.setUnknownText(sample.getText());
             if (sample.isOpaque()) {
-                icon.setBackgroundUnknown(sample.getBackground());                
+                icon.setBackgroundUnknown(sample.getBackground());
             } else {
-                icon.setBackgroundUnknown(null);                
+                icon.setBackgroundUnknown(null);
             }
             icon.setTextUnknown(sample.getForeground());
 
             sample = _sample.get("Inconsistent");
             icon.setInconsistentText(sample.getText());
             if (sample.isOpaque()) {
-                icon.setBackgroundInconsistent(sample.getBackground());                
+                icon.setBackgroundInconsistent(sample.getBackground());
             } else {
-                icon.setBackgroundInconsistent(null);                
+                icon.setBackgroundInconsistent(null);
             }
             icon.setTextInconsistent(sample.getForeground());
         } else {
@@ -703,15 +706,17 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 !(pos instanceof jmri.jmrit.display.MemoryIcon)) {
                 ((PositionableLabel) pos).setText(sample.getText());
             }
+            PositionablePopupUtil util = pos.getPopupUtility();
             if (sample.isOpaque()) {
-                pos.setBackground(sample.getBackground());                
+                util.setBackgroundColor(sample.getBackground());
             } else {
-                pos.setBackground(null);                
+                util.setBackgroundColor(null);
             }
-            _util.setHasBackground(sample.isOpaque());
+            util.setHasBackground(sample.isOpaque());
+            util.setFont(_util.getFont());
         }
     }
-    
+
     private void changeColor() {
         switch (_selectedButton) {
             case TEXT_FONT:
@@ -758,6 +763,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 log.warn("Unexpected _selectedButton {}  in changeColor", _selectedButton);
                 break;
         }
+        JmriColorChooser.addRecentColor(_chooser.getColor());
     }
 
     @Override
@@ -820,7 +826,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
         updateSamples();
     }
-    
+
     private void setButtonSelected(AJRadioButton button) {
         if (button != null) {
             _selectedButton = button.which;

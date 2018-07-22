@@ -321,7 +321,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             if (!_track.getScheduleId().equals(_schedule.getId())) {
                 InstanceManager.getDefault(LocationManager.class).resetMoves();
             }
-            _track.setScheduleId(_schedule.getId());
+            _track.setSchedule(_schedule);
             if (sequentialRadioButton.isSelected()) {
                 _track.setScheduleMode(Track.SEQUENTIAL);
             } else {

@@ -279,6 +279,21 @@
         </xs:appinfo>
       </xs:annotation>
 
+      <xs:sequence>
+         <xs:element name="decorations" minOccurs="0" maxOccurs="1">
+           <xs:complexType>
+             <xs:sequence>
+               <xs:element name="decoration" minOccurs="1" maxOccurs="unbounded">
+                 <xs:complexType>
+                   <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                   <xs:attribute name="value" type="xs:string"></xs:attribute>
+                 </xs:complexType>
+               </xs:element>
+             </xs:sequence>
+           </xs:complexType>
+         </xs:element>
+       </xs:sequence>
+
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
@@ -1391,6 +1406,47 @@
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
      </xs:complexType>
 
+
+     <!-- decorations enums -->
+     <xs:simpleType name="decoration_border_ends">
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="entry" />
+       <xs:enumeration value="exit" />
+       <xs:enumeration value="both" />
+     </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="decoration_ends">
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="start" />
+       <xs:enumeration value="stop" />
+       <xs:enumeration value="both" />
+     </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="decoration_sides">
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="left" />
+       <xs:enumeration value="right" />
+       <xs:enumeration value="both" />
+     </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="decoration_arrow_styles">
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="1" />
+       <xs:enumeration value="2" />
+       <xs:enumeration value="3" />
+       <xs:enumeration value="4" />
+       <xs:enumeration value="5" />
+     </xs:restriction>
+     </xs:simpleType>
+     <xs:simpleType name="decoration_arrow_directions">
+     <xs:restriction base="xs:string">
+       <xs:enumeration value="in" />
+       <xs:enumeration value="out" />
+       <xs:enumeration value="both" />
+     </xs:restriction>
+     </xs:simpleType>
+     <!-- end of direction enums -->
+
     <xs:complexType name="EditorTrackSegmentType">
       <xs:annotation>
         <xs:documentation>
@@ -1410,6 +1466,59 @@
                   <xs:attribute name="index" type="xs:integer" use="required"></xs:attribute>
                   <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
                   <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="decorations" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="decoration" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="value" type="xs:string"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="arrow" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="style" type="decoration_arrow_styles" use="required"></xs:attribute>
+                  <xs:attribute name="end" type="decoration_ends"></xs:attribute>
+                  <xs:attribute name="direction" type="decoration_arrow_directions" use="required"></xs:attribute>
+                  <xs:attribute name="color" type="screenColorType"></xs:attribute>
+                  <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
+                  <xs:attribute name="length" type="xs:int"></xs:attribute>
+                  <xs:attribute name="gap" type="xs:int"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="bridge" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="side" type="decoration_sides"></xs:attribute>
+                  <xs:attribute name="end" type="decoration_border_ends"></xs:attribute>
+                  <xs:attribute name="color" type="screenColorType"></xs:attribute>
+                  <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
+                  <xs:attribute name="approachwidth" type="xs:int"></xs:attribute>
+                  <xs:attribute name="deckwidth" type="xs:int"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="bumper" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="end" type="decoration_ends"></xs:attribute>
+                  <xs:attribute name="color" type="screenColorType"></xs:attribute>
+                  <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
+                  <xs:attribute name="length" type="xs:int"></xs:attribute>
+                  <xs:attribute name="flip" type="xs:boolean"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="tunnel" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="side" type="decoration_sides"></xs:attribute>
+                  <xs:attribute name="end" type="decoration_border_ends"></xs:attribute>
+                  <xs:attribute name="color" type="screenColorType"></xs:attribute>
+                  <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
+                  <xs:attribute name="entrancewidth" type="xs:int"></xs:attribute>
+                  <xs:attribute name="floorwidth" type="xs:int"></xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>

@@ -9,11 +9,11 @@
   <title>JMRI: Technical Info</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -285,7 +285,7 @@
       files that make up a project. Take a look at the
       <a href="/community/codeswarm.shtml">JMRI Code Swarm</a>.
       </p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

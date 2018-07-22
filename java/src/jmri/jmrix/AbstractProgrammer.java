@@ -165,7 +165,7 @@ public abstract class AbstractProgrammer implements Programmer {
 
     /**
      * Define the "best" programming mode, which provides the initial setting.
-     *
+     * <p>
      * The definition of "best" is up to the specific-system developer.
      * By default, this is the first of the available methods from getSupportedModes;
      * override this method to change that.

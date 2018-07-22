@@ -1668,7 +1668,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Respond to Create new item pressed on Add Turnout pane
+     * Respond to Create new item pressed on Add Turnout pane.
      *
      * @param e the click event
      */

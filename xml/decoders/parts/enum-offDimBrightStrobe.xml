@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
-<!-- $Id$ -->
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Off">
     <choice>Off</choice>
@@ -12,6 +11,7 @@
   </enumChoice>
   <enumChoice choice="Dim">
     <choice>Dim</choice>
+	<choice xml:lang="da">Dæmpet</choice>
     <choice xml:lang="cs">Tlumené</choice>
     <choice xml:lang="fr">Atténué</choice>
     <choice xml:lang="it">Smorzato</choice>
@@ -28,6 +28,7 @@
   </enumChoice>
   <enumChoice choice="Strobe">
     <choice>Strobe</choice>
+	<choice xml:lang="da">Blinkende</choice>
     <choice xml:lang="cs">Stroboskopický</choice>
     <choice xml:lang="fr">Stroboscopique</choice>
     <choice xml:lang="it">Strobo</choice>

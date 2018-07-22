@@ -45,13 +45,12 @@ public class MemoryComboIcon extends PositionableJPanel
         } else {
             _model = new ComboModel();
         }
-        _comboBox = new JComboBox<String>(_model);
+        _comboBox = new JComboBox<>(_model);
         _comboBox.addActionListener(this);
         setDisplayLevel(Editor.LABELS);
 
         setLayout(new java.awt.GridBagLayout());
         add(_comboBox);
-        addMouseMotionListener(this);
         _comboBox.addMouseListener(this);
 
         for (int i = 0; i < _comboBox.getComponentCount(); i++) {
@@ -226,7 +225,7 @@ public class MemoryComboIcon extends PositionableJPanel
 
             @Override
             protected void addAdditionalButtons(JPanel p) {
-                _listModel = new DefaultListModel<String>();
+                _listModel = new DefaultListModel<>();
                 bDel.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent a) {
@@ -253,7 +252,7 @@ public class MemoryComboIcon extends PositionableJPanel
                 for (int i = 0; i < _model.getSize(); i++) {
                     _listModel.add(i, _model.getElementAt(i));
                 }
-                list = new JList<String>(_listModel);
+                list = new JList<>(_listModel);
                 JScrollPane scrollPane = new JScrollPane(list);
                 JPanel p1 = new JPanel();
                 p1.add(new JLabel(Bundle.getMessage("comboList")));
@@ -326,9 +325,14 @@ public class MemoryComboIcon extends PositionableJPanel
             getMemory().removePropertyChangeListener(this);
         }
         if (_comboBox != null) {
-//            _comboBox.removeMouseMotionListener(this);
+            for (int i = 0; i < _comboBox.getComponentCount(); i++) {
+                java.awt.Component component = _comboBox.getComponent(i);
+                if (component instanceof AbstractButton) {
+                    component.removeMouseListener(this);
+                    component.removeMouseMotionListener(this);
+                }
+            }
             _comboBox.removeMouseListener(this);
-            _comboBox = null;
         }
         namedMemory = null;
     }

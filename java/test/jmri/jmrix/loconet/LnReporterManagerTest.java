@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * LnReporterManagerTest.java
+ * Tests for the LnReporterManager class
  *
- * Description:	tests for the LnReporterManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -18,7 +16,7 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
         return "LR" + i;
     }
 
-    LnTrafficController tc = null;
+    private LnTrafficController tc = null;
 
     // The minimal setup for log4J
     @Before
@@ -37,4 +35,5 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
 
     @Override
     protected int maxN() { return 1; }
+
 }

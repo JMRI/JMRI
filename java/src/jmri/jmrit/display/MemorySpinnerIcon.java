@@ -265,7 +265,6 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
             ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().removeMouseMotionListener(this);
             ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().removeMouseListener(this);
         }
-        spinner = null;
         namedMemory = null;
     }
 

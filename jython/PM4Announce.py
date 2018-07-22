@@ -134,7 +134,7 @@ l = PM4LnListener()
 
 l.init()
 
-jmri.jmrix.loconet.LnTrafficController.instance().addLocoNetListener(0xFF, l)
+jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().addLocoNetListener(0xFF, l)
 
 
 # The next part formats and sends a test LocoNet message.
@@ -149,9 +149,11 @@ jmri.jmrix.loconet.LnTrafficController.instance().addLocoNetListener(0xFF, l)
 #packet.setElement(2, ((board-1)&0x7F))
 #packet.setElement(3, 0x3F)  
 #F in lower bits means all AR
-#packet.setElement(4, 0x10+(on << zone)) 
+#packet.setElement(4, 0x10+(on << zone))
+#set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+#connectionIndex = 0
 #set the control bit for just the channel
-#jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+#jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
 
 #     About this script - Jim Thompson
 
@@ -177,5 +179,3 @@ jmri.jmrix.loconet.LnTrafficController.instance().addLocoNetListener(0xFF, l)
 # scripts are stored - On windows normally c:\Program Files\JMRI\Jython\your script name here.
 # click open and your script will now appear on the preferences screen. When you restart PanelPro
 # or DecoderPro this scrpt will load with your panel. 
-
-

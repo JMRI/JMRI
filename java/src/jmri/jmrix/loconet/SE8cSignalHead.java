@@ -5,27 +5,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.SignalHead for signals implemented by an SE8c
- * <P>
+ * Extend jmri.SignalHead for signals implemented by an SE8C.
+ * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.
- * <P>
+ * <p>
  * To get a complete set of aspects, we assume that the SE8C board has been
  * configured such that the 4th aspect is "dark". We then do flashing aspects by
  * commanding the lit appearance to change.
- *
  * <p>
- * This is a grandfathered implementation that is specific to loconet systems. A
+ * This is a grandfathered implementation that is specific to LocoNet systems. A
  * more general implementation, which can work with any system(s), is available
  * in {@link jmri.implementation.SE8cSignalHead}. This package is maintained so
  * that existing XML files can continue to be read. In particular, it only works
  * with the first LocoNet connection (names LHnnn, not L2Hnnn etc).
- *
- * <P>
+ * <p>
  * The algorithms in this class are a collaborative effort of Digitrax, Inc and
  * Bob Jacobsen.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -229,7 +227,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
     }
 
     // data members
-    int mNumber;   // loconet turnout number with lower address (0 based)
+    int mNumber;   // LocoNet Turnout number with lower address (0 based)
 
     private boolean myAddress(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering

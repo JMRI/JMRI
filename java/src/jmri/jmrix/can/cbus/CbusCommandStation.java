@@ -37,7 +37,7 @@ public class CbusCommandStation implements CommandStation, CanListener {
      *                in the current implementation
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (repeats != 1) {
             log.warn("Only single transmissions currently available");
@@ -55,6 +55,7 @@ public class CbusCommandStation implements CommandStation, CanListener {
         }
 
         tc.sendCanMessage(m, null);
+        return true;
     }
 
     /**

@@ -249,7 +249,7 @@ public class Track {
         newTrack.setReservationFactor(getReservationFactor());
         newTrack.setRoadNames(getRoadNames());
         newTrack.setRoadOption(getRoadOption());
-        newTrack.setScheduleId(getScheduleId());
+        newTrack.setSchedule(getSchedule());
         newTrack.setScheduleMode(getScheduleMode());
         newTrack.setServiceOrder(getServiceOrder());
         newTrack.setShipLoadNames(getShipLoadNames());
@@ -1372,7 +1372,7 @@ public class Track {
                 }
             }
             // None of the trains servicing this track can pick up car type ({0})
-            status = MessageFormat.format(Bundle.getMessage("ErrorNoTrain"), new Object[]{carType});
+            status = MessageFormat.format(Bundle.getMessage("ErrorNoTrain"), new Object[]{getName(), carType});
             break;
         }
         return status;
@@ -1382,7 +1382,7 @@ public class Track {
      * Used to determine if track can service the rolling stock.
      *
      * @param rs the car or loco to be tested
-     * @return Error string starting with TYPE, ROAD, LENGTH, DESTINATION, or
+     * @return Error string starting with TYPE, ROAD, CAPACITY, LENGTH, DESTINATION or
      *         LOAD if there's an issue. OKAY if track can service Rolling
      *         Stock.
      */
@@ -1401,6 +1401,7 @@ public class Track {
         }
         // now determine if there's enough space for the rolling stock
         int length = rs.getTotalLength();
+        // error check
         try {
             Integer.parseInt(rs.getLength());
         } catch (Exception e) {
@@ -1426,15 +1427,7 @@ public class Track {
             }
             // check for car in kernel
             if (car.getKernel() != null && car.getKernel().isLead(car)) {
-                length = 0;
-                for (Car c : car.getKernel().getCars()) {
-                    // don't add length for cars already on this track or already going to this track
-                    if (c.getTrack() != null && c.getTrack().equals(this) ||
-                            c.getDestinationTrack() != null && c.getDestinationTrack().equals(this)) {
-                        continue;
-                    }
-                    length += c.getTotalLength();
-                }
+                length = car.getKernel().getTotalLength();
             }
             if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
@@ -1446,15 +1439,7 @@ public class Track {
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
             if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
-                length = 0;
-                for (Engine e : eng.getConsist().getEngines()) {
-                    // don't add length for locos already on this track or already going to this track
-                    if (e.getTrack() != null && e.getTrack().equals(this) ||
-                            e.getDestinationTrack() != null && e.getDestinationTrack().equals(this)) {
-                        continue;
-                    }
-                    length = length + Integer.parseInt(e.getLength()) + RollingStock.COUPLER;
-                }
+                length = eng.getConsist().getTotalLength();
             }
         }
         if (rs.getTrack() != this &&
@@ -1543,6 +1528,11 @@ public class Track {
         return _order;
     }
 
+    /**
+     * Set the service order for this track. Only yards and interchange have
+     * this feature.
+     * @param order Track.NORMAL, Track.FIFO, Track.LIFO
+     */
     public void setServiceOrder(String order) {
         String old = _order;
         _order = order;
@@ -1577,6 +1567,14 @@ public class Track {
             log.error("No schedule for id: " + getScheduleId());
         }
         return schedule;
+    }
+    
+    public void setSchedule(Schedule schedule) {
+        String scheduleId = NONE;
+        if (schedule != null) {
+            scheduleId = schedule.getId();
+        }
+        setScheduleId(scheduleId);
     }
 
     public String getScheduleId() {
@@ -1871,9 +1869,9 @@ public class Track {
             }
             String status = checkScheduleItem(si, car);
             if (status.equals(OKAY)) {
-                log.debug("Found item match ({}) car ({}) load ({}) ship ({}) destination ({}, {})", si.getId(), car
-                        .toString(), si.getReceiveLoadName(), si.getShipLoadName(), si.getDestinationName(), si
-                                .getDestinationTrackName()); // NOI18N
+                log.debug("Found item match ({}) car ({}) type ({}) load ({}) ship ({}) destination ({}, {})", si.getId(),
+                        car.toString(), car.getTypeName(), si.getReceiveLoadName(), si.getShipLoadName(),
+                        si.getDestinationName(), si.getDestinationTrackName()); // NOI18N
                 car.setScheduleItemId(si.getId()); // remember which item was a match
                 return OKAY;
             } else {
@@ -2253,6 +2251,13 @@ public class Track {
         return _destinationIdList.size();
     }
 
+    /**
+     * adds a location to the list of acceptable destinations for this track.
+     * 
+     * @param destination location that is acceptable
+     * @return true if added to list, false if destination is already part of
+     *         list.
+     */
     public boolean addDestination(Location destination) {
         if (_destinationIdList.contains(destination.getId())) {
             return false;

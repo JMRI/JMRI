@@ -6,9 +6,17 @@ For more information, see [JMRI.org](http://jmri.org)
 
 For development information, see [Technical Info](http://jmri.org/help/en/html/doc/Technical)
 
-User discussions are on the [JMRIusers Yahoo group](https://groups.yahoo.com/neo/groups/jmriusers/info)
+User discussions are on the [JMRI users Groups.io group](https://groups.io/g/jmriusers)
 
 Infrastructure status available at [status.jmri.org](http://status.jmri.org)
+
+Test:
+![Test release](https://img.shields.io/github/release/JMRI/JMRI.svg)
+![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/latest/total.svg)
+Production:
+![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.12/total.svg)
+Total (since 2017):
+![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/total.svg)
 
 Jenkins: [![Build Status](http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Builds)](http://jmri.tagadab.com/jenkins/job/Development/job/Builds/)
 [![Build Status](http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Packages)](http://jmri.tagadab.com/jenkins/job/Development/job/Packages/)

@@ -1,6 +1,5 @@
 package jmri.jmrix.nce.consist;
 
-import jmri.util.swing.TextFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +14,7 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
+import jmri.util.swing.TextFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,14 +184,8 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 
         replyLen = REPLY_1; // Expect 1 byte response
         waiting++;
-        byte[] bl;
 
-        bl = NceBinaryCommand.accMemoryWriteN(curConsist, 16);
-        int j = bl.length - 16;
-        for (int i = 0; i < 16; i++, j++) {
-            bl[j] = b[i];
-        }
-
+        byte[] bl = NceBinaryCommand.accMemoryWriteN(curConsist, b);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         return m;
     }

@@ -7,6 +7,9 @@
 
 import jmri
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 def locoNetCabSigMesg(loco, mast, vertical, diagonal, horizontal, blink):
 		# Message variables are Loco = Decimal loco address,  others are binary 1 or 0 
 		#  mast = 1 means show mast,  mast = 0 means hide mast.
@@ -48,7 +51,7 @@ def sendLocoNetMsg(msgLength,opcode,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7,ARG8,ARG9
         packet.setElement(14, ARG14)
         packet.setElement(15, ARG15)
       
-     jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+     jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
      print "Packet", packet           # print packet to Script Output window
      return
 
