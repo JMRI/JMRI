@@ -1,8 +1,8 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -95,6 +95,12 @@ public class WiThrottlePreferencesTest {
     public void testSetAndGetAllowTurnout(){
         prefs.setAllowTurnout(false);
         Assert.assertFalse("Allow Turnout",prefs.isAllowTurnout());
+    }
+
+    @Test
+    public void testSetAndGetAllowTurnoutCreation(){
+        prefs.setAllowTurnoutCreation(false);
+        Assert.assertFalse("Allow Turnout Creation",prefs.isAllowTurnoutCreation());
     }
 
     @Test

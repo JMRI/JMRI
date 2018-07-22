@@ -16,7 +16,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         panel = new CbusEventTablePane();
-        title = "Event Table";
+        title = Bundle.getMessage("MenuItemEventTable");
         helpTarget = "package.jmri.jmrix.can.cbus.CbusEventTablePane";
     }
 
