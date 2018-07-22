@@ -16,7 +16,7 @@ public class ConnectionConfigTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
+      Assert.assertNotNull("ConnectionConfig constructor", new ConnectionConfig());
    }
 
    @Before

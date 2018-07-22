@@ -18,7 +18,6 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the GridConnect protocol.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Andrew Crosland Copyright (C) 2008

@@ -9,7 +9,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * Loopback connection to simulate a CAN link
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  */
+ */
 public class Port extends AbstractSerialPortController {
 
     public Port() {

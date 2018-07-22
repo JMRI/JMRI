@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a Cbus event table. Menu code copied from BeanTableFrame.
- * <P>
  *
  * @author Andrew Crosland (C) 2009
  * @author Kevin Dickerson (C) 2012
