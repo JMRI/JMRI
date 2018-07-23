@@ -26,6 +26,8 @@ public class ImportRollingStock extends Thread {
 
     protected JLabel lineNumber = new JLabel();
     protected JLabel importLine = new JLabel();
+    
+    protected static final String LOCATION_TRACK_SEPARATOR = "-";
 
     protected jmri.util.JmriJFrame fstatus;
 
