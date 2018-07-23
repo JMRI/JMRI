@@ -2939,17 +2939,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
+            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new TextAttrDialog(comp)).setVisible(true);
             }
 
-            AbstractAction init(Positionable pos) {
+            AbstractAction init(Positionable pos, Editor e) {
                 comp = pos;
+                ed = e;
                 return this;
             }
-        }.init(p));
+        }.init(p, this));
         return true;
     }
 
@@ -2972,8 +2974,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             dim = new Dimension(dim.width +10, dim.height + 10);
             sp.setPreferredSize(dim);
             setContentPane(sp);
+            setLocation(jmri.util.PlaceWindow.nextTo(_pos.getEditor(), (Component)_pos, this));
             pack();
-            setLocationRelativeTo((Component) _pos);
         }
 
         protected JPanel makeDoneButtonPanel() {

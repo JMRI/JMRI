@@ -26,12 +26,12 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  */
 public class JmriColorChooserPanel extends AbstractColorChooserPanel {
 
-    private Color[] colors = {Color.black, Color.darkGray, Color.gray,
+    private final Color[] colors = {Color.black, Color.darkGray, Color.gray,
        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
        Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan,
        jmri.util.ColorUtil.BROWN};
-    private int numColors = 14; //number of entries in the above array
-    private JPanel recentPanel = new JPanel(new GridBagLayout());
+    private final int numColors = 14; //number of entries in the above array
+    private final JPanel recentPanel = new JPanel(new GridBagLayout());
 
     @Override
     public void updateChooser(){
@@ -40,7 +40,7 @@ public class JmriColorChooserPanel extends AbstractColorChooserPanel {
         recentPanel.removeAll();
 
         ArrayList<Color> colors = JmriColorChooser.getRecentColors();
-        int cols = Math.max(3, (int) Math.ceil((double)colors.size() / 7));
+        int cols = 4;
         int idx = 0;
         for (Color recent : colors) {
             c.gridx = idx % cols;
