@@ -32,7 +32,11 @@ public class JmriColorChooser {
      * @param color The color object to be added.
      */
     static public void addRecentColor(Color color) {
-        if (color != null && !recentColors.contains(color)) {
+        if (color == null || !color.toString().contains("java.awt.Color")) {
+            // Ignore null or default system colors
+            return;
+        }
+        if (!recentColors.contains(color)) {
             recentColors.add(color);
         }
     }

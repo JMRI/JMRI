@@ -27,8 +27,8 @@ public class LnTcpServerFrame extends JmriJFrame {
     private final JLabel portNumberLabel = new JLabel(Bundle.getMessage("PortLabel", 1234));
     private final JLabel statusLabel = new JLabel(Bundle.getMessage("StatusLabel", Bundle.getMessage("Stopped"), 0));
 
-    private final JButton startButton = new JButton(Bundle.getMessage("StartButton"));
-    private final JButton stopButton = new JButton(Bundle.getMessage("StopButton"));
+    private final JButton startButton = new JButton(Bundle.getMessage("StartServer"));
+    private final JButton stopButton = new JButton(Bundle.getMessage("StopServer"));
     private final LnTcpServer server;
     private final LnTcpServerListener listener;
 

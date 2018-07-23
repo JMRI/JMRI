@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 public class TurnoutController extends AbstractController implements PropertyChangeListener {
 
     private TurnoutManager manager = null;
+    private final boolean isTurnoutCreationAllowed = InstanceManager.getDefault(WiThrottlePreferences.class).isAllowTurnoutCreation();
+
 
     public TurnoutController() {
         manager = InstanceManager.getNullableDefault(jmri.TurnoutManager.class);
@@ -54,31 +56,63 @@ public class TurnoutController extends AbstractController implements PropertyCha
     @Override
     void handleMessage(String message) {
         if (message.charAt(0) == 'A') {
+            //first look for existing turnout
             Turnout t = manager.getBySystemName(message.substring(2));
-            if (t != null) {
-                switch (message.charAt(1)) {
-                    case '2':
-                        if (t.getCommandedState() == Turnout.CLOSED) {
-                            t.setCommandedState(Turnout.THROWN);
-                        } else {
-                            t.setCommandedState(Turnout.CLOSED);
-                        }
-                        break;
-                    case 'C':
-                        t.setCommandedState(Turnout.CLOSED);
-                        break;
-                    case 'T':
-                        t.setCommandedState(Turnout.THROWN);
-                        break;
-                    default:
-                        log.warn("Message \"{}\" unknown.", message);
-                        break;
-                }
+            //this turnout IS known to JMRI
+            if (t != null) {                
+                //send error if this turnout is not allowed
+                Object o = t.getProperty("WifiControllable");
+                if (o != null && Boolean.valueOf(o.toString())==false) {
+                    String msg = "Turnout '" + message.substring(2) + "' not allowed in JMRI Filter Controls.";
+                    log.warn(msg);
+                    thislistener.sendAlertMessage(msg);
+                    return;
+                }            
+            //turnout is NOT known to JMRI, attempt to create it
             } else {
-                log.warn("Message \"{}\" does not match a turnout.", message);
+                //check if turnout creation is allowed
+                if (!isTurnoutCreationAllowed) {
+                    String msg = "Turnout '" + message.substring(2) + "' not defined in JMRI, create not allowed.";
+                    log.warn(msg);
+                    thislistener.sendAlertMessage(msg);                    
+                    return;
+                } else {
+                    try {
+                        t = manager.provideTurnout(message.substring(2));
+                    } catch (IllegalArgumentException e) {
+                        String msg = "JMRI error creating Turnout: " + e.getLocalizedMessage();
+                        log.warn(msg);
+                        thislistener.sendAlertMessage(msg);
+                        return;
+                    }
+                    String msg = "JMRI created Turnout '" + message.substring(2) + "'";
+                    log.debug(msg);
+                    thislistener.sendInfoMessage(msg);                    
+                }
+            }
+            
+            switch (message.charAt(1)) {
+                case '2':
+                    if (t.getCommandedState() == Turnout.CLOSED) {
+                        t.setCommandedState(Turnout.THROWN);
+                    } else {
+                        t.setCommandedState(Turnout.CLOSED);
+                    }
+                    break;
+                case 'C':
+                    t.setCommandedState(Turnout.CLOSED);
+                    break;
+                case 'T':
+                    t.setCommandedState(Turnout.THROWN);
+                    break;
+                default:
+                    log.warn("Message \"{}\" unknown.", message);
+                    break;
             }
         }
     }
+
+
 
     /**
      * Send Info on turnouts to devices, not specific to any one turnout.
