@@ -54,9 +54,9 @@ public class NceConsistRoster extends XmlFile {
     }
 
     /**
-     * Locate the single instance of Roster, loading it if need be
+     * Locate the single instance of NCE consist roster, loading it if need be
      *
-     * @return The valid Roster object
+     * @return The valid NCE consist roster object
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
@@ -75,9 +75,9 @@ public class NceConsistRoster extends XmlFile {
                 }
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("ConsistRoster returns instance " + _instance);
-        }
+//        if (log.isDebugEnabled()) {
+//            log.debug("ConsistRoster returns instance " + _instance);
+//        }
         return _instance;
     }
 
