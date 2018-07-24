@@ -23,7 +23,7 @@ public class TextItemPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor es = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = ItemPalette.getDefault("Test ItemPalette", new ControlPanelEditor("ED"));
+            ip = ItemPalette.getDefault("Test ItemPalette", es);
             ip.pack();
         });
         TextItemPanel t = new TextItemPanel(ip, "test", es);
