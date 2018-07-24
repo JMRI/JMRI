@@ -26,6 +26,13 @@ public class JComboBoxUtil {
      * @param inComboBox the JComboBox to setup
      */
     public static <E extends Object, T extends JComboBox<E>> void setupComboBoxMaxRows(T inComboBox) {
+        boolean isDummy = false;
+        if (inComboBox.getItemCount() == 0 || (inComboBox.getItemCount() == 1 && inComboBox.getItemAt(0).equals(""))) {
+            // Add a row to insure the proper cell height
+            inComboBox.insertItemAt((E) makeObj("XYZxyz"), 0);
+            isDummy = true;
+        }
+
         ListModel<E> lm = inComboBox.getModel();
         JList<E> list = new JList<>(lm);
         ListCellRenderer renderer = list.getCellRenderer();
@@ -48,9 +55,14 @@ public class JComboBoxUtil {
             itemsPerScreen = (int) maxWindowBounds.getHeight() / maxItemHeight;
         }
 
-        // Set the minimum size to 8 rows
-        int c = Math.max(Math.min(itemsPerScreen - 1, inComboBox.getItemCount()), 8);
+        int c = Math.max(itemsPerScreen - 1, 8);
+        if (isDummy) {
+            inComboBox.removeItemAt(0);
+        }
         inComboBox.setMaximumRowCount(c);
     }
 
+    private static Object makeObj(final String item)  {
+     return new Object() { public String toString() { return item; } };
+   }
 }
