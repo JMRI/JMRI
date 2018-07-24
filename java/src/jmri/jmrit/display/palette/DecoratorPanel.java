@@ -195,6 +195,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         makeFontPanels();
         this.add(makeTextPanel("Text", sample, true));
         _samplePanel.add(sample);
+        _selectedButton = FOREGROUND_BUTTON;
+        _selectedState = "Text";
+        log.debug("DragDecoratorLabel size {} | panel size {}", sample.getPreferredSize(), _samplePanel.getPreferredSize());
         finishInit(true);
     }
 
@@ -488,11 +491,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                             } else {
                                 c = _editor.getTargetPanel().getBackground();
                             }
-/*                            Color c = util.getBackground();
-                            if (c ==null) {
-                                c = _editor.getTargetPanel().getBackground();
-                            }*/
-//                            _chooser.setColor(_editor.getTargetPanel().getBackground());
                             _chooser.setColor(c);
                             util.setHasBackground(true);
                             pos.setOpaque(true);
