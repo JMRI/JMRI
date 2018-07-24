@@ -1,7 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -22,7 +21,7 @@ public class TextItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EditorScaffold es = new EditorScaffold();
+        ControlPanelEditor es = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             ip = ItemPalette.getDefault("Test ItemPalette", new ControlPanelEditor("ED"));
             ip.pack();

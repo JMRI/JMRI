@@ -22,7 +22,7 @@ public class DetectionPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor es = new ControlPanelEditor("ED");
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = ItemPalette.getDefault("Test ItemPalette", new ControlPanelEditor("ED"));
+            ip = ItemPalette.getDefault("Test ItemPalette", new ControlPanelEditor("CPE"));
             ip.pack();
         });
         TextItemPanel tip = new TextItemPanel(ip, "test", es);
