@@ -18,8 +18,6 @@ abstract public class AbstractController {
     boolean isValid = false;
     boolean canBuildList = true;
 
-    ControllerInterface thislistener = null;
-
     /**
      * isValid is used to indicate if the Controller is created. If false, we
      * can null the controller and reduce overhead.
@@ -80,12 +78,9 @@ abstract public class AbstractController {
 
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
-     *
+     * @param listener listener to add to listeners list
      */
     public void addControllerListener(ControllerInterface listener) {
-        this.thislistener = listener; //remember who we are
-//        DeviceServer x = (DeviceServer) listener; //remember who we are
-        
         if (listeners == null) {
             listeners = new ArrayList<>(1);
         }
