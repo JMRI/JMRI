@@ -78,11 +78,11 @@ abstract public class AbstractController {
 
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
-     *
+     * @param listener listener to add to listeners list
      */
     public void addControllerListener(ControllerInterface listener) {
         if (listeners == null) {
-            listeners = new ArrayList<ControllerInterface>(1);
+            listeners = new ArrayList<>(1);
         }
         if (!listeners.contains(listener)) {
             listeners.add(listener);

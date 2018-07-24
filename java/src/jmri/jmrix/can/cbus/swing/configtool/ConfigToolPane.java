@@ -18,6 +18,10 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 /**
  * Pane for user creation of Sensor, Turnouts and Lights (?) that are linked to CBUS
  * events.
@@ -32,6 +36,8 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     static final int NRECORDERS = 6;
     CbusEventRecorder[] recorders = new CbusEventRecorder[NRECORDERS];
 
+    
+    
     public ConfigToolPane() {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -48,11 +54,11 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive") {
-
             @Override
             void create(String name) {
                 if (memo != null) {
                     ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
+                    // provideSensor does not yet add the conn prefix + S
                 } else {
                     InstanceManager.sensorManagerInstance().provideSensor("MS" + name); // S for Sensor
                 }
@@ -66,7 +72,8 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             @Override
             void create(String name) {
                 if (memo != null) {
-                    ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout("MS" + name);
+                    ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout(name); 
+                    // auto adds the conn. prefix + T
                 } else {
                     InstanceManager.turnoutManagerInstance().provideTurnout("MT" + name); // T for Turnout
                 }
@@ -75,6 +82,22 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         makeTurnout.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TitleAddX", Bundle.getMessage("BeanNameTurnout"))));
         add(makeTurnout);
 
+        
+        // add light
+        makeLight = new MakeNamedBean("LabelEventLightOn", "LabelEventLightOff") {
+            @Override
+            void create(String name) {
+                if (memo != null) {
+                    ((jmri.LightManager) memo.get(jmri.LightManager.class)).provideLight("ML" + name);
+                    // provideLight does not yet add a custom conn prefix + L
+                } else {
+                    InstanceManager.lightManagerInstance().provideLight("ML" + name); // L for Light
+                }
+            }
+        };
+        makeLight.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TitleAddX", Bundle.getMessage("BeanNameLight"))));
+        add(makeLight);        
+        
     }
 
     TrafficController tc;
@@ -97,12 +120,14 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
     MakeNamedBean makeSensor;
     MakeNamedBean makeTurnout;
+    MakeNamedBean makeLight;
 
     @Override
     public void reply(jmri.jmrix.can.CanReply m) {
         // forward to anybody waiting to capture
         makeSensor.reply(m);
         makeTurnout.reply(m);
+        makeLight.reply(m);
         for (int i = 0; i < recorders.length; i++) {
             if (recorders[i].waiting()) {
                 recorders[i].reply(m);
@@ -116,12 +141,19 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         // forward to anybody waiting to capture
         makeSensor.message(m);
         makeTurnout.message(m);
+        makeLight.message(m);
         for (int i = 0; i < recorders.length; i++) {
             if (recorders[i].waiting()) {
                 recorders[i].message(m);
                 break;
             }
         }
+    }
+    
+    
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
     }
 
     @Override
@@ -137,11 +169,14 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
 
         JTextField f1 = new JTextField(20);
         JTextField f2 = new JTextField(20);
-
+        JTextField f3 = new JTextField(20);
+        
         JButton bc;
 
         JToggleButton b1 = new JToggleButton(Bundle.getMessage("ButtonCaptureNext"));
         JToggleButton b2 = new JToggleButton(Bundle.getMessage("ButtonCaptureNext"));
+        JToggleButton b3 = new JToggleButton(Bundle.getMessage("ButtonCaptureNext"));
+        
 
         /**
          * Create CBUS NamedBean using a JPanel for user interaction.
@@ -221,6 +256,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f2.setText(CbusMessage.toAddress(m));
                 b2.setSelected(false);
             }
+            if (b3.isSelected()) {
+                f3.setText(CbusMessage.toAddress(m));
+                b3.setSelected(false);
+            }
         }
 
         @Override
@@ -232,6 +271,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             if (b2.isSelected()) {
                 f2.setText(CbusMessage.toAddress(m));
                 b2.setSelected(false);
+            }
+            if (b3.isSelected()) {
+                f3.setText(CbusMessage.toAddress(m));
+                b3.setSelected(false);
             }
         }
     }
@@ -288,5 +331,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
+
+        private static final Logger log = LoggerFactory.getLogger(ConfigToolPane.class);
 
 }

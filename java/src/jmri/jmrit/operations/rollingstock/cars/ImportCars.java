@@ -53,8 +53,6 @@ public class ImportCars extends ImportRollingStock {
     private final boolean autoCreateColors = true;
     private final boolean autoCreateOwners = true;
 
-    private static final String LOCATION_TRACK_SEPARATOR = "-";
-
     private static final int CAR_NUMBER = 0;
     private static final int CAR_ROAD = 1;
     private static final int CAR_TYPE = 2;

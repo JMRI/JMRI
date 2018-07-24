@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -67,20 +68,20 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0
     private static final int CONSIST_MAX = 127;
     private static final int LOC_ADR_MIN = 0;    // loco address range
-    private static final int LOC_ADR_MAX = 10239;
+    private static final int LOC_ADR_MAX = 9999; // max range for NCE
     private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address
 
     private int consistNum = 0;     // consist being worked
     private boolean newConsist = true;    // new consist is displayed
 
-    private int locoNum = LEAD;     // which loco, 0 = lead, 1 = rear, 2 = mid
+    private int locoPosition = LEAD;     // which loco memory bank, 0 = lead, 1 = rear, 2 = mid
     private static final int LEAD = 0;
     private static final int REAR = 1;
     private static final int MID = 2;
 
     // Verify that loco isn't already a lead or rear loco
     private int consistNumVerify;     // which consist number we're checking
-    private int[] locoVerifyList = new int[6]; // list of locos to verify
+    private final int[] locoVerifyList = new int[6]; // list of locos to verify
     private int verifyType;      // type of verification
     private static final int VERIFY_DONE = 0;
     private static final int VERIFY_LEAD_REAR = 1;  // lead or rear loco
@@ -99,7 +100,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private boolean emptyConsistSearch = false;  // when true searching for an empty consist
     private boolean verifyRosterMatch = false;   // when true verify that roster matches consist in NCE CS
 
-    private int emptyConsistSearchStart = CONSIST_MAX; // where to begin search for empty consist
+    private static final int CONSIST_ERROR = -1;
+    private static final int ADDRESS_ERROR = -1;
 
     private int consistCount = 0;      // search count not to exceed CONSIST_MAX
 
@@ -253,7 +255,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // build menu
         JMenu toolMenu = new JMenu("Tools");
         toolMenu.add(new NceConsistRosterMenu("Roster", jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
-        List<JMenu> l = new ArrayList<JMenu>();
+        List<JMenu> l = new ArrayList<>();
         l.add(toolMenu);
         return l;
     }
@@ -268,59 +270,42 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // the following code sets the frame's initial state
 
         textConsist.setText(rb.getString("L_Consist"));
-        textConsist.setVisible(true);
 
         textStatus.setText(rb.getString("L_Status"));
-        textStatus.setVisible(true);
 
         consistStatus.setText(rb.getString("EditStateUNKNOWN"));
-        consistStatus.setVisible(true);
 
         previousButton.setText(rb.getString("KeyPREVIOUS"));
-        previousButton.setVisible(true);
         previousButton.setToolTipText(rb.getString("ToolTipPrevious"));
 
         nextButton.setText(rb.getString("KeyNEXT"));
-        nextButton.setVisible(true);
         nextButton.setToolTipText(rb.getString("ToolTipNext"));
 
         getButton.setText(rb.getString("KeyGET"));
-        getButton.setVisible(true);
         getButton.setToolTipText(rb.getString("ToolTipGet"));
 
         consistTextField.setText(Integer.toString(CONSIST_MAX));
-        consistTextField.setToolTipText(rb.getString("ToolTipConsist"));
+        consistTextField.setToolTipText(MessageFormat.format(rb.getString("ToolTipConsist"), new Object[] {CONSIST_MIN, CONSIST_MAX}));
         consistTextField.setMaximumSize(new Dimension(consistTextField
                 .getMaximumSize().width,
                 consistTextField.getPreferredSize().height));
 
         textLocomotive.setText(rb.getString("L_Loco"));
-        textLocomotive.setVisible(true);
         textRoster.setText(rb.getString("L_Roster"));
-        textRoster.setVisible(true);
         textAddress.setText(rb.getString("L_Address"));
-        textAddress.setVisible(true);
         textAddrType.setText(rb.getString("L_Type"));
-        textAddrType.setVisible(true);
         textDirection.setText(rb.getString("L_Direction"));
-        textDirection.setVisible(true);
 
         textConRoster.setText(rb.getString("L_Consist"));
-        textConRoster.setVisible(true);
         textConRoadName.setText("");
-        textConRoadName.setVisible(true);
         textConRoadNumber.setText("");
-        textConRoadNumber.setVisible(true);
         textConModel.setText("");
-        textConModel.setVisible(true);
 
         throttleButton.setText(rb.getString("L_Throttle"));
-        throttleButton.setVisible(true);
         throttleButton.setEnabled(true);
         throttleButton.setToolTipText(rb.getString("ToolTipThrottle"));
 
         clearCancelButton.setText(rb.getString("KeyCLEAR"));
-        clearCancelButton.setVisible(true);
         clearCancelButton.setEnabled(false);
         clearCancelButton.setToolTipText(rb.getString("ToolTipClear"));
 
@@ -335,24 +320,19 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         deleteButton.setToolTipText(rb.getString("ToolTipDelete"));
 
         backUpButton.setText(rb.getString("KeyBACKUP"));
-        backUpButton.setVisible(true);
         backUpButton.setToolTipText(rb.getString("ToolTipBackup"));
 
         restoreButton.setText(rb.getString("KeyRESTORE"));
-        restoreButton.setVisible(true);
         restoreButton.setToolTipText(rb.getString("ToolTipRestore"));
 
         checkBoxEmpty.setText(rb.getString("KeyEMPTY"));
-        checkBoxEmpty.setVisible(true);
         checkBoxEmpty.setToolTipText(rb.getString("ToolTipEmpty"));
 
         checkBoxVerify.setText(rb.getString("KeyVERIFY"));
-        checkBoxVerify.setVisible(true);
         checkBoxVerify.setSelected(true);
         checkBoxVerify.setToolTipText(rb.getString("ToolTipVerify"));
 
         checkBoxConsist.setText(rb.getString("KeyCONSIST"));
-        checkBoxConsist.setVisible(true);
         checkBoxConsist.setSelected(true);
         checkBoxConsist.setToolTipText(rb.getString("ToolTipConsistCkBox"));
 
@@ -783,33 +763,33 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     // gets the user supplied consist number and then reads NCE CS memory
     private int getConsist() {
         newConsist = true;
-        int cN = validConsist(consistTextField.getText());
-        if (!validConsist()) {
+        int consistNumber = validConsist(consistTextField.getText());
+        if (consistNumber == CONSIST_ERROR) {
             consistSearchPrevious = false;
             consistSearchNext = false;
-            return cN;
+            return consistNumber;
         }
         if (consistSearchNext || consistSearchPrevious) {
             consistCount = 0; // used to determine if all 127 consist have been read
             consistStatus.setText(rb.getString("EditStateSEARCH"));
         } else {
             consistStatus.setText(rb.getString("EditStateWAIT"));
-            if (cN == consistNum) {
+            if (consistNumber == consistNum) {
                 newConsist = false;
             }
         }
 
         // if busy don't request
         if (waiting > 0) {
-            return cN;
+            return consistNumber;
         }
 
         if (consistSearchNext) {
-            readConsistMemory(cN - 1, LEAD); // decrement consist number
+            readConsistMemory(consistNumber - 7, LEAD);
         } else {
-            readConsistMemory(cN, LEAD);
+            readConsistMemory(consistNumber, LEAD); // Get or Previous button
         }
-        return cN;
+        return consistNumber;
     }
 
     /**
@@ -818,50 +798,50 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      * @return true if valid
      */
     private boolean validConsist() {
-        int cN = validConsist(consistTextField.getText());
-        if (cN == -1) {
+        int consistNumber = validConsist(consistTextField.getText());
+        if (consistNumber == CONSIST_ERROR) {
             consistStatus.setText(rb.getString("EditStateERROR"));
             JOptionPane.showMessageDialog(this,
-                    rb.getString("ToolTipConsist"), rb.getString("DIALOG_NceConsist"),
+                    MessageFormat.format(rb.getString("ToolTipConsist"), new Object[] {CONSIST_MIN, CONSIST_MAX}), rb.getString("DIALOG_NceConsist"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
-    // Check for valid consist number, return number if valid, -1 if not.
+    // Check for valid consist number, return number if valid, -1 or CONSIST_ERROR if not.
     private int validConsist(String s) {
-        int cN;
+        int consistNumber;
         try {
-            cN = Integer.parseInt(s);
+            consistNumber = Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            return -1;
+            return CONSIST_ERROR;
         }
-        if (cN < CONSIST_MIN || cN > CONSIST_MAX) {
-            return -1;
+        if (consistNumber < CONSIST_MIN || consistNumber > CONSIST_MAX) {
+            return CONSIST_ERROR;
         } else {
-            return cN;
+            return consistNumber;
         }
     }
 
     /**
      * @param s loco address
-     * @return number if valid, -1 if not
+     * @return number if valid, -1 or ADDRESS_ERROR if not
      */
     private int validLocoAdr(String s) {
-        int lA;
+        int locoAddress;
         try {
-            lA = Integer.parseInt(s);
+            locoAddress = Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            lA = -1;
+            locoAddress = ADDRESS_ERROR;
         }
-        if (lA < LOC_ADR_MIN || lA > LOC_ADR_MAX) {
+        if (locoAddress < LOC_ADR_MIN || locoAddress > LOC_ADR_MAX) {
             JOptionPane.showMessageDialog(this,
                     rb.getString("DIALOG_AddrRange"), rb.getString("DIALOG_NceConsist"),
                     JOptionPane.ERROR_MESSAGE);
-            return -1;
+            return ADDRESS_ERROR;
         } else {
-            return lA;
+            return locoAddress;
         }
     }
 
@@ -880,40 +860,41 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
     /**
      * Reads 16 bytes of NCE consist memory based on consist number and loco
-     * number 0=lead 1=rear 2=mid
+     * position in the consist 0=lead 1=rear 2=mid
      */
-    private void readConsistMemory(int consistNum, int eNum) {
-        locoNum = eNum;
+    private void readConsistMemory(int consistNum, int engPosition) {
+        locoPosition = engPosition;
         int nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
-        if (eNum == REAR) {
+        if (locoPosition == REAR) {
             nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_REAR;
         }
-        if (eNum == MID) {
+        if (locoPosition == MID) {
             nceMemAddr = (consistNum * 8) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_MID;
         }
+        log.debug("Read consist ({}) position ({}) NCE memory address ({})", consistNum, engPosition, Integer.toHexString(nceMemAddr));
         byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
         sendNceMessage(bl, NceMessage.REPLY_16);
     }
 
-    NceConsistRosterEntry cre;
+    NceConsistRosterEntry nceConsistRosterEntry;
 
     private void loadRosterEntry(String entry) {
-        cre = NceConsistRoster.instance().entryFromTitle(entry);
-        consistTextField.setText(cre.getConsistNumber());
-        int cNum = validConsist(cre.getConsistNumber());
+        nceConsistRosterEntry = NceConsistRoster.instance().entryFromTitle(entry);
+        consistTextField.setText(nceConsistRosterEntry.getConsistNumber());
+        int cNum = validConsist(nceConsistRosterEntry.getConsistNumber());
 
         if (0 < cNum) {
             log.debug("verify consist matches roster selection");
             verifyRosterMatch = true;
             consistNum = getConsist();
         } else {
-            if (cre.getConsistNumber().equals(rb.getString("CLEARED")) || cre.getConsistNumber().equals("0")) {
+            if (nceConsistRosterEntry.getConsistNumber().equals(rb.getString("CLEARED")) || nceConsistRosterEntry.getConsistNumber().equals("0")) {
                 log.debug("search for empty consist");
-                consistTextField.setText(Integer.toString(emptyConsistSearchStart));
+                consistTextField.setText(Integer.toString(CONSIST_MAX));
                 emptyConsistSearch = true;
                 consistSearchNext = true;
                 consistNum = getConsist();
-                loadFullRoster(cre);
+                loadFullRoster(nceConsistRosterEntry);
                 saveLoadButton.setEnabled(false);
             } else {
                 log.error("roster consist number is out of range: " + consistNum);
@@ -922,61 +903,61 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
-    private void loadFullRoster(NceConsistRosterEntry cre) {
+    private void loadFullRoster(NceConsistRosterEntry nceConsistRosterEntry) {
         // get road name, number and model
-        textConRoadName.setText(cre.getRoadName());
-        textConRoadNumber.setText(cre.getRoadNumber());
-        textConModel.setText(cre.getModel());
+        textConRoadName.setText(nceConsistRosterEntry.getRoadName());
+        textConRoadNumber.setText(nceConsistRosterEntry.getRoadNumber());
+        textConModel.setText(nceConsistRosterEntry.getModel());
 
         // load lead loco
-        locoTextField1.setText(cre.getLoco1DccAddress());
-        adrButton1.setText(cre.isLoco1LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
-        dirButton1.setText(convertDTD(cre.getLoco1Direction()));
+        locoTextField1.setText(nceConsistRosterEntry.getLoco1DccAddress());
+        adrButton1.setText(nceConsistRosterEntry.isLoco1LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
+        dirButton1.setText(convertDTD(nceConsistRosterEntry.getLoco1Direction()));
         locoRosterBox1.setEnabled(true);
         locoTextField1.setEnabled(true);
         adrButton1.setEnabled(true);
         dirButton1.setEnabled(true);
 
         // load rear loco
-        locoTextField2.setText(cre.getLoco2DccAddress());
-        adrButton2.setText(cre.isLoco2LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
-        dirButton2.setText(convertDTD(cre.getLoco2Direction()));
+        locoTextField2.setText(nceConsistRosterEntry.getLoco2DccAddress());
+        adrButton2.setText(nceConsistRosterEntry.isLoco2LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
+        dirButton2.setText(convertDTD(nceConsistRosterEntry.getLoco2Direction()));
         locoRosterBox2.setEnabled(true);
         locoTextField2.setEnabled(true);
         adrButton2.setEnabled(true);
         dirButton2.setEnabled(true);
 
         // load Mid1 loco
-        locoTextField3.setText(cre.getLoco3DccAddress());
-        adrButton3.setText(cre.isLoco3LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
-        dirButton3.setText(convertDTD(cre.getLoco3Direction()));
+        locoTextField3.setText(nceConsistRosterEntry.getLoco3DccAddress());
+        adrButton3.setText(nceConsistRosterEntry.isLoco3LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
+        dirButton3.setText(convertDTD(nceConsistRosterEntry.getLoco3Direction()));
         locoRosterBox3.setEnabled(true);
         locoTextField3.setEnabled(true);
         adrButton3.setEnabled(true);
         dirButton3.setEnabled(true);
 
         // load Mid2 loco
-        locoTextField4.setText(cre.getLoco4DccAddress());
-        adrButton4.setText(cre.isLoco4LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
-        dirButton4.setText(convertDTD(cre.getLoco4Direction()));
+        locoTextField4.setText(nceConsistRosterEntry.getLoco4DccAddress());
+        adrButton4.setText(nceConsistRosterEntry.isLoco4LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
+        dirButton4.setText(convertDTD(nceConsistRosterEntry.getLoco4Direction()));
         locoRosterBox4.setEnabled(true);
         locoTextField4.setEnabled(true);
         adrButton4.setEnabled(true);
         dirButton4.setEnabled(true);
 
         // load Mid3 loco
-        locoTextField5.setText(cre.getLoco5DccAddress());
-        adrButton5.setText(cre.isLoco5LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
-        dirButton5.setText(convertDTD(cre.getLoco5Direction()));
+        locoTextField5.setText(nceConsistRosterEntry.getLoco5DccAddress());
+        adrButton5.setText(nceConsistRosterEntry.isLoco5LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
+        dirButton5.setText(convertDTD(nceConsistRosterEntry.getLoco5Direction()));
         locoRosterBox5.setEnabled(true);
         locoTextField5.setEnabled(true);
         adrButton5.setEnabled(true);
         dirButton5.setEnabled(true);
 
         // load Mid4 loco
-        locoTextField6.setText(cre.getLoco6DccAddress());
-        adrButton6.setText(cre.isLoco6LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
-        dirButton6.setText(convertDTD(cre.getLoco6Direction()));
+        locoTextField6.setText(nceConsistRosterEntry.getLoco6DccAddress());
+        adrButton6.setText(nceConsistRosterEntry.isLoco6LongAddress() ? rb.getString("KeyLONG") : rb.getString("KeySHORT"));
+        dirButton6.setText(convertDTD(nceConsistRosterEntry.getLoco6Direction()));
         locoRosterBox6.setEnabled(true);
         locoTextField6.setEnabled(true);
         adrButton6.setEnabled(true);
@@ -989,25 +970,25 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      *
      * @return true if match
      */
-    private boolean consistRosterMatch(NceConsistRosterEntry cre) {
-        if (consistTextField.getText().equals(cre.getConsistNumber())
-                && locoTextField1.getText().equals(cre.getLoco1DccAddress())
-                && locoTextField2.getText().equals(cre.getLoco2DccAddress())
-                && locoTextField3.getText().equals(cre.getLoco3DccAddress())
-                && locoTextField4.getText().equals(cre.getLoco4DccAddress())
-                && locoTextField5.getText().equals(cre.getLoco5DccAddress())
-                && locoTextField6.getText().equals(cre.getLoco6DccAddress())) {
+    private boolean consistRosterMatch(NceConsistRosterEntry nceConsistRosterEntry) {
+        if (consistTextField.getText().equals(nceConsistRosterEntry.getConsistNumber())
+                && locoTextField1.getText().equals(nceConsistRosterEntry.getLoco1DccAddress())
+                && locoTextField2.getText().equals(nceConsistRosterEntry.getLoco2DccAddress())
+                && locoTextField3.getText().equals(nceConsistRosterEntry.getLoco3DccAddress())
+                && locoTextField4.getText().equals(nceConsistRosterEntry.getLoco4DccAddress())
+                && locoTextField5.getText().equals(nceConsistRosterEntry.getLoco5DccAddress())
+                && locoTextField6.getText().equals(nceConsistRosterEntry.getLoco6DccAddress())) {
             // match!  Only load the elements needed
             if (newConsist) {
-                textConRoadName.setText(cre.getRoadName());
-                textConRoadNumber.setText(cre.getRoadNumber());
-                textConModel.setText(cre.getModel());
-                dirButton1.setText(convertDTD(cre.getLoco1Direction()));
-                dirButton2.setText(convertDTD(cre.getLoco2Direction()));
-                dirButton3.setText(convertDTD(cre.getLoco3Direction()));
-                dirButton4.setText(convertDTD(cre.getLoco4Direction()));
-                dirButton5.setText(convertDTD(cre.getLoco5Direction()));
-                dirButton6.setText(convertDTD(cre.getLoco6Direction()));
+                textConRoadName.setText(nceConsistRosterEntry.getRoadName());
+                textConRoadNumber.setText(nceConsistRosterEntry.getRoadNumber());
+                textConModel.setText(nceConsistRosterEntry.getModel());
+                dirButton1.setText(convertDTD(nceConsistRosterEntry.getLoco1Direction()));
+                dirButton2.setText(convertDTD(nceConsistRosterEntry.getLoco2Direction()));
+                dirButton3.setText(convertDTD(nceConsistRosterEntry.getLoco3Direction()));
+                dirButton4.setText(convertDTD(nceConsistRosterEntry.getLoco4Direction()));
+                dirButton5.setText(convertDTD(nceConsistRosterEntry.getLoco5Direction()));
+                dirButton6.setText(convertDTD(nceConsistRosterEntry.getLoco6Direction()));
             }
             return true;
         } else {
@@ -1015,7 +996,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
-    private boolean enablePartialMatch = true;
+    private final boolean enablePartialMatch = true;
 
     /**
      * checks to see if some loco addresses in NCE consist match roster updates
@@ -1057,7 +1038,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         return true;
     }
 
-    protected List<NceConsistRosterEntry> consistList = new ArrayList<NceConsistRosterEntry>();
+    protected List<NceConsistRosterEntry> consistList = new ArrayList<>();
 
     /**
      * returns true if update successful
@@ -1075,7 +1056,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         if (locoTextField2.getText().equals("")) {
             return false;
         }
-        NceConsistRosterEntry cre;
+        NceConsistRosterEntry nceConsistRosterEntry;
         consistList = NceConsistRoster.instance().matchingList(null, null,
                 null, null, null, null, null, null, null, id);
         // if consist doesn't exist in roster ask user if they want to create one
@@ -1085,11 +1066,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return false;
             }
-            cre = new NceConsistRosterEntry();
-            NceConsistRoster.instance().addEntry(cre);
+            nceConsistRosterEntry = new NceConsistRosterEntry();
+            NceConsistRoster.instance().addEntry(nceConsistRosterEntry);
             // roster entry exists, does it match?
         } else {
-            cre = NceConsistRoster.instance().entryFromTitle(id);
+            nceConsistRosterEntry = NceConsistRoster.instance().entryFromTitle(id);
             // if all of the loco addresses match, just update without telling user
             consistList = NceConsistRoster.instance()
                     .matchingList(null, null, null, locoTextField1.getText(),
@@ -1099,11 +1080,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // if it doesn't match, do we want to modify it?
             if (consistList.isEmpty()) {
                 if (JOptionPane.showConfirmDialog(null, rb.getString("DIALOG_ConfirmUpd1") + " " + id
-                        + " " + rb.getString("DIALOG_ConfirmUpd2") + getRosterText(cre),
+                        + " " + rb.getString("DIALOG_ConfirmUpd2") + getRosterText(nceConsistRosterEntry),
                         rb.getString("DIALOG_NceUpdate"), JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
                     // update consist if command was to clear
                     if (consistNumber.equals(rb.getString("CLEARED"))) {
-                        cre.setConsistNumber(consistNumber);
+                        nceConsistRosterEntry.setConsistNumber(consistNumber);
                         writeRosterFile();
                     }
                     return false;
@@ -1112,35 +1093,35 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             log.debug("Modify consist " + id);
         }
         // save all elements of a consist roster
-        cre.setId(id);
-        cre.setConsistNumber(consistNumber);
-        cre.setRoadName(textConRoadName.getText());
-        cre.setRoadNumber(textConRoadNumber.getText());
-        cre.setModel(textConModel.getText());
+        nceConsistRosterEntry.setId(id);
+        nceConsistRosterEntry.setConsistNumber(consistNumber);
+        nceConsistRosterEntry.setRoadName(textConRoadName.getText());
+        nceConsistRosterEntry.setRoadNumber(textConRoadNumber.getText());
+        nceConsistRosterEntry.setModel(textConModel.getText());
         // save lead loco
-        cre.setLoco1DccAddress(locoTextField1.getText());
-        cre.setLoco1LongAddress(adrButton1.getText().equals(rb.getString("KeyLONG")));
-        cre.setLoco1Direction(directionDTD(dirButton1));
+        nceConsistRosterEntry.setLoco1DccAddress(locoTextField1.getText());
+        nceConsistRosterEntry.setLoco1LongAddress(adrButton1.getText().equals(rb.getString("KeyLONG")));
+        nceConsistRosterEntry.setLoco1Direction(directionDTD(dirButton1));
         // save rear loco
-        cre.setLoco2DccAddress(locoTextField2.getText());
-        cre.setLoco2LongAddress(adrButton2.getText().equals(rb.getString("KeyLONG")));
-        cre.setLoco2Direction(directionDTD(dirButton2));
+        nceConsistRosterEntry.setLoco2DccAddress(locoTextField2.getText());
+        nceConsistRosterEntry.setLoco2LongAddress(adrButton2.getText().equals(rb.getString("KeyLONG")));
+        nceConsistRosterEntry.setLoco2Direction(directionDTD(dirButton2));
         // save Mid1 loco
-        cre.setLoco3DccAddress(locoTextField3.getText());
-        cre.setLoco3LongAddress(adrButton3.getText().equals(rb.getString("KeyLONG")));
-        cre.setLoco3Direction(directionDTD(dirButton3));
+        nceConsistRosterEntry.setLoco3DccAddress(locoTextField3.getText());
+        nceConsistRosterEntry.setLoco3LongAddress(adrButton3.getText().equals(rb.getString("KeyLONG")));
+        nceConsistRosterEntry.setLoco3Direction(directionDTD(dirButton3));
         // save Mid2 loco
-        cre.setLoco4DccAddress(locoTextField4.getText());
-        cre.setLoco4LongAddress(adrButton4.getText().equals(rb.getString("KeyLONG")));
-        cre.setLoco4Direction(directionDTD(dirButton4));
+        nceConsistRosterEntry.setLoco4DccAddress(locoTextField4.getText());
+        nceConsistRosterEntry.setLoco4LongAddress(adrButton4.getText().equals(rb.getString("KeyLONG")));
+        nceConsistRosterEntry.setLoco4Direction(directionDTD(dirButton4));
         // save Mid3 loco
-        cre.setLoco5DccAddress(locoTextField5.getText());
-        cre.setLoco5LongAddress(adrButton5.getText().equals(rb.getString("KeyLONG")));
-        cre.setLoco5Direction(directionDTD(dirButton5));
+        nceConsistRosterEntry.setLoco5DccAddress(locoTextField5.getText());
+        nceConsistRosterEntry.setLoco5LongAddress(adrButton5.getText().equals(rb.getString("KeyLONG")));
+        nceConsistRosterEntry.setLoco5Direction(directionDTD(dirButton5));
         // save Mid4 loco
-        cre.setLoco6DccAddress(locoTextField6.getText());
-        cre.setLoco6LongAddress(adrButton6.getText().equals(rb.getString("KeyLONG")));
-        cre.setLoco6Direction(directionDTD(dirButton6));
+        nceConsistRosterEntry.setLoco6DccAddress(locoTextField6.getText());
+        nceConsistRosterEntry.setLoco6LongAddress(adrButton6.getText().equals(rb.getString("KeyLONG")));
+        nceConsistRosterEntry.setLoco6Direction(directionDTD(dirButton6));
 
         writeRosterFile();
         return true;
@@ -1207,7 +1188,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         conRosterBox.addActionListener(consistRosterListener);
     }
 
-    // can the consist be loading into NCE memory?
+    // can the consist be loaded into NCE memory?
     private boolean canLoad() {
         if (locoTextField1.getText().equals("")) {
             return false;
@@ -1252,9 +1233,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
         if (saveLoadButton.getText().equals(rb.getString("KeyLOAD"))) {
             return true;
-        } else if (exactMatch) // no need to save, exact match!
-        {
-            return false;
+        } else if (exactMatch) {
+            return false; // no need to save, exact match!
         } else {
             return true;
         }
@@ -1351,25 +1331,25 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     // A single byte response is expected from commands
     // A 16 byte response is expected when loading a consist or searching
     @Override
-    public void reply(NceReply r) {
+    public void reply(NceReply nceReply) {
         if (waiting <= 0) {
             log.error("unexpected response");
             return;
         }
         waiting--;
 
-        if (r.getNumDataElements() != replyLen) {
+        if (nceReply.getNumDataElements() != replyLen) {
             consistStatus.setText(rb.getString("EditStateERROR"));
             log.error("reply length error, expecting: " + replyLen + " got: "
-                    + r.getNumDataElements());
+                    + nceReply.getNumDataElements());
             return;
         }
 
         // response to commands
         if (replyLen == NceMessage.REPLY_1) {
             // Looking for proper response
-            int recChar = r.getElement(0);
-            log.debug("command reply: " + recChar);
+            int recChar = nceReply.getElement(0);
+            log.debug("command reply: {}", recChar);
             if (recChar == '!') {
                 if (locoSearch && waiting == 0) {
                     readConsistMemory(consistNumVerify, LEAD);
@@ -1394,25 +1374,24 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // are we verifying that loco isn't already part of a consist?
             if (locoSearch) {
                 // search the 16 bytes for a loco match
-                for (int i = 0; i < 16;) {
-                    int rC = r.getElement(i++);
-                    rC = (rC << 8) & 0xFF00;
-                    int rC_l = r.getElement(i++);
-                    rC_l = rC_l & 0xFF;
-                    rC = rC + rC_l;
+                for (int i = 0; i < NceMessage.REPLY_16;) {
+                    int recChar_High = nceReply.getElement(i++);
+                    recChar_High = (recChar_High << 8) & 0xFF00;
+                    int recChar_Low = nceReply.getElement(i++);
+                    recChar_Low = recChar_Low & 0xFF;
+                    int locoAddress = recChar_High + recChar_Low;
                     // does it match any of the locos?
                     for (int j = 0; j < locoVerifyList.length; j++) {
-                        if (locoVerifyList[j] == 0) // done searching?
-                        {
-                            break;
+                        if (locoVerifyList[j] == 0) {
+                            break;  // done searching
                         }
-                        if (rC == locoVerifyList[j]) {
+                        if (locoAddress == locoVerifyList[j]) {
                             // ignore matching the consist that we're adding the
                             // loco
                             if (consistNumVerify != consistNum) {
                                 locoSearch = false; // quit the search
                                 consistStatus.setText(rb.getString("EditStateERROR"));
-                                locoNumInUse = rC & 0x3FFF;
+                                locoNumInUse = locoAddress & 0x3FFF;
                                 queueError(ERROR_LOCO_IN_USE);
                                 return;
                             }
@@ -1421,9 +1400,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     consistNumVerify++;
                 }
                 if (consistNumVerify > CONSIST_MAX) {
-                    if (locoNum == LEAD) {
+                    if (locoPosition == LEAD) {
                         // now verify the rear loco consist
-                        locoNum = REAR;
+                        locoPosition = REAR;
                         consistNumVerify = 0;
                     } else {
                         // verify complete, loco address is unique
@@ -1454,20 +1433,20 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     }
                 }
                 // continue verify
-                readConsistMemory(consistNumVerify, locoNum);
+                readConsistMemory(consistNumVerify, locoPosition);
                 return;
             }
-            // are we searching?
+            // are we searching for a consist?
             if (consistSearchNext) {
-                for (int i = 15; i > 0;) {
-                    int rC_l = r.getElement(i--);
-                    rC_l = rC_l & 0xFF;
-                    int rC = r.getElement(i--);
-                    rC = (rC << 8) & 0xFF00;
-                    rC = rC + rC_l;
+                for (int i = NceMessage.REPLY_16 - 1; i > 0;) {
+                    int recChar_Low = nceReply.getElement(i--);
+                    recChar_Low = recChar_Low & 0xFF;
+                    int recChar_High = nceReply.getElement(i--);
+                    recChar_High = (recChar_High << 8) & 0xFF00;
+                    int locoAddress = recChar_High + recChar_Low;
 
                     if (emptyConsistSearch) {
-                        if (rC == 0) {
+                        if (locoAddress == 0) {
                             // found an empty consist!
                             consistSearchNext = false;
                             emptyConsistSearch = false;
@@ -1476,14 +1455,15 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                             return;
                         }
                     } else if (checkBoxEmpty.isSelected()) {
-                        if (rC == 0 && consistCount > 0) {
+                        if (locoAddress == 0 && consistCount > 0) {
                             // found an empty consist!
+                            log.debug("Empty consist ({})", consistNum);
                             consistSearchNext = false;
                             // update the panel
                             readConsistMemory(consistNum, LEAD);
                             return;
                         }
-                    } else if (rC != 0 && consistCount > 0) {
+                    } else if (locoAddress != 0 && consistCount > 0) {
                         // found a consist!
                         consistSearchNext = false;
                         readConsistMemory(consistNum, LEAD);
@@ -1516,23 +1496,21 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             }
             // are we searching?
             if (consistSearchPrevious) {
-                for (int i = 0; i < 16;) {
-                    int rC = r.getElement(i++);
-                    rC = (rC << 8) & 0xFF00;
-                    int rC_l = r.getElement(i++);
-                    rC_l = rC_l & 0xFF;
-                    rC = rC + rC_l;
+                for (int i = 0; i < NceMessage.REPLY_16;) {
+                    int recChar_High = nceReply.getElement(i++);
+                    recChar_High = (recChar_High << 8) & 0xFF00;
+                    int recChar_Low = nceReply.getElement(i++);
+                    recChar_Low = recChar_Low & 0xFF;
+                    int locoAddress = recChar_High + recChar_Low;
 
                     if (checkBoxEmpty.isSelected()) {
-                        if (rC == 0 && consistCount > 0) {
+                        if (locoAddress == 0 && consistCount > 0) {
                             consistSearchPrevious = false;
                             break;
                         }
-                    } else {
-                        if (rC != 0 && consistCount > 0) {
+                    } else if (locoAddress != 0 && consistCount > 0) {
                             consistSearchPrevious = false;
                             break;
-                        }
                     }
                     if (++consistCount > CONSIST_MAX) {
                         consistStatus.setText(rb.getString("EditStateNONE"));
@@ -1554,36 +1532,36 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             }
 
             // Panel update, load lead loco
-            if (locoNum == LEAD) {
-                boolean loco1exists = updateLocoFields(r, 0, locoRosterBox1,
+            if (locoPosition == LEAD) {
+                boolean loco1exists = updateLocoFields(nceReply, 0, locoRosterBox1,
                         locoTextField1, adrButton1, dirButton1, cmdButton1);
                 if (clearCancelButton.getText().equals(rb.getString("KeyCLEAR"))) {
                     clearCancelButton.setEnabled(loco1exists);
                 }
 
                 // load rear loco
-            } else if (locoNum == REAR) {
-                updateLocoFields(r, 0, locoRosterBox2, locoTextField2,
+            } else if (locoPosition == REAR) {
+                updateLocoFields(nceReply, 0, locoRosterBox2, locoTextField2,
                         adrButton2, dirButton2, cmdButton2);
 
                 // load mid locos
             } else {
-                updateLocoFields(r, 0, locoRosterBox3, locoTextField3,
+                updateLocoFields(nceReply, 0, locoRosterBox3, locoTextField3,
                         adrButton3, dirButton3, cmdButton3);
-                updateLocoFields(r, 2, locoRosterBox4, locoTextField4,
+                updateLocoFields(nceReply, 2, locoRosterBox4, locoTextField4,
                         adrButton4, dirButton4, cmdButton4);
-                updateLocoFields(r, 4, locoRosterBox5, locoTextField5,
+                updateLocoFields(nceReply, 4, locoRosterBox5, locoTextField5,
                         adrButton5, dirButton5, cmdButton5);
-                updateLocoFields(r, 6, locoRosterBox6, locoTextField6,
+                updateLocoFields(nceReply, 6, locoRosterBox6, locoTextField6,
                         adrButton6, dirButton6, cmdButton6);
                 consistStatus.setText(rb.getString("EditStateOKAY"));
                 checkForRosterMatch();
                 saveLoadButton.setEnabled(canLoad());
             }
             // read the next loco number in the consist
-            if (locoNum == LEAD || locoNum == REAR) {
-                locoNum++;
-                readConsistMemory(consistNum, locoNum);
+            if (locoPosition == LEAD || locoPosition == REAR) {
+                locoPosition++;
+                readConsistMemory(consistNum, locoPosition);
             }
         }
     }
@@ -1593,9 +1571,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private void checkForRosterMatch() {
         exactMatch = false;
         if (!verifyRosterMatch) {
-            cre = NceConsistRoster.instance().entryFromTitle(locoTextField1.getText());
+            nceConsistRosterEntry = NceConsistRoster.instance().entryFromTitle(locoTextField1.getText());
         }
-        if (cre == null) {
+        if (nceConsistRosterEntry == null) {
             if (checkBoxConsist.isSelected() && !locoTextField1.getText().equals("")) {
                 consistStatus.setText(rb.getString("EditStateUNKNOWN"));
             } else {
@@ -1605,7 +1583,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             textConModel.setText("");
             return;
         }
-        if (consistRosterMatch(cre)) {
+        if (consistRosterMatch(nceConsistRosterEntry)) {
             exactMatch = true;
             // exact match!
             if (verifyRosterMatch) {
@@ -1618,7 +1596,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 queueError(ERROR_CONSIST_DOESNT_MATCH);
             }
             verifyRosterMatch = false;
-            if (!consistRosterPartialMatch(cre)) {
+            if (!consistRosterPartialMatch(nceConsistRosterEntry)) {
                 textConRoadName.setText("");
                 textConRoadNumber.setText("");
                 textConModel.setText("");
@@ -1679,8 +1657,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         if (validLocoAdr(locoTextField.getText()) < 0) {
             return;
         }
-        byte cN = (byte) validConsist(consistTextField.getText());
-        if (cN < 0) {
+        byte consistNumber = (byte) validConsist(consistTextField.getText());
+        if (consistNumber < 0) {
             return;
         }
         if (locoTextField.getText().equals("")) {
@@ -1718,13 +1696,13 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             if (locoTextField == locoTextField1) {
                 // replace lead loco
                 sendNceBinaryCommand(LOC_ADR_REPLACE,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
+                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, consistNumber);
                 // no lead loco so we can't kill the consist
                 clearCancelButton.setEnabled(false);
             } else {
                 // replace rear loco
                 sendNceBinaryCommand(LOC_ADR_REPLACE,
-                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
+                        NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, consistNumber);
             }
             // now delete lead or rear loco from layout
             sendNceBinaryCommand(locoAddr,
@@ -1753,21 +1731,21 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             if (locoTextField == locoTextField1) {
                 if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, cN);
+                            NceBinaryCommand.LOCO_CMD_FWD_CONSIST_LEAD, consistNumber);
                 }
                 if (dirButton.getText().equals(rb.getString("KeyREV"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, cN);
+                            NceBinaryCommand.LOCO_CMD_REV_CONSIST_LEAD, consistNumber);
                 }
                 // rear loco?
             } else if (locoTextField == locoTextField2) {
                 if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, cN);
+                            NceBinaryCommand.LOCO_CMD_FWD_CONSIST_REAR, consistNumber);
                 }
                 if (dirButton.getText().equals(rb.getString("KeyREV"))) {
                     sendNceBinaryCommand(locoAddr,
-                            NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, cN);
+                            NceBinaryCommand.LOCO_CMD_REV_CONSIST_REAR, consistNumber);
                 }
                 // must be mid loco
             } else {
@@ -1782,11 +1760,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 } else {
                     if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
                         sendNceBinaryCommand(locoAddr,
-                                NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, cN);
+                                NceBinaryCommand.LOCO_CMD_FWD_CONSIST_MID, consistNumber);
                     }
                     if (dirButton.getText().equals(rb.getString("KeyREV"))) {
                         sendNceBinaryCommand(locoAddr,
-                                NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, cN);
+                                NceBinaryCommand.LOCO_CMD_REV_CONSIST_MID, consistNumber);
                     }
                 }
             }
@@ -2172,24 +2150,24 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             case ERROR_CONSIST_DOESNT_MATCH:
                 if (JOptionPane.showConfirmDialog(null,
                         rb.getString("DIALOG_RosterNotMatch") + " "
-                        + getRosterText(cre),
+                        + getRosterText(nceConsistRosterEntry),
                         rb.getString("DIALOG_NceContinue"),
                         JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                     if (JOptionPane.showConfirmDialog(null,
-                            rb.getString("DIALOG_RosterNotMatch1") + " " + cre.getId()
+                            rb.getString("DIALOG_RosterNotMatch1") + " " + nceConsistRosterEntry.getId()
                             + " " + rb.getString("DIALOG_RosterNotMatch2")
-                            + " " + cre.getConsistNumber()
+                            + " " + nceConsistRosterEntry.getConsistNumber()
                             + "\n " + rb.getString("DIALOG_RosterNotMatch3"),
                             rb.getString("DIALOG_NceReset"),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        cre.setConsistNumber(rb.getString("CLEARED"));
+                        nceConsistRosterEntry.setConsistNumber(rb.getString("CLEARED"));
                     }
                     changeButtons(false);
                     saveLoadButton.setEnabled(canLoad());
                     break;
                 }
                 changeButtons(true);
-                loadFullRoster(cre);
+                loadFullRoster(nceConsistRosterEntry);
                 saveLoadButton.setEnabled(canLoad());
                 break;
             case WARN_CONSIST_ALREADY_LOADED:
