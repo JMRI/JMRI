@@ -31,6 +31,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
     private boolean allowTrackPower = true;
     private boolean allowTurnout = true;
+    private boolean allowTurnoutCreation = false; //defaults to NOT allowed
     private boolean allowRoute = true;
     private boolean allowConsist = true;
     private boolean useWiFiConsist = true;
@@ -46,6 +47,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
     private boolean asLoadedAllowTrackPower = true;
     private boolean asLoadedAllowTurnout = true;
+    private boolean asLoadedAllowTurnoutCreation = false;
     private boolean asLoadedAllowRoute = true;
     private boolean asLoadedAllowConsist = true;
     private boolean asLoadedUseWiFiConsist = true;
@@ -94,6 +96,10 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
             setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
             this.asLoadedAllowTurnout = this.isAllowTurnout();
         }
+        if ((a = child.getAttribute("isAllowTurnoutCreation")) != null) {
+            setAllowTurnoutCreation(a.getValue().equalsIgnoreCase("true"));
+            this.asLoadedAllowTurnoutCreation = this.isAllowTurnoutCreation();
+        }
         if ((a = child.getAttribute("isAllowRoute")) != null) {
             setAllowRoute(a.getValue().equalsIgnoreCase("true"));
             this.asLoadedAllowRoute = this.isAllowRoute();
@@ -120,6 +126,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 || prefs.getPort() != this.getPort()
                 || prefs.isAllowTrackPower() != this.isAllowTrackPower()
                 || prefs.isAllowTurnout() != this.isAllowTurnout()
+                || prefs.isAllowTurnoutCreation() != this.isAllowTurnoutCreation()
                 || prefs.isAllowRoute() != this.isAllowRoute()
                 || prefs.isAllowConsist() != this.isAllowConsist()
                 || prefs.isUseWiFiConsist() != this.isUseWiFiConsist()
@@ -133,6 +140,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         setPort(prefs.getPort());
         setAllowTrackPower(prefs.isAllowTrackPower());
         setAllowTurnout(prefs.isAllowTurnout());
+        setAllowTurnoutCreation(prefs.isAllowTurnoutCreation());
         setAllowRoute(prefs.isAllowRoute());
         setAllowConsist(prefs.isAllowConsist());
         setUseWiFiConsist(prefs.isUseWiFiConsist());
@@ -157,6 +165,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         this.asLoadedAllowTrackPower = this.isAllowTrackPower();
         element.setAttribute("isAllowTurnout", "" + isAllowTurnout());
         this.asLoadedAllowTurnout = this.isAllowTurnout();
+        element.setAttribute("isAllowTurnoutCreation", "" + isAllowTurnoutCreation());
+        this.asLoadedAllowTurnoutCreation = this.isAllowTurnoutCreation();
         element.setAttribute("isAllowRoute", "" + isAllowRoute());
         this.asLoadedAllowRoute = this.isAllowRoute();
         element.setAttribute("isAllowConsist", "" + isAllowConsist());
@@ -176,6 +186,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 || this.asLoadedPort != this.getPort()
                 || this.asLoadedAllowTrackPower != this.isAllowTrackPower()
                 || this.asLoadedAllowTurnout != this.isAllowTurnout()
+                || this.asLoadedAllowTurnoutCreation != this.isAllowTurnoutCreation()
                 || this.asLoadedAllowRoute != this.isAllowRoute()
                 || this.asLoadedAllowConsist != this.isAllowConsist()
                 || this.asLoadedUseWiFiConsist != this.isUseWiFiConsist()
@@ -233,6 +244,14 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
     public void setAllowTurnout(boolean value) {
         allowTurnout = value;
     }
+
+    public boolean isAllowTurnoutCreation() {
+        return allowTurnoutCreation;
+    }
+    public void setAllowTurnoutCreation(boolean value) {
+        allowTurnoutCreation = value;
+    }
+
 
     public boolean isAllowRoute() {
         return allowRoute;

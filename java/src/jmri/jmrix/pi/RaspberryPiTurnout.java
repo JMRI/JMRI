@@ -3,6 +3,7 @@ package jmri.jmrix.pi;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
@@ -36,24 +37,38 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
 
    public RaspberryPiTurnout(String systemName, GpioController _gpio) {
         super(systemName.toUpperCase());
- log.debug("Provisioning turnout {}",systemName);
+        log.trace("Provisioning turnout '{}'",systemName);
         init(systemName.toUpperCase(),_gpio);
    }
 
    public RaspberryPiTurnout(String systemName, String userName,GpioController _gpio) {
         super(systemName.toUpperCase(), userName);
-        log.debug("Provisioning turnout {} with username '{}'",systemName, userName);
+        log.trace("Provisioning turnout '{}' with username '{}'",systemName, userName);
         init(systemName.toUpperCase(),_gpio);
    }
 
    /**
-    * Common initilization for all constructors
+    * Common initialization for all constructors
     */
    private void init(String systemName, GpioController _gpio) {
-        gpio=_gpio;
-        address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
-        pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
-        pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
+       gpio=_gpio;
+       address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
+       String pinName = "GPIO "+address;
+       Pin p = RaspiPin.getPinByName(pinName);
+       if (p != null) {
+           pin = gpio.provisionDigitalOutputPin(p, getSystemName());
+           if (pin != null) {
+               pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
+           } else {
+               String msg = Bundle.getMessage("ProvisioningFailed", pinName, getSystemName());
+               log.error(msg);
+               throw new IllegalArgumentException(msg);
+           }
+       } else {
+           String msg = Bundle.getMessage("PinNameNotValid", pinName, getSystemName());
+           log.error(msg);
+           throw new IllegalArgumentException(msg);
+       }
    }
     
    //support inversion for RPi turnouts
@@ -72,11 +87,11 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    @Override
    protected void forwardCommandChangeToLayout(int s){
       if(s==CLOSED){
-         log.debug("Setting turnout {} to CLOSED", getSystemName());
+         log.debug("Setting turnout '{}' to CLOSED", getSystemName());
          if (!getInverted()) pin.high();
          else pin.low();
       } else if(s==THROWN) {
-         log.debug("Setting turnout {} to THROWN", getSystemName());
+         log.debug("Setting turnout '{}' to THROWN", getSystemName());
          if (!getInverted()) pin.low();
          else pin.high();
       }
