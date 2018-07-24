@@ -105,7 +105,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String VERSION_NUMBER = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
+    private final CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
@@ -620,29 +620,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
     }
 
-    /**
-     * Send an Alert message (simple text string) to this client
-     * <p>
-     * @param message 
-     * Format: HMmessage
-     */
-    @Override
-    public void sendAlertMessage(String message) {
-        sendPacketToDevice("HM" + message);
-    }
-
-    /**
-     * Send an Info message (simple text string) to this client
-     * <p>
-     * @param message 
-     * Format: Hmmessage
-     */
-    @Override
-    public void sendInfoMessage(String message) {
-        sendPacketToDevice("Hm" + message);
-    }
-    
-    
     /**
      * Add a DeviceListener
      *
