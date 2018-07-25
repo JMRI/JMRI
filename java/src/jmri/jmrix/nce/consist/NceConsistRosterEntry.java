@@ -5,6 +5,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import jmri.InstanceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -70,7 +71,7 @@ public class NceConsistRosterEntry {
         String oldID = _id;
         _id = s;
         if (!oldID.equals(s)) {
-            NceConsistRoster.instance().entryIdChanged(this);
+            InstanceManager.getDefault(NceConsistRoster.class).entryIdChanged(this);
         }
     }
 
@@ -593,7 +594,7 @@ public class NceConsistRosterEntry {
         // Tokenize the string using \n to separate the text on mulitple lines
         // and create a vector to hold the processed text pieces
         StringTokenizer commentTokens = new StringTokenizer(comment, "\n", true);
-        Vector<String> textVector = new Vector<String>(commentTokens.countTokens());
+        Vector<String> textVector = new Vector<>(commentTokens.countTokens());
         String newLine = "\n";
         while (commentTokens.hasMoreTokens()) {
             String commentToken = commentTokens.nextToken();
