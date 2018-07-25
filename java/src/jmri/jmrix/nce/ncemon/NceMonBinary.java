@@ -301,7 +301,7 @@ public class NceMonBinary {
                 }
                 break;
             default:
-                log.debug("Unhandled command code: {} after pass 1", m.getOpCode() & 0xFF);
+//                log.debug("Unhandled command code: {} after 1st pass", Integer.toHexString(m.getOpCode() & 0xFF));
                 break;
         }
         // 2nd pass, check for messages that have a data reply
@@ -362,12 +362,12 @@ public class NceMonBinary {
             case (NceMessage.SW_REV_CMD):
                 return Bundle.getMessage("SW_REV_CMD");
             default:
-                log.debug("Unhandled command code: {} after pass 2", m.getOpCode() & 0xFF);
+                log.debug("Unhandled command code: {} after 2nd pass", Integer.toHexString(m.getOpCode() & 0xFF));
                 break;
         }
         // this is one we don't know about or haven't coded it up
         replyType = REPLY_UNKNOWN;
-        log.debug("Unhandled command code: {}, display as raw", m.getOpCode() & 0xFF);
+        log.debug("Unhandled command code: {}, display as raw", Integer.toHexString(m.getOpCode() & 0xFF));
         return MessageFormat.format(Bundle.getMessage("BIN_CMD"), new Object[]{m.toString()});
     }
 
@@ -538,6 +538,8 @@ public class NceMonBinary {
                             break;
                     }
                 }
+                break;
+            case (REPLY_DATA):
                 break;
             default:
                 log.debug("Unhandled reply type code: {}, display as raw", replyType);
