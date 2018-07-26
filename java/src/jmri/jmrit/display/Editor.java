@@ -2986,9 +2986,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
+                    _decorator.setSuppressRecentColor(false);
                     _decorator.setAttributes(_pos);
                     if (_selectionGroup == null) {
-//                        _decorator.setAttributes(_pos);
                         setAttributes(util, _pos);
                     } else {
                         setSelectionsAttributes(util, _pos);
@@ -3002,6 +3002,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             cancelButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
+                    _decorator.setSuppressRecentColor(false);
                     dispose();
                 }
             });

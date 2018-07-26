@@ -24,7 +24,7 @@ public class JmriColorChooser {
      * The XML loading process creates the initial list and
      * subsequent activity will add new colors.
      */
-    static private java.util.Vector<Color> recentColors = new java.util.Vector<>();
+    static private ArrayList<Color> recentColors = new ArrayList<>();
 
     /**
      * Add a new color to the recent list.
@@ -37,9 +37,6 @@ public class JmriColorChooser {
             return;
         }
         if (!recentColors.contains(color)) {
-            if (recentColors.size() >= 28) {
-                recentColors.remove(0);
-            }
             recentColors.add(color);
         }
     }

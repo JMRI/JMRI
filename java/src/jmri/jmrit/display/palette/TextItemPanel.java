@@ -123,6 +123,14 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         }
     }
 
+    @Override
+    public void closeDialogs() {
+        if (_decorator != null) {
+            _decorator.setSuppressRecentColor(false);
+        }
+        super.closeDialogs();
+    }
+
     /**
      * Export a Positionable item from panel.
      */
