@@ -10,7 +10,7 @@ import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.cars.ExportCars;
+import jmri.jmrit.operations.rollingstock.cars.tools.ExportCars;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;

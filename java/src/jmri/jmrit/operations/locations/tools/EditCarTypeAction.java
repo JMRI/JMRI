@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.rollingstock.cars.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 
 /**
  * Swing action to create and register a LocationCopyFrame object.
