@@ -406,6 +406,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         appendLine(frame1);
         appendLine(provideStatusLine());
         setStatus(Bundle.getMessage("STATUS_TEXT_BOARD_MODE"));
+
+        panelToScroll();
+
     }
 
     /**

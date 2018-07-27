@@ -119,7 +119,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      *          is outside of this range.
      */
     @Override
-    public void sendPacket(byte[] packet, int sendCount) {
+    public boolean sendPacket(byte[] packet, int sendCount) {
         if (sendCount > 8) {
             log.warn("Ops Mode Accessory Packet 'Send count' reduced from {} to 8.", sendCount); // NOI18N
             sendCount = 8;
@@ -176,6 +176,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         } else {
             tc.sendLocoNetMessage(m);
         }
+        return true;
     }
 
     final static protected int NUM_SLOTS = 128;

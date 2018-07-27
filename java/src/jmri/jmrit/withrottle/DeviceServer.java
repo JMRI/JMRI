@@ -77,6 +77,7 @@ package jmri.jmrit.withrottle;
  *
  * Alert message: 'HM' + message to display. Cannot have newlines in body of
  * text, only at end of message.
+ * Info message: 'Hm' + message to display. Same as HM, but informationa only.
  *
  */
 import java.io.BufferedReader;
@@ -104,7 +105,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private static final String VERSION_NUMBER = "2.0";
 
     private Socket device;
-    private CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
+    private final CommandStation cmdStation = jmri.InstanceManager.getNullableDefault(CommandStation.class);
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;

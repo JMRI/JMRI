@@ -2474,7 +2474,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         rlgulf.setMaxTrainLength(80); // only one car can be carried
         
         trainStagingToFoxboro2.build();
-        Assert.assertFalse(trainStagingToFoxboro2.isBuilt()); // build failed
+        Assert.assertTrue(trainStagingToFoxboro2.isBuilt());
         
         // the Router found a two train route, but gave up using a three train route out of staging
         // TODO should the router use multiple trains just to get the car out of staging?

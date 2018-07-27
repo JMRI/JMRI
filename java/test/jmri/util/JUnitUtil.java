@@ -416,7 +416,8 @@ public class JUnitUtil {
     public static void initDebugCommandStation() {
         jmri.CommandStation cs = new jmri.CommandStation() {
             @Override
-            public void sendPacket(@Nonnull byte[] packet, int repeats) {
+            public boolean sendPacket(@Nonnull byte[] packet, int repeats) {
+            return true;
             }
 
             @Override

@@ -17,6 +17,7 @@ import org.junit.Test;
  */
 public class PositionableShapeTest extends PositionableJComponentTest {
 
+    @Override
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -35,12 +36,20 @@ public class PositionableShapeTest extends PositionableJComponentTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            editor = new EditorScaffold();
            p = new PositionableShape(editor) {
+
+               @Override
+               protected DrawFrame makeEditFrame(boolean create) {
+                   // bogus body, not used in tests
+                   return null;
+               }
+
                @Override
                protected Shape makeShape() {
                    // bogus body, not used in tests

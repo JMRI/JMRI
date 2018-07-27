@@ -54,8 +54,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
     // params for shape's bounding box
     protected int _width;
     protected int _height;
-    protected boolean _editing = false;
 
+    protected DrawFrame _editFrame;
+    
     static final int TOP = 0;
     static final int RIGHT = 1;
     static final int BOTTOM = 2;
@@ -377,6 +378,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
      * Attach a named sensor to a PositionableShape.
      *
      * @param pName Used as a system/user name to lookup the sensor object
+     * @return errror message or null
      */
     public String setControlSensor(String pName) {
         String msg = null;
@@ -459,16 +461,10 @@ public abstract class PositionableShape extends PositionableJComponent implement
         }
     }
 
-    DrawFrame _editFrame;
+    abstract protected DrawFrame makeEditFrame(boolean create);
 
-    protected void setEditFrame(DrawFrame f) {
-        _editFrame = f;
-    }
-
-    protected void setEditParams() {
-        _editFrame.setDisplayParams();
-        _editFrame.makeCopy(this);
-        drawHandles();
+    protected DrawFrame getEditFrame() {
+        return _editFrame;
     }
 
     public void removeHandles() {
@@ -501,10 +497,6 @@ public abstract class PositionableShape extends PositionableJComponent implement
         return new Point(x, y);
     }
 
-    protected void editing(boolean edit) {
-        _editing = edit;
-    }
-
     @Override
     public void doMousePressed(MouseEvent event) {
         _hitIndex = -1;
@@ -528,6 +520,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
                     _hitIndex = i;
                 }
             }
+            log.debug("doMousePressed _hitIndex= {}", _hitIndex);
         }
     }
 
@@ -578,11 +571,11 @@ public abstract class PositionableShape extends PositionableJComponent implement
             repaint();
             _lastX = event.getX();
             _lastY = event.getY();
+            log.debug("doHandleMove _hitIndex= {}", _hitIndex);
             return true;
         }
         return false;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableShape.class);
-
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -199,8 +200,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         // basic formatting: Create pane to hold contents
         // within a scroll box
         contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
-        JScrollPane scroll = new JScrollPane(contents);
-        add(scroll);
 
         // and prep for display
         addrField.setText(Integer.toString(boardNum));
@@ -216,6 +215,20 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      */
     protected AbstractBoardProgPanel(int boardNum, String boardTypeName) {
         this(boardNum, false, boardTypeName);
+    }
+
+    /**
+     * In order to get the scrollpanel on the screen it must be added at the end when
+     * all components and sub panels have been added to the one panel.
+     * This must be called as the last thing in the initComponents.
+     */
+    protected void panelToScroll() {
+        JScrollPane scroll = new JScrollPane(contents);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        setLayout(new BorderLayout()); //!! added
+        add(scroll,BorderLayout.CENTER);
+        setVisible(true);
     }
 
     @Override

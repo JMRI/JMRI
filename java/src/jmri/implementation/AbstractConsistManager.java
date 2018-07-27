@@ -123,7 +123,7 @@ abstract public class AbstractConsistManager implements ConsistManager {
     /**
      * Allow a request for consist updates from the layout.
      *
-     * If not overridden, by a concrete subclass, this method always returns
+     * If not overridden by a concrete subclass, this method always returns
      * true.
      *
      * @return true if the request can be made, false if not
@@ -162,4 +162,5 @@ abstract public class AbstractConsistManager implements ConsistManager {
             l.notifyConsistListChanged();
         }
     }
+
 }

@@ -105,6 +105,9 @@ public class JUnitOperationsUtil {
         InstanceManager.getDefault(EngineManager.class).dispose();
         InstanceManager.getDefault(EngineModels.class).dispose();
         InstanceManager.getDefault(EngineLengths.class).dispose();
+        
+        // there can be test concurrency issues if auto save is on
+        Assert.assertFalse("Confirm disabled", Setup.isAutoSaveEnabled());
     }
 
     /**
