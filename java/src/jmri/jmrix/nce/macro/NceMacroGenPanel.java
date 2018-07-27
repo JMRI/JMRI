@@ -92,6 +92,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
         setLayout(new GridBagLayout());
+        setPreferredSize(new Dimension(300, 100));
 
         addItem(jLabel1, 0, 0);
         addItem(packetTextField, 2, 0);
@@ -204,7 +205,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        // NCE responds with okay (!) if macro exist, (0) if not
+        // NCE responds with okay (!) if macro exist, ('0') if not
         NceMessage m = new NceMessage(2);
         m.setElement(0, NceMessage.MACRO_CMD); // Macro cmd
         m.setElement(1, macroNum); // Macro #

@@ -3,6 +3,11 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
+import jmri.jmrit.operations.rollingstock.cars.tools.DeleteCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ExportCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ImportCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarRosterAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ResetCarMovesAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
