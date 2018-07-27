@@ -238,8 +238,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             return  ( _controllingSignal == null || _controllingSignal.getUserName() == null) ? "" : _controllingSignal.getUserName();
         } else {
-            return ( _controllingSignal == null || _controllingSignalMast.getUserName() == null) ? "" : _controllingSignalMast.getUserName();
-        }
+            return ( _controllingSignalMast == null || _controllingSignalMast.getUserName() == null) ? "" : _controllingSignalMast.getUserName();        }
     }
 
     RosterEntry re = null;
