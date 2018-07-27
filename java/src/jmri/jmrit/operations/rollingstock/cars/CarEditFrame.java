@@ -833,8 +833,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             }
         }
         _car.setComment(commentTextField.getText());
-        _car.setImagePath(FileUtil.getPortableFilename(carImage.getImagePath()));
-        _car.setValue(valueTextField.getText());
+        if (carImage.getImagePath() != null) {
+            _car.setImagePath(FileUtil.getPortableFilename(carImage.getImagePath()));
+            _car.setValue(valueTextField.getText());
+        }
         // save the IdTag for this car
         IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
         if (idTag != null) {

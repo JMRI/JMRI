@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
@@ -597,6 +598,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    RollingstockCarIconFactory iconFactory = null;
+
+    ImageIcon getIcon(Car car) {
+        // defer image handling to RollingstockCarIconFactory
+        if (iconFactory == null) {
+            iconFactory = new RollingstockCarIconFactory(Math.max(19, new JLabel(getColumnName(0)).getPreferredSize().height));
+        }
+        return iconFactory.getIcon(car);
+    }
+
     @Override
     public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
@@ -697,11 +708,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return Bundle.getMessage("ButtonEdit");
             case PICTURE_COLUMN:
                 if (!car.getImagePath().contentEquals("")) {
-                    ImageIcon icon = new ImageIcon(FileUtil.getAbsoluteFilename(car.getImagePath()), "");
+                    ImageIcon icon = getIcon(car);
+/*                    ImageIcon icon = new ImageIcon(FileUtil.getAbsoluteFilename(car.getImagePath()), "");
                     icon.setImage(icon.getImage().getScaledInstance(-1, 200, java.awt.Image.SCALE_FAST));
                     if (icon.getImageLoadStatus() != MediaTracker.COMPLETE) {
                         log.info("Error loading car imagefile[{}]", car.getImagePath());
-                    }
+                    } */
                     return icon;
                 } else {
                     return "";

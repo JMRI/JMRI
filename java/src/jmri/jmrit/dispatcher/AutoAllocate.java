@@ -162,6 +162,8 @@ public class AutoAllocate {
                                 if (sS.getState() != Section.FREE) {
                                     log.debug("Forward section unavailable[{}]", sS.getUserName());
                                     areForwardsFree = false;
+                                } else if (areBlocksInSectionOtherAllocatedSection(sS,ar.getActiveTrain())) {
+                                    areForwardsFree = false;
                                 } else if (sS.getOccupancy() != Section.UNOCCUPIED) {
                                     log.debug("Forward section is not unoccupied [{}]", sS.getUserName());
                                     areForwardsFree = false;
@@ -1072,7 +1074,29 @@ public class AutoAllocate {
         }
         return false;
     }
-
+    
+    /**
+     * 
+     * @param ar Section to be checked for block conflict
+     *           in all allocatedsections
+     * @param at the train making the AllocationRequest
+     * @return   false if no conflict else true
+     */
+    private boolean areBlocksInSectionOtherAllocatedSection(Section ar, ActiveTrain at) {
+        for (AllocatedSection asItem: _dispatcher.getAllocatedSectionsList()) {
+            if (asItem.getActiveTrain() != at ) {
+                for (Block blkAr : ar.getBlockList()) {
+                    for (Block blkAs : asItem.getSection().getBlockList()) {
+                        if ( blkAs == blkAr ) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+        
+    }
     private boolean areTrainsAdjacent(ActiveTrain at, ActiveTrain nt) {
         // returns 'false' if a different ActiveTrain has allocated track between the
         //      two trains, returns 'true' otherwise
