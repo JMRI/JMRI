@@ -95,7 +95,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
             pane2.add(new JLabel(Integer.toString(i + 1)));
             mUseField[i] = new JCheckBox();
             mPacketField[i] = new JTextField(10);
-            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
+            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(500, 0, 10000, 1));
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
             mPacketField[i].setToolTipText(Bundle.getMessage("PacketToolTip"));
