@@ -18,7 +18,6 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the GridConnect protocol.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Andrew Crosland Copyright (C) 2008
@@ -31,7 +30,8 @@ public class GcSerialDriverAdapter extends GcPortController {
     public GcSerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol"; // NOI18N
-        options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
+                jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
     }
 

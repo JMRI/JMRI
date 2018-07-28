@@ -29,12 +29,12 @@ public class NceMonBinary {
     private static final int REPLY_ENTER_PROGRAMMING_MODE = 3;
 
     // The standard replies
-    private static final int REPLY_ZERO = 0;
-    private static final int REPLY_ONE = 1;
-    private static final int REPLY_TWO = 2;
-    private static final int REPLY_THREE = 3;
-    private static final int REPLY_FOUR = 4;
-    private static final int REPLY_OK = 0x21;  // !
+    private static final int REPLY_ZERO = '0'; // command not supported
+    private static final int REPLY_ONE = '1';  // loco/accy/signal address out of range
+    private static final int REPLY_TWO = '2';  // cab address or op code out of range
+    private static final int REPLY_THREE = '3';// CV address or data out of range
+    private static final int REPLY_FOUR = '4'; // byte count out of range
+    private static final int REPLY_OK = '!';   // command completed successfully
 
     /**
      * Creates a command message for the log, in a human-friendly form if possible.
@@ -301,7 +301,7 @@ public class NceMonBinary {
                 }
                 break;
             default:
-                log.debug("Unhandled command code: {} after pass 1", m.getOpCode() & 0xFF);
+//                log.debug("Unhandled command code: {} after 1st pass", Integer.toHexString(m.getOpCode() & 0xFF));
                 break;
         }
         // 2nd pass, check for messages that have a data reply
@@ -362,12 +362,12 @@ public class NceMonBinary {
             case (NceMessage.SW_REV_CMD):
                 return Bundle.getMessage("SW_REV_CMD");
             default:
-                log.debug("Unhandled command code: {} after pass 2", m.getOpCode() & 0xFF);
+                log.debug("Unhandled command code: {} after 2nd pass", Integer.toHexString(m.getOpCode() & 0xFF));
                 break;
         }
         // this is one we don't know about or haven't coded it up
         replyType = REPLY_UNKNOWN;
-        log.debug("Unhandled command code: {}, display as raw", m.getOpCode() & 0xFF);
+        log.debug("Unhandled command code: {}, display as raw", Integer.toHexString(m.getOpCode() & 0xFF));
         return MessageFormat.format(Bundle.getMessage("BIN_CMD"), new Object[]{m.toString()});
     }
 
@@ -495,7 +495,8 @@ public class NceMonBinary {
         switch (replyType) {
             case (REPLY_STANDARD):
                 /* standard reply is a single byte
-                 * Errors returned: '0'= command not supported
+                 * Errors returned: 
+                 * '0'= command not supported
                  * '1'= loco/accy/signal address out of range
                  * '2'= cab address or op code out of range
                  * '3'= CV address or data out of range
@@ -517,7 +518,7 @@ public class NceMonBinary {
                         case (REPLY_OK):
                             return Bundle.getMessage("NceReplyOK");
                         default:
-                            log.error("Unhandled reply code: {}", r.getOpCode() & 0xFF);
+                            log.error("Unhandled reply code: {}", Integer.toHexString(r.getOpCode() & 0xFF));
                             break;
                     }
                 }
@@ -534,10 +535,12 @@ public class NceMonBinary {
                         case (REPLY_OK):
                             return Bundle.getMessage("NceReplyOK");
                         default:
-                            log.error("Unhandled programming reply code: {}", r.getOpCode() & 0xFF);
+                            log.error("Unhandled programming reply code: {}", Integer.toHexString(r.getOpCode() & 0xFF));
                             break;
                     }
                 }
+                break;
+            case (REPLY_DATA):
                 break;
             default:
                 log.debug("Unhandled reply type code: {}, display as raw", replyType);

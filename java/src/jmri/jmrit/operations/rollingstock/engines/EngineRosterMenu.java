@@ -3,6 +3,12 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
+import jmri.jmrit.operations.rollingstock.engines.tools.DeleteEngineRosterAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ExportEngineRosterAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ImportEngineAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ImportRosterEngineAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.PrintEngineRosterAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ResetEngineMovesAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
