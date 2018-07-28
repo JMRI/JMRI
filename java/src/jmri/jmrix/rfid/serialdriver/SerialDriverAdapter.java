@@ -31,7 +31,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to RFID devices via a serial comm port. Derived from the
- * oaktree code.
+ * Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -49,10 +49,10 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         option2Name = "Concentrator-Range"; // NOI18N
         option3Name = "Protocol"; // NOI18N
         option4Name = "Device"; // NOI18N
-        options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
-        options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false)); // NOI18N
-        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false)); // NOI18N
-        options.put(option4Name, new Option("Device Type:", new String[]{"MOD-RFID125", "MOD-RFID1356MIFARE"},false)); // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionAdapter"), new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionConcentratorRange"), new String[]{"A-H", "I-P"}, false)); // NOI18N
+        options.put(option3Name, new Option(Bundle.getMessage("ConnectionProtocol"), new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false)); // NOI18N
+        options.put(option4Name, new Option(Bundle.getMessage("ConnectionDeviceType"), new String[]{"MOD-RFID125", "MOD-RFID1356MIFARE"}, false)); // NOI18N
         this.manufacturerName = jmri.jmrix.rfid.RfidConnectionTypeList.RFID;
     }
 
@@ -70,25 +70,25 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage()); // NOI18N
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage()); // NOI18N
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage(); // NOI18N
             }
 
             // set framing (end) character
             try {
-                log.debug("Serial framing was observed as: " + activeSerialPort.isReceiveFramingEnabled() // NOI18N
-                        + " " + activeSerialPort.getReceiveFramingByte()); // NOI18N
+                log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(), // NOI18N
+                        activeSerialPort.getReceiveFramingByte()); // NOI18N
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef); // NOI18N
+                log.debug("failed to set serial framing: {}", ef); // NOI18N
             }
 
             // set timeout; framing should work before this anyway
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout() // NOI18N
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled()); // NOI18N
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), // NOI18N
+                        activeSerialPort.isReceiveTimeoutEnabled()); // NOI18N
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et); // NOI18N
+                log.info("failed to set serial timeout: {}", et); // NOI18N
             }
 
             // get and save stream
@@ -111,8 +111,8 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -140,7 +140,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port
      */
     @Override
     public void configure() {
@@ -168,7 +168,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                 break;
             default:
                 // no connection at all - warn
-                log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone"); // NOI18N
+                log.warn("adapter option {} defaults to Generic Stand-alone", opt1); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
                 this.getSystemConnectionMemo().configureManagers(
@@ -228,7 +228,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                     break;
                 default:
                     // no protocol at all - warn
-                    log.warn("protocol option " + opt3 + " defaults to CORE-ID");
+                    log.warn("protocol option {} defaults to CORE-ID", opt3);
                     // create a coreid protocol
                     protocol = new CoreIdRfidProtocol();
                     break;
@@ -261,7 +261,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -306,7 +306,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      */
     @Override
     public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
+        log.debug("configureBaudRate: {}", rate);
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }

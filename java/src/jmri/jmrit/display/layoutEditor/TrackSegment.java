@@ -556,7 +556,13 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void scaleCoords(float xFactor, float yFactor) {
-        // nothing to see here, move along
+        Point2D factor = new Point2D.Float(xFactor, yFactor);
+        center = MathUtil.multiply(center, factor);
+        if (isBezier()) {
+            for (Point2D p : bezierControlPoints) {
+                p.setLocation(MathUtil.multiply(p, factor));
+            }
+        }
     }
 
     /**
@@ -567,7 +573,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void translateCoords(float xFactor, float yFactor) {
-        // nothing to see here, move along
+        setCoordsCenter(MathUtil.add(center, new Point2D.Float(xFactor, yFactor)));
     }
 
     /**
@@ -576,9 +582,9 @@ public class TrackSegment extends LayoutTrack {
      * @param newCenterPoint the coordinates to set
      */
     @Override
-    public void setCoordsCenter(@Nullable Point2D newCenterPoint) {
+    public void setCoordsCenter(@Nonnull Point2D newCenterPoint) {
         if (center != newCenterPoint) {
-            if ((newCenterPoint != null) && isBezier()) {
+            if (isBezier()) {
                 Point2D delta = MathUtil.subtract(newCenterPoint, center);
                 for (Point2D p : bezierControlPoints) {
                     p.setLocation(MathUtil.add(p, delta));
@@ -2085,7 +2091,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        if (!isBlock && getDashed() && getLayoutBlock() != null) {
+        if (!isBlock && isDashed() && getLayoutBlock() != null) {
             // Skip the dashed rail layer, the block layer will display the dashed track
             // This removes random rail fragments from between the block dashes
             return;
@@ -2125,7 +2131,7 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        if (getDashed() && getLayoutBlock() != null) {
+        if (isDashed() && getLayoutBlock() != null) {
             // Skip the dashed rail layer, the block layer will display the dashed track
             // This removes random rail fragments from between the block dashes
             return;

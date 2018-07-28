@@ -9,13 +9,13 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * Loopback connection to simulate a CAN link
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  */
+ */
 public class Port extends AbstractSerialPortController {
 
     public Port() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol"; // NOI18N
-        options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         mPort = "(none)";
     }
 
