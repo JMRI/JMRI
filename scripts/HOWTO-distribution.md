@@ -36,6 +36,24 @@ So our releases procedure is, in outline:
 
 - [ ] It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.4 (and 4.4.1) branch around throughout the 4.5.x phase and then prune it when moving to 4.6. Each 4.5.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’. How about the case near the end of a development cycle when we’re doing incremental releases? E.g. 4.5.9 might be 4.5.8+deltas?  Should that be a branch from a branch? We'll need to develop and document this as needed.
 
+### Suggested approach (2016) to handling near-production test releases:
+
+As part of building e.g. release 4.13.8, we create a "release-4.13.9-suggested-patches" branch off the final v4.13.8 tag. The sequence is then:
+
+- A developer notices some issue needing to be resolved post 4.13.8
+- Developer makes own development branch from 'release-4.13.9-suggested-patches'
+- Developer makes necessary changes, commits and then pushes to own fork.
+- Developer then creates PR from own development branch onto 'JMRI/JMRI/release-4.13.9-suggested-patches'
+- Developer additionally creates second PR from own development branch onto 'JMRI/JMRI/master' (*) - could also be performed by the Release Pumpkin meaning the
+developer need only create a single PR between 'needed-patches' (communityu decision needed here)
+- If decisions is to include this, Release Pumpkin merges first PR into 'JMRI/JMRI/release-4.13.9-suggested-patches'
+- 4.13.9 is eventually built (and if need be, rebuilt) from release-4.13.9-suggested-patches
+- Maintainer merges second PR into 'JMRI/JMRI/master' whenever.
+
+This has the nice property that if multiple things arise, they can definitely be handled separately. It still gets a bit tricky if there's a difference (e.g. due to a conflict with another change) that arises in either PR.  We'll have to manage that a little carefully. One way to handle that is to _not_ merge any conflicts on master (_any_ PRs to master, not just in these dual-hatted PRs) until after the test release is done and merged back.
+
+The problem is that there are production people who aren't used to working off the master branch.
+
 ============================================================================
 
 # Detailed Instructions
@@ -218,11 +236,7 @@ Maintainers, please set the 4.13.1 milestone on pulls from now on, as that will 
 
 Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.9/)
 
-If you're developing any additional (post-4.11.9) changes that you want in the JMRI 4.12 production release, please start from this branch, i.e. do
-```
-git checkout -b release-4.11.9
-```
-to start your work.
+If you're developing any additional (post-4.11.9) changes that you want in the JMRI 4.12 production release, please start from this branch, i.e. do `git checkout -b release-4.11.9` to start your work.
 ```
 
 ================================================================================
@@ -253,18 +267,22 @@ to start your work.
 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
-- Announce the file set via email to jmri-developers@lists.sf.net with a subject line "First 4.11.9 files available":
+- Announce the file set via email to jmri-developers@lists.sf.net with a subject line 
+
+```
+"First 4.11.9 files available":
 
 First JMRI 4.11.9 files are available in the usual way at:
 
 http://builds.jmri.org/jenkins/job/TestReleases/job/4.11.9
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
+```
 
 - *Wait for some replies* before proceeding
 
 ================================================================================
-## Further Changes to Contents
+## Further Changes to Contents Before Release
 
 If anybody wants to add a change from here on in, they should
 
@@ -286,26 +304,7 @@ If somebody has merged their change into master (or it's branched from master la
 
 - Merge master into the release-4.11.9 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` file will have the wrong minor number in it:  You'll have to edit and commit that to get the right number in the release.
 
-- `git cherrypick` just the changes you want.  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
-
-
-### Special instructions for the last few test releases before a production release:
-
-(The following is tentative text for this section from a 4/2016 jmri-developers discussion on how to do this for the run-up to 4.4, starting with 4.3.7 - Bob)
-
-As part of building e.g. release 4.3.7, we create a "release-4.3.8-suggested-patches" branch off the final v4.3.7 tag. The sequence is then:
-
-- A developer notices some issue needing to be resolved post 4.3.7
-- Developer makes own development branch from 'release-4.3.8-suggested-patches'
-- Developer makes necessary changes, commits and then pushes to own fork.
-- Developer then creates PR from own development branch onto 'JMRI/JMRI/release-4.3.8-suggested-patches'
-- Developer additionally creates second PR from own development branch onto 'JMRI/JMRI/master' (*) - could also be performed by the Release Pumpkin meaning the
-developer need only create a single PR between 'needed-patches' (communityu decision needed here)
-- If decisions is to include this, Release Pumpkin merges first PR into 'JMRI/JMRI/release-4.3.8-suggested-patches'
-- 4.3.8 is eventually built (and if need be, rebuilt) from release-4.3.8-suggested-patches
-- Maintainer merges second PR into 'JMRI/JMRI/master'
-
-This has the nice property that if multiple things arise, they can definitely be handled separately. It still gets a bit tricky if there’s a difference (e.g. due to a conflict with another change) that arises in either PR.  We’ll have to manage that a little carefully. One way to handle that is to _not_ merge any conflicts on master (_any_ PRs to master, not just in these dual-hatted PRs) until after the test release is done and merged back.
+- `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
 ====================================================================================
 ## Create zipped .properties (experimental)
