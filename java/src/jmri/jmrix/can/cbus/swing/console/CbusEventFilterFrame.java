@@ -75,13 +75,13 @@ public class CbusEventFilterFrame extends JmriJFrame {
             // Pane to hold a filter
             filterPanes[i] = new CbusEventFilterPanel(this, i);
             filterPanes[i].setBorder(BorderFactory.createTitledBorder(
-                    BorderFactory.createEtchedBorder(), Bundle.getMessage("EventFilterTitleX", (i + 1))));
+                    BorderFactory.createLineBorder(filterColors[i],4), Bundle.getMessage("EventFilterTitleX", (i + 1))));
             filterPanes[i].initComponents(i);
             getContentPane().add(filterPanes[i]);
         }
 
         // add help menu to window
-        addHelpMenu();
+        // addHelpMenu();
 
         // prevent button areas from expanding
         pack();
@@ -133,10 +133,10 @@ public class CbusEventFilterFrame extends JmriJFrame {
      * Specific implementations can override this to show their own help page if
      * desired.
      */
-    protected void addHelpMenu() {
-        // *** TO DO
+    // protected void addHelpMenu() {
+        // *** TO DO - Add FilterFrame support to main console help page
         //     addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
-    }
+    // }
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventFilterFrame.class);
 }
