@@ -460,9 +460,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         }
         instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
         // Either of these positioning calls puts the instance on the primary monitor. ???
-        java.awt.Point pt = ed.getLocation();
-        instance.setLocation(pt.x, pt.y);
-        // instance.setLocationRelativeTo(ed);
+        instance.setLocation(jmri.util.PlaceWindow.nextTo(ed, null, instance));
         instance.pack();
         instance.setVisible(true);
         return instance;
