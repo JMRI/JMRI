@@ -29,7 +29,7 @@
  <tocitem text="Hardware Support " target="html.hardware.index">
   <tocitem text="Acela (CTI) " target="html.hardware.acela.index"/>
 
-  <tocitem text="CAN Bus Overview" target="html.hardware.can.index"/>
+  <tocitem text="CAN Bus Overview " target="html.hardware.can.index"/>
 
   <tocitem text="CBUS (MERG) " target="html.hardware.can.cbus.index"/>
 
@@ -448,22 +448,22 @@
 
   </tocitem>
   <tocitem text="MERG (CBUS) " target="html.hardware.can.cbus.index">
-
-   <tocitem text="Console Tool" target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+   <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
    <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
 
-   <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>   
+   <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
 
-   <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>   
-   
+   <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+
    <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
-   
+
    <tocitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
-   
+
    <tocitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
-   
+
    <tocitem text="CAN Networks " target="html.hardware.can.index"/>
+
   </tocitem>
   <tocitem text="Digitrax ">
    <tocitem text="BDL16, BDL162, BDL168 Configuration Tool " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>

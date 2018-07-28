@@ -873,11 +873,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * @param routeTree the routes
      */
     protected void pickRoute(List<DefaultMutableTreeNode> destNodes, DefaultTreeModel routeTree) {
-        if (destNodes.size() == 1) {
+/*        if (destNodes.size() == 1) {      // for Leo
             showRoute(destNodes.get(0), routeTree);
             selectedRoute(_orders);
             return;
-        }
+        }*/
         _pickRouteDialog = new JDialog(this, Bundle.getMessage("DialogTitle"), false);
         _pickRouteDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -907,6 +907,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             });
             buttons.add(button);
             panel.add(button);
+            if (destNodes.size() == 1) {
+                button.setSelected(true);
+            }
         }
         JScrollPane scrollPane = new JScrollPane(panel);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
