@@ -35,11 +35,9 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(p);
         
-        //turnoutMastScroll = new JScrollPane(turnoutMastPanel);
-        //turnoutMastScroll.setBorder(BorderFactory.createEmptyBorder());
-        //turnoutMastScroll.setVisible(false);
-        //add(turnoutMastScroll);
-        add(turnoutMastPanel);
+        turnoutMastScroll = new JScrollPane(turnoutMastPanel);
+        turnoutMastScroll.setBorder(BorderFactory.createEmptyBorder());
+        add(turnoutMastScroll);
 
     }
 
@@ -84,6 +82,7 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
         
         turnoutMastPanel.revalidate();
+        turnoutMastScroll.revalidate();
     }
 
     /** {@inheritDoc} */
