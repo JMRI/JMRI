@@ -2939,17 +2939,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
+            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new TextAttrDialog(comp)).setVisible(true);
             }
 
-            AbstractAction init(Positionable pos) {
+            AbstractAction init(Positionable pos, Editor e) {
                 comp = pos;
+                ed = e;
                 return this;
             }
-        }.init(p));
+        }.init(p, this));
         return true;
     }
 
@@ -2972,8 +2974,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             dim = new Dimension(dim.width +10, dim.height + 10);
             sp.setPreferredSize(dim);
             setContentPane(sp);
+            setLocation(jmri.util.PlaceWindow.nextTo(_pos.getEditor(), (Component)_pos, this));
             pack();
-            setLocationRelativeTo((Component) _pos);
         }
 
         protected JPanel makeDoneButtonPanel() {
@@ -2984,9 +2986,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 @Override
                 public void actionPerformed(ActionEvent a) {
                     PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
+                    _decorator.setSuppressRecentColor(false);
                     _decorator.setAttributes(_pos);
                     if (_selectionGroup == null) {
-//                        _decorator.setAttributes(_pos);
                         setAttributes(util, _pos);
                     } else {
                         setSelectionsAttributes(util, _pos);
@@ -3000,6 +3002,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             cancelButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
+                    _decorator.setSuppressRecentColor(false);
                     dispose();
                 }
             });

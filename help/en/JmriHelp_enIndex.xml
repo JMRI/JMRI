@@ -35,23 +35,21 @@
  <indexitem text="CAN Bus " target="html.hardware.can.index"/>
 
  <indexitem text="CBUS (MERG) " target="html.hardware.can.cbus.index">
-
   <indexitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
-   
+
   <indexitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
 
-  <indexitem text="Console Tool" target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+  <indexitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
   <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
 
-  <indexitem text="Event Capture Tool " target="package.jmri.jmrix.can.swing.configtool.ConfigToolFrame"/>   
+  <indexitem text="Event Capture Tool " target="package.jmri.jmrix.can.swing.configtool.ConfigToolFrame"/>
 
-  <indexitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>   
+  <indexitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
 
   <indexitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
 
  </indexitem>
-
  <indexitem text="Clock ">
   <indexitem text="Introduction " target="html.tools.fastclock.index"/>
 
@@ -165,6 +163,7 @@
    <indexitem text="Configure Nodes " target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame"/>
 
    <indexitem text="Diagnostics " target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame"/>
+
   </indexitem>
   <indexitem text="DCC Specialties " target="html.hardware.misc.DccSpecialties"/>
 
