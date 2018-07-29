@@ -75,11 +75,16 @@ public class OlcbSignalMastAddPaneTest {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
 
         vp.setAspectNames(
-            java.util.Collections.enumeration(
-                java.util.Arrays.asList(
-                    new String[]{"Clear","Approach Medium","Advance Approach",
+            new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                public Enumeration<String> getAspects() {
+                    return java.util.Collections.enumeration(
+                        java.util.Arrays.asList(
+                            new String[]{"Clear","Approach Medium","Advance Approach",
                                     "Medium Clear", "Approach", "Slow Approach",
-                                    "Permissive", "Restricting", "Stop and Proceed", "Stop"})));
+                                    "Permissive", "Restricting", "Stop and Proceed", "Stop"}));
+                    }
+            }
+        );
         
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
@@ -148,7 +153,11 @@ public class OlcbSignalMastAddPaneTest {
         
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         
-        vp.setAspectNames(mast.getAllKnownAspects().elements());
+        vp.setAspectNames(
+            new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
+            }
+        );
         vp.setMast(mast);
               
         JFrame frame = new JFrame("Add/Edit Signal Mast");

@@ -406,7 +406,7 @@ public class AddSignalMastPanel extends JPanel {
         String mastFile = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String mastType = mastFile.substring(11, mastFile.indexOf(".xml"));
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
-        currentPane.setAspectNames(sigMap.getAspects());
+        currentPane.setAspectNames(sigMap);
         
         validate();
         if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {

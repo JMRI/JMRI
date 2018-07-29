@@ -42,7 +42,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      * May be done later, to update to a new system.
      * //+ should be abstract
      */
-    public void setAspectNames(@Nonnull Enumeration<String> aspects) {}
+    public void setAspectNames(@Nonnull SignalAppearanceMap map) {}
 
     /**
      * Can this pane edit a specific mast object, i.e. an object of its type?

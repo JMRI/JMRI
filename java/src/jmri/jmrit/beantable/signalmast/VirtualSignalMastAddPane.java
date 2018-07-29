@@ -58,7 +58,8 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull Enumeration<String> aspects) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map) {
+        Enumeration<String> aspects = map.getAspects();
         // update immediately
         disabledAspects = new LinkedHashMap<>(10);
         disabledAspectsPanel.removeAll();
