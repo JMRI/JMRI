@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.implementation.DccSignalMast;
+import jmri.util.*;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -54,9 +55,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     JTextField dccAspectAddressField = new JTextField(5);
 
     JCheckBox allowUnLit = new JCheckBox();
+    JTextField unLitAspectField = new JTextField(5);
 
     final static int NOTIONAL_ASPECT_COUNT = 20;  // size of maps, not critical
     LinkedHashMap<String, DCCAspectPanel> dccAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
+
+    DccSignalMast currentMast = null;
 
     /** {@inheritDoc} */
     @Override
@@ -72,12 +76,29 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             aPanel.setAspectId((String) map.getProperty(aspect, "dccAspect"));
         }
 
+        systemPrefixBox.removeAllItems();
+        List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        if (!connList.isEmpty()) {
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                systemPrefixBox.addItem(station.getUserName());
+            }
+        } else {
+            systemPrefixBox.addItem("None");
+        }
+
         dccMastPanel.removeAll();
+        dccMastPanel.add(systemPrefixBoxLabel);
+        dccMastPanel.add(systemPrefixBox);
+        dccMastPanel.add(dccAspectAddressLabel);
+        dccMastPanel.add(dccAspectAddressField);
         dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size() + 1, 2));
         for (String aspect : dccAspect.keySet()) {
             log.trace("   aspect: {}", aspect);
             dccMastPanel.add(dccAspect.get(aspect).getPanel());
         }
+        dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastCopyAspectId") + ":"));
+        dccMastPanel.add(copyFromMastSelection());
         
         dccMastPanel.revalidate();
         dccMastScroll.revalidate();
@@ -89,6 +110,57 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     @Override
     public boolean canHandleMast(@Nonnull SignalMast mast) {
         return mast instanceof DccSignalMast;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setMast(SignalMast mast) { 
+        log.debug("setMast({})", mast);
+        if (mast == null) { 
+            currentMast = null; 
+            return; 
+        }
+        
+        if (! (mast instanceof DccSignalMast) ) {
+            log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
+            return;
+        }
+
+        currentMast = (DccSignalMast) mast;
+        SignalAppearanceMap appMap = mast.getAppearanceMap();
+
+        if (appMap != null) {
+            Enumeration<String> aspects = appMap.getAspects();
+            while (aspects.hasMoreElements()) {
+                String key = aspects.nextElement();
+                DCCAspectPanel dccPanel = dccAspect.get(key);
+                dccPanel.setAspectDisabled(currentMast.isAspectDisabled(key));
+                if (!currentMast.isAspectDisabled(key)) {
+                    dccPanel.setAspectId(currentMast.getOutputForAppearance(key));
+                }
+
+            }
+        }
+        List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        if (!connList.isEmpty()) {
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.CommandStation station = connList.get(x);
+                systemPrefixBox.addItem(station.getUserName());
+            }
+        } else {
+            systemPrefixBox.addItem("None");
+        }
+        dccAspectAddressField.setText("" + currentMast.getDccSignalMastAddress());
+        systemPrefixBox.setSelectedItem(currentMast.getCommandStation().getUserName());
+
+        systemPrefixBoxLabel.setEnabled(false);
+        systemPrefixBox.setEnabled(false);
+        dccAspectAddressLabel.setEnabled(false);
+        dccAspectAddressField.setEnabled(false);
+        if (currentMast.allowUnLit()) {
+            unLitAspectField.setText("" + currentMast.getUnlitId());
+        }
+
     }
 
     static boolean validateAspectId(String strAspect) {
@@ -107,6 +179,57 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         return true;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
+        log.debug("createMast({},{} start)", sigsysname, mastname);
+        
+        String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) systemPrefixBox.getSelectedItem());
+        // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
+        if (systemNameText.equals("\0")) {
+            systemNameText = "I";
+        }
+        systemNameText = systemNameText + "F$dsm:";
+
+        String name = systemNameText
+                + sigsysname
+                + ":" + mastname.substring(11, mastname.length() - 4);
+        name += "(" + dccAspectAddressField.getText() + ")";
+        
+        DccSignalMast dccMast;
+        
+        // if it exists, retrieve it
+        dccMast = (DccSignalMast)InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        // if not, validate and get a new one
+        if (dccMast == null) {
+            if (!validateDCCAddress()) {
+                return;
+            }
+            log.trace("Creating new mast");
+            dccMast = new DccSignalMast(name);
+        }
+
+        for (String aspect : dccAspect.keySet()) {
+            dccMastPanel.add(dccAspect.get(aspect).getPanel()); // update mast from aspect subpanel panel
+            if (dccAspect.get(aspect).isAspectDisabled()) {
+                dccMast.setAspectDisabled(aspect);
+            } else {
+                dccMast.setAspectEnabled(aspect);
+                dccMast.setOutputForAppearance(aspect, dccAspect.get(aspect).getAspectId());
+            }
+        }
+        if (!username.equals("")) {
+            dccMast.setUserName(username);
+        }
+        dccMast.setAllowUnLit(allowUnLit.isSelected());
+        if (allowUnLit.isSelected()) {
+            dccMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
+        }
+        InstanceManager.getDefault(jmri.SignalMastManager.class).register(dccMast);
+        
+        log.debug("createMast({},{} end)", sigsysname, mastname);
+   }
+
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
     static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {
         /** {@inheritDoc} */
@@ -118,6 +241,79 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         @Override
         @Nonnull public SignalMastAddPane getNewPane() {
             return new DccSignalMastAddPane();
+        }
+    }
+
+    private boolean validateDCCAddress() {
+        if (dccAspectAddressField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressBlank"));
+            return false;
+        }
+        int address;
+        try {
+            address = Integer.parseInt(dccAspectAddressField.getText().trim());
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressNumber"));
+            return false;
+        }
+
+        if (address < NmraPacket.accIdLowLimit || address > NmraPacket.accIdAltHighLimit) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("DCCMastAddressOutOfRange"));
+            log.error("invalid address {}", address);
+            return false;
+        }
+        if (DccSignalMast.isDCCAddressUsed(address) != null) {
+            String msg = Bundle.getMessage("DCCMastAddressAssigned", new Object[]{dccAspectAddressField.getText(), DccSignalMast.isDCCAddressUsed(address)});
+            JOptionPane.showMessageDialog(null, msg);
+            return false;
+        }
+        return true;
+    }
+
+    JComboBox<String> copyFromMastSelection() {
+        JComboBox<String> mastSelect = new JComboBox<>();
+        List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
+        for (String name : names) {
+            if (log.isTraceEnabled()) log.trace("copyFromMastSelection comparing to {}", InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name).getSignalSystem().getSystemName());
+            if ((InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof DccSignalMast)){
+                mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
+            }
+        }
+        if (mastSelect.getItemCount() == 0) {
+            mastSelect.setEnabled(false);
+        } else {
+            mastSelect.insertItemAt("", 0);
+            mastSelect.setSelectedIndex(0);
+            mastSelect.addActionListener(new ActionListener() {
+                @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JComboBox<String> eb = (JComboBox<String>) e.getSource();
+                    String sourceMast = (String) eb.getSelectedItem();
+                    if (sourceMast != null && !sourceMast.equals("")) {
+                        copyFromAnotherDCCMastAspect(sourceMast);
+                    }
+                }
+            });
+        }
+        return mastSelect;
+    }
+
+    /**
+     * Copy aspects by name from another DccSignalMast
+     */
+    void copyFromAnotherDCCMastAspect(String strMast) {
+        DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
+        Vector<String> validAspects = mast.getValidAspects();
+        for (String aspect : dccAspect.keySet()) {
+            if (validAspects.contains(aspect) || mast.isAspectDisabled(aspect)) { // valid doesn't include disabled
+                // present, copy
+                dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
+                dccAspect.get(aspect).setAspectDisabled(mast.isAspectDisabled(aspect));
+            } else {
+                // not present, log
+                log.info("Can't get aspect \"{}\" from head \"{}\", leaving unchanged", aspect, mast);
+            }
         }
     }
 
