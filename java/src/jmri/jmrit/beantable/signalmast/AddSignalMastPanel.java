@@ -479,11 +479,16 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         // ask top-most pane to make a signal
+        boolean success = false;
         try {
-            currentPane.createMast(sigsysname,mastname,user);
+            success = currentPane.createMast(sigsysname,mastname,user);
         } catch (RuntimeException ex) {
             issueDialogFailMessage(ex);
             return; // without clearing panel, so user can try again
+        }
+        if (!success) {
+            // should have already provided user feedback via dialog
+            return;
         }
         
         clearPanel();

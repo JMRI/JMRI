@@ -109,9 +109,16 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * @param sigsysname the value of sigsysname
+     * @param mastname the value of mastname
+     * @param username the value of username
+     * @return the boolean */
     @Override
-    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
+    public boolean createMast(@Nonnull
+            String sigsysname, @Nonnull
+                    String mastname, @Nonnull
+                            String username) {
         if (currentMast == null) {
             // create a mast
             String name = "IF$vsm:"
@@ -135,6 +142,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             }
         }
         currentMast.setAllowUnLit(allowUnLit.isSelected());
+        return true;
     }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)

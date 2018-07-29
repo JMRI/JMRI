@@ -206,9 +206,16 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * @param sigsysname the value of sigsysname
+     * @param mastname the value of mastname
+     * @param username the value of username
+     * @return the boolean */
     @Override
-    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
+    public boolean createMast(@Nonnull
+            String sigsysname, @Nonnull
+                    String mastname, @Nonnull
+                            String username) {
         if (currentMast == null) {
             // create a mast
             String name = "MF$olm:"
@@ -239,6 +246,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         currentMast.setNotHeldEventId(notHeldEventID.getText());
 
         currentMast.setAllowUnLit(allowUnLit.isSelected());
+        return true;
     }
 
 

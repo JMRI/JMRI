@@ -62,10 +62,17 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
     public void setMast(SignalMast mast) {}
     
     /**
-     * Create and register a mast from the given information.
+     * Called to either "create and register" or update an existing mast from the given information.
      * //+ should be abstract
+     * @param sigsysname the name of the signal system in use
+     * @param mastname the mast type name
+     * @param username user name value
+     * @return false if the operation failed, in which case the user should have already been notified
      */
-    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {}
+    public boolean createMast(@Nonnull
+            String sigsysname, @Nonnull
+                    String mastname, @Nonnull
+                            String username) { return false; }
     
     /**
      * @return Human-prefered name for type of signal mast, in local language

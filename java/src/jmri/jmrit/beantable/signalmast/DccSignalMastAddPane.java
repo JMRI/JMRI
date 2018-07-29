@@ -88,15 +88,20 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         }
 
         dccMastPanel.removeAll();
+
         dccMastPanel.add(systemPrefixBoxLabel);
         dccMastPanel.add(systemPrefixBox);
+
         dccMastPanel.add(dccAspectAddressLabel);
+        dccAspectAddressField.setText("");
         dccMastPanel.add(dccAspectAddressField);
+
         dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size() + 1, 2));
         for (String aspect : dccAspect.keySet()) {
             log.trace("   aspect: {}", aspect);
             dccMastPanel.add(dccAspect.get(aspect).getPanel());
         }
+
         dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastCopyAspectId") + ":"));
         dccMastPanel.add(copyFromMastSelection());
         
@@ -179,55 +184,62 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * @param sigsysname the value of sigsysname
+     * @param mastname the value of mastname
+     * @param username the value of username
+     * @return the boolean */
     @Override
-    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
+    public boolean createMast(@Nonnull
+            String sigsysname, @Nonnull
+                    String mastname, @Nonnull
+                            String username) {
         log.debug("createMast({},{} start)", sigsysname, mastname);
         
-        String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) systemPrefixBox.getSelectedItem());
-        // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
-        if (systemNameText.equals("\0")) {
-            systemNameText = "I";
-        }
-        systemNameText = systemNameText + "F$dsm:";
-
-        String name = systemNameText
-                + sigsysname
-                + ":" + mastname.substring(11, mastname.length() - 4);
-        name += "(" + dccAspectAddressField.getText() + ")";
-        
-        DccSignalMast dccMast;
-        
-        // if it exists, retrieve it
-        dccMast = (DccSignalMast)InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
-        // if not, validate and get a new one
-        if (dccMast == null) {
-            if (!validateDCCAddress()) {
-                return;
-            }
+        // are we already editing?  If no, create a new one.
+        if (currentMast == null) {
             log.trace("Creating new mast");
-            dccMast = new DccSignalMast(name);
+            if (!validateDCCAddress()) {
+                log.trace("validateDCCAddress failed, return from createMast");
+                return false;
+            }
+            String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) systemPrefixBox.getSelectedItem());
+            // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
+            if (systemNameText.equals("\0")) {
+                systemNameText = "I";
+            }
+            systemNameText = systemNameText + "F$dsm:";
+
+            String name = systemNameText
+                    + sigsysname
+                    + ":" + mastname.substring(11, mastname.length() - 4);
+            name += "(" + dccAspectAddressField.getText() + ")";
+            currentMast = new DccSignalMast(name);
+            InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
 
         for (String aspect : dccAspect.keySet()) {
             dccMastPanel.add(dccAspect.get(aspect).getPanel()); // update mast from aspect subpanel panel
+            currentMast.setOutputForAppearance(aspect, dccAspect.get(aspect).getAspectId());
             if (dccAspect.get(aspect).isAspectDisabled()) {
-                dccMast.setAspectDisabled(aspect);
+                currentMast.setAspectDisabled(aspect);
             } else {
-                dccMast.setAspectEnabled(aspect);
-                dccMast.setOutputForAppearance(aspect, dccAspect.get(aspect).getAspectId());
+                currentMast.setAspectEnabled(aspect);
             }
         }
         if (!username.equals("")) {
-            dccMast.setUserName(username);
+            currentMast.setUserName(username);
         }
-        dccMast.setAllowUnLit(allowUnLit.isSelected());
+        currentMast.setAllowUnLit(allowUnLit.isSelected());
         if (allowUnLit.isSelected()) {
-            dccMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
+            currentMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
         }
-        InstanceManager.getDefault(jmri.SignalMastManager.class).register(dccMast);
+
+        // having created, clear current
+        currentMast = null;
         
         log.debug("createMast({},{} end)", sigsysname, mastname);
+        return true;
    }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)

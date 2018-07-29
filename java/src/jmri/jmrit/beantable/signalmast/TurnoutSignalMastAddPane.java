@@ -134,9 +134,16 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * @param sigsysname the value of sigsysname
+     * @param mastname the value of mastname
+     * @param username the value of username
+     * @return the boolean */
     @Override
-    public void createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
+    public boolean createMast(@Nonnull
+            String sigsysname, @Nonnull
+                    String mastname, @Nonnull
+                            String username) {
         log.debug("createMast({},{})", sigsysname, mastname);
         String name;
         if (currentMast == null) {
@@ -169,6 +176,7 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         if (allowUnLit.isSelected()) {
             currentMast.setUnLitTurnout(turnoutUnLitBox.getDisplayName(), turnoutStateValues[turnoutUnLitState.getSelectedIndex()]);
         }
+        return true;
     }
 
     String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
