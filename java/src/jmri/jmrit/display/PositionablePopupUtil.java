@@ -44,6 +44,7 @@ public class PositionablePopupUtil {
     protected PositionablePropertiesUtil _propertiesUtil;
 
     private final Color defaultBorderColor;
+    private boolean _suppressRecentColor = false;
 
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
@@ -286,7 +287,9 @@ public class PositionablePopupUtil {
             outlineBorder = new LineBorder(borderColor, borderSize);
             _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
-        JmriColorChooser.addRecentColor(border);
+        if (!_suppressRecentColor) {
+            JmriColorChooser.addRecentColor(border);
+        }
     }
 
     public Color getBorderColor() {
@@ -299,7 +302,9 @@ public class PositionablePopupUtil {
     public void setForeground(Color c) {
         _textComponent.setForeground(c);
         _parent.updateSize();
-        JmriColorChooser.addRecentColor(c);
+        if (!_suppressRecentColor) {
+            JmriColorChooser.addRecentColor(c);
+        }
     }
 
     public Color getForeground() {
@@ -315,12 +320,18 @@ public class PositionablePopupUtil {
             setHasBackground(true);
             _textComponent.setBackground(color);
             _parent.setBackground(color);
-            JmriColorChooser.addRecentColor(color);
+            if (!_suppressRecentColor) {
+                JmriColorChooser.addRecentColor(color);
+            }
         }
         if (hasBackground()) {
             setMargin(margin);  //This rebuilds margin and sets it colour.
         }
         _parent.updateSize();
+    }
+    
+    public void setSuppressRecentColor(boolean b) {
+        _suppressRecentColor = b;
     }
 
     public void setHasBackground(boolean set) {

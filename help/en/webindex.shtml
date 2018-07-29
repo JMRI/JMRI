@@ -120,9 +120,52 @@
  
 <li>
 <a href="html/hardware/can/cbus/index.shtml">CBUS (MERG) </a>
+<ul>
+  
+<li>
+<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="">Event Capture Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
  
 <li>Clock <ul>
   
