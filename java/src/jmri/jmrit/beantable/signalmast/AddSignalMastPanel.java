@@ -396,8 +396,7 @@ public class AddSignalMastPanel extends JPanel {
      * Update contents of Add/Edit mast panel appropriate for chosen Driver
      * type.
      * <p>
-     * Hides the other JPanels. Invoked when selecting a Signal Mast Driver in
-     * {@link #loadMastDefinitions}
+     * Invoked when selecting a Signal Mast Driver in {@link #loadMastDefinitions}
      */
     protected void updateSelectedDriver() {
         log.trace(" updateSelectedDriver() start");
@@ -408,10 +407,9 @@ public class AddSignalMastPanel extends JPanel {
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         currentPane.setAspectNames(sigMap);
         
-        validate();
-        if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {
-            ((jmri.util.JmriJFrame) getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame) getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame) getTopLevelAncestor()).pack();
+        revalidate();
+        if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+            ((JFrame)getTopLevelAncestor()).pack();
         }
         repaint();
         log.trace(" updateSelectedDriver() end");
