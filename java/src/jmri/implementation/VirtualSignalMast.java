@@ -5,7 +5,7 @@ package jmri.implementation;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$vsm:basic:one-searchlight:($0001)
+ * IF$vsm:basic:one-searchlight($0001)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$vsm - defines signal masts of this type
