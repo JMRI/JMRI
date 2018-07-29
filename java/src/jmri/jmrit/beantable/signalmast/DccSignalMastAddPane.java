@@ -7,6 +7,10 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import jmri.*;
+import jmri.implementation.DccSignalMast;
+import jmri.util.swing.BeanSelectCreatePanel;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -22,6 +26,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     @Override
     @Nonnull public String getPaneName() {
         return Bundle.getMessage("DCCMast");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean canHandleMast(@Nonnull SignalMast mast) {
+        return mast instanceof DccSignalMast;
     }
 
     public JPanel getLitPanel() {

@@ -37,6 +37,18 @@ public class OlcbSignalMastAddPaneTest {
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 
     }
+    
+    @Test
+    public void testCanHandleMast() {
+        OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
+        SignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
+            { lastRef = 4; } // reset references 
+        };
+        Assert.assertTrue(vp.canHandleMast(mast));
+        
+        Assert.assertFalse(vp.canHandleMast(new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($0001)")));
+        
+    }
 
     @Test
     public void testCreateMast() {

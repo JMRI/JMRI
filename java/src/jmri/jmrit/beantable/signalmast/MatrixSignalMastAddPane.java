@@ -8,6 +8,10 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import jmri.*;
+import jmri.implementation.MatrixSignalMast;
+import jmri.util.swing.BeanSelectCreatePanel;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -23,6 +27,12 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     @Override
     @Nonnull public String getPaneName() {
         return Bundle.getMessage("MatrixCtlMast");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean canHandleMast(@Nonnull SignalMast mast) {
+        return mast instanceof MatrixSignalMast;
     }
 
     /**

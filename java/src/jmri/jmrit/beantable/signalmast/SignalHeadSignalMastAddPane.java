@@ -1,6 +1,11 @@
 package jmri.jmrit.beantable.signalmast;
 
 import javax.annotation.Nonnull;
+
+import jmri.*;
+import jmri.implementation.SignalHeadSignalMast;
+import jmri.util.swing.BeanSelectCreatePanel;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -16,6 +21,12 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
     @Override
     @Nonnull public String getPaneName() {
         return Bundle.getMessage("HeadCtlMast");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean canHandleMast(@Nonnull SignalMast mast) {
+        return mast instanceof SignalHeadSignalMast;
     }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)

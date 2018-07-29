@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import jmri.*;
+import jmri.implementation.TurnoutSignalMast;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -25,6 +26,12 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
     @Override
     @Nonnull public String getPaneName() {
         return Bundle.getMessage("TurnCtlMast");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean canHandleMast(@Nonnull SignalMast mast) {
+        return mast instanceof TurnoutSignalMast;
     }
 
     String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
