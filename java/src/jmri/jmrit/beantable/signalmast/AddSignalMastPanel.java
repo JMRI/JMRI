@@ -8,42 +8,16 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
+
 import javax.swing.*;
-import jmri.*;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.NmraPacket;
-import jmri.SignalAppearanceMap;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.SignalSystem;
-import jmri.SignalSystemManager;
-import jmri.Turnout;
-import jmri.implementation.DccSignalMast;
-import jmri.implementation.DefaultSignalAppearanceMap;
-import jmri.implementation.MatrixSignalMast;
-import jmri.implementation.SignalHeadSignalMast;
-import jmri.implementation.TurnoutSignalMast;
-import jmri.implementation.VirtualSignalMast;
-import jmri.util.ConnectionNameFromSystemName;
-import jmri.util.FileUtil;
-import jmri.util.StringUtil;
-import jmri.util.swing.BeanSelectCreatePanel;
-import jmri.util.swing.JmriBeanComboBox;
+
+import jmri.*;
+import jmri.implementation.*;
+import jmri.util.*;
+import jmri.util.swing.*;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JPanel to create a new Signal Mast
@@ -79,7 +53,7 @@ public class AddSignalMastPanel extends JPanel {
     JButton apply = new JButton(Bundle.getMessage("ButtonApply")); // NOI18N
     JButton create = new JButton(Bundle.getMessage("ButtonCreate")); // NOI18N
 
-    // current
+    // current mast being worked on
     SignalMast mast;
     
     /**
@@ -115,7 +89,7 @@ public class AddSignalMastPanel extends JPanel {
         p = new JPanel();
         p.setLayout(new jmri.util.javaworld.GridLayout2(5, 2));
 
-        JLabel l = new JLabel(Bundle.getMessage("LabelUserName"));
+        JLabel l = new JLabel(Bundle.getMessage("LabelUserName"));  // NOI18N
         p.add(l);
         p.add(userName);
 
@@ -317,49 +291,49 @@ public class AddSignalMastPanel extends JPanel {
 
             // do file IO to get all the appearances
             // gather all the appearance files
-            //Look for the default system defined ones first
-            URL path = FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED);
+            // Look for the default system defined ones first
+            URL path = FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED); // NOI18N
             if (path != null) {
                 File[] apps = new File(path.toURI()).listFiles();
                 if (apps !=null) {
                     for (File app : apps) {
-                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
-                            log.debug("   found file: {}", app.getName());
+                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) { // NOI18N
+                            log.debug("   found file: {}", app.getName()); // NOI18N
                             // load it and get name
                             mastFiles.add(app);
                             jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
                             };
                             Element root = xf.rootFromFile(app);
                             String name = root.getChild("name").getText();
-                            log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name);
+                            log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name); // NOI18N
                             mastBox.addItem(name);
-                            mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name);
-                            mapNameToShowSize.put(name, root.getChild("appearances")
-                                    .getChild("appearance")
-                                    .getChildren("show")
+                            mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
+                            mapNameToShowSize.put(name, root.getChild("appearances") // NOI18N
+                                    .getChild("appearance") // NOI18N
+                                    .getChildren("show") // NOI18N
                                     .size());
                         }
                     }
                 } else {
-                    log.error("Unexpected null list of signal definition files");
+                    log.error("Unexpected null list of signal definition files"); // NOI18N
                 }
             }
         } catch (org.jdom2.JDOMException e) {
-            mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox1"));
-            log.warn("in loadMastDefinitions", e);
+            mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox1")); // NOI18N
+            log.warn("in loadMastDefinitions", e); // NOI18N
         } catch (java.io.IOException | URISyntaxException e) {
-            mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox2"));
-            log.warn("in loadMastDefinitions", e);
+            mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox2")); // NOI18N
+            log.warn("in loadMastDefinitions", e); // NOI18N
         }
 
         try {
-            URL path = FileUtil.findURL("signals/" + sigsysname, FileUtil.Location.USER, "xml", "resources");
+            URL path = FileUtil.findURL("signals/" + sigsysname, FileUtil.Location.USER, "xml", "resources"); // NOI18N
             if (path != null) {
                 File[] apps = new File(path.toURI()).listFiles();
                 if (apps != null) {
                     for (File app : apps) {
-                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
-                            log.debug("   found file: {}", app.getName());
+                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) { // NOI18N
+                            log.debug("   found file: {}", app.getName()); // NOI18N
                             // load it and get name
                             // If the mast file name already exists no point in re-adding it
                             if (!mastFiles.contains(app)) {
@@ -371,9 +345,9 @@ public class AddSignalMastPanel extends JPanel {
                                 //if the mast name already exist no point in readding it.
                                 if (!mapNameToShowSize.containsKey(name)) {
                                     mastBox.addItem(name);
-                                    mapNameToShowSize.put(name, root.getChild("appearances")
-                                            .getChild("appearance")
-                                            .getChildren("show")
+                                    mapNameToShowSize.put(name, root.getChild("appearances") // NOI18N
+                                            .getChild("appearance") // NOI18N
+                                            .getChildren("show") // NOI18N
                                             .size());
                                 }
                             }
@@ -384,14 +358,14 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         } catch (org.jdom2.JDOMException | java.io.IOException | URISyntaxException e) {
-            log.warn("in loadMastDefinitions", e);
+            log.warn("in loadMastDefinitions", e); // NOI18N
         }
         mastBox.addItemListener((ItemEvent e) -> {
             if (!mastBoxPassive) updateSelectedDriver();
         });
         updateSelectedDriver();
 
-        if (prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())) != null) {
+        if (prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())) != null) { // NOI18N
             mastBox.setSelectedItem(prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())));
         }
     }
@@ -443,11 +417,11 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     void issueWarningUserName(String nam) {
-        log.error("User Name \"{}\" is already in use", nam);
+        log.error("User Name \"{}\" is already in use", nam); // NOI18N
         if (!GraphicsEnvironment.isHeadless()) {
-            String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)});
+            String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + nam)}); // NOI18N
             JOptionPane.showMessageDialog(null, msg,
-                    Bundle.getMessage("WarningTitle"),
+                    Bundle.getMessage("WarningTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -471,7 +445,7 @@ public class AddSignalMastPanel extends JPanel {
     void okPressed() {
         // get and validate entered global information 
         String mastname = mastFiles.get(mastBox.getSelectedIndex()).getName();
-        String user = (userName.getText() != null ? NamedBean.normalizeUserName(userName.getText()) : "");
+        String user = (userName.getText() != null ? NamedBean.normalizeUserName(userName.getText()) : ""); // NOI18N
         if (!GraphicsEnvironment.isHeadless()) {
             if (user == null || user.isEmpty()) {
                 int i = issueNoUserNameGiven();
@@ -493,17 +467,17 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     int issueNoUserNameGiven() {
-        return JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",
-                "No UserName Given",
+        return JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",  // NOI18N
+                "No UserName Given",  // NOI18N
                 JOptionPane.YES_NO_OPTION);
     }
     
     void issueDialogFailMessage(RuntimeException ex) {
         // This is intrinsically swing, so pop a dialog
-        log.error("Failed during createMast", ex);
+        log.error("Failed during createMast", ex); // NOI18N
         JOptionPane.showMessageDialog(this,
-            Bundle.getMessage("DialogFailMessage", ex.toString()),
-            Bundle.getMessage("DialogFailTitle"),  // title of box
+            Bundle.getMessage("DialogFailMessage", ex.toString()), // NOI18N
+            Bundle.getMessage("DialogFailTitle"),  // title of box // NOI18N
             JOptionPane.ERROR_MESSAGE);
     }
     
@@ -538,11 +512,11 @@ public class AddSignalMastPanel extends JPanel {
         if (getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
         } else {
-            log.warn("Unexpected top level ancestor: {}", getTopLevelAncestor());
+            log.warn("Unexpected top level ancestor: {}", getTopLevelAncestor()); // NOI18N
         }
         userName.setText(""); // clear user name
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(AddSignalMastPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanel.class);
 }
