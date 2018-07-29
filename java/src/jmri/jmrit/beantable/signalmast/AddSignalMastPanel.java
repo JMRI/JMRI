@@ -21,17 +21,13 @@ import org.jdom2.Element;
 
 /**
  * JPanel to create a new Signal Mast
+ * 
+ * "Driver" refers to a particular class of SignalMast implementation that's to be configured.
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2016
  * @author Egbert Broerse Copyright (C) 2016
  */
 public class AddSignalMastPanel extends JPanel {
-
-    // connection to preferences
-    jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected"; // NOI18N
-    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // NOI18N
-    String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected"; // NOI18N
     
     // head matter
     JTextField userName = new JTextField(20); // N11N
@@ -53,6 +49,12 @@ public class AddSignalMastPanel extends JPanel {
     JButton apply = new JButton(Bundle.getMessage("ButtonApply")); // NOI18N
     JButton create = new JButton(Bundle.getMessage("ButtonCreate")); // NOI18N
 
+    // connection to preferences
+    jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected"; // NOI18N
+    String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // NOI18N
+    String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected"; // NOI18N
+
     // current mast being worked on
     SignalMast mast;
     
@@ -64,6 +66,7 @@ public class AddSignalMastPanel extends JPanel {
      * {@link #updateSelectedDriver()}
      */
     public AddSignalMastPanel() {
+        log.debug("AddSignalMastPanel()");
         // get the list of possible signal types (as shown by panes)
         SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().forEach(
             (provider)-> {
@@ -115,6 +118,7 @@ public class AddSignalMastPanel extends JPanel {
         add(centerPanel);
         signalMastDriver.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent evt) {
+                    log.trace("about to call selection() from signalMastDriver itemStateChanged");
                     selection((String)evt.getItem());
                 }
         });
@@ -168,7 +172,8 @@ public class AddSignalMastPanel extends JPanel {
         if (prefs.getComboBoxLastSelection(systemSelectionCombo) != null) {
             sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));
         }
-
+        log.trace("  preferences set {} into sigSysBox", sigSysBox.getSelectedItem());
+        
         loadMastDefinitions();
 
         // select the 1st one  //+ should be load from preference - see directly above
@@ -204,6 +209,7 @@ public class AddSignalMastPanel extends JPanel {
      * Select a particular signal implementation to display
      */
     void selection(String view) {
+        log.trace(" selection({}) start", view);
         // find the new pane
         for (SignalMastAddPane pane : panes) {
             if (pane.getPaneName().equals(view)) {
@@ -216,6 +222,7 @@ public class AddSignalMastPanel extends JPanel {
         
         // and show
         cl.show(centerPanel, view);
+        log.trace(" selection({}) end", view);
     }
 
     /**
@@ -228,6 +235,7 @@ public class AddSignalMastPanel extends JPanel {
      */
     public AddSignalMastPanel(SignalMast mast) {
         this(); // calls the above method to build the base for an edit panel
+        log.debug("  called by AddSignalMastPanel({})", mast);
 
         // switch buttons
         apply.setVisible(true);
@@ -243,8 +251,10 @@ public class AddSignalMastPanel extends JPanel {
         userName.setEnabled(false);
        
         //load prior content
-        userName.setText(mast.getUserName());
-        sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());
+        userName.setText(mast.getUserName()); 
+        log.trace("Prior content system name: {}  mast type: {}", mast.getSignalSystem().getUserName(), mast.getMastType());
+        if (mast.getMastType() == null) log.error("MastType was null, and never should be");
+        sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());  // signal system
                 
         // select and show
         for (SignalMastAddPane pane : panes) {
@@ -252,7 +262,14 @@ public class AddSignalMastPanel extends JPanel {
                 currentPane = pane;
                 // set the driver combobox
                 signalMastDriver.setSelectedItem(pane.getPaneName());
+                log.trace("About to call selection() from SignalMastAddPane loop in AddSignalMastPanel(SignalMast mast)");
                 selection(pane.getPaneName());
+
+                // Ensure that the mast type is set
+                mastBoxPassive = false;
+                log.trace("set mastBox to \"{}\" from \"{}\"", mapTypeToName.get(mast.getMastType()), mast.getMastType());
+                mastBox.setSelectedItem(mapTypeToName.get(mast.getMastType()));
+
                 pane.setMast(mast);
                 break;
             }
@@ -274,6 +291,7 @@ public class AddSignalMastPanel extends JPanel {
  
     // load the mast definitions from the selected signal system
     void loadMastDefinitions() {
+        log.trace(" loadMastDefinitions() start");
         // need to remove itemListener before addItem() or item event will occur
         if (mastBox.getItemListeners().length > 0) { // should this be a while loop?
             mastBox.removeItemListener(mastBox.getItemListeners()[0]);
@@ -286,6 +304,7 @@ public class AddSignalMastPanel extends JPanel {
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
             sigsysname = man.getByUserName(u).getSystemName();
+            log.trace("     loadMastDefinitions with sigsysname {}", sigsysname);
             mapNameToShowSize = new LinkedHashMap<>();
             mapTypeToName = new LinkedHashMap<>();
 
@@ -307,11 +326,13 @@ public class AddSignalMastPanel extends JPanel {
                             String name = root.getChild("name").getText();
                             log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name); // NOI18N
                             mastBox.addItem(name);
+                            log.trace("mapTypeToName adding key \"{}\" value \"{}\"", app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
                             mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
                             mapNameToShowSize.put(name, root.getChild("appearances") // NOI18N
                                     .getChild("appearance") // NOI18N
                                     .getChildren("show") // NOI18N
                                     .size());
+                            
                         }
                     }
                 } else {
@@ -368,6 +389,7 @@ public class AddSignalMastPanel extends JPanel {
         if (prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())) != null) { // NOI18N
             mastBox.setSelectedItem(prefs.getComboBoxLastSelection(mastSelectionCombo + ":" + ((String) sigSysBox.getSelectedItem())));
         }
+        log.trace(" loadMastDefinitions() end");
     }
 
     /**
@@ -378,6 +400,7 @@ public class AddSignalMastPanel extends JPanel {
      * {@link #loadMastDefinitions}
      */
     protected void updateSelectedDriver() {
+        log.trace(" updateSelectedDriver() start");
         //+ have to do whatever updates are needed to show the display
         //+ this is redundant computation to find the mast info??
         String mastFile = mastFiles.get(mastBox.getSelectedIndex()).getName();
@@ -391,6 +414,7 @@ public class AddSignalMastPanel extends JPanel {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).pack();
         }
         repaint();
+        log.trace(" updateSelectedDriver() end");
     }
 
     /**
@@ -443,6 +467,7 @@ public class AddSignalMastPanel extends JPanel {
      * Invoked from Apply/Create button.
      */
     void okPressed() {
+        log.trace(" okPressed() start");
         // get and validate entered global information 
         String mastname = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String user = (userName.getText() != null ? NamedBean.normalizeUserName(userName.getText()) : ""); // NOI18N
@@ -464,6 +489,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         clearPanel();
+        log.trace(" okPressed() end");
     }
 
     int issueNoUserNameGiven() {
@@ -486,6 +512,7 @@ public class AddSignalMastPanel extends JPanel {
      * displayed again, right before it's set visible.
      */
     public void refresh() {
+        log.trace(" refresh() start");
         // add new cards (new panes)
         centerPanel.removeAll();
         for (SignalMastAddPane pane : panes) {
@@ -493,14 +520,18 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         // select pane to match current combobox
+        log.trace("about to call selection from refresh");
         selection(signalMastDriver.getItemAt(signalMastDriver.getSelectedIndex()));
+        log.trace(" refresh() end");
     }
 
     /**
      * Respond to the Cancel button.
      */
     void cancelPressed() {
+        log.trace(" cancelPressed() start");
         clearPanel();
+        log.trace(" cancelPressed() end");
     }
 
     /**
@@ -509,12 +540,14 @@ public class AddSignalMastPanel extends JPanel {
      * Called at end of okPressed() and from Cancel
      */
     void clearPanel() {
+        log.trace(" clearPanel() start");
         if (getTopLevelAncestor() instanceof jmri.util.JmriJFrame) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).dispose();
         } else {
             log.warn("Unexpected top level ancestor: {}", getTopLevelAncestor()); // NOI18N
         }
         userName.setText(""); // clear user name
+        log.trace(" clearPanel() end");
     }
 
 
