@@ -206,11 +206,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    /** {@inheritDoc}
-     * @param sigsysname the value of sigsysname
-     * @param mastname the value of mastname
-     * @param username the value of username
-     * @return the boolean */
+    /** {@inheritDoc} */
     @Override
     public boolean createMast(@Nonnull
             String sigsysname, @Nonnull

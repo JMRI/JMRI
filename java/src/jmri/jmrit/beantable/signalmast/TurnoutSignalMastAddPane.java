@@ -134,16 +134,9 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
     }
 
-    /** {@inheritDoc}
-     * @param sigsysname the value of sigsysname
-     * @param mastname the value of mastname
-     * @param username the value of username
-     * @return the boolean */
+    /** {@inheritDoc} */
     @Override
-    public boolean createMast(@Nonnull
-            String sigsysname, @Nonnull
-                    String mastname, @Nonnull
-                            String username) {
+    public boolean createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
         log.debug("createMast({},{})", sigsysname, mastname);
         String name;
         if (currentMast == null) {
@@ -187,23 +180,6 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
     BeanSelectCreatePanel<Turnout> turnoutUnLitBox = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
     JComboBox<String> turnoutUnLitState = new JComboBox<>(turnoutStates);
     DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    public JPanel getLitPanel() {
-
-        JPanel turnoutUnLitPanel = new JPanel();
-
-        turnoutUnLitPanel.setLayout(new BoxLayout(turnoutUnLitPanel, BoxLayout.Y_AXIS));
-        JPanel turnDetails = new JPanel();
-        turnDetails.add(turnoutUnLitBox);
-        turnDetails.add(new JLabel(Bundle.getMessage("SetState")));
-        turnDetails.add(turnoutUnLitState);
-        turnoutUnLitPanel.add(turnDetails);
-        TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border.setTitle(Bundle.getMessage("TurnUnLitDetails"));
-        turnoutUnLitPanel.setBorder(border);
-        
-        return turnoutUnLitPanel;
-    }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
     static public class SignalMastAddPaneProvider extends SignalMastAddPane.SignalMastAddPaneProvider {

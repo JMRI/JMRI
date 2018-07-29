@@ -12,7 +12,6 @@ import javax.swing.border.TitledBorder;
 import jmri.*;
 import jmri.implementation.DccSignalMast;
 import jmri.util.*;
-import jmri.util.swing.BeanSelectCreatePanel;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -62,6 +61,13 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     DccSignalMast currentMast = null;
 
+    /**
+     * Check if a command station will work for this subtype
+     */
+    protected boolean usableCommandStation(CommandStation cs) {
+        return true;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void setAspectNames(@Nonnull SignalAppearanceMap map) {
@@ -81,7 +87,9 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
                 jmri.CommandStation station = connList.get(x);
-                systemPrefixBox.addItem(station.getUserName());
+                if (usableCommandStation(station)) {
+                    systemPrefixBox.addItem(station.getUserName());
+                }
             }
         } else {
             systemPrefixBox.addItem("None");
@@ -114,7 +122,9 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public boolean canHandleMast(@Nonnull SignalMast mast) {
-        return mast instanceof DccSignalMast;
+        // because that mast can be subtyped by something 
+        // completely different, we text for exact here.
+        return mast.getClass().getCanonicalName().equals(DccSignalMast.class.getCanonicalName());
     }
 
     /** {@inheritDoc} */
@@ -150,7 +160,9 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         if (!connList.isEmpty()) {
             for (int x = 0; x < connList.size(); x++) {
                 jmri.CommandStation station = connList.get(x);
-                systemPrefixBox.addItem(station.getUserName());
+                if (usableCommandStation(station)) {
+                    systemPrefixBox.addItem(station.getUserName());
+                }
             }
         } else {
             systemPrefixBox.addItem("None");
@@ -183,12 +195,23 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         }
         return true;
     }
+    
+    /**
+     * Return the first part of the system name 
+     * for the specific mast type
+     */
+    protected String getNamePrefix() {
+        return "F$dsm:";
+    }
 
-    /** {@inheritDoc}
-     * @param sigsysname the value of sigsysname
-     * @param mastname the value of mastname
-     * @param username the value of username
-     * @return the boolean */
+    /** 
+     * Create a mast of the specific subtype
+     */
+    protected DccSignalMast constructMast(String name) {
+        return new DccSignalMast(name);
+    }
+    
+    /** {@inheritDoc} */
     @Override
     public boolean createMast(@Nonnull
             String sigsysname, @Nonnull
@@ -208,13 +231,13 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             if (systemNameText.equals("\0")) {
                 systemNameText = "I";
             }
-            systemNameText = systemNameText + "F$dsm:";
+            systemNameText = systemNameText + getNamePrefix();
 
             String name = systemNameText
                     + sigsysname
                     + ":" + mastname.substring(11, mastname.length() - 4);
             name += "(" + dccAspectAddressField.getText() + ")";
-            currentMast = new DccSignalMast(name);
+            currentMast = constructMast(name);
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
 
