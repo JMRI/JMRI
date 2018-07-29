@@ -113,7 +113,9 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
             Enumeration<String> aspects = appMap.getAspects();
             while (aspects.hasMoreElements()) {
                 String key = aspects.nextElement();
+                Objects.requireNonNull(key, "only non-null keys are expected");
                 TurnoutAspectPanel turnPanel = turnoutAspect.get(key);
+                Objects.requireNonNull(turnPanel, "a panel should exist for each aspect");
                 turnPanel.setSelectedTurnout(currentMast.getTurnoutName(key));
                 turnPanel.setTurnoutState(currentMast.getTurnoutState(key));
                 turnPanel.setAspectDisabled(currentMast.isAspectDisabled(key));
