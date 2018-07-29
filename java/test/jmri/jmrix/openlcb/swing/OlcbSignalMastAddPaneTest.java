@@ -27,12 +27,15 @@ public class OlcbSignalMastAddPaneTest {
 
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         
-        Assert.assertFalse(vp.canHandleMast(null));
         Assert.assertTrue(vp.canHandleMast(s1));
         Assert.assertFalse(vp.canHandleMast(m1));
         
         vp.setMast(null);
+        
+        vp.setAspectNames(s1.getAppearanceMap());
         vp.setMast(s1);
+        
+        vp.setAspectNames(m1.getAppearanceMap());
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 

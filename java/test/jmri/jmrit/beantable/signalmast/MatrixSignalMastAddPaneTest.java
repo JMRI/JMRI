@@ -17,18 +17,23 @@ public class MatrixSignalMastAddPaneTest {
 
     @Test
     public void testSetMast() {
-        MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
-        TurnoutSignalMast s1 = new TurnoutSignalMast("IF$tsm:basic:one-searchlight($1)", "user name");
+        MatrixSignalMast s1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+        TurnoutSignalMast m1 = new TurnoutSignalMast("IF$tsm:basic:one-searchlight($1)", "user name");
 
         MatrixSignalMastAddPane vp = new MatrixSignalMastAddPane();
         
-        Assert.assertFalse(vp.canHandleMast(null));
-        Assert.assertTrue(vp.canHandleMast(m1));
-        Assert.assertFalse(vp.canHandleMast(s1));
+        Assert.assertTrue(vp.canHandleMast(s1));
+        Assert.assertFalse(vp.canHandleMast(m1));
         
         vp.setMast(null);
+        
+        vp.setAspectNames(s1.getAppearanceMap());
         vp.setMast(s1);
+        
+        vp.setAspectNames(m1.getAppearanceMap());
         vp.setMast(m1);
+        // uncomment later, after migration
+        //JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
     }
 
     @Before
