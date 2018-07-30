@@ -666,8 +666,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
 
         if (filterIndex >= 0) {
-            sbCan.append(("Filter " + (filterIndex + 1) + ": ")); // TODO I18N
-            sbCbus.append(("Filter " + (filterIndex + 1) + ": ")); // TODO NOI18N
+            sbCan.append((Bundle.getMessage("ButtonFilter") + (filterIndex + 1) + ": "));
+            sbCbus.append((Bundle.getMessage("ButtonFilter") + (filterIndex + 1) + ": "));
         }
 
         // display decoded data
@@ -810,21 +810,22 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 //        nextLine("All filters removed\n", "All filters removed\n", "", -1);
 //        _filterFrame = null;
 //    }
+
     public void filterOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
         log.debug("Cbus Console filter applied");
         StringBuffer sb = new StringBuffer(80);
         if (nnEn) {
-            sb.append(("Node " + nn + " "));
+            sb.append((Bundle.getMessage("CbusNode") + nn + " "));
         }
         if (evEn) {
-            sb.append(("Event " + ev + " "));
+            sb.append((Bundle.getMessage("CbusEvent") + ev + " "));
         }
         if (ty == CbusConstants.EVENT_ON) {
-            sb.append("ON"); // TODO I18N
+            sb.append(Bundle.getMessage("CbusEventOn"));
         } else if (ty == CbusConstants.EVENT_OFF) {
-            sb.append("OFF"); // TODO I18N
+            sb.append(Bundle.getMessage("CbusEventOff"));
         } else {
-            sb.append("On or OFF"); // TODO I18N
+            sb.append(Bundle.getMessage("CbusEventOnOrOff"));
         }
         sb.append("\n");
         nextLine(sb.toString(), sb.toString(), "", index);
@@ -832,7 +833,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
     public void filterOff(int index) {
         log.debug("Cbus Console filter removed");
-        nextLine(" closed\n", " closed\n", "", index);
+        nextLine( Bundle.getMessage("HighlightDisabled") + " \n", Bundle.getMessage("HighlightDisabled") + " \n", "", index);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -969,10 +970,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     static private int MAX_LINES = 500;
 
     @Override
-    public synchronized void message(CanMessage m) {  // receive a message and log it TODO I18N?
-        nextLine("sent: " + m.toString() + "\n",
+    public synchronized void message(CanMessage m) {  // receive a message and log it
+        nextLine( Bundle.getMessage("EventSent") + ": " + m.toString() + "\n",
                 "ID:" + CbusMessage.getId(m) + " " + (m.isRtr() ? "R " : "N ") + decode(m, m.isExtended(), m.getHeader()) + " [" + CbusMessage.toAddress(m) + "]\n",
-                "Dyn Pri:" + CbusMessage.getPri(m) / 4 + " Min Pri:" + (CbusMessage.getPri(m) & 3),
+                Bundle.getMessage("DynPriTitle") + CbusMessage.getPri(m) / 4 + Bundle.getMessage("MinPriTitle") + (CbusMessage.getPri(m) & 3),
                 (_filterFrame != null) ? _filterFrame.filter(m) : -1);
         sentCountField.setText(Integer.toString(++_sent));
     }
@@ -996,9 +997,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 lastRxDataFields[j].setText(Integer.toHexString(r.getElement(j)));
             }
         }
-        nextLine("rcvd: " + r.toString() + "\n",
+        nextLine( Bundle.getMessage("EventReceived") + ": " + r.toString() + "\n",
                 "ID:" + CbusMessage.getId(r) + " " + (r.isRtr() ? "R " : "N ") + decode(r, r.isExtended(), r.getHeader()) + " [" + CbusMessage.toAddress(r) + "]\n",
-                "Dyn Pri:" + CbusMessage.getPri(r) / 4 + " Min Pri:" + (CbusMessage.getPri(r) & 3),
+                Bundle.getMessage("DynPriTitle") + CbusMessage.getPri(r) / 4 + Bundle.getMessage("MinPriTitle") + (CbusMessage.getPri(r) & 3),
                 (_filterFrame != null) ? _filterFrame.filter(r) : -1);
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }

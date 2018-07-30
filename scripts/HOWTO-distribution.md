@@ -118,6 +118,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
         cd help/en/
         ant
+        cd ../..
 ```
 
 Be patient, it might take a couple minutes. That will pop some frames, etc, but should be entirely automatic. 
@@ -128,8 +129,7 @@ Be patient, it might take a couple minutes. That will pop some frames, etc, but 
 
 - Commit this back:
 ```
-        git commit -m"JavaHelp indexing update" .
-        cd ../..
+        git commit -m"JavaHelp indexing update" help/en/
 ```
 
 ================================================================================
@@ -205,6 +205,11 @@ where the date at the end should be the date (and optionally time) of the last r
     <version>4.13.1-SNAPSHOT</version>
 ```
 Commit, and push back directly to master (this should be the only change, and has to be before the next step)
+```
+git commit -m"for 4.13.1" pom.xml
+git push github
+```
+
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 
@@ -213,7 +218,7 @@ Commit, and push back directly to master (this should be the only change, and ha
         ant make-test-release-branch
 ```
 
-- Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE)
+- Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
 ```
 The release-4.13.1 branch has been created. 
@@ -257,6 +262,8 @@ If you're developing any additional (post-4.13.1) changes that you want in the J
         Git Modules: Branch
     
     and click "Save". If needed, click "Enable".
+
+- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours that "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
