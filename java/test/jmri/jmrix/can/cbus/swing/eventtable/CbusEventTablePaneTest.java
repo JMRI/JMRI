@@ -5,9 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Test simple functioning of CbusEventTablePane
+ * Test simple functioning of CbusEventTablePane.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -17,12 +17,11 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.setUp();
         panel = new CbusEventTablePane();
         title = Bundle.getMessage("MenuItemEventTable");
-        helpTarget = "package.jmri.jmrix.can.cbus.CbusEventTablePane";
+        helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
     }
 
     @Override
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
-
 
 }

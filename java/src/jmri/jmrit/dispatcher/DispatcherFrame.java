@@ -80,7 +80,7 @@ import org.slf4j.LoggerFactory;
 public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceManagerAutoDefault {
 
     public DispatcherFrame() {
-        super(true, true);
+        super(true, true); // remember size a position.
         initializeOptions();
         openDispatcherWindow();
         autoTurnouts = new AutoTurnouts(this);

@@ -10,14 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * NceConsist.java
- *
- * This is the Consist definition for a consist on a NCE system. it uses the NCE
+ * The Consist definition for a consist on an NCE system. It uses the NCE
  * specific commands to build a consist.
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- *
  */
 public class NceConsist extends jmri.implementation.DccConsist implements jmri.jmrix.nce.NceListener {
 
