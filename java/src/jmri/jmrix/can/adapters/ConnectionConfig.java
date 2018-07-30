@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base for of objects to handle configuring a layout connection via
+ * Abstract base for objects to handle configuring a layout connection via
  * various types of SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2012
@@ -41,9 +41,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -91,4 +89,5 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
 
     @Override
     abstract protected void setInstance(); // necessary to get right type
+
 }

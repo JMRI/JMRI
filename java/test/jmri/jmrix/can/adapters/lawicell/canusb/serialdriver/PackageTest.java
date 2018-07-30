@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.configurexml.PackageTest.class,
-   CanUsbDriverAdapterTest.class
+   CanUsbDriverAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.can.adatpers.lawicell.canusb.serialdriver package.

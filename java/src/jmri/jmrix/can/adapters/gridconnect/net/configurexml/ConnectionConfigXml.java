@@ -7,10 +7,10 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 /**
  * Handle XML persistance of layout connections by persistening the
  * NetworkDriverAdapter (and connections).
- * <P>
+ * <p>
  * Note this is named as the XML version of a ConnectionConfig object, but it's
  * actually persisting the NetworkDriverAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.

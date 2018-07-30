@@ -19,13 +19,13 @@ public class GotoFailureAction extends GotoAction {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            AutomationItem automationItem = getAutomationItem().getGotoAutomationItem();
-            if (automationItem != null) {
+            AutomationItem gotoAutomationItem = getAutomationItem().getGotoAutomationItem();
+            if (gotoAutomationItem != null) {
                 setRunning(true);
                 // the old property controls conditional branch if failure
-                firePropertyChange(ACTION_GOTO_CHANGED_PROPERTY, false, automationItem);
+                firePropertyChange(ACTION_GOTO_CHANGED_PROPERTY, false, gotoAutomationItem);
             }
-            finishAction(automationItem != null);
+            finishAction(gotoAutomationItem != null);
         }
     }
 }

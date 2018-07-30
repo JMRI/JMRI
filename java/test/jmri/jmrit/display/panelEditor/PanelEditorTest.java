@@ -43,6 +43,7 @@ public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
     public void tearDown() {
         if (pe != null) {
             JUnitUtil.dispose(pe);
+            JUnitUtil.dispose(pe.getTargetFrame());
             e = pe = null;
         }
         JUnitUtil.tearDown();

@@ -142,8 +142,9 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     class MockCommandStation implements CommandStation {
 
         @Override
-        public void sendPacket(byte[] packet, int repeats) {
+        public boolean sendPacket(byte[] packet, int repeats) {
             lastPacket = packet;
+            return true;
         }
 
         @Override

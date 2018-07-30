@@ -1,10 +1,10 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JMRIClientSensorTest.java
@@ -12,10 +12,27 @@ import org.junit.Assert;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientSensor class
  *
  * @author	Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2018
  */
-public class JMRIClientSensorTest extends TestCase {
+public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    public void testCtor() {
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         JMRIClientTrafficController tc = new JMRIClientTrafficController() {
             @Override
             public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
@@ -23,35 +40,12 @@ public class JMRIClientSensorTest extends TestCase {
                 // connection during test.
             }
         };
-        JMRIClientSensor m = new JMRIClientSensor(3, new JMRIClientSystemConnectionMemo(tc));
-        Assert.assertNotNull(m);
+        t = new JMRIClientSensor(3, new JMRIClientSystemConnectionMemo(tc));
     }
 
-    // from here down is testing infrastructure
-    public JMRIClientSensorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientSensorTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	t.dispose();
         JUnitUtil.tearDown();
     }
 

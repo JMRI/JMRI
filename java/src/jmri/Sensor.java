@@ -26,6 +26,9 @@ public interface Sensor extends NamedBean {
     public static final int ACTIVE = 0x02;
     public static final int INACTIVE = 0x04;
 
+    // MAx value for Debounce Parameter
+    public static final Long MAX_DEBOUNCE = 9999999L;
+
     /**
      * Known state on layout is a bound parameter
      *

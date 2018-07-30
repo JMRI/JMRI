@@ -75,7 +75,7 @@
           <p><a href="#Debounce">See Sensor Debounce below</a></p>
         </dd>
 
-        <dt>Active Delay/ InActive Delay</dt>
+        <dt>Active Delay/ Inactive Delay</dt>
 
         <dd>
           Specify the amount of time in milliseconds that the

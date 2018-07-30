@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2013
  */
 public class Location implements java.beans.PropertyChangeListener {
+    
+    public static final String LOC_TRACK_REGIX = "s";
 
     public static final String NONE = "";
     public static final int RANGE_DEFAULT = 25;
@@ -719,7 +721,7 @@ public class Location implements java.beans.PropertyChangeListener {
         Track track = getTrackByName(name, type);
         if (track == null) {
             _IdNumber++;
-            String id = _id + "s" + Integer.toString(_IdNumber);
+            String id = _id + LOC_TRACK_REGIX + Integer.toString(_IdNumber);
             log.debug("Adding new ({}) to ({}) track name ({}) id: {}", type, getName(), name, id);
             track = new Track(id, name, type, this);
             InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length for manifests
@@ -739,7 +741,7 @@ public class Location implements java.beans.PropertyChangeListener {
         // add to the locations's available track length
         setLength(getLength() + track.getLength());
         // find last id created
-        String[] getId = track.getId().split("s");
+        String[] getId = track.getId().split(LOC_TRACK_REGIX);
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber) {
             _IdNumber = id;

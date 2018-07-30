@@ -8,7 +8,7 @@ import org.junit.Before;
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPSensorServer class
  *
- * @author Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016,2018
  */
 public class JmriSRCPSensorServerTest extends jmri.jmris.AbstractSensorServerTestBase {
 

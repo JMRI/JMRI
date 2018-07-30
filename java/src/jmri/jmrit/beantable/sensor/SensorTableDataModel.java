@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
@@ -362,10 +363,30 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 s.setUseDefaultTimerSettings(((Boolean) value));
                 break;
             case ACTIVEDELAY:
-                s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                Long activeDeBounce  = 0L;
+                try {
+                    activeDeBounce = Long.parseLong((String) value);
+                    if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                    }
+                } catch (NumberFormatException exActiveDeBounce) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
             case INACTIVEDELAY:
-                s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                Long inactiveDeBounce  = 0L;
+                try {
+                    inactiveDeBounce = Long.parseLong((String) value);
+                    if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                    }
+                } catch (NumberFormatException exActiveDeBounce) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
             case EDITCOL:
                 javax.swing.SwingUtilities.invokeLater(() -> {
