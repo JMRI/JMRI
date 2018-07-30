@@ -845,11 +845,8 @@
       builds</a>, it's important that tests needing access to the screen start
       with:</p>
       <pre><code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></pre>
-      or
-      <pre><code>if (GraphicsEnvironment.isHeadless()) { return; }</code></pre><br>
-      if the Assume statement throws an exception.
 
-      <p>This will run the myTest suite of tests only when a
+      <p>This will run the test only when a
       display is available.</p>
 
       <p>GUI tests should close windows when they're done, and in
