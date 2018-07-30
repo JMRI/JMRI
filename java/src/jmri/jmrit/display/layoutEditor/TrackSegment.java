@@ -116,6 +116,7 @@ public class TrackSegment extends LayoutTrack {
         angle = 0.0D;
         circle = false;
         bezier = false;
+        setupDefaultBumperSizes(layoutEditor);
     }
 
     // alternate constructor for loading layout editor panels
@@ -134,6 +135,8 @@ public class TrackSegment extends LayoutTrack {
         mainline = main;
         dashed = dash;
         hidden = hide;
+
+        setupDefaultBumperSizes(layoutEditor);
     }
 
     /**
@@ -3467,6 +3470,28 @@ public class TrackSegment extends LayoutTrack {
         }
     }
     private int bumperLineWidth = 2;
+
+    private void setupDefaultBumperSizes(LayoutEditor layoutEditor) {
+        LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+
+        // use these as default sizes for end bumpers
+        int tieLength = ltdo.getSideTieLength();
+        int tieWidth = ltdo.getSideTieWidth();
+        int railWidth = ltdo.getSideRailWidth();
+        int railGap = ltdo.getSideRailGap();
+        if (mainline) {
+            tieLength = ltdo.getMainTieLength();
+            tieWidth = ltdo.getMainTieWidth();
+            railWidth = ltdo.getMainRailWidth();
+            railGap = ltdo.getMainRailGap();
+        }
+        bumperLineWidth = railWidth;
+        bumperLength = railGap + railWidth;
+        if ((tieLength > 0) && (tieWidth > 0)) {
+            bumperLineWidth = tieWidth;
+            bumperLength = tieLength * 3 / 2;
+        }
+    }
 
     public int getBumperLength() {
         return bumperLength;
