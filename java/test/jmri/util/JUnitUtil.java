@@ -416,7 +416,8 @@ public class JUnitUtil {
     public static void initDebugCommandStation() {
         jmri.CommandStation cs = new jmri.CommandStation() {
             @Override
-            public void sendPacket(@Nonnull byte[] packet, int repeats) {
+            public boolean sendPacket(@Nonnull byte[] packet, int repeats) {
+            return true;
             }
 
             @Override
@@ -504,6 +505,21 @@ public class JUnitUtil {
             log.error("Failed to reset jmri.Application static field", x);
         }
     }
+
+    /*
+     * Use reflection to reset the jmri.util.node.NodeIdentity instance
+     */
+    public static void resetNodeIdentity() {
+        try {
+            Class<?> c = jmri.util.node.NodeIdentity.class;
+            java.lang.reflect.Field f = c.getDeclaredField("instance");
+            f.setAccessible(true);
+            f.set(c, null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset jmri.util.node.NodeIdentity static field", x);
+        }
+    }
+
 
     public static void initGuiLafPreferencesManager() {
         GuiLafPreferencesManager m = new GuiLafPreferencesManager();
@@ -698,6 +714,8 @@ public class JUnitUtil {
      * @param window the window to dispose of
      */
     public static void dispose(@Nonnull Window window) {
+        java.util.Objects.requireNonNull(window, "Window cannot be null");
+        
         ThreadingUtil.runOnGUI(() -> {
             window.dispose();
         });

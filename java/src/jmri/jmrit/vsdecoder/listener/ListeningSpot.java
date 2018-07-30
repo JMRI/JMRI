@@ -42,21 +42,21 @@ public class ListeningSpot {
     private Vector3d _lookAt;
     private String _name;
 
-    private static final Vector3d _rightVector = new Vector3d(0.0d, 1.0d, 0.0d);
+    private static final Vector3d _atVector = new Vector3d(0.0d, 1.0d, 0.0d);
     private static final Vector3d _upVector = new Vector3d(0.0d, 0.0d, 1.0d);
 
     public ListeningSpot() {
         _name = null;
         _location = new Vector3d();
         _up = _upVector;
-        _lookAt = _rightVector;
+        _lookAt = _atVector;
     }
 
     public ListeningSpot(Vector3f position) {
         _name = null;
         _location = new Vector3d(position);
         _up = _upVector;
-        _lookAt = _rightVector;
+        _lookAt = _atVector;
     }
 
     public ListeningSpot(Vector3d position) {
@@ -66,7 +66,7 @@ public class ListeningSpot {
     public ListeningSpot(String name, Vector3d position) {
         _name = name;
         _location = position;
-        _lookAt = _rightVector;
+        _lookAt = _atVector;
         _up = _upVector;
     }
 
@@ -111,18 +111,28 @@ public class ListeningSpot {
      * map z = r cos (90-azimuth)
      * r = sqrt( x^2 + y^2 + z^2 )
      * bearing = theta = atan(map x / map y)
-     * azimuth = 90 - rho = 90 - acos(z / p)
+     * azimuth = 90 - rho = 90 - acos(z / r)
      */
     public Double getBearing() {
-        //bearing = theta = atan(map x / map y)
-        return (Math.toDegrees(Math.atan(_location.x / _location.y)));
+        // bearing = theta = atan(map x / map y)
+        Vector3d lav= getLookAtVector();
+        Double b = Math.toDegrees(Math.atan(lav.x / lav.y));
+
+        // lookAt point is behind listener
+        if (lav.y < 0.0d) {
+            b = b + 180.0d;
+        } else if (b < 0.0d) {
+            b = b + 360.0d;
+        }
+        return b;
     }
 
     public Double getAzimuth() {
         // r = sqrt( x^2 + y^2 + z^2 )
-        // azimuth = 90 - rho = 90 - acos(z / p)
-        Double r = Math.sqrt(Math.pow(_location.x, 2.0d) + Math.pow(_location.y, 2.0d) + Math.pow(_location.z, 2.0d));
-        return (Math.toDegrees(Math.acos(_location.z / r)));
+        // azimuth = 90 - rho = 90 - acos(z / r)
+        Vector3d lav = getLookAtVector();
+        Double r = Math.sqrt(lav.x * lav.x + lav.y * lav.y + lav.z * lav.z);
+        return 90 - Math.toDegrees(Math.acos(lav.z / r));
     }
 
     public void setName(String n) {
@@ -134,6 +144,24 @@ public class ListeningSpot {
     }
 
     public void setLocation(Double x, Double y, Double z) {
+        if (x == null) {
+            x = 0.0d;
+        } else {
+            x = checkLimits(x);
+            x = roundDecimal(x);
+        }
+        if (y == null) {
+            y = 0.0d;
+        } else {
+            y = checkLimits(y);
+            y = roundDecimal(y);
+        }
+        if (z == null) {
+            z = 0.0d;
+        } else {
+            z = checkLimits(z);
+            z = roundDecimal(z);
+        }
         _location = new Vector3d(x, y, z);
     }
 
@@ -163,12 +191,13 @@ public class ListeningSpot {
         Vector3d _la = la;
         _la.normalize();
         Vector3d up = new Vector3d();
-        up.cross(_la, _rightVector);
+        up.cross(_la, _upVector);
         up.cross(up, _la);
+        up.normalize();
         return (up);
     }
 
-    public void setOrientation(double bearing, double azimuth) {
+    public void setOrientation(Double bearing, Double azimuth) {
         // Convert bearing + azimuth to look-at and up vectors.
         // Bearing measured clockwise from Y axis.
         // Azimuth measured up (or down) from X/Y plane.
@@ -176,11 +205,33 @@ public class ListeningSpot {
         // map x = r sin (90-azimuth) sin bearing
         // map z = r cos (90-azimuth)
         // Assumes r = 1;
-        double y = Math.sin(Math.toRadians(90 - azimuth)) * Math.cos(bearing);
-        double x = Math.sin(Math.toRadians(90 - azimuth)) * Math.sin(bearing);
+        if (bearing == null) {
+            bearing = 0.0d;
+        }
+
+        if (azimuth == null) {
+            azimuth = 0.0d;
+        }
+
+        if (azimuth > 90.0d) {
+            azimuth = 180.0d - azimuth;
+        } else if (azimuth < -90.0d) {
+           azimuth = -180.0d - azimuth;
+        }
+
+        double y = Math.sin(Math.toRadians(90 - azimuth)) * Math.cos(Math.toRadians(bearing)); 
+        double x = Math.sin(Math.toRadians(90 - azimuth)) * Math.sin(Math.toRadians(bearing));
         double z = Math.cos(Math.toRadians(90 - azimuth));
         _lookAt = new Vector3d(x, y, z);
         _up = calcUpFromLookAt(_lookAt);
+ 
+        _lookAt.x = roundDecimal(_lookAt.x);
+        _lookAt.y = roundDecimal(_lookAt.y);
+        _lookAt.z = roundDecimal(_lookAt.z);
+
+        _up.x = roundDecimal(_up.x);
+        _up.y = roundDecimal(_up.y);
+        _up.z = roundDecimal(_up.z);
     }
 
     public Boolean equals(ListeningSpot other) {
@@ -255,6 +306,19 @@ public class ListeningSpot {
             _lookAt = parseVector3d(e.getAttributeValue("look_at"));
         }
     }
+
+    private static double roundDecimal(double value) {
+        return (double) Math.round(value * 100) / 100;
+    }
+
+    private static final double MAX_DIST = 9999.99d;
+
+    private static double checkLimits(double value) {
+        value = Math.max(-MAX_DIST, value);
+        value = Math.min(MAX_DIST, value);
+        return value;
+    }
+
     private static final Logger log = LoggerFactory.getLogger(ListeningSpot.class);
 
 }

@@ -12,8 +12,8 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml persistance">
-  <!--#include virtual="/Style" -->
-</head><!--#include virtual="/Header" -->
+  <!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -170,7 +170,7 @@
       via a schema file. These files are kept in the <a href=
       "http://jmri.org/xml/schema">xml/schema</a> directory.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * FamilyItemPanel extension for placing of CPE item types that come from tool Tables
  * - e.g. Turnouts, Sensors, Lights, Signal Heads, etc.
- * 
+ *
  * @author Pete Cressman Copyright (c) 2010, 2011
  */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
@@ -100,11 +101,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         topPanel.setLayout(new BorderLayout());
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
+        int cnt = Math.min(8, _table.getRowCount()) + 2;
+        _scrollPane.setPreferredSize(new Dimension(_scrollPane.getPreferredSize().width, cnt*ROW_HEIGHT));
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
-        java.awt.Dimension dim = _table.getPreferredSize();
-        dim.height = Math.min(ROW_HEIGHT * (_table.getRowCount() + 1), 15);
-        _scrollPane.getViewport().setPreferredSize(dim);
 
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
@@ -121,6 +121,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             @Override
             public void actionPerformed(ActionEvent a) {
                 _table.clearSelection();
+                hideIcons();
             }
         });
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
@@ -257,7 +258,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         if (row < 0) {
             return null;
         }
-        return _model.getBeanAt(row);
+        return _model.getBySystemName((String) _table.getValueAt(row, 0));
     }
 
     /** {@inheritDoc} */
@@ -274,7 +275,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             super(flavor, icon);
             iMap = map;
         }
-        
+
         /** {@inheritDoc} */
         @Override
         protected boolean okToDrag() {
@@ -297,7 +298,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             if (bean == null) {
                 return null;
             }
-            
+
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("Turnout")) {
                     TurnoutIcon t = new TurnoutIcon(_editor);
@@ -339,7 +340,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 sb.append("\"");
                 return  sb.toString();
             }
-            return null;                
+            return null;
         }
     }
 

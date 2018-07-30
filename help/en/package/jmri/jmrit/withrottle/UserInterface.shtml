@@ -38,12 +38,12 @@
       under the heading WiThrottle.</p>
 
       <p>This utility broadcasts its connection information across
-      the local network, so it can be picked up by any device
+      all local networks, so it can be picked up by any device
       looking for the service. This eliminates having to enter
       connection information into the device. If the computer
       running JMRI is protected by a software firewall, you may
-      need to disable the firewall to allow the WiFi throttle to
-      connect.</p>
+      need to add an exception for JMRI or disable the firewall
+      to allow the WiFi throttle to connect.</p>
 
       <p>When using a WiFi throttle, if the computer enters sleep
       mode, control will be lost. System preferences may need to be
@@ -72,7 +72,7 @@
 
       <p>To use your Android device with JMRI as a throttle, you
       run the <a href="http://enginedriver.mstevetodd.com">Engine
-      Driver</a> program or <a href=
+      Driver</a> app or <a href=
       "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
       Digitrains</a> on the Android device. These free apps are
       available from the <a href=
@@ -102,12 +102,12 @@
 
       <h3>Routes &amp; Turnouts</h3>The app can control any
       turnouts (and routes) that JMRI can control. NOTE:
-      EngineDriver only lists turnouts and routes which have User
-      Names.
+      By default, EngineDriver only lists turnouts and routes which 
+      have User Names. This can be changed in EngineDriver Preferences.
 
       <p>Additionally, you can limit what turnouts appear. In JMRI,
       with the WiThrottle window active, there is a menu named
-      WiThrottle. It has an item titled "Filter Controls" that will
+      WiThrottle. It has an item titled "Routes and Turnouts" that will
       let you pick which turnouts to display or hide.</p>
 
       <h3>Advanced Consisting</h3>There are now two options for how

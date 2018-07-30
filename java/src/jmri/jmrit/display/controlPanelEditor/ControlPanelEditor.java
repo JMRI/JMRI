@@ -48,6 +48,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SwingWorker;
+import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -410,7 +411,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> {
-            InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
+            InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex();
         });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
@@ -1651,14 +1652,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }   Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
                     popupSet |= p.setTextEditMenu(popup);
-                    popupSet |= setTextAttributes(pl, popup);
+                    popupSet |= setTextAttributes(p, popup);
+//                    popupSet |= pl.setEditTextMenu(popup);
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                     if (pl.isText()) {
                         popupSet |= setTextAttributes(p, popup);
+//                        popupSet |= pl.setEditTextMenu(popup);
                     }
-                } else {
-                    popupSet = p.setTextEditMenu(popup);
                 }
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);
@@ -1839,6 +1840,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         try {
             //Point pt = evt.getLocation(); coords relative to entire window
             Point pt = _targetPanel.getMousePosition(true);
+            if (pt == null) {
+                return;
+            }
             Transferable tr = evt.getTransferable();
             if (log.isDebugEnabled()) { // avoid string building if not debug
                 DataFlavor[] flavors = tr.getTransferDataFlavors();

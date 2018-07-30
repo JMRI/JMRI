@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBase<ReporterManager> {
+public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBase<ReporterManager, Reporter> {
 
     /**
      * Max number of Reporters supported.  Override to return 1 if
@@ -55,6 +55,15 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
     }
+
+    @Test
+    public void testProvideName() {
+        // Create
+        Reporter t = l.provide("" + getNameToTest1());
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
+    }
+
 
     @Test
     public void testReporterProvideReporter() {

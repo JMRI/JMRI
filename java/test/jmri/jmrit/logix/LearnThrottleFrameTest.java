@@ -17,9 +17,11 @@ public class LearnThrottleFrameTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LearnThrottleFrame t = new LearnThrottleFrame(new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
+        LearnThrottleFrame t = new LearnThrottleFrame(wf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
+        JUnitUtil.dispose(wf);
     }
 
     // The minimal setup for log4J

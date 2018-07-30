@@ -23,13 +23,31 @@ public abstract class LnTrafficController implements LocoNetInterface {
      */
     @Deprecated
     static public LnTrafficController instance() {
-        return self;
+        return null;
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
+    /**
+     * @deprecated 2.13.4
+     */
     static protected LnTrafficController self = null;
+
+    /**
+     * Reference to the system connection memo.
+     */
+    LocoNetSystemConnectionMemo memo = null;
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m) {
+        log.debug("LnTrafficController set memo to {}", m.getUserName());
+        memo = m;
+    }
 
     // Abstract methods for the LocoNetInterface
     @Override
@@ -40,7 +58,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * <p>
      * Implementations should update the transmit count statistic.
      *
-     * @param m Message to send; will be updated with CRC
+     * @param m message to send; will be updated with CRC
      */
     @Override
     abstract public void sendLocoNetMessage(LocoNetMessage m);
@@ -75,7 +93,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * {@link jmri.jmrix.loconet.Intellibox.IBLnPacketizer} invoke it, but don't
      * inherit from it.
      *
-     * @param m Message to forward. Listeners should not modify it!
+     * @param m message to forward. Listeners should not modify it!
      */
     @SuppressWarnings("unchecked")
     public void notify(LocoNetMessage m) {
@@ -88,9 +106,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
         synchronized (this) {
             v = (Vector<LocoNetListener>) listeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify of incoming LocoNet packet: " + m.toString());
-        }
+        log.debug("notify of incoming LocoNet packet: {}", m.toString());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {

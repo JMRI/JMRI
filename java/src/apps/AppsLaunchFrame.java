@@ -222,6 +222,11 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
+        
+        d.add(new JSeparator());
+        d.add(new apps.TrainCrew.InstallFromURL());
+        
+        // add final to menu bar
         menuBar.add(d);
 
     }

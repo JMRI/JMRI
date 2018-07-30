@@ -172,6 +172,80 @@ displayed from the text in the "label" attribute, which is:
         or updated
         (<a href="#update">Updates and Migration</a>).</p>
 
+        <h4>Public-domain and DIY decoders</h4>
+
+        <span class="since">Since <a href="/releasenotes/jmri4.11.5.shtml" target="_blank">JMRI 4.11.5</a></span>
+
+        <p>The "Read Type from Decoder" feature is available for Public-domain and DIY decoders.</p>
+
+        <p>Three identifiers are used to identify the decoder:</p>
+
+            <dl>
+                <dt>Manufacturer:</dt>
+
+                <dd>Numeric value <b>CV8 = 13</b> according to the NMRA standard S-9.2.2.
+                file.</dd>
+
+                <dt>Version code:</dt>
+
+                <dd>The numeric value from <b>CV7</b> where the software version is stored.</dd>
+
+                <dt>Product ID code:</dt>
+
+                <dd>Numeric value stored in <b>CV47</b>, <b>CV48</b>, <b>CV49</b> and <b>CV50</b> 
+                according to NMRA standard S-9.2.2 file and reserved for use by the manufacturer.
+
+                    <p>Product ID is calculated using the following formula:</p>
+
+                    <ul>
+                        <li>Product ID = (((CV47 * 256) + CV48) * 256 + CV49) * 256 + CV50</li>
+                    </ul>
+
+                    <p>Individual CVs have the following meaning:</p>
+
+                    <ul>
+                        <li>CV47 - country code, for example CV47 = 1 for the Czech Republic</li>
+                        <li>CV48 - developer or group of developers code, such as CV48 = 1 for dccdoma.cz</li>
+                        <li>CV49 - third ProductID for further identification</li>
+                        <li>CV50 - fourth ProductID for further identification</li>
+                    </ul>
+                </dd>
+            </dl>
+
+        <p>The corresponding decoder definition xml file has a filled &lt;family&gt; element. Example:</p>
+    
+       <pre style="font-family: monospace;">
+  &lt;decoder&gt;
+    &lt;family name="dccdoma.cz" mfg="Public-domain and DIY" &gt;
+      &lt;model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" &#8230;  /&gt;
+    &lt;/family&gt;
+    &#8230;
+  &lt;/decoder&gt;</pre>
+
+        <p>The individual attributes of this element must be filled in as follows:</p>
+        <ul>
+            <li><b>mfg="Public-domain and DIY"</b> that matches CV8</li>
+            <li><b>lowVersionID="nn" highVersionID="mm"</b> that matches CV7</li>
+            <li><b>productID="nnnnnn"</b> that matches CV47, CV48, CV49 and CV50</li>
+        </ul>
+
+        <p>The name of the xml file with the definition of the decoder should have the following structure:</p>
+
+        <pre style="font-family: monospace;"><b>Public_Domain</b>_<b>family-name</b>_<b>model-model</b>.xml</pre>
+
+        <p>Where each part of a file name has the following meaning:</p>
+        <ul>
+            <li><b>Public_Domain</b> that matches attribute &lt;family mfg="Public-domain and DIY" &gt;</li>
+            <li><b>family-name</b> that matches attribute &lt;family name="developer" &gt;</li>
+            <li><b>model-model</b> that matches attribute &lt;model model="decoder name" &gt;</li>
+        </ul>
+
+        <p>Example of a definition decoder file for signal decoder <i>UNI16ARD-NAV.xml</i> 
+            from the developers group <i>dccdoma.cz</i> who are from <i>the Czech Republic</i> 
+            <a href="../../../../../xml/decoders/Public_Domain_dccdoma_UNI16ARD_NAV.xml">Public_Domain_dccdoma_UNI16ARD_NAV.xml</a>.</p> 
+        
+        <p>For the new <i>country code</i> and new <i>developer code</i>, please contact Groups.io jmriusers <a href="https://groups.io/g/jmriusers">https://groups.io/g/jmriusers</a>.</p>
+        
       <a name="pane_considerations" id="pane_considerations"></a>
       <h3>Pane Considerations</h3>Programmer panes are used to
       split and organise decoder variables into convenient named

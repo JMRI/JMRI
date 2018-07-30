@@ -177,7 +177,7 @@ public class InputWindow extends JPanel {
             try {
                 try {
                     languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactoryByExtension(Files.getFileExtension(file.getName())).getLanguageName());
-                } catch (NullPointerException npe) {
+                } catch (ScriptException npe) {
                     log.error("Unable to identify script language for {}, assuming its Python.", file);
                     languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.PYTHON).getLanguageName());
                 }

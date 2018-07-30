@@ -77,6 +77,8 @@ public class SimpleTimebaseTest extends TestCase {
     // set the time based on an instant.
     public void testSetTimeInstant() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Instant now = Instant.now();
         
         p.setTime(now);

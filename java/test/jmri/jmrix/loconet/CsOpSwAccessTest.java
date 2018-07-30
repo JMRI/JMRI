@@ -13,8 +13,7 @@ import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
 /**
- *
- * @author given
+ * Tests for LocoNet CsOpSwAccess class.
  */
 public class CsOpSwAccessTest {
 

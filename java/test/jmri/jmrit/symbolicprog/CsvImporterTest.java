@@ -41,6 +41,11 @@ public class CsvImporterTest {
         CvTableModel tm = new CvTableModel(new JLabel(), null);
         CsvImporter t = new CsvImporter(f,tm);
         Assert.assertNotNull("exists",t);
+        
+        // following messages don't seem to always happen in AppVeyor and Travis CI
+        // jmri.util.JUnitAppender.assertWarnMessage("CV1 was in import file, but not defined by the decoder definition");
+        // jmri.util.JUnitAppender.assertWarnMessage("CV2 was in import file, but not defined by the decoder definition");
+        
     }
 
     // The minimal setup for log4J

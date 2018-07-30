@@ -91,7 +91,7 @@
         Soundtraxx decoder definitions, created our Windows icons,
         has debugged several difficult problems, created several
         Tam Valley decoder definitions, and is a primary author of
-        EngineDriver.</li>
+        EngineDriver.</li><!-- n3ix on GitHub -->
 
         <li>John Bell, who improved the NCE instructions</li>
 
@@ -192,7 +192,8 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li>Egbert Broerse, who worked on translations, added
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Asilverailscolo+">Egbert Broerse</a>, 
+        who worked on translations, added
         Switchboards, graphic state display in the tables,
         the Output Matrix signal mast and the Rio Grande 1965
         signal definition, localized hardware connection tools and 
@@ -211,6 +212,9 @@
         <li>Stephen Brooks, who did the initial testing of the
         Grapevine and Maple support</li>
 
+        <li>Stuart Brorson, who provided the decoder definition for the 
+            SDD-001 from BNM Hobbies</li>
+        
         <li>Andy Brown, who helped solve a problem with NX
         entry/exit pairs.</li>
 
@@ -298,7 +302,8 @@
         decoder definitions for MRC decoders and the Kato
         FL11.</li>
 
-        <li>Peter Cressman provided a major improvement to Logix,
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Apetecressman+">Peter Cressman</a>
+        provided a major improvement to Logix,
         improved Sensor Groups, fixed some problems in Routes, and
         provided the Warrant system for scripted running</li>
 
@@ -412,7 +417,7 @@
         <li>William C Gage provided an MRC decoder definition</li>
 
         <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
-        and helped fix the Transit implementation of comments.
+        and helped fix the Transit implementation of comments.</li><!-- Pugwash1 -->
 
         <li>Brian Gilhuly, who helped debug a programmer problem in
         JMRI 3.11.1</li>
@@ -441,6 +446,8 @@
         and packetpro.info domain names; provided definitions for
         the E-Z Command and Zimo MX61_N decoders; and updated the
         Digitrax definition for new types.</li>
+
+        <li>Tom Gretton, who helped with documentation and the Groups.io migration</li><!-- tgretton -->
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
@@ -597,7 +604,7 @@
         of the C/MRI support.</li>
 
         <li>Alain Le Marchand, who provided a number of decoder
-        definitions and updates</li>
+        definitions and updates</li><!-- GitHub: AlanUS -->
 
         <li>Karl Johan Lisby, who made large improvements to the
         Uhlenbrock Intellibox support and contributed the Signal
@@ -839,6 +846,10 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Adsand47+">Dave Sand</a>, 
+        who's worked on Layout Editor, Logix, 
+        Entry/Exit signaling and other things.</li><!-- dsand47 -->
+        
         <li>Richard Sauerbrun provided a definition for the
         DN163K4B decoder.</li>
 
@@ -890,7 +901,7 @@
         XML files</li>
 
         <li>Petr Šídlo, who provided a large update to the Czech
-        translations of JMRI</li>
+        translations of JMRI</li><!-- sidlo64 on GitHub -->
 
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific
@@ -1061,6 +1072,11 @@
         <li>Mike Yawn, who provided the instructions for building
         under Eclipse <a name="Z" id="Z"></a></li>
 
+        <li>Steve Young, who helped with CBUS documentation and the Groups.io migration</li><!-- icklesteve -->
+
+        <li>Luis Zamora, who done a lot of work on the 
+        Catalan translation</li><!-- eldelinux --> 
+        
         <li>david zuhn, who provided instructions for installing
         the comm libraries on Linux, wrote startup scripts and
         configured Ant for compiling with warnings</li>

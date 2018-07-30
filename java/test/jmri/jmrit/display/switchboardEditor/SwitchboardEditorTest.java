@@ -90,7 +90,8 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase {
     @After
     public void tearDown() {
         if (swe != null) {
-            swe.dispose();
+            JUnitUtil.dispose(swe);
+            JUnitUtil.dispose(swe.getTargetFrame());
             e = swe = null;
         }
         JUnitUtil.tearDown();

@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
    jmri.jmrix.can.adapters.gridconnect.net.configurexml.PackageTest.class,
    MergConnectionConfigTest.class,
    MergNetworkDriverAdapterTest.class,
-   NetworkDriverAdapterTest.class
+   NetworkDriverAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.net package.

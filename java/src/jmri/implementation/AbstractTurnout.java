@@ -53,8 +53,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return Bundle.getMessage("BeanNameTurnout");
     }
 
-    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+    private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     /**
      * Handle a request to change state, typically by sending a message to the

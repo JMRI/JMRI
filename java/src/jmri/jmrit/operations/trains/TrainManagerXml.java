@@ -300,7 +300,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     private String getDefaultManifestFileName(String name, String ext) {
-        return OperationsManager.getInstance().getPath(JSON_MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
+        return InstanceManager.getDefault(OperationsManager.class).getPath(JSON_MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
     }
 
     /**

@@ -23,7 +23,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -114,12 +114,12 @@ scanning through the code.
         Note that SpotBugs won't let you compare an @Nonnull value to
         null; that's an error that SpotBugs wants to find via static analysis.
         If your annotating a part of the external API, and you want to double-check at runtime, use 
-        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Objects.html#requireNonNull-T-">Objects.requireNonNull(..)</a>,
+        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Objects.html#requireNonNull-T-">java.util.Objects.requireNonNull(..)</a>,
         for example:
 <pre style="font-family: monospace;">
         public Car(@Nonnull Engine engine, @Nonnull Transmission transmission) {
-            this.engine = Objects.requireNonNull(engine, "Engine cannot be null");
-            this.transmission = Objects.requireNonNull(transmission, "Transmission cannot be null");
+            this.engine = java.util.Objects.requireNonNull(engine, "Engine cannot be null");
+            this.transmission = java.util.Objects.requireNonNull(transmission, "Transmission cannot be null");
         }
 </pre>
    
@@ -141,8 +141,7 @@ scanning through the code.
           should) be invoke super in the overriding method.
           Examples of such methods include finalize() and clone().
 
-          <p>Note this replaces the deprecated <a href=
-                                                  "http://findbugs.sourceforge.net/manual/annotations.html">
+          <p>Note this replaces the deprecated <a href="http://findbugs.sourceforge.net/manual/annotations.html">
                   <code>edu.umd.cs.findbugs.annotations.OverrideMustInvoke</code></a>.</p>
         </li>
 
@@ -378,7 +377,7 @@ ant spotbugs
       <p>If you are checking code in to the JMRI repository, please
       check the CI server and make sure that your changes do not
       introduce new errors.</p>
-       <!--#include virtual="/Footer" -->
+       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

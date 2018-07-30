@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.11.5-SNAPSHOT</version>
+    <version>4.13.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -506,6 +506,23 @@
                                 <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                                 <File>jmri/util/web/BrowserFactory.class</File>
+                                <!-- pure interfaces and classes of constants -->
+                                <File>jmri/AddressedProgrammerManager.class</File>
+                                <File>jmri/PhysicalLocationReporter.class</File>
+                                <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
+                                <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
+                                <File>jmri/jmrit/audio/AudioSource.class</File>
+                                <File>jmri/jmrit/operations/locations/Xml.class</File>
+                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
+                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
+                                <File>jmri/jmrit/operations/trains/Xml.class</File>
+                                <File>jmri/jmrit/ussctc/Lock.class</File>
+                                <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                <File>jmri/server/json/roster/JsonRoster.class</File>
+                                <File>jmri/server/json/reporter/JsonReporter.class</File>
+                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
+                                <!-- deprecated classes -->
+                                <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -528,6 +545,16 @@
                                     <limits>
                                         <limit>
                                             <counter>CLASS</counter>
+                                            <value>COVEREDCOUNT</value>
+                                            <minimum>1</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>SOURCEFILE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
                                             <value>COVEREDCOUNT</value>
                                             <minimum>1</minimum>
                                         </limit>
@@ -984,13 +1011,18 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>0.1.16</version>
+            <version>0.1.19</version>
         </dependency>
-	<dependency>
-	    <groupId>org.eclipse.paho</groupId>
-	    <artifactId>mqtt-client</artifactId>
-	    <version>0.4.0</version>
-	</dependency>
+        <dependency>
+	         <groupId>org.eclipse.paho</groupId>
+	         <artifactId>mqtt-client</artifactId>
+	         <version>0.4.0</version>
+	    </dependency>
+        <dependency>
+             <groupId>com.alexandriasoftware.swing</groupId>
+             <artifactId>jsplitbutton</artifactId>
+             <version>1.3.1</version>
+        </dependency>
     </dependencies>
 
     <repositories>

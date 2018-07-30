@@ -41,8 +41,8 @@
       given piece of model railroad equipment, it is possible to
       connect it to JMRI. If you don't see your particular system
       here, please ask about it on the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users Yahoo group</a>.</p>
+      "https://groups.io/g/jmriusers">JMRI
+      users</a>.</p>
 
       <div class="list">
         <dl>
@@ -236,6 +236,9 @@
 
             <p class="dl">Configure: Directly connecting to an
             <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configure: Connecting to a <a href=
+            "StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
           </dd>
 
           <dt class="im"><a href=

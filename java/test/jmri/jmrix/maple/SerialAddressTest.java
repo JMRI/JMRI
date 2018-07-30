@@ -163,7 +163,7 @@ public class SerialAddressTest {
 
     @Test
     public void testGetUserNameFromSystemName() {
-        jmri.SensorManager sMgr = memo.getSensorManager();
+        jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
         // create 4 new sensors
         sMgr.newSensor("KS16", "userS16");
         sMgr.newSensor("KS014", "userS14");

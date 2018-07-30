@@ -37,9 +37,9 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     /**
      * Can the port accept additional characters? This might go false for short
      * intervals, but it might also stick off if something goes wrong.
-     * <P>
-     * Provide a default implementation for the MS100, etc, in which this is
-     * _always_ true, as we rely on the queueing in the port itself.
+     * <p>
+     * Provide a default implementation for the MS100, etc.
+     * @return _always_ true, as we rely on the queueing in the port itself
      */
     public boolean okToSend() {
         return true;
@@ -76,7 +76,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     // There are also "PR3 standalone programmer" and "Stand-alone LocoNet" in pr3/PR3Adapter
-    //  and "PR2 standalone programmer" in pr2/Pr2Adaper
+    // and "PR2 standalone programmer" in pr2/Pr2Adaper
     /**
      * Set config info from a name, which needs to be one of the valid ones.
      */
@@ -96,19 +96,21 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
 
     public void setTurnoutHandling(String value) {
-        if (value.equals("One Only") || value.equals("Both")) { // NOI18N
+        if (value.equals("One Only") || value.equals(Bundle.getMessage("HandleOneOnly"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutNoRetry = true;
         }
-        if (value.equals("Spread") || value.equals("Both")) { // NOI18N
+        log.debug("turnout no retry: {}", mTurnoutNoRetry); // NOI18N
+        if (value.equals("Spread") || value.equals(Bundle.getMessage("HandleSpread"))
+                || value.equals("Both") || value.equals(Bundle.getMessage("HandleBoth"))) {
             mTurnoutExtraSpace = true;
         }
-        log.debug("turnout no retry: {}", mTurnoutNoRetry); // NOI18N
         log.debug("turnout extra space: {}", mTurnoutExtraSpace); // NOI18N
     }
 
     public void setTranspondingAvailable(String value) {
         // default (most common state) is off, so just check for Yes
-        mTranspondingAvailable = value.equals("Yes");
+        mTranspondingAvailable = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
     }
     
@@ -116,5 +118,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
     private final static Logger log = LoggerFactory.getLogger(LnPortController.class);
+
 }

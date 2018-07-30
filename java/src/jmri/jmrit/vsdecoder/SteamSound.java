@@ -47,7 +47,7 @@ class SteamSound extends EngineSound {
             use_chuff = chuff;
             if (use_chuff) {
                 sound.setLooped(false);
-                t = newTimer(1000, true, new ActionListener() {
+                t = newTimer(1, true, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         doChuff();
@@ -79,12 +79,11 @@ class SteamSound extends EngineSound {
 
     // Engine Sounds
     ArrayList<RPMSound> rpm_sounds;
-    SoundBite idle_sound;
     int top_speed;
     int driver_diameter;
     int num_cylinders;
     RPMSound current_rpm_sound;
-    int current_chuff_time;
+    float exponent;
 
     public SteamSound(String name) {
         super(name);
@@ -124,11 +123,11 @@ class SteamSound extends EngineSound {
     }
 
     private double speedCurve(float t) {
-        return Math.pow(t, 2.0) / 1.0;
+        return Math.pow(t, exponent) / 1.0;
     }
 
     private int calcChuffInterval(int rpm) {
-        return 1000 * num_cylinders / rpm;
+        return 30000 / num_cylinders / rpm;
     }
 
     @Override
@@ -136,22 +135,32 @@ class SteamSound extends EngineSound {
         // Don't do anything, if engine is not started or auto-start is active.
         if (engine_started) {
             RPMSound rps;
-            // Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
-            if (((rps = getRPMSound(calcRPM(t))) != null) && (rps != current_rpm_sound)) {
-                // Stop the current sound
-                if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
-                    current_rpm_sound.sound.fadeOut();
-                    if (current_rpm_sound.use_chuff) {
-                        current_rpm_sound.stopChuff();
+            rps = getRPMSound(calcRPM(t)); // Get the rpm sound.
+            if (rps != null) {
+                // Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
+                if (rps != current_rpm_sound) {
+                    // Stop the current sound
+                    if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
+                        current_rpm_sound.sound.fadeOut();
+                        if (current_rpm_sound.use_chuff) {
+                            current_rpm_sound.stopChuff();
+                        }
+                    }
+                    // Start the new sound.
+                    current_rpm_sound = rps;
+                    if (rps.use_chuff) {
+                        rps.setRPM(calcRPM(t));
+                        rps.startChuff();
+                    }
+                    rps.sound.fadeIn();
+                } else {
+                    // *same object* - but possibly different rpm (speed) which affects the chuff interval
+                    if (rps.use_chuff) {
+                        rps.setRPM(calcRPM(t)); // Chuff interval need to be recalculated
                     }
                 }
-                // Start the new sound.
-                current_rpm_sound = rps;
-                if (rps.use_chuff) {
-                    rps.setRPM(calcRPM(t));
-                    rps.startChuff();
-                }
-                rps.sound.fadeIn();
+            } else {
+                log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
             }
             log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
         }
@@ -216,6 +225,17 @@ class SteamSound extends EngineSound {
             num_cylinders = Integer.parseInt(n);
             log.debug("Num Cylinders: {}", num_cylinders);
         }
+
+        // Optional value
+        // Allows to adjust speed via speedCurve(T).
+        n = e.getChildText("exponent");
+        if (n != null) {
+            exponent = Float.parseFloat(n);
+        } else {
+            exponent = 2.0f; // default
+        }
+        log.debug("exponent: {}", exponent);
+
         // For now, num_rpms is not used.  
         /*
          n = e.getChild("rpm-steps").getValue();
@@ -228,7 +248,7 @@ class SteamSound extends EngineSound {
         is_auto_start = setXMLAutoStart(e);
         log.debug("config auto-start: {}", is_auto_start);
 
-        rpm_sounds = new ArrayList<RPMSound>();
+        rpm_sounds = new ArrayList<>();
 
         // Get the RPM steps
         Iterator<Element> itr = (e.getChildren("rpm-step")).iterator();

@@ -21,7 +21,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.PrintCarLoadsAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;

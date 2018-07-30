@@ -1,10 +1,10 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,8 +13,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
  */
-public class LnSensorAddressTest extends TestCase {
+public class LnSensorAddressTest {
 
+    @Test
     public void testLnSensorAddressCreate() {
         LnSensorAddress a1 = new LnSensorAddress("LS001", "L");
         LnSensorAddress a2 = new LnSensorAddress("LS001A", "L");
@@ -26,6 +27,7 @@ public class LnSensorAddressTest extends TestCase {
         Assert.assertNotNull("exists", a4);
     }
 
+    @Test
     public void testLnSensorInvalid() {
         LnSensorAddress a;
         a = new LnSensorAddress("foo", "L") {
@@ -33,43 +35,44 @@ public class LnSensorAddressTest extends TestCase {
             void reportParseError(String s) {
             }
         };
-        assertTrue(!a.isValid());
+        Assert.assertTrue(!a.isValid());
     }
 
+    @Test
     public void testLnSensorAddressASmode() {
         LnSensorAddress a;
 
         a = new LnSensorAddress("LS130A", "L");
-        assertTrue(a.getLowBits() == 2);
-        assertTrue(a.getHighBits() == 1);
-        assertEquals("AS bit from LS130A", 0x20, a.getASBit());
-        assertTrue(a.isValid());
+        Assert.assertTrue(a.getLowBits() == 2);
+        Assert.assertTrue(a.getHighBits() == 1);
+        Assert.assertEquals("AS bit from LS130A", 0x20, a.getASBit());
+        Assert.assertTrue(a.isValid());
 
         a = new LnSensorAddress("LS257S", "L");
-        assertTrue(a.getLowBits() == 1);
-        assertTrue(a.getHighBits() == 2);
-        assertTrue(a.getASBit() == 0x00);
-        assertTrue(a.isValid());
-
+        Assert.assertTrue(a.getLowBits() == 1);
+        Assert.assertTrue(a.getHighBits() == 2);
+        Assert.assertTrue(a.getASBit() == 0x00);
+        Assert.assertTrue(a.isValid());
     }
 
+    @Test
     public void testLnSensorAddressNumericMode() {
         LnSensorAddress a;
 
         a = new LnSensorAddress("LS130A2", "L"); // 0x0822
-        assertTrue(a.getLowBits() == 17);
-        assertTrue(a.getHighBits() == 16);
-        assertTrue(a.getASBit() == 0x00);
-        assertTrue(a.isValid());
+        Assert.assertTrue(a.getLowBits() == 17);
+        Assert.assertTrue(a.getHighBits() == 16);
+        Assert.assertTrue(a.getASBit() == 0x00);
+        Assert.assertTrue(a.isValid());
 
         a = new LnSensorAddress("LS257D3", "L");  // 0x101F
         Assert.assertTrue(a.getLowBits() == 15);
         Assert.assertTrue(a.getHighBits() == 32);
-        assertEquals("AS bit from LS257D3", 0x20, a.getASBit());
+        Assert.assertEquals("AS bit from LS257D3", 0x20, a.getASBit());
         Assert.assertTrue(a.isValid());
-
     }
 
+    @Test
     public void testLnSensorAddressBDL16Mode() {
         LnSensorAddress a;
 
@@ -82,11 +85,11 @@ public class LnSensorAddressTest extends TestCase {
         a = new LnSensorAddress("LS258", "L");
         Assert.assertTrue(a.getLowBits() == 0);
         Assert.assertTrue(a.getHighBits() == 1);
-        assertEquals("AS bit from LS258", 0x20, a.getASBit());
+        Assert.assertEquals("AS bit from LS258", 0x20, a.getASBit());
         Assert.assertTrue(a.isValid());
-
     }
 
+    @Test
     public void testLnSensorAddressFromPacket() {
         LnSensorAddress a;
 
@@ -99,34 +102,17 @@ public class LnSensorAddressTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public LnSensorAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LnSensorAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LnSensorAddressTest.class);
-        return suite;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(LnSensorAddressTest.class);
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnSensorAddressTest.class);
 
 }

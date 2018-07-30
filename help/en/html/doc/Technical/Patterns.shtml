@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -228,7 +228,7 @@
       JMRI then packages those into the appropriate level of <code>jmri.jar</code> file, 
       where they will eventually be found and acted on.</p>
       
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

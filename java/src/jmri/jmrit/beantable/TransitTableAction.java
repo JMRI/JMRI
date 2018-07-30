@@ -54,16 +54,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a TransitTable GUI.
- * <p>
- * This file is part of JMRI.
- * <P>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
@@ -85,7 +75,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         if (sectionManager == null || transitManager == null) {
             setEnabled(false);
         }
-
     }
 
     public TransitTableAction() {
@@ -113,7 +102,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 }
                 Transit z = InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
                 if (z == null) {
-                    log.debug("requested getValue(\"" + name + "\"), Transit doesn't exist");
+                    log.debug("requested getValue(\"{}\"), Transit doesn't exist", name);
                     return "(no Transit)";
                 }
                 return "Transit";
@@ -889,7 +878,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
         }
         if (sOld == null) {
-            log.error("Missing primary Section for seq = " + seq);
+            log.error("Missing primary Section for seq = {}", seq);
             return;
         }
         List<Section> possibles = new ArrayList<>();
@@ -1102,7 +1091,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             }
         }
         if (primarySection == null) {
-            log.error("Missing primary Section for seq = " + seq);
+            log.error("Missing primary Section for seq = {}", seq);
             return;
         }
         List<Section> possibles = new ArrayList<>();
@@ -1762,7 +1751,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             TitledBorder border = BorderFactory.createTitledBorder(rbx.getString("SelectASignal"));
             signalPanel = new JPanel();
             signalPanel.setBorder(border);
-            signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
+            signalPanel.add(new JLabel(rbx.getString("MastLabel")));
             signalPanel.add(signalMastComboBox);
             signalMastComboBox.setFirstItemBlank(true);
             signalMastComboBox.addActionListener(new ActionListener() {
@@ -1773,7 +1762,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     }
                 }
             });
-            signalPanel.add(new JLabel(rbx.getString("MastLabel")));
+            signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
             signalPanel.add(signalHeadComboBox);
             signalHeadComboBox.setFirstItemBlank(true);
             signalHeadComboBox.addActionListener(new ActionListener() {
@@ -2185,7 +2174,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
      * Validate entered data for selected Action. Converted to use JSpinners
      * where applicable, 2017.
      *
-     * @return
+     * @return true if data entered into field whatStringField is valid for selected Action type tWhat
      */
     private boolean validateWhatData() {
         tWhat = whatBox.getSelectedIndex() + 1;
@@ -2692,7 +2681,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
 
     /**
      * Table model for Actions in Special Actions window. Currently shows max. 5
-     * rows
+     * rows.
      */
     public class SpecialActionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {

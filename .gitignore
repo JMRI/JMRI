@@ -52,6 +52,9 @@ local.properties
 .metadata
 RemoteSystemsTempFiles
 
+# user-installed components
+/web/TrainCrew
+
 # CATS source, sometimes present for test
 /java/src/cats
 
