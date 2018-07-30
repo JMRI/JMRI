@@ -1254,6 +1254,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Routes" url="manual/JMRI_OPS_UsersGuide/Ops_Routes.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_PrintLocation" url="package/jmri/jmrit/operations/Operations.shtml#PrintLocation"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_SetEngines_Top" url="manual/JMRI_OPS_UsersGuide/Ops_SetEngines.shtml#Top"/>
 
 <mapID target="html.hardware.grapevine.Names_documentation" url="html/hardware/grapevine/Names.shtml#documentation"/>
@@ -1904,6 +1906,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.sdfeditor.EditorFrame" url="package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ShowTrainsServicingThisTrack" url="package/jmri/jmrit/operations/Operations.shtml#ShowTrainsServicingThisTrack"/>
+
 <mapID target="manual.DecoderPro3.Main_XpressNet_LI101" url="manual/DecoderPro3/Main_XpressNet.shtml#LI101"/>
 
 <mapID target="html.hardware.roco.z21.index_hardware" url="html/hardware/roco/z21/index.shtml#hardware"/>
@@ -2053,6 +2057,8 @@
 <mapID target="html.doc.Technical.Logging_config" url="html/doc/Technical/Logging.shtml#config"/>
 
 <mapID target="manual.DecoderPro.Basic_BasicPane_DoMore" url="manual/DecoderPro/Basic_BasicPane.shtml#DoMore"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_TroubleShooting" url="package/jmri/jmrit/operations/Operations.shtml#TroubleShooting"/>
 
 <mapID target="manual.DecoderPro3.Programmer_SingleCV" url="manual/DecoderPro3/Programmer_SingleCV.shtml"/>
 
@@ -2625,6 +2631,8 @@
 <mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame" url="package/jmri/jmrix/loconet/clockmon/ClockMonFrame.shtml"/>
+
+<mapID target="html.hardware.can.cbus.Names_events" url="html/hardware/can/cbus/Names.shtml#events"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_LocomotivesSet" url="package/jmri/jmrit/operations/Operations.shtml#LocomotivesSet"/>
 
