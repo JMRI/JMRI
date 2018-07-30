@@ -118,6 +118,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
         cd help/en/
         ant
+        cd ../..
 ```
 
 Be patient, it might take a couple minutes. That will pop some frames, etc, but should be entirely automatic. 
@@ -128,8 +129,7 @@ Be patient, it might take a couple minutes. That will pop some frames, etc, but 
 
 - Commit this back:
 ```
-        git commit -m"JavaHelp indexing update" .
-        cd ../..
+        git commit -m"JavaHelp indexing update" help/en/
 ```
 
 ================================================================================
@@ -205,6 +205,11 @@ where the date at the end should be the date (and optionally time) of the last r
     <version>4.13.1-SNAPSHOT</version>
 ```
 Commit, and push back directly to master (this should be the only change, and has to be before the next step)
+```
+git commit -m"for 4.13.1" pom.xml
+git push github
+```
+
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 
@@ -213,7 +218,7 @@ Commit, and push back directly to master (this should be the only change, and ha
         ant make-test-release-branch
 ```
 
-- Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE)
+- Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
 ```
 The release-4.13.1 branch has been created. 
@@ -257,6 +262,8 @@ If you're developing any additional (post-4.13.1) changes that you want in the J
         Git Modules: Branch
     
     and click "Save". If needed, click "Enable".
+
+- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours that "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
@@ -341,7 +348,7 @@ Run a script to download the created files, create checksums and create text for
 
 This puts the right tag on the branch, then removes the branch.  
 
-Note on file names:  Our filenames are generated with proper [semantic versioning](http://semver.org) in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  But the GitHub binary-file release system changes the '+' to a '.', so our scripts below do that too.  A request for support was filed with GitHub on this in early June 2017.
+Note on file names:  Our filenames are generated with [semantic versioning](http://semver.org) format in which the `+R202c9ee` indicates build meta-data, specifically the hash for the tag point.  Originally, the GitHub binary-file release system changed the '+' to a '.', so our scripts below did that too.  That was fixed at the start of 2018, so we no longer do it, but there are some old releases with that filename format.
 
 Note: Once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
@@ -368,9 +375,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.13.1.R72446d4.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1.R72446d4.dmg) | 7852de77d6bf44c8a677d3229ebaa38115258a0afc518667e3e7f8d6a89a2ce3
-[JMRI.4.13.1.R72446d4.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1.R72446d4.exe) | 8a2b32d6c1da0664502b2d4660c93c5853fc9b988a29bfd0255586c56fe91499
-[JMRI.4.13.1.R72446d4.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1.R72446d4.tgz) | 46bf97d949c43e6d7c95d61c741efb12698158658b5ccebd3cffb892e3803c19
+[JMRI.4.13.1+R9341f13.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1+R9341f13.dmg) | bd16ea307535837eebbff6df3fe264932b5d0cac38e4a8fdcee4fea9cdd14c10
+[JMRI.4.13.1+R9341f13.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1+R9341f13.exe) | b955acbcfa392dc9f216e7a839ba8bb093516a342eaab1c144c2f05d8786bee5
+[JMRI.4.13.1+R9341f13.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1+R9341f13.tgz) | f856f313f6875417ecd3f978075d148f697f59dbfefd56cd57f1bc65f0a0668c
 
 ```
 
@@ -383,9 +390,10 @@ and expansion;
 
 - [ ] it's slow to upload from a typical home connection, so wish we had a way to cross-load them from Jenkins
 
-Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all three files show.
+Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all four files (three installers plus properties) are there.
     
 - Click "Publish Release"
+
 - Wait for completion, which might be a while with big uploads
 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
@@ -422,7 +430,7 @@ If there are any changes in other files, do both of:
 ====================================================================================
 ## Update GitHub Status items
 
-- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.13.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.13.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
 This is the next release in the 4.14 cycle. It's intended to be released around July 12 from HEAD of master.
 ```
@@ -475,12 +483,15 @@ git push github
     
 Test version 4.13.1 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in Summer 2018.
+This is the next in a series of test releases that will culminate in a production release, hopefully in December 2018.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
 
-If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the release note for details: <http://jmri.org/releasenotes/jmri4.13.1.shtml#migration>
+If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you first update to JMRI 4.12 and make sure that's running OK before updating to this test release. There have been a number of changes in serial port support, panel file format and configuration options since those earlier releases, and moving to the stable JMRI 4.12 release is a good way to work through any possible problems.
+<http://jmri.org/releasenotes/jmri4.12.shtml>
+
+If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <http://jmri.org/releasenotes/jmri4.12.shtml#migration>
 
 For more information on the issues, new features and bug fixes in 4.13.1 please see the release note:
 <http://jmri.org/releasenotes/jmri4.13.1.shtml>
@@ -491,7 +502,10 @@ Note that JMRI is made available under the GNU General Public License. For more 
 The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
 <http://jmri.org/releasenotes/jmri4.13.1.shtml>
 
-- Close the [GitHub issue](https://github.com/JMRI/JMRI/issues) with a comment that sums up the release-build experience
+- Close the [current release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
+```
+JMRI 4.13.1 has been released. Files are available in the GitHub release section.
+```
 
 - Wait a day for complaints
 
