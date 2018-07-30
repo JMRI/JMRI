@@ -8,10 +8,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.netbeans.jemmy.operators.*;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2014
@@ -34,6 +31,7 @@ public class AddSignalMastPanelTest {
 
     @Test
     public void testIssueWarningUserName() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -44,6 +42,7 @@ public class AddSignalMastPanelTest {
     
     @Test
     public void testIssueWarningUserNameAsSystem() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -54,6 +53,7 @@ public class AddSignalMastPanelTest {
     
     @Test
     public void testIssueNoUserNameGiven() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
@@ -62,7 +62,8 @@ public class AddSignalMastPanelTest {
     }
     
     @Test
-    public void testSIssueDialogFailMessage() {
+    public void testIssueDialogFailMessage() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show and cancel each of the error dialogs
         AddSignalMastPanel a = new AddSignalMastPanel();
 
