@@ -402,6 +402,7 @@ public class AddSignalMastPanel extends JPanel {
         log.trace(" updateSelectedDriver() start");
         //+ have to do whatever updates are needed to show the display
         //+ this is redundant computation to find the mast info??
+        if (mastBox.getSelectedIndex() < 0) return; // no mast selected yet
         String mastFile = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String mastType = mastFile.substring(11, mastFile.indexOf(".xml"));
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
