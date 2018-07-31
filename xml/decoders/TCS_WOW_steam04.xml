@@ -3012,5 +3012,5 @@
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol6.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol7.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
-   <xi:include href="http://jmri.org/xml/decoders/tcs/PaneWowReadMe.xml"/>
+   <xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>
