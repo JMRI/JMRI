@@ -40,7 +40,6 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
         JScrollPane disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);
         disabledAspectsScroll.setBorder(disableborder);
         add(disabledAspectsScroll);
-
     }
 
     /** {@inheritDoc} */
@@ -85,6 +84,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public void setMast(SignalMast mast) { 
+        log.trace("setMast {} start", mast);
         if (mast == null) { 
             currentMast = null; 
             return; 
@@ -105,6 +105,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             }
             //+ do we need to clear non-disabled aspects?
         }
+        log.trace("setMast {} end", mast);
     }
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
@@ -115,6 +116,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             String sigsysname, @Nonnull
                     String mastname, @Nonnull
                             String username) {
+        log.trace("createMast {} {} {} start with currentMast: {}", sigsysname, mastname, username, currentMast);
         if (currentMast == null) {
             // create a mast
             String name = "IF$vsm:"
@@ -138,6 +140,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             }
         }
         currentMast.setAllowUnLit(allowUnLit.isSelected());
+        log.trace("createMast {} {} {} end", sigsysname, mastname, username);
         return true;
     }
 
