@@ -2,15 +2,19 @@ package jmri.jmrit.beantable.signalmast;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
+import java.io.File;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import jmri.*;
-import jmri.implementation.MatrixSignalMast;
-import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.implementation.*;
+import jmri.util.*;
+import jmri.util.swing.*;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -23,16 +27,68 @@ import org.openide.util.lookup.ServiceProvider;
  */
 public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull public String getPaneName() {
-        return Bundle.getMessage("MatrixCtlMast");
-    }
+    public MatrixSignalMastAddPane() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // lit/unlit controls
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(new JLabel(Bundle.getMessage("AllowUnLitLabel") + ": "));
+        p.add(allowUnLit);
+        p.setAlignmentX(Component.LEFT_ALIGNMENT);
+        add(p);
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean canHandleMast(@Nonnull SignalMast mast) {
-        return mast instanceof MatrixSignalMast;
+
+        matrixMastBitnumPanel = makeMatrixMastBitnumPanel(); // create panel
+        add(matrixMastBitnumPanel);
+        if (prefs.getComboBoxLastSelection(matrixBitNumSelectionCombo) != null) {
+            columnChoice.setSelectedItem(prefs.getComboBoxLastSelection(matrixBitNumSelectionCombo)); // setting for bitNum
+        }
+
+        matrixMastScroll = new JScrollPane(matrixMastPanel);
+        matrixMastScroll.setBorder(BorderFactory.createEmptyBorder());
+        add(matrixMastScroll);
+
+    }
+    
+    boolean inEditMode; // <-------------------------------------------
+    
+    String sigsysname;
+    ArrayList<File> mastNames = new ArrayList<>();
+    DefaultSignalAppearanceMap map;
+    
+    MatrixSignalMast currentMast;
+    
+    JCheckBox resetPreviousState = new JCheckBox(Bundle.getMessage("ResetPrevious"));
+
+    jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+
+    String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
+
+    JCheckBox allowUnLit = new JCheckBox();
+    JPanel unLitSettingsPanel = new JPanel();
+
+    JScrollPane matrixMastScroll;
+    JPanel matrixMastBitnumPanel = new JPanel();
+    JPanel matrixMastPanel = new JPanel();
+    char[] bitString;
+    char[] unLitPanelBits;
+
+    String emptyChars = "000000"; // size of String = MAXMATRIXBITS; add 0 in order to set > 6
+    char[] emptyBits = emptyChars.toCharArray();
+    JLabel bitNumLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("MatrixBitsLabel")));
+    JComboBox<String> columnChoice = new JComboBox<>(choiceArray());
+
+    LinkedHashMap<String, MatrixAspectPanel> matrixAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT); // only used once, see updateMatrixAspectPanel()
+
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    private String[] choiceArray() {
+        String[] numberOfOutputs = new String[MAXMATRIXBITS];
+        for (int i = 0; i < MAXMATRIXBITS; i++) {
+            numberOfOutputs[i] = (i + 1) + "";
+        }
+        log.debug("Created output combo  box: {}", Arrays.toString(numberOfOutputs));
+        return numberOfOutputs;
     }
 
     /**
@@ -43,14 +99,602 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     // 6 Seems the maximum to be able to show in a panel a coded and code below should be extended where marked
 
     /**
+     * on = thrown, off = closed, no turnout states asked
+     */
+    BeanSelectCreatePanel<Turnout> turnoutBox1 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox2 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox3 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox4 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox5 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    BeanSelectCreatePanel<Turnout> turnoutBox6 = new BeanSelectCreatePanel<>(InstanceManager.turnoutManagerInstance(), null);
+    // repeat in order to set MAXMATRIXBITS > 6
+
+    /**
      * The number of columns in logic matrix
      */
     int bitNum;
     // ToDo: add boxes to set DCC Packets (with drop down selection "Output Type": Turnouts/Direct DCC Packets)
 
-    char[] unLitPanelBits;
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull public String getPaneName() {
+        return Bundle.getMessage("MatrixCtlMast");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setAspectNames(@Nonnull SignalAppearanceMap newMap) {
+        log.debug("setAspectNames(...)");
+
+        map = (DefaultSignalAppearanceMap)newMap;
+
+        updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
+        // @see copyFromMatrixMast line 1840
+        if (map != null) {
+            Enumeration<String> aspects = map.getAspects();
+            // in matrixPanel LinkedHashtable, fill in mast settings per aspect
+            while (aspects.hasMoreElements()) {
+                String key = aspects.nextElement(); // for each aspect
+                MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
+            }
+        }
+
+        columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean canHandleMast(@Nonnull SignalMast mast) {
+        return mast instanceof MatrixSignalMast;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setMast(SignalMast mast) { 
+        log.debug("setMast({})", mast);
+        if (mast == null) { 
+            currentMast = null; 
+            return; 
+        }
+        
+        if (! (mast instanceof MatrixSignalMast) ) {
+            log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
+            return;
+        }
+
+        currentMast = (MatrixSignalMast) mast;
+        SignalAppearanceMap appMap = mast.getAppearanceMap();
+
+        bitNum = currentMast.getBitNum(); // number of matrix columns = logic outputs = number of bits per Aspect
+        updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
+        // @see copyFromMatrixMast line 1840
+        if (map != null) {
+            Enumeration<String> aspects = map.getAspects();
+            // in matrixPanel LinkedHashtable, fill in mast settings per aspect
+            while (aspects.hasMoreElements()) {
+                String key = aspects.nextElement(); // for each aspect
+                MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
+                matrixPanel.setAspectDisabled(currentMast.isAspectDisabled(key)); // sets a disabled aspect
+                if ( ! currentMast.isAspectDisabled(key)) { // bits not saved in mast when disabled, so we should not load them back in
+                    char[] mastBits = currentMast.getBitsForAspect(key); // same as loading an existing MatrixMast
+                    char[] panelAspectBits = Arrays.copyOf(mastBits, MAXMATRIXBITS); // store as [6] character array in panel
+                    matrixPanel.updateAspectBits(panelAspectBits);
+                    matrixPanel.setAspectBoxes(panelAspectBits);
+                    // sets boxes 1 - MAXMATRIXBITS on aspect sub panel from values in hashmap char[] like: 1001
+                }
+            }
+        }
+
+        columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
+        columnChoice.setEnabled(false);
+        // fill in the names of the outputs from mast:
+        if ( ! currentMast.getOutputName(1).equals("")) {
+            turnoutBox1.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(1))); // load input into turnoutBox1
+        }
+        if (bitNum > 1 && !currentMast.getOutputName(2).equals("")) {
+            turnoutBox2.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(2))); // load input into turnoutBox2
+        }
+        if (bitNum > 2 && !currentMast.getOutputName(3).equals("")) {
+            turnoutBox3.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(3))); // load input into turnoutBox3
+        }
+        if (bitNum > 3 && !currentMast.getOutputName(4).equals("")) {
+            turnoutBox4.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(4))); // load input into turnoutBox4
+        }
+        if (bitNum > 4 && !currentMast.getOutputName(5).equals("")) {
+            turnoutBox5.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(5))); // load input into turnoutBox5
+        }
+        if (bitNum > 5 && !currentMast.getOutputName(6).equals("")) {
+            turnoutBox6.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(currentMast.getOutputName(6))); // load input into turnoutBox6
+        }
+        // repeat in order to set MAXMATRIXBITS > 6
+        if (currentMast.resetPreviousStates()) {
+            resetPreviousState.setSelected(true);
+        }
+        if (currentMast.allowUnLit()) {
+            char[] mastUnLitBits = currentMast.getUnLitBits(); // load char[] for unLit from mast
+            char[] unLitPanelBits = Arrays.copyOf(mastUnLitBits, MAXMATRIXBITS); // store as MAXMATRIXBITS character array in panel var unLitPanelBits
+            unlitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
+            if (bitNum > 1) {
+                unlitCheck2.setSelected(unLitPanelBits[1] == '1');
+            }
+            if (bitNum > 2) {
+                unlitCheck3.setSelected(unLitPanelBits[2] == '1');
+            }
+            if (bitNum > 3) {
+                unlitCheck4.setSelected(unLitPanelBits[3] == '1');
+            }
+            if (bitNum > 4) {
+                unlitCheck5.setSelected(unLitPanelBits[4] == '1');
+            }
+            if (bitNum > 5) {
+                unlitCheck6.setSelected(unLitPanelBits[5] == '1');
+            }
+            // repeat in order to set MAXMATRIXBITS > 6
+            String value = String.valueOf(unLitPanelBits); // convert back from char[] to String
+            unLitBitsField.setText(value);
+        }
+        
+        allowUnLit.setSelected(currentMast.allowUnLit());
+ 
+        log.trace("setMast {} end", mast);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
+        log.debug("createMast({},{})", sigsysname, mastname);
+
+        // Create was pressed for new mast, check all boxes are filled
+        if (turnoutBox1.getDisplayName().isEmpty() || (bitNum > 1 && turnoutBox2.getDisplayName().isEmpty()) || (bitNum > 2 && turnoutBox3.getDisplayName().isEmpty())
+                || (bitNum > 3 && turnoutBox4.getDisplayName().equals("")) || (bitNum > 4 && turnoutBox5.getDisplayName().equals(""))
+                || (bitNum > 5 && turnoutBox6.getDisplayName().equals(""))) {
+            // add extra OR in order to set MAXMATRIXBITS > 6
+            //error dialog
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+            log.error("Empty output on panel");
+            return false;
+        }
+        //create new MatrixMast with props from panel
+        String name = "IF$xsm:"
+                + sigsysname
+                + ":" + mastname.substring(11, mastname.length() - 4);
+        name += "($" + (paddedNumber.format(MatrixSignalMast.getLastRef() + 1));
+        name += ")" + "-" + bitNum + "t"; // for the number of t = "turnout-outputs", add option for direct packets
+        MatrixSignalMast matrixMast = new MatrixSignalMast(name);
+
+        matrixMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
+
+        //store outputs from turnoutBoxes; method in line 976
+        matrixMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
+        setMatrixReference(turnoutBox1, name + ":output1"); // write mast name to output1 bean comment
+        if (bitNum > 1) {
+            matrixMast.setOutput("output2", turnoutBox2.getDisplayName()); // store choice from turnoutBox2
+            setMatrixReference(turnoutBox2, name + ":output2"); // write mast name to output2 bean comment
+            if (bitNum > 2) {
+                matrixMast.setOutput("output3", turnoutBox3.getDisplayName()); // store choice from turnoutBox3
+                setMatrixReference(turnoutBox3, name + ":output3"); // write mast name to output3 bean comment
+                if (bitNum > 3) {
+                    matrixMast.setOutput("output4", turnoutBox4.getDisplayName()); // store choice from turnoutBox4
+                    setMatrixReference(turnoutBox4, name + ":output4"); // write mast name to output4 bean comment
+                    if (bitNum > 4) {
+                        matrixMast.setOutput("output5", turnoutBox5.getDisplayName()); // store choice from turnoutBox5
+                        setMatrixReference(turnoutBox5, name + ":output5"); // write mast name to output5 bean comment
+                        if (bitNum > 5) {
+                            matrixMast.setOutput("output6", turnoutBox6.getDisplayName()); // store choice from turnoutBox6
+                            setMatrixReference(turnoutBox6, name + ":output6"); // write mast name to output6 bean comment
+                            // repeat in order to set MAXMATRIXBITS > 6
+                        }
+                    }
+                }
+            }
+        }
+
+        for (String aspect : matrixAspect.keySet()) {
+            // store matrix in mast per aspect, compare with line 991
+            matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // read from aspect panel to mast
+            if (matrixAspect.get(aspect).isAspectDisabled()) {
+                matrixMast.setAspectDisabled(aspect); // don't store bits when this aspect is disabled
+            } else {
+                matrixMast.setAspectEnabled(aspect);
+                matrixMast.setBitsForAspect(aspect, matrixAspect.get(aspect).trimAspectBits()); // return as char[]
+            }
+        }
+        matrixMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, not displayed?
+
+        matrixMast.setAllowUnLit(allowUnLit.isSelected());
+        if (allowUnLit.isSelected()) {
+            // copy bits from UnLitPanel var unLitPanelBits
+            try {
+                matrixMast.setUnLitBits(trimUnLitBits()); // same as line 1046,
+            } catch (Exception ex) {
+                log.error("failed to read and copy unLitPanelBits");
+            }
+        }
+        
+        if (!username.equals("")) {
+            matrixMast.setUserName(username);
+        }
+
+        prefs.addComboBoxLastSelection(matrixBitNumSelectionCombo, (String) columnChoice.getSelectedItem()); // store bitNum pref
+        InstanceManager.getDefault(jmri.SignalMastManager.class).register(matrixMast);
+        
+        currentMast.setAllowUnLit(allowUnLit.isSelected());
+        
+        return true;
+    }
+
+    /**
+     * Create bitNumPanel with drop down to set number of columns, separate from
+     * the rest for redraw.
+     * <p>
+     * Auto refresh to show/hide input (turnout) selection boxes. Hide/show
+     * checkboxes in matrix (per aspect).
+     *
+     * @return a JPanel with a comboBox to select number of outputs, set at
+     *         current value
+     */
+    JPanel makeMatrixMastBitnumPanel() {
+        JPanel bitnumpanel = new JPanel();
+        bitnumpanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        // select number of columns in logic matrix
+        bitnumpanel.add(bitNumLabel);
+        bitnumpanel.add(columnChoice); // drop down list 1 - 5
+        if (bitNum < 1 || bitNum > MAXMATRIXBITS) {
+            bitNum = 4; // default to 4 col for (first) new mast
+        }
+        columnChoice.setSelectedIndex(bitNum - 1);
+        columnChoice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newBitnumString = (String) columnChoice.getSelectedItem();
+                bitNumChanged(Integer.valueOf(newBitnumString));
+            }
+        });
+        return bitnumpanel;
+    }
+
+    /**
+     * @return char[] of length bitNum copied from unLitPanelBits
+     */
+    protected char[] trimUnLitBits() {
+        if (unLitPanelBits != null) {
+            return Arrays.copyOf(unLitPanelBits, bitNum);
+        } else {
+            return Arrays.copyOf(emptyBits, bitNum);
+        }
+    }
+
+    /**
+     * Build lower half of Add Signal Mast panel, specifically for Matrix Mast.
+     * <p>
+     * Called when Mast Type drop down changes.
+     */
+    void updateMatrixMastPanel() {
+        matrixAspect = new LinkedHashMap<>(10); // LinkedHT type keeps things sorted
+
+        Enumeration<String> aspects = map.getAspects();
+        while (aspects.hasMoreElements()) {
+            String aspect = aspects.nextElement();
+            MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect);
+            matrixAspect.put(aspect, aspectpanel); // store in LinkedHashMap
+            // values are filled in later
+        }
+        matrixMastPanel.removeAll();
+        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 5, 2)); // was + 3
+
+        // sub panels (so we can hide all turnouts with Output Type drop down box later)
+        JPanel turnoutpanel = new JPanel();
+        // binary matrix outputs follow:
+        JPanel output1panel = new JPanel();
+        output1panel.add(turnoutBox1);
+        TitledBorder border1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border1.setTitle(Bundle.getMessage("MatrixOutputLabel") + "1 ");
+        output1panel.setBorder(border1);
+        turnoutpanel.add(output1panel);
+
+        JPanel output2panel = new JPanel();
+        output2panel.add(turnoutBox2);
+        TitledBorder border2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border2.setTitle(Bundle.getMessage("MatrixOutputLabel") + "2 ");
+        output2panel.setBorder(border2);
+        turnoutpanel.add(output2panel);
+
+        JPanel output3panel = new JPanel();
+        output3panel.add(turnoutBox3);
+        TitledBorder border3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border3.setTitle(Bundle.getMessage("MatrixOutputLabel") + "3 ");
+        output3panel.setBorder(border3);
+        turnoutpanel.add(output3panel);
+
+        JPanel output4panel = new JPanel();
+        output4panel.add(turnoutBox4);
+        TitledBorder border4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border4.setTitle(Bundle.getMessage("MatrixOutputLabel") + "4 ");
+        output4panel.setBorder(border4);
+        turnoutpanel.add(output4panel);
+
+        JPanel output5panel = new JPanel();
+        output5panel.add(turnoutBox5);
+        TitledBorder border5 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border5.setTitle(Bundle.getMessage("MatrixOutputLabel") + "5 ");
+        output5panel.setBorder(border5);
+        turnoutpanel.add(output5panel);
+
+        JPanel output6panel = new JPanel();
+        output6panel.add(turnoutBox6);
+        TitledBorder border6 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border6.setTitle(Bundle.getMessage("MatrixOutputLabel") + "6 ");
+        output6panel.setBorder(border6);
+        turnoutpanel.add(output6panel);
+
+        // repeat in order to set MAXMATRIXBITS > 6
+        // output1panel always on
+        output2panel.setVisible(bitNum > 1);
+        output3panel.setVisible(bitNum > 2);
+        output4panel.setVisible(bitNum > 3);
+        output5panel.setVisible(bitNum > 4);
+        output6panel.setVisible(bitNum > 5);
+        // repeat in order to set MAXMATRIXBITS > 6
+
+        matrixMastPanel.add(turnoutpanel);
+
+        unlitCheck2.setVisible(bitNum > 1);
+        unlitCheck3.setVisible(bitNum > 2);
+        unlitCheck4.setVisible(bitNum > 3);
+        unlitCheck5.setVisible(bitNum > 4);
+        unlitCheck6.setVisible(bitNum > 5);
+        // repeat in order to set MAXMATRIXBITS > 6
+
+        JPanel matrixHeader = new JPanel();
+        JLabel matrixHeaderLabel = new JLabel(Bundle.getMessage("AspectMatrixHeaderLabel", bitNum), JLabel.CENTER);
+        matrixHeader.add(matrixHeaderLabel);
+        matrixHeaderLabel.setToolTipText(Bundle.getMessage("AspectMatrixHeaderTooltip"));
+        matrixMastPanel.add(matrixHeader);
+
+        // option: configure outputs from DCC packet addresses
+        /*       if (matrixDCCListener == null) {
+            matrixDCCListener = new FocusListener() {
+                public void focusLost(FocusEvent e) {
+                    if (matrixDCCAddressField.getText().equals("")) {
+                        return;
+                    }
+                    validateMatrixDCCAddressField();
+                    // todo set the checkboxes & check sth?, copy from UpdateDCCMastPanel
+                }
+
+                public void focusGained(FocusEvent e) {
+                }
+
+            };
+
+            matrixDCCAddressField.addFocusListener(matrixDCCAddressListener);
+        }
+
+        if (mast == null) {
+            systemPrefixBoxLabel.setEnabled(true);
+            systemPrefixBox.setEnabled(true);
+            matrixDCCAddressLabel.setEnabled(true);
+            matrixDCCAddressField.setEnabled(true);
+        }
+         */
+        for (String aspect : matrixAspect.keySet()) {
+            matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // load Aspect sub panels to matrixMastPanel from hashmap
+            // build aspect sub panels
+        }
+        if ((matrixAspect.size() & 1) == 1) {
+            // spacer before "Reset previous aspect"
+            matrixMastPanel.add(new JLabel());
+        }
+        matrixMastPanel.add(resetPreviousState); // checkbox
+        resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
+        // copy option matrixMast bitstrings = settings
+        JPanel matrixCopyPanel = new JPanel();
+        matrixCopyPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
+        matrixCopyPanel.add(copyFromMastSelection());
+        matrixMastPanel.add(matrixCopyPanel);
+    }
+    
+     /**
+     * When the user changes the number of columns in matrix from the drop down:
+     * store the new value.
+     *
+     * @param newColNum int with the new value = the number of columns in the
+     *                  Matrix Table
+     */
+    void bitNumChanged(Integer newColNum) {
+        if (newColNum < 1 || newColNum > MAXMATRIXBITS || newColNum == bitNum) {
+            return;
+        }
+        bitNum = newColNum;
+        // show/hide column labels (if any)
+        // hide/show output choices per Aspect
+        if (inEditMode == false) {
+            updateMatrixMastPanel(); // not while in edit mode! deletes all info for aspects
+        }
+        validate();
+        if (getTopLevelAncestor() != null) {
+            ((jmri.util.JmriJFrame) getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame) getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame) getTopLevelAncestor()).pack();
+        }
+        repaint();
+    }
+   
+    
+    /**
+     * Write matrix mast name + output no. to output bean comment.
+     * <p>
+     * Called from {@link #okPressed(ActionEvent)}
+     *
+     * @param bp           the bean panel containing the Turnout (output)
+     * @param functionName Description of turnout function on mast
+     */
+    void setMatrixReference(BeanSelectCreatePanel bp, String functionName) {
+        //System.out.println("box: " + bp.getDisplayName()); // debug
+        //System.out.println("name: " + functionName); // debug
+        bp.setReference(functionName);
+    }
+
+    
+    void copyFromAnotherMatrixMastAspect(String strMast) {
+        MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
+        if (bitNum != mast.getBitNum()) {
+            int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("MatrixColWarning", mast.getBitNum(), bitNum),
+                    Bundle.getMessage("MatrixColWarningTitle"),
+                    JOptionPane.YES_NO_OPTION);
+            if (i != 0) {
+                return;
+            }
+        }
+        // cf. line 405 loading an existing mast for edit
+        for (String key : matrixAspect.keySet()) {
+            // select the right checkboxes
+            MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
+            matrixPanel.setAspectDisabled(mast.isAspectDisabled(key)); // sets a disabled aspect
+            if (!mast.isAspectDisabled(key)) {
+                char[] mastBits = mast.getBitsForAspect(key); // same as loading an existing MatrixMast
+                char[] panelAspectBits = Arrays.copyOf(mastBits, MAXMATRIXBITS); // store as 6 character array in panel
+                matrixPanel.updateAspectBits(panelAspectBits);
+                matrixPanel.setAspectBoxes(panelAspectBits);
+                // sets boxes 1 - MAXMATRIXBITS on aspect sub panel from values in hashmap char[] like: 1001
+            }
+        }
+    }
+
+    /**
+     * Call for sub panel per aspect from hashmap matrixAspect with check boxes
+     * to set properties.
+     * <p>
+     * Invoked when updating MatrixMastPanel
+     *
+     * @see #updateMatrixMastPanel()
+     */
+    void updateMatrixAspectPanel() {
+        Enumeration<String> aspects = map.getAspects();
+        // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
+        while (aspects.hasMoreElements()) {
+            String aspect = aspects.nextElement();
+            MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect, bitString); // build 1 line, picking up bitString
+            matrixAspect.put(aspect, aspectpanel); // store that line
+        }
+        // sort matrixAspect HashTable, which at this point is not sorted
+        // TODO
+        matrixMastPanel.removeAll();
+        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 1, 2));
+        for (String aspect : matrixAspect.keySet()) {
+            matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
+            // Matrix checkbox states are set by getPanel()
+        }
+    }
+
+    JPanel matrixUnLitPanel = new JPanel();
+    JCheckBox unlitCheck1 = new JCheckBox();
+    JCheckBox unlitCheck2 = new JCheckBox();
+    JCheckBox unlitCheck3 = new JCheckBox();
+    JCheckBox unlitCheck4 = new JCheckBox();
+    JCheckBox unlitCheck5 = new JCheckBox();
+    JCheckBox unlitCheck6 = new JCheckBox();
+    // repeat in order to set MAXMATRIXBITS > 6
     JTextField unLitBitsField = new JTextField(MAXMATRIXBITS); // for debug
 
+    /**
+     * JPanel to set outputs for an unlit (Dark) Matrix Signal Mast.
+     */
+    void matrixUnLitPanel() {
+        if (bitNum < 1 || bitNum > MAXMATRIXBITS) {
+            bitNum = 4; // default to 4 col for (first) new mast
+        }
+        /*        if (unLitPanelBits == null) {
+            char[] unLitPanelBits = emptyBits;
+            // if needed, assign panel var to enable setting separate items by clicking a UnLitCheck check box
+        }*/
+        JPanel matrixUnLitDetails = new JPanel();
+        matrixUnLitDetails.setLayout(new jmri.util.javaworld.GridLayout2(1, 1)); // stretch to full width
+        //matrixUnLitDetails.setAlignmentX(matrixUnLitDetails.RIGHT_ALIGNMENT);
+        matrixUnLitDetails.add(unlitCheck1);
+        matrixUnLitDetails.add(unlitCheck2);
+        matrixUnLitDetails.add(unlitCheck3);
+        matrixUnLitDetails.add(unlitCheck4);
+        matrixUnLitDetails.add(unlitCheck5);
+        matrixUnLitDetails.add(unlitCheck6);
+        // repeat in order to set MAXMATRIXBITS > 6
+
+        //matrixUnLitDetails.add(unLitBitsField);
+        //unLitBitsField.setEnabled(false); // not editable, just for debugging
+        //unLitBitsField.setVisible(false); // set to true to check/debug unLitBits
+        matrixUnLitPanel.add(matrixUnLitDetails);
+        TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        border.setTitle(Bundle.getMessage("MatrixUnLitDetails"));
+        matrixUnLitPanel.setBorder(border);
+        matrixUnLitPanel.setToolTipText(Bundle.getMessage("MatrixUnlitTooltip"));
+
+        unlitCheck1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUnLitBit(1, unlitCheck1.isSelected());
+            }
+        });
+        unlitCheck2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUnLitBit(2, unlitCheck2.isSelected());
+            }
+        });
+        unlitCheck3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUnLitBit(3, unlitCheck3.isSelected());
+            }
+        });
+        unlitCheck4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUnLitBit(4, unlitCheck4.isSelected());
+            }
+        });
+        unlitCheck5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUnLitBit(5, unlitCheck5.isSelected());
+            }
+        });
+        unlitCheck6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUnLitBit(6, unlitCheck6.isSelected());
+            }
+        });
+        // repeat in order to set MAXMATRIXBITS > 6
+    }
+
+
+    JComboBox<String> copyFromMastSelection() {
+        JComboBox<String> mastSelect = new JComboBox<>();
+        List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
+        for (String name : names) {
+            mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
+        }
+        if (mastSelect.getItemCount() == 0) {
+            mastSelect.setEnabled(false);
+        } else {
+            mastSelect.insertItemAt("", 0);
+            mastSelect.setSelectedIndex(0);
+            mastSelect.addActionListener(new ActionListener() {
+                @SuppressWarnings("unchecked") // e.getSource() cast from mastSelect source
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JComboBox<String> eb = (JComboBox<String>) e.getSource();
+                    String sourceMast = (String) eb.getSelectedItem();
+                    if (sourceMast != null && !sourceMast.equals("")) {
+                        copyFromAnotherMatrixMastAspect(sourceMast);
+                    }
+                }
+            });
+        }
+        return mastSelect;
+    }
 
     /**
      * Update the on/off positions for the unLitPanelBits char[].
