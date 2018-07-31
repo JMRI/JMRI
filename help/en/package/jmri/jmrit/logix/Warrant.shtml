@@ -220,7 +220,8 @@
         Aspect Speed Names in Warrant Preferences. This type of warrant
         is better suited to smaller layouts. To create this type
         of Warrant, select the <b>Warrants-&gt;Tables-&gt;Create New Warrant</b>
-        menu item and select 'Fast Reacting' as Warrant type.</li>
+        menu item and select 'Fast Reacting' as Warrant type.
+        More on <a href="SCWarrant.shtml">Fast Reacting Warrants</a></li>
       </ul>
 
       <h2>Creating a Warrant</h2>
