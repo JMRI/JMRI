@@ -448,6 +448,12 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             String aspect = values.nextElement();
             retval.append("\n    aspect: "+aspect);
             retval.append("\n       len aspectSettings: "+getAspectSettings(aspect).length);
+            retval.append("\n       attribute map:");
+            Enumeration<String> keys = aspectAttributeMap.get(aspect).keys();
+            while (keys.hasMoreElements()) {
+                String key = keys.nextElement();
+                retval.append("\n       key: "+key+" value: "+aspectAttributeMap.get(aspect).get(key));
+            }
         }
         
         retval.append("\n  SignalSystem = "+getSignalSystem());
