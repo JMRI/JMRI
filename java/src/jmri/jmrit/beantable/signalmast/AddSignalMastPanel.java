@@ -406,7 +406,9 @@ public class AddSignalMastPanel extends JPanel {
         String mastType = mastFile.substring(11, mastFile.indexOf(".xml"));
         DefaultSignalAppearanceMap sigMap = DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         currentPane.setAspectNames(sigMap);
-        
+        // clear mast info
+        currentPane.setMast(null);
+
         revalidate();
         if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
             ((JFrame)getTopLevelAncestor()).pack();
