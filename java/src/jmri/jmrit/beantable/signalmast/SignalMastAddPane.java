@@ -78,7 +78,9 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      * @return Human-prefered name for type of signal mast, in local language
      */
     @Nonnull abstract public String getPaneName();
-        
+    
+    final protected static int NOTIONAL_ASPECT_COUNT = 12;  // size of maps, not critical
+
     static public abstract class SignalMastAddPaneProvider implements JmriServiceProviderInterface {
         /**
          * Is this pane available, given the current configuration of the program?
