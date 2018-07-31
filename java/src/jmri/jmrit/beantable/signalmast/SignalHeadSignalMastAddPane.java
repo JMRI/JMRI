@@ -64,7 +64,8 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         log.debug("setAspectNames(...)");
         
         System.err.println(" map "+map);
-        System.err.println(" system "+map.getSignalSystem());   // <-- this is null!
+        System.err.println(" system "+map.getSignalSystem());   // <-- this is null, that's an error? Or by design?
+        if (map.getSignalSystem() == null) return;              // panic for now.
         Enumeration<String> keys = map.getSignalSystem().getKeys();
         while (keys.hasMoreElements()) {
             System.err.println("  key: "+keys.nextElement());
@@ -101,7 +102,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             return; 
         }
         
-        if (! (mast instanceof TurnoutSignalMast) ) {
+        if (! (mast instanceof SignalHeadSignalMast) ) {
             log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
             return;
         }
