@@ -670,5 +670,5 @@
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol_grp.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol0.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
-   <xi:include href="http://jmri.org/xml/decoders/tcs/PaneWowReadMe.xml"/>
+   <xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>
