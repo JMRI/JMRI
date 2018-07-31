@@ -123,7 +123,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull SignalAppearanceMap newMap) {
+    public void setAspectNames(@Nonnull
+            SignalAppearanceMap newMap, SignalSystem sigSystem) {
         log.debug("setAspectNames(...)");
 
         map = (DefaultSignalAppearanceMap)newMap;
@@ -581,7 +582,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
      */
     void updateMatrixAspectPanel() {
         Enumeration<String> aspects = map.getAspects();
-        // SignalSystem sigsys = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(sigsysname); // not used in this class
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect, bitString); // build 1 line, picking up bitString

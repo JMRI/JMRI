@@ -28,10 +28,10 @@ public class VirtualSignalMastAddPaneTest {
         
         vp.setMast(null);
         
-        vp.setAspectNames(s1.getAppearanceMap());
+        vp.setAspectNames(s1.getAppearanceMap(), null);
         vp.setMast(s1);
         
-        vp.setAspectNames(m1.getAppearanceMap());
+        vp.setAspectNames(m1.getAppearanceMap(), null);
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 
@@ -67,7 +67,7 @@ public class VirtualSignalMastAddPaneTest {
                             new String[]{"Clear","Approach Medium","Advance Approach"}));
                     }
             }
-        );
+                , null);
         
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
@@ -115,7 +115,7 @@ public class VirtualSignalMastAddPaneTest {
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
                 public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
             }
-        );
+                , null);
         vp.setMast(mast);
               
         JFrame frame = new JFrame("Add/Edit Signal Mast");

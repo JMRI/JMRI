@@ -121,7 +121,8 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull SignalAppearanceMap map) {
+    public void setAspectNames(@Nonnull
+            SignalAppearanceMap map, SignalSystem sigSystem) {
         Enumeration<String> aspects = map.getAspects();
         // update immediately
         disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);

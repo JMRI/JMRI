@@ -59,6 +59,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     LinkedHashMap<String, DCCAspectPanel> dccAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
 
     DccSignalMast currentMast = null;
+    SignalSystem sigsys;
 
     /**
      * Check if a command station will work for this subtype
@@ -69,20 +70,21 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull SignalAppearanceMap map) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map, 
+                               @Nonnull SignalSystem sigSystem) {
         log.trace("setAspectNames(...) start");
 
         dccAspect.clear();
         
-        System.out.println("map\n"+map.summary());
-        
         Enumeration<String> aspects = map.getAspects();
+        sigsys = map.getSignalSystem();
+
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
             dccAspect.put(aspect, aPanel);
             log.trace(" in loop, dccAspect: {} ", map.getProperty(aspect, "dccAspect")); 
-            aPanel.setAspectId((String) map.getProperty(aspect, "dccAspect"));
+            aPanel.setAspectId((String) sigSystem.getProperty(aspect, "dccAspect"));
         }
 
         systemPrefixBox.removeAllItems();
