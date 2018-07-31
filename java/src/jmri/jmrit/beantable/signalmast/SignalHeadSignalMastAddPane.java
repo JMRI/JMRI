@@ -39,7 +39,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         border.setTitle(Bundle.getMessage("MenuItemSignalTable")); // Signal Heads
         signalHeadPanel.setBorder(border);
         signalHeadPanel.setVisible(false);
-        add(signalHeadPanel);
+        // ----> add(signalHeadPanel);
         
     }
     
