@@ -39,8 +39,8 @@ public class SignalHeadSignalMastAddPaneTest {
         
         vp.setAspectNames(m1.getAppearanceMap());
         vp.setMast(m1);
-        // uncomment later, after migration
-        // JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
+
+        JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
     }
 
     @Before
