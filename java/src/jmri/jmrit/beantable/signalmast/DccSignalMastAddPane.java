@@ -70,14 +70,18 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public void setAspectNames(@Nonnull SignalAppearanceMap map) {
-        Enumeration<String> aspects = map.getAspects();
         log.trace("setAspectNames(...) start");
 
         dccAspect.clear();
+        
+        System.out.println("map\n"+map.summary());
+        
+        Enumeration<String> aspects = map.getAspects();
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
             DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
             dccAspect.put(aspect, aPanel);
+            log.trace(" in loop, dccAspect: {} ", map.getProperty(aspect, "dccAspect")); 
             aPanel.setAspectId((String) map.getProperty(aspect, "dccAspect"));
         }
 
