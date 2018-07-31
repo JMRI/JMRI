@@ -38,9 +38,21 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         border.setTitle(Bundle.getMessage("MenuItemSignalTable")); // Signal Heads
         signalHeadPanel.setBorder(border);
-        signalHeadPanel.setVisible(false);
-        // ----> add(signalHeadPanel);
+        add(signalHeadPanel);
         
+        includeUsed.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                refreshHeadComboBox();
+            }
+        });
+
+        // disabled aspects controls
+        TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        disableborder.setTitle(Bundle.getMessage("DisableAspectsLabel"));
+        JScrollPane disabledAspectsScroll = new JScrollPane(disabledAspectsPanel);
+        disabledAspectsScroll.setBorder(disableborder);
+        add(disabledAspectsScroll);
     }
     
     /** {@inheritDoc} */
@@ -52,40 +64,57 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
     
     JPanel signalHeadPanel = new JPanel();
     ArrayList<JmriBeanComboBox> headList = new ArrayList<>(5);
+    JCheckBox includeUsed = new JCheckBox(Bundle.getMessage("IncludeUsedHeads"));
 
     JCheckBox allowUnLit = new JCheckBox();
 
+    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
+    JPanel disabledAspectsPanel = new JPanel();
+
     SignalHeadSignalMast currentMast = null;
+    List<NamedBean> alreadyUsed = new ArrayList<>();
+    DefaultSignalAppearanceMap map; 
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull SignalAppearanceMap map) {
-        Enumeration<String> aspects = map.getAspects();
+    public void setAspectNames(@Nonnull SignalAppearanceMap newMap) {
         log.debug("setAspectNames(...)");
+
+        map = (DefaultSignalAppearanceMap)newMap;
         
-        System.err.println(" map "+map);
-        System.err.println(" system "+map.getSignalSystem());   // <-- this is null, that's an error? Or by design?
-        if (map.getSignalSystem() == null) return;              // panic for now.
-        Enumeration<String> keys = map.getSignalSystem().getKeys();
-        while (keys.hasMoreElements()) {
-            System.err.println("  key: "+keys.nextElement());
+        int count = map.getAspectSettings(map.getAspects().nextElement()).length;
+        log.trace(" head count is {}", count);
+
+        Enumeration<String> aspects = map.getAspects();
+
+        headList = new ArrayList<>(count);
+
+        signalHeadPanel.removeAll();
+        signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(count + 1, 1));
+        for (int i = 0; i < count; i++) {
+            JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.getDefault(jmri.SignalHeadManager.class));
+            head.excludeItems(alreadyUsed);
+            headList.add(head);
+            signalHeadPanel.add(head);
+        }
+        signalHeadPanel.add(includeUsed);
+        signalHeadPanel.revalidate();
+
+        disabledAspects = new LinkedHashMap<>(10);
+        disabledAspectsPanel.removeAll();
+        while (aspects.hasMoreElements()) {
+            String aspect = aspects.nextElement();
+            JCheckBox disabled = new JCheckBox(aspect);
+            disabledAspects.put(aspect, disabled);
+        }
+        disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(disabledAspects.size() + 1, 1));
+        for (String aspect : disabledAspects.keySet()) {
+            disabledAspectsPanel.add(disabledAspects.get(aspect));
         }
 
-        // int count = mapNameToShowSize.get(mastBox.getSelectedItem()).intValue(); //mapNameToShowSuze is from jmri/jmrit/beantable/signalmast/AddSignalMastPanel
-        // headList = new ArrayList<>(count);
-
-        //signalHeadPanel.removeAll();
-        //signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(count + 1, 1));
-        //for (int i = 0; i < count; i++) {
-            //JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.getDefault(jmri.SignalHeadManager.class));
-            //head.excludeItems(alreadyUsed);
-            //headList.add(head);
-            //signalHeadPanel.add(head);
-        //}
-        //signalHeadPanel.add(includeUsed);
-          
+        disabledAspectsPanel.revalidate();
+         
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -110,23 +139,37 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         currentMast = (SignalHeadSignalMast) mast;
         SignalAppearanceMap appMap = mast.getAppearanceMap();
 
+        // can't actually edit the heads in this kind of mast
+        int count = map.getAspectSettings(map.getAspects().nextElement()).length;
+        log.trace(" head count is {}", count);
+        signalHeadPanel.removeAll();
+        signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(count + 1, 1));
+        for (int i = 0; i < count; i++) {
+            JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.getDefault(jmri.SignalHeadManager.class));
+            head.excludeItems(alreadyUsed);
+            headList.add(head);
+
+            head.setEnabled(false);
+            head.setSelectedItem(currentMast.getHeadsUsed().get(i).getBean().getDisplayName()); // must match JmriBeanComboBox above
+            signalHeadPanel.add(head);
+        }
+        signalHeadPanel.add(includeUsed);
+        signalHeadPanel.revalidate();
 
 
-
-        // don't have anything here yet
-
-
-
-        //if (currentMast.allowUnLit()) {
-            //turnoutUnLitBox.setDefaultNamedBean(currentMast.getUnLitTurnout());
-            //if (currentMast.getUnLitTurnoutState() == Turnout.CLOSED) {
-                //turnoutUnLitState.setSelectedItem(stateClosed);
-            //} else {
-                //turnoutUnLitState.setSelectedItem(stateThrown);
-            //}
-
-        //}
-
+        List<String> disabled = currentMast.getDisabledAspects();
+        if (disabled != null) {
+            for (String aspect : disabled) {
+                if (disabledAspects.containsKey(aspect)) {
+                    disabledAspects.get(aspect).setSelected(true);
+                }
+            }
+            //+ do we need to clear non-disabled aspects?
+        }
+        
+        allowUnLit.setSelected(currentMast.allowUnLit());
+ 
+        log.trace("setMast {} end", mast);
     }
 
     /** {@inheritDoc} */
@@ -157,23 +200,54 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
                     currentMast = (SignalHeadSignalMast)InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(name);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
- // --->                   //handleCreateException(name);
+                    handleCreateException(name);
                     return false; // without creating
                 }
         }
         name = currentMast.getSystemName();
         
-        // need update here
+        // heads are attached via the system name
 
+        for (String aspect : disabledAspects.keySet()) {
+            if (disabledAspects.get(aspect).isSelected()) {
+                currentMast.setAspectDisabled(aspect);
+            } else {
+                currentMast.setAspectEnabled(aspect);
+            }
+        }
 
         if (!username.equals("")) {
             currentMast.setUserName(username);
         }
-        //currentMast.setAllowUnLit(allowUnLit.isSelected());
-        //if (allowUnLit.isSelected()) {
-            //currentMast.setUnLitTurnout(turnoutUnLitBox.getDisplayName(), turnoutStateValues[turnoutUnLitState.getSelectedIndex()]);
-        //}
+        
+        currentMast.setAllowUnLit(allowUnLit.isSelected());
+        
         return true;
+    }
+
+    protected void refreshHeadComboBox() {
+        log.trace("refreshHeadComboBox");
+        if (includeUsed.isSelected()) {
+            alreadyUsed = new ArrayList<>();
+        } else {
+            List<SignalHead> alreadyUsedHeads = SignalHeadSignalMast.getSignalHeadsUsed();
+            alreadyUsed = new ArrayList<>();
+            log.trace("   found {}", alreadyUsedHeads.size());
+            for (SignalHead head : alreadyUsedHeads) {
+                alreadyUsed.add(head);
+            }
+        }
+
+        for (JmriBeanComboBox head : headList) {
+            head.excludeItems(alreadyUsed);
+        }
+    }
+    
+    void handleCreateException(String sysName) {
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("ErrorSignalMastAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                Bundle.getMessage("ErrorTitle"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     @ServiceProvider(service = SignalMastAddPane.SignalMastAddPaneProvider.class)
