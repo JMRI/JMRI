@@ -202,6 +202,10 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         notLitEventID.setText(currentMast.getNotLitEventId());
         heldEventID.setText(currentMast.getHeldEventId());
         notHeldEventID.setText(currentMast.getNotHeldEventId());        
+
+        allowUnLit.setSelected(currentMast.allowUnLit());
+
+        log.debug("setMast({})", mast);
     }
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
