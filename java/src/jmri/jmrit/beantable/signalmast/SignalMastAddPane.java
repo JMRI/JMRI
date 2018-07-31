@@ -26,7 +26,7 @@ import jmri.spi.JmriServiceProviderInterface;
  * <li>Find one or more object of this type that have {@link SignalMastAddPaneProvider#isAvailable} true.
  * <li>Invoke {@link #setAspectNames} from the selected signal system
  * <li>If you're showing a mast that exists, invoke {@link #setMast} to load the contents
- * <li>To eventually create a mast from the entered data, invoke {@link #createMast}
+ * <li>To eventually create or update a mast from the entered data, invoke {@link #createMast}
  * </ul>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2018
