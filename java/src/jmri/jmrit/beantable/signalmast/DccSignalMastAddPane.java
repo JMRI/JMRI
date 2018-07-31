@@ -56,7 +56,6 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     JCheckBox allowUnLit = new JCheckBox();
     JTextField unLitAspectField = new JTextField(5);
 
-    final static int NOTIONAL_ASPECT_COUNT = 20;  // size of maps, not critical
     LinkedHashMap<String, DCCAspectPanel> dccAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
 
     DccSignalMast currentMast = null;
@@ -253,14 +252,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         if (!username.equals("")) {
             currentMast.setUserName(username);
         }
+
         currentMast.setAllowUnLit(allowUnLit.isSelected());
         if (allowUnLit.isSelected()) {
             currentMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
         }
 
-        // having created, clear current
-        currentMast = null;
-        
         log.debug("createMast({},{} end)", sigsysname, mastname);
         return true;
    }

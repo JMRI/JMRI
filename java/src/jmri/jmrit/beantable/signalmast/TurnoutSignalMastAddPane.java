@@ -53,7 +53,6 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
     JCheckBox allowUnLit = new JCheckBox();
     
-    final static int NOTIONAL_ASPECT_COUNT = 20;  // size of maps, not critical
     LinkedHashMap<String, TurnoutAspectPanel> turnoutAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT); // only used once, see updateTurnoutAspectPanel()
     JPanel disabledAspectsPanel = new JPanel();
     
@@ -95,7 +94,7 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public void setMast(SignalMast mast) { 
-        log.debug("setMast({})", mast);
+        log.trace("setMast({}) start", mast);
         if (mast == null) { 
             currentMast = null; 
             return; 
@@ -134,6 +133,9 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
         }
 
+        allowUnLit.setSelected(currentMast.allowUnLit());
+
+        log.trace("setMast({}) end", mast);
     }
 
     /** {@inheritDoc} */

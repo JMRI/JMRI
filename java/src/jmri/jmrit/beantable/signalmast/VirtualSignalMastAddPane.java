@@ -50,7 +50,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     JCheckBox allowUnLit = new JCheckBox();
 
-    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(14);
+    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
     JPanel disabledAspectsPanel = new JPanel();
     
     VirtualSignalMast currentMast = null;
@@ -60,7 +60,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
     public void setAspectNames(@Nonnull SignalAppearanceMap map) {
         Enumeration<String> aspects = map.getAspects();
         // update immediately
-        disabledAspects = new LinkedHashMap<>(10);
+        disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
         disabledAspectsPanel.removeAll();
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
@@ -105,6 +105,9 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             }
             //+ do we need to clear non-disabled aspects?
         }
+
+        allowUnLit.setSelected(currentMast.allowUnLit());
+
         log.trace("setMast {} end", mast);
     }
 

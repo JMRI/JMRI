@@ -109,8 +109,8 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     JCheckBox allowUnLit = new JCheckBox();
 
-    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(14);
-    LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(14);
+    LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
+    LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
     JPanel disabledAspectsPanel = new JPanel();
     EventIdTextField litEventID = new EventIdTextField();
     EventIdTextField notLitEventID = new EventIdTextField();
@@ -124,7 +124,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
     public void setAspectNames(@Nonnull SignalAppearanceMap map) {
         Enumeration<String> aspects = map.getAspects();
         // update immediately
-        disabledAspects = new LinkedHashMap<>(10);
+        disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
         disabledAspectsPanel.removeAll();
         while (aspects.hasMoreElements()) {
             String aspect = aspects.nextElement();
