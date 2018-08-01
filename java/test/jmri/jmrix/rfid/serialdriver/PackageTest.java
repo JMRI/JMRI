@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    SerialDriverAdapterTest.class,
+   BundleTest.class,
    jmri.jmrix.rfid.serialdriver.configurexml.PackageTest.class
 })
 /**

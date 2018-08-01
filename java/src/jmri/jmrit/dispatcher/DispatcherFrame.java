@@ -80,7 +80,7 @@ import org.slf4j.LoggerFactory;
 public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceManagerAutoDefault {
 
     public DispatcherFrame() {
-        super(false, true);
+        super(true, true); // remember size a position.
         initializeOptions();
         openDispatcherWindow();
         autoTurnouts = new AutoTurnouts(this);
@@ -445,6 +445,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
             addMouseListenerToHeader(activeTrainsTable);
 
+            activeTrainsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             JScrollPane activeTrainsTableScrollPane = new JScrollPane(activeTrainsTable);
             p12.add(activeTrainsTableScrollPane, BorderLayout.CENTER);
             contentPane.add(p12);
@@ -548,6 +549,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             cancelButtonColumn.setPreferredWidth((sampleButton.getPreferredSize().width) + 2);
             // add listener
             addMouseListenerToHeader(allocationRequestTable);
+            allocationRequestTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             JScrollPane allocationRequestTableScrollPane = new JScrollPane(allocationRequestTable);
             p22.add(allocationRequestTableScrollPane, BorderLayout.CENTER);
             contentPane.add(p22);
@@ -604,6 +606,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             p31.add(allocatedSectionTableScrollPane, BorderLayout.CENTER);
             // add listener
             addMouseListenerToHeader(allocatedSectionTable);
+            allocatedSectionTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             contentPane.add(p31);
             if (tpm != null) {
                 tpm.resetState(allocatedSectionTable);

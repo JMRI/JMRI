@@ -1,7 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.display.EditorScaffold;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
@@ -21,7 +21,7 @@ public class ItemPaletteTest {
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = ItemPalette.getDefault("Test ItemPalette",  new EditorScaffold());
+            ip = ItemPalette.getDefault("Test ItemPalette",  new ControlPanelEditor("ED"));
             ip.pack();
             ip.setVisible(true);
         });

@@ -238,8 +238,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             return  ( _controllingSignal == null || _controllingSignal.getUserName() == null) ? "" : _controllingSignal.getUserName();
         } else {
-            return ( _controllingSignal == null || _controllingSignalMast.getUserName() == null) ? "" : _controllingSignalMast.getUserName();
-        }
+            return ( _controllingSignalMast == null || _controllingSignalMast.getUserName() == null) ? "" : _controllingSignalMast.getUserName();        }
     }
 
     RosterEntry re = null;
@@ -671,16 +670,11 @@ public class AutoActiveTrain implements ThrottleListener {
                 _controllingSignalMast = sm;
                 _conSignalProtectedBlock = nB;
                 sm.addPropertyChangeListener(_conSignalMastListener = (PropertyChangeEvent e) -> {
-                    if (e.getPropertyName().equals("Aspect")) {
-                        // controlling signal has changed appearance
+                    if (e.getPropertyName().equals("Aspect") || e.getPropertyName().equals("Held")) {
+                        // controlling signal has changed appearance or a hold has been released
+                        // even if its a hold we still have to use target speed etc else we override pauses and other stop events.
                         setSpeedBySignal();
                         if (_stoppingForStopSignal && (_targetSpeed > 0.0)) {
-                            cancelStopInCurrentSection();
-                            _stoppingForStopSignal = false;
-                        }
-                    } else if (e.getPropertyName().equals("Held")) {
-                        setSpeedBySignal();
-                        if (!((Boolean) e.getNewValue())) {
                             cancelStopInCurrentSection();
                             _stoppingForStopSignal = false;
                         }

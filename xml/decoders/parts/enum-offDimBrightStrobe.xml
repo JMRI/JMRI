@@ -11,6 +11,7 @@
   </enumChoice>
   <enumChoice choice="Dim">
     <choice>Dim</choice>
+	<choice xml:lang="da">Dæmpet</choice>
     <choice xml:lang="cs">Tlumené</choice>
     <choice xml:lang="fr">Atténué</choice>
     <choice xml:lang="it">Smorzato</choice>
@@ -27,6 +28,7 @@
   </enumChoice>
   <enumChoice choice="Strobe">
     <choice>Strobe</choice>
+	<choice xml:lang="da">Blinkende</choice>
     <choice xml:lang="cs">Stroboskopický</choice>
     <choice xml:lang="fr">Stroboscopique</choice>
     <choice xml:lang="it">Strobo</choice>

@@ -104,7 +104,7 @@
 
   
 <li>
-<a href="html/hardware/can/index.shtml">CAN Bus </a>
+<a href="html/hardware/can/index.shtml">CAN Bus Overview </a>
 <ul></ul>
 </li>
 
@@ -1377,23 +1377,53 @@
 </li>
   
 <li>
-<a href="html/hardware/can/index.shtml">CBUS </a>
+<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) </a>
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console </a>
+<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Config Tool </a>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/hardware/can/index.shtml">CAN Bus </a>
+<a href="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/hardware/can/index.shtml">CAN Networks </a>
 <ul></ul>
 </li>
 

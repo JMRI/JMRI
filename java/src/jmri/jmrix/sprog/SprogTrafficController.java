@@ -57,7 +57,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         tcThread.setName("SPROG TC thread");
         tcThread.setPriority(Thread.MAX_PRIORITY-1);
         tcThread.start();
-        // Set the timeout for communcation with hardware
+        // Set the timeout for communication with hardware
         if (memo.getSprogMode() == SprogConstants.SprogMode.OPS) {
             timeout = SprogConstants.TC_OPS_REPLY_TIMEOUT;
         } else {
