@@ -20,7 +20,7 @@ import org.jdom2.Element;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 abstract public class VSDSound {
 
@@ -104,6 +104,10 @@ abstract public class VSDSound {
 
     public void setGain(float g) {
         gain = g;
+    }
+
+    double speedCurve(float s) {
+        return s;
     }
 
     public Element getXml() {
