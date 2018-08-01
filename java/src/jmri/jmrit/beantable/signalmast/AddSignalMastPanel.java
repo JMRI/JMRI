@@ -153,13 +153,6 @@ public class AddSignalMastPanel extends JPanel {
         apply.setVisible(false);
         add(buttonHolder); // add bottom row of buttons (to me)
 
-        //+ includeUsed.addActionListener(new ActionListener() {
-        //+     @Override
-        //+    public void actionPerformed(ActionEvent e) {
-        //+        //+ refreshHeadComboBox();
-        //+    }
-        //+});
-
         // default to 1st pane
         currentPane = panes.get(0);
         
@@ -176,7 +169,7 @@ public class AddSignalMastPanel extends JPanel {
         
         loadMastDefinitions();
 
-        // select the 1st one  //+ should be load from preference - see directly above
+        // select the 1st one
         selection(panes.get(0).getPaneName());  // there has to be at least one, so we can do the update
 
         // set a remembered signalmast type, if present
@@ -184,16 +177,6 @@ public class AddSignalMastPanel extends JPanel {
             signalMastDriver.setSelectedItem(prefs.getComboBoxLastSelection(driverSelectionCombo));
         }
         
-        // configure responsive actions
-        signalMastDriver.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //+ updateSelectedDriver();
-            }
-        });
-
-        //+ updateHeads();
-        //+ refreshHeadComboBox();
         sigSysBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -241,7 +224,6 @@ public class AddSignalMastPanel extends JPanel {
         apply.setVisible(true);
         create.setVisible(false);
         
-        //+ inEditMode = true;
         this.mast = mast;
         
         // can't change some things from original settings
@@ -400,8 +382,7 @@ public class AddSignalMastPanel extends JPanel {
      */
     protected void updateSelectedDriver() {
         log.trace(" updateSelectedDriver() start");
-        //+ have to do whatever updates are needed to show the display
-        //+ this is redundant computation to find the mast info??
+
         if (mastBox.getSelectedIndex() < 0) return; // no mast selected yet
         String mastFile = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String mastType = mastFile.substring(11, mastFile.indexOf(".xml"));

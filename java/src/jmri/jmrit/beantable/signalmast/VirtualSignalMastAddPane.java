@@ -104,7 +104,6 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
                     disabledAspects.get(aspect).setSelected(true);
                 }
             }
-            //+ do we need to clear non-disabled aspects?
         }
 
         allowUnLit.setSelected(currentMast.allowUnLit());

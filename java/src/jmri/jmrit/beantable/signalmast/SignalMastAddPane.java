@@ -40,40 +40,36 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      * Provide a new list of aspects in the signal system.
      * Must be done at startup before the pane is shown.
      * May be done later, to update to a new system.
-     * //+ should be abstract
      */
-    public void setAspectNames(@Nonnull SignalAppearanceMap map, 
-                               @Nonnull SignalSystem sigSystem) {}
+    abstract public void setAspectNames(@Nonnull SignalAppearanceMap map, 
+                               @Nonnull SignalSystem sigSystem);
 
     /**
      * Can this pane edit a specific mast object, i.e. an object of its type?
      * @param mast the SignalMast to possibly display
      * @return true if this pane can handle that mast type; false if can't
-     * //+ should be abstract
      */
-    public boolean canHandleMast(@Nonnull SignalMast mast) { return false; }
+    abstract public boolean canHandleMast(@Nonnull SignalMast mast);
 
     /**
      * Load this pane with information from a mast.
      * Do not invoke this is {@link #canHandleMast(SignalMast)} on that mast returns false.
      *
      * @param mast the SignalMast to display or null to reset a previous setting
-     * //+ should be abstract
      */
-    public void setMast(SignalMast mast) {}
+    abstract public void setMast(SignalMast mast);
     
     /**
      * Called to either "create and register" or update an existing mast from the given information.
-     * //+ should be abstract
      * @param sigsysname the name of the signal system in use
      * @param mastname the mast type name
      * @param username user name value
      * @return false if the operation failed, in which case the user should have already been notified
      */
-    public boolean createMast(@Nonnull
+    abstract public boolean createMast(@Nonnull
             String sigsysname, @Nonnull
                     String mastname, @Nonnull
-                            String username) { return false; }
+                            String username);
     
     /**
      * @return Human-prefered name for type of signal mast, in local language

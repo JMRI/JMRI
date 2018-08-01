@@ -184,7 +184,6 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
                     disabledAspects.get(aspect).setSelected(true);
                 }
             }
-            //+ do we need to clear non-disabled aspects?
          }
         for (String aspect : currentMast.getAllKnownAspects()) {
             if (aspectEventIDs.get(aspect) == null) {

@@ -52,8 +52,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
     }
     
-    boolean inEditMode; // <-------------------------------------------
-    
     String sigsysname;
     ArrayList<File> mastNames = new ArrayList<>();
     DefaultSignalAppearanceMap map;
@@ -515,11 +513,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             return;
         }
         bitNum = newColNum;
-        // show/hide column labels (if any)
         // hide/show output choices per Aspect
-        if (inEditMode == false) {
-            updateMatrixMastPanel(); // not while in edit mode! deletes all info for aspects
-        }
+        updateMatrixMastPanel();
+
         validate();
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame) getTopLevelAncestor()).getPreferredSize());
