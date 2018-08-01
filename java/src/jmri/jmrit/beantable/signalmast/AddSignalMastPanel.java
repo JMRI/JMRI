@@ -218,7 +218,7 @@ public class AddSignalMastPanel extends JPanel {
      */
     public AddSignalMastPanel(SignalMast mast) {
         this(); // calls the above method to build the base for an edit panel
-        log.debug("  called by AddSignalMastPanel({})", mast);
+        log.debug("AddSignalMastPanel({}) start", mast);
 
         // switch buttons
         apply.setVisible(true);
@@ -249,7 +249,11 @@ public class AddSignalMastPanel extends JPanel {
 
                 // Ensure that the mast type is set
                 mastBoxPassive = false;
-                log.trace("set mastBox to \"{}\" from \"{}\"", mapTypeToName.get(mast.getMastType()), mast.getMastType());
+                if (mapTypeToName.get(mast.getMastType()) == null ) {
+                    log.error("About to set mast to null, which shouldn't happen. mast.getMastType() is {}", mast.getMastType(),
+                            new Exception("Traceback Exception")); // NOI18N
+                }
+                log.trace("set mastBox to \"{}\" from \"{}\"", mapTypeToName.get(mast.getMastType()), mast.getMastType()); // NOI18N
                 mastBox.setSelectedItem(mapTypeToName.get(mast.getMastType()));
 
                 pane.setMast(mast);
@@ -260,9 +264,11 @@ public class AddSignalMastPanel extends JPanel {
         // set mast type, suppress notification
         mastBoxPassive = true;
         String newMastType = mapTypeToName.get(mast.getMastType());
-        log.debug("Setting type to {}", newMastType);
+        log.debug("Setting type to {}", newMastType); // NOI18N
         mastBox.setSelectedItem(newMastType);
         mastBoxPassive = false;
+
+        log.debug("AddSignalMastPanel({}) end", mast);
     }
     
     // signal system definition variables
@@ -286,41 +292,52 @@ public class AddSignalMastPanel extends JPanel {
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
             sigsysname = man.getByUserName(u).getSystemName();
-            log.trace("     loadMastDefinitions with sigsysname {}", sigsysname);
+            log.trace("     loadMastDefinitions with sigsysname {}", sigsysname); // NOI18N
             mapNameToShowSize = new LinkedHashMap<>();
             mapTypeToName = new LinkedHashMap<>();
 
             // do file IO to get all the appearances
             // gather all the appearance files
             // Look for the default system defined ones first
-            URL path = FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED); // NOI18N
-            if (path != null) {
-                File[] apps = new File(path.toURI()).listFiles();
-                if (apps !=null) {
-                    for (File app : apps) {
-                        if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) { // NOI18N
-                            log.debug("   found file: {}", app.getName()); // NOI18N
-                            // load it and get name
-                            mastFiles.add(app);
-                            jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-                            };
-                            Element root = xf.rootFromFile(app);
-                            String name = root.getChild("name").getText();
-                            log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name); // NOI18N
-                            mastBox.addItem(name);
-                            log.trace("mapTypeToName adding key \"{}\" value \"{}\"", app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
-                            mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
-                            mapNameToShowSize.put(name, root.getChild("appearances") // NOI18N
-                                    .getChild("appearance") // NOI18N
-                                    .getChildren("show") // NOI18N
-                                    .size());
-                            
-                        }
+            File[] programDirArray = new File[0];
+            URL pathProgramDir = FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED); // NOI18N
+            if (pathProgramDir != null) programDirArray = new File(pathProgramDir.toURI()).listFiles();
+            if (programDirArray == null) programDirArray = new File[0];
+
+            File[] profileDirArray = new File[0];
+            URL pathProfileDir = FileUtil.findURL("resources/signals/" + sigsysname, FileUtil.Location.USER); // NOI18N
+            if (pathProfileDir != null) profileDirArray = new File(pathProfileDir.toURI()).listFiles();
+            if (profileDirArray == null) profileDirArray = new File[0];
+            
+            // create a composite list of files
+            File[] apps = Arrays.copyOf(programDirArray, programDirArray.length + profileDirArray.length);
+            System.arraycopy(profileDirArray, 0, apps, programDirArray.length, profileDirArray.length);
+            
+            if (apps !=null) {
+                for (File app : apps) {
+                    if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) { // NOI18N
+                        log.debug("   found file: {}", app.getName()); // NOI18N
+                        // load it and get name
+                        mastFiles.add(app);
+                        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
+                        };
+                        Element root = xf.rootFromFile(app);
+                        String name = root.getChild("name").getText();
+                        log.trace("mastNames adding \"{}\" mastBox adding \"{}\" ", app, name); // NOI18N
+                        mastBox.addItem(name);
+                        log.trace("mapTypeToName adding key \"{}\" value \"{}\"", app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
+                        mapTypeToName.put(app.getName().substring(11, app.getName().indexOf(".xml")), name); // NOI18N
+                        mapNameToShowSize.put(name, root.getChild("appearances") // NOI18N
+                                .getChild("appearance") // NOI18N
+                                .getChildren("show") // NOI18N
+                                .size());
+                        
                     }
-                } else {
-                    log.error("Unexpected null list of signal definition files"); // NOI18N
                 }
+            } else {
+                log.error("Unexpected null list of signal definition files"); // NOI18N
             }
+
         } catch (org.jdom2.JDOMException e) {
             mastBox.addItem(Bundle.getMessage("ErrorSignalMastBox1")); // NOI18N
             log.warn("in loadMastDefinitions", e); // NOI18N
@@ -451,7 +468,13 @@ public class AddSignalMastPanel extends JPanel {
      */
     void okPressed() {
         log.trace(" okPressed() start");
+        boolean success = false;
+        
         // get and validate entered global information 
+        if ( (mastBox.getSelectedIndex() < 0) || ( mastFiles.get(mastBox.getSelectedIndex()) == null) ) {
+            issueDialogFailMessage(new RuntimeException("There's something wrong with the mast type selection"));
+            return;
+        }
         String mastname = mastFiles.get(mastBox.getSelectedIndex()).getName();
         String user = (userName.getText() != null ? NamedBean.normalizeUserName(userName.getText()) : ""); // NOI18N
         if (!GraphicsEnvironment.isHeadless()) {
@@ -464,7 +487,6 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         // ask top-most pane to make a signal
-        boolean success = false;
         try {
             success = currentPane.createMast(sigsysname,mastname,user);
         } catch (RuntimeException ex) {
