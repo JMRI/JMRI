@@ -85,7 +85,7 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
      */
-    public void setMastType(String type);
+    public void setMastType(@Nonnull String type);
 
     /**
      * Get the specific mast type for this mast.

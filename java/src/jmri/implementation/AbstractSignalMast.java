@@ -1,13 +1,15 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+
+import javax.annotation.*;
+
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.SignalSystem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,7 +172,10 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * {@inheritDoc }
      */
     public String getMastType() { return mastType; }
-    public void setMastType(String type) { mastType = type; }
+    public void setMastType(@Nonnull String type) { 
+        Objects.requireNonNull(type, "MastType cannot be null");
+        mastType = type;
+    }
     String mastType;
 
     /**
