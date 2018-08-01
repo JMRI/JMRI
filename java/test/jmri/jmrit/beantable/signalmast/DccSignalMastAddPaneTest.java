@@ -13,8 +13,11 @@ import org.junit.Test;
 /**
  * @author	Bob Jacobsen Copyright 2018
  */
-public class DccSignalMastAddPaneTest {
+public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
+    /** {@inheritDoc} */
+    protected SignalMastAddPane getOTT() { return new DccSignalMastAddPane(); }    
+    
     @Test
     public void testSetMast() {
         DccSignalMast s1 = new DccSignalMast("IF$dsm:AAR-1946:PL-1-high-abs(1)", "user name");

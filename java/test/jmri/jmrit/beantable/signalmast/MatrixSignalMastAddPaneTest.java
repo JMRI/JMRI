@@ -11,8 +11,11 @@ import org.junit.*;
 /**
  * @author	Bob Jacobsen Copyright 2018
  */
-public class MatrixSignalMastAddPaneTest {
+public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
+    /** {@inheritDoc} */
+    protected SignalMastAddPane getOTT() { return new MatrixSignalMastAddPane(); }    
+    
     @Test
     @Ignore("causes missing data for other tests?")
     public void testSetMastOK() {

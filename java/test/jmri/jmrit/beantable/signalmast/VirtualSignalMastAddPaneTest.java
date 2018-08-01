@@ -1,11 +1,11 @@
 package jmri.jmrit.beantable.signalmast;
 
+import java.util.*;
+import javax.swing.*;
+
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
-
-import java.util.*;
-import javax.swing.*;
 
 import org.junit.*;
 
@@ -14,8 +14,11 @@ import org.netbeans.jemmy.operators.*;
 /**
  * @author	Bob Jacobsen Copyright 2018
  */
-public class VirtualSignalMastAddPaneTest {
+public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
+    /** {@inheritDoc} */
+    protected SignalMastAddPane getOTT() { return new VirtualSignalMastAddPane(); }    
+    
     @Test
     public void testSetMast() {
         VirtualSignalMast s1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "user name");

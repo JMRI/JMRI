@@ -12,8 +12,11 @@ import org.junit.Test;
 /**
  * @author	Bob Jacobsen Copyright 2018
  */
-public class TurnoutSignalMastAddPaneTest {
+public class TurnoutSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
+    /** {@inheritDoc} */
+    protected SignalMastAddPane getOTT() { return new TurnoutSignalMastAddPane(); }    
+    
     @Test
     public void testSetMast() {
         TurnoutSignalMast s1 = new TurnoutSignalMast("IF$tsm:basic:one-searchlight($1)", "user name");

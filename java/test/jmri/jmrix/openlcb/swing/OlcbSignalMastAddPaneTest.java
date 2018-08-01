@@ -1,7 +1,7 @@
 package jmri.jmrix.openlcb.swing;
 
 import jmri.*;
-import jmri.jmrit.beantable.signalmast.SignalMastAddPane;
+import jmri.jmrit.beantable.signalmast.*;
 import jmri.jmrix.openlcb.*;
 import jmri.implementation.*;
 import jmri.util.*;
@@ -18,8 +18,11 @@ import org.openlcb.*;
 /**
  * @author	Bob Jacobsen Copyright 2018
  */
-public class OlcbSignalMastAddPaneTest {
+public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
+    /** {@inheritDoc} */
+    protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }    
+    
     @Test
     public void testSetMast() {
         OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name");

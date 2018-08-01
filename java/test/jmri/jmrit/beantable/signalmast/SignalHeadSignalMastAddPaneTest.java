@@ -13,8 +13,11 @@ import org.junit.Test;
 /**
  * @author	Bob Jacobsen Copyright 2018
  */
-public class SignalHeadSignalMastAddPaneTest {
+public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
+    /** {@inheritDoc} */
+    protected SignalMastAddPane getOTT() { return new SignalHeadSignalMastAddPane(); }    
+    
     @Test
     public void testSetMast() {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
