@@ -184,6 +184,37 @@ public class JmriConfigurationManager implements ConfigureManager {
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
+                        
+                        
+                        // Daniel start
+                        
+                        log.error("====================");
+                        log.error("Daniel: Errors found");
+                        log.error("====================");
+                        for (java.util.Map.Entry<PreferencesManager, InitializationException> entry : this.initializationExceptions.entrySet()) {
+                            log.error(String.format("Daniel: %s, %s, %s", entry.getKey().getClass().getName(), entry.getValue().getMessage(), entry.getValue().getClass().getName()));
+                        }
+                        
+                        
+                        log.error("====================");
+                        log.error("Daniel: Errors found");
+                        log.error("====================");
+                        this.initialized.forEach((provider) -> {
+                            List<Exception> exceptions = provider.getInitializationExceptions(profile);
+                            if (!exceptions.isEmpty()) {
+                                exceptions.forEach((exception) -> {
+                                    log.error(String.format("Daniel: %s, %s", exception.getMessage(), exception.getClass().getName()));
+//                                    errors.add(exception.getLocalizedMessage());
+                                });
+                            } else if (this.initializationExceptions.get(provider) != null) {
+//                                errors.add(this.initializationExceptions.get(provider).getLocalizedMessage());
+                            }
+                        });
+                        
+                        // Daniel end
+                        
+                        
+                        
                         List<String> errors = new ArrayList<>();
                         this.initialized.forEach((provider) -> {
                             List<Exception> exceptions = provider.getInitializationExceptions(profile);
