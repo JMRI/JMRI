@@ -527,8 +527,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     
     /**
      * Write matrix mast name + output no. to output bean comment.
-     * <p>
-     * Called from {@link #okPressed(ActionEvent)}
      *
      * @param bp           the bean panel containing the Turnout (output)
      * @param functionName Description of turnout function on mast
