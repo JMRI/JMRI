@@ -809,7 +809,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Check for an optional sound start-position.
         n = e.getChildText("start-position");
         if (n != null) {
-            startPos = new PhysicalLocation().parse(n);
+            startPos = PhysicalLocation.parse(n);
         } else {
             startPos = null;
         }
