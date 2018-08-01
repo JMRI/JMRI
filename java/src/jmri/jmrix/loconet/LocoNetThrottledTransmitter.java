@@ -178,11 +178,23 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
             return unit.convert(delay, TimeUnit.MILLISECONDS);
         }
 
+        public long getDelay(TimeUnit unit, long time) {
+            long delay = endTimeMsec - time;
+            return unit.convert(delay, TimeUnit.MILLISECONDS);
+        }
+
         @Override
         public int compareTo(Delayed d) {
             // -1 means this is less than m
-            long delta = this.getDelay(TimeUnit.MILLISECONDS)
-                    - d.getDelay(TimeUnit.MILLISECONDS);
+            long delta;
+            if (d instanceof Memo) {
+                long now = nowMSec();
+                delta = this.getDelay(TimeUnit.MILLISECONDS, now)
+                        - ((Memo)d).getDelay(TimeUnit.MILLISECONDS, now);
+            } else {
+                delta = this.getDelay(TimeUnit.MILLISECONDS)
+                        - d.getDelay(TimeUnit.MILLISECONDS);
+            }
             if (delta > 0) {
                 return 1;
             } else if (delta < 0) {
