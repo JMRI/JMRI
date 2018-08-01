@@ -135,14 +135,16 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /** {@inheritDoc} */
     @Override
     public void setMast(SignalMast mast) { 
-        log.debug("setMast({})", mast);
+        log.debug("setMast({}) start", mast);
         if (mast == null) { 
             currentMast = null; 
+            log.debug("setMast({}) end early with null", mast);
             return; 
         }
         
         if (! (mast instanceof DccSignalMast) ) {
             log.error("mast was wrong type: {} {}", mast.getSystemName(), mast.getClass().getName());
+            log.debug("setMast({}) end early: wrong type", mast);
             return;
         }
 
@@ -183,6 +185,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             unLitAspectField.setText("" + currentMast.getUnlitId());
         }
 
+        log.debug("setMast({}) end", mast);
     }
 
     static boolean validateAspectId(String strAspect) {
