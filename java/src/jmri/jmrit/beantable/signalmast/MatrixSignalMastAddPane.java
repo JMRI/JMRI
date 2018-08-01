@@ -53,7 +53,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }
     
     String sigsysname;
-    ArrayList<File> mastNames = new ArrayList<>();
     DefaultSignalAppearanceMap map;
     
     MatrixSignalMast currentMast;
