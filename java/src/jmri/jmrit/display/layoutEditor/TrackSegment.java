@@ -116,6 +116,7 @@ public class TrackSegment extends LayoutTrack {
         angle = 0.0D;
         circle = false;
         bezier = false;
+        setupDefaultBumperSizes(layoutEditor);
     }
 
     // alternate constructor for loading layout editor panels
@@ -134,6 +135,8 @@ public class TrackSegment extends LayoutTrack {
         mainline = main;
         dashed = dash;
         hidden = hide;
+
+        setupDefaultBumperSizes(layoutEditor);
     }
 
     /**
@@ -2256,7 +2259,7 @@ public class TrackSegment extends LayoutTrack {
         Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
         Point2D p1, p2, p3, p4, p5, p6, p7;
-        Point2D p1P, p2P, p3P, p4P, p5P, p6P, p7P;
+        Point2D p1P = ep1, p2P = ep2, p3P, p4P, p5P, p6P, p7P;
         double startAngleRAD, stopAngleRAD;
         if (isArc()) {
             calculateTrackSegmentAngle();
@@ -2430,21 +2433,20 @@ public class TrackSegment extends LayoutTrack {
                 stopAngleRAD = temp;
             }
 
-            // draw cross ties
+            // common points
+            p1 = new Point2D.Double(0.F, -halfLength);
+            p2 = new Point2D.Double(0.F, +halfLength);
+
             if (bumperEndStart) {
-                p1 = new Point2D.Double(halfLength, -halfLength);
-                p2 = new Point2D.Double(halfLength, +halfLength);
                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
-                g2.draw(new Line2D.Double(p1P, p2P));
             }
             if (bumperEndStop) {
-                p1 = new Point2D.Double(-halfLength, -halfLength);
-                p2 = new Point2D.Double(-halfLength, +halfLength);
                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
-                g2.draw(new Line2D.Double(p1P, p2P));
             }
+            // draw cross tie
+            g2.draw(new Line2D.Double(p1P, p2P));
         }   // if (bumperEndStart || bumperEndStop)
 
         //
@@ -3468,6 +3470,28 @@ public class TrackSegment extends LayoutTrack {
         }
     }
     private int bumperLineWidth = 2;
+
+    private void setupDefaultBumperSizes(LayoutEditor layoutEditor) {
+        LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+
+        // use these as default sizes for end bumpers
+        int tieLength = ltdo.getSideTieLength();
+        int tieWidth = ltdo.getSideTieWidth();
+        int railWidth = ltdo.getSideRailWidth();
+        int railGap = ltdo.getSideRailGap();
+        if (mainline) {
+            tieLength = ltdo.getMainTieLength();
+            tieWidth = ltdo.getMainTieWidth();
+            railWidth = ltdo.getMainRailWidth();
+            railGap = ltdo.getMainRailGap();
+        }
+        bumperLineWidth = railWidth;
+        bumperLength = railGap + railWidth;
+        if ((tieLength > 0) && (tieWidth > 0)) {
+            bumperLineWidth = tieWidth;
+            bumperLength = tieLength * 3 / 2;
+        }
+    }
 
     public int getBumperLength() {
         return bumperLength;

@@ -47,7 +47,7 @@ class Steam1Sound extends EngineSound {
     // Trigger Sounds
     HashMap<String, SoundBite> trigger_sounds;
 
-    private int top_speed;
+    int top_speed;
     private float driver_diameter_float;
     private int num_cylinders;
     private float exponent;
@@ -90,6 +90,11 @@ class Steam1Sound extends EngineSound {
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
         }
+    }
+
+    @Override
+    double speedCurve(float t) {
+        return Math.pow(t, exponent);
     }
 
     // Called from thread
@@ -1053,10 +1058,10 @@ class Steam1Sound extends EngineSound {
             return helper_index;
         }
 
-        public int calcRPM(float t) {
+        private int calcRPM(float t) {
             // speed = % of topspeed (mph)
             // RPM = speed * ((inches/mile) / (minutes/hour)) / (pi * driver_diameter_float)
-            return (int) Math.round(speedCurve(t) * _top_speed * 1056 / (Math.PI * _driver_diameter_float));
+            return (int) Math.round(_parent.speedCurve(t) * _top_speed * 1056 / (Math.PI * _driver_diameter_float));
         }
 
         public double speedCurve(float t) {
