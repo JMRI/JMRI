@@ -37,7 +37,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         p.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(p);
 
-
+        add(matrixUnLitPanel);
+        matrixUnLitPanel();
+        
         matrixMastBitnumPanel = makeMatrixMastBitnumPanel(); // create panel
         add(matrixMastBitnumPanel);
         if (prefs.getComboBoxLastSelection(matrixBitNumSelectionCombo) != null) {
@@ -65,7 +67,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     String matrixBitNumSelectionCombo = this.getClass().getName() + ".matrixBitNumSelected";
 
     JCheckBox allowUnLit = new JCheckBox();
-    JPanel unLitSettingsPanel = new JPanel();
 
     JScrollPane matrixMastScroll;
     JPanel matrixMastBitnumPanel = new JPanel();
@@ -127,6 +128,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             SignalAppearanceMap newMap, SignalSystem sigSystem) {
         log.debug("setAspectNames(...)");
 
+        unLitPanelBits = Arrays.copyOf(emptyBits, MAXMATRIXBITS);
         map = (DefaultSignalAppearanceMap)newMap;
 
         updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
@@ -211,29 +213,25 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         if (currentMast.resetPreviousStates()) {
             resetPreviousState.setSelected(true);
         }
-        if (currentMast.allowUnLit()) {
-            char[] mastUnLitBits = currentMast.getUnLitBits(); // load char[] for unLit from mast
-            char[] unLitPanelBits = Arrays.copyOf(mastUnLitBits, MAXMATRIXBITS); // store as MAXMATRIXBITS character array in panel var unLitPanelBits
-            unlitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
-            if (bitNum > 1) {
-                unlitCheck2.setSelected(unLitPanelBits[1] == '1');
-            }
-            if (bitNum > 2) {
-                unlitCheck3.setSelected(unLitPanelBits[2] == '1');
-            }
-            if (bitNum > 3) {
-                unlitCheck4.setSelected(unLitPanelBits[3] == '1');
-            }
-            if (bitNum > 4) {
-                unlitCheck5.setSelected(unLitPanelBits[4] == '1');
-            }
-            if (bitNum > 5) {
-                unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-            }
-            // repeat in order to set MAXMATRIXBITS > 6
-            String value = String.valueOf(unLitPanelBits); // convert back from char[] to String
-            unLitBitsField.setText(value);
+ 
+        unLitPanelBits = Arrays.copyOf(currentMast.getUnLitBits(), MAXMATRIXBITS); // store as MAXMATRIXBITS character array
+        unlitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
+        if (bitNum > 1) {
+            unlitCheck2.setSelected(unLitPanelBits[1] == '1');
         }
+        if (bitNum > 2) {
+            unlitCheck3.setSelected(unLitPanelBits[2] == '1');
+        }
+        if (bitNum > 3) {
+            unlitCheck4.setSelected(unLitPanelBits[3] == '1');
+        }
+        if (bitNum > 4) {
+            unlitCheck5.setSelected(unLitPanelBits[4] == '1');
+        }
+        if (bitNum > 5) {
+            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
+        }
+        // repeat in order to set MAXMATRIXBITS > 6
         
         allowUnLit.setSelected(currentMast.allowUnLit());
  
@@ -311,13 +309,12 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         currentMast.resetPreviousStates(resetPreviousState.isSelected()); // read from panel, not displayed?
 
         currentMast.setAllowUnLit(allowUnLit.isSelected());
-        if (allowUnLit.isSelected()) {
-            // copy bits from UnLitPanel var unLitPanelBits
-            try {
-                currentMast.setUnLitBits(trimUnLitBits()); // same as line 1046,
-            } catch (Exception ex) {
-                log.error("failed to read and copy unLitPanelBits");
-            }
+
+        // copy bits from UnLitPanel var unLitPanelBits
+        try {
+            currentMast.setUnLitBits(trimUnLitBits());
+        } catch (Exception ex) {
+            log.error("failed to read and copy unLitPanelBits");
         }
         
         if (!username.equals("")) {
@@ -605,7 +602,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     JCheckBox unlitCheck5 = new JCheckBox();
     JCheckBox unlitCheck6 = new JCheckBox();
     // repeat in order to set MAXMATRIXBITS > 6
-    JTextField unLitBitsField = new JTextField(MAXMATRIXBITS); // for debug
 
     /**
      * JPanel to set outputs for an unlit (Dark) Matrix Signal Mast.
@@ -614,10 +610,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         if (bitNum < 1 || bitNum > MAXMATRIXBITS) {
             bitNum = 4; // default to 4 col for (first) new mast
         }
-        /*        if (unLitPanelBits == null) {
-            char[] unLitPanelBits = emptyBits;
-            // if needed, assign panel var to enable setting separate items by clicking a UnLitCheck check box
-        }*/
+
         JPanel matrixUnLitDetails = new JPanel();
         matrixUnLitDetails.setLayout(new jmri.util.javaworld.GridLayout2(1, 1)); // stretch to full width
         //matrixUnLitDetails.setAlignmentX(matrixUnLitDetails.RIGHT_ALIGNMENT);
@@ -629,9 +622,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixUnLitDetails.add(unlitCheck6);
         // repeat in order to set MAXMATRIXBITS > 6
 
-        //matrixUnLitDetails.add(unLitBitsField);
-        //unLitBitsField.setEnabled(false); // not editable, just for debugging
-        //unLitBitsField.setVisible(false); // set to true to check/debug unLitBits
         matrixUnLitPanel.add(matrixUnLitDetails);
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
         border.setTitle(Bundle.getMessage("MatrixUnLitDetails"));
@@ -719,8 +709,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         if (state == false) {
             unLitPanelBits[column - 1] = '0';
         }
-        String value = String.valueOf(unLitPanelBits); // convert back from char[] to String
-        unLitBitsField.setText(value);
     }
 
     /**
