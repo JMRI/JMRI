@@ -283,6 +283,8 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     null);
         }
         
+        private final static EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
+        
         @Nonnull
         public T getState() { return state; }
         
@@ -292,24 +294,29 @@ public class OlcbSignalMast extends AbstractSignalMast {
             EventID eid = new OlcbAddress(value).toEventID();
             stateToEventID.put(key, eid);
             
-            eventToState.put(eid, key);
+            // check for whether already there; so, we're done.
+            if (eventToState.get(eid) == null) {
+                // Not there yet, save it
+                eventToState.put(eid, key);
             
-            // emit Producer, Consumer Identified messages to show our interest
-            connection.put(
-                    new ProducerIdentifiedMessage(node, eid, EventState.Unknown),
-                    null);
-            connection.put(
-                    new ConsumerIdentifiedMessage(node, eid, EventState.Unknown),
-                    null);
+                if (! nullEvent.equals(eid)) { // and if not the null (i.e. not the "don't send") event
+                    // emit Producer, Consumer Identified messages to show our interest
+                    connection.put(
+                            new ProducerIdentifiedMessage(node, eid, EventState.Unknown),
+                            null);
+                    connection.put(
+                            new ConsumerIdentifiedMessage(node, eid, EventState.Unknown),
+                            null);
 
-            // emit Identify Producer, Consumer messages to get distributed state
-            connection.put(
-                    new IdentifyProducersMessage(node, eid),
-                    null);
-            connection.put(
-                    new IdentifyConsumersMessage(node, eid),
-                    null);
-            
+                    // emit Identify Producer, Consumer messages to get distributed state
+                    connection.put(
+                            new IdentifyProducersMessage(node, eid),
+                            null);
+                    connection.put(
+                            new IdentifyConsumersMessage(node, eid),
+                            null);
+                }
+            }
         }
         
         @CheckForNull

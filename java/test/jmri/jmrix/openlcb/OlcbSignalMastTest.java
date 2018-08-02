@@ -90,6 +90,28 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("Init sent for 8 events", 32, messages.size());      
         messages = new java.util.ArrayList<>(); // reset test message queue
       
+        // confirm that setting again doesn't resend
+        t.setLitEventId("1.2.3.4.5.6.7.1");
+        t.setNotLitEventId("1.2.3.4.5.6.7.2");
+        t.setHeldEventId("1.2.3.4.5.6.7.3");
+        t.setNotHeldEventId("1.2.3.4.5.6.7.4");
+        t.setOutputForAppearance("Clear", "1.2.3.4.5.6.7.10");
+        t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
+        t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
+        t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
+
+        Assert.assertEquals("Init sent 0 events 2nd time", 0, messages.size());    
+        
+        // but a different event does
+        t.setOutputForAppearance("Stop", "11.2.3.4.5.6.7.13");
+        Assert.assertEquals("Init for single new event", 4, messages.size());    
+        messages = new java.util.ArrayList<>(); // reset test message queue
+
+        // and zero doesn't
+        t.setOutputForAppearance("Stop", "0.0.0.0.0.0.0.0");
+        Assert.assertEquals("Init sent nothing", 0, messages.size());    
+        messages = new java.util.ArrayList<>(); // reset test message queue
+        
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
         org.openlcb.Message msg;
