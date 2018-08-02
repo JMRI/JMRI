@@ -242,9 +242,13 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
         if (currentMast == null) {
             // Create was pressed for new mast, check all boxes are filled
-            if (turnoutBox1.getDisplayName().isEmpty() || (bitNum > 1 && turnoutBox2.getDisplayName().isEmpty()) || (bitNum > 2 && turnoutBox3.getDisplayName().isEmpty())
-                    || (bitNum > 3 && turnoutBox4.getDisplayName().equals("")) || (bitNum > 4 && turnoutBox5.getDisplayName().equals(""))
-                    || (bitNum > 5 && turnoutBox6.getDisplayName().equals(""))) {
+            if (       (              ( turnoutBox1.getDisplayName() == null || turnoutBox1.getDisplayName().isEmpty() ) )
+                    || (bitNum > 1 && ( turnoutBox2.getDisplayName() == null || turnoutBox2.getDisplayName().isEmpty() ) ) 
+                    || (bitNum > 2 && ( turnoutBox3.getDisplayName() == null || turnoutBox3.getDisplayName().isEmpty() ) )
+                    || (bitNum > 3 && ( turnoutBox4.getDisplayName() == null || turnoutBox4.getDisplayName().isEmpty() ) ) 
+                    || (bitNum > 4 && ( turnoutBox5.getDisplayName() == null || turnoutBox5.getDisplayName().isEmpty() ) )
+                    || (bitNum > 5 && ( turnoutBox6.getDisplayName() == null || turnoutBox6.getDisplayName().isEmpty() ) )
+                ) {
                 // add extra OR in order to set MAXMATRIXBITS > 6
                 //error dialog
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
@@ -665,7 +669,10 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         JComboBox<String> mastSelect = new JComboBox<>();
         List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
         for (String name : names) {
-            mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
+            // only accept MatrixSignalMast masts
+            if (InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof MatrixSignalMast) {
+                mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
+            }
         }
         if (mastSelect.getItemCount() == 0) {
             mastSelect.setEnabled(false);
