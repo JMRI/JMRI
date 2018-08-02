@@ -66,7 +66,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
      * Then sends command to alter state of turnout
      * Can return HM error messages to client
      * @param message Command string to be parsed
-     * @param deviceServer 
+     * @param deviceServer client to send responses (error messages) back to
      */
     @Override
     void handleMessage(String message, DeviceServer deviceServer) {
@@ -86,7 +86,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
                 if (o != null && Boolean.valueOf(o.toString())==false) {
                     String msg = Bundle.getMessage("ErrorTurnoutNotAllowed", t.getSystemName());
                     log.warn(msg);
-                    sendAlertMessage(msg, deviceServer);
+                    deviceServer.sendAlertMessage(msg);
                     return;
                 }            
             //turnout is NOT known to JMRI, attempt to create it (if allowed)
@@ -95,7 +95,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
                 if (!isTurnoutCreationAllowed) {
                     String msg = Bundle.getMessage("ErrorTurnoutNotDefined", message.substring(2));
                     log.warn(msg);
-                    sendAlertMessage(msg, deviceServer);                    
+                    deviceServer.sendAlertMessage(msg);                    
                     return;
                 } else {
                     try {
@@ -103,12 +103,12 @@ public class TurnoutController extends AbstractController implements PropertyCha
                     } catch (IllegalArgumentException e) {
                         String msg = Bundle.getMessage("ErrorCreatingTurnout", e.getLocalizedMessage());
                         log.warn(msg);
-                        sendAlertMessage(msg, deviceServer);
+                        deviceServer.sendAlertMessage(msg);
                         return;
                     }
                     String msg = Bundle.getMessage("InfoCreatedTurnout", t.getSystemName());
                     log.debug(msg);
-                    sendInfoMessage(msg, deviceServer);                    
+                    deviceServer.sendInfoMessage(msg);                    
                 }
             }
             
@@ -220,30 +220,6 @@ public class TurnoutController extends AbstractController implements PropertyCha
             listener.sendPacketToDevice(message);
         }
     }
-    /**
-     * Send an Alert message (simple text string) to this client
-     * TODO: rewrite this to handle multiple devices properly
-     * <p>
-     * @param message 
-     * Format: HMmessage
-     * @param deviceServer 
-     */
-    public void sendAlertMessage(String message, DeviceServer deviceServer) {        
-        deviceServer.sendPacketToDevice("HM" + message);
-    }
-
-    /**
-     * Send an Info message (simple text string) to this client
-     * TODO: rewrite this to handle multiple devices properly
-     * <p>
-     * @param message 
-     * Format: Hmmessage
-     */
-    public void sendInfoMessage(String message, DeviceServer deviceServer) {
-        deviceServer.sendPacketToDevice("Hm" + message);
-    }
-   
-    
 
     @Override
     public void register() {

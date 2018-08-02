@@ -619,6 +619,27 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             log.debug("Sent: " + s + "  to  " + getName() + device.getRemoteSocketAddress());
         }
     }
+    /**
+     * Send an Alert message (simple text string) to this client
+     * <p>
+     * @param message 
+     * Format: HMmessage
+     */
+    public void sendAlertMessage(String message) {        
+        sendPacketToDevice("HM" + message);
+    }
+
+    /**
+     * Send an Info message (simple text string) to this client
+     * <p>
+     * @param message 
+     * Format: Hmmessage
+     */
+    public void sendInfoMessage(String message) {
+        sendPacketToDevice("Hm" + message);
+    }
+   
+    
 
     /**
      * Add a DeviceListener
