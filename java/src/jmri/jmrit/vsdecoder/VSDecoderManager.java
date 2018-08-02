@@ -110,14 +110,11 @@ public class VSDecoderManager implements PropertyChangeListener {
     private float distance_rest_new = 0.0f; // Block distance to go, copy
 
     private float xPosi;
-    private float yPosi;
     static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
     private int remove_index;
     boolean is_tunnel = false;
     boolean geofile_ok = false;
     int num_setups;
-    private int num_issues;
-    private boolean is_circling = false;
 
     // Unused?
     //private PhysicalLocation listener_position;
@@ -777,7 +774,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                     } else {
                                         posToSet = blockPositionlists.get(d.setup_index).get(new_rp_index + 1);
                                     }
-                                    if (old_rp == 0 && d.startPos != null) { // Special case start position: first choise; if found, overwrite it.
+                                    if (old_rp == -1 && d.startPos != null) { // Special case start position: first choise; if found, overwrite it.
                                         posToSet = d.startPos;
                                     }
                                     log.debug("position to set: {}", posToSet);  
@@ -943,7 +940,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     if (locoInBlock[dadr_index][direction] == 0) { // On start
                         locoInBlock[dadr_index][direction] = d.dirfn;
                     }
-                    distance_rest_old = ((float) locoInBlock[dadr_index][distance_to_go]) / 100.0f; // Distance to go in meter
+                    distance_rest_old = locoInBlock[dadr_index][distance_to_go] / 100.0f; // Distance to go in meter
                     if (locoInBlock[dadr_index][direction] == d.dirfn) { // Last traveling direction
                         distance_rest = distance_rest_old;
                     } else {
