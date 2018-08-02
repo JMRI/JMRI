@@ -68,7 +68,7 @@ public class FastClockController extends AbstractController {
     }
 
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         throw new UnsupportedOperationException("Not used.");
     }
 

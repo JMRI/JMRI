@@ -56,7 +56,7 @@ public class RouteController extends AbstractController implements PropertyChang
     }
 
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         try {
             if (message.charAt(0) == 'A') {
                 if (message.charAt(1) == '2') {
