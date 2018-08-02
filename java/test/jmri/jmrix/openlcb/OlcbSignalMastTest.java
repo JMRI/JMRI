@@ -86,7 +86,10 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
         t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
-        
+
+        Assert.assertEquals("Init sent for 8 events", 32, messages.size());      
+        messages = new java.util.ArrayList<>(); // reset test message queue
+      
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
         org.openlcb.Message msg;
@@ -113,6 +116,9 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
         t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
+
+        Assert.assertEquals("Init sent for 8 events", 32, messages.size());      
+        messages = new java.util.ArrayList<>(); // reset test message queue
         
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
@@ -138,6 +144,9 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
         
+        Assert.assertEquals("Init sent for 8 events", 32, messages.size());      
+        messages = new java.util.ArrayList<>(); // reset test message queue
+
         Assert.assertEquals("lit defaults true", true, t.getLit());
         
         org.openlcb.Message msg;
@@ -181,6 +190,9 @@ public class OlcbSignalMastTest {
         machine.setEventForState(States2.A, "01.00.00.00.00.00.01.00");
         machine.setEventForState(States2.B, "01.00.00.00.00.00.02.00");
 
+        Assert.assertEquals("Init sent for 2 events", 8, messages.size());      
+        messages = new java.util.ArrayList<>(); // reset test message queue
+
         Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventIDForState(States2.A));
         Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventIDForState(States2.B));
         
@@ -203,8 +215,9 @@ public class OlcbSignalMastTest {
         machine.setEventForState(States2.A, "01.00.00.00.00.00.01.00");
         machine.setEventForState(States2.B, "01.00.00.00.00.00.02.00");
 
-        Assert.assertEquals("none sent", 0, messages.size());
-        
+        Assert.assertEquals("Init sent for 2 events", 8, messages.size());      
+        messages = new java.util.ArrayList<>(); // reset test message queue
+
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
         Assert.assertEquals("no reply if wrong address", 0, messages.size());
         
@@ -215,8 +228,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
         Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
         Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
-
-        messages = new java.util.ArrayList<>();
+        messages = new java.util.ArrayList<>(); // reset test message queue
 
         machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
         Assert.assertEquals("no reply", 0, messages.size());
@@ -226,7 +238,7 @@ public class OlcbSignalMastTest {
         // check by string comparison as a short cut
         Assert.assertEquals("reply", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
         
-        messages = new java.util.ArrayList<>();
+        messages = new java.util.ArrayList<>(); // reset test message queue
 
         machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null); 
         Assert.assertEquals("no reply", 0, messages.size());
@@ -251,7 +263,9 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventIDForState("A"));
         Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventIDForState("B"));
         
-        Assert.assertEquals("none sent", 0, messages.size());
+        Assert.assertEquals("Init sent for 2 events", 8, messages.size());
+        messages = new java.util.ArrayList<>(); // reset test message queue
+        
         machine.setState("A");
         Assert.assertEquals("still starting state", "B", machine.getState());
         Assert.assertEquals("one sent", 1, messages.size());
@@ -271,7 +285,8 @@ public class OlcbSignalMastTest {
         machine.setEventForState("A", "01.00.00.00.00.00.01.00");
         machine.setEventForState("B", "01.00.00.00.00.00.02.00");
 
-        Assert.assertEquals("none sent", 0, messages.size());
+        Assert.assertEquals("Init sent for 2 events", 8, messages.size());
+        messages = new java.util.ArrayList<>(); // reset test message queue
 
         machine.handleIdentifyEvents( new IdentifyEventsMessage(new NodeID(), new NodeID()), null); 
         Assert.assertEquals("no reply if wrong address", 0, messages.size());

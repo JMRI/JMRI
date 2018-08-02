@@ -293,6 +293,23 @@ public class OlcbSignalMast extends AbstractSignalMast {
             stateToEventID.put(key, eid);
             
             eventToState.put(eid, key);
+            
+            // emit Producer, Consumer Identified messages to show our interest
+            connection.put(
+                    new ProducerIdentifiedMessage(node, eid, EventState.Unknown),
+                    null);
+            connection.put(
+                    new ConsumerIdentifiedMessage(node, eid, EventState.Unknown),
+                    null);
+
+            // emit Identify Producer, Consumer messages to get distributed state
+            connection.put(
+                    new IdentifyProducersMessage(node, eid),
+                    null);
+            connection.put(
+                    new IdentifyConsumersMessage(node, eid),
+                    null);
+            
         }
         
         @CheckForNull
