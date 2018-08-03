@@ -138,7 +138,6 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         }
 
         currentMast = (SignalHeadSignalMast) mast;
-        SignalAppearanceMap appMap = mast.getAppearanceMap();
 
         // can't actually edit the heads in this kind of mast
         int count = map.getAspectSettings(map.getAspects().nextElement()).length;

@@ -128,16 +128,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         unLitPanelBits = Arrays.copyOf(emptyBits, MAXMATRIXBITS);
         map = (DefaultSignalAppearanceMap)newMap;
 
+        // set up rest of panel
         updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
-        // @see copyFromMatrixMast line 1840
-        if (map != null) {
-            Enumeration<String> aspects = map.getAspects();
-            // in matrixPanel LinkedHashtable, fill in mast settings per aspect
-            while (aspects.hasMoreElements()) {
-                String key = aspects.nextElement(); // for each aspect
-                MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
-            }
-        }
 
         columnChoice.setSelectedIndex(bitNum - 1); // index of items in list starts counting at 0 while "1" is displayed
     }
@@ -163,7 +155,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         }
 
         currentMast = (MatrixSignalMast) mast;
-        SignalAppearanceMap appMap = mast.getAppearanceMap();
 
         bitNum = currentMast.getBitNum(); // number of matrix columns = logic outputs = number of bits per Aspect
         updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
