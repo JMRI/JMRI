@@ -104,8 +104,10 @@
         general has made more contributions than can be
         counted.</li>
 
-        <li>Daniel Bergqvist, who added the "ask before shutdown" code, 
-        improved the Bundle code and added to the Swedish translation
+        <li><!-- danielb987 -->
+        Daniel Bergqvist, who added the "ask before shutdown" code, 
+        improved the Bundle code, added to the Swedish translation,
+        and improved components of the LocoNet engine. 
         
         <li>Andrew Berridge, who debugged and fixed problems with
         the SPROG serial interface</li>
@@ -549,7 +551,8 @@
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
-        <li>Klaus Killinger<!-- klk32003 -->, who improved the sound support
+        <li><!-- klk32003 -->
+        Klaus Killinger, who improved the sound support
             and has provided multiple sound projects</li>
 
         <li>Scott Kitts, who helped debug the new communications
