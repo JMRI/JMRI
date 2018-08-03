@@ -56,7 +56,7 @@ public class CbusTurnoutTest {
     @Test
     public void testLongEventSingleNoN() {
         CbusTurnout t = new CbusTurnout("MT","+654e321",new TrafficControllerScaffold());
-        Assert.assertNotNull("exists",t)
+        Assert.assertNotNull("exists",t);
     }    
 
 
