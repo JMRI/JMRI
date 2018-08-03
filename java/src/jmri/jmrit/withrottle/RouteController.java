@@ -73,7 +73,7 @@ public class RouteController extends AbstractController implements PropertyChang
                 Route r = manager.getBySystemName(rName);
                 if (r != null) {
                     r.setRoute();
-                    log.debug("Route '{}' set.");
+                    log.debug("Route '{}' set.", rName);
                 } else {
                     String msg = Bundle.getMessage("ErrorRouteNotDefined", rName);                        
                     log.warn(msg);
