@@ -863,10 +863,14 @@ public class ProfileManager extends Bean {
         if (ProfileManager.getDefault().getActiveProfile() == null) {
             ProfileManager.getDefault().readActiveProfile();
             // Automatically start with only profile if only one profile
-            Profile profile;
-            if ((ProfileManager.getDefault().getProfiles().length == 1) 
-                && ((profile = ProfileManager.getDefault().getProfiles(0)) != null)) {
-                ProfileManager.getDefault().setActiveProfile(profile);
+            if (ProfileManager.getDefault().getProfiles().length == 1) {
+                Profile profile = ProfileManager.getDefault().getProfiles(0);
+                if (profile != null) {
+                    ProfileManager.getDefault().setActiveProfile(profile);
+                } else {
+                    log.error("profile is null");
+                    throw new RuntimeException("profile is null");
+                }
                 // Display profile selector if user did not choose to auto start with last used profile
             } else if (!ProfileManager.getDefault().isAutoStartActiveProfile()) {
                 return null;
