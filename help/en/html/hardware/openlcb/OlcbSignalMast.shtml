@@ -33,11 +33,6 @@
 
       <h2>OpenLCB Signal Masts</h2>
 
-      <p>JMRI's general approach is to support as many hardware
-      combinations as possible. By supporting as many people and
-      their hardware desires as possible, we can create a growing
-      community of developers, hence more code.</p>
-
       <p>There's also a separate <a href="SignalMast.pdf">technical summary</a> as a 
       <a href="SignalMast.pdf">PDF document</a>.
       
@@ -74,7 +69,7 @@
       <ul>
       <li>"This Mast can be unlit" - same as for other mast types, this tells the signal logic
             that it's OK for this mast to be unlit (set to dark).
-      <li>A scrolling set of aspects to configure:  For each one, enter tne OpenLCB EventID 
+      <li>A scrolling set of aspects to configure:  For each one, enter the OpenLCB EventID 
             that sets the mast to this aspect. You can use any of the 
             <a href="Names.shtml">EventID formats that JMRI understands</a>
             such as "x1234567890ABCDEF" or "00.01.02.03.04.05.06.07" or "0.1.2.3.4.5.6.7".  
