@@ -243,7 +243,7 @@ public class ProfileManager extends Bean {
         this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
     }
 
-    protected void saveActiveProfile(@CheckForNull Profile profile, boolean autoStart) throws IOException {
+    protected void saveActiveProfile(@Nonnull Profile profile, boolean autoStart) throws IOException {
         Properties p = new Properties();
         FileOutputStream os = null;
         File config = this.getConfigFile();
@@ -252,11 +252,15 @@ public class ProfileManager extends Bean {
             log.debug("No config file defined, not attempting to save active profile.");
             return;
         }
-        if (profile != null) {
-            p.setProperty(ACTIVE_PROFILE, profile.getId());
-            p.setProperty(AUTO_START, Boolean.toString(autoStart));
-            p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
+        if (profile == null) {
+            log.error("profile is null");
+            throw new IllegalArgumentException("profile is null");
         }
+        
+        p.setProperty(ACTIVE_PROFILE, profile.getId());
+        p.setProperty(AUTO_START, Boolean.toString(autoStart));
+        p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
+        
         if (!config.exists() && !config.createNewFile()) {
             throw new IOException("Unable to create file at " + config.getAbsolutePath()); // NOI18N
         }
