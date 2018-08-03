@@ -47,6 +47,7 @@ class Diesel3Sound extends EngineSound {
     AudioBuffer start_buffer;
     AudioBuffer stop_buffer;
     AudioBuffer transition_buf;
+    int top_speed;
     float engine_rd;
     float engine_gain;
 
@@ -153,7 +154,17 @@ class Diesel3Sound extends EngineSound {
         //log.debug("Diesel EngineSound: {}", e.getAttribute("name").getValue());
         _soundName = this.getName() + ":LoopSound";
         log.debug("get name: {}, soundName: {}, name: {}", this.getName(), _soundName, name);
-        notch_sounds = new HashMap<Integer, D3Notch>();
+
+        // Optional value
+        in = e.getChildText("top-speed");
+        if (in != null) {
+            top_speed = Integer.parseInt(in);
+        } else {
+            top_speed = 0; // default
+        }
+        log.debug("top speed forward: {} MPH", top_speed);
+
+        notch_sounds = new HashMap<>();
         in = e.getChildText("idle-notch");
         Integer idle_notch = null;
         if (in != null) {

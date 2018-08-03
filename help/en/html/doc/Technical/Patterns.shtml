@@ -213,6 +213,8 @@
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
+      <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.html">SignalMastAddPane</a></dt>
+        <dd>Provide a type-specific pane used to add/edit the information in a SignalMast concrete object</dd>
       <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
       <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html">WebManifest</a></dt>
@@ -228,6 +230,14 @@
       JMRI then packages those into the appropriate level of <code>jmri.jar</code> file, 
       where they will eventually be found and acted on.</p>
       
+      <p>
+      To access them:
+<pre style="font-family: monospace;">
+            java.util.ServiceLoader.load(OurServiceClass.class).forEach((ourServiceObject) -> {
+                 // access the service object via ourServiceObject
+            });
+</pre>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

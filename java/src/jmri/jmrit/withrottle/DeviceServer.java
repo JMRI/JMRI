@@ -307,24 +307,24 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             switch (inPackage.charAt(1)) {
                                 case 'P': {
                                     if (isTrackPowerAllowed) {
-                                        trackPower.handleMessage(inPackage.substring(2));
+                                        trackPower.handleMessage(inPackage.substring(2), this);
                                     }
                                     break;
                                 }
                                 case 'T': {
                                     if (isTurnoutAllowed) {
-                                        turnoutC.handleMessage(inPackage.substring(2));
+                                        turnoutC.handleMessage(inPackage.substring(2), this);
                                     }
                                     break;
                                 }
                                 case 'R': {
                                     if (isRouteAllowed) {
-                                        routeC.handleMessage(inPackage.substring(2));
+                                        routeC.handleMessage(inPackage.substring(2), this);
                                     }
                                     break;
                                 }
                                 default:
-                                    log.warn("Unhandled code: {}", inPackage.charAt(1));
+                                    log.warn("Unhandled code: {}", inPackage.charAt(1), this);
                                     break;
                             }
                             break;
@@ -334,7 +334,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             switch (inPackage.charAt(1)) {
                                 case 'C':
                                     if (isConsistAllowed) {
-                                        consistC.handleMessage(inPackage.substring(2));
+                                        consistC.handleMessage(inPackage.substring(2), this);
                                     }
                                     break;
                                 default:
@@ -619,6 +619,27 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             log.debug("Sent: " + s + "  to  " + getName() + device.getRemoteSocketAddress());
         }
     }
+    /**
+     * Send an Alert message (simple text string) to this client
+     * <p>
+     * @param message 
+     * Format: HMmessage
+     */
+    public void sendAlertMessage(String message) {        
+        sendPacketToDevice("HM" + message);
+    }
+
+    /**
+     * Send an Info message (simple text string) to this client
+     * <p>
+     * @param message 
+     * Format: Hmmessage
+     */
+    public void sendInfoMessage(String message) {
+        sendPacketToDevice("Hm" + message);
+    }
+   
+    
 
     /**
      * Add a DeviceListener
