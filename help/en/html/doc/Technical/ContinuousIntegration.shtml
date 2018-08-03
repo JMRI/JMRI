@@ -103,6 +103,10 @@
       "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>,
       also known as <a href=
       "http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>.
+      Because it's hosted outside the US, we force its
+      Java locale to US English by setting the 
+      <code>LC_ALL</code> environment variable to
+      <code>en_US</code> in the master Jenkins configuration settings.
       
       <!-- We previously had an engine at <a href=
       "https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
