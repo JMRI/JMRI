@@ -16,32 +16,33 @@ import org.slf4j.LoggerFactory;
  * type, horsepower rating, length, and weight that is kept here. The program provides
  * some default models for the user. These values can be overridden by the user.
  * <ul>
- * <li>Model Horsepower Length Weight Type
+ * <li>Model Horsepower Length Weight Type</li>
  *
- * <li>E8 2250 70 150 Diesel
- * <li>FT 1350 50 115 Diesel
- * <li>F3 1500 50 115 Diesel
- * <li>F7 1500 50 115 Diesel
- * <li>F9 1750 50 115 Diesel
- * <li>GP20 2000 56 120 Diesel
- * <li>GP30 2250 56 130 Diesel
- * <li>GP35 2500 56 130 Diesel
- * <li>GP38 2000 59 125 Diesel
- * <li>GP40 3000 59 122 Diesel
- * <li>RS1 1000 51 124 Diesel
- * <li>RS2 1500 52 115 Diesel
- * <li>RS3 1600 51 114 Diesel
- * <li>RS11 1800 53 125 Diesel
- * <li>RS18 1800 52 118 Diesel
- * <li>RS27 2400 57 132 Diesel
- * <li>RSD4 1600 52 179 Diesel
- * <li>SD26 2650 61 164 Diesel
- * <li>SD45 3600 66 195 Diesel
- * <li>SW1200 1200 45 124 Diesel
- * <li>SW1500 1500 45 124 Diesel
- * <li>SW8 800 44 115 Diesel
- * <li>TRAINMASTER 2400 66 188 Diesel
- * <li>U28B 2800 60 126 Diesel
+ * <li>E8 2250 70 150 Diesel</li>
+ * <li>FT 1350 50 115 Diesel</li>
+ * <li>F3 1500 50 115 Diesel</li>
+ * <li>F7 1500 50 115 Diesel</li>
+ * <li>F9 1750 50 115 Diesel</li>
+ * <li>GP20 2000 56 120 Diesel</li>
+ * <li>GP30 2250 56 130 Diesel</li>
+ * <li>GP35 2500 56 130 Diesel</li>
+ * <li>GP38 2000 59 125 Diesel</li>
+ * <li>GP40 3000 59 122 Diesel</li>
+ * <li>RS1 1000 51 124 Diesel</li>
+ * <li>RS2 1500 52 115 Diesel</li>
+ * <li>RS3 1600 51 114 Diesel</li>
+ * <li>RS11 1800 53 125 Diesel</li>
+ * <li>RS18 1800 52 118 Diesel</li>
+ * <li>RS27 2400 57 132 Diesel</li>
+ * <li>RSD4 1600 52 179 Diesel</li>
+ * <li>SD26 2650 61 164 Diesel</li>
+ * <li>SD45 3600 66 195 Diesel</li>
+ * <li>SW1200 1200 45 124 Diesel</li>
+ * <li>SW1500 1500 45 124 Diesel</li>
+ * <li>SW8 800 44 115 Diesel</li>
+ * <li>TRAINMASTER 2400 66 188 Diesel</li>
+ * <li>U28B 2800 60 126 Diesel</li>
+ * </ul>
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
