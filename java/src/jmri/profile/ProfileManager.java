@@ -120,6 +120,15 @@ public class ProfileManager extends Bean {
     }
 
     /**
+     * Returns true if the manager has an active profile.
+     *
+     * @return true if the manager has an active profile
+     */
+    public boolean hasActiveProfile() {
+        return (activeProfile != null);
+    }
+
+    /**
      * Get the {@link Profile} that is currently in use.
      *
      * @return the in use Profile or null if there is no Profile in use
@@ -860,7 +869,7 @@ public class ProfileManager extends Bean {
      */
     @CheckForNull
     public static Profile getStartingProfile() throws IOException {
-        if (ProfileManager.getDefault().getActiveProfile() == null) {
+        if (!ProfileManager.getDefault().hasActiveProfile()) {
             ProfileManager.getDefault().readActiveProfile();
             // Automatically start with only profile if only one profile
             if (ProfileManager.getDefault().getProfiles().length == 1) {
