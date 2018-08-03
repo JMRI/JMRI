@@ -38,7 +38,7 @@ public class CbusLight extends AbstractLight
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            log.warn("CbusLight Did not find usable system name: " + address);
+            log.error("Did not find usable system name: " + address);
             return;
         }
         switch (v.length) {
@@ -51,7 +51,7 @@ public class CbusLight extends AbstractLight
                 } else if (address.startsWith("-")) {
                     addrOff = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.warn("CbusLight can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname " + address);
                     return;
                 }
                 break;
@@ -60,7 +60,7 @@ public class CbusLight extends AbstractLight
                 addrOff = v[1];
                 break;
             default:
-                log.error("CbusLight Can't parse system name: " + address);
+                log.error("Can't parse CbusSensor system name: " + address);
                 return;
         }
         // connect

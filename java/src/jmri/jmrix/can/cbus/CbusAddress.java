@@ -4,8 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling CBUS addresses.
@@ -48,23 +46,20 @@ public class CbusAddress {
 
     /**
      * Construct from string without leading system or type letters
-     * but with leading + on split events
      */
     public CbusAddress(String s) {
         aString = s;
-        // log.debug("58 aString  is {}  ", aString);
         // now parse
         match = hCode.reset(aString).matches();
         if (match) {
             if (hCode.group(1) != null) {
-                // log.debug("CbusAddress hCode group1 hit on +/-ddd");
+                // hit on +/-ddd
                 aFrame = new int[5];
 
                 int n = Integer.parseInt(aString.substring(1, aString.length()));  // skip +/-
                 int node = n / NODEFACTOR;
                 int event = n % NODEFACTOR;
 
-                // log.debug("CbusAddress n  is {} node is {} event is {} ", n, node, event);
                 aFrame[4] = event & 0xff;
                 aFrame[3] = (event >> 8) & 0xff;
                 aFrame[2] = node & 0xff;
@@ -126,10 +121,6 @@ public class CbusAddress {
             }
         } else {
             // no match, leave match false and aFrame null
-            // does not pick up +N123E456;-N123E456
-            log.debug("129 no match for {} ", s );
-            
-            
         }
     }
 
@@ -231,7 +222,6 @@ public class CbusAddress {
     public CbusAddress[] split() {
         // reject strings ending in ";"
         if (aString.endsWith(";")) {
-            log.warn(" String ends with ; ");
             return null;
         }
 
@@ -278,71 +268,4 @@ public class CbusAddress {
         return retval;
     }
 
-    
-    
-    public static String CbusPreParseEvent(String psn, String storl) {
-        
-        // allows users to enter common events without leading +
-        // however saves them with the leading + so duplicates etc. can be spotted
-        // log.debug("281 New Parsing start psn {} ", psn);
-        // psn= hardware address to parse
-        psn=psn.toUpperCase();
-        psn=psn.substring(psn.lastIndexOf(storl) + 1); // strip the string to everything left of and including the T, leaving just the hardware
-        
-        // log.debug("286 after system + T check psn is {} ", psn);
-        
-        int unsigned = 0;
-            try {
-                unsigned = Integer.valueOf(psn); // on unsigned integer, will add "+" next
-            } catch (NumberFormatException ex) {
-                // already warned
-            }
-            if (unsigned > 0 && !psn.startsWith("+")) {
-                psn = "+" + psn;
-            }
-        
-        if ( psn.length() == 1 ) {
-            psn= "+" + psn;
-            log.error("300 SHOULD ALREADY HAVE BEEN DONE BY ABOVE");
-        }
-        
-        log.warn("309 unsigned is {} ", unsigned);
-        
-        if (psn.contains(";") && (!psn.endsWith(";"))) {
-            // log.debug ("304 New Parsing psn {} ", psn);
-            
-            String[] vstring = psn.split("\\;");        
-            String partone = vstring[0];
-            String parttwo = vstring[1];
-
-            if (partone.startsWith("+")|partone.startsWith("-")|partone.startsWith("X")) {
-                // partone =  new CbusAddress(partone);
-            } else {
-                partone = "+" + partone;
-            }
-            
-            if (parttwo.startsWith("+")|parttwo.startsWith("-")|parttwo.startsWith("X")) {
-                // parttwo =  new CbusAddress(parttwo);
-            } else {
-                parttwo = "+" + parttwo;
-            }
-            psn = partone + ";" + parttwo;
-            // log.warn("104 new psn is {}  ", psn);
-        }
-        
-        if ((!psn.contains(";")) && (psn.contains("E")) && (!psn.startsWith("+")) && (!psn.startsWith("-"))) {
-            // supposed to convert inputs like N123E456 
-            psn = "+" + psn;
-        }
-        
-        
-
-       // log.debug ("325 preParseEvent new psn {} ", psn);
-
-        return psn;
-    } 
-    
-    
-    private static final Logger log = LoggerFactory.getLogger(CbusAddress.class);
-    
 }

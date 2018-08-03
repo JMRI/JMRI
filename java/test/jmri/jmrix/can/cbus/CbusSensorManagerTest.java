@@ -4,15 +4,11 @@ import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Ignore;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
@@ -32,7 +28,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     @Override
     public void testCreate() {
-        Assert.assertNotNull("createsSensor", l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
+        Assert.assertNotNull("creaesSensor", l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
     }
 
     @Test
@@ -92,6 +88,4 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);
-    
 }

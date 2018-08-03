@@ -55,7 +55,7 @@ public class CbusMessage {
     }
 
     public static int getEventType(CanMessage m) {
-        if ((m.getElement(0) == 0x91) || (m.getElement(0) == 0x99)) {
+        if ((m.getElement(0) & 1) == 1) {
             return CbusConstants.EVENT_OFF;
         } else {
             return CbusConstants.EVENT_ON;
@@ -63,8 +63,7 @@ public class CbusMessage {
     }
 
     public static boolean isEvent(CanMessage m) {
-        if ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91)
-         || (m.getElement(0) == 0x98) || (m.getElement(0) == 0x99)) {
+        if ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91)) {
             return true;
         } else {
             return false;
@@ -176,7 +175,7 @@ public class CbusMessage {
     }
 
     public static int getEventType(CanReply r) {
-        if ((r.getElement(0) == 0x91) || (r.getElement(0) == 0x99)) {
+        if ((r.getElement(0) & 1) == 1) {
             return CbusConstants.EVENT_OFF;
         } else {
             return CbusConstants.EVENT_ON;
@@ -184,8 +183,7 @@ public class CbusMessage {
     }
 
     public static boolean isEvent(CanReply r) {
-        if ((r.getElement(0) == 0x90) || (r.getElement(0) == 0x91)
-         || (r.getElement(0) == 0x98) || (r.getElement(0) == 0x99)) {
+        if ((r.getElement(0) == 0x90) || (r.getElement(0) == 0x91)) {
             return true;
         } else {
             return false;
