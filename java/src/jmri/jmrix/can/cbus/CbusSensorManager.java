@@ -43,6 +43,12 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
+        
+        
+        
+        // log.warn("49 system prefix is {} ", getSystemPrefix());
+        
+        
         // first, check validity
         try {
             validateSystemNameFormat(addr);
@@ -56,9 +62,10 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
                 addr = "+" + addr;
             }
         } catch (NumberFormatException ex) {
-            log.debug("Unable to convert {} into Cbus format +nn", addr);
+            log.warn("65 Unable to convert {} into Cbus format +nn", addr);
         }
 
+        log.warn("68 about to create addr which should lead with + or - in front {} ", addr);
         // OK, make
         Sensor s = new CbusSensor(getSystemPrefix(), addr, memo.getTrafficController());
         s.setUserName(userName);
@@ -89,13 +96,14 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         // always return this (the current) name without change
-        try {
+        
+         try {
             validateSystemNameFormat(curAddress);
-        } catch (IllegalArgumentException ex) {
+         } catch (IllegalArgumentException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
-        }
+         }
         return curAddress;
     }
 
@@ -105,7 +113,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.debug("Warning: " + e.getMessage());
+            log.warn("Warning: " + e.getMessage());
             return NameValidity.INVALID;
         }
         return NameValidity.VALID;
@@ -130,12 +138,12 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
                 try {
                     unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
-                    log.debug("Unable to convert {} into Cbus format +nn", address);
+                    log.warn("141 Unable to convert {} into Cbus format +nn", address);
                 }
                 if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
-                throw new IllegalArgumentException("can't make 2nd event from address " + address);
+                throw new IllegalArgumentException("cannot make 2nd event from address " + address);
             case 2:
                 break;
             default:

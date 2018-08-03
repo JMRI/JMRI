@@ -53,7 +53,7 @@ public class CbusLightManager extends AbstractLightManager {
                 addr = "+" + addr;
             }
         } catch (NumberFormatException ex) {
-            log.debug("Unable to convert " + addr + " into Cbus format +nn");
+            log.warn("createNewLight Unable to convert " + addr + " into Cbus format +nn");
         }
         Light l = new CbusLight(getSystemPrefix(), addr, memo.getTrafficController());
         l.setUserName(userName);
@@ -85,13 +85,14 @@ public class CbusLightManager extends AbstractLightManager {
         return getSystemPrefix() + typeLetter() + curAddress;
     }
 
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(String curAddress, String prefix) {
         // always return this (the current) name without change
-        try {
-            validateSystemNameFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
-        }
+        
+        // try {
+        //    validateSystemNameFormat(curAddress);
+        // } catch (IllegalArgumentException e) {
+        //    throw new JmriException(e.toString());
+        // }
         return curAddress;
     }
 
@@ -101,7 +102,7 @@ public class CbusLightManager extends AbstractLightManager {
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.debug("Warning: " + e.getMessage());
+            log.warn("Warning: " + e.getMessage());
             return NameValidity.INVALID;
         }
         return NameValidity.VALID;
@@ -118,7 +119,7 @@ public class CbusLightManager extends AbstractLightManager {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus light address");
+            throw new IllegalArgumentException("122 Did not find usable hardware address: " + address + " for a valid Cbus light address");
         }
         switch (v.length) {
             case 1:
@@ -126,16 +127,16 @@ public class CbusLightManager extends AbstractLightManager {
                 try {
                     unsigned = Integer.valueOf(address).intValue(); // on unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
-                    log.debug("Unable to convert " + address + " into Cbus format +nn");
+                    log.warn("130 Unable to convert {} into Cbus format +nn", address);
                 }
                 if (address.startsWith("+") || address.startsWith("-") || unsigned > 0) {
                     break;
                 }
-                throw new IllegalArgumentException("can't make 2nd event from address " + address);
+                throw new IllegalArgumentException("135 cannot make 2nd event from address " + address);
             case 2:
                 break;
             default:
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+                throw new IllegalArgumentException("139 Wrong number of events in address: " + address);
         }
     }
 
@@ -145,7 +146,7 @@ public class CbusLightManager extends AbstractLightManager {
         try {
             validateSystemNameFormat(addr);
         } catch (IllegalArgumentException e){
-            log.debug("Warning: " + e.getMessage());
+            log.warn("Warning: " + e.getMessage());
             return false;
         }
         return true;

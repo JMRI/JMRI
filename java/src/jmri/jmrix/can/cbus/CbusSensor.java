@@ -37,7 +37,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v == null) {
-            log.error("Did not find usable system name: " + address);
+            log.warn("40 Did not find usable system name: {} ", address);
             return;
         }
         switch (v.length) {
@@ -50,7 +50,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 } else if (address.startsWith("-")) {
                     addrInactive = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.warn("53 cannot make 2nd event from systemname {} ", address);
                     return;
                 }
                 break;
@@ -59,7 +59,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 addrInactive = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
+                log.warn("Can't parse CbusSensor system name: {} ", address);
                 return;
         }
         // connect

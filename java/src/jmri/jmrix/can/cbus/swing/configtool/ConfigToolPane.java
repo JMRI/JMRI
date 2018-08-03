@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Pane for user creation of Sensor, Turnouts and Lights (?) that are linked to CBUS
+ * Pane for user creation of Sensor, Turnouts and Lights that are linked to CBUS
  * events.
  *
  * @author Bob Jacobsen Copyright (C) 2008
@@ -57,8 +57,8 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             @Override
             void create(String name) {
                 if (memo != null) {
-                    ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
-                    // provideSensor does not yet add the conn prefix + S
+                    ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor(name);
+                    // auto adds the conn. prefix + S
                 } else {
                     InstanceManager.sensorManagerInstance().provideSensor("MS" + name); // S for Sensor
                 }

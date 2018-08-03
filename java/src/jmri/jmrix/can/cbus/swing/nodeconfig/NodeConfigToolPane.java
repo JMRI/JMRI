@@ -13,6 +13,9 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Pane for setting node configuration.
  * <p>
@@ -50,12 +53,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     public NodeConfigToolPane() {
         super();
 
+        
+        
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        
         JPanel p1;
+        
 
         // get event number
         p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        
+        
         p1.add(new JLabel(Bundle.getMessage("LabelNodeNumber")));
 
         numberSpinner = new JSpinner(new SpinnerNumberModel(256, 256, 1000000, 1));
@@ -143,5 +152,5 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigToolPane.class);
 }

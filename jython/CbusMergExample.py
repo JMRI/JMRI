@@ -7,8 +7,15 @@
 # Part of the JMRI distribution
 
 import jmri
-
 import java
+import javax.swing
+
+
+
+
+
+
+
 
 
 print "hello"
@@ -28,7 +35,7 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     def reply(self, msg) :
         print "received Frame"
-        print "ID: 0x"+java.lang.Integer.toHexString(msg.getHeader())
+        print "Sender CAN ID: 0x"+java.lang.Integer.toHexString(msg.getHeader())
         print "content: ", msg.toString()
         print "..................................................................................."
         return
@@ -52,12 +59,18 @@ tc.addCanListener(MyCanListener())
 
 
 # Send a frame
-frame = jmri.jmrix.can.CanMessage(tc.getCanid())
+frame = jmri.jmrix.can.CanMessage(tc.getCanid()) # use the CAN ID of the MERG connection, 120-127
+
+frame.setNumDataElements(5)   # will load opscode + 4 bytes
+
+frame.setElement(0, CbusConstants.CBUS_ACON);
+frame.setElement(1, 00)  # node number 1st half of 4 byte hex string
+frame.setElement(2, 01)  # node number 2nd half hex
+frame.setElement(3, 00)  # event number 1st half hex
+frame.setElement(4, 18)  # event number 2nd half hex
 
 
-frame.setNumDataElements(2)   # will load 2 bytes
-frame.setElement(0, 0x45)
-frame.setElement(1, 0x67)
+
 if tc != None:
   tc.sendCanMessage(frame, None)
   print "CAN frame sent!"

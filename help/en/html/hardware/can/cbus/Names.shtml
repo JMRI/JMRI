@@ -44,11 +44,7 @@
       
       <h2><a name="events" id="events">Event Name and Numbering</a></h2>
       
-            
-      
         <h3>Event Conventions</h3>
-
-
 
             <p>Suggestion from Mike Bolton : <br>
             His club has adopted the convention of 1 to 9999 for turnouts 
@@ -74,8 +70,7 @@
             
             
             
-            <p>Another use of event segmentation could be for modular club layouts, 
-            
+            <p>Another use of event segmentation could be for modular club layouts,
             where various club members building a section at home, 
             then bringing it together into 1 big super layout.
             <br>
@@ -107,36 +102,16 @@
         startup for a TD to cross-session.
         </p>      
       
-      <h3><a name="automatic" id="automatic">Sensors - JMRI Automatic Creation</a></h3>
-
-        <p>JMRI automatically attempts to create Sensor objects from
-        the traffic that it hears on the MERGCBUS network.</p>
-        <p>When JMRI hears an ON
-        or OFF event, it creates a Sensor using the
-        corresponding event ID.</p>
-        <p>This automatically-created sensor
-        defaults to the ON event setting the Sensor ACTIVE and the
-        OFF event setting INACTIVE.</p>
-    
-        <p>Because events are not intrinsically associated with
-        specific hardware objects, and because people can use event
-        IDs in many ways, this doesn't do what's desired.</p>
-        <p>When it
-        doesn't, you can manually create the proper Sensors using the
-        <a href=
-        "../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
-        Add...</a> button on the <a href=
-        "../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
-        Table</a>.</p>
-    
-        <p>Note that there's a <a href=
-        "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
-        MERGCBUS Event Capture Tool</a>. </p>
-      
-      
-      
       <h2><a name="sysname" id="sysname">System Names</a></h2>
 
+      
+       <p>Note that there's a <a href=
+        "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
+        MERGCBUS Event Capture Tool</a> to assist you setting up Sensors, turnouts and Lights from events.</p>
+      
+      
+      
+      
      <p>When adding an item to your JMRI
      
            <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>,

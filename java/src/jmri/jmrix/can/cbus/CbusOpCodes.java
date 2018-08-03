@@ -162,16 +162,16 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_QCVS, "Read CV (QCVS) Session:,%1, CV:,%2, Mode:,%1");
         result.put(CbusConstants.CBUS_PCVS, "Report CV (PCVS) Session:,%1, CV:,%2, Data:,%1");
 
-        result.put(CbusConstants.CBUS_ACON, "Accessory ON (ACON) NN:,%2, EN:,%2");
-        result.put(CbusConstants.CBUS_ACOF, "Accessory OFF (ACOF) NN:,%2, EN:,%2");
+        result.put(CbusConstants.CBUS_ACON, "Long Event On (ACON) NN:,%2, EN:,%2");
+        result.put(CbusConstants.CBUS_ACOF, "Long Event Off (ACOF) NN:,%2, EN:,%2");
         result.put(CbusConstants.CBUS_AREQ, "Accessory Request (AREQ) NN:,%2, EN:,%2");
         result.put(CbusConstants.CBUS_ARON, "Accessory Response ON (ARON) [NN:,%2,] EN:,%2");
         result.put(CbusConstants.CBUS_AROF, "Accessory Response OFF (AROF) [NN:,%2,] EN:,%2");
         result.put(CbusConstants.CBUS_EVULN, "Unlearn Event (EVULN) NN:,%2 EN:,%2");
         result.put(CbusConstants.CBUS_NVSET, "Set Node Variable (NVSET) NN:,%2 NV:,%1, VAL:,%1");
         result.put(CbusConstants.CBUS_NVANS, "Returned Node Variable (NVANS) NN:,%2 NV:,%1 VAL:,%1");
-        result.put(CbusConstants.CBUS_ASON, "Accessory Short ON (ASON) NN:,%2, DN:,%2");
-        result.put(CbusConstants.CBUS_ASOF, "Accessory Short OFF (ASOF) NN:,%2, DN:,%2");
+        result.put(CbusConstants.CBUS_ASON, "Short Event On (ASON) NN:,%2, DN:,%2");
+        result.put(CbusConstants.CBUS_ASOF, "Short Event Off (ASOF) NN:,%2, DN:,%2");
         result.put(CbusConstants.CBUS_ASRQ, "Accessory Short Request (ASRQ) NN:,%2, DN:,%2");
         result.put(CbusConstants.CBUS_PARAN, "Accessory Short Request (PARAN) NN:,%2, Para:,%1, Val:,%1");
         result.put(CbusConstants.CBUS_REVAL, "Accessory Short Request (REVAL) NN:,%2, EN:,%1, EV:,%1");

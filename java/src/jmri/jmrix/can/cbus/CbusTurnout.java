@@ -5,6 +5,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +35,15 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      *
      */
     private void init(String address) {
+        // log.debug("37 address : {} should have leading + or - for normal event", address);
         // build local addresses
         CbusAddress a = new CbusAddress(address);
+        // log.debug("40 a : {} ", a);
         CbusAddress[] v = a.split();
         if (v == null) {
-            log.error("Did not find usable system name: " + address);
-            return;
+            // throw exception same as other turnout hardwares, should have been filtered by the turnout manager?
+            throw new IllegalArgumentException("45 Turnout value: " + address 
+                    + " not a usable system name.");
         }
         switch (v.length) {
             case 1:
@@ -51,22 +55,29 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 } else if (address.startsWith("-")) {
                     addrClosed = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.warn("57 Cannot make 2nd event from systemname: {} ", address);
                     return;
                 }
                 break;
             case 2:
+                // log.debug ("61 The 2 part split is {} , {} ", v[0], v[1]);
                 addrThrown = v[0];
                 addrClosed = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
-                return;
+            throw new IllegalArgumentException("68 Turnout value: " + address 
+                    + " not a usable system name.");
         }
         // connect
         tc.addCanListener(this);
     }
 
+    // Cbus Turnouts do not currently support inversion
+    @Override
+    public boolean canInvert() {
+        return false;
+    }
+    
     /**
      * Handle a request to change state by sending CBUS events.
      *
