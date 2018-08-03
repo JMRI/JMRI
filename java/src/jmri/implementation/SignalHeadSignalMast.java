@@ -66,12 +66,14 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         // if "mast" contains (, it's new style
         if (mast.indexOf('(') == -1) {
             // old style
+            setMastType(mast);
             configureSignalSystemDefinition(system);
             configureAspectTable(system, mast);
             configureHeads(parts, 3);
         } else {
             // new style
             mast = mast.substring(0, mast.indexOf("("));
+            setMastType(mast);
             String interim = systemName.substring(prefix.length() + 1 + system.length() + 1);
             String parenstring = interim.substring(interim.indexOf("("), interim.length());
             java.util.List<String> parens = jmri.util.StringUtil.splitParens(parenstring);
