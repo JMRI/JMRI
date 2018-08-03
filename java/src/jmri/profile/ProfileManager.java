@@ -124,8 +124,11 @@ public class ProfileManager extends Bean {
      *
      * @return the in use Profile or null if there is no Profile in use
      */
-    @CheckForNull
     public Profile getActiveProfile() {
+        if (activeProfile == null) {
+            log.error("activeProfile is null");
+            throw new NullPointerException("activeProfile is null");
+        }
         return activeProfile;
     }
 
@@ -139,26 +142,25 @@ public class ProfileManager extends Bean {
      * @return the name of the active profile or null if there is no active
      *         profile
      */
-    @CheckForNull
     public String getActiveProfileName() {
-        return activeProfile != null ? activeProfile.getName() : null;
+        if (activeProfile == null) {
+            log.error("activeProfile is null");
+            throw new NullPointerException("activeProfile is null");
+        }
+        return activeProfile.getName();
     }
 
     /**
      * Set the {@link Profile} to use. This method finds the Profile by path or
      * Id and calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
-     * @param identifier the profile path or id; can be null
+     * @param identifier the profile path or id; must not be null
      */
-    public void setActiveProfile(@Nullable String identifier) {
+    public void setActiveProfile(@Nonnull String identifier) {
         // handle null profile
         if (identifier == null) {
-            Profile old = activeProfile;
-            activeProfile = null;
-            FileUtil.setProfilePath(null);
-            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
-            log.debug("Setting active profile to null");
-            return;
+            log.error("identifier is null");
+            throw new IllegalArgumentException("identifier is null");
         }
         // handle profile path
         File profileFile = new File(identifier);
@@ -193,14 +195,11 @@ public class ProfileManager extends Bean {
      *
      * @param profile the profile to activate
      */
-    public void setActiveProfile(@Nullable Profile profile) {
+    public void setActiveProfile(@Nonnull Profile profile) {
         Profile old = activeProfile;
         if (profile == null) {
-            activeProfile = null;
-            FileUtil.setProfilePath(null);
-            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
-            log.debug("Setting active profile to null");
-            return;
+            log.error("profile is null");
+            throw new IllegalArgumentException("profile is null");
         }
         activeProfile = profile;
         FileUtil.setProfilePath(profile.getPath().toString());
@@ -628,10 +627,11 @@ public class ProfileManager extends Bean {
     /**
      * Create a default profile if no profiles exist.
      *
-     * @return A new profile or null if profiles already exist
+     * @return A new profile if profile does not already exist
      * @throws java.io.IOException if unable to create a Profile
+     * @throws java.lang.RuntimeException if profile already exists
      */
-    @CheckForNull
+    @Nonnull
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
         if (this.getAllProfiles().isEmpty()) {
             String pn = Bundle.getMessage("defaultProfileName");
@@ -643,7 +643,10 @@ public class ProfileManager extends Bean {
             log.info("Created default profile \"{}\"", pn);
             return profile;
         } else {
-            return null;
+            // createDefaultProfile() should never be called if there already
+            // exists a profile
+            log.error("profile already exists");
+            throw new RuntimeException("profile already exists");
         }
     }
 
@@ -860,8 +863,10 @@ public class ProfileManager extends Bean {
         if (ProfileManager.getDefault().getActiveProfile() == null) {
             ProfileManager.getDefault().readActiveProfile();
             // Automatically start with only profile if only one profile
-            if (ProfileManager.getDefault().getProfiles().length == 1) {
-                ProfileManager.getDefault().setActiveProfile(ProfileManager.getDefault().getProfiles(0));
+            Profile profile;
+            if ((ProfileManager.getDefault().getProfiles().length == 1) 
+                && ((profile = ProfileManager.getDefault().getProfiles(0)) != null)) {
+                ProfileManager.getDefault().setActiveProfile(profile);
                 // Display profile selector if user did not choose to auto start with last used profile
             } else if (!ProfileManager.getDefault().isAutoStartActiveProfile()) {
                 return null;
