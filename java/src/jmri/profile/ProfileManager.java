@@ -362,7 +362,11 @@ public class ProfileManager extends Bean {
      * @param profile the Profile to set
      * @param index   the index to set; any existing profile at index is removed
      */
-    public void setProfiles(Profile profile, int index) {
+    public void setProfiles(@Nonnull Profile profile, int index) {
+        if (profile == null) {
+            log.error("profile is null");
+            throw new IllegalArgumentException("profile is null");
+        }
         Profile oldProfile = profiles.get(index);
         if (!this.readingProfiles) {
             profiles.set(index, profile);
@@ -371,6 +375,10 @@ public class ProfileManager extends Bean {
     }
 
     protected void addProfile(@Nonnull Profile profile) {
+        if (profile == null) {
+            log.error("profile is null");
+            throw new IllegalArgumentException("profile is null");
+        }
         if (!profiles.contains(profile)) {
             profiles.add(profile);
             if (!this.readingProfiles) {
@@ -393,6 +401,10 @@ public class ProfileManager extends Bean {
     }
 
     protected void removeProfile(@Nonnull Profile profile) {
+        if (profile == null) {
+            log.error("profile is null");
+            throw new IllegalArgumentException("profile is null");
+        }
         try {
             int index = profiles.indexOf(profile);
             if (index >= 0) {
@@ -776,6 +788,10 @@ public class ProfileManager extends Bean {
      *                                 Profile
      */
     public void export(@Nonnull Profile profile, @Nonnull File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
+        if (profile == null) {
+            log.error("profile is null");
+            throw new IllegalArgumentException("profile is null");
+        }
         if (!target.exists() && !target.createNewFile()) {
             throw new IOException("Unable to create file " + target);
         }
