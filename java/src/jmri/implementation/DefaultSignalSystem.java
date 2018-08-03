@@ -203,6 +203,27 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalSystem");
     }
+    
+    @Override
+    /**
+     * {@inheritDoc}
+     */
+    public String summary() {
+        StringBuilder retval = new StringBuilder();
+        retval.append(toString());
+        retval.append("\n  BeanType: "+getBeanType());
+        
+        retval.append("\n  keys:");
+        for (String key : keys) retval.append("\n    "+key);
+        
+        retval.append("\n  aspects:");
+        Enumeration<String> values = aspects.keys();
+        while (values.hasMoreElements()) retval.append("\n    "+values.nextElement());
+        
+        retval.append("\n  maximumLineSpeed = "+getMaximumLineSpeed());
+        
+        return new String(retval);
+    }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class);
 }

@@ -264,6 +264,18 @@ public class OlcbAddress {
         return retval;
     }
 
+    /**
+     * Provide as dotted pairs
+     */
+    public String toDottedString() {
+        String retval = "";
+        for (int i = 0; i < aFrame.length; i++) {
+            if (! retval.isEmpty()) retval += ".";
+            retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
+        }
+        return retval;
+    }
+
     public EventID toEventID() {
         byte[] b = new byte[8];
         for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];

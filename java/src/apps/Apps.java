@@ -1204,11 +1204,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     private void prepareFontLists() {
         // Prepare font lists
-        new Thread(() -> {
+        Thread fontThread = new Thread(() -> {
             log.debug("Prepare font lists...");
             FontComboUtil.prepareFontLists();
             log.debug("...Font lists built");
-        }, "PrepareFontListsThread").start();
+        }, "PrepareFontListsThread");
+        
+        fontThread.setDaemon(true);
+        fontThread.setPriority(Thread.MIN_PRIORITY);
+        fontThread.start();
     }
 
     @Override
