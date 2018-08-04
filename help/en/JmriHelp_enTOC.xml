@@ -525,6 +525,7 @@
   </tocitem>
   <tocitem text="OpenLCB " target="html.hardware.openlcb.index">
    <tocitem text="Names " target="html.hardware.openlcb.Names"/>
+   <tocitem text="Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
 
    <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 

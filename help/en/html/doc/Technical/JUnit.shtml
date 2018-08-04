@@ -845,11 +845,8 @@
       builds</a>, it's important that tests needing access to the screen start
       with:</p>
       <pre><code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></pre>
-      or
-      <pre><code>if (GraphicsEnvironment.isHeadless()) { return; }</code></pre><br>
-      if the Assume statement throws an exception.
 
-      <p>This will run the myTest suite of tests only when a
+      <p>This will run the test only when a
       display is available.</p>
 
       <p>GUI tests should close windows when they're done, and in
@@ -880,11 +877,10 @@
 
       <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
 
-      Recently, e.g. 2016, some tests have been developed
+      Recently, e.g. since 2016, some tests have been developed
       using the
-      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the Speedometer tests
-      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a>
-      for an example.
+      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the 
+      <a href="http://wiki.netbeans.org/Jemmy_Samples">samples on the NetBeans pages</a>.
       
       <p>
       For more information on Jemmy, please see the 
@@ -905,6 +901,25 @@
       <li>If an item contains its own text (Buttons, for example), it is recommended you use the text to search for a component.</li>
       <li>If an item does not contain its own description, but the GUI contains a JLabel describing that component, be certain the JLabel's LabelFor property is set.  A Jemmy JLabelOperator can then be used to find the label, and retrieve the object.</li>
       </ul>
+
+      <h4>Example of Closing a Dialog Box</h4>
+      If you want to test a method that pops a have a JDialog box with a title (in top bar of the dialog window)
+      of "Foo Warning" and an "OK" button to close it, put this in your JUnit test:
+<pre style="font-family: monospace;">
+        new Thread(() -> {
+            // constructor for d will wait until the dialog is visible
+            JDialogOperator d = new JDialogOperator("Foo Warning");
+            JButtonOperator bo = new JButtonOperator(d,"OK");
+            jmri.util.ThreadingUtil.runOnGUI(() -> {bo.push();});
+        }).start();
+        showTheDialog();
+</pre>
+      The thread is started before your code runs and starts Jemmy looking for the 
+      Dialog box.  Once it appears, Jemmy will push the "OK" button.  You 
+      can't put the Jemmy calls in advance: They'll wait forever for the dialog 
+      to appear, and never proceed to your code to show the dialog.  And you
+      can't put them after the call, because your call won't exist until somebody
+      presses "OK".
       
       <a id="jemmytimeout" name="jemmytimeout"></a>
       <h4>Jemmy timeouts</h4>
@@ -1156,7 +1171,7 @@ import org.junit.Test;
 </pre>
         </li>
 
-        <li>Finally, annotate the <code>setUp()</code> and
+        <li>Annotate the <code>setUp()</code> and
         <code>tearDown()</code> methods. Note: They have to be
         "public" methods, not "protected" or "private". They should
         end up looking like (plus your own content, of course):
@@ -1171,9 +1186,14 @@ import org.junit.Test;
           jmri.util.JUnitUtil.tearDown();
     }
 </pre>
-        <a name="super">Make sure no more references to the <code>super.</code></a>
+        <p><a name="super">Make sure no more references to the <code>super.</code></a>
         method remain in either setUp() or tearDown().
         Just remove those lines.
+        <p>A note on nesting:  If you have @Before and/or @After in both
+        a class and one its superclasses, they will be reliably invoked in 
+        the useful way:  First the @Before of the super class, then
+        the @Before of your class, then the test, then the @After of your class,
+        and finally the @After of the superclass.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was

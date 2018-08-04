@@ -1,7 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import java.util.*;
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 import jmri.CommandStation;
 import jmri.InstanceManager;
@@ -44,11 +44,10 @@ import org.slf4j.LoggerFactory;
  * <li>F$olm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>(123) - number distinguishing this from others
+ * <li>($123) - number distinguishing this from others
  * </ul>
  * <p>
- * EventIDs are returned in their CanonicalString form; using OlcbAddress.toString() instead
- * would return the format in which they were provided.
+ * EventIDs are returned in format in which they were provided.
  * <p>
  * To keep OpenLCB distributed state consistent, setAspect does not immediately
  * change the local aspect.  Instead, it produced the relevant EventId on the 
@@ -121,11 +120,13 @@ public class OlcbSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
-        String tmp = parts[2].substring(parts[2].indexOf("(") + 1, parts[2].indexOf(")"));
+        setMastType(mast);
+        String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")")); // +2 because we're looking for 2 characters
+        
         try {
             mastNumber = Integer.parseInt(tmp);
         } catch (NumberFormatException e) {
-            log.warn("Mast number of SystemName " + systemName + " is not in the correct format");
+            log.warn("Mast number of SystemName {} is not in the correct format: {} is not an integer", systemName, tmp);
         }
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
@@ -151,16 +152,20 @@ public class OlcbSignalMast extends AbstractSignalMast {
     int mastNumber; // used to tell them apart
     
     public void setOutputForAppearance(String appearance, String event) {
-        aspectMachine.setEventForState(appearance, new OlcbAddress(event).toEventID());
+        aspectMachine.setEventForState(appearance, event);
     }
 
+    public boolean isOutputConfigured(String appearance) {
+        return aspectMachine.getEventStringForState(appearance) != null;
+    }
+    
     public String getOutputForAppearance(String appearance) {
-        EventID retval = aspectMachine.getEventForState(appearance);
+        String retval = aspectMachine.getEventStringForState(appearance);
         if (retval == null) {
             log.error("Trying to get appearance " + appearance + " but it has not been configured");
             return "";
         }
-        return new OlcbAddress(retval).toString();
+        return retval;
     }
 
     @Override
@@ -229,53 +234,109 @@ public class OlcbSignalMast extends AbstractSignalMast {
         return heldMachine.getState();
     }
 
-    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
-    public String getLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
-    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.FALSE, new OlcbAddress(event).toEventID()); }
-    public String getNotLitEventId() { return new OlcbAddress(litMachine.getEventForState(Boolean.FALSE)).toCanonicalString(); }
+    /**
+     * Provide the last used sequence number
+     */
+    public static int getLastRef() {
+        return lastRef;
+    }
+    protected static volatile int lastRef = 0;
 
-    public void setHeldEventId(String event) { heldMachine.setEventForState(Boolean.TRUE, new OlcbAddress(event).toEventID()); }
-    public String getHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.TRUE)).toCanonicalString(); }
-    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.FALSE, new OlcbAddress(event).toEventID()); }
-    public String getNotHeldEventId() { return new OlcbAddress(heldMachine.getEventForState(Boolean.FALSE)).toCanonicalString(); }
+    public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, event); }
+    public String getLitEventId() { return litMachine.getEventStringForState(Boolean.TRUE); }
+    public void setNotLitEventId(String event) { litMachine.setEventForState(Boolean.FALSE, event); }
+    public String getNotLitEventId() { return litMachine.getEventStringForState(Boolean.FALSE); }
+
+    public void setHeldEventId(String event) { heldMachine.setEventForState(Boolean.TRUE, event); }
+    public String getHeldEventId() { return heldMachine.getEventStringForState(Boolean.TRUE); }
+    public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.FALSE, event); }
+    public String getNotHeldEventId() { return heldMachine.getEventStringForState(Boolean.FALSE); }
 
     
 
+    /**
+     * Implement a general state machine where state transitions are 
+     * associated with the production and consumption of specific events.
+     * There's a one-to-one mapping between transitions and events.
+     * EventID storage is via Strings, so that the user-visible 
+     * eventID string is preserved.
+     */
     static class StateMachine<T> extends org.openlcb.MessageDecoder {
-        public StateMachine(Connection connection, NodeID node, T start) {
+        public StateMachine(@Nonnull Connection connection, @Nonnull NodeID node, @Nonnull T start) {
             this.connection = connection;
             this.node = node;
-            if (start != null) this.state = start;
+            this.state = start;
         }
         
         Connection connection;
         NodeID node;
         T state;
         boolean initizalized = false;
-        protected HashMap<T, EventID> stateToEvent = new HashMap<>();
+        protected HashMap<T, String> stateToEventString = new HashMap<>();
+        protected HashMap<T, EventID> stateToEventID = new HashMap<>();
         protected HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
         
         public void setState(@Nonnull T newState) {
-            log.debug("sending PCER to {}", getEventForState(newState));
+            log.debug("sending PCER to {}", getEventStringForState(newState));
             connection.put(
-                    new ProducerConsumerEventReportMessage(node, getEventForState(newState)),
+                    new ProducerConsumerEventReportMessage(node, getEventIDForState(newState)),
                     null);
         }
+        
+        private final static EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
+        
+        @Nonnull
         public T getState() { return state; }
         
-        public void setEventForState(@Nonnull T key, @Nonnull EventID value) {
-            stateToEvent.put(key, value);
-            eventToState.put(value, key);
+        public void setEventForState(@Nonnull T key, @Nonnull String value) {
+            stateToEventString.put(key, value);
+
+            EventID eid = new OlcbAddress(value).toEventID();
+            stateToEventID.put(key, eid);
+            
+            // check for whether already there; so, we're done.
+            if (eventToState.get(eid) == null) {
+                // Not there yet, save it
+                eventToState.put(eid, key);
+            
+                if (! nullEvent.equals(eid)) { // and if not the null (i.e. not the "don't send") event
+                    // emit Producer, Consumer Identified messages to show our interest
+                    connection.put(
+                            new ProducerIdentifiedMessage(node, eid, EventState.Unknown),
+                            null);
+                    connection.put(
+                            new ConsumerIdentifiedMessage(node, eid, EventState.Unknown),
+                            null);
+
+                    // emit Identify Producer, Consumer messages to get distributed state
+                    connection.put(
+                            new IdentifyProducersMessage(node, eid),
+                            null);
+                    connection.put(
+                            new IdentifyConsumersMessage(node, eid),
+                            null);
+                }
+            }
         }
-        public EventID getEventForState(@Nonnull T key) {
-            return stateToEvent.get(key);
+        
+        @CheckForNull
+        public EventID getEventIDForState(@Nonnull T key) {
+            EventID retval = stateToEventID.get(key);
+            if (retval == null) retval = new EventID("00.00.00.00.00.00.00.00");
+            return retval;
+        }
+        @CheckForNull
+        public String getEventStringForState(@Nonnull T key) {
+            String retval = stateToEventString.get(key);
+            if (retval == null) retval = "00.00.00.00.00.00.00.00";
+            return retval;
         }
 
         /**
          * Internal method to determine the EventState for a reply
          * to an Identify* method
          */
-        EventState getEventState(EventID event) {
+        EventState getEventIDState(EventID event) {
             T value = eventToState.get(event);
             if (initizalized) {
                 if (value.equals(state)) {
@@ -292,7 +353,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
+        public void handleProducerConsumerEventReport(@Nonnull ProducerConsumerEventReportMessage msg, Connection sender){
             if (eventToState.containsKey(msg.getEventID())) {
                 initizalized = true;
                 state = eventToState.get(msg.getEventID());
@@ -302,7 +363,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
+        public void handleProducerIdentified(@Nonnull ProducerIdentifiedMessage msg, Connection sender){
             // process if for here and marked "valid"
             if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
                 initizalized = true;
@@ -313,7 +374,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
+        public void handleConsumerIdentified(@Nonnull ConsumerIdentifiedMessage msg, Connection sender){
             // process if for here and marked "valid"
             if (eventToState.containsKey(msg.getEventID()) && msg.getEventState() == EventState.Valid) {
                 initizalized = true;
@@ -325,7 +386,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyEvents(IdentifyEventsMessage msg, Connection sender){
+        public void handleIdentifyEvents(@Nonnull IdentifyEventsMessage msg, Connection sender){
             // ours?
             if (! node.equals(msg.getDestNodeID())) return;  // not to us
             sendAllIdentifiedMessages();
@@ -340,23 +401,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
             for (Map.Entry<EventID,T> entry : set) {
                 EventID event = entry.getKey();
                 connection.put(
-                    new ConsumerIdentifiedMessage(node, event, getEventState(event)),
+                    new ConsumerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
                 connection.put(
-                    new ProducerIdentifiedMessage(node, event, getEventState(event)),
-                    null);
-            }
-        }
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void handleIdentifyProducers(IdentifyProducersMessage msg, Connection sender){
-            // process if we have the event
-            EventID event = msg.getEventID();
-            if (eventToState.containsKey(event)) {
-                connection.put(
-                    new ProducerIdentifiedMessage(node, event, getEventState(event)),
+                    new ProducerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
             }
         }
@@ -364,12 +412,25 @@ public class OlcbSignalMast extends AbstractSignalMast {
          * {@inheritDoc}
          */
         @Override
-        public void handleIdentifyConsumers(IdentifyConsumersMessage msg, Connection sender){
+        public void handleIdentifyProducers(@Nonnull IdentifyProducersMessage msg, Connection sender){
             // process if we have the event
             EventID event = msg.getEventID();
             if (eventToState.containsKey(event)) {
                 connection.put(
-                    new ConsumerIdentifiedMessage(node, event, getEventState(event)),
+                    new ProducerIdentifiedMessage(node, event, getEventIDState(event)),
+                    null);
+            }
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void handleIdentifyConsumers(@Nonnull IdentifyConsumersMessage msg, Connection sender){
+            // process if we have the event
+            EventID event = msg.getEventID();
+            if (eventToState.containsKey(event)) {
+                connection.put(
+                    new ConsumerIdentifiedMessage(node, event, getEventIDState(event)),
                     null);
             }
         }

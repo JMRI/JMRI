@@ -93,6 +93,14 @@
       receiving them, and the type letter is "T" instead of "S",
       e.g. "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
 
+      <h4>Signals</h4>
+      
+      <p>OpenLCB connections can use many of the usual forms of 
+      SignalHeads and SignalMasts that are based on 
+      Turnouts.  In addition, there's an 
+      <a href="OlcbSignalMast.shtml">OpenLCB-specific form of SignalMast</a>
+      that uses Events to change from one aspect to another.
+
       <h3>Wiring</h3>
 
       <p>OpenLCB connection options are <a href=
