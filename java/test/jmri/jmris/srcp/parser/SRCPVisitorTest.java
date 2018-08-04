@@ -82,6 +82,7 @@ public class SRCPVisitorTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
