@@ -74,12 +74,12 @@ public class ProfileManagerTest {
         
         // non-existant profile
         pm.setActiveProfile("NonExistantId");
-        Assert.assertNull(pm.getActiveProfile());
+        Assert.assertFalse(pm.hasActiveProfile());
         JUnitAppender.assertWarnMessage("Unable to set active profile.  No profile with id NonExistantId could be found.");
         // existant non-profile directory (real directory, but no profile)
         String folderName = folder.newFolder("non-profile").getAbsolutePath();
         pm.setActiveProfile(folderName);
-        Assert.assertNull(pm.getActiveProfile());
+        Assert.assertFalse(pm.hasActiveProfile());
         JUnitAppender.assertErrorMessage(folderName + " is not a profile folder.");
         JUnitAppender.assertWarnMessage("Unable to set active profile.  No profile with id " + folderName + " could be found.");
         // existant profile directory
@@ -88,7 +88,7 @@ public class ProfileManagerTest {
         FileUtil.copy(new File("java/test/jmri/profile/samples/ln-simulator"), profileFolder); // where is existing profile?
         pm.setActiveProfile(folderName);
         Profile p = new Profile(profileFolder);
-        Assert.assertNotNull(pm.getActiveProfile());
+        Assert.assertTrue(pm.hasActiveProfile());
         Assert.assertEquals(p, pm.getActiveProfile());
     }
 
