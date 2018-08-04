@@ -72,7 +72,6 @@ public class ProfileManagerTest {
         }
         Assert.assertTrue("Expected exception IllegalArgumentException", threw);
         
-        Assert.assertNull(pm.getActiveProfile());
         // non-existant profile
         pm.setActiveProfile("NonExistantId");
         Assert.assertNull(pm.getActiveProfile());
