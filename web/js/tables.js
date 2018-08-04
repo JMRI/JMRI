@@ -84,6 +84,8 @@ function displayCellValue(type, colName, value) {
 		case "sensors":
 		case "layoutBlocks":
 			switch (value) {
+			case 0:
+				return "unknown";
 			case 2:
 				return "active";
 			case 4:
@@ -126,6 +128,7 @@ $(document).ready(function() {
 	jmri = $.JMRI({});
 
 	//replace title with the table type
+	document.title = "JMRI Tables: " + $("html").data("table-type");
 	$("h1.title").text($("html").data("table-type"));
 
 	//listen for roster changes and refresh the roster table when this occurs
