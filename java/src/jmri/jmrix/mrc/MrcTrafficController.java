@@ -181,7 +181,7 @@ public abstract class MrcTrafficController implements MrcInterface {
 
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "MR"; //IN18N
+            return "M"; //IN18N
         }
         return adaptermemo.getSystemPrefix();
     }
