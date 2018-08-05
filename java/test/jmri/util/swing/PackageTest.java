@@ -21,6 +21,7 @@ import org.junit.runners.Suite;
         JTreeUtilTest.class,
         JmriPanelTest.class,
         ResizableImagePanelTest.class,
+        ScrollablePanelTest.class,
         SliderSnapTest.class,
         StatusBarTest.class,
         SwingSettingsTest.class,

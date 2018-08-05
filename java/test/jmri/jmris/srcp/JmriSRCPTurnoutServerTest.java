@@ -82,6 +82,7 @@ public class JmriSRCPTurnoutServerTest extends jmri.jmris.AbstractTurnoutServerT
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
 
         // verify the Internal System Connection memo is available.
         jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class);

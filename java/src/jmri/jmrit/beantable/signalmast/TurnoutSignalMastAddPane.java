@@ -73,7 +73,6 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         }
 
         turnoutMastPanel.removeAll();
-        turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(turnoutAspect.size() + 1, 2));
         for (String aspect : turnoutAspect.keySet()) {
             log.trace("   aspect: {}", aspect);
             turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
@@ -81,6 +80,8 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
         turnoutMastPanel.add(resetPreviousState);
         resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
+
+        turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 2)); // 0 means enough
         
         turnoutMastPanel.revalidate();
         turnoutMastScroll.revalidate();
