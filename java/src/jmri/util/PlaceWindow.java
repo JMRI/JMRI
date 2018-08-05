@@ -7,13 +7,22 @@ import java.awt.Window;
 
 /**
  * Position a Window relative to a component in another window so as
- * to not obscure a component in that window.
+ * to not obscure a component in that window. Typically, the Component
+ * is being edited by actions done in the target Window.
  * <p>
- * @author Pete Cressman Copyright (C) space18
+ * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */
 public class PlaceWindow {
-    
+
+    /**
+     * 
+     * @param parent Window containing the Component
+     * @param comp Component contained in the parent Window 
+     * @param target a popup or some kind of window with tools to
+     *  edit the component
+     * @return the location Point to open the target window.
+     */
     public static Point nextTo(Window parent, Component comp, Window target) {
         if (target == null || parent == null) {
             return new Point(0, 0);

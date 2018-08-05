@@ -14,6 +14,7 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -82,6 +83,24 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     public void init(ActionListener doneAction, Positionable pos) {
         _decorator = new DecoratorPanel(_editor, _paletteFrame);
         _decorator.initDecoratorPanel(pos);
+    }
+
+    @Override
+    public void init(ActionListener doneAction) {
+    }
+
+    @Override
+    protected void updateBackground0(BufferedImage im) {
+        if (_decorator != null) {
+            _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
+        }
+    }
+
+    @Override
+    protected void setPreviewBg(int index) {
+        if (_decorator != null) {
+            _decorator._bgColorBox.setSelectedIndex(_paletteFrame.getPreviewBg());
+        }
     }
 
     protected JPanel makeDoneButtonPanel(ActionListener doneAction) {

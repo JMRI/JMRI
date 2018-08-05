@@ -447,12 +447,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> {
             return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
         });
-        Iterator<Entry<String, ItemPanel>> iter = _tabIndex.entrySet().iterator();
+        Iterator<ItemPanel> iter = _tabIndex.values().iterator();
         while (iter.hasNext()) {
-            Entry<String, ItemPanel> entry = iter.next();
-            ItemPanel tab = entry.getValue();
-//            log.debug("setEditor for \"{}\" added", entry.getKey());
-            tab.setEditor(ed);            
+            iter.next().setEditor(ed);
         }
         String name = ed.getName();
         if (name == null || name.equals("")) {
@@ -565,6 +562,17 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         JScrollPane scrollPane = new JScrollPane(itemPanel);
         _tabPane.add(scrollPane, Bundle.getMessage(tabTitle));
         _tabIndex.put(key, itemPanel);
+    }
+
+    @Override
+    public void updateBackground0(java.awt.image.BufferedImage im) {
+        int bgIdx = getPreviewBg();
+        Iterator<ItemPanel> iter = _tabIndex.values().iterator();
+        while (iter.hasNext()) {
+            ItemPanel panel = iter.next();
+            panel.updateBackground0(im);
+            panel.setPreviewBg(bgIdx);
+        }
     }
 
     @Override

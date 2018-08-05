@@ -69,6 +69,7 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
+import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
@@ -1112,6 +1113,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 _manualSelection = false;
             }
+        } else {
+            if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
+/*                ActionListener colorAction = ((ActionEvent event) -> {
+                    colorChanged(); // callback
+                });*/
+                new ColorDialog(this, getTargetPanel(), null);
+            }
         }
         if (!isEditable() && selection != null && selection.isHidden()) {
             selection = null;
@@ -1352,7 +1360,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setToolTip(null); // ends tooltip if displayed
 
         long time = System.currentTimeMillis();
-        if (time - _mouseDownTime < 50) {
+        if (time - _mouseDownTime < 200) {
             return;     // don't drag until sure mouse down was not just a select click
         }
 
