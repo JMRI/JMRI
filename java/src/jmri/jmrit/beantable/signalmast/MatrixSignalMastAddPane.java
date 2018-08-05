@@ -380,7 +380,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             // values are filled in later
         }
         matrixMastPanel.removeAll();
-        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 5, 2)); // was + 3
 
         // sub panels (so we can hide all turnouts with Output Type drop down box later)
         JPanel turnoutpanel = new JPanel();
@@ -451,32 +450,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixHeaderLabel.setToolTipText(Bundle.getMessage("AspectMatrixHeaderTooltip"));
         matrixMastPanel.add(matrixHeader);
 
-        // option: configure outputs from DCC packet addresses
-        /*       if (matrixDCCListener == null) {
-            matrixDCCListener = new FocusListener() {
-                public void focusLost(FocusEvent e) {
-                    if (matrixDCCAddressField.getText().equals("")) {
-                        return;
-                    }
-                    validateMatrixDCCAddressField();
-                    // todo set the checkboxes & check sth?, copy from UpdateDCCMastPanel
-                }
-
-                public void focusGained(FocusEvent e) {
-                }
-
-            };
-
-            matrixDCCAddressField.addFocusListener(matrixDCCAddressListener);
-        }
-
-        if (mast == null) {
-            systemPrefixBoxLabel.setEnabled(true);
-            systemPrefixBox.setEnabled(true);
-            matrixDCCAddressLabel.setEnabled(true);
-            matrixDCCAddressField.setEnabled(true);
-        }
-         */
         for (String aspect : matrixAspect.keySet()) {
             matrixMastPanel.add(matrixAspect.get(aspect).getPanel()); // load Aspect sub panels to matrixMastPanel from hashmap
             // build aspect sub panels
@@ -485,7 +458,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             // spacer before "Reset previous aspect"
             matrixMastPanel.add(new JLabel());
         }
+
         matrixMastPanel.add(resetPreviousState); // checkbox
+        
         resetPreviousState.setToolTipText(Bundle.getMessage("ResetPreviousToolTip"));
         // copy option matrixMast bitstrings = settings
         JPanel matrixCopyPanel = new JPanel();
@@ -493,6 +468,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
         matrixCopyPanel.add(copyFromMastSelection());
         matrixMastPanel.add(matrixCopyPanel);
+
+        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
+        matrixMastPanel.revalidate();
     }
     
      /**
@@ -575,11 +553,13 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // sort matrixAspect HashTable, which at this point is not sorted
         // TODO
         matrixMastPanel.removeAll();
-        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(matrixAspect.size() + 1, 2));
         for (String aspect : matrixAspect.keySet()) {
             matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
             // Matrix checkbox states are set by getPanel()
         }
+
+        matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
+        matrixMastPanel.revalidate();
     }
 
     JPanel matrixUnLitPanel = new JPanel();
@@ -601,7 +581,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
         JPanel matrixUnLitDetails = new JPanel();
         matrixUnLitDetails.setLayout(new jmri.util.javaworld.GridLayout2(1, 1)); // stretch to full width
-        //matrixUnLitDetails.setAlignmentX(matrixUnLitDetails.RIGHT_ALIGNMENT);
+
         matrixUnLitDetails.add(unlitCheck1);
         matrixUnLitDetails.add(unlitCheck2);
         matrixUnLitDetails.add(unlitCheck3);
