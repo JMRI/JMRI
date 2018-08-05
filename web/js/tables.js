@@ -45,6 +45,7 @@ function replaceRow(name, data) {
 			r += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
 		});
     	row.html(r);
+    	hideEmptyColumns("table#jmri-data tr th");
     } else {
     	jmri.log("row not found for name='" + name + "'");
     	//TODO: handle addition of row
@@ -70,6 +71,8 @@ function displayCellValue(type, colName, value) {
 		switch (type) {
 		case "turnouts":
 			switch (value) {
+			case 0:
+				return "unknown";
 			case 2:
 				return "closed";
 			case 4:
@@ -114,11 +117,12 @@ function hideEmptyColumns(selector) {
 		//select all tds in this column
 		var tds = $(this).parents('table').find('tr td:nth-child(' + (index + 1) + ')');
 		//check if all the cells in this column are empty
-		if (tds.length === tds.filter(':empty').length) {
-			//hide header
-			$(this).addClass("hidden");
-			//hide cells
-			tds.addClass("hidden");
+		if (tds.length === tds.filter(':empty').length) {			
+			$(this).addClass("hidden"); //hide header			
+			tds.addClass("hidden"); //hide cells
+		} else {			
+			$(this).removeClass("hidden"); //show header			
+			tds.removeClass("hidden"); //show cells			
 		}
 	});
 }
@@ -131,47 +135,22 @@ $(document).ready(function() {
 	document.title = "JMRI Tables: " + $("html").data("table-type");
 	$("h1.title").text($("html").data("table-type"));
 
-	//listen for roster changes and refresh the roster table when this occurs
-	//  by overriding processing of websocket messages of interest
 	jmri = $.JMRI({
-		//wait for the hello message
+		//when we get the hello message, send a websocket list request which 
+		//  returns the list and sets up change listeners
 		hello: function(data) {
-			var list = jmri.getObjectList($("html").data("table-type")); // request list for the table-type
-			rebuildTable(list);			
 			jmri.getList($("html").data("table-type")); // request list and updates for the table-type 
 		},
-		//all types call console
+		//everything calls console()
 		console: function(originalData) {
 			var data = JSON.parse(originalData);
-			if ((data.type) && (data.type !== "pong")) {
-				jmri.log("in console: data="+JSON.stringify(data).substr(0,180) + "...");
-				replaceRow(data.data.name, data.data);
+			jmri.log("in console: data="+JSON.stringify(data).substr(0,180) + "...");
+			if ($.isArray(data)) {  //if its an array, 
+				rebuildTable(data); //  replace the table with the array list			
+			} else if ((data.type) && (data.type !== "pong")) {
+				replaceRow(data.data.name, data.data); //if single item, update the row
 			}
-		},
-//		turnouts: function(data) {
-//		jmri.log("in turnouts. data="+JSON.stringify(data).substr(0,180) + "...");
-//		rebuildTable(data);
-//	},
-//		turnout: function(name, state, data) {
-//		jmri.log("in turnout. name="+name+", data="+JSON.stringify(data).substr(0,180) + "...");
-//		replaceRow(name, data);
-//	},
-		getObjectList: function(listType) {	//Retrieve a JSON list of objects, note this is synchronous
-			var list = [];
-			$.ajax({
-				url: jmri.url + listType,
-				async: false,
-				cache: false,
-				type: 'GET',
-				dataType: 'json',
-				error: function(jqXHR, textStatus, errorThrown) {
-					jmri.error(jqXHR.status, 'Response:\n' + jqXHR.responseText + '\n\nError:\n' + errorThrown);
-				},
-				success: function(listReturned, status, jqXHR) {list = listReturned;}
-			});
-			return list;
-		},
-	
+		},	
 	});
 });
 
