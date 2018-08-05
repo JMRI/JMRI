@@ -7,23 +7,65 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class CbusTurnoutTest {
+public class CbusTurnoutTest { 
+// public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
+
+    @Test
+    public void testNullEvent() {
+        try {
+            CbusTurnout t = new CbusTurnout("MT",null,new TrafficControllerScaffold());
+            Assert.fail("Should have thrown an exception");
+        } catch (NullPointerException e) {
+            Assert.assertTrue(true);
+        }
+    }
+    
     
     @Test
     public void testCTorShortEventSingle() {
         CbusTurnout t = new CbusTurnout("MT","+7",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
+
+    @Test
+    public void testCTorShortEventSinglePlus() {
+        CbusTurnout t = new CbusTurnout("MT","+2",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testCTorShortEventSingleMinus() {
+        CbusTurnout t = new CbusTurnout("MT","-2",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
     
     @Test
     public void testCTorShortEventDouble() {
         CbusTurnout t = new CbusTurnout("MT","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
+    
+    
+    @Test
+    public void testLongEventSingleNoN() {
+        CbusTurnout t = new CbusTurnout("MT","+654e321",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
+
+
+    @Test
+    public void testLongEventDoubleNoN() {
+        CbusTurnout t = new CbusTurnout("MT","-654e321;+123e456",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
+    
     
     @Test
     public void testCTorLongEventSingle() {
