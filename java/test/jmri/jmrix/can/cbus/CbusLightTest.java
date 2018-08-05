@@ -2,10 +2,14 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,6 +28,21 @@ public class CbusLightTest {
         CbusLight t = new CbusLight("ML","+1;-1",new TrafficControllerScaffold());
         Assert.assertNotNull("exists",t);
     }
+    
+    
+    @Test
+    public void testLongEventSingleNoN() {
+        CbusLight t = new CbusLight("ML","+654e321",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
+
+
+    @Test
+    public void testLongEventDoubleNoN() {
+        CbusLight t = new CbusLight("ML","-654e321;+123e456",new TrafficControllerScaffold());
+        Assert.assertNotNull("exists",t);
+    }    
+    
     
     @Test
     public void testCTorLongEventSingle() {
@@ -98,6 +117,7 @@ public class CbusLightTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+    //    apps.tests.Log4JFixture.setUp();
     }
 
     @After
