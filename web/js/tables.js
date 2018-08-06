@@ -1,5 +1,10 @@
 /*
  * TablesServlet specific JavaScript
+ * 
+ * TODO: add children listeners to additional types (below the line)
+ * TODO: update other language NavBar.html
+ * TODO: update json help with correct program references
+ * TODO: add structure change listeners for routes
  */
 
 var jmri = null;
