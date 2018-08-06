@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
-    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180408"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20180805"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/24-uni16ard-nav -->
@@ -45,7 +45,7 @@
         <label xml:lang="cs">Verze software:</label>
       </variable>
       
-      <variable item="Manufacturer" CV="8" readOnly="yes" >
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="13" >
         <decVal/>
         <label>Manufacturer:</label>
         <label xml:lang="cs">Výrobce ID:</label>
@@ -8250,7 +8250,9 @@
     </variables> 
 
     <resets>
-      <factReset label="Reset All CVs:" CV="8" default="33">
+      <factReset CV="8" default="33">
+        <label>Reset All CVs</label>
+        <label xml:lang="cs">Reset všech CV</label>
       </factReset>
     </resets>
 
