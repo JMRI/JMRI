@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/panel.css">
 <link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="/css/tables.css">
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -41,13 +42,16 @@
         <![endif]-->
     <div id="wrap">
         <!-- Navigation Bar %2$s -->
-        <div class="container">
-            <h1 class="title">%1$s</h1>
-        </div>
-        <div class="container">
+        <div class="jumbotron">
+			<div class="container">
+				<h1 class="title text-capitalize">%1$s</h1>
+			</div>
+		</div>
+		<div class="container">
             <div id="activity-alert" class="alert alert-info alert-dismissable">Getting data...</div>
             <div id="warning-no-data" class="alert alert-warning hidden">No data for this table.</div>
-            <table id="jmri-data" class="table table-hover hidden">
+            <div id="error-message" class="alert alert-danger hidden">Error message received.</div>
+            <table id="jmri-data" class="table table-striped table-hover table-responsive hidden">
                 <thead>
                     <tr>
                         <th>headings go here</th>
