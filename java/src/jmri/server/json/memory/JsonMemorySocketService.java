@@ -76,7 +76,6 @@ public class JsonMemorySocketService extends JsonSocketService<JsonMemoryHttpSer
         });
     }
 
-
     @Override
     public void onClose() {
         memoryListeners.values().stream().forEach((memory) -> {
@@ -96,7 +95,6 @@ public class JsonMemorySocketService extends JsonSocketService<JsonMemoryHttpSer
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             log.debug("in MemoryListener for '{}' '{}' ('{}'=>'{}')", this.memory.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-//            if (evt.getPropertyName().equals("value")) {
                 try {
                     try {
                         connection.sendMessage(service.doGet(MEMORY, this.memory.getSystemName(), getLocale()));
