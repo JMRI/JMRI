@@ -49,6 +49,8 @@ function rebuildTable(data) {
 		});
 		$("table#jmri-data tbody").html(tbody);
 		$("table#jmri-data").removeClass("hidden").addClass("show");
+		var newTableObject = document.getElementById("jmri-data");
+		sorttable.makeSortable(newTableObject);
 	} else {
 		$("#warning-no-data").removeClass("hidden").addClass("show");
 	}
