@@ -64,7 +64,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
            
             pack();
             setVisible(true);
-            log.debug("ColorDialog: color= {}", _chooser.getColor());
+//            log.debug("ColorDialog: color= {}", _chooser.getColor());
         }
 
         protected JPanel makeDoneButtonPanel() {
@@ -91,7 +91,7 @@ public class ColorDialog extends JDialog implements ChangeListener {
             return panel;
         }
 
-        private void cancel() {
+        void cancel() {
             _target.setBackground(_saveColor);
             log.debug("Cancel: color= {}", _saveColor);
             dispose();
