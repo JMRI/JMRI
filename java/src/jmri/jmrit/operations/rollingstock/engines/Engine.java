@@ -103,7 +103,7 @@ public class Engine extends RollingStock {
         try {
             return Integer.parseInt(getHp());
         } catch (NumberFormatException e) {
-            log.warn("Locomotive ({}) horsepower ({}) isn't a number", toString(), getHp());
+            log.debug("Locomotive ({}) horsepower ({}) isn't a number", toString(), getHp());
             return 0;
         }
     }

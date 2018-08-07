@@ -21,6 +21,7 @@ public class LoadXmlUserActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        JUnitUtil.resetProfileManager();
         JUnitUtil.setUp();
     }
 
