@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -191,18 +192,26 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
                 log.warn("Throttle for locomotive address {} could not be setup.", throttleAddr);
             }
             throttleAddr+=1;
-            try{Thread.sleep(20);} catch (Exception e2) {log.info("Ahh");}
+            // try{Thread.sleep(20);} catch (Exception e2) {log.info("Ahh");}
             count++;
         }
-        try{Thread.sleep(2000);} catch (Exception e2) {log.info("Ahh2");}
+        //try{Thread.sleep(2000);} catch (Exception e2) {log.info("Ahh2");}
         log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
     }
 
     public void del10ThrottlesActionPerformed(java.awt.event.ActionEvent e) {
-        for( DccThrottle item : throttles) {
-            if (item != null ) {
+        int count = 10;
+        Iterator<DccThrottle> throttleList = throttles.iterator();
+        while (throttleList.hasNext()) {
+            DccThrottle item = throttleList.next();
+            if (item != null && item.getLocoAddress().getNumber() > 300 && item.getLocoAddress().getNumber() < 1000 ) {
+                if ( count < 1) {
+                    break;
+                }
                 item.setSpeedSetting(0.0f);
                 InstanceManager.throttleManagerInstance().releaseThrottle(item, null);
+                throttleList.remove();
+                count--;
             }
         }
     }
