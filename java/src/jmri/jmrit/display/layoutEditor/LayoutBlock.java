@@ -160,7 +160,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /*
-     * Completes the creation of a LayoutBlock object by adding a Block to it
+     * Completes the creation of a LayoutBlock object by adding a Block to it.
+     *
+     * The block create process takes into account that the _bean register
+     * process considers IB1 and IB01 to be the same name which results in a
+     * silent failure.
      */
     protected void initializeLayoutBlock() {
         //get/create a Block object corresponding to this LayoutBlock
@@ -169,35 +173,50 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if ((userName != null) && !userName.isEmpty()) {
             block = InstanceManager.getDefault(BlockManager.class).getByUserName(userName);
         }
-        if (block == null) {
-            //not found, create a new Block
-            String s = "";
 
-            //create a unique system name
-            for (boolean found = true; found;) {
+        if (block == null) {
+            // Not found, create a new Block
+            BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+            String s = "";
+            while (true) {
+                if (jmriblknum > 50000) {
+                    throw new IndexOutOfBoundsException("Run away prevented while trying to create a block");
+                }
                 s = "IB" + jmriblknum;
                 jmriblknum++;
-                block = InstanceManager.getDefault(BlockManager.class).getBySystemName(s);
-                if (block == null) {
-                    found = false;
+
+                // Find an unused system name
+                block = bm.getBySystemName(s);
+                if (block != null) {
+                    log.debug("System name is already used: {}", s);
+                    continue;
                 }
+
+                // Create a new block.  User name is null to prevent user name checking.
+                block = bm.createNewBlock(s, null);
+                if (block == null) {
+                    log.debug("Null block returned: {}", s);
+                    continue;
+                }
+
+                // Verify registration
+                if (bm.getSystemNameList().contains(s)) {
+                    log.debug("Block is valid: {}", s);
+                    break;
+                }
+                log.debug("Registration failed: {}", s);
             }
-            block = InstanceManager.getDefault(BlockManager.class).createNewBlock(s, getUserName());
-            if (block == null) {
-                log.error("Failure to get/create Block: " + s + "," + getUserName());
-            }
+            block.setUserName(getUserName());
         }
 
-        if (block != null) {
-            //attach a listener for changes in the Block
-            mBlockListener = (PropertyChangeEvent e) -> {
-                handleBlockChange(e);
-            };
-            block.addPropertyChangeListener(mBlockListener,
-                    getUserName(), "Layout Block:" + getUserName());
-            if (occupancyNamedSensor != null) {
-                block.setNamedSensor(occupancyNamedSensor);
-            }
+        //attach a listener for changes in the Block
+        mBlockListener = (PropertyChangeEvent e) -> {
+            handleBlockChange(e);
+        };
+        block.addPropertyChangeListener(mBlockListener,
+                getUserName(), "Layout Block:" + getUserName());
+        if (occupancyNamedSensor != null) {
+            block.setNamedSensor(occupancyNamedSensor);
         }
     }
 
