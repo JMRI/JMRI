@@ -97,7 +97,11 @@ public class JsonClientHandler {
      * @throws java.io.IOException if communications with the client is broken
      */
     public void onMessage(String string) throws IOException {
-        log.debug("Received from client: {}", string);
+        if (string.equals("{\"type\":\"ping\"}")) { //turn down the noise a bit
+            log.trace("Received from client: '{}'", string);            
+        } else {
+            log.debug("Received from client: '{}'", string);
+        }
         try {
             this.onMessage(this.connection.getObjectMapper().readTree(string));
         } catch (JsonProcessingException pe) {
@@ -144,7 +148,11 @@ public class JsonClientHandler {
                     method = data.path(METHOD).asText(JSON.POST);
                 }
             }
-            log.debug("Processing {} with {}", type, data);
+            if (type.equals(PING)) { //turn down the noise a bit
+                log.trace("Processing '{}' with '{}'", type, data);
+            } else {
+                log.debug("Processing '{}' with '{}'", type, data);                
+            }
             if (method.equals(LIST)) {
                 if (this.services.get(type) != null) {
                     for (JsonSocketService<?> service : this.services.get(type)) {
