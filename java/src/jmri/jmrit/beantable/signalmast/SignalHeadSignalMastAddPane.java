@@ -91,7 +91,6 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
         headList = new ArrayList<>(count);
 
         signalHeadPanel.removeAll();
-        signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(count + 1, 1));
         for (int i = 0; i < count; i++) {
             JmriBeanComboBox head = new JmriBeanComboBox(InstanceManager.getDefault(jmri.SignalHeadManager.class));
             head.excludeItems(alreadyUsed);
@@ -99,6 +98,8 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             signalHeadPanel.add(head);
         }
         signalHeadPanel.add(includeUsed);
+
+        signalHeadPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
         signalHeadPanel.revalidate();
 
         disabledAspects = new LinkedHashMap<>(10);
@@ -108,11 +109,12 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
             JCheckBox disabled = new JCheckBox(aspect);
             disabledAspects.put(aspect, disabled);
         }
-        disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(disabledAspects.size() + 1, 1));
+
         for (String aspect : disabledAspects.keySet()) {
             disabledAspectsPanel.add(disabledAspects.get(aspect));
         }
 
+        disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
         disabledAspectsPanel.revalidate();
          
     }

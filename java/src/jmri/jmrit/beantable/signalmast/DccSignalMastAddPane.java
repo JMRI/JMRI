@@ -109,7 +109,6 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         dccAspectAddressField.setText("");
         dccMastPanel.add(dccAspectAddressField);
 
-        dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size() + 1, 2));
         for (String aspect : dccAspect.keySet()) {
             log.trace("   aspect: {}", aspect);
             dccMastPanel.add(dccAspect.get(aspect).getPanel());
@@ -118,8 +117,10 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastCopyAspectId") + ":"));
         dccMastPanel.add(copyFromMastSelection());
         
+        dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 2)); // 0 means enough
         dccMastPanel.revalidate();
         dccMastScroll.revalidate();
+
         log.trace("setAspectNames(...) end");
     }
 

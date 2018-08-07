@@ -182,7 +182,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         // gather before state
         Boolean litBefore = litMachine.getState();
         Boolean heldBefore = heldMachine.getState();
-        String aspectBefore = aspectMachine.getState();
+        String aspectBefore = aspectMachine.getState(); // before the update
         
         // handle message
         msg.applyTo(litMachine, null);
@@ -193,21 +193,13 @@ public class OlcbSignalMast extends AbstractSignalMast {
         if (!litBefore.equals(litMachine.getState())) firePropertyChange("Lit", litBefore, litMachine.getState());
         if (!heldBefore.equals(heldMachine.getState())) firePropertyChange("Held", heldBefore, heldMachine.getState());
         
-        if ( (aspectBefore==null && aspectMachine.getState()!=null) || (aspectBefore!=null && !aspectBefore.equals(aspectMachine.getState()) ) ) updateState(aspectMachine.getState());
+        this.aspect = aspectMachine.getState();  // after the update
+        this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
+        // need to check aspect != null because original getAspect (at ctor time) can return null, even though StateMachine disallows it.
+        if (aspect==null || ! aspect.equals(aspectBefore)) firePropertyChange("Aspect", aspectBefore, aspect);
 
     }
     
-    /** 
-     * When the aspect change has returned from the OpenLCB network,
-     * change the local state and notify
-     */
-    void updateState(String aspect) {
-        String oldAspect = this.aspect;
-        this.aspect = aspect;
-        this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
-        firePropertyChange("Aspect", oldAspect, aspect);
-    }
-
     /** 
      * Always communicates via OpenLCB
      */

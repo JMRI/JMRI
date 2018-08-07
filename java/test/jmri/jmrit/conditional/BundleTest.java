@@ -44,7 +44,8 @@ public class BundleTest  {
 
     @Test public void testLocaleMessageArg() {
         Assert.assertEquals("Zeile", Bundle.getMessage(Locale.GERMANY, "ColumnLabelRow", new Object[]{}));  // NOI18N
-        Assert.assertEquals("Prüfung \"prüfung\" Zustand ist 2", Bundle.getMessage(Locale.GERMANY, "VarStateDescrpt", "Prüfung", "prüfung", "2"));  // NOI18N
+        // Using escape for u-with
+        Assert.assertEquals("Pruefung \"pruefung\" Zustand ist 2", Bundle.getMessage(Locale.GERMANY, "VarStateDescrpt", "Pruefung", "pruefung", "2"));  // NOI18N
     }
 
 }

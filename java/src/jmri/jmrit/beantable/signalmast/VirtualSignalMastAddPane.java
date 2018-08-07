@@ -68,10 +68,11 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             JCheckBox disabled = new JCheckBox(aspect);
             disabledAspects.put(aspect, disabled);
         }
-        disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(disabledAspects.size() + 1, 1));
         for (String aspect : disabledAspects.keySet()) {
             disabledAspectsPanel.add(disabledAspects.get(aspect));
         }
+        
+        disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
 
         disabledAspectsPanel.revalidate();
     }
