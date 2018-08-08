@@ -51,13 +51,13 @@
 
       <h4>Configuration File</h4>
 
-      <p>The config.xml file can be created or edited using a
+      <p>The <strong>config.xml</strong> file can be created or edited using a
        standard text editor or a
         <a href="http://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
         XML editor</a>.
-	  </p>
+      </p>
       <p>A value in XML is described as a <strong>tag</strong>, e.g.
-	    <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.
+        <code>&lt;gain&gt;0.8&lt;/gain&gt;</code>.
       </p>
       <p>The following sections present some optional configuration features.
         They are documented as tags, so you can copy and paste it into your 
@@ -112,7 +112,7 @@
       volume of the Audio Source will be as defined by the gain
       setting.<br>
       Optional. Must be declared in the tag <strong>sound</strong>
-	  previous to a gain value. Default value: 1.0<br>
+      previous to a gain value. Default value: 1.0<br>
       <em>Since JMRI 4.11.4</em></p>
 
       <p>Example:</p>
@@ -135,6 +135,32 @@
       <p>Example:</p>
       <pre>
       &lt;engine-gain&gt;0.6&lt;/engine-gain&gt;
+      </pre>
+
+      <h5><a name="xy">Create XY coordinates output in console for a VSDecoder</a></h5>
+
+      <p>Description:<br>
+      Helpfull option to verify the setup of your VSDGeoData.xml file
+      (see <a href="VSD_locationsMgr.shtml#advanced_location_following">Advanced Location Following</a>).<br>
+      The JMRI system console output can be copied and edited for printing a route curve.
+      I have tested this with "LibreOffice Calc" and "Gnuplot".<br>
+      Optional. Must be declared right after the
+      <code>&lt;profile&gt;</code> tag.<br>
+      Default value: "no"<br>
+      <em>Since JMRI 4.13.2</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;create-xy-series&gt;yes&lt;/create-xy-series&gt;
+      </pre>
+
+      <p>Console output:<br></p>
+      <pre>
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.5     1.1 [AWT-EventQueue-0]
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.489   1.1 [AWT-EventQueue-0]
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.4173  1.1 [AWT-EventQueue-0]
+       vsdecoder.VSDecoder      INFO  - 3(S): -1.3456  1.1 [AWT-EventQueue-0]
+       ...
       </pre>
 
       <div align="right">
