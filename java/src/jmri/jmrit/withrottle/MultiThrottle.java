@@ -127,7 +127,7 @@ public class MultiThrottle {
                 !jmri.InstanceManager.throttleManagerInstance().canBeShortAddress(addr)) {
             String msg = Bundle.getMessage("ErrorShortAddress", key);
             log.warn(msg);
-            parentController.sendInfoMessage(msg);
+            parentController.sendAlertMessage(msg);
             return false;            
         }
         return true;
