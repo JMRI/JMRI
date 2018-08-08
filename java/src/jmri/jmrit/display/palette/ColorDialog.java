@@ -11,8 +11,12 @@ import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.PositionablePopupUtil;
+import jmri.jmrit.display.palette.DecoratorPanel.AJSpinner;
 import jmri.util.swing.JmriColorChooser;
 
 /**
@@ -25,9 +29,17 @@ import jmri.util.swing.JmriColorChooser;
  */
 public class ColorDialog extends JDialog implements ChangeListener {
 
+    public static final int ONLY = 0;
+    public static final int FONT = 1;
+    public static final int MARGIN = 2;
+    public static final int BORDER = 3;
+    public static final int TEXT = 4;
+
         JColorChooser _chooser;
         JComponent _target;
         Color _saveColor;
+        PositionablePopupUtil _util;
+        boolean _saveOpaque;
         ActionListener _colorAction;
         JPanel _preview;
 
@@ -38,16 +50,41 @@ public class ColorDialog extends JDialog implements ChangeListener {
          * @param ca callback to tell client the component's color was changed. 
          * May be null if client doesen't care.
          */
-        public ColorDialog(Frame client, JComponent t, ActionListener ca) {
+        public ColorDialog(Frame client, JComponent t, int type, ActionListener ca) {
             super(client, Bundle.getMessage("ColorChooser"), true);
             _target = t;
-            _saveColor = t.getBackground();
+            if (t instanceof Positionable) {
+                _util = ((Positionable)t).getPopupUtility();
+                _util.setSuppressRecentColor(true);
+                _saveColor = _util.getBackground();
+            } else {
+                _util = null;
+                _saveColor = t.getBackground();
+            }
+            _saveOpaque = t.isOpaque();
             _colorAction = ca;
 
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout(5, 5));
 
-            _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(_target.getBackground()));
+            switch (type) {
+                case ONLY:
+                    break;
+                case FONT:
+                    break;
+                case MARGIN:
+                    SpinnerNumberModel model = new SpinnerNumberModel(_util.getBorderSize(), 0, 100, 1);
+                    add(DecoratorPanel.makeSpinPanel("marginSize", new AJSpinner(model, MARGIN), this));
+                    break;
+                case BORDER:
+                    model = new SpinnerNumberModel(_util.getBorderSize(), 0, 100, 1);
+                    add(DecoratorPanel.makeSpinPanel("borderSize", new AJSpinner(model, BORDER), this));
+                    break;
+                case TEXT:
+                    break;
+                default:
+            }
+            _chooser = JmriColorChooser.extendColorChooser(new JColorChooser(_saveColor));
             _chooser.getSelectionModel().addChangeListener(this);
             _chooser.setPreviewPanel(new JPanel());
             panel.add(_chooser, BorderLayout.NORTH);
@@ -76,6 +113,9 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     if (_colorAction != null) {
                         _colorAction.actionPerformed(null);
                     }
+                    if (_util != null) {
+                        _util.setSuppressRecentColor(false);
+                    }
                     JmriColorChooser.addRecentColor(_chooser.getColor());
                     dispose();
             });
@@ -92,7 +132,13 @@ public class ColorDialog extends JDialog implements ChangeListener {
         }
 
         void cancel() {
-            _target.setBackground(_saveColor);
+            if (_util != null) {
+                _util.setBackgroundColor(_saveColor);
+                _util.setSuppressRecentColor(false);
+            } else {
+                _target.setBackground(_saveColor);
+            }
+            _target.setOpaque(_saveOpaque);
             log.debug("Cancel: color= {}", _saveColor);
             dispose();
             
@@ -100,9 +146,29 @@ public class ColorDialog extends JDialog implements ChangeListener {
         
         @Override
         public void stateChanged(ChangeEvent e) {
-            log.debug("stateChanged: color= {}", _chooser.getColor());
-            _target.setOpaque(true);
-            _target.setBackground(_chooser.getColor());
+            Object obj = e.getSource();
+            if (obj instanceof AJSpinner) {
+                int num = ((Number) ((AJSpinner) obj).getValue()).intValue();
+                switch (((AJSpinner) obj)._which) {
+                    case BORDER:
+                        _util.setBorderSize(num);
+                        break;
+                    case MARGIN:
+                        _util.setMargin(num);
+                        break;
+                    default:
+                        log.warn("Unexpected _which {}  in stateChanged", ((AJSpinner) obj)._which);
+                        break;
+                }
+            } else {
+                log.debug("stateChanged: color= {}", _chooser.getColor());
+                _target.setOpaque(true);
+                if (_util != null) {
+                    _util.setBackgroundColor(_chooser.getColor());
+                } else {
+                    _target.setBackground(_chooser.getColor());
+                }
+            }
         }
 
         private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ColorDialog.class);

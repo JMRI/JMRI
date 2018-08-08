@@ -1118,7 +1118,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 /*                ActionListener colorAction = ((ActionEvent event) -> {
                     colorChanged(); // callback
                 });*/
-                new ColorDialog(this, getTargetPanel(), null);
+                new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, null);
             }
         }
         if (!isEditable() && selection != null && selection.isHidden()) {

@@ -131,7 +131,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _samplePanel.setOpaque(false);
     }
 
-    static class AJComboBox extends JComboBox/*<Class<?>> - can't get this to work*/ {
+    @SuppressWarnings("unchecked")
+    static class AJComboBox extends JComboBox /*<T> - can't get this to work*/ {
         int _which;
 
         AJComboBox(Font[] items, int which) {
@@ -177,11 +178,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
-    private JPanel makeSpinPanel(String caption, JSpinner spin) {
+    public static JPanel makeSpinPanel(String caption, JSpinner spin, ChangeListener listener) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage(caption)));
-        spin.addChangeListener(this);
+        spin.addChangeListener(listener);
         panel.add(spin);
         return panel;
     }
@@ -327,6 +328,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
     }
 
+    @SuppressWarnings("unchecked")
     private void makeFontPanels() {
         JPanel fontPanel = new JPanel();
 
@@ -359,17 +361,17 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         JPanel sizePanel = new JPanel();
         SpinnerNumberModel model = new SpinnerNumberModel(_util.getBorderSize(), 0, 100, 1);
         _borderSpin = new AJSpinner(model, BORDER);
-        sizePanel.add(makeSpinPanel("borderSize", _borderSpin));
+        sizePanel.add(makeSpinPanel("borderSize", _borderSpin, this));
         model = new SpinnerNumberModel(_util.getMargin(), 0, 100, 1);
         _marginSpin = new AJSpinner(model, MARGIN);
-        sizePanel.add(makeSpinPanel("marginSize", _marginSpin));
+        sizePanel.add(makeSpinPanel("marginSize", _marginSpin, this));
         model = new SpinnerNumberModel(_util.getFixedWidth(), 0, 1000, 1);
         if (_isPositionableLabel) {
             _widthSpin = new AJSpinner(model, FWIDTH);
-            sizePanel.add(makeSpinPanel("fixedWidth", _widthSpin));
+            sizePanel.add(makeSpinPanel("fixedWidth", _widthSpin, this));
             model = new SpinnerNumberModel(_util.getFixedHeight(), 0, 1000, 1);
             _heightSpin = new AJSpinner(model, FHEIGHT);
-            sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin));
+            sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin, this));
         }
         this.add(sizePanel);
     }
