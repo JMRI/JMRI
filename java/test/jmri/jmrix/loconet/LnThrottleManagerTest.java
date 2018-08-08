@@ -48,7 +48,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for " + address + " because " + reason);
+                log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
 
@@ -1041,7 +1041,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
-        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
         memo.configureManagers();
         tm = new LnThrottleManager(memo);
         log.debug("new throttle manager is {}", tm.toString());

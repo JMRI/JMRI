@@ -13,17 +13,16 @@ import org.slf4j.LoggerFactory;
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortController is via a pair of *Streams, which then carry sequences of
  * characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <P>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -31,22 +30,34 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2018
- *
  */
 public class LnPacketizer extends LnTrafficController {
 
     /**
-     * true if the external hardware is not echoing messages, so we must
+     * True if the external hardware is not echoing messages, so we must.
      */
-    protected boolean echo = false;  // echo messages here, instead of in hardware
+    protected boolean echo = false;  // true = echo messages here, instead of in hardware
 
+    /**
+     * Create a default LnPacketizer instance without a SystemConnectionMemo.
+     * Not compatible with multi connections.
+     *
+     * @deprecated since 4.11.6, use LnPacketizer(LocoNetSystemConnectionMemo) instead
+     */
+    @Deprecated
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnPacketizer() {
-        self = this;
+    }
+
+    public LnPacketizer(LocoNetSystemConnectionMemo m) {
+        // set the memo to point here
+        memo = m;
+        m.setLnTrafficController(this);
     }
 
     // The methods to implement the LocoNetInterface
+
     /**
      * {@inheritDoc}
      */
@@ -57,7 +68,7 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * Synchronized list used as a transmit queue.
-     * <P>
+     * <p>
      * This is public to allow access from the internal class(es) when compiling
      * with Java 1.1
      */
@@ -77,7 +88,7 @@ public class LnPacketizer extends LnTrafficController {
      * Forward a preformatted LocoNetMessage to the actual interface.
      * <p>
      * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission
+     * to a byte array and queued for transmission.
      *
      * @param m Message to send; will be updated with CRC
      */
@@ -96,17 +107,19 @@ public class LnPacketizer extends LnTrafficController {
             msg[i] = (byte) m.getElement(i);
         }
 
-        if (log.isDebugEnabled()) { // avoid String building if not needed
-            log.debug("queue LocoNet packet: {}", m.toString());
-        }
+        log.debug("queue LocoNet packet: {}", m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify();
+                xmtHandler.notify(); // NPE here on slow systems init state query
+                // null test added in 4.11.6 in LnPowerManager and LnSensorManager
             }
+        } catch (NullPointerException npe) {
+            log.warn("xmtHandler.notify() npe");
+            throw npe; // is caught by LnSensor/PowerManager run()
         } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: " + e);
+            log.warn("passing to xmit: unexpected exception: ", e);
         }
     }
 
@@ -126,11 +139,12 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
+
     // This is public to allow access from the internal class(es) when compiling with Java 1.1
     public LnPortController controller = null;
 
     /**
-     * Make connection to existing LnPortController object.
+     * Make connection to an existing LnPortController object.
      *
      * @param p Port controller for connected. Save this for a later disconnect
      *          call
@@ -145,7 +159,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     /**
-     * Break connection to existing LnPortController object. Once broken,
+     * Break connection to an existing LnPortController object. Once broken,
      * attempts to send via "message" member will fail.
      *
      * @param p previously connected port
@@ -160,13 +174,13 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // data members to hold the streams. These are public so the inner classes defined here
-    // can access whem with a Java 1.1 compiler
+    // can access them with a Java 1.1 compiler
     public DataInputStream istream = null;
     public OutputStream ostream = null;
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
@@ -332,28 +346,28 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     /**
-     * Captive class to notify of one message
+     * Captive class to notify of one message.
      */
     private static class RcvMemo implements jmri.util.ThreadingUtil.ThreadAction {
 
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;
-            thisTC = trafficController;
+            thisTc = trafficController;
         }
         LocoNetMessage thisMsg;
-        LnTrafficController thisTC;
+        LnTrafficController thisTc;
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void run() {
-            thisTC.notify(thisMsg);
+            thisTc.notify(thisMsg);
         }
     }
 
     /**
-     * Captive class to handle transmission
+     * Captive class to handle transmission.
      */
     class XmtHandler implements Runnable {
 
@@ -385,7 +399,7 @@ public class LnPacketizer extends LnTrafficController {
                             if (log.isTraceEnabled()) { // avoid String building if not needed
                                 log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg)); // NOI18N
                             }
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
@@ -397,7 +411,7 @@ public class LnPacketizer extends LnTrafficController {
                     // message queue was empty, wait for input
                     log.trace("start wait"); // NOI18N
 
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
+                    new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
 
                     log.trace("end wait"); // NOI18N
                 }
@@ -407,13 +421,12 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
-     * is needed
+     * is needed.
      *
      * @param msg message sent
-     *
      */
-    protected void messageTransmited(byte[] msg) {
-        log.debug("message transmitted");
+    protected void messageTransmitted(byte[] msg) {
+        log.debug("message transmitted (echo {})", echo);
         if (!echo) {
             return;
         }
@@ -472,4 +485,5 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
+
 }

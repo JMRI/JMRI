@@ -131,7 +131,7 @@ RL2]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 </pre>
 
-      <p>with zero, two, and three roster entries, repsectively.
+      <p>with zero, two, and three roster entries, respectively.
       Each roster entry contains three pieces of information,
       always in the same order:</p>
 
@@ -344,9 +344,9 @@ PW12080
       the command. Here are the letters currently supported:</p>
 
       <ul>
-        <li>'T' sends a throttle command</li>
+        <li>'T' sends a throttle command, <i>deprecated, use 'M'</i></li>
 
-        <li>'S' sends a throttle command to a second throttle</li>
+        <li>'S' sends a throttle command to a second throttle, <i>deprecated, use 'M'</i></li>
 
         <li>'M' sends a command to a "multi" throttle</li>
 
@@ -431,28 +431,24 @@ NJohn's Throttle
       ensure it sends periodic heartbeat commands (or any other
       command) to keep your engine(s) alive.</p>
 
-      <h3>T, S, M - Throttle Controller</h3>
+      <h3>M - MultiThrottle Controller</h3>
 
-      <p>The three throttle commands are somewhat similiar. The 'T'
-      and 'S' commands support a primary and secondary throttle,
-      which allows controlling two locomotives independently. The
-      'M' command is for a "multi" throttle (more details below).
-      All 'T' and 'S', and most 'M' commands are handled by the
+      <p>The 'M' command is for a "multi" throttle, handled by the
       <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/withrottle/ThrottleController.java">
       ThrottleController</a> class.</p>
 
-      <p>Unlike the 'T' and 'S' throttles, the 'M' multi throttle
+      <p>The 'M' multithrottle
       can handle more than one locomotive. Engine Driver uses this
       feature, for example, to make it super easy to create a
       consist on the fly with any set of engines (without using DCC
-      consisting). You can have one or more multi throttle, and
-      each multi throttle can have more than one locomotive
+      consisting). You can have one or more multithrottles, and
+      each multithrottle can have more than one locomotives
       attached to it. The first character after the 'M' is used as
       a key for the instance of MultiThrottle to use. Engine Driver
-      always uses 'MT' and therefore the key 'T' for it's multi
-      throttle instance. However, you can use other characters for
-      the key.</p>
+      uses '0' through '6' as its keys for multithrottle
+      instances. However, you can use other characters for
+      the key, 'T' is used in the examples below.</p>
 
       <h4>MultiThrottle Elements</h4>
 
@@ -506,13 +502,13 @@ MT+L341&lt;;&gt;ED&amp;RGW 341
       section.</p>
 
       <h5>'+' -- Add Locomotive</h5>The following command is a
-      request to add a new locomotive to the multi throttle:
+      request to add a new locomotive to the multithrottle:
       <pre class="code">
 MT+S3&lt;;&gt;ED&amp;RGW 341
 </pre>
 
       <p>The first element is "+S3" has the '+' to indicate that
-      this is a request to add a locomotive to the multi throttle.
+      this is a request to add a locomotive to the multithrottle.
       The rest of the string looks like an address, but it's
       actually a key used to identify the engine within the multi
       throttle. Engine Driver uses the DCC address as the key.</p>
@@ -551,7 +547,7 @@ MTAL341&lt;;&gt;s1
 </pre>
 
       <p class="note">the examples above are all replies from the
-      multi throttle.</p>
+      multithrottle.</p>
 
       <p>The reply consists of the following sections:</p>
 
@@ -578,16 +574,16 @@ MTAL341&lt;;&gt;s1
 
       <h5>'-' -- Remove Locomotive</h5>
 
-      <p>The '-' command removes an engine from a multi throttle.
-      Engine Driver, for example, sends the following command when
-      you release a locomotive:</p>
+      <p>The '-' command removes an engine from a multithrottle.
+      Engine Driver, for example, sends the following command to 
+      release all locomotives from the 'T' throttle:</p>
       <pre class="code">
 MT-*&lt;;&gt;r
 </pre>
 
       <p>The first element after the '-' character is the key of
       the locomotive to remove, or '*' to remove <i>all</i>
-      locomotives from the multi throttle instance. The multi
+      locomotives from the multithrottle instance. The multi
       throttle instance will loop through all of it's throttle
       instances and send the 'r' command to each one. The 'r'
       command is a release command.</p>
@@ -596,49 +592,46 @@ MT-*&lt;;&gt;r
 
       <p>This command passes the second element in the array to
       either a specific throttle (if you specify a key), or to all
-      of the throttles in the multi-throttle instance if you
+      of the throttles in the multithrottle instance if you
       provide '*' as the key. For example:</p>
       <pre class="code">
 MTA*&lt;;&gt;qR
 </pre>
 
-      <p>The characters after the 'A' in the first elemnet are the
-      key to a locomotive in the multi throttle, or '*' to send the
+      <p>The characters after the 'A' in the first element are the
+      key to a locomotive in the multithrottle, or '*' to send the
       command to all of the locomotives. In the example above,
       Engine Driver is sending a "qR" command to all of the
-      locomotives in the multi throttle.</p>
+      locomotives on the 'T' throttle.</p>
 
       <h2>Throttle Controller Commands</h2>
 
       <p>This section describes throttle commands, which are
-      commands that start with 'T' or 'S', or the second element of
-      'MT' commands (as described above). After the command prefix,
+      the second element of
+      'Mx' commands (as described above). After the command prefix,
       the next letter is one of the following:</p>
 
       <ul>
-        <li>'V' sets the speed (velocity). Format V<i>speed.
-        Example: "TV23"</i></li>
+        <li>'V' sets the speed (velocity). Format V<i>speed.</i></li>
 
-        <li>'X' emergency stop. Example: "TX"</li>
+        <li>'X' emergency stop.</li>
 
-        <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.
-        Example, "TF112"</li>
+        <li>'F' function key. Format F<i>{0|1}</i><i>Function</i>.</li>
 
         <li>'f' force function</li>
 
-        <li>'R' set direction. Format R<i>{0|1}</i>. Example
-        "TR1"</li>
+        <li>'R' set direction. Format R<i>{0|1}</i>.</li>
 
-        <li>'r' release. Example: "Tr"</li>
+        <li>'r' release.</li>
 
-        <li>'d' dispatch. Example: "Td"</li>
+        <li>'d' dispatch.</li>
 
-        <li>'L' sets a long DCC address. Example: "TL1234"</li>
+        <li>'L' sets a long DCC address.</li>
 
-        <li>'S' sets a short DCC address. Example: "TS32"</li>
+        <li>'S' sets a short DCC address.</li>
 
         <li>'E' sets an address from a roster entry. Format
-        E<i>ID</i>. Example, "TERGS 41"</li>
+        E<i>ID</i>.</li>
 
         <li>'C' consist</li>
 
@@ -656,19 +649,6 @@ MTA*&lt;;&gt;qR
         <li>'Q' quit</li>
       </ul>
 
-      <p class="note">All of the examples above use the simpler 'T'
-      command. If you're using the multi throttle, you'll need to
-      send an array with the text after the "T" in the second part
-      of the array. The descriptions below all use examples based
-      on the multi throttle. Here is an example of the difference
-      in the full command format for a multi throttle vs a normal
-      throttle ('T' or 'S'). Here is an example of one command in
-      both formats:</p>
-      <pre class="code">
-MTA*&lt;;&gt;V30
-TV30
-</pre>
-
       <p>Each of the commands is described in a section below when
       it takes additional information. Some commands, such as 'X'
       require no additional information.</p>
@@ -676,8 +656,8 @@ TV30
       <h3>'d' Dispatch and 'r' Release</h3>
 
       <p>For most DCC systems, these are the same thing; if in
-      doubt, use release. Device server will then send "Not Set" to
-      the mobile device.</p>
+      doubt, use release. Device server will then send a 
+      remove address command to the mobile device.</p>
 
       <h3>'F' Function</h3>
 

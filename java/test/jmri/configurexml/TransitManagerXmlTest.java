@@ -51,6 +51,7 @@ public class TransitManagerXmlTest {
    @Before
    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }

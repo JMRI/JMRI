@@ -222,7 +222,8 @@
         <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-0.1.16.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-0.1.19.jar"/>
+        <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -342,7 +343,6 @@
         <!-- Exclude pure interfaces and classes only providing constants. -->
         <exclude name="jmri/AddressedProgrammerManager.class" />
         <exclude name="jmri/PhysicalLocationReporter.class" />
-        <exclude name="jmri/Turnout.class" />
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
         <exclude name="jmri/jmrit/audio/AudioSource.class" />
@@ -441,8 +441,10 @@
             description="remove all non-respository files from a build"
             depends="clean">
         <delete dir="target"/>
+        <delete dir="release"/>
         <delete dir="dist"/>
         <delete dir="temp"/>
+        <delete dir="web/TrainCrew"/>
         <delete dir="lib/cachedir"/>
         <delete dir="${coveragetarget}"/>
         <delete includeEmptyDirs="true" quiet="true" verbose="true">
@@ -454,6 +456,7 @@
             <!-- .gitignore transient artifacts -->
             <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
+            <fileset file="release.zip"/>
             <fileset dir="." includes="hs_err_pid*.log"/>
         </delete>
     </target>
@@ -1042,7 +1045,7 @@
     <target name="locale"
             description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">
-        <java classname="apps.DecoderPro.DecoderPro" dir="." fork="yes">
+        <java classname="apps.PanelPro.PanelPro" dir="." fork="yes">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>

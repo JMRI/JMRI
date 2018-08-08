@@ -128,14 +128,8 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
     @Override
     protected void saveTrack(Track track) {
         // save the schedule
-        Object selected = comboBoxSchedules.getSelectedItem();
-        if (selected == null) {
-            track.setScheduleId(Track.NONE);
-        } else {
-            Schedule sch = (Schedule) selected;
-            // update only if the schedule has changed
-            track.setScheduleId(sch.getId());
-        }
+        Schedule schedule = (Schedule) comboBoxSchedules.getSelectedItem();
+        track.setSchedule(schedule);
         textSchError.setText(track.checkScheduleValid());
         super.saveTrack(track);
     }
@@ -180,7 +174,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
                 || e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
             updateScheduleComboBox();
         }
-        if (e.getPropertyName().equals(Schedule.LISTCHANGE_CHANGED_PROPERTY)) {
+        if (e.getSource().getClass().equals(Schedule.class)) {
             textSchError.setText(_track.checkScheduleValid());
         }
         super.propertyChange(e);

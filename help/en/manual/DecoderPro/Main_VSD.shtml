@@ -155,8 +155,8 @@
       <p>*Support for these systems is expected but not confirmed.
       If you have one of these systems and can confirm that VSD
       responds to throttle changes, please mention this on the
-      <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
-	  JMRIUsers Yahoo! Group</a></p>
+      <a href="https://groups.io/g/jmriusers">
+	  JMRI users Groups.io group</a></p>
 
       <p>Notably missing from this list is the popular NCE PowerCab
       system.</p>
@@ -208,8 +208,8 @@
       <p>If you have one of the systems noted as "not tested", and
       would like to help with testing and debug of this feature,
       please contact me on the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRIUsers Yahoo!
-      Group</a>. More systems will be added in the future.</p>
+      "https://groups.io/g/jmriusers">JMRI users Groups.io group</a>.
+      More systems will be added in the future.</p>
 
       <p>For details on setting up Location Following, see the
       <a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a>

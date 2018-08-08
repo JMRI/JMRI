@@ -433,6 +433,34 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
 
+    @Override
+    /**
+     * {@inheritDoc}
+     */
+    public String summary() {
+        StringBuilder retval = new StringBuilder();
+        retval.append(toString());
+        retval.append("\n  BeanType: "+getBeanType());
+                
+        retval.append("\n  aspects:");
+        Enumeration<String> values = getAspects();
+        while (values.hasMoreElements()) {
+            String aspect = values.nextElement();
+            retval.append("\n    aspect: "+aspect);
+            retval.append("\n       len aspectSettings: "+getAspectSettings(aspect).length);
+            retval.append("\n       attribute map:");
+            Enumeration<String> keys = aspectAttributeMap.get(aspect).keys();
+            while (keys.hasMoreElements()) {
+                String key = keys.nextElement();
+                retval.append("\n       key: "+key+" value: "+aspectAttributeMap.get(aspect).get(key));
+            }
+        }
+        
+        retval.append("\n  SignalSystem = "+getSignalSystem());
+        
+        return new String(retval);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class);
 
 }

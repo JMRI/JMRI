@@ -617,7 +617,7 @@ public class RailDriverMenuItem extends JMenuItem
                             setLEDs("DBr");
                         } else {
                             String speed = String.format("%03d", setting);
-                            //log.info("••••    speed: " + speed);
+                            //log.info("speed: " + speed);
                             setLEDs(speed);
                         }
                     }

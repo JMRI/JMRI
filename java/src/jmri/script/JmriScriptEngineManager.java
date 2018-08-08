@@ -181,10 +181,11 @@ public final class JmriScriptEngineManager {
      * @param extension a file extension
      * @return a ScriptEngine or null
      */
-    public ScriptEngine getEngineByExtension(String extension) {
+    public ScriptEngine getEngineByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
         if (name == null) {
-            log.error("Could not find script engine name for extension \"{}\"", extension);
+            log.error("Could not find script engine for extension \"{}\", expected one of {}", extension, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for extension \""+extension+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getEngine(name);
     }
@@ -196,10 +197,11 @@ public final class JmriScriptEngineManager {
      * @param mimeType a mimeType for a script
      * @return a ScriptEngine or null
      */
-    public ScriptEngine getEngineByMimeType(String mimeType) {
+    public ScriptEngine getEngineByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
         if (name == null) {
-            log.error("Could not find script engine name for mime type \"{}\"", mimeType);
+            log.error("Could not find script engine for mime type \"{}\", expected one of {}", mimeType, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for mime type \""+mimeType+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getEngine(name);
     }
@@ -210,10 +212,11 @@ public final class JmriScriptEngineManager {
      * @param shortName the short name for the ScriptEngine
      * @return a ScriptEngine or null
      */
-    public ScriptEngine getEngineByName(String shortName) {
+    public ScriptEngine getEngineByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
         if (name == null) {
-            log.error("Could not find script engine name for short name \"{}\"", shortName);
+            log.error("Could not find script engine for short name \"{}\", expected one of {}", shortName, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for short name \""+shortName+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getEngine(name);
     }
@@ -415,10 +418,11 @@ public final class JmriScriptEngineManager {
      * @param extension a file extension
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactoryByExtension(String extension) {
+    public ScriptEngineFactory getFactoryByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
         if (name == null) {
-            log.error("Could not find script engine factory name for extension \"{}\"", extension);
+            log.error("Could not find script engine factory for extension \"{}\", expected one of {}", extension, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for extension \""+extension+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getFactory(name);
     }
@@ -430,10 +434,11 @@ public final class JmriScriptEngineManager {
      * @param mimeType the script mimeType
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
+    public ScriptEngineFactory getFactoryByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
         if (name == null) {
-            log.error("Could not find script engine factory name for mime type \"{}\"", mimeType);
+            log.error("Could not find script engine factory for mime type \"{}\", expected one of {}", mimeType, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for mime type \""+mimeType+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getFactory(name);
     }
@@ -444,10 +449,11 @@ public final class JmriScriptEngineManager {
      * @param shortName the short name for the factory
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactoryByName(String shortName) {
+    public ScriptEngineFactory getFactoryByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
         if (name == null) {
-            log.error("Could not find script engine factory name for short name \"{}\"", shortName);
+            log.error("Could not find script engine factory for name \"{}\", expected one of {}", shortName, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for short name \""+shortName+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getFactory(name);
     }

@@ -21,7 +21,7 @@ public class SprogCSSerialDriverAdapter
         options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
                 new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
                 true)); // first element (TrackPowerState) NOI18N
-        //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        // Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogCSTitle"));
     }
 

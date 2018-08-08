@@ -15,6 +15,7 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +39,7 @@ public class JsonSchemaSocketServiceTest {
 
     /**
      * Test that schema are gettable, but not modifiable.
+     * Note: This test will be skipped if json-schema.org is unreachable.
      *
      * @throws IOException   on unexpected exception
      * @throws JmriException on unexpected exception
@@ -45,6 +47,17 @@ public class JsonSchemaSocketServiceTest {
      */
     @Test
     public void testOnMessage() throws IOException, JmriException, JsonException {
+        // this test triggers a process that tries to contact json-schema.org.
+        // we first verify that host is reachable.
+        boolean reachable = false;
+        try{
+          java.net.InetAddress inet = java.net.InetAddress.getByName("json-schema.org");
+          reachable = inet.isReachable(5000);
+        } catch(java.net.UnknownHostException uhe) {
+          reachable = false;
+        }
+        // if the host isn't reachable, we're going to skip the test.
+        Assume.assumeTrue(reachable);
         String type = JSON.SCHEMA;
         ObjectNode data = mapper.createObjectNode();
         Locale locale = Locale.ENGLISH;

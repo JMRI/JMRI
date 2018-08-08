@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
     <div id="mBody">
 <!--#include virtual="Sidebar" -->
 
@@ -513,7 +513,7 @@ and assigned the Variable key type.
 <p>When the script is done scanning, it provides an option to export the <strong>entire</strong>
 key list to a CSV file.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

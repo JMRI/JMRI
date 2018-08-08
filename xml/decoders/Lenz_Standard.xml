@@ -678,7 +678,7 @@
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33">
         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-        <label xml:lang="cs">Reset všech CV na továtní nastavení</label>
+        <label xml:lang="cs">Reset všech CV na tovární nastavení</label>
       </factReset>
     </resets>
   </decoder>

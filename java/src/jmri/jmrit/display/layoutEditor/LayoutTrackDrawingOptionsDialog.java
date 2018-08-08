@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +52,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         initComponents();
         setLocationRelativeTo(layoutEditor);
         definePresets();
+        pack();
     }
 
     /**
@@ -1020,7 +1021,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void mainRailColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_mainRailColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        Color newColor = JmriColorChooser.showDialog(null, "Choose a color", value);
         if ((newColor != null) && !newColor.equals(value)) {
             makeCustomPreset();
             button.setBackground(newColor);
@@ -1032,7 +1033,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void sideRailColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_sideRailColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        Color newColor = JmriColorChooser.showDialog(null, "Choose a color", value);
         if ((newColor != null) && !newColor.equals(value)) {
             makeCustomPreset();
             button.setBackground(newColor);
@@ -1044,7 +1045,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void mainBallastColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_mainBallastColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        Color newColor = JmriColorChooser.showDialog(null, "Choose a color", value);
         if ((newColor != null) && !newColor.equals(value)) {
             makeCustomPreset();
             button.setBackground(newColor);
@@ -1056,7 +1057,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void sideBallastColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_sideBallastColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        Color newColor = JmriColorChooser.showDialog(null, "Choose a color", value);
         if ((newColor != null) && !newColor.equals(value)) {
             makeCustomPreset();
             button.setBackground(newColor);
@@ -1068,7 +1069,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void mainTieColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_mainTieColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        Color newColor = JmriColorChooser.showDialog(null, "Choose a color", value);
         if ((newColor != null) && !newColor.equals(value)) {
             makeCustomPreset();
             button.setBackground(newColor);
@@ -1080,7 +1081,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void sideTieColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_sideTieColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
-        Color newColor = JColorChooser.showDialog(null, "Choose a color", value);
+        Color newColor = JmriColorChooser.showDialog(null, "Choose a color", value);
         if ((newColor != null) && !newColor.equals(value)) {
             makeCustomPreset();
             button.setBackground(newColor);

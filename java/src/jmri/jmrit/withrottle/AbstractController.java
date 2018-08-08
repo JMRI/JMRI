@@ -28,9 +28,11 @@ abstract public class AbstractController {
 
     /**
      * Break down a message and use it.
+     * @param message message for controller to parse and take action
+     * @param deviceServer DeviceServer that sent this message, used to send response messages to proper client
      *
      */
-    abstract void handleMessage(String message);
+    abstract void handleMessage(String message, DeviceServer deviceServer);
 
     /**
      * Register as listener of NamedBeans to be updated of changes.
@@ -78,11 +80,11 @@ abstract public class AbstractController {
 
     /**
      * Add a listener to handle: listener.sendPacketToDevice(message);
-     *
+     * @param listener listener to add to listeners list
      */
     public void addControllerListener(ControllerInterface listener) {
         if (listeners == null) {
-            listeners = new ArrayList<ControllerInterface>(1);
+            listeners = new ArrayList<>(1);
         }
         if (!listeners.contains(listener)) {
             listeners.add(listener);

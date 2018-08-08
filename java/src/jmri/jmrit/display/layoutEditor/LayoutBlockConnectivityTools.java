@@ -341,6 +341,12 @@ public class LayoutBlockConnectivityTools {
              We also need to perform a more advanced check if the destBlockn1
              is null as this indicates that the destination signal mast is assigned
              on an end bumper*/
+
+            if (pathMethod == SENSORTOSENSOR && destBlockn1.size() == 0) {
+                // Change the pathMethod to accept the NX sensor at the end bumper.
+                pathMethod = NONE;
+            }
+
             List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); //Was MASTTOMAST
             if (log.isDebugEnabled()) {
                 log.debug("checkValidDest blockList for {}", destBlock.getDisplayName());

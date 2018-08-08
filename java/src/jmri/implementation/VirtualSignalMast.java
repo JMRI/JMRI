@@ -1,14 +1,11 @@
 package jmri.implementation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * SignalMast implemented via one SignalHead object.
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF$vsm:basic:one-searchlight:($0001)
+ * IF$vsm:basic:one-searchlight($0001)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$vsm - defines signal masts of this type
@@ -47,11 +44,14 @@ public class VirtualSignalMast extends AbstractSignalMast {
         String mast = parts[2];
         // new style
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
-            if (autoNumber > lastRef) {
-                lastRef = autoNumber;
+            synchronized (VirtualSignalMast.class) {
+                if (autoNumber > lastRef) {
+                    lastRef = autoNumber;
+                }
             }
         } catch (NumberFormatException e) {
             log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
@@ -78,7 +78,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
         return lastRef;
     }
 
-    static int lastRef = 0;
+    protected static volatile int lastRef = 0;
 
-    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMast.class);
 }

@@ -261,14 +261,18 @@ public abstract class Apps3 extends AppsBase {
 
     private void prepareFontLists() {
         // Prepare font lists
-        new Thread(new Runnable() {
+        Thread fontThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 log.debug("Prepare font lists...");
                 FontComboUtil.prepareFontLists();
                 log.debug("...Font lists built");
             }
-        }).start();
+        });
+        
+        fontThread.setDaemon(true);
+        fontThread.setPriority(Thread.MIN_PRIORITY);
+        fontThread.start();
     }
 
     protected void initMacOSXMenus() {
@@ -317,6 +321,7 @@ public abstract class Apps3 extends AppsBase {
         } else {
             profileFile = new File(profileFilename);
         }
+
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property org.jmri.profile as a profile id.
@@ -325,6 +330,7 @@ public abstract class Apps3 extends AppsBase {
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!profileFile.exists()) { // no profile config for this app
+            log.trace("profileFile {} doesn't exist", profileFile);
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // notify user of change only if migration occurred
@@ -349,6 +355,9 @@ public abstract class Apps3 extends AppsBase {
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
+
+            // rapid language set; must follow up later with full setting as part of preferences
+            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }

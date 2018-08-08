@@ -47,7 +47,7 @@ class Steam1Sound extends EngineSound {
     // Trigger Sounds
     HashMap<String, SoundBite> trigger_sounds;
 
-    private int top_speed;
+    int top_speed;
     private float driver_diameter_float;
     private int num_cylinders;
     private float exponent;
@@ -57,6 +57,7 @@ class Steam1Sound extends EngineSound {
     private SoundBite brake_sound;
     private SoundBite pre_arrival_sound;
     float engine_rd;
+    float engine_gain;
 
     // Common variables
     boolean is_looping = false;
@@ -89,6 +90,11 @@ class Steam1Sound extends EngineSound {
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
         }
+    }
+
+    @Override
+    double speedCurve(float t) {
+        return Math.pow(t, exponent);
     }
 
     // Called from thread
@@ -190,6 +196,21 @@ class Steam1Sound extends EngineSound {
         // Sounds with distance to listener position lower than reference-distance will not have attenuation
         engine_rd = setXMLReferenceDistance(e); // Handle reference distance
         log.debug("engine-sound referenceDistance: {}", engine_rd);
+
+        // Optional value
+        // Allows to adjust the engine gain
+        n = e.getChildText("engine-gain");
+        if ((n != null) && (!n.isEmpty())) {
+            engine_gain = Float.parseFloat(n);
+            // Make some restrictions, since engine_gain is used for calculations later
+            if ((engine_gain < default_gain - 0.4f) || (engine_gain > default_gain + 0.2f)) {
+                log.info("Invalid engine gain {} was set to default {}", engine_gain, default_gain);
+                engine_gain = default_gain;
+            }
+        } else {
+            engine_gain = default_gain;
+        }
+        log.debug("engine gain: {}", engine_gain);
 
         // Optional value
         // Defines how many rpms in 0.5 seconds will trigger decel actions like braking.
@@ -626,6 +647,7 @@ class Steam1Sound extends EngineSound {
         public S1LoopThread(Steam1Sound d, String s, int ts, float dd, 
                 int nc, float e, int dtr, boolean r) {
             super();
+            _parent = d;
             is_running = r;
             is_looping = false;
             is_dying = false;
@@ -642,8 +664,7 @@ class Steam1Sound extends EngineSound {
             helper_notch = null;
             // Sound for queueing.
             _sound = new SoundBite(s + "_QUEUE");
-            _sound.setGain(VSDSound.default_gain); // All chuff sounds will have this gain
-            _parent = d;
+            _sound.setGain(_parent.engine_gain); // All chuff sounds will have this gain
             _top_speed = ts;
             _driver_diameter_float = dd;
             _num_cylinders = nc;
@@ -1037,10 +1058,10 @@ class Steam1Sound extends EngineSound {
             return helper_index;
         }
 
-        public int calcRPM(float t) {
+        private int calcRPM(float t) {
             // speed = % of topspeed (mph)
             // RPM = speed * ((inches/mile) / (minutes/hour)) / (pi * driver_diameter_float)
-            return (int) Math.round(speedCurve(t) * _top_speed * 1056 / (Math.PI * _driver_diameter_float));
+            return (int) Math.round(_parent.speedCurve(t) * _top_speed * 1056 / (Math.PI * _driver_diameter_float));
         }
 
         public double speedCurve(float t) {

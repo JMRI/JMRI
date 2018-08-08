@@ -68,8 +68,11 @@ public class LearnWarrantTest {
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
         JFrameOperator jfo = new JFrameOperator(frame);
-
         pressButton(jfo, Bundle.getMessage("Calculate"));
+        
+        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
+        pressButton(jdo, Bundle.getMessage("ButtonSelect"));
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders() != null);

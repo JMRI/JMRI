@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import org.jdom2.Document;
@@ -42,43 +45,18 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau (C) 2008
  * @see NceConsistRosterEntry
  */
-public class NceConsistRoster extends XmlFile {
-
-    /**
-     * record the single instance of Roster *
-     */
-    private static NceConsistRoster _instance = null;
-
-    public synchronized static void resetInstance() {
-        _instance = null;
+public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
+    
+    public NceConsistRoster() {
     }
 
     /**
-     * Locate the single instance of Roster, loading it if need be
-     *
-     * @return The valid Roster object
+     * @return The NCE consist roster object
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
     public static synchronized NceConsistRoster instance() {
-        if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("ConsistRoster creating instance");
-            }
-            // create and load
-            _instance = new NceConsistRoster();
-            if (_instance.checkFile(defaultNceConsistRosterFilename())) {
-                try {
-                    _instance.readFile(defaultNceConsistRosterFilename());
-                } catch (IOException | JDOMException e) {
-                    log.error("Exception during ConsistRoster reading: {}", e.getMessage());
-                }
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("ConsistRoster returns instance " + _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(NceConsistRoster.class);
     }
 
     /**
@@ -451,10 +429,10 @@ public class NceConsistRoster extends XmlFile {
      * Store the roster in the default place, including making a backup if
      * needed
      */
-    public static void writeRosterFile() {
-        NceConsistRoster.instance().makeBackupFile(defaultNceConsistRosterFilename());
+    public void writeRosterFile() {
+        makeBackupFile(defaultNceConsistRosterFilename());
         try {
-            NceConsistRoster.instance().writeFile(defaultNceConsistRosterFilename());
+            writeFile(defaultNceConsistRosterFilename());
         } catch (IOException e) {
             log.error("Exception while writing the new ConsistRoster file, may not be complete: {}", e.getMessage());
         }
@@ -469,7 +447,7 @@ public class NceConsistRoster extends XmlFile {
         _list.clear();
         // and read new
         try {
-            _instance.readFile(defaultNceConsistRosterFilename());
+            readFile(defaultNceConsistRosterFilename());
         } catch (IOException | JDOMException e) {
             log.error("Exception during ConsistRoster reading: {}", e.getMessage());
         }
@@ -526,6 +504,18 @@ public class NceConsistRoster extends XmlFile {
 
         firePropertyChange("change", null, r);
     }
+    
+    @Override
+    public void initialize() {
+        if (checkFile(defaultNceConsistRosterFilename())) {
+            try {
+                readFile(defaultNceConsistRosterFilename());
+            } catch (IOException | JDOMException e) {
+                log.error("Exception during ConsistRoster reading: {}", e.getMessage());
+            }
+        }
+    }
+    
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 

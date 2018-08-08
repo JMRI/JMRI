@@ -28,7 +28,7 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
         generateCheckBox.setText(rb.getString("GenerateCsvManifest"));
         generateCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
         fileNameTextField.setText(InstanceManager.getDefault(TrainCustomManifest.class).getFileName());
-        pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()).getPath()));
+        pDirectoryName.add(new JLabel(InstanceManager.getDefault(OperationsManager.class).getFile(InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()).getPath()));
     }
 
     // Save and Test

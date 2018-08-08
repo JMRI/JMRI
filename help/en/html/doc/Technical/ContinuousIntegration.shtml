@@ -24,7 +24,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -103,6 +103,10 @@
       "http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>,
       also known as <a href=
       "http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>.
+      Because it's hosted outside the US, we force its
+      Java locale to US English by setting the 
+      <code>LC_ALL</code> environment variable to
+      <code>en_US</code> in the master Jenkins configuration settings.
       
       <!-- We previously had an engine at <a href=
       "https://jmri.ci.cloudbees.com">https://jmri.ci.cloudbees.com</a>.
@@ -194,7 +198,7 @@
 
       <p><img src="images/NetBeansJenkinsOverview.png" width="342"
       height="452" alt="Jenkins Overview"></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

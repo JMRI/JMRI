@@ -23,7 +23,7 @@ public class ThrottleFramePropertyEditorTest {
         ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor(frame);
         Assert.assertNotNull("exists", dialog);
         JUnitUtil.dispose(frame);
-    }
+     }
 
     @Before
     public void setUp() {

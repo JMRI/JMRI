@@ -22,15 +22,77 @@ import org.slf4j.LoggerFactory;
  * A third thread is registered by the constructor as a shutdown hook. It
  * triggers the necessary cleanup code
  * <p>
- * "Mode" refers to the state of the command station communications.<br>
- * "State" refers to the internal state machine used to control the mode, e.g.
- * to send commands to change mode.<br>
- * "Idle" is a special case, where there is no communications in process, and
- * the port is waiting to do something.
+ * The internal state machine handles changes of mode, automatic retry of 
+ * certain messages, time outs, and sending poll messages when otherwise idle.
+ * <p>
+ * "Mode" refers to the state of the command station communications. "Normal" 
+ * and "Programming" are the two modes, used if the command station requires
+ * messages to go back and forth between them. <br>
  *
+ * <img src="doc-files/AbstractMRTrafficController-StateDiagram.png" alt="UML State diagram">
+ * 
+ * <P>
+ * The key methods for the basic operation are:
+ * <UL>
+ * <li>If needed for formatting outbound messages, {@link #addHeaderToOutput(byte[], AbstractMRMessage)} and {@link #addTrailerToOutput(byte[], int, AbstractMRMessage)}
+ * <li> {@link #newReply()} creates an empty reply message (of the proper concrete type) to fill with incoming data
+ * <li>The {@link #endOfMessage(AbstractMRReply) } method is used to parse incoming messages. If it needs
+ *      information on e.g. the last message sent, that can be stored in member variables
+ *      by {@link #forwardToPort(AbstractMRMessage, AbstractMRListener)}.
+ *  <li>{@link #forwardMessage(AbstractMRListener, AbstractMRMessage)} and {@link #forwardReply(AbstractMRListener, AbstractMRReply) } handle forwarding of specific types of objects
+ * </ul>
+ * <p>
+ * If your command station requires messages to go in and out of 
+ * "programming mode", those should be provided by 
+ * {@link #enterProgMode()} and {@link #enterNormalMode()}.
+ * <p>
+ * If you want to poll for information when the line is otherwise idle,
+ * implement {@link #pollMessage()} and {@link #pollReplyHandler()}.
+ * 
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2004-2010
  */
+
+/*
+@startuml jmri/jmrix/doc-files/AbstractMRTrafficController-StateDiagram.png
+
+    [*] --> IDLESTATE
+    IDLESTATE --> NOTIFIEDSTATE : sendMessage()
+    NOTIFIEDSTATE --> IDLESTATE : queue empty
+    
+    NOTIFIEDSTATE --> WAITMSGREPLYSTATE : transmitLoop()\nwake, send message
+    
+    WAITMSGREPLYSTATE --> WAITREPLYINPROGMODESTATE : transmitLoop()\nnot in PROGRAMINGMODE,\nmsg for PROGRAMINGMODE
+    WAITMSGREPLYSTATE --> WAITREPLYINNORMMODESTATE : transmitLoop()\nnot in NORMALMODE,\nmsg for NORMALMODE
+    
+    WAITMSGREPLYSTATE --> NOTIFIEDSTATE : handleOneIncomingReply()
+
+    WAITREPLYINPROGMODESTATE --> OKSENDMSGSTATE : handleOneIncomingReply()\nentered PROGRAMINGMODE
+    WAITREPLYINNORMMODESTATE --> OKSENDMSGSTATE : handleOneIncomingReply()\nentered NORMALMODE
+    OKSENDMSGSTATE --> WAITMSGREPLYSTATE : send original pended message
+    
+    IDLESTATE --> POLLSTATE : transmitLoop()\nno work
+    POLLSTATE --> WAITMSGREPLYSTATE : transmitLoop()\npoll msg exists, send it
+    POLLSTATE --> IDLESTATE : transmitLoop()\nno poll msg to send
+    
+    WAITMSGREPLYSTATE --> AUTORETRYSTATE : handleOneIncomingReply()\nwhen tagged as error reply
+    AUTORETRYSTATE --> IDLESTATE : to drive a repeat of a message 
+
+NOTIFIEDSTATE : Transmit thread wakes up and processes
+POLLSTATE : Transient while deciding to send poll
+OKSENDMSGSTATE : Transient while deciding to send\noriginal message after mode change
+AUTORETRYSTATE : Transient while deciding to resend auto-retry message
+WAITREPLYINPROGMODESTATE : Sent request to go to programming mode,\nwaiting reply
+WAITREPLYINNORMMODESTATE : Sent request to go to normal mode,\nwaiting reply
+WAITMSGREPLYSTATE : Have sent message, waiting a\nresponse from layout
+
+Note left of AUTORETRYSTATE : This state handles timeout of\nmessages marked for autoretry
+Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when going back\nto send message that\nwas deferred for mode change.
+
+@enduml
+ */
+
+
 abstract public class AbstractMRTrafficController {
 
     private Thread shutdownHook = null; // retain shutdown hook for 
@@ -127,8 +189,8 @@ abstract public class AbstractMRTrafficController {
 
     /**
      * Invoked if it's appropriate to do low-priority polling of the command
-     * station, this should return the next message to send, or null if the TC
-     * should just sleep.
+     * station, this should return the next message to send, or null if the
+     * TrafficController should just sleep.
      */
     abstract protected AbstractMRMessage pollMessage();
 
@@ -1152,26 +1214,26 @@ abstract public class AbstractMRTrafficController {
 
         AbstractMRReply mMsg;
         AbstractMRListener mDest;
-        AbstractMRTrafficController mTC;
+        AbstractMRTrafficController mTc;
 
         public RcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
-                AbstractMRTrafficController pTC) {
+                AbstractMRTrafficController pTc) {
             mMsg = pMsg;
             mDest = pDest;
-            mTC = pTC;
+            mTc = pTc;
         }
 
         @Override
         public void run() {
             log.debug("Delayed rcv notify starts");
-            mTC.notifyReply(mMsg, mDest);
+            mTc.notifyReply(mMsg, mDest);
         }
     } // end RcvNotifier
 
     // allow creation of object outside package
     protected RcvNotifier newRcvNotifier(AbstractMRReply pMsg, AbstractMRListener pDest,
-            AbstractMRTrafficController pTC) {
-        return new RcvNotifier(pMsg, pDest, pTC);
+            AbstractMRTrafficController pTc) {
+        return new RcvNotifier(pMsg, pDest, pTc);
     }
 
     /**
@@ -1182,19 +1244,19 @@ abstract public class AbstractMRTrafficController {
 
         AbstractMRMessage mMsg;
         AbstractMRListener mDest;
-        AbstractMRTrafficController mTC;
+        AbstractMRTrafficController mTc;
 
         public XmtNotifier(AbstractMRMessage pMsg, AbstractMRListener pDest,
-                AbstractMRTrafficController pTC) {
+                AbstractMRTrafficController pTc) {
             mMsg = pMsg;
             mDest = pDest;
-            mTC = pTC;
+            mTc = pTc;
         }
 
         @Override
         public void run() {
             log.debug("Delayed xmt notify starts");
-            mTC.notifyMessage(mMsg, mDest);
+            mTc.notifyMessage(mMsg, mDest);
         }
     }  // end XmtNotifier
 
@@ -1239,15 +1301,15 @@ abstract public class AbstractMRTrafficController {
      */
     static class CleanupHook implements Runnable {
 
-        AbstractMRTrafficController mTC;
+        AbstractMRTrafficController mTc;
 
-        CleanupHook(AbstractMRTrafficController pTC) {
-            mTC = pTC;
+        CleanupHook(AbstractMRTrafficController pTc) {
+            mTc = pTc;
         }
 
         @Override
         public void run() {
-            mTC.terminate();
+            mTc.terminate();
         }
     }
 
