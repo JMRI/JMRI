@@ -159,6 +159,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case NODECOLUMN:
                 if (_node[row]>0) {
                     return _node[row];
+                } else {
+                    return null;
                 }
             case EVENTCOLUMN:
                 return _event[row];
