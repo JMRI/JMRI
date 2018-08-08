@@ -198,7 +198,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(makeTextPanel("Text", sample, true));
         _samplePanel.add(sample);
         log.debug("DragDecoratorLabel size {} | panel size {}", sample.getPreferredSize(), _samplePanel.getPreferredSize());
-        finishInit(true);
+        finishInit(true, sample);
     }
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
@@ -273,14 +273,14 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         util.getFixedWidth(), util.getFixedHeight(), pos.getWidth(), pos.getHeight());
             }
         }
-        finishInit(false);
+        finishInit(false, pos);
     }
 
-    private void finishInit(boolean addBgCombo) {
-        _chooser.setPreviewPanel(new JPanel());
+    private void finishInit(boolean addBgCombo, Positionable pos) {
         _chooser = JmriColorChooser.extendColorChooser(_chooser);
         setSuppressRecentColor(true);
         _chooser.getSelectionModel().addChangeListener(this);
+        _chooser.setPreviewPanel(new JPanel());
         add(_chooser);
         _previewPanel.add(_samplePanel, BorderLayout.CENTER);
 
@@ -291,9 +291,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         add(_previewPanel);
         _previewPanel.setImage(_backgrounds[0]);
         _previewPanel.revalidate();        // force redraw
-        updateSamples();
         // after everything created, set selections
-        setFontSelections();
+        setFontSelections(pos);
+        updateSamples();
     }
 
     private void doPopupUtility(String type, PositionableLabel sample, boolean editText) {
@@ -374,7 +374,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(sizePanel);
     }
     
-    private void setFontSelections() {
+    private void setFontSelections(Positionable pos) {
         _fontBox.setSelectedItem(_util.getFont());
         int row = 4;
         for (int i = 0; i < FONTSIZE.length; i++) {
@@ -399,7 +399,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 row = 2;
         }
         _fontJustBox.setSelectedIndex(row);
+
         _selectedButton = FOREGROUND_BUTTON;
+        _chooser.setColor(pos.getForeground());
+        _fontButton.setSelected(true);
     }
 
     String bundleCaption = null;
@@ -482,26 +485,25 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                             _chooser.setColor(util.getForeground());
                             break;
                         case BACKGROUND_BUTTON:
-                            Color c;
                             if (util.hasBackground()) {
-                                c = util.getBackground();
-                            } else {
-                                c = _editor.getTargetPanel().getBackground();
+                                _chooser.setColor(util.getBackground());
                             }
-                            _chooser.setColor(c);
                             util.setHasBackground(true);
                             pos.setOpaque(true);
                             break;
                         case BORDERCOLOR_BUTTON:
                             _chooser.setColor(util.getBorderColor());
                             break;
-                        default:    // TRANSPARENT_BUTTON
+                        case TRANSPARENT_BUTTON:
                             util.setHasBackground(false);
+                            _util.setHasBackground(false);
                             pos.setOpaque(false);
-                    }
+                            break;
+                        default:    // TRANSPARENT_BUTTON
+                   }
                     log.debug("Button actionPerformed Colors opaque= {} _state= {} _which= {}",
                             pos.isOpaque(), button._state, button._which);
-                    colorChange();
+                    updateSamples();
                 }
             }
         });
@@ -641,18 +643,32 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 case BORDER:
                     _util.setBorderSize(num);
                     _borderButton.setSelected(true);
+                    _selectedButton = BORDERCOLOR_BUTTON;
+                    _chooser.setColor(_util.getBorderColor());
                     break;
                 case MARGIN:
                     _util.setMargin(num);
-                    _backgroundButton.setSelected(true);
+                    _selectedButton = BACKGROUND_BUTTON;
+                    Color c = _util.getBackground();
+                    if (c != null) {
+                        _chooser.setColor(c);
+                    }
                     break;
                 case FWIDTH:
                     _util.setFixedWidth(num);
                     _backgroundButton.setSelected(true);
+                    c = _util.getBackground();
+                    if (c != null) {
+                        _chooser.setColor(c);
+                    }
                     break;
                 case FHEIGHT:
                     _util.setFixedHeight(num);
                     _backgroundButton.setSelected(true);
+                    c = _util.getBackground();
+                    if (c != null) {
+                        _chooser.setColor(c);
+                    }
                     break;
                 default:
                     log.warn("Unexpected _which {}  in stateChanged", ((AJSpinner) obj)._which);
@@ -759,7 +775,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             } else {
                 util.setBackgroundColor(null);
             }
-            util.setHasBackground(sample.isOpaque());
+            util.setHasBackground(_util.hasBackground());
             util.setFont(_util.getFont());
             util.setFixedWidth(_util.getFixedWidth());
             util.setFixedHeight(_util.getFixedHeight());
@@ -783,6 +799,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             case SIZE:
                 String size = (String) comboBox.getSelectedItem();
                 _util.setFontSize(Float.valueOf(size));
+                _selectedButton = FOREGROUND_BUTTON;
+                _chooser.setColor(_util.getForeground());
                 _fontButton.setSelected(true);
                 break;
             case STYLE:
@@ -805,6 +823,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         break;
                 }
                 _util.setFontStyle(style);
+                _selectedButton = FOREGROUND_BUTTON;
+                _chooser.setColor(_util.getForeground());
                 _fontButton.setSelected(true);
                 break;
             case JUST:
@@ -824,11 +844,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         break;
                 }
                 _util.setJustification(just);
+                _selectedButton = FOREGROUND_BUTTON;
+                _chooser.setColor(_util.getForeground());
                 _fontButton.setSelected(true);
                 break;
             case FONT:
                 Font font = (Font) comboBox.getSelectedItem();
                 _util.setFont(font);
+                _selectedButton = FOREGROUND_BUTTON;
+                _chooser.setColor(_util.getForeground());
                 _fontButton.setSelected(true);
                 break;
             default:
