@@ -512,6 +512,10 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     
     void copyFromAnotherMatrixMastAspect(String strMast) {
         MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
+        if (mast == null) {
+            log.error("Cannot copy from mast {} which doesn't exist", strMast);
+            return;
+        }
         if (bitNum != mast.getBitNum()) {
             int i = JOptionPane.showConfirmDialog(null, Bundle.getMessage("MatrixColWarning", mast.getBitNum(), bitNum),
                     Bundle.getMessage("MatrixColWarningTitle"),
@@ -642,7 +646,12 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         for (String name : names) {
             // only accept MatrixSignalMast masts
             if (InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof MatrixSignalMast) {
-                mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
+                SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name);
+                if (m!=null) {
+                    mastSelect.addItem(m.getDisplayName());
+                } else {
+                    log.error("Can't copy from mast {} as it doesn't exist", name);
+                }
             }
         }
         if (mastSelect.getItemCount() == 0) {
