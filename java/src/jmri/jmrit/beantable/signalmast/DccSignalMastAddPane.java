@@ -139,7 +139,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         log.debug("setMast({}) start", mast);
         if (mast == null) { 
             currentMast = null; 
-            log.debug("setMast({}) end early with null", mast);
+            log.debug("setMast() end early with null");
             return; 
         }
         
@@ -189,7 +189,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         log.debug("setMast({}) end", mast);
     }
 
-    static boolean validateAspectId(String strAspect) {
+    static boolean validateAspectId(@Nonnull String strAspect) {
         int aspect;
         try {
             aspect = Integer.parseInt(strAspect.trim());
@@ -209,14 +209,14 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
      * Return the first part of the system name 
      * for the specific mast type
      */
-    protected String getNamePrefix() {
+    protected @Nonnull String getNamePrefix() {
         return "F$dsm:";
     }
 
     /** 
      * Create a mast of the specific subtype
      */
-    protected DccSignalMast constructMast(String name) {
+    protected DccSignalMast constructMast(@Nonnull String name) {
         return new DccSignalMast(name);
     }
     
@@ -237,7 +237,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
             }
             String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) systemPrefixBox.getSelectedItem());
             // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
-            if (systemNameText.equals("\0")) {
+            if (systemNameText == null || systemNameText.isEmpty()) {
                 systemNameText = "I";
             }
             systemNameText = systemNameText + getNamePrefix();
@@ -312,11 +312,10 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         return true;
     }
 
-    JComboBox<String> copyFromMastSelection() {
+    @Nonnull JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<>();
         List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
         for (String name : names) {
-            if (log.isTraceEnabled()) log.trace("copyFromMastSelection comparing to {}", InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name).getSignalSystem().getSystemName());
             if ((InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof DccSignalMast)){
                 mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
             }
@@ -344,8 +343,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /**
      * Copy aspects by name from another DccSignalMast
      */
-    void copyFromAnotherDCCMastAspect(String strMast) {
+    void copyFromAnotherDCCMastAspect(@Nonnull String strMast) {
         DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
+        if (mast == null) {
+            log.error("can't copy from another mast because {} doesn't exist", strMast);
+            return;
+        }
         Vector<String> validAspects = mast.getValidAspects();
         for (String aspect : dccAspect.keySet()) {
             if (validAspects.contains(aspect) || mast.isAspectDisabled(aspect)) { // valid doesn't include disabled

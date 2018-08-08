@@ -340,6 +340,10 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.error("Trying to store a null output. Fix output configuration for mast");
         } else {
             Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutname);
+            if (turn == null) {  
+                log.error("setOutpout couldn't locate turnout {}", turn);
+                return;
+            }
             NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutname, turn);
             if (outputsToBeans.containsKey(colname)) {
                 log.debug("Output " + colname + " is already defined so will override");
@@ -360,8 +364,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
         } else {
             for (int i = 0; i < outputsToBeans.size(); i++) {
                 //log.debug("Setting bits[1] = " + bits[i] + " for output #" + i);
-                if (getOutputBean(i + 1) != null) {
-                    getOutputBean(i + 1).setBinaryOutput(true); // prevent feedback etc.
+                Turnout t = getOutputBean(i + 1);
+                if ( t != null) {
+                    t.setBinaryOutput(true); // prevent feedback etc.
                 }
                 if (bits[i] == '1' && getOutputBean(i + 1) != null && getOutputBean(i + 1).getCommandedState() != Turnout.CLOSED) {
                     // no need to set a state already set
