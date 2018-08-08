@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -920,6 +921,14 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 iconPanel.setImage(_backgrounds[index]);
             }
         }
+        if (_iconPanel != null) {
+            _iconPanel.setImage(_backgrounds[index]);      
+        }
+    }
+
+    @Override
+    protected void updateBackground0(BufferedImage im) {
+        _backgrounds[0] = im;
     }
 
     protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {

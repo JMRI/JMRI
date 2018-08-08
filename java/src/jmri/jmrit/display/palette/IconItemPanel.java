@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -137,6 +138,14 @@ public class IconItemPanel extends ItemPanel {
                 iconPanel.setImage(_backgrounds[index]);
             }
         }
+        if (_iconPanel != null) {
+            _iconPanel.setImage(_backgrounds[index]);
+        }
+    }
+    
+    @Override
+    protected void updateBackground0(BufferedImage im) {
+        _backgrounds[0] = im;
     }
 
     /**
