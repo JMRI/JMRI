@@ -34,12 +34,12 @@ public class DebugThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 1 and above can be a long address
+     * Address 128 and above can be a long address
      *
      */
     @Override
     public boolean canBeLongAddress(int address) {
-        return (address >= 1);
+        return (address >= 128);
     }
 
     /**
