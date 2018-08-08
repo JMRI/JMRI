@@ -471,8 +471,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     public static void setLocaleMinimally(Profile profile) {
         String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found
-        log.debug("language found {}", name);
+        log.debug("setLocaleMinimally found language {}, setting", name);
         Locale.setDefault(new Locale(name));
+        javax.swing.JComponent.setDefaultLocale(new Locale(name));
+        javax.swing.JOptionPane.setDefaultLocale(new Locale(name));
     }
 
     /**

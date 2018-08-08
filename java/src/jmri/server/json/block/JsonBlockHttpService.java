@@ -22,7 +22,7 @@ import jmri.server.json.sensor.JsonSensor;
 
 /**
  *
- * @author mstevetodd Copyright 2016
+ * @author mstevetodd Copyright 2018
  * @author Randall Wood Copyright 2018
  */
 public class JsonBlockHttpService extends JsonNamedBeanHttpService {

@@ -18,12 +18,12 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 
 /**
- * Pane for user creation of Sensor, Turnouts and Lights (?) that are linked to CBUS
+ * Pane for user creation of Sensor, Turnouts and Lights that are linked to CBUS
  * events.
  *
  * @author Bob Jacobsen Copyright (C) 2008
@@ -332,6 +332,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
-        private static final Logger log = LoggerFactory.getLogger(ConfigToolPane.class);
+    //    private static final Logger log = LoggerFactory.getLogger(ConfigToolPane.class);
 
 }

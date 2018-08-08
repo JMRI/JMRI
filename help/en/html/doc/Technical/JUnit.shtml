@@ -67,7 +67,7 @@
             From Tests</a></li>
 
             <li><a href="#ResetInstMgr">Resetting the
-            InstanceManager</a></li>
+            InstanceManager</a> and other Managers</li>
 
             <li><a href="#RunningListeners">Working with
             Listeners</a></li>
@@ -488,25 +488,34 @@
       until those are handled.</p>
 
       <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the
-      InstanceManager</a></h3>If you are testing code that is going
+      InstanceManager</a></h3>
+      If you are testing code that is going
       to reference the InstanceManager, you should clear and reset
       it to ensure you get reproducible results.
 
-      <p>Depending on what managers your code uses, your
-      <code>setUp()</code> implementation should start with:</p>
+      <p>Depending on what managers your code needs, your
+      <code>setUp()</code> implementation could start with:</p>
 
 <pre style="font-family: monospace;">
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
     jmri.util.JUnitUtil.setUp();
     jmri.util.JUnitUtil.resetInstanceManager();
+    jmri.util.JUnitUtil.resetProfileManager();
+    jmri.util.JUnitUtil.initConfigureManager();
+    jmri.util.JUnitUtil.initShutDownManager();
+
+    jmri.util.JUnitUtil.initDebugCommandStation();
+    
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
     jmri.util.JUnitUtil.initReporterManager();
 </pre>
-    (You can omit the initialization managers you don't need) See
-    the jmri.util.JUnitUtil class for the full list of available ones,
-    and please add more if you need one that's not there yet.
+    (You can omit the initialization managers not needed for your tests) 
+    See the 
+    <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitUtil.java">jmri.util.JUnitUtil</a>
+    class for the full list of available ones,
+    and please add more if you need ones that are not in JUnitUtil yet.
 
       <p>Your <code>tearDown()</code> should end with:</p>
 <pre style="font-family: monospace;">

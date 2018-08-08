@@ -409,11 +409,12 @@ public class AddSignalMastPanel extends JPanel {
         // clear mast info
         currentPane.setMast(null);
 
-        revalidate();
-        if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+        currentPane.revalidate();
+        if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof Window) {
             ((JFrame)getTopLevelAncestor()).pack();
+        } else {
+            log.debug("Can't call pack() on {}", getTopLevelAncestor());
         }
-        repaint();
         log.trace(" updateSelectedDriver() end");
     }
 

@@ -113,6 +113,7 @@ public class SchemaTestBase {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         this.validate = XmlFile.getDefaultValidate();
     }
 

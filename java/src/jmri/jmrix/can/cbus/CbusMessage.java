@@ -55,15 +55,51 @@ public class CbusMessage {
     }
 
     public static int getEventType(CanMessage m) {
-        if ((m.getElement(0) & 1) == 1) {
+        if (
+           (m.getElement(0) == 0x91)
+        || (m.getElement(0) == 0x94)
+        || (m.getElement(0) == 0x99)
+        || (m.getElement(0) == 0x9E)
+        || (m.getElement(0) == 0xB1)
+        || (m.getElement(0) == 0xB4)
+        || (m.getElement(0) == 0xB9)
+        || (m.getElement(0) == 0xBE)
+        || (m.getElement(0) == 0xD1)
+        || (m.getElement(0) == 0xD5)
+        || (m.getElement(0) == 0xD9)
+        || (m.getElement(0) == 0xDE)
+        || (m.getElement(0) == 0xF1)
+        || (m.getElement(0) == 0xF4)
+        || (m.getElement(0) == 0xF9)
+        || (m.getElement(0) == 0xFE)
+        ) {
             return CbusConstants.EVENT_OFF;
         } else {
             return CbusConstants.EVENT_ON;
         }
     }
 
+    // this adheres to cbus spec, ie on off responses to an AREQ are events
+    // D4 D5 not typo
     public static boolean isEvent(CanMessage m) {
-        if ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91)) {
+        if 
+          ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91)
+        || (m.getElement(0) == 0x93) || (m.getElement(0) == 0x94)
+        || (m.getElement(0) == 0x98) || (m.getElement(0) == 0x99)
+        || (m.getElement(0) == 0x9D) || (m.getElement(0) == 0x9E)
+        || (m.getElement(0) == 0xB0) || (m.getElement(0) == 0xB1)
+        || (m.getElement(0) == 0xB3) || (m.getElement(0) == 0xB4)
+        || (m.getElement(0) == 0xB8) || (m.getElement(0) == 0xB9)
+        || (m.getElement(0) == 0xBD) || (m.getElement(0) == 0xBE)
+        || (m.getElement(0) == 0xD0) || (m.getElement(0) == 0xD1)
+        || (m.getElement(0) == 0xD4) || (m.getElement(0) == 0xD5) 
+        || (m.getElement(0) == 0xD8) || (m.getElement(0) == 0xD9)
+        || (m.getElement(0) == 0xDD) || (m.getElement(0) == 0xDE)
+        || (m.getElement(0) == 0xF0) || (m.getElement(0) == 0xF1)
+        || (m.getElement(0) == 0xF3) || (m.getElement(0) == 0xF4)
+        || (m.getElement(0) == 0xF8) || (m.getElement(0) == 0xF9)
+        || (m.getElement(0) == 0xFD) || (m.getElement(0) == 0xFE)
+     ) {
             return true;
         } else {
             return false;
@@ -175,7 +211,24 @@ public class CbusMessage {
     }
 
     public static int getEventType(CanReply r) {
-        if ((r.getElement(0) & 1) == 1) {
+        if (
+           (r.getElement(0) == 0x91)
+        || (r.getElement(0) == 0x94)
+        || (r.getElement(0) == 0x99)
+        || (r.getElement(0) == 0x9E)
+        || (r.getElement(0) == 0xB1)
+        || (r.getElement(0) == 0xB4)
+        || (r.getElement(0) == 0xB9)
+        || (r.getElement(0) == 0xBE)
+        || (r.getElement(0) == 0xD1)
+        || (r.getElement(0) == 0xD5)
+        || (r.getElement(0) == 0xD9)
+        || (r.getElement(0) == 0xDE)
+        || (r.getElement(0) == 0xF1)
+        || (r.getElement(0) == 0xF4)
+        || (r.getElement(0) == 0xF9)
+        || (r.getElement(0) == 0xFE)
+        ) {
             return CbusConstants.EVENT_OFF;
         } else {
             return CbusConstants.EVENT_ON;
@@ -183,7 +236,24 @@ public class CbusMessage {
     }
 
     public static boolean isEvent(CanReply r) {
-        if ((r.getElement(0) == 0x90) || (r.getElement(0) == 0x91)) {
+        if (
+           (r.getElement(0) == 0x90) || (r.getElement(0) == 0x91)
+        || (r.getElement(0) == 0x93) || (r.getElement(0) == 0x94)
+        || (r.getElement(0) == 0x98) || (r.getElement(0) == 0x99)
+        || (r.getElement(0) == 0x9D) || (r.getElement(0) == 0x9E)
+        || (r.getElement(0) == 0xB0) || (r.getElement(0) == 0xB1)
+        || (r.getElement(0) == 0xB3) || (r.getElement(0) == 0xB4)
+        || (r.getElement(0) == 0xB8) || (r.getElement(0) == 0xB9)
+        || (r.getElement(0) == 0xBD) || (r.getElement(0) == 0xBE)
+        || (r.getElement(0) == 0xD0) || (r.getElement(0) == 0xD1)
+        || (r.getElement(0) == 0xD4) || (r.getElement(0) == 0xD5) 
+        || (r.getElement(0) == 0xD8) || (r.getElement(0) == 0xD9)
+        || (r.getElement(0) == 0xDD) || (r.getElement(0) == 0xDE)
+        || (r.getElement(0) == 0xF0) || (r.getElement(0) == 0xF1)
+        || (r.getElement(0) == 0xF3) || (r.getElement(0) == 0xF4)
+        || (r.getElement(0) == 0xF8) || (r.getElement(0) == 0xF9)
+        || (r.getElement(0) == 0xFD) || (r.getElement(0) == 0xFE)
+        ) {
             return true;
         } else {
             return false;

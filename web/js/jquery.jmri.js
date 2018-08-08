@@ -770,11 +770,11 @@
             		reporters: function(e) {
             			jmri.reporters(e.data);
             		},
-            		roster: function(e) {
-            			jmri.roster(e.data);
-            		},
             		rosterEntry: function(e) {
             			jmri.rosterEntry(e.data.name, e.data);
+            		},
+            		roster: function(e) {
+            			jmri.roster(e.data);
             		},
             		rosterGroup: function(e) {
             			jmri.rosterGroup(e.data.name, e.data);
@@ -791,11 +791,20 @@
             		sensor: function(e) {
             			jmri.sensor(e.data.name, e.data.state, e.data);
             		},
+            		sensors: function(e) {
+            			jmri.sensors(e.data);
+            		},
             		signalHead: function(e) {
             			jmri.signalHead(e.data.name, e.data.state, e.data);
             		},
+            		signalHeads: function(e) {
+            			jmri.signalHeads(e.data);
+            		},
             		signalMast: function(e) {
             			jmri.signalMast(e.data.name, e.data.state, e.data);
+            		},
+            		signalMasts: function(e) {
+            			jmri.signalMasts(e.data);
             		},
             		systemConnection: function(e) {
             			jmri.systemConnection(e.data.name, e.data);

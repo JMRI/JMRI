@@ -22,6 +22,7 @@ public class DefaultClassMigrationTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
