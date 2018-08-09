@@ -1,0 +1,10 @@
+.jumbotron {
+    padding: 0;
+    margin-bottom: 0;
+}
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+}
+table.sortable th:hover {
+	cursor: pointer;
+}

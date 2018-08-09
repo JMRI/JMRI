@@ -207,6 +207,23 @@ public class ImportCars extends ImportRollingStock {
 
                 log.debug("Checking car number ({}) road ({}) type ({}) length ({}) weight ({}) color ({})", carNumber,
                         carRoad, carType, carLength, carWeight, carColor); // NOI18N
+                
+                if (carNumber.trim().equals("")) {
+                    log.info("Import line {} missing car number", lineNum);
+                    break;
+                }
+                if (carRoad.trim().equals("")) {
+                    log.info("Import line {} missing car road", lineNum);
+                    break;
+                }
+                if (carType.trim().equals("")) {
+                    log.info("Import line {} missing car type", lineNum);
+                    break;
+                }
+                if (carLength.trim().equals("")) {
+                    log.info("Import line {} missing car length", lineNum);
+                    break;
+                }
                 if (carNumber.length() > Control.max_len_string_road_number) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNumberTooLong"),
                             new Object[]{(carRoad + " " + carNumber), carNumber}),
@@ -779,9 +796,6 @@ public class ImportCars extends ImportRollingStock {
         } catch (IOException e) {
         }
 
-        // kill status panel
-        fstatus.dispose();
-
         if (importOkay) {
             JOptionPane
                     .showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
@@ -791,6 +805,9 @@ public class ImportCars extends ImportRollingStock {
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportCarsAdded"),
                     new Object[]{carsAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
         }
+        
+        // kill status panel
+        fstatus.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(ImportCars.class);

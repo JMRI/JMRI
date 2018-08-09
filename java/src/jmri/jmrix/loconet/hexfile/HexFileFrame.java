@@ -187,8 +187,19 @@ public class HexFileFrame extends JmriJFrame {
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
-        // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
+        // Install a debug throttle manager, replacing the existing LocoNet one, and overriding edits
+        port.getSystemConnectionMemo().setThrottleManager(
+                new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo() ) {
+                    /**
+                     * Address 128 and above can be a long address
+                     *
+                     */
+                    @Override
+                    public boolean canBeLongAddress(int address) {
+                        return (address >= 128);
+                    }
+
+                });
         jmri.InstanceManager.setThrottleManager(
                 port.getSystemConnectionMemo().getThrottleManager());
 

@@ -13,9 +13,15 @@ import org.junit.runners.Suite;
     BundleTest.class,
     AddSignalMastPanelTest.class,
     AddSignalMastJFrameTest.class,
+    DccSignalMastAddPaneTest.class,
+    MatrixSignalMastAddPaneTest.class,
+    SignalHeadSignalMastAddPaneTest.class,
     SignalMastRepeaterJFrameTest.class,
     SignalMastRepeaterPanelTest.class,
-    SignalMastTableDataModelTest.class
+    SignalMastTableDataModelTest.class,
+    SignalMastAddPaneTest.class,
+    TurnoutSignalMastAddPaneTest.class,
+    VirtualSignalMastAddPaneTest.class
 })
 public class PackageTest {
 }
