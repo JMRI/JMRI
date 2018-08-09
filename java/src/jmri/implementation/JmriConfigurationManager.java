@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import apps.AppsBase;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import apps.gui3.TabbedPreferencesAction;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
