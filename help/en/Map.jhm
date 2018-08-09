@@ -3276,6 +3276,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_newUserAdvice" url="package/jmri/jmrit/operations/Operations.shtml#newUserAdvice"/>
 
+<mapID target="html.hardware.openlcb.OlcbSignalMast" url="html/hardware/openlcb/OlcbSignalMast.shtml"/>
+
 <mapID target="html.hardware.pi.index_connecting" url="html/hardware/pi/index.shtml#connecting"/>
 
 <mapID target="package.jmri.jmrit.beantable.ViewSpecialActions" url="package/jmri/jmrit/beantable/ViewSpecialActions.shtml"/>
@@ -3659,6 +3661,8 @@
 <mapID target="html.doc.Technical.IntelliJ_debug" url="html/doc/Technical/IntelliJ.shtml#debug"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Menu.shtml"/>
+
+<mapID target="package.jmri.jmrit.logix.SCWarrant" url="package/jmri/jmrit/logix/SCWarrant.html"/>
 
 <mapID target="html.hardware.raildriver.index" url="html/hardware/raildriver/index.shtml"/>
 

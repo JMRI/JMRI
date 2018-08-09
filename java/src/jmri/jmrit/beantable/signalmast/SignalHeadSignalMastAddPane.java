@@ -205,7 +205,6 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
                     return false; // without creating
                 }
         }
-        name = currentMast.getSystemName();
         
         // heads are attached via the system name
 

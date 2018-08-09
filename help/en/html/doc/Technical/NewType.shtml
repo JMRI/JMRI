@@ -56,7 +56,6 @@
     <!-- need to better document the proper package structure: jmri.managers vs jmri.implementations -->
     <!-- need to better document InstanceManager creation of default objects for non-specific types -->
     
-      <div class="list">
         <p>We list the files that are modified and created in the
         order they were done in this case; other orders may also
         work, and you might not need to do all these.</p>
@@ -77,10 +76,10 @@
         case, we copy the "*Turnout*" file to make a corresponding
         "*Reporter*" file.</p>
 
+
+        <h3>Define the new type and it's manager</h3>
+
         <dl>
-          <dd>
-            <h3>Define the new type and it's manager</h3>
-          </dd>
 
           <dt>Reporter</dt>
 
@@ -110,9 +109,9 @@
             update the system-specific naming pages as needed.</p>
           </dd>
 
-          <dd>
+          </dl>
             <h3>Provide the base for implementations</h3>
-          </dd>
+          <dl>
 
           <dt>AbstractReporter</dt>
 
@@ -153,11 +152,13 @@
 
           <dd>
             <p>At this point, make sure you can compile.</p>
-
-            <h3>Provide the first system-specific
-            implementation</h3>
           </dd>
+        </dl>
+        
+        <h3>Provide the first system-specific
+            implementation</h3>
 
+        <dl>
           <dt>jmrix.loconet.LnReporterManager</dt>
 
           <dd>
@@ -191,9 +192,9 @@
             <a href="SystemStructure.shtml">system structure page</a> for more details.</p>
           </dd>
 
-          <dd>
+          </dl>
             <h3>Add to the scripting support</h3>
-          </dd>
+          <dl>
 
           <dt>jython/jmri_defaults.py</dt>
 
@@ -212,10 +213,11 @@
           <dd>
             <p>At this point, you should be able to compile and
             run, testing the new code from the jython command
-            line.</p>
+            line.</dd>
 
+          </dl>
             <h3>Add a new table tool for access (optional)</h3>
-          </dd>
+          <dl>
 
           <dt>jmrit.beantable.ReporterTableAction</dt>
 
@@ -254,11 +256,12 @@
 
           <dd>
             <p>At this point, you should be able to compile and run
-            to test the new table.</p>
+            to test the new table.</dd>
 
+          </dl>
             <h3>Provide for persistance of the manager and type
             objects</h3>
-          </dd>
+          <dl>
 
           <dt>configxml.AbstractReporterManagerConfigXML</dt>
 
@@ -281,10 +284,10 @@
             DTD</p>
           </dd>
 
-          <dd>
+          </dl>
             <h3>Provide a suitable display icon class
             (optional)</h3>
-          </dd>
+          <dl>
 
           <dt>jmrit.display.ReporterIcon</dt>
 
@@ -304,9 +307,9 @@
             <p>discussion</p>
           </dd>
 
-          <dd>
+          </dl>
             <h3>Complete the documentation</h3>
-          </dd>
+          <dl>
 
           <dt>ant javadoc</dt>
 
@@ -316,7 +319,7 @@
           </dd>
         </dl>
 
-      </div><!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
