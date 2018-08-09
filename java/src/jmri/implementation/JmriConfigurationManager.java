@@ -3,6 +3,7 @@ package jmri.implementation;
 import apps.AppsBase;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import apps.gui3.TabbedPreferencesAction;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -367,12 +368,16 @@ public class JmriConfigurationManager implements ConfigureManager {
 
             JPanel marginPanel = new JPanel();
             marginPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            marginPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10,10,10,10));
+            marginPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
             contentPanel.add(marginPanel);
+            JPanel borderPanel = new JPanel();
+            borderPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            borderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black));
+            marginPanel.add(borderPanel);
             panel = new JPanel();
             panel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black));
+            panel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
             for (String s : list) {
                 // Remove html
                 s = s.replaceAll("\\<html\\>.*\\<\\/html\\>", "");
@@ -380,7 +385,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                 label.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
                 panel.add(label);
             }
-            marginPanel.add(panel);
+            borderPanel.add(panel);
 
             panel = new JPanel();
             JButton button = new JButton("Exit program");
@@ -393,7 +398,9 @@ public class JmriConfigurationManager implements ConfigureManager {
             });
             panel.add(button);
             
-            button = new JButton("New profile");
+            panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+            
+            button = new JButton("Start with new profile");
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent a) {
@@ -402,6 +409,8 @@ public class JmriConfigurationManager implements ConfigureManager {
                 }
             });
             panel.add(button);
+            
+            panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
             
             button = new JButton("Edit connections");
             button.addActionListener(new ActionListener() {
