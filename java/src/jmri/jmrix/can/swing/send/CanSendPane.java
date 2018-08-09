@@ -13,6 +13,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -92,10 +93,10 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         pane2.add(new JLabel(Bundle.getMessage("PacketLabel")));
         pane2.add(new JLabel(Bundle.getMessage("WaitLabel")));
         for (int i = 0; i < MAXSEQUENCE; i++) {
-            pane2.add(new JLabel(Integer.toString(i + 1)));
+            pane2.add(new JLabel(Integer.toString(i + 1)+" ",SwingConstants.RIGHT));
             mUseField[i] = new JCheckBox();
-            mPacketField[i] = new JTextField(10);
-            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(500, 0, 10000, 1));
+            mPacketField[i] = new JTextField(14);
+            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(500, 1, 1000000, 1));
             pane2.add(mUseField[i]);
             pane2.add(mPacketField[i]);
             mPacketField[i].setToolTipText(Bundle.getMessage("PacketToolTip"));
@@ -142,9 +143,16 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        CanMessage m = createPacket(packetTextField.getText());
-        log.debug("sendButtonActionPerformed: " + m);
-        tc.sendCanMessage(m, this);
+        try {
+            CanMessage m = createPacket(packetTextField.getText());
+            tc.sendCanMessage(m, this);        
+            log.debug("sendButtonActionPerformed: " + m);
+        } catch (Exception ex) {     
+            // log.debug (" Unable to create can frame ");
+            JOptionPane.showMessageDialog(null, 
+            (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // control sequence operation
@@ -230,11 +238,20 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         }
         // is this one enabled?
         if (mUseField[mNextSequenceElement].isSelected()) {
-            // make the packet
-            CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText());
-            // send it
-            tc.sendCanMessage(m, this);
-            startSequenceDelay();
+            try {
+                // make the packet
+                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText());
+                // send it
+                tc.sendCanMessage(m, this);
+                startSequenceDelay();
+            } catch (Exception ex) {
+                // log.debug(" Unable to create can frame ");
+                JOptionPane.showMessageDialog(null, 
+                (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle")
+                , JOptionPane.ERROR_MESSAGE);
+                mRunButton.setSelected(false);
+                return;
+            }
         } else {
             // ask for the next one
             mNextSequenceElement++;
@@ -244,7 +261,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
 
     /**
      * Create a well-formed message from a String. String is expected to be space
-     * seperated hex bytes or CbusAddress, e.g.: 12 34 56 +n4e1
+     * seperated hex bytes or CbusAddress, e.g.: 12 34 56 or +n4e1
      *
      * @return The packet, with contents filled-in
      */
