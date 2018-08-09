@@ -1,7 +1,10 @@
 package jmri.implementation;
 
 import apps.AppsBase;
+import apps.ConfigBundle;
+import apps.gui3.TabbedPreferences;
 import apps.gui3.TabbedPreferencesAction;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -14,7 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -22,6 +27,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -33,6 +41,7 @@ import jmri.profile.AddProfileDialog;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import jmri.util.prefs.InitializationException;
@@ -241,7 +250,23 @@ public class JmriConfigurationManager implements ConfigureManager {
                                     break;
                                     
                                 case EDIT_CONNECTIONS:
-                                    // Show preferences dialog, but only the connections panel
+                                    final Object waiter = new Object();
+                                    try {
+                                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
+                                            synchronized (waiter) {
+                                                waiter.wait(50);
+                                            }
+                                        }
+//                                        SwingUtilities.updateComponentTreeUI(f);
+                                    } catch (InterruptedException ex) {
+                                        Thread.currentThread().interrupt();
+                                    }
+                                    
+                                    ConnectionsPreferencesDialog preferencesDialog = new ConnectionsPreferencesDialog();
+                                    
+                                    // For testing only
+                                    AppsBase.handleQuit();
+                                    
                                     // Restart program
                                     AppsBase.handleRestart();
                                     break;
@@ -431,5 +456,148 @@ public class JmriConfigurationManager implements ConfigureManager {
             setVisible(true);
         }
     }
+    
+    
+    
+    
+    private static class ConnectionsPreferencesDialog extends JDialog {
+        
+        enum Result {
+            EXIT_PROGRAM,
+            NEW_PROFILE,
+            EDIT_CONNECTIONS,
+        }
+        
+        
+        /**
+         * All preferences panels handled, whether persisted or not.
+         */
+        protected HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
+        
+        Result result = Result.EXIT_PROGRAM;
+        
+        
+        ConnectionsPreferencesDialog() {
+            super();
+            setTitle("Connections preferences");
+            setModal(true);
+            
+            JPanel contentPanel = new jmri.util.swing.JmriPanel();
+            
+            
+            JList list = new JList<>();
+            JScrollPane listScroller = new JScrollPane(list);
+            listScroller.setPreferredSize(new Dimension(100, 100));
 
+            JPanel buttonpanel = new JPanel();
+            buttonpanel.setLayout(new BoxLayout(buttonpanel, BoxLayout.Y_AXIS));
+            buttonpanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 3));
+            
+            buttonpanel.removeAll();
+            List<String> choices = new ArrayList();
+            choices.add("Connections");
+            list = new JList<>(choices.toArray(new String[choices.size()]));
+            listScroller = new JScrollPane(list);
+            listScroller.setPreferredSize(new Dimension(100, 100));
+
+            list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            list.setLayoutOrientation(JList.VERTICAL);
+            buttonpanel.add(listScroller);
+            
+            
+
+            JPanel detailpanel = new JPanel();
+            detailpanel.setLayout(new CardLayout());
+            detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
+            detailpanel.setPreferredSize(new Dimension(700, 400));
+
+            JButton save = new JButton(
+                    ConfigBundle.getMessage("ButtonSave"),
+                    new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
+            save.addActionListener((ActionEvent e) -> {
+                savePressed(invokeSaveOptions());
+            });
+
+            buttonpanel.add(save);
+            
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+            
+            for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
+                System.out.format("Daniel: %s%n", panel.getClass().getName());
+                
+                if (panel instanceof jmri.jmrix.swing.ConnectionsPreferencesPanel) {
+                    detailpanel.add(panel.getPreferencesComponent());
+                }
+            }
+            
+            contentPanel.add(buttonpanel);
+            contentPanel.add(new JSeparator(JSeparator.VERTICAL));
+            contentPanel.add(detailpanel);
+
+            list.setSelectedIndex(0);
+            
+            setContentPane(contentPanel);
+            
+            pack();
+            
+            // Center dialog on screen
+            setLocationRelativeTo(null);
+            setVisible(true);
+        }
+        
+        
+        public void savePressed(boolean restartRequired) {
+/*            
+            ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
+            if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+                for (PreferencesPanel panel : preferencesPanels.values()) {
+                    if (!panel.isPreferencesValid()) {
+                        switch (JOptionPane.showConfirmDialog(this,
+                                apps.gui3.Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                                apps.gui3.Bundle.getMessage("InvalidPreferencesTitle"),
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.ERROR_MESSAGE)) {
+                            case JOptionPane.YES_OPTION:
+                                // abort save and return to broken preferences
+                                this.gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
+                                return;
+                            default:
+                                // do nothing
+                                break;
+                        }
+                    }
+                }
+            }
+            super.savePressed(restartRequired);
+*/            
+        }
+
+        // package only - for TabbedPreferencesFrame
+        boolean invokeSaveOptions() {
+            boolean restartRequired = false;
+            for (PreferencesPanel panel : preferencesPanels.values()) {
+                // wrapped in isDebugEnabled test to prevent overhead of assembling message
+                if (log.isDebugEnabled()) {
+                    log.debug("PreferencesPanel {} ({}) is {}.",
+                            panel.getClass().getName(),
+                            (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                            (panel.isDirty()) ? "dirty" : "clean");
+                }
+                panel.savePreferences();
+                // wrapped in isDebugEnabled test to prevent overhead of assembling message
+                if (log.isDebugEnabled()) {
+                    log.debug("PreferencesPanel {} ({}) restart is {}required.",
+                            panel.getClass().getName(),
+                            (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                            (panel.isRestartRequired()) ? "" : "not ");
+                }
+                if (!restartRequired) {
+                    restartRequired = panel.isRestartRequired();
+                }
+            }
+            return restartRequired;
+        }
+        
+    }
+    
 }
