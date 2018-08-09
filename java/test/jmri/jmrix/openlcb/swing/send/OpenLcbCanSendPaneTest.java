@@ -31,6 +31,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         tc = new jmri.jmrix.can.TestTrafficController();
         memo.setTrafficController(tc);
