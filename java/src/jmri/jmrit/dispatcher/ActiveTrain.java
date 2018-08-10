@@ -2,8 +2,10 @@ package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import jmri.Block;
+import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -1016,10 +1018,10 @@ public class ActiveTrain {
     }
 
     protected AllocatedSection reverseAllAllocatedSections() {
+        Iterator<AllocatedSection> allocateSectionList = mAllocatedSections.iterator();
         AllocatedSection aSec = null;
-        log.debug("All Allocated Sections");
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            aSec = mAllocatedSections.get(i);
+        while (allocateSectionList.hasNext()) {
+            aSec = allocateSectionList.next();
             int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
             if (dir == jmri.Section.FORWARD) {
                 aSec.getSection().setState(jmri.Section.REVERSE);
