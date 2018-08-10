@@ -697,10 +697,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @param tc      The throttle controller that was listening for a response
      *                to an address request
      * @param address The address to send a cancel to
+     * @param reason  The reason the request was declined, to be sent back to client
      */
     @Override
-    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address) {
-        log.debug("notifyControllerAddressDeclined");
+    public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason) {
+        log.warn("notifyControllerAddressDeclined: "+ reason);
+        sendAlertMessage(reason); // let the client know why the request failed
         if (multiThrottles != null) {   //  Should exist by this point
             jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
             multiThrottles.get(tc.whichThrottle).canceledThrottleRequest(tc.locoKey);
