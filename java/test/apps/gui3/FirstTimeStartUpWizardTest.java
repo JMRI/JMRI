@@ -68,6 +68,7 @@ public class FirstTimeStartUpWizardTest {
     @Before
     public void setUp() {
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
