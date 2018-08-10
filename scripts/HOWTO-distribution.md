@@ -260,10 +260,11 @@ If you're developing any additional (post-4.13.2) changes that you want in the J
         Project Name
         Description
         Git Modules: Branch
+           Clone (Advanced) refspec should be +refs/heads/master:refs/remotes/origin/release-4.13.2
     
-    and click "Save". If needed, click "Enable".
+- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours "Honor refspec" and "Shallow Clone" are checked, Shallow Clone Depth is 1, and time out is 20.
 
-- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours that "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
+- Click "Save". If needed, click "Enable".
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
