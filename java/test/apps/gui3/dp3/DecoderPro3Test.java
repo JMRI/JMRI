@@ -65,6 +65,7 @@ public class DecoderPro3Test {
     @Before
     public void setUp() {
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -68,6 +68,7 @@ public class PanedTest {
     public void setUp() {
         Log4JFixture.setUp();
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
