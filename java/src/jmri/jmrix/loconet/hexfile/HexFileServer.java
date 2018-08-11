@@ -78,9 +78,9 @@ public class HexFileServer {
                 connectedAddresses++;
                 DccLocoAddress address = (DccLocoAddress) a;
                 //create some testing situations
-                if (connectedAddresses > 3) {
-                    log.warn("SLOT MAX of 3 exceeded");
-                    failedThrottleRequest(address, "SLOT MAX of 3 exceeded");
+                if (connectedAddresses > 5) {
+                    log.warn("SLOT MAX of 5 exceeded");
+                    failedThrottleRequest(address, "SLOT MAX of 5 exceeded");
                     return;
                 }
                 // otherwise, continue with setup
