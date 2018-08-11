@@ -755,6 +755,7 @@ public class LayoutTurnoutTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
             Point2D point = new Point2D.Double(150.0, 100.0);
