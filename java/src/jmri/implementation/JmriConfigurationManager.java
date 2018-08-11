@@ -262,7 +262,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                                         Thread.currentThread().interrupt();
                                     }
                                     
-                                    ConnectionsPreferencesDialog preferencesDialog = new ConnectionsPreferencesDialog();
+                                    new ConnectionsPreferencesDialog();
                                     
                                     // For testing only
                                     AppsBase.handleQuit();
