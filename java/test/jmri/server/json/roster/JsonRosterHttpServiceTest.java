@@ -30,6 +30,7 @@ public class JsonRosterHttpServiceTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
     }

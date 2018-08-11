@@ -87,6 +87,7 @@ public class RouteTableActionTest extends AbstractTableActionBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new RouteTableAction();
     }
