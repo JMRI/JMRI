@@ -5,14 +5,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2001
  */
-public class XmlFileTest extends TestCase {
+public class XmlFileTest {
 
     // file urls are relative to the 
     // program directory
@@ -39,6 +39,8 @@ public class XmlFileTest extends TestCase {
     // (ditto schema), check with validate on and off that proper result is obtained.
     // That's 3*3*2*2 cases!
     enum Type { ABSENT, VALID, INVALID }
+
+    @Test
     public void testValidationControl() {
     
         final String docTypeValid = "<!DOCTYPE decoderIndex-config SYSTEM \"decoderIndex-config.dtd\">";
@@ -108,27 +110,32 @@ public class XmlFileTest extends TestCase {
         }
     }
     
-    
+    @Test
     public void testProgIncludeRelative() {
         validateFileAndDtdAccess(new File(testFileDir + "ProgramMainRelative.xml"));
     }
 
+    @Test
     public void testProgIncludeURL() {
         validateFileAndDtdAccess(new File(testFileDir + "ProgramMainURL.xml"));
     }
 
+    @Test
     public void testDotDotDTD() {
         validateFileAndDtdAccess(new File(testFileDir + "DotDotDTD.xml"));
     }
 
+    @Test
     public void testHttpURL() {
         validateFileAndDtdAccess(new File(testFileDir + "HttpURL.xml"));
     }
 
+    @Test
     public void testJustFilename() {
         validateFileAndDtdAccess(new File(testFileDir + "JustFilename.xml"));
     }
 
+    @Test
     public void testPathname() {
         validateFileAndDtdAccess(new File(testFileDir + "Pathname.xml"));
     }
@@ -146,6 +153,7 @@ public class XmlFileTest extends TestCase {
         }
     }
 
+    @Test
     public void testCheckFile() {
         // XmlFile is abstract, so can't check ctor directly; use local class
         XmlFile x = new XmlFile() {
@@ -159,6 +167,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
     }
 
+    @Test
     public void testNotVoid() throws org.jdom2.JDOMException, java.io.IOException {
         // XmlFile is abstract, so can't check ctor directly; use local class
         XmlFile x = new XmlFile() {
@@ -171,6 +180,7 @@ public class XmlFileTest extends TestCase {
         } catch (java.io.FileNotFoundException e) { /* OK, desired exit */ }
     }
 
+    @Test
     public void testWriteFile() throws java.io.IOException {
         XmlFile x = new XmlFile() {
         };
@@ -192,6 +202,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("File expected to be present", f.exists());
     }
 
+    @Test
     public void testReadFile() throws org.jdom2.JDOMException, java.io.IOException {
         // ensure file present
         testWriteFile();
@@ -207,6 +218,7 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("Element found", e != null);
     }
 
+    @Test
     public void testProcessPI() throws org.jdom2.JDOMException, java.io.IOException {
         // Document from test file
         Document doc;
@@ -242,31 +254,14 @@ public class XmlFileTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public XmlFileTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlFileTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlFileTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
