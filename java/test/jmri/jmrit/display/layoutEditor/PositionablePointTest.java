@@ -387,6 +387,7 @@ public class PositionablePointTest {
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
             le = new LayoutEditor();
         }
     }

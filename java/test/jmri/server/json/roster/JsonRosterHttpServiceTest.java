@@ -36,7 +36,9 @@ public class JsonRosterHttpServiceTest {
     }
 
     @After
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
+    }
 
     /**
      * Tests only that this does not throw an error with a valid call, and
