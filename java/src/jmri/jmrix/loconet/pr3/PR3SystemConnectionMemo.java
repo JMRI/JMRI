@@ -7,6 +7,7 @@ import jmri.ThrottleManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetConsistManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetThrottledTransmitter;
@@ -176,6 +177,23 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             powerManager = new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this);
         }
         return powerManager;
+    }
+
+    private LocoNetConsistManager consistManager = null;
+
+    /**
+     * Get connections Consist Manager
+     * @return the LocoNet Consist manager; may be null in some circumstances
+     */
+    @Override
+    public LocoNetConsistManager getConsistManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (consistManager == null) {
+            consistManager = new LocoNetConsistManager(this);
+        }
+        return consistManager;
     }
 
     /**
